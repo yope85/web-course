@@ -1253,8 +1253,8 @@ function paintProgress(){
 }
 paintProgress();
 const chapters = [...document.querySelectorAll('.chapter')];
-$('#toc').innerHTML = chapters.map(c => { const n = c.querySelector('.num').textContent; return '<a href="#' + c.id + '"><span class="n">' + n + '</span>' + c.dataset.title + '</a>'; }).join('');
-const io = new IntersectionObserver(es => { es.forEach(e => { if (e.isIntersecting) $('#now').textContent = '· ' + e.target.querySelector('.num').textContent + ' ' + e.target.dataset.title; }); }, {rootMargin:'-20% 0px -70% 0px'});
+$('#toc').innerHTML = chapters.map(c => { const n = c.querySelector('.num').textContent; return '<a href="#' + c.id + '"><span class="n">' + n + '</span><bdi>' + c.dataset.title + '</bdi></a>'; }).join('');
+const io = new IntersectionObserver(es => { es.forEach(e => { if (e.isIntersecting) $('#now').innerHTML = '· ' + e.target.querySelector('.num').textContent + ' <bdi>' + e.target.dataset.title + '</bdi>'; }); }, {rootMargin:'-20% 0px -70% 0px'});
 chapters.forEach(c => io.observe(c));
 })();
 </script>
