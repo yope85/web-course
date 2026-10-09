@@ -6,281 +6,9 @@
 <title>שיעור 3 – עיצוב עם CSS | המדריך המעשי</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
-<style>
-:root{
-  --bg:#f6f7fb; --surface:#ffffff; --surface2:#eef1f7; --text:#1d2433; --muted:#5b6476; --line:#d9deea;
-  --accent:#2f6fec; --accent-soft:#e3ecff; --ok:#16a34a; --ok-soft:#dcfce7; --bad:#dc2626; --bad-soft:#fee2e2;
-  --warn:#b45309; --warn-soft:#fef3c7; --what:#0f766e; --what-soft:#dff5f1;
-  --code-bg:#0f172a; --code-text:#e2e8f0; --code-muted:#94a3b8;
-  --m:#f9cc9d; --b:#fddd9b; --pd:#c3d08b; --c:#8cb6c0;
-  --radius:16px; --shadow:0 1px 2px rgba(16,24,40,.06),0 6px 20px rgba(16,24,40,.06);
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --bg:#0e1320; --surface:#151c2c; --surface2:#1c2538; --text:#e6e9f2; --muted:#9aa4b8; --line:#2a3550;
-    --accent:#7aa2ff; --accent-soft:#1f2b4a; --ok:#4ade80; --ok-soft:#14321f; --bad:#f87171; --bad-soft:#3b1717;
-    --warn:#fbbf24; --warn-soft:#3a2d0b; --what:#5eead4; --what-soft:#0f2e2b; --code-bg:#0a0f1c; --shadow:none;
-  }
-}
-:root[data-theme="dark"]{
-  --bg:#0e1320; --surface:#151c2c; --surface2:#1c2538; --text:#e6e9f2; --muted:#9aa4b8; --line:#2a3550;
-  --accent:#7aa2ff; --accent-soft:#1f2b4a; --ok:#4ade80; --ok-soft:#14321f; --bad:#f87171; --bad-soft:#3b1717;
-  --warn:#fbbf24; --warn-soft:#3a2d0b; --what:#5eead4; --what-soft:#0f2e2b; --code-bg:#0a0f1c; --shadow:none;
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Rubik,Arial,sans-serif;font-size:17px;line-height:1.75}
-a{color:var(--accent)}
-b{font-weight:600}
-.topbar{position:sticky;top:0;z-index:20;background:var(--surface);border-bottom:1px solid var(--line)}
-.topbar .in{max-width:1120px;margin:auto;padding:8px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.brand{font-weight:700}
-.now{color:var(--muted);font-size:14px}
-.progress{margin-inline-start:auto;display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted)}
-.bar{width:120px;height:8px;background:var(--surface2);border-radius:99px;overflow:hidden}
-.bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .4s}
-.themebtn{border:1px solid var(--line);background:var(--surface2);color:var(--text);border-radius:99px;padding:4px 10px;cursor:pointer;font:inherit;font-size:13px}
-main{max-width:1120px;margin:auto;padding:24px 16px 80px}
-.hero{background:linear-gradient(135deg,var(--accent-soft),var(--surface));border:1px solid var(--line);border-radius:var(--radius);padding:24px;margin-bottom:28px}
-.hero .school{color:var(--muted);font-size:13px}
-.hero h1{margin:4px 0 6px;font-size:32px;line-height:1.3}
-.hero .lead{font-size:19px;margin:0 0 14px}
-.ways{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
-.way{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px;font-size:15px}
-.way b{display:block;font-size:16px}
-.goals{margin:8px 0 0;padding-inline-start:22px}
-.toc{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
-.toc a{text-decoration:none;background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:3px 12px;font-size:14px;color:var(--text)}
-.toc a .n{color:var(--accent);font-weight:700;margin-inline-end:4px}
-.chapter{margin:0 0 36px;scroll-margin-top:70px}
-.chapter>header{display:flex;align-items:center;gap:12px;margin:0 0 12px}
-.chapter>header .num{flex:0 0 44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:grid;place-items:center;font-size:22px;font-weight:700}
-.chapter>header h2{margin:0;font-size:26px;line-height:1.3}
-.chapter>header .sub{color:var(--muted);font-size:15px}
-.spread{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px;margin:0 0 18px;box-shadow:var(--shadow);scroll-margin-top:70px}
-.spread>h3{margin:0 0 8px;font-size:21px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
-.spread>h3 .sn{font-size:14px;color:var(--accent);background:var(--accent-soft);border-radius:99px;padding:1px 10px;font-weight:600}
-.spread p{margin:8px 0}
-.what{background:var(--what-soft);border-inline-start:4px solid var(--what);border-radius:10px;padding:10px 14px;margin:14px 0 4px}
-.what::before{content:"🔎 מה קרה פה?";display:block;font-weight:700;color:var(--what);margin-bottom:2px}
-.bridge{background:var(--accent-soft);border-radius:10px;padding:10px 14px;margin:12px 0}
-.bridge::before{content:"🔗 בשפה של הקורס";display:block;font-weight:700;color:var(--accent);margin-bottom:2px}
-.tip{background:var(--warn-soft);border-inline-start:4px solid var(--warn);border-radius:10px;padding:10px 14px;margin:12px 0}
-.trap{background:var(--bad-soft);border-inline-start:4px solid var(--bad);border-radius:10px;padding:10px 14px;margin:12px 0}
-.trap::before{content:"⚠ מלכודת";display:block;font-weight:700;color:var(--bad);margin-bottom:2px}
-code,.ltr{font-family:"JetBrains Mono",Consolas,monospace;direction:ltr;unicode-bidi:isolate;font-size:.9em}
-p code,li code,.what code,.tip code,.bridge code,.trap code{background:var(--surface2);padding:1px 6px;border-radius:6px;white-space:nowrap}
-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:15px}
-td code{background:var(--surface2);padding:1px 6px;border-radius:6px;overflow-wrap:anywhere}
-.compare>div,.walk>div,.minis>div,.split>.pane{min-width:0}
-th,td{border:1px solid var(--line);padding:8px 10px;text-align:right;vertical-align:top}
-th{background:var(--surface2)}
-/* static code blocks */
-.codeblock{position:relative;direction:ltr;text-align:left;background:var(--code-bg);color:var(--code-text);border-radius:12px;margin:12px 0;overflow:auto}
-.codeblock pre{margin:0;padding:14px 16px;font-family:"JetBrains Mono",Consolas,monospace;font-size:14px;line-height:1.65;white-space:pre}
-.codeblock .cv{margin:0;border-radius:0;background:transparent}
-.codeblock .copy{z-index:1;position:absolute;top:8px;right:8px;font:inherit;font-size:12px;border:0;border-radius:8px;padding:3px 10px;background:#334155;color:#fff;cursor:pointer;direction:rtl}
-.t-tag{color:#93c5fd}.t-attr{color:#fcd34d}.t-str{color:#86efac}.t-sel{color:#f9a8d4}.t-prop{color:#93c5fd}.t-val{color:#86efac}.t-cm{color:var(--code-muted);font-style:italic}
-.he{direction:rtl;unicode-bidi:isolate;font-family:Rubik,Arial,sans-serif}
-/* split = code beside live result */
-.split{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
-@media (max-width:860px){.split{grid-template-columns:1fr}}
-.pane{min-width:0}
-.pane-h{font-size:13px;color:var(--muted);margin:0 0 4px;display:flex;align-items:center;gap:6px}
-.pane-h .dot{width:8px;height:8px;border-radius:50%;background:var(--accent)}
-.cv{direction:ltr;text-align:left;background:var(--code-bg);color:var(--code-text);border-radius:12px;margin:0 0 10px;padding:10px 0;font-family:"JetBrains Mono",Consolas,monospace;font-size:13.5px;line-height:1.7;overflow:auto;white-space:pre;counter-reset:ln}
-.cv .ln{display:block;padding:0 12px 0 0;border-left:4px solid transparent;min-height:1.7em;transition:background .2s}
-.cv .ln::before{counter-increment:ln;content:counter(ln);display:inline-block;width:2.2em;padding-right:.8em;text-align:right;color:#475569;user-select:none}
-.cv .ln.hit{background:rgba(244,63,94,.28);border-left-color:#f43f5e}
-.cv .ln.peek{background:rgba(96,165,250,.22)}
-.cv .ln.new{border-left-color:#22c55e;background:rgba(34,197,94,.14)}
-.cv .ln.new::after{content:"חדש";font-family:Rubik,Arial,sans-serif;font-size:11px;background:#22c55e;color:#04210f;border-radius:99px;padding:0 7px;margin-left:10px;vertical-align:1px}
-.cv .ln.diff{background:rgba(250,204,21,.18);border-left-color:#facc15}
-.cv .ln.diff::after{content:"ההבדל";font-family:Rubik,Arial,sans-serif;font-size:11px;background:#facc15;color:#2b2100;border-radius:99px;padding:0 7px;margin-left:10px;vertical-align:1px}
-.cv .ln.warn{background:rgba(250,204,21,.18);border-left-color:#facc15}
-.cv .ln.warn::after{content:"חוזר על עצמו";font-family:Rubik,Arial,sans-serif;font-size:11px;background:#facc15;color:#2b2100;border-radius:99px;padding:0 7px;margin-left:10px;vertical-align:1px}
-.host{border-radius:12px;border:1px solid var(--line);overflow:hidden;background:#fff}
-.res-note{font-size:15px;margin-top:6px;min-height:1.5em}
-.res-note .count{font-weight:700}
-/* controls */
-.ctrls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}
-.ctrls .lbl{font-size:14px;color:var(--muted)}
-.seg{display:inline-flex;flex-wrap:wrap;gap:6px}
-.seg button,.chip{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--surface);color:var(--text);padding:4px 12px;border-radius:99px;cursor:pointer}
-.chip{font-family:"JetBrains Mono",monospace;direction:ltr;font-size:13px}
-.seg button[aria-pressed="true"],.chip[aria-pressed="true"]{background:var(--accent);color:#fff;border-color:var(--accent)}
-.seg button:focus-visible,.chip:focus-visible,.btn:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
-.btn{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--surface);color:var(--text);padding:6px 14px;border-radius:10px;cursor:pointer}
-.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
-/* anatomy diagram */
-.anat{direction:ltr;display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:16px 0 8px}
-.anat .tok{display:flex;flex-direction:column;align-items:center;gap:6px;max-width:190px}
-.anat .tok code{white-space:nowrap}
-.anat .tok code{font-size:22px;background:var(--code-bg);color:var(--code-text);padding:6px 14px;border-radius:10px;border-bottom:4px solid var(--tc)}
-.anat .tok span{direction:rtl;text-align:center;font-size:14px;line-height:1.4;color:var(--muted)}
-.anat .tok span b{display:block;color:var(--text)}
-/* predict */
-.predict{border:2px dashed var(--accent);border-radius:12px;padding:12px 16px;margin:14px 0;background:var(--surface)}
-.predict .q{font-weight:600}
-.predict .q::before{content:"❓ נחשו לפני שרואים: ";color:var(--accent)}
-.predict.quiz .q::before{content:"❓ "}
-.predict .opts{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
-.predict .opts button{font:inherit;font-size:15px;border:1px solid var(--line);background:var(--surface2);color:var(--text);padding:6px 14px;border-radius:10px;cursor:pointer;text-align:right}
-.predict .opts button.right{background:var(--ok-soft);border-color:var(--ok)}
-.predict .opts button.wrong{background:var(--bad-soft);border-color:var(--bad)}
-.predict .fb{margin-top:8px;border-radius:10px;padding:8px 12px}
-.predict .fb.right{background:var(--ok-soft)}
-.predict .fb.wrong{background:var(--bad-soft)}
-.predict.solved{border-style:solid;border-color:var(--ok)}
-/* compare */
-.compare{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
-@media (max-width:700px){.compare{grid-template-columns:1fr}}
-.compare .cap{font-size:15px;margin-top:6px}
-.compare .cap b{display:block}
-/* family tree */
-.tree{direction:ltr;text-align:left;font-family:"JetBrains Mono",monospace;font-size:14px;background:var(--surface2);border-radius:12px;padding:12px 16px;line-height:2}
-.tree .node{display:inline-block;border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:0 8px;cursor:default}
-.tree .node.hit{background:#ffe4e6;border-color:#f43f5e;color:#9f1239}
-.tree .node.peek{border-color:var(--accent)}
-.tree .role{font-family:Rubik,Arial,sans-serif;font-size:13px;color:var(--muted);direction:rtl;unicode-bidi:isolate;margin-left:8px}
-.tree .g{color:var(--muted);white-space:pre}
-/* box lab */
-.sliders{display:grid;grid-template-columns:auto 1fr auto;gap:6px 10px;align-items:center}
-.sliders output{font-family:"JetBrains Mono",monospace;min-width:52px;text-align:left;direction:ltr}
-input[type=range]{width:100%;accent-color:var(--accent)}
-.boxstage{background:#fff;border-radius:12px;padding:16px;border:1px solid var(--line);display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-start}
-.mm{background:var(--m)}.bb{border-style:solid;border-color:#c79300;background:var(--b)}.pp{background:var(--pd)}
-.cc{background:var(--c);color:#0b2530;width:84px;min-height:56px;padding:6px;font-size:14px;text-align:center;line-height:1.4}
-.plain .mm,.plain .pp{background:transparent}.plain .bb{background:#fff;border-color:#334155}.plain .cc{background:#fff}
-.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:14px;margin-top:10px}
-.legend span::before{content:"";display:inline-block;width:14px;height:14px;border-radius:3px;margin-inline-end:6px;vertical-align:-2px;background:var(--sw)}
-/* devtools sketch */
-.dt{direction:ltr;margin:12px auto;max-width:360px;font-family:"JetBrains Mono",monospace;font-size:12px;text-align:center;color:#1f2937}
-.dt div{padding:8px 14px;border:1px dashed #6b7280}
-.dt .l{display:block;text-align:left;font-size:11px;margin:-4px 0 2px}
-/* path walker */
-.walk{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
-@media (max-width:700px){.walk{grid-template-columns:1fr}}
-.ftree{direction:ltr;text-align:left;font-family:"JetBrains Mono",monospace;font-size:14px;background:var(--surface2);border-radius:12px;padding:12px 16px;line-height:1.9;white-space:pre}
-.ftree .f{border-radius:6px;padding:0 4px;transition:background .2s}
-.ftree .f.here{background:#fde68a;color:#422006}
-.ftree .f.goal{outline:2px dashed var(--ok)}
-.pathbox{direction:ltr;font-family:"JetBrains Mono",monospace;font-size:18px;background:var(--code-bg);color:var(--code-text);border-radius:10px;padding:10px 14px;min-height:48px}
-.pathbox .t-str{color:#86efac}
-/* mini pages for external demo */
-.minis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-@media (max-width:700px){.minis{grid-template-columns:1fr}}
-.minis .cap{font-size:13px;color:var(--muted);text-align:center;direction:ltr}
-/* ladder */
-.ladder{list-style:none;padding:0;margin:12px 0;counter-reset:lad}
-.ladder li{counter-increment:lad;display:flex;gap:10px;align-items:center;padding:8px 12px;border-radius:10px;margin-bottom:6px;background:var(--surface2)}
-.ladder li::before{content:counter(lad);flex:0 0 28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-weight:700}
-.rules label{display:flex;gap:10px;align-items:center;padding:5px 8px;border-radius:8px;cursor:pointer}
-.rules label:hover{background:var(--surface2)}
-.rules .ltr{background:var(--code-bg);color:var(--code-text);border-radius:6px;padding:1px 8px}
-/* challenges */
-.chal{list-style:none;padding:0;margin:10px 0}
-.chal li{display:flex;gap:10px;align-items:flex-start;padding:7px 10px;border-radius:10px;margin-bottom:6px;background:var(--surface2);cursor:pointer}
-.chal li.cur{outline:2px solid var(--accent)}
-.chal li.done{background:var(--ok-soft)}
-.chal .st{flex:0 0 26px;height:26px;border-radius:50%;display:grid;place-items:center;border:2px solid var(--line);font-size:13px;font-weight:700}
-.chal li.done .st{background:var(--ok);border-color:var(--ok);color:#fff}
-.sel-input{display:flex;gap:8px;align-items:center;margin:8px 0}
-.sel-input input{flex:1;min-width:0;direction:ltr;text-align:left;font-family:"JetBrains Mono",monospace;font-size:16px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--text)}
-.err{color:var(--bad)}
-/* playground */
-.pg{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-@media (max-width:860px){.pg{grid-template-columns:1fr}}
-.editor{display:flex;flex-direction:column;gap:6px}
-.editor .lbl{font-size:13px;color:var(--muted)}
-.editor textarea{direction:ltr;text-align:left;width:100%;min-height:200px;resize:vertical;font-family:"JetBrains Mono",monospace;font-size:14px;line-height:1.55;background:var(--code-bg);color:var(--code-text);border:0;border-radius:10px;padding:12px;tab-size:4}
-.preview{background:#fff;border-radius:10px;border:1px solid var(--line);width:100%;height:460px}
-.tasks{list-style:none;padding:0;margin:12px 0 0}
-.tasks li{display:flex;gap:10px;align-items:flex-start;padding:8px 10px;border-radius:10px;margin-bottom:6px;background:var(--surface2)}
-.tasks li .st{flex:0 0 26px;height:26px;border-radius:50%;display:grid;place-items:center;border:2px solid var(--line);font-size:14px;font-weight:700}
-.tasks li.done{background:var(--ok-soft)}
-.tasks li.done .st{background:var(--ok);border-color:var(--ok);color:#fff}
-.stepbox{background:var(--accent-soft);border-radius:12px;padding:14px 16px}
-.stepbox ol{margin:6px 0 0;padding-inline-start:22px}
-.next{display:block;text-align:left;margin-top:-6px;font-size:15px}
-details{background:var(--surface2);border-radius:10px;padding:10px 14px;margin:10px 0}
-details summary{cursor:pointer;font-weight:600}
-footer{color:var(--muted);font-size:13px;text-align:center;padding:20px}
-@media (max-width:600px){
-  body{font-size:16px} table{font-size:14px} th,td{padding:6px} .spread{padding:16px} .hero{padding:18px} .hero h1{font-size:25px}
-  .chapter>header h2{font-size:21px} .bar{width:44px} .now{display:none} .plbl{display:none} .themebtn{font-size:0;padding:4px 8px} .themebtn::before{content:'🌓';font-size:15px} .ways{grid-template-columns:1fr}
-  .anat .tok code{font-size:17px;padding:5px 10px}
-}
-
-/* ---------- course player ---------- */
-.lesson-head{margin:4px 0 14px}
-.lesson-head .school{color:var(--muted);font-size:13px}
-.lesson-head h1{margin:2px 0 0;font-size:28px;line-height:1.3}
-.topics{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 10px;scrollbar-width:thin}
-.topics button{flex:0 0 auto;font:inherit;font-size:15px;display:flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:12px;padding:8px 14px;cursor:pointer}
-.topics button .ic{font-size:18px}
-.topics button[aria-current="true"]{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:var(--shadow)}
-.topics button.done:not([aria-current="true"])::after{content:"✔";color:var(--ok);font-weight:700}
-.steps{display:flex;gap:6px;overflow-x:auto;padding:2px 2px 12px;margin-bottom:6px;border-bottom:1px solid var(--line);scrollbar-width:thin}
-.steps button{flex:0 0 auto;max-width:230px;font:inherit;font-size:13.5px;border:1px solid var(--line);background:var(--surface2);color:var(--text);border-radius:99px;padding:4px 12px 4px 10px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.steps button .k{display:inline-block;min-width:20px;height:20px;line-height:20px;border-radius:50%;background:var(--surface);text-align:center;font-weight:700;font-size:12px;margin-inline-end:6px}
-.steps button.seen .k{background:var(--ok);color:#fff}
-.steps button[aria-current="true"]{border-color:var(--accent);background:var(--accent-soft);color:var(--accent);font-weight:600}
-.topic[hidden],.spread[hidden]{display:none}
-.spread>h3 .sn{font-weight:500}
-.stepnav{display:flex;justify-content:space-between;gap:12px;margin:6px 0 30px}
-.stepnav button{font:inherit;font-size:15px;border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:12px;padding:10px 16px;cursor:pointer;text-align:right;max-width:48%}
-.stepnav button small{display:block;color:var(--muted);font-size:12.5px}
-.stepnav button.next{background:var(--accent);border-color:var(--accent);color:#fff;margin-inline-start:auto}
-.stepnav button.next small{color:#dbe6ff}
-.stepnav button:disabled{visibility:hidden}
-.welcome .lead{font-size:18px}
-.welcome h4{margin:18px 0 6px;font-size:18px}
-.ways{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:8px 0}
-.way{background:var(--surface2);border:1px solid var(--line);border-radius:12px;padding:10px 14px;font-size:15px}
-.way b{display:block;font-size:16px}
-.way.main{border:2px solid var(--accent);background:var(--accent-soft)}
-.how{list-style:none;padding:0;margin:6px 0}
-.how li{margin:4px 0}
-.eggnote{background:linear-gradient(135deg,#fff7d6,#ffe9f3);color:#3b2a00;border-radius:12px;padding:10px 14px;margin:14px 0 4px}
-.preview-goal{max-width:520px;zoom:.78;margin:10px auto;transform:rotate(-1deg);box-shadow:0 10px 30px rgba(0,0,0,.15);border-radius:12px}
-.preview-goal .host{border:0}
-details.more{background:var(--surface);border:1px dashed var(--what);margin:14px 0}
-details.more summary{color:var(--what)}
-.cheat{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.cheat .card{border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:var(--surface2)}
-.cheat .card h4{margin:0 0 6px}
-.cheat .card{min-width:0}.cheat table{font-size:14px}.cheat td code{white-space:nowrap;overflow-wrap:normal}.cheat td{background:var(--surface)}
-.cheat ol,.cheat ul{margin:4px 0;padding-inline-start:22px}
-/* eggs */
-.eggbtn{border:1px solid var(--line);background:linear-gradient(135deg,#fff7d6,#ffe9f3);color:#3b2a00;border-radius:99px;padding:3px 10px;cursor:pointer;font:inherit;font-size:13px}
-.eggbtn.bump{animation:bump .6s}
-@keyframes bump{30%{transform:scale(1.35) rotate(-8deg)}60%{transform:scale(.95) rotate(6deg)}}
-dialog#eggDlg{border:1px solid var(--line);border-radius:16px;background:var(--surface);color:var(--text);max-width:520px;width:calc(100% - 32px);padding:16px 18px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
-dialog#eggDlg::backdrop{background:rgba(10,15,30,.45)}
-.dlg-h{display:flex;justify-content:space-between;align-items:center}
-.dlg-h h3{margin:0}
-.muted{color:var(--muted);font-size:14px}
-.egglist{list-style:none;padding:0;margin:10px 0}
-.egglist li{border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin-bottom:8px;background:var(--surface2)}
-.egglist li.found{background:var(--ok-soft);border-color:var(--ok)}
-.egglist li b{display:block}
-.egglist .h2{display:block;margin-top:4px;color:var(--muted);font-size:14px}
-.egglist .hintbtn{font:inherit;font-size:13px;background:none;border:0;color:var(--accent);cursor:pointer;padding:0;margin-top:4px}
-.codebox{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.codebox input{flex:1;min-width:120px;direction:ltr;text-align:left;font-family:"JetBrains Mono",monospace;font-size:15px;padding:6px 10px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--text)}
-.toast{position:fixed;bottom:18px;left:50%;transform:translate(-50%,120px);background:#1d2433;color:#fff;border-radius:14px;padding:10px 18px;font-size:15px;box-shadow:0 10px 30px rgba(0,0,0,.3);transition:transform .35s;z-index:60;max-width:calc(100% - 32px)}
-.toast{opacity:0;visibility:hidden}
-.toast.show{transform:translate(-50%,0);opacity:1;visibility:visible}
-.party{position:fixed;inset:0;pointer-events:none;z-index:70;overflow:hidden}
-.party span{position:absolute;top:-40px;font-size:28px;animation:fall linear forwards}
-@keyframes fall{to{transform:translateY(110vh) rotate(540deg)}}
-.ghost{background:#ede9fe;color:#4c1d95;border-radius:10px;padding:10px 14px;margin-top:12px;font-weight:600}
-@media (max-width:700px){.cheat td code{white-space:normal;overflow-wrap:anywhere} .ways,.cheat{grid-template-columns:1fr} .stepnav button{max-width:60%} .lesson-head h1{font-size:23px}}
-@media print{.topbar,.topics,.steps,.stepnav,.lesson-head,footer,#printBtn{display:none!important} body{background:#fff} .spread{box-shadow:none;border:0}}
-</style>
+<link rel="stylesheet" href="assets/course.css" />
 </head>
-<body>
+<body data-lesson="css3" data-title="שיעור 3" data-next="html-advanced.html" data-next-name="HTML מתקדם">
 <header class="topbar"><div class="in">
   <span class="brand">🛠 שיעור 3 · CSS</span>
   <span class="now" id="now"></span>
@@ -364,6 +92,20 @@ dialog#eggDlg::backdrop{background:rgba(10,15,30,.45)}
     <div class="what" id="s22what" hidden>הדפדפן מפריד בין ההוראות לפי ה-<code>;</code>. בלי הנקודה-פסיק הוא לא יודע איפה הוראה אחת נגמרת, ולכן <b>זורק את שתיהן</b>. ושימו לב: <b>אין הודעת שגיאה</b>. ב-CSS טעות פשוט "לא עובדת" בשקט. זו הסיבה שצריך לבדוק כל שינוי בדפדפן.</div>
   </article>
   <article class="spread">
+    <h3>שני סוגי תגיות: block ו-inline</h3>
+    <p>לפני שמעצבים, עוד עובדה אחת על HTML. יש תגיות שתופסות <b>שורה שלמה</b> – קוראים להן <b>block</b> (בלוק). ויש תגיות שיושבות <b>בתוך השורה</b>, כמו מילה במשפט – קוראים להן <b>inline</b> (בתוך השורה).</p>
+    <div class="predict" id="pKinds"></div>
+    <div class="ctrls"><div class="seg" id="sKindsSeg"></div></div>
+    <div id="sKinds"></div>
+    <div class="kinds-legend"><span style="border-color:#2563eb">כחול = block</span><span style="border-color:#db2777">ורוד = inline</span></div>
+    <div class="what">הכחולים (h2, p) נמתחים <b>לכל רוחב הדף</b>, גם כשהטקסט בתוכם קצר – ולכן כל אחד מתחיל בשורה חדשה. הוורודים (b, a, img) תופסים <b>רק את המקום שלהם</b>, ויושבים זה ליד זה בתוך השורה.</div>
+    <table>
+      <tr><th>block – שורה שלמה</th><th>inline – בתוך השורה</th></tr>
+      <tr><td><code>h1</code>–<code>h6</code>, <code>p</code>, <code>div</code>, <code>ul</code>, <code>ol</code>, <code>table</code>, <code>form</code></td><td><code>span</code>, <code>a</code>, <code>img</code>, <code>b</code>, <code>input</code>, <code>label</code></td></tr>
+    </table>
+    <div class="bridge">זה מסביר משהו שאולי ראיתם בשיעור 2: למה שתי תמונות עמדו אחת ליד השנייה, ושתי פסקאות – אחת מתחת לשנייה. ובהמשך השיעור תראו שעם CSS אפשר גם לשנות את זה (המאפיין <code>display</code>).</div>
+  </article>
+  <article class="spread">
     <h3>שתי תגיות בלי שום מראה משלהן</h3>
     <p>לפעמים רוצים לעצב <b>כמה תגיות ביחד</b> – למשל את כל התפריט, כולל הכותרת שלו. ולפעמים רוצים לעצב <b>רק חלק משורה</b> – למשל את המילה "במבצע". בשביל זה יש שתי תגיות שלא עושות כלום בעצמן – הן רק "עוטפות":</p>
     <table>
@@ -431,7 +173,7 @@ dialog#eggDlg::backdrop{background:rgba(10,15,30,.45)}
   </article>
   <article class="spread">
     <h3>כל השכבות יחד – מעבדה</h3>
-    <p>מבפנים החוצה: <b>תוכן</b> ← <b>padding</b> ← <b>border</b> (המסגרת עצמה) ← <b>margin</b>. הזיזו כל פס לבד, ושימו לב מה זז ומה לא.</p>
+    <p>מבפנים החוצה: <b>תוכן</b> &rlm;←&rlm; <b>padding</b> &rlm;←&rlm; <b>border</b> (המסגרת עצמה) &rlm;←&rlm; <b>margin</b>. הזיזו כל פס לבד, ושימו לב מה זז ומה לא.</p>
     <div class="ctrls"><div class="seg" id="s54view"></div></div>
     <div class="split" style="margin-top:0">
       <div class="pane">
@@ -601,8 +343,8 @@ dialog#eggDlg::backdrop{background:rgba(10,15,30,.45)}
     <h3>יוצרים את הקובץ ב-Visual Studio</h3>
     <ol>
       <li>ב-Solution Explorer, בתוך <b>wwwroot</b>, כבר יש תיקייה בשם <b>css</b>.</li>
-      <li>קליק ימני עליה ← Add ← New Item.</li>
-      <li>מחפשים <b>Style Sheet</b>, נותנים שם (למשל style.css) ← Add.</li>
+      <li>קליק ימני עליה &rlm;←&rlm; Add &rlm;←&rlm; New Item.</li>
+      <li>מחפשים <b>Style Sheet</b>, נותנים שם (למשל style.css) &rlm;←&rlm; Add.</li>
     </ol>
     <p>בתוך הקובץ כותבים <b>רק כללים</b> – בלי תגית style ובלי שום HTML:</p>
     <div class="codeblock"><button class="copy" type="button">העתקה</button><pre class="cv" id="s82code"></pre></div>
@@ -706,24 +448,14 @@ dialog#eggDlg::backdrop{background:rgba(10,15,30,.45)}
   <article class="spread">
     <h3>🛠 נסו עכשיו: כותבים בעצמכם</h3>
     <p>זה הדף של פיצה דני, עם קובץ CSS. בצעו את המשימות לפי הסדר – כשמשימה מצליחה, היא נצבעת בירוק ✔. אחר כך עשו את אותו דבר אצלכם ב-Visual Studio.</p>
-    <div class="pg">
-      <div class="editor">
-        <span class="lbl">HTML – menu.html</span>
-        <textarea id="edHtml" spellcheck="false" aria-label="עורך HTML"></textarea>
-        <span class="lbl">CSS – style.css</span>
-        <textarea id="edCss" spellcheck="false" aria-label="עורך CSS"></textarea>
-        <div><button class="btn" id="resetPg" type="button">↺ התחלה מחדש</button></div>
-      </div>
-      <iframe class="preview" id="preview" title="תצוגה חיה" sandbox="allow-same-origin"></iframe>
-    </div>
-    <ul class="tasks" id="tasks"></ul>
+    <div id="pg"></div>
   </article>
   <article class="spread">
     <h3>🧩 צעד בפרויקט – לקראת הגשה 1</h3>
     <div class="stepbox">
       <b>בונים את קובץ העיצוב של האתר שלכם:</b>
       <ol>
-        <li>בתיקייה css צרו קובץ חדש: קליק ימני ← Add ← New Item ← Style Sheet, בשם site-style.css.</li>
+        <li>בתיקייה css צרו קובץ חדש: קליק ימני &rlm;←&rlm; Add &rlm;←&rlm; New Item &rlm;←&rlm; Style Sheet, בשם site-style.css.</li>
         <li>חברו אותו עם תגית link לדף הנחיתה ולדף התוכן הראשון שלכם.</li>
         <li>כתבו בו: גופן וצבע רקע ל-body, צבע לכותרות h1 ו-h2, ו-class אחד בשם box לקופסת תוכן (עם padding, border ו-margin).</li>
         <li>הוסיפו <code>class="box"</code> לפחות לשתי קופסאות תוכן, בשני דפים שונים.</li>
@@ -774,158 +506,11 @@ dialog#eggDlg::backdrop{background:rgba(10,15,30,.45)}
 </main>
 <footer>בניית אתרים · המדריך המעשי · שיעור 3 – CSS · יוחאי פרץ</footer>
 
+<script src="assets/course.js"></script>
 <script>
 (function(){
 "use strict";
-const $ = s => document.querySelector(s);
-const store = {
-  get(k){ try { return JSON.parse(localStorage.getItem('css3-'+k)); } catch(e){ return null; } },
-  set(k,v){ try { localStorage.setItem('css3-'+k, JSON.stringify(v)); } catch(e){} }
-};
-const state = store.get('state') || {};
-let T = [];
-const save = () => { store.set('state', state); if (T.length) paintProgress(); };
-
-/* ---------- theme ---------- */
-const savedTheme = store.get('theme'); if (savedTheme) document.documentElement.dataset.theme = savedTheme;
-$('#themeBtn').addEventListener('click', () => {
-  const cur = document.documentElement.dataset.theme;
-  const dark = cur ? cur === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
-  const next = dark ? 'light' : 'dark'; document.documentElement.dataset.theme = next; store.set('theme', next);
-});
-
-/* ---------- syntax highlight ---------- */
-const HE = /[֐-׿]/;
-const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-function hlHtmlLine(line){
-  const cont = !line.includes('<') && line.match(/^(\s+)([a-z-]+:[^"]*)("?\s*\/?>?)$/);
-  if (cont) return cont[1] + '<span class="t-str">' + esc(cont[2]) + '</span>' + '<span class="t-str">' + esc(cont[3].replace(/\s*\/?>$/, '')) + '</span>' + esc(cont[3].replace(/^"?/, ''));
-  let out = ''; const re = /<!--[\s\S]*?-->|<[^>]*>?|[^<]+/g; let m;
-  while ((m = re.exec(line))) {
-    const t = m[0];
-    if (t.startsWith('<!--')) out += '<span class="t-cm">' + esc(t) + '</span>';
-    else if (t[0] === '<') {
-      let e = esc(t);
-      e = e.replace(/([a-zA-Z-]+)=(&quot;|")([^"]*)"/g, (x, an, q, av) => '<span class="t-attr">' + an + '</span>=<span class="t-str">"' + av + '"</span>');
-      e = e.replace(/ ([a-zA-Z-]+)="([^"]*)$/, (x, an, av) => ' <span class="t-attr">' + an + '</span>=<span class="t-str">"' + av + '</span>');
-      e = e.replace(/^(&lt;\/?)([a-zA-Z0-9!]+)/, '$1<span class="t-tag">$2</span>');
-      out += e;
-    } else out += HE.test(t) ? t.replace(/^(\s*)(.*?)(\s*)$/, (x,a,b,c) => a + '<span class="he">' + esc(b) + '</span>' + c) : esc(t);
-  }
-  return out;
-}
-function hlCssLine(line){
-  if (/\/\*/.test(line)) return '<span class="t-cm">' + esc(line) + '</span>';
-  if (line.includes('{')) { const i = line.indexOf('{'); return '<span class="t-sel">' + esc(line.slice(0,i)) + '</span>' + esc(line.slice(i)); }
-  const m = line.match(/^(\s*)([a-zA-Z-]+)(\s*:\s*)([^;]*)(;?)(.*)$/);
-  if (m) return m[1] + '<span class="t-prop">' + m[2] + '</span>' + esc(m[3]) + '<span class="t-val">' + esc(m[4]) + '</span>' + m[5] + esc(m[6]);
-  return esc(line);
-}
-const hlHtml = src => src.split('\n').map(hlHtmlLine).join('\n');
-const hlCss = src => src.split('\n').map(hlCssLine).join('\n');
-function codeLines(pre, src, kind, marks){
-  marks = marks || {};
-  const f = kind === 'css' ? hlCssLine : hlHtmlLine;
-  pre.innerHTML = src.split('\n').map((l,i) => '<span class="ln' + (marks[i] ? ' ' + marks[i] : '') + '" data-i="' + i + '">' + (f(l) || ' ') + '</span>').join('');
-}
-document.querySelectorAll('.codeblock .copy').forEach(b => b.addEventListener('click', async () => {
-  const t = b.parentElement.querySelector('pre').innerText;
-  try { await navigator.clipboard.writeText(t); b.textContent = 'הועתק ✔'; } catch(e){ b.textContent = 'סמנו והעתיקו'; }
-  setTimeout(() => b.textContent = 'העתקה', 1500);
-}));
-
-/* ---------- live stage (shadow DOM = isolated mini page) ---------- */
-const PIZZA_IMG = "data:image/svg+xml;utf8," + encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='47' fill='#e9a23b'/><circle cx='50' cy='50' r='40' fill='#d9472b'/><circle cx='50' cy='50' r='37' fill='#f6d365'/><circle cx='35' cy='38' r='6' fill='#c0392b'/><circle cx='63' cy='35' r='6' fill='#c0392b'/><circle cx='59' cy='63' r='6' fill='#c0392b'/><circle cx='36' cy='64' r='5' fill='#c0392b'/><circle cx='48' cy='50' r='3' fill='#2d6a2d'/><circle cx='71' cy='51' r='3' fill='#2d6a2d'/></svg>");
-const BASE_CSS = ':host{display:block}x-page{display:block;background:#fff;color:#111;padding:12px 16px;font-family:Rubik,Arial,sans-serif;font-size:16px;line-height:1.5;direction:rtl;min-height:40px}' +
-  '.hit{outline:3px solid #f43f5e!important;outline-offset:2px}.peek{outline:2px dashed #2f6fec;outline-offset:2px}' +
-  'x-page.boxes *{outline:2px dashed #f97316;outline-offset:-2px;background-color:rgba(249,115,22,.07)}x-page.boxes *::before{content:attr(data-tag);font:11px monospace;color:#c2410c;background:#fff7ed;padding:0 4px;margin-inline-end:6px;border-radius:3px}';
-function mapCss(css){ return css.replace(/(^|[\s,}])body(?=[\s,{:.])/g, '$1x-page'); }
-class Stage {
-  constructor(host){
-    this.root = host.attachShadow({mode:'open'});
-    this.root.innerHTML = '<style>' + BASE_CSS + '</style><style class="u"></style><x-page></x-page>';
-    this.page = this.root.querySelector('x-page'); this.u = this.root.querySelector('style.u');
-  }
-  html(src){ this.page.innerHTML = src.replace(/\.\.\/Img\/pizza\.jpg/g, PIZZA_IMG); return this; }
-  css(src){ this.u.textContent = mapCss(src || ''); return this; }
-  all(){ return [...this.page.querySelectorAll('*')]; }
-}
-/* Split: code (HTML [+CSS]) beside the live result, with line <-> element linking */
-class Split {
-  constructor(el, o){
-    o = o || {};
-    this.el = el; el.classList.add('split');
-    el.innerHTML = '<div class="pane"><div class="pane-h"><span class="dot"></span>' + (o.htmlTitle || 'HTML') + '</div><pre class="cv h"></pre>' +
-      '<div class="cssw" hidden><div class="pane-h"><span class="dot"></span>' + (o.cssTitle || 'CSS – בתוך תגית style') + '</div><pre class="cv c"></pre></div></div>' +
-      '<div class="pane"><div class="pane-h"><span class="dot"></span>מה רואים בדפדפן</div><div class="host"></div><div class="res-note"></div></div>';
-    this.hPre = el.querySelector('pre.h'); this.cPre = el.querySelector('pre.c'); this.cssw = el.querySelector('.cssw');
-    this.note = el.querySelector('.res-note');
-    this.stage = new Stage(el.querySelector('.host'));
-    this.hPre.addEventListener('mouseover', e => { const ln = e.target.closest('.ln'); this.peek(ln ? +ln.dataset.i : -1); });
-    this.hPre.addEventListener('mouseleave', () => this.peek(-1));
-    this.stage.page.addEventListener('mouseover', e => { const t = e.target.closest('[data-ln]'); this.peek(t ? +t.dataset.ln : -1); });
-    this.stage.page.addEventListener('mouseleave', () => this.peek(-1));
-  }
-  setHtml(src, marks){
-    this.src = src; codeLines(this.hPre, src, 'html', marks);
-    this.stage.html(src);
-    // k-th opening tag in the source <-> k-th element in document order
-    const lineOf = []; src.split('\n').forEach((l,i) => { const m = l.match(/<[a-zA-Z][a-zA-Z0-9]*/g); if (m) m.forEach(() => lineOf.push(i)); });
-    this.stage.all().forEach((e,k) => { e.dataset.ln = lineOf[k]; e.dataset.tag = e.tagName.toLowerCase(); });
-    return this;
-  }
-  setCss(css, marks){
-    this.cssSrc = css || '';
-    this.cssw.hidden = !css; if (css) codeLines(this.cPre, css, 'css', marks);
-    this.stage.css(css); return this;
-  }
-  peek(i){
-    this.hPre.querySelectorAll('.ln.peek').forEach(x => x.classList.remove('peek'));
-    this.stage.page.querySelectorAll('.peek').forEach(x => x.classList.remove('peek'));
-    if (i < 0) return;
-    const els = this.stage.all().filter(e => +e.dataset.ln === i);
-    if (!els.length) return;
-    els.forEach(e => e.classList.add('peek'));
-    const ln = this.hPre.querySelector('.ln[data-i="' + i + '"]'); if (ln) ln.classList.add('peek');
-  }
-  highlight(sel){
-    this.hPre.querySelectorAll('.ln.hit').forEach(x => x.classList.remove('hit'));
-    this.stage.page.querySelectorAll('.hit').forEach(x => x.classList.remove('hit'));
-    if (!sel) return [];
-    let list; try { list = [...this.stage.page.querySelectorAll(sel)]; } catch(e){ return null; }
-    list.forEach(e => { e.classList.add('hit'); const ln = this.hPre.querySelector('.ln[data-i="' + e.dataset.ln + '"]'); if (ln) ln.classList.add('hit'); });
-    return list;
-  }
-  say(html){ this.note.innerHTML = html || ''; }
-}
-
-/* ---------- small UI helpers ---------- */
-function seg(el, options, onPick, start){
-  el.innerHTML = ''; const btns = [];
-  options.forEach((o,i) => {
-    const b = document.createElement('button'); b.type = 'button'; b.innerHTML = o.label || o;
-    if (o.mono) b.className = 'chip';
-    b.addEventListener('click', () => pick(i)); el.appendChild(b); btns.push(b);
-  });
-  function pick(i){ btns.forEach((b,j) => b.setAttribute('aria-pressed', i === j)); onPick(options[i], i); }
-  pick(start || 0); return pick;
-}
-const predicts = [];
-function predict(el, o){
-  predicts.push(el.id);
-  if (o.quiz) el.classList.add('quiz');
-  el.innerHTML = '<div class="q">' + o.q + '</div><div class="opts"></div><div class="fb" hidden></div>';
-  const opts = el.querySelector('.opts'), fb = el.querySelector('.fb');
-  const bs = o.opts.map((t,i) => { const b = document.createElement('button'); b.type = 'button'; b.innerHTML = t; b.addEventListener('click', () => answer(i)); opts.appendChild(b); return b; });
-  function answer(i, silent){
-    const ok = i === o.correct;
-    bs[i].classList.add(ok ? 'right' : 'wrong');
-    fb.hidden = false; fb.className = 'fb ' + (ok ? 'right' : 'wrong');
-    fb.innerHTML = (ok ? '✔ נכון! ' : '✘ לא בדיוק. ') + (o.why[i] || '') + (ok ? '' : ' נסו שוב.');
-    if (ok) { el.classList.add('solved'); bs.forEach(b => b.disabled = true); if (!silent) { state[el.id] = true; save(); } if (o.onCorrect) o.onCorrect(); }
-  }
-  if (state[el.id]) answer(o.correct, true);
-}
+const {$, esc, store, state, save, Stage, Split, seg, predict, quiz, doneCheck, playground, codeLines, hlCssLine, PIZZA_IMG} = Course;
 
 /* ---------- the running example: Danny's pizza ---------- */
 const P0 = [
@@ -964,6 +549,15 @@ predict($('#p22'), {
   why: ['הדפדפן לא יודע איפה ההוראה הראשונה נגמרת – הוא קורא "red font-size: 32px" כערך אחד של צבע.', 'גם הגודל נבלע בתוך ההוראה הראשונה.', 'בלי ה-; הדפדפן רואה הוראה אחת ארוכה ושבורה, וזורק את כולה. לחצו על הכפתור למטה כדי לראות.', 'ב-CSS אין הודעות שגיאה. מה ששבור פשוט לא עובד – בשקט.']
 });
 
+
+/* block vs inline */
+const sKinds = new Split($('#sKinds')).setHtml(['<h2>התפריט</h2>','<p>מרגריטה – <b>45</b> שקל</p>','<p>פטריות – <a href="#">להזמנה</a></p>','<img src="../Img/pizza.jpg" width="60" />','<img src="../Img/pizza.jpg" width="60" />'].join('\n'));
+seg($('#sKindsSeg'), ['הדף כרגיל', 'הראו לי block ו-inline'], (o,i) => sKinds.stage.page.classList.toggle('kinds', i === 1));
+predict('#pKinds', {
+  q: 'בקוד למטה כתובות שתי תמונות, אחת אחרי השנייה. איפה הן יופיעו בדף?',
+  opts: ['אחת מתחת לשנייה', 'אחת ליד השנייה'], correct: 1,
+  why: ['ככה מתנהגות פסקאות (block). תמונה היא inline – כמו מילה.', 'תמונה היא inline: היא יושבת בתוך השורה כמו מילה, ולכן התמונה הבאה ממשיכה לידה.']
+});
 /* 3.1 div & span */
 const s31 = new Split($('#s31'));
 function draw31(d, s){
@@ -1306,7 +900,6 @@ seg($('#s101seg'), ['ההוראה פעילה', 'הפכו את ההוראה לה�
 /* ---------- playground with auto-checked tasks ---------- */
 const START_HTML = ['<h1 id="logo">פיצה דני</h1>','<div class="menu">','    <h2>התפריט</h2>','    <p>מרגריטה – 45 שקל</p>','    <p class="sale">פטריות – 39 שקל במבצע</p>','    <p class="sale">זיתים – 39 שקל במבצע</p>','</div>','<button class="order">להזמנה</button>'].join('\n');
 const START_CSS = ['body {','    font-family: Arial, sans-serif;','    background-color: #fff8ee;','}','','.menu {','    background-color: white;','    border: 2px solid orange;','}'].join('\n');
-const edH = $('#edHtml'), edC = $('#edCss'), frame = $('#preview');
 const TASKS = [
   {id:'t1', text:'צבעו את <b>המנות במבצע</b> בצבע <code>crimson</code>. (רמז: כבר יש להן class – כתבו לו כלל.)',
    test: d => [...d.querySelectorAll('.sale')].every(e => d.defaultView.getComputedStyle(e).color === 'rgb(220, 20, 60)') && d.querySelectorAll('.sale').length === 2},
@@ -1318,30 +911,8 @@ const TASKS = [
    test: d => { const m = d.querySelector('.menu'); return m && d.defaultView.getComputedStyle(m).marginTop === '30px'; }},
   {id:'t5', text:'אתגר: כשהעכבר על הכפתור "להזמנה", הרקע שלו נהיה <code>orange</code>. (רמז: <code>:hover</code> – <a href="#" data-go="rules:9">השלב על מצבים</a>.) בדקו עם העכבר וסמנו בעצמכם.', manual:true}
 ];
-const done = state.tasks || {};
-const tasksBox = $('#tasks');
-TASKS.forEach((t,i) => {
-  const li = document.createElement('li'); li.id = 'task-' + t.id;
-  li.innerHTML = '<span class="st">' + (i+1) + '</span><div>' + t.text + (t.manual ? ' <label style="margin-inline-start:6px;white-space:nowrap"><input type="checkbox" data-manual="' + t.id + '" /> עובד אצלי</label>' : '') + '</div>';
-  tasksBox.appendChild(li);
-});
-tasksBox.querySelectorAll('[data-manual]').forEach(cb => { cb.checked = !!done[cb.dataset.manual]; cb.addEventListener('change', () => { done[cb.dataset.manual] = cb.checked; state.tasks = done; save(); }); });
-const stepCb = $('#stepDone'); stepCb.checked = !!state.step; stepCb.addEventListener('change', () => { state.step = stepCb.checked; save(); });
-function render(){ frame.srcdoc = '<!DOCTYPE html><html lang="he" dir="rtl"><head><meta charset="utf-8"><style>' + edC.value.replace(/<\/style/gi,'') + '</style></head><body>' + edH.value + '</body></html>'; }
-frame.addEventListener('load', () => {
-  let d; try { d = frame.contentDocument; } catch(e){ return; } if (!d) return;
-  TASKS.forEach(t => { if (!t.manual) { let ok = false; try { ok = !!t.test(d); } catch(e){} if (ok) done[t.id] = true; } });
-  state.tasks = done; save();
-});
-let timer; const sched = () => { clearTimeout(timer); timer = setTimeout(() => { store.set('code', {h:edH.value, c:edC.value}); render(); }, 350); };
-[edH, edC].forEach(t => {
-  t.addEventListener('input', sched);
-  t.addEventListener('keydown', e => { if (e.key === 'Tab') { e.preventDefault(); t.setRangeText('    ', t.selectionStart, t.selectionEnd, 'end'); sched(); } });
-});
-const savedCode = store.get('code');
-edH.value = savedCode ? savedCode.h : START_HTML; edC.value = savedCode ? savedCode.c : START_CSS;
-$('#resetPg').addEventListener('click', () => { edH.value = START_HTML; edC.value = START_CSS; store.set('code', null); render(); });
-render();
+playground('#pg', {html: START_HTML, css: START_CSS, tasks: TASKS, htmlLabel: 'HTML – menu.html', url: 'localhost:7123/HTML/menu.html'});
+doneCheck('#stepDone', 'step');
 
 /* ---------- quiz ---------- */
 const QUIZ = [
@@ -1356,7 +927,7 @@ const QUIZ = [
   {q:'כתבתם קובץ CSS, חיברתם אותו, והדף לא משתנה בכלל. מה הדבר הראשון לבדוק?', opts:['להתקין מחדש את Visual Studio','את הנתיב בתגית link (וש-link בתוך ה-head)','להחליף דפדפן'], correct:1,
    why:['ממש לא 🙂', 'רוב הפעמים הנתיב שגוי – למשל חסר <code>../</code>. ראו <a href="#" data-go="site:5">את רשימת הבדיקה</a>.', 'זה כמעט אף פעם לא הדפדפן.']}
 ];
-QUIZ.forEach((qq,i) => { const d = document.createElement('div'); d.className = 'predict'; d.id = 'q' + (i+1); $('#quiz').appendChild(d); predict(d, Object.assign({quiz:true}, qq, {q:(i+1) + '. ' + qq.q})); });
+quiz('#quiz', QUIZ);
 
 /* ---------- conversion exercise: inline -> internal -> external ---------- */
 const CV_BODY = ['<h1>פיצה דני</h1>','<p>מרגריטה – 45 שקל</p>','<p class="sale">פטריות – 39 שקל במבצע</p>','<p class="sale">זיתים – 39 שקל במבצע</p>'];
@@ -1385,117 +956,21 @@ seg($('#sCvSeg'), ['1. בתוך התגיות (inline)', '2. בראש הדף (int
 new Stage($('#welcomeStage')).html(PF).css(['body {','    font-family: Arial, sans-serif;','    background-color: #fff8ee;','}','#logo {','    color: #c0392b;','    text-align: center;','}','.menu {','    background-color: white;','    border: 2px solid orange;','    border-radius: 12px;','    padding: 4px 20px;','    margin: 12px 0;','}','.menu h2 {','    color: #e67e22;','}','.sale {','    color: crimson;','    font-weight: bold;','}','.extras {','    border-top: 2px dashed orange;','}'].join('\n'));
 codeLines($('#sumRule'), 'selector {\n    property: value;\n}', 'css');
 codeLines($('#sumLink'), '<link rel="stylesheet" href="../css/style.css" />', 'html');
-$('#printBtn').addEventListener('click', () => window.print());
 
 /* ---------- easter eggs ---------- */
 const EGGS = [
   {id:'console', icon:'🕵️', name:'הודעה סודית למפתחים', learn:'כלי המפתחים (F12) הם חלון אל מאחורי הקלעים של כל אתר – גם של אתרים שלא אתם בניתם.',
    h1:'מפתחים אמיתיים מסתכלים גם מאחורי הקלעים של הדף. איפה הדפדפן כותב הודעות שמיועדות רק למפתחים?', h2:'לחצו F12 ועברו ללשונית <b>Console</b>.', code:'REVWVE9PTFM='},
   {id:'ghost', icon:'👻', name:'הרוח הנסתרת', learn:'<code>display: none</code> מעלים תגית מהמסך – אבל היא עדיין שם, בקוד.',
-   h1:'באחד השלבים של "מראה ורווחים" מסתתר משפט שאי אפשר לראות. איזה מאפיין גורם לתגית להיעלם?', h2:'F12 ← לשונית Elements ← Ctrl+F וחפשו ghost. מצאתם? בטלו לו את ה-<code>display: none</code> (לחיצה על תיבת הסימון ליד ההוראה).', code:'R0hPU1Q='},
+   h1:'באחד השלבים של "מראה ורווחים" מסתתר משפט שאי אפשר לראות. איזה מאפיין גורם לתגית להיעלם?', h2:'F12 &rlm;←&rlm; לשונית Elements &rlm;←&rlm; Ctrl+F וחפשו ghost. מצאתם? בטלו לו את ה-<code>display: none</code> (לחיצה על תיבת הסימון ליד ההוראה).', code:'R0hPU1Q=', poll: () => { const g = $('#eggGhost'); return g && getComputedStyle(g).display !== 'none'; }},
   {id:'whisper', icon:'💬', name:'הלחישה', learn:'הערות לא מוצגות בדף, אבל כל אחד יכול לקרוא אותן בקוד המקור. אל תכתבו בהן סודות אמיתיים!',
    h1:'למדתם שהדפדפן מדלג על הערות. אבל הן עדיין כתובות בקוד של הדף...', h2:'Ctrl+U פותח את קוד המקור של הדף. שם, Ctrl+F וחפשו את המילה "לחישה".', code:'V0hJU1BFUg=='},
   {id:'star', icon:'⭐', name:'הכוכב שבוחר הכול', learn:'הבורר <code>*</code> (כוכבית) בוחר את כל התגיות. לא לימדנו אותו – גיליתם לבד!',
    h1:'במעבדת הבוררים: אפשר לבחור את כל 11 התגיות בבת אחת?', h2:'יש בורר של תו אחד בלבד שעושה את זה. הוא נראה כמו כוכב.'},
   {id:'paint', icon:'🎨', name:'צובעים את המדריך', learn:'משתני CSS (כמו <code>--accent</code>) מאפשרים לשנות צבע בכל האתר ממקום אחד – אותו רעיון כמו קובץ חיצוני.',
-   h1:'גם הדף הזה בנוי מ-CSS. מה יקרה אם תשנו לו את הצבע הראשי?', h2:'F12 ← Elements ← בחרו את השורה הראשונה, &lt;html&gt; ← בחלון Styles חפשו <code>--accent</code> ושנו את הערך לצבע אחר.'}
+   h1:'גם הדף הזה בנוי מ-CSS. מה יקרה אם תשנו לו את הצבע הראשי?', h2:'F12 &rlm;←&rlm; Elements &rlm;←&rlm; בחרו את השורה הראשונה, &lt;html&gt; &rlm;←&rlm; בחלון Styles חפשו <code>--accent</code> ושנו את הערך לצבע אחר.', poll: () => { const acc = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim().toLowerCase(); return acc && acc !== '#2f6fec' && acc !== '#7aa2ff'; }}
 ];
-const found = state.eggs || {}; const hints = state.hints || {};
-function toast(html){ const t = $('#toast'); t.innerHTML = html; t.classList.add('show'); clearTimeout(toast.tm); toast.tm = setTimeout(() => t.classList.remove('show'), 4200); }
-function party(){
-  const p = $('#party'); const em = ['🍕','🥚','🎉','🍕','⭐'];
-  for (let i = 0; i < 45; i++) { const s = document.createElement('span'); s.textContent = em[i % em.length]; s.style.left = Math.random() * 100 + '%'; s.style.animationDuration = (2.5 + Math.random() * 2.5) + 's'; s.style.animationDelay = Math.random() * 1.5 + 's'; p.appendChild(s); }
-  setTimeout(() => p.innerHTML = '', 7000);
-}
-function paintEggs(){
-  const n = EGGS.filter(e => found[e.id]).length;
-  $('#eggCount').textContent = n + '/' + EGGS.length;
-  $('#eggIntro').innerHTML = n === EGGS.length ? '🏆 <b>מצאתם את כל הביצים!</b> סקרנות היא התכונה הכי חשובה של מפתחים – ויש לכם אותה.' : 'בדף מוחבאות 5 ביצים. כל אחת נמצאת בעזרת משהו שלומדים בשיעור. תקועים? לחצו על "רמז נוסף".';
-  $('#eggList').innerHTML = EGGS.map(e => found[e.id]
-    ? '<li class="found"><b>' + e.icon + ' ' + e.name + ' ✔</b>' + e.learn + '</li>'
-    : '<li><b>❓ ביצה נסתרת</b>' + e.h1 + (hints[e.id] ? '<span class="h2">💡 ' + e.h2 + '</span>' : '<br><button class="hintbtn" type="button" data-hint="' + e.id + '">רמז נוסף</button>') + '</li>').join('');
-}
-function findEgg(id){
-  if (found[id]) return;
-  found[id] = true; state.eggs = found; save(); paintEggs();
-  const e = EGGS.find(x => x.id === id), n = EGGS.filter(x => found[x.id]).length;
-  toast(e.icon + ' מצאתם ביצה: <b>' + e.name + '</b> (' + n + '/' + EGGS.length + ')' + (n === EGGS.length ? ' – כולן! 🏆' : ''));
-  const b = $('#eggBtn'); b.classList.remove('bump'); void b.offsetWidth; b.classList.add('bump');
-  if (n === EGGS.length) party();
-}
-window.__egg = findEgg;
-$('#eggBtn').addEventListener('click', () => { paintEggs(); $('#codeMsg').textContent = ''; try { $('#eggDlg').showModal(); } catch(e){ $('#eggDlg').setAttribute('open',''); } });
-$('#eggClose').addEventListener('click', () => $('#eggDlg').close());
-$('#eggDlg').addEventListener('click', e => { if (e.target === $('#eggDlg')) $('#eggDlg').close(); });
-$('#eggList').addEventListener('click', e => { const b = e.target.closest('[data-hint]'); if (b) { hints[b.dataset.hint] = true; state.hints = hints; save(); paintEggs(); } });
-$('#codeForm').addEventListener('submit', e => {
-  e.preventDefault();
-  let v = ''; try { v = btoa($('#codeIn').value.trim().toUpperCase()); } catch(err){}
-  const egg = EGGS.find(x => x.code && x.code === v);
-  if (egg) { const was = found[egg.id]; findEgg(egg.id); $('#codeMsg').innerHTML = was ? 'את הביצה הזו כבר מצאתם 🙂' : '✔ נכון!'; $('#codeIn').value = ''; }
-  else $('#codeMsg').innerHTML = '<span class="err">הקוד לא נכון. בדקו שוב 🙂</span>';
-});
-console.log('%c🥚 מצאתם ביצה!', 'font-size:22px;font-weight:bold;color:#e67e22');
-console.log('%cמפתחים אמיתיים מציצים מאחורי הקלעים 🕵️\nהקוד הסודי: DEVTOOLS\nהקלידו אותו במונה הביצים שבראש הדף.\nשמתם לב? גם ההודעה הזו מעוצבת ב-CSS. ויש עוד 4 ביצים בדף 😉', 'font-size:14px;color:#2f6fec;line-height:1.6');
-setInterval(() => {
-  const g = $('#eggGhost'); if (g && getComputedStyle(g).display !== 'none') findEgg('ghost');
-  const acc = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim().toLowerCase();
-  if (acc && acc !== '#2f6fec' && acc !== '#7aa2ff') findEgg('paint');
-}, 1500);
-paintEggs();
-
-/* ---------- course player: topics -> steps, one step at a time ---------- */
-T = [...document.querySelectorAll('section.topic')].map(el => ({el, id:el.dataset.id, title:el.dataset.title, icon:el.dataset.icon, steps:[...el.querySelectorAll(':scope > .spread')]}));
-state.seen = state.seen || {};
-T.forEach(t => t.steps.forEach((st,si) => { const h = st.querySelector('h3'); if (h) { const b = document.createElement('span'); b.className = 'sn'; b.textContent = 'שלב ' + (si+1) + ' מתוך ' + t.steps.length; h.prepend(b); } }));
-const stepTitle = st => { const h = st.querySelector('h3'); if (!h) return ''; const c = h.cloneNode(true); const sn = c.querySelector('.sn'); if (sn) sn.remove(); return c.textContent.trim(); };
-const escA = x => esc(x).replace(/"/g,'&quot;');
-let pos = {ti:0, si:0};
-function show(ti, si, scroll){
-  ti = Math.max(0, Math.min(T.length - 1, ti)); si = Math.max(0, Math.min(T[ti].steps.length - 1, si));
-  pos = {ti, si};
-  T.forEach((t,a) => { t.el.hidden = a !== ti; t.steps.forEach((st,b) => st.hidden = !(a === ti && b === si)); });
-  state.seen[T[ti].id + ':' + si] = true; state.pos = pos; save();
-  $('#topics').innerHTML = T.map((t,a) => '<button type="button" data-t="' + a + '"' + (a === ti ? ' aria-current="true"' : '') + (t.steps.every((x,b) => state.seen[t.id + ':' + b]) ? ' class="done"' : '') + '><span class="ic">' + t.icon + '</span><bdi>' + t.title + '</bdi></button>').join('');
-  $('#steps').innerHTML = T[ti].steps.map((st,b) => '<button type="button" data-s="' + b + '"' + (b === si ? ' aria-current="true"' : '') + (state.seen[T[ti].id + ':' + b] ? ' class="seen"' : '') + ' title="' + escA(stepTitle(st)) + '"><span class="k">' + (b+1) + '</span><bdi>' + esc(stepTitle(st)) + '</bdi></button>').join('');
-  const prev = si > 0 ? [ti, si-1] : ti > 0 ? [ti-1, T[ti-1].steps.length - 1] : null;
-  const next = si < T[ti].steps.length - 1 ? [ti, si+1] : ti < T.length - 1 ? [ti+1, 0] : null;
-  const label = (p, isNext) => {
-    const st = T[p[0]].steps[p[1]], other = p[0] !== ti;
-    const top = isNext ? (ti === 0 && si === 0 ? 'בואו נתחיל ←' : other ? 'לנושא הבא: ' + T[p[0]].title + ' ←' : 'הבא ←') : (other ? '→ לנושא הקודם' : '→ הקודם');
-    return '<small>' + top + '</small><bdi>' + esc(stepTitle(st)) + '</bdi>';
-  };
-  $('#stepnav').innerHTML = (prev ? '<button type="button" class="prev">' + label(prev, false) + '</button>' : '<span></span>') +
-    (next ? '<button type="button" class="next">' + label(next, true) + '</button>' : '<div class="what" style="margin:0">🎉 סיימתם את שיעור 3! ' + (EGGS.every(e => found[e.id]) ? '' : 'עוד לא מצאתם את כל הביצים? <a href="#" id="openEggs">רמזים כאן</a>.') + '</div>');
-  if (prev) $('#stepnav .prev').onclick = () => show(prev[0], prev[1], true);
-  if (next) $('#stepnav .next').onclick = () => show(next[0], next[1], true);
-  const oe = $('#openEggs'); if (oe) oe.onclick = e => { e.preventDefault(); $('#eggBtn').click(); };
-  $('#now').innerHTML = '· ' + T[ti].icon + ' <bdi>' + T[ti].title + '</bdi>';
-  try { history.replaceState(null, '', '#' + T[ti].id + '-' + (si+1)); } catch(e){}
-  ['#topics', '#steps'].forEach(q => { const ac = $(q + ' [aria-current="true"]'); if (ac && ac.scrollIntoView) ac.scrollIntoView({block:'nearest', inline:'center'}); });
-  if (scroll) { const y = $('#topics').getBoundingClientRect().top + scrollY - 64; window.scrollTo({top: Math.max(0, y), behavior: 'smooth'}); }
-}
-$('#topics').addEventListener('click', e => { const b = e.target.closest('[data-t]'); if (!b) return; const t = +b.dataset.t; const u = T[t].steps.findIndex((x,i) => !state.seen[T[t].id + ':' + i]); show(t, u < 0 ? 0 : u, true); });
-$('#steps').addEventListener('click', e => { const b = e.target.closest('[data-s]'); if (b) show(pos.ti, +b.dataset.s, false); });
-document.addEventListener('click', e => { const a = e.target.closest('[data-go]'); if (!a) return; e.preventDefault(); const [id, n] = a.dataset.go.split(':'); const t = T.findIndex(x => x.id === id); if (t >= 0) { try { $('#eggDlg').close(); } catch(err){} show(t, (+n || 1) - 1, true); } });
-document.addEventListener('keydown', e => {
-  if (e.target.closest('input,textarea,select,dialog') || e.altKey || e.ctrlKey || e.metaKey) return;
-  if (e.key === 'ArrowLeft') { const b = $('#stepnav .next'); if (b) b.click(); }
-  if (e.key === 'ArrowRight') { const b = $('#stepnav .prev'); if (b) b.click(); }
-});
-function paintProgress(){
-  TASKS.forEach((t,i) => { const li = $('#task-' + t.id); const ok = !!(state.tasks||{})[t.id]; li.classList.toggle('done', ok); li.querySelector('.st').textContent = ok ? '✔' : (i+1); });
-  const total = T.reduce((n,t) => n + t.steps.length, 0); if (!total) return;
-  const n = T.reduce((k,t) => k + t.steps.filter((x,b) => state.seen[t.id + ':' + b]).length, 0);
-  $('#progBar').style.width = (100 * n / total) + '%'; $('#progTxt').textContent = n + '/' + total;
-}
-window.__goto = sel => { const sp = document.querySelector(sel).closest('.spread'); T.forEach((t,a) => t.steps.forEach((st,b) => { if (st === sp) show(a, b, false); })); };
-(function start(){
-  const m = location.hash.match(/^#([a-z]+)-(\d+)$/);
-  if (m) { const t = T.findIndex(x => x.id === m[1]); if (t >= 0) return show(t, +m[2] - 1, false); }
-  if (state.pos) return show(state.pos.ti, state.pos.si, false);
-  show(0, 0, false);
-})();
+Course.start({eggs: EGGS, console: ['🥚 מצאתם ביצה!', 'מפתחים אמיתיים מציצים מאחורי הקלעים 🕵️\nהקוד הסודי: DEVTOOLS\nהקלידו אותו במונה הביצים שבראש הדף.\nשמתם לב? גם ההודעה הזו מעוצבת ב-CSS. ויש עוד 4 ביצים בדף 😉']});
 })();
 </script>
 </body>

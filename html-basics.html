@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>שיעור 2 – תגיות בסיסיות, קישורים ותמונות | המדריך המעשי</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/course.css" />
+<style>
+/* ---- lesson 2: a small fake browser frame (tabs + address bar) ---- */
+.bchrome{background:#dfe3ea;border:1px solid var(--line);border-bottom:0;border-radius:12px 12px 0 0;direction:ltr;overflow:hidden}
+.bchrome + .host{border-top-left-radius:0;border-top-right-radius:0}
+.btabs{display:flex;gap:3px;padding:6px 8px 0;overflow:hidden}
+.btab{flex:0 1 180px;min-width:0;display:flex;align-items:center;gap:6px;background:#cbd2dc;color:#374151;border-radius:9px 9px 0 0;padding:5px 10px;font:12.5px Rubik,Arial,sans-serif;transition:box-shadow .3s}
+.btab.on{background:#f8fafc;color:#111827}
+.btab .tt{flex:1;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;unicode-bidi:plaintext;text-align:start}
+.btab .x{color:#9ca3af;font-size:11px}
+.btab.pop{animation:tabpop .7s}
+.btab.flash{box-shadow:0 0 0 3px #f43f5e inset}
+@keyframes tabpop{0%{transform:translateY(12px);opacity:0}100%{transform:none;opacity:1}}
+.burl{display:flex;gap:8px;align-items:center;background:#f8fafc;padding:6px 10px;margin:0;font-size:12.5px;color:#6b7280}
+.burl .nav{white-space:nowrap;letter-spacing:4px}
+.burl .u{flex:1;min-width:0;background:#e5e7eb;border:0;border-radius:99px;padding:3px 12px;font:12.5px "JetBrains Mono",Consolas,monospace;color:#111;direction:ltr;text-align:left}
+.burl .u:not([readonly]){background:#fff;outline:2px solid #93c5fd}
+.burl .go{font:inherit;font-size:12px;border:0;background:#2f6fec;color:#fff;border-radius:99px;padding:3px 10px;cursor:pointer}
+.scrolly .host{max-height:290px;overflow:auto}
+.host.hl{box-shadow:0 0 0 3px #f43f5e}
+/* ---- anatomy builder ---- */
+.tagline{direction:ltr;display:flex;flex-wrap:wrap;justify-content:center;gap:10px 6px;background:var(--code-bg);border-radius:12px;padding:14px 10px 10px;margin:14px 0 8px}
+.tagline .grp{display:flex;flex-direction:column;align-items:stretch;gap:6px;min-width:0}
+.tagline .toks{display:flex;flex-wrap:wrap;gap:4px;justify-content:center}
+.tagline .gl{direction:rtl;text-align:center;font-size:12.5px;color:#cbd5e1;border-top:2px solid var(--gc);padding-top:2px}
+.atok{font:600 17px "JetBrains Mono",Consolas,monospace;background:#1e293b;color:var(--tc,#e2e8f0);border:1px solid #334155;border-radius:8px;padding:4px 8px;cursor:pointer;transition:transform .15s,background .2s}
+.atok:hover{transform:translateY(-2px);background:#273449}
+.atok.sel{background:#fde68a;color:#422006;border-color:#f59e0b}
+.atok.okq{background:#bbf7d0;color:#052e16;border-color:#16a34a}
+.atok.he{font-family:Rubik,Arial,sans-serif;direction:rtl}
+.anainfo{min-height:3.2em;background:var(--surface2);border-radius:10px;padding:8px 14px}
+.anaq{margin-top:10px;border:2px dashed var(--accent);border-radius:12px;padding:10px 14px}
+.anaq .fbk{margin-top:4px;font-size:15px}
+/* ---- small things ---- */
+.mojibake{font-family:Arial,sans-serif}
+.eggpizza{width:44px;height:44px;vertical-align:middle;margin-inline-start:6px}
+#oven:empty{display:none}
+.site-tasks li{cursor:default}
+.lblrow{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:10px 0}
+.lblrow input{flex:1;min-width:160px;font:inherit;font-size:15px;padding:6px 10px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--text)}
+</style>
+</head>
+<body data-lesson="l2" data-title="שיעור 2" data-next="css.html" data-next-name="עיצוב עם CSS">
+<header class="topbar"><div class="in">
+  <span class="brand">🛠 שיעור 2 · תגיות, קישורים ותמונות</span>
+  <span class="now" id="now"></span>
+  <span class="progress" title="שלבים שעברתם בשיעור"><span class="bar"><i id="progBar"></i></span> <span id="progTxt">0/0</span></span>
+  <button class="eggbtn" id="eggBtn" type="button" title="ביצי הפתעה – לחצו לרמזים">🥚 <span id="eggCount">0/5</span></button>
+  <button class="themebtn" id="themeBtn" type="button">🌓 מצב תצוגה</button>
+</div></header>
+<dialog id="eggDlg" aria-labelledby="eggTitle">
+  <div class="dlg-h"><h3 id="eggTitle">🥚 ביצי הפתעה</h3><button class="btn" type="button" id="eggClose" aria-label="סגירה">✕</button></div>
+  <p class="muted" id="eggIntro">בדף מוחבאות 5 ביצים. כל אחת נמצאת בעזרת משהו שלומדים בשיעור. תקועים? לחצו על "רמז נוסף".</p>
+  <ul class="egglist" id="eggList"></ul>
+  <form class="codebox" id="codeForm"><label for="codeIn">מצאתם קוד סודי?</label><input id="codeIn" autocomplete="off" spellcheck="false" placeholder="הקלידו כאן" /><button class="btn primary" type="submit">בדיקה</button></form>
+  <p id="codeMsg" class="res-note"></p>
+</dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="party" id="party" aria-hidden="true"></div>
+
+<main>
+<div class="lesson-head">
+  <div class="school">אורט הנרי רונסון אשקלון · מגמת מדעי המחשב והנדסת תוכנה · יוחאי פרץ</div>
+  <h1>שיעור 2 – תגיות בסיסיות, קישורים ותמונות</h1>
+</div>
+<nav class="topics" id="topics" aria-label="נושאי השיעור"></nav>
+<nav class="steps" id="steps" aria-label="השלבים בנושא"></nav>
+
+<!-- ===================== 1. START ===================== -->
+<section class="topic" data-id="start" data-icon="🌱" data-title="פתיחה">
+  <article class="spread welcome">
+    <h3>ברוכים הבאים לשיעור 2 👋</h3>
+    <p class="lead">בשיעור 1 יצרתם דף ראשון עם כותרת ופסקה. היום הדף הופך ל<b>אתר</b>: עם תמונות, עם קישורים בין דפים, ועם מבנה נכון של דף בעברית. בסוף השיעור תדעו לבנות בעצמכם את הדף הזה – ולחבר אליו דף נוסף:</p>
+    <div class="preview-goal"><div id="welcomeStage"></div></div>
+    <h4>איך לומדים את השיעור?</h4>
+    <div class="ways">
+      <div class="way main"><b>📖 כאן, בדף הזה</b>הדף מכסה את כל מה שיש בסרטון ובמצגת, ומוסיף דוגמאות חיות לשחק בהן. מתאים למי שאוהב לקרוא ולנסות.</div>
+      <div class="way"><b>🎬 מעדיפים סרטון?</b>הסרטון של השיעור נמצא בקלאסרום. אחריו, קפצו ישר ל<a href="#" data-go="practice:1">תרגול וסיכום</a>.</div>
+      <div class="way"><b>🎧 פודקסט</b>תוספת, לא חובה: לשמוע את הרעיונות הגדולים בדרך הביתה.</div>
+    </div>
+    <h4>איך הדף עובד?</h4>
+    <ul class="how">
+      <li>🧭 <b>7 נושאים</b> (הלשוניות למעלה), ובכל אחד כמה שלבים קצרים. רואים <b>שלב אחד בכל פעם</b>.</li>
+      <li>👆 כל דוגמה כאן <b>חיה</b>: לוחצים, משנים ורואים. אי אפשר לשבור כלום.</li>
+      <li>❓ לפני חלק מהתוצאות יש שאלת ניחוש. מותר לטעות – בשביל זה היא שם.</li>
+      <li>💾 ההתקדמות נשמרת בדפדפן הזה. בערך 45 דקות בסך הכול – אפשר בכמה ישיבות.</li>
+    </ul>
+    <div class="eggnote">🥚 <b>ועוד משהו:</b> בדף מוחבאות <b>5 ביצי הפתעה</b>. כדי למצוא אותן צריך סקרנות – וכמה דברים שתלמדו היום: קישורים, תמונות ומאפיינים. המונה למעלה; לחיצה עליו נותנת רמזים.</div>
+  </article>
+  <article class="spread">
+    <h3>תזכורת: מה כבר יודעים משיעור 1</h3>
+    <p>בשיעור 1 יצרתם פרויקט ב-Visual Studio, ובתוך התיקייה <b>wwwroot</b> פתחתם תיקייה בשם <b>HTML</b>. בתוכה יצרתם דף ראשון:</p>
+    <div class="walk">
+      <div class="ftree" id="recapTree"></div>
+      <div>
+        <div class="pane-h"><span class="dot"></span>מה כתבתם בתוך הדף</div>
+        <div class="codeblock"><pre data-code="html">
+&lt;h1&gt;פיצה דני&lt;/h1&gt;
+&lt;p&gt;הפיצה הכי טעימה באשקלון&lt;/p&gt;
+</pre></div>
+      </div>
+    </div>
+    <p>הרצתם עם ה-▶ הירוק, והדף נפתח בדפדפן בכתובת <code style="white-space:normal;overflow-wrap:anywhere">https://localhost:&lt;port&gt;/HTML/index.html</code> (port הוא מספר שמשתנה מפרויקט לפרויקט).</p>
+    <p><b>היום נוסיף ארבעה דברים:</b></p>
+    <ol>
+      <li>מה עוד כתוב בקובץ, <b>מסביב</b> ל-h1 ול-p (השלד של הדף).</li>
+      <li>איך בנויה כל תגית – ותגיות חדשות.</li>
+      <li>קישורים: מדף לדף, לאתר אחר, ולמקום בתוך הדף.</li>
+      <li>תמונות – בתיקייה חדשה בשם <b>Img</b>.</li>
+    </ol>
+    <div class="tip">💡 לאורך כל השיעור נבנה את האתר של "פיצה דני" – פיצרייה קטנה באשקלון. בשיעור 3 נעצב אותו עם CSS.</div>
+  </article>
+</section>
+
+<!-- ===================== 2. ANATOMY ===================== -->
+<section class="topic" data-id="anatomy" data-icon="🔬" data-title="איך בנויה תגית">
+  <article class="spread">
+    <h3>מה יש בתוך תגית?</h3>
+    <p>HTML בנויה מ<b>תגיות</b> (tags). לרוב התגיות יש <b>תגית פותחת</b>, <b>תוכן</b>, ו<b>תגית סוגרת</b>. בתגית הפותחת אפשר להוסיף <b>מאפיינים</b> (attributes) – מידע נוסף על התגית.</p>
+    <p>הנה קישור אמיתי, מפורק לחלקים (את הקישורים עצמם נלמד בהמשך – כרגע רק מסתכלים על החלקים). <b>לחצו על כל חלק</b> כדי לראות איך קוראים לו:</p>
+    <div class="tagline" id="ana"></div>
+    <div class="anainfo" id="anaInfo">👆 לחצו על חלק כלשהו בשורה.</div>
+    <div class="anaq" id="anaQ"></div>
+    <details class="more"><summary>🐢 רוצים הסבר לאט יותר?</summary>
+      <p>קראו את השורה כמו משפט: "<b>קישור</b> (a), <b>שמוביל לדף</b> menu.html (href), <b>ונפתח בלשונית חדשה</b> (target), <b>ועליו כתוב</b> 'לתפריט'. <b>כאן הקישור נגמר</b> (<code>&lt;/a&gt;</code>)."</p>
+      <p>כל מאפיין הוא זוג: <b>שם</b> – מה רוצים לקבוע, ו<b>ערך</b> – למה. <code>href="menu.html"</code> פירושו "היעד הוא menu.html".</p>
+      <p>ולמה צריך תגית סוגרת? כי הדפדפן צריך לדעת איפה התוכן נגמר. כל מה שבין הפותחת לסוגרת – שייך לתגית. בקישור: כל זה לחיץ.</p>
+    </details>
+    <div class="bridge">מאפיין עובד כמו השמה ב-C#: <code>string page = "menu.html";</code> – שם, סימן <code>=</code>, וערך. ב-HTML: <code>href="menu.html"</code>. הבדל אחד: ב-HTML הערך <b>תמיד</b> בתוך מירכאות, גם כשהוא מספר (<code>width="150"</code>).</div>
+    <div class="tip">💡 HTML לא מבדילה בין אותיות גדולות לקטנות: <code>&lt;H1&gt;</code> ו-<code>&lt;h1&gt;</code> עובדות אותו דבר. אבל המוסכמה היא לכתוב תמיד <b>באותיות קטנות</b> – וכך נכתוב בקורס.</div>
+    <div class="trap">מירכאות "חכמות" (<code>“</code> ו-<code>”</code>) – כאלה שמגיעות בהעתקה מ-Word או ממצגת – שוברות את המאפיין, והדפדפן לא מבין אותו. בקוד כותבים רק את המירכאות הישרות של המקלדת: <code>"</code>.</div>
+  </article>
+  <article class="spread">
+    <h3>תגית בתוך תגית (nesting)</h3>
+    <p>מותר לשים תגית <b>בתוך</b> תגית. לזה קוראים <b>קינון</b> (nesting). כאן נשתמש בשתי תגיות חדשות וקטנות: <code>b</code> – טקסט <b>מודגש</b> (bold), ו-<code>i</code> – טקסט <i>נטוי</i> (italic).</p>
+    <p>הכלל: <b>מה שנפתח אחרון – נסגר ראשון</b>.</p>
+    <div class="bridge">בדיוק כמו סוגריים בחשבון ובקוד C#: ב-<code>(2 * (3 + 4))</code> הסוגר שנפתח אחרון נסגר ראשון. וב-C#, אם כתבתם if בתוך לולאה – ה-<code>}</code> של ה-if בא לפני ה-<code>}</code> של הלולאה.</div>
+    <div class="ctrls"><div class="seg" id="nestSeg"></div></div>
+    <div id="nest"></div>
+    <div class="what" id="nestWhat"></div>
+    <div class="predict" id="pNest"></div>
+    <div class="tip">💡 כשתגית מכילה כמה תגיות בכמה שורות, מזיחים את הפנימיות פנימה (indentation – הזחה). ככה רואים במבט אחד מי בתוך מי – כמו בקוד C#.</div>
+  </article>
+  <article class="spread">
+    <h3>הערות: טקסט שרק המתכנתים רואים</h3>
+    <p><b>הערה</b> (comment) היא טקסט שהדפדפן מדלג עליו. כותבים אותה בין <code>&lt;!--</code> ל-<code>--&gt;</code>. משתמשים בה לשני דברים: להסביר את הקוד, ו<b>"לכבות" שורה לרגע</b> בלי למחוק אותה – למשל מבצע שנגמר.</p>
+    <div class="ctrls"><div class="seg" id="cmSeg"></div></div>
+    <div id="cm"></div>
+    <div class="what">ההערה בשורה 2 לא מופיעה בדף אף פעם – היא בשבילכם. וכשהפכנו את שורת המבצע להערה, היא נעלמה מהדף, אבל נשארה בקוד. כשהמבצע יחזור – רק מוחקים את סימני ההערה.</div>
+    <p><b>ב-Visual Studio</b> לא צריך להקליד את הסימנים: מסמנים שורות ולוחצים על כפתור ההערה בסרגל הכלים, או <b>Ctrl+K ואז Ctrl+C</b>. לביטול ההערה: <b>Ctrl+K ואז Ctrl+U</b>.</p>
+    <div class="bridge">ב-C# כתבתם הערות עם <code>//</code>. ב-HTML יש רק צורה אחת: <code>&lt;!-- --&gt;</code>, והיא יכולה להשתרע על כמה שורות. הקיצור Ctrl+K ואז Ctrl+C עובד בשתי השפות – ו-Visual Studio כבר יודע איזה סימן לשים.</div>
+    <div class="trap">הערות לא מופיעות בדף, אבל כל גולש יכול לראות אותן בקוד המקור של הדף. לעולם לא כותבים בהן סיסמאות או סודות.</div>
+  </article>
+</section>
+
+<!-- ===================== 3. PAGE STRUCTURE ===================== -->
+<section class="topic" data-id="page" data-icon="📄" data-title="מבנה הדף">
+  <article class="spread">
+    <h3>השלד של כל דף HTML</h3>
+    <p>בשיעור 1 כתבתם רק h1 ו-p. אבל בקובץ היו עוד שורות, מסביב. אלה <b>השלד</b> – והוא זהה כמעט בכל דף. לחצו על כל חלק ותראו מה הוא עושה:</p>
+    <div class="ctrls"><div class="seg" id="skelSeg"></div></div>
+    <div class="split">
+      <div class="pane"><div class="pane-h"><span class="dot"></span>index.html</div><pre class="cv" id="skelCode"></pre></div>
+      <div class="pane"><div class="pane-h"><span class="dot"></span>מה רואים בדפדפן</div><div id="skelHost"><div class="host"></div></div></div>
+    </div>
+    <div class="what" id="skelWhat"></div>
+    <div class="bridge">זה כמו התבנית שמקבלים בכל תוכנית C# חדשה: יש <code>class</code> ובתוכו <code>Main</code>, ואת הקוד שלכם כותבים בתוך Main. כאן – את התוכן כותבים בתוך body, וכל השאר הוא מסגרת קבועה.</div>
+    <div class="tip">💡 כש-Visual Studio יוצר דף HTML חדש, השלד כבר כתוב. רק שנו את השורה של html: במקום <code>lang="en"</code> (ואולי עוד מאפיין בשם xmlns – אפשר למחוק אותו) כתבו <code>&lt;html lang="he" dir="rtl"&gt;</code>. עוד שני שלבים ותבינו למה.</div>
+  </article>
+  <article class="spread">
+    <h3>head: הכותרת של הלשונית</h3>
+    <p>מה שכתוב ב-head <b>לא מופיע בתוך הדף</b>. אבל יש שם תגית אחת שרואים בכל זאת: <code>&lt;title&gt;</code>.</p>
+    <div class="predict" id="pTitle"></div>
+    <div id="titleDemo" hidden>
+      <div class="lblrow"><label for="titleIn">כתבו כותרת לדף:</label><input id="titleIn" value="פיצה דני – הפיצה של אשקלון" maxlength="60" /></div>
+      <div class="split">
+        <div class="pane"><div class="pane-h"><span class="dot"></span>index.html</div><pre class="cv" id="titleCode"></pre></div>
+        <div class="pane"><div class="pane-h"><span class="dot"></span>מה רואים בדפדפן</div><div id="titleHost"><div class="host"></div></div></div>
+      </div>
+      <div class="what">הטקסט של title מופיע <b>על הלשונית</b> של הדפדפן – לא בתוך הדף. הוא מופיע גם כששומרים את הדף במועדפים, וגם בתוצאות החיפוש של גוגל. לכן כותבים בו שם ברור. את הכותרת שבתוך הדף כותבים ב-h1 – אלה שני דברים נפרדים.</div>
+    </div>
+  </article>
+  <article class="spread">
+    <h3>meta charset: שהעברית לא תהפוך לג'יבריש</h3>
+    <p>המחשב שומר כל אות כ<b>מספר</b>. יש כמה "שיטות מספור" (קידוד – encoding), ו-<b>utf-8</b> היא השיטה שמתאימה לכל השפות, כולל עברית ואימוג'י. השורה <code>&lt;meta charset="utf-8" /&gt;</code> אומרת לדפדפן באיזו שיטה הקובץ כתוב.</p>
+    <div class="compare" id="cmpCharset"></div>
+    <div class="what">בלי השורה, הדפדפן צריך <b>לנחש</b> איך לקרוא את המספרים בקובץ. לפעמים הוא מנחש נכון, ולפעמים – לא, ואז כל אות עברית הופכת לסימנים משונים. השורה הזו מבטלת את הניחוש. היא נכנסת לתוך head, בשורה הראשונה שלו.</div>
+    <div class="bridge">ב-C# אולי ראיתם ש-char הוא בעצם מספר: <code>(int)'A'</code> שווה 65. גם האות א' היא מספר. utf-8 היא "המילון" שאומר איזה מספר שייך לאיזו אות.</div>
+  </article>
+  <article class="spread">
+    <h3>lang ו-dir: דף שמדבר עברית</h3>
+    <p>שני מאפיינים בתגית html. <code>dir="rtl"</code> (direction – כיוון) אומר: הדף נקרא <b>מימין לשמאל</b> (right to left). <code>lang="he"</code> (language – שפה) אומר: הדף <b>בעברית</b>. אותו תוכן בדיוק, פעמיים:</p>
+    <div class="compare" id="cmpDir"></div>
+    <div class="what">בלי <code>dir="rtl"</code> הדפדפן חושב שזה דף באנגלית: הטקסט נצמד לשמאל, וסימן הקריאה <b>קפץ לתחילת המשפט</b> (הסתכלו בצד ימין של השורה). עם <code>dir="rtl"</code> הכול במקום.</div>
+    <div class="tip">💡 ו-<code>lang="he"</code>? לא רואים אותו, אבל הוא עוזר לגוגל להבין באיזו שפה הדף, עוזר לתוכנות שמקריאות דפים לעיוורים לבחור קול בעברית, ועוזר לדפדפן לא להציע "לתרגם" את הדף בלי צורך.</div>
+  </article>
+</section>
+
+<!-- ===================== 4. BASIC TAGS ===================== -->
+<section class="topic" data-id="tags" data-icon="🏷️" data-title="תגיות בסיס">
+  <article class="spread">
+    <h3>כותרות: מ-h1 עד h6</h3>
+    <p>את h1 אתם כבר מכירים. יש שש רמות של כותרות. המספר אומר <b>כמה הכותרת חשובה</b>: 1 – הכי חשובה, 6 – הכי פחות.</p>
+    <div id="heads"></div>
+    <div class="what">הדפדפן מציג כל רמה קצת יותר קטנה, וכולן מודגשות. הפסקה p היא טקסט רגיל. שימו לב: כל כותרת וכל פסקה מתחילה <b>בשורה חדשה</b>.</div>
+    <div class="bridge">כמו בספר: h1 הוא שם הספר, h2 – שם של פרק, h3 – תת-פרק בתוך הפרק. באתר של פיצה דני: h1 = "פיצה דני", h2 = "התפריט", h3 = "פיצות".</div>
+    <div class="tip">💡 בכל דף יש <b>h1 אחד בלבד</b> – הכותרת הראשית. ובוחרים רמה לפי החשיבות, לא לפי הגודל: את הגודל נקבע בעצמנו עם CSS בשיעור 3.</div>
+  </article>
+  <article class="spread">
+    <h3>ירידת שורה: br</h3>
+    <p>רוצים לכתוב בדף את הכתובת של הפיצרייה, בשלוש שורות. כתבנו בקוד שלוש שורות, עם Enter אחרי כל אחת.</p>
+    <div class="predict" id="pBr"></div>
+    <div id="brDemo" hidden>
+      <div class="ctrls"><div class="seg" id="brSeg"></div></div>
+      <div id="br"></div>
+      <div class="what">הדפדפן <b>מתעלם מ-Enter ומרווחים כפולים</b> בקוד – בשבילו כל אלה הם רווח אחד. כדי לרדת שורה כותבים <code>&lt;br /&gt;</code> (מהמילה break – שבירה).</div>
+      <div class="bridge">ב-C#, <code>Console.Write</code> לא יורד שורה גם אם תלחצו Enter באמצע הקוד – צריך לכתוב <code>\n</code>. כאן זה אותו דבר: Enter בקוד הוא לא ירידת שורה בדף. <code>&lt;br /&gt;</code> הוא ה-<code>\n</code> של HTML.</div>
+      <p><b>שימו לב:</b> ל-br <b>אין תגית סוגרת</b>. אין לה תוכן – אז אין מה לסגור. לתגיות כאלה קוראים <b>תגיות ריקות</b> (void). הלוכסן לפני ה-<code>&gt;</code> לא חובה, אבל Visual Studio כותב אותו – וגם אנחנו.</p>
+    </div>
+  </article>
+  <article class="spread">
+    <h3>קו מפריד ורווח שלא נעלם: hr ו-<code>&amp;nbsp;</code></h3>
+    <p>עוד שני כלים קטנים. בחרו כל אחד וראו:</p>
+    <div class="ctrls"><div class="seg" id="hrSeg"></div></div>
+    <div id="hr"></div>
+    <div class="what" id="hrWhat"></div>
+    <p><b>שימו לב:</b> <code>&amp;nbsp;</code> הוא <b>לא תגית</b> – אין בו סוגריים משולשים. הוא <b>ישות</b> (entity): קוד של תו מיוחד, שמתחיל ב-<code>&amp;</code> ונגמר ב-<code>;</code>. nbsp הם ראשי תיבות של non-breaking space – רווח שלא נשבר.</p>
+    <details><summary>להרחבה: עוד ישויות שימושיות</summary>
+      <table>
+        <tr><th>כותבים בקוד</th><th>מופיע בדף</th><th>למה צריך?</th></tr>
+        <tr><td><code>&amp;lt;</code> · <code>&amp;gt;</code></td><td><code>&lt;</code> · <code>&gt;</code></td><td>כדי להציג סוגר משולש בלי שהדפדפן יחשוב שזו תגית (lt = less than, gt = greater than)</td></tr>
+        <tr><td><code>&amp;amp;</code></td><td><code>&amp;</code></td><td>הסימן &amp; עצמו</td></tr>
+        <tr><td><code>&amp;copy;</code></td><td>©</td><td>זכויות יוצרים, בתחתית אתרים</td></tr>
+        <tr><td><code>&amp;#x1F355;</code></td><td>🍕</td><td>לכל תו בעולם – גם לאימוג'י – יש מספר. אפשר לכתוב כל תו לפי המספר שלו</td></tr>
+      </table>
+    </details>
+    <div class="tip">💡 <code>&amp;nbsp;</code> טוב לרווח קטן פה ושם. לא מסדרים איתו דף שלם (עמודות, ריווחים גדולים) – את זה עושים עם CSS.</div>
+  </article>
+</section>
+
+<!-- ===================== 5. LINKS ===================== -->
+<section class="topic" data-id="links" data-icon="🔗" data-title="קישורים">
+  <article class="spread">
+    <h3>התגית a: קישור</h3>
+    <p>קישור הוא מה שהופך דפים בודדים ל<b>אתר</b>. התגית היא <code>a</code> (מהמילה anchor – עוגן), והמאפיין <code>href</code> אומר <b>לאן</b> הקישור מוביל. לחצו על הקישור בתוצאה:</p>
+    <div id="l1"></div>
+    <div class="what">ה-<code>href</code> הוא היעד, והטקסט שבין התגיות הוא מה שהגולש <b>רואה ולוחץ עליו</b>. הדפדפן מציג קישור בכחול עם קו תחתון, וכשהעכבר מעליו הסמן הופך ליד 👆. שימו לב שהקישור יושב <b>בתוך</b> המשפט, כמו מילה.</div>
+    <div class="tip">💡 הטקסט של קישור אומר לאן הוא מוביל: "לתפריט שלנו" – ולא "לחצו כאן". גולש שסורק את הדף בעיניים צריך להבין מהקישור לבד לאן יגיע.</div>
+  </article>
+  <article class="spread">
+    <h3>לפתוח בלשונית חדשה: <code>target="_blank"</code></h3>
+    <p>בדרך כלל קישור נפתח <b>באותה לשונית</b>, והדף שלכם נעלם. כשמקשרים לאתר <b>אחר</b> (למשל מפה), עדיף שייפתח בלשונית חדשה – כדי שהגולש לא יעזוב את האתר שלכם. בשביל זה יש את המאפיין <code>target</code>. נסו את שני המצבים, ולחצו על הקישור בכל אחד:</p>
+    <div class="ctrls"><div class="seg" id="l2seg"></div></div>
+    <div id="l2"></div>
+    <div class="what" id="l2what"></div>
+    <div class="tip">💡 במצגת כתוב <code>_target</code> – הנכון הוא <code>_blank</code>. ברירת המחדל, בלי target בכלל, היא <code>_self</code> – אותה לשונית.</div>
+  </article>
+  <article class="spread">
+    <h3>קישור לדף אחר באתר שלנו</h3>
+    <p>האתר של פיצה דני כולל שני דפים, ושניהם באותה תיקייה – HTML. כשהדפים <b>באותה תיקייה</b>, ב-href כותבים <b>רק את שם הקובץ</b>: <code>href="menu.html"</code>.</p>
+    <div class="walk">
+      <div class="ftree" id="l3tree"></div>
+      <div>
+        <p style="margin-top:0"><b>ב-Visual Studio יש קיצור דרך:</b> גוררים את הקובץ menu.html מ-Solution Explorer אל תוך הקוד, ו-Visual Studio כותב את תגית הקישור עם הנתיב הנכון. נשאר רק לשנות את הטקסט שבין התגיות.</p>
+      </div>
+    </div>
+    <p>זה אתר חי של שני דפים. לחצו על הקישורים ועברו בין הדפים. שימו לב איך משתנים <b>הכתובת</b> למעלה ו<b>הקוד</b> משמאל:</p>
+    <div id="l3"></div>
+    <div class="trap">שוכחים את הסיומת: <code>href="menu"</code> מחפש קובץ בשם menu בלי סיומת – ואין כזה. מקבלים דף שגיאה 404 ("לא נמצא"). השם צריך להיות <b>בדיוק</b> כמו ב-Solution Explorer, כולל <code>.html</code>.</div>
+  </article>
+  <article class="spread">
+    <h3>קפיצה למקום בתוך הדף: # ו-id</h3>
+    <p>בדף ארוך נוח לתת קישור שקופץ ישר לחלק מסוים – למשל למחירון. עושים את זה בשני צעדים:</p>
+    <ol>
+      <li>נותנים לתגית היעד <b>שם ייחודי</b> עם המאפיין <code>id</code>: <code>&lt;h2 id="prices"&gt;</code>.</li>
+      <li>בקישור כותבים סולמית ואת השם: <code>href="#prices"</code>.</li>
+    </ol>
+    <div class="predict" id="pJump"></div>
+    <div id="l4"></div>
+    <div class="what" id="l4what" hidden>הסולמית <code>#</code> אומרת לדפדפן: "אל תחפש דף אחר – חפש <b>בדף הזה</b> תגית עם ה-id הזה". והדפדפן גולל אליה. הקישור "חזרה למעלה" עובד בדיוק אותו דבר, עם <code>id="top"</code> על הכותרת הראשית.</div>
+    <details class="more"><summary>🐢 רוצים הסבר לאט יותר?</summary>
+      <p>כך הדפדפן עובד, צעד אחר צעד, כשלוחצים על <code>href="#prices"</code>:</p>
+      <ol>
+        <li>הוא רואה <b>סולמית</b>: "לא מחפשים דף אחר – מחפשים מקום <b>בדף הזה</b>".</li>
+        <li>הוא קורא את השם: <b>prices</b>, ועובר על הדף עד שהוא מוצא תגית עם <code>id="prices"</code>.</li>
+        <li>מצא? הוא גולל עד שהתגית בראש החלון. לא מצא? לא קורה כלום – וגם אין הודעת שגיאה.</li>
+      </ol>
+      <p>שימו לב: ב-id כותבים את השם <b>בלי</b> סולמית. את הסולמית כותבים רק בקישור.</p>
+    </details>
+    <div class="bridge">id הוא כמו שם של משתנה ב-C#: אסור שיהיו שני משתנים באותו שם באותו מקום. גם id חייב להיות <b>ייחודי</b> בדף – אם יהיו שניים, הקישור יקפוץ תמיד רק לראשון. את הסימן # תפגשו שוב בשיעור 3, ב-CSS.</div>
+  </article>
+  <article class="spread">
+    <h3>שלושה סוגי קישורים: מתי כותבים מה?</h3>
+    <table>
+      <tr><th>לאן?</th><th>מה כותבים ב-href</th><th>איך קוראים לזה</th></tr>
+      <tr><td>לאתר אחר באינטרנט</td><td><code>https://maps.google.com</code></td><td><b>נתיב מוחלט</b> (absolute) – כתובת מלאה, מתחילה ב-<code>https://</code></td></tr>
+      <tr><td>לדף או לקובץ באתר שלנו</td><td><code>menu.html</code></td><td><b>נתיב יחסי</b> (relative) – יחסית לתיקייה של הדף שבו נמצא הקישור</td></tr>
+      <tr><td>למקום בדף הנוכחי</td><td><code>#prices</code></td><td>קפיצה ל-id</td></tr>
+    </table>
+    <div class="bridge">כתובת מלאה – "רחוב הנמל 5, אשקלון" – מביאה אתכם לאותו מקום מכל מקום בארץ. זה <b>נתיב מוחלט</b>: <code>https://...</code>. לעומת זאת "הבית ממול" נכון רק ביחס למקום שבו אתם עומדים. זה <b>נתיב יחסי</b>: <code>menu.html</code> = "הקובץ שנמצא לידי, באותה תיקייה".</div>
+    <p><b>למה לא לכתוב גם לדפים שלנו כתובת מלאה?</b> כי הכתובת של האתר שלכם עוד תשתנה: מספר ה-port ב-localhost שונה מפרויקט לפרויקט, וכשהאתר יעלה לשרת אמיתי – תהיה לו כתובת חדשה לגמרי. נתיב יחסי ממשיך לעבוד בכל מקום.</p>
+    <div class="predict" id="pTypes"></div>
+    <p class="muted">להרחבה (באנגלית): <a href="https://www.w3schools.com/html/html_filepaths.asp" target="_blank">נתיב מוחלט ונתיב יחסי – w3schools</a></p>
+  </article>
+</section>
+
+<!-- ===================== 6. IMAGES ===================== -->
+<section class="topic" data-id="images" data-icon="🖼️" data-title="תמונות">
+  <article class="spread">
+    <h3>התגית img: תמונה בדף</h3>
+    <p>תמונה מוסיפים עם התגית <code>img</code> (image – תמונה). המאפיין <code>src</code> (source – מקור) אומר <b>איפה קובץ התמונה</b>. גם img היא <b>תגית ריקה</b>, כמו br – אין לה תגית סוגרת.</p>
+    <div id="i1"></div>
+    <p><b>שלושה צעדים ב-Visual Studio:</b></p>
+    <ol>
+      <li>ב-Solution Explorer: קליק ימני על wwwroot ← Add ← New Folder, ותנו לה את השם <b>Img</b>. כל התמונות של האתר יגורו בה.</li>
+      <li>גררו את קובץ התמונה מסייר הקבצים של Windows אל התיקייה Img ב-Solution Explorer.</li>
+      <li>גררו את התמונה מ-Solution Explorer אל תוך הקוד – ו-Visual Studio כותב את תגית img עם הנתיב.</li>
+    </ol>
+    <div class="tip">💡 תנו לקבצים שמות <b>באנגלית, בלי רווחים</b>: <code>pizza.jpg</code> ולא "פיצה חדשה 1.jpg". רווחים ועברית בשמות קבצים גורמים לבעיות בכתובות.</div>
+  </article>
+  <article class="spread">
+    <h3>הדרך אל התמונה: <code>../Img/pizza.jpg</code></h3>
+    <p>הדף נמצא בתיקייה HTML, והתמונה בתיקייה Img. הנתיב ב-src הוא <b>נתיב יחסי</b>: הוראות הליכה <b>מהתיקייה של הדף</b> אל הקובץ. בואו נלך בדרך צעד אחר צעד:</p>
+    <div class="walk">
+      <div class="ftree" id="ftree"></div>
+      <div>
+        <div class="pathbox" id="pathbox"></div>
+        <p id="walkTxt" style="min-height:3.5em"></p>
+        <div class="ctrls"><button class="btn primary" id="walkNext" type="button">הצעד הבא ←</button><button class="btn" id="walkReset" type="button">↺ מההתחלה</button></div>
+      </div>
+    </div>
+    <details class="more"><summary>🐢 רוצים הסבר לאט יותר?</summary>
+      <p>דמיינו שאתם בסייר הקבצים של Windows, בתוך התיקייה HTML, ורוצים להגיע לקובץ pizza.jpg:</p>
+      <ol>
+        <li>התמונה לא נמצאת כאן, בתיקייה HTML. אז לוחצים על החץ "למעלה" – וחוזרים לתיקייה wwwroot. זה בדיוק מה ש-<code>../</code> אומר: "עלו תיקייה אחת למעלה".</li>
+        <li>ב-wwwroot רואים את התיקייה Img ונכנסים אליה. זה ה-<code>Img/</code>.</li>
+        <li>בוחרים את הקובץ. זה ה-<code>pizza.jpg</code>.</li>
+      </ol>
+      <p>הלוכסן <code>/</code> מפריד בין הצעדים. הדפדפן הולך באותו מסלול בדיוק – אתם רק כותבים לו אותו במילים.</p>
+    </details>
+    <div class="predict" id="pPath"></div>
+    <div class="tip">💡 כתבו את שם התיקייה בדיוק כמו ב-Solution Explorer: <code>Img</code>. ב-Windows גם <code>img</code> יעבוד, אבל כשהאתר יעלה לשרת אמיתי (שם בדרך כלל אותיות גדולות וקטנות כן משנות) – התמונה תישבר.</div>
+  </article>
+  <article class="spread">
+    <h3>גודל התמונה: width ו-height</h3>
+    <p><code>width</code> קובע את הרוחב ו-<code>height</code> את הגובה. המספרים הם <b>פיקסלים</b> (pixels) – הנקודות הקטנות שמהן בנוי המסך. ב-HTML כותבים רק את המספר, בלי יחידה. בחרו רוחב:</p>
+    <div class="ctrls"><div class="seg" id="i3seg"></div></div>
+    <div id="i3"></div>
+    <p>ומה קורה אם קובעים <b>גם</b> רוחב <b>וגם</b> גובה? אותה תמונה, פעמיים:</p>
+    <div class="compare" id="i3cmp"></div>
+    <div class="what">מספיק לקבוע <b>אחד</b> מהשניים – והדפדפן מחשב את השני לבד, כך שהתמונה נשארת בפרופורציות שלה. אם קובעים את שניהם בלי לחשב, התמונה <b>נמתחת</b> – והפיצה העגולה הפכה לביצה. 🥚 מומלץ לקבוע גודל לכל תמונה – תמונה מהמצלמה יכולה להיות רחבה יותר מכל המסך.</div>
+  </article>
+  <article class="spread">
+    <h3>alt: מה רואים כשהתמונה לא נטענת</h3>
+    <p>המאפיין <code>alt</code> (alternative – חלופה) הוא <b>תיאור במילים</b> של התמונה. כדי להבין למה הוא חשוב – נשבור תמונה בכוונה: נכתוב את שם הקובץ עם טעות.</p>
+    <div class="predict" id="pAlt"></div>
+    <div id="altDemo" hidden>
+      <div class="compare" id="altCmp"></div>
+      <div class="what">כשהדפדפן לא מוצא את הקובץ, הוא מציג סמל של תמונה שבורה, ו<b>במקומה את הטקסט של alt</b>. ככה הגולש לפחות יודע מה היה אמור להיות שם. ויש עוד שתי סיבות לכתוב alt: <b>תוכנות הקראה</b> מקריאות אותו לגולשים עיוורים, ו<b>גוגל</b> משתמש בו כדי להבין מה בתמונה.</div>
+      <div class="tip">💡 בדוגמאות שבמצגת אין alt – אבל אצלנו כותבים alt <b>בכל</b> תמונה. ואל תתבלבלו עם מאפיין אחר, <code>title</code>: הוא מציג "בועה" קטנה (tooltip) כשמחזיקים את העכבר מעל התגית. הוא עובד על כל תגית, לא רק על תמונות.</div>
+    </div>
+  </article>
+  <article class="spread">
+    <h3>⚠ התמונה לא מופיעה! בודקים לפי הסדר</h3>
+    <p>זו התקלה הכי נפוצה בשיעור. רואים סמל שבור (ואת ה-alt)? בודקים:</p>
+    <ol>
+      <li>הקובץ באמת נמצא בתיקייה Img? (בדקו ב-Solution Explorer)</li>
+      <li>השם <b>והסיומת</b> זהים בדיוק? <code>pizza.jpg</code> ולא <code>pizza.png</code>, ולא <code>piza.jpg</code>.</li>
+      <li>הנתיב מתחיל ב-<code>../</code>? הדף בתיקייה HTML, אז קודם עולים תיקייה.</li>
+      <li>שם התיקייה כתוב בדיוק: <code>Img</code>?</li>
+      <li>שמרתם (Ctrl+S) ורעננתם את הדפדפן?</li>
+    </ol>
+    <div class="tip">💡 F12 עוזר גם כאן: בלשונית Console תופיע שגיאה אדומה עם המילה 404 ושם הקובץ שהדפדפן חיפש ולא מצא. ככה רואים בדיוק איזה נתיב הוא ניסה.</div>
+    <h4>ולמה לא פשוט לקשר לתמונה מאתר אחר?</h4>
+    <p>אפשר לכתוב ב-src כתובת מלאה של תמונה באינטרנט – אבל <b>לא מומלץ</b>. התמונה באתר האחר יכולה להשתנות, לזוז או להימחק בכל רגע, ואז היא תישבר אצלכם בלי שתדעו. לכן <b>מורידים</b> את התמונה ושומרים אותה בתיקייה Img של הפרויקט.</p>
+    <p class="muted">אגב, התמונה הזו נטענת בסדר גמור – ולכן את ה-alt שלה אף אחד לא רואה... 😉 <img id="eggAlt" class="eggpizza" src="" alt="🥚 הקוד הסודי: BASIL" width="44" height="44" /></p>
+  </article>
+  <article class="spread">
+    <h3>תמונה שהיא קישור</h3>
+    <p>רוצים שלחיצה על התמונה תעביר לדף אחר? שמים את <b>תגית img בתוך תגית a</b> – קינון, כמו שלמדתם. במקום טקסט, התוכן של הקישור הוא תמונה. לחצו על הפיצה:</p>
+    <div id="i6"></div>
+    <div class="what">התגית a עוטפת את התמונה, ולכן כל התמונה "לחיצה". זה שימושי לכפתורים גדולים, לוגו שמחזיר לדף הבית, וגלריות.</div>
+  </article>
+  <article class="spread">
+    <h3>block ו-inline: מי תופס שורה שלמה?</h3>
+    <p>יש תגיות שתופסות <b>שורה שלמה</b> – קוראים להן <b>block</b> (בלוק). ויש תגיות שיושבות <b>בתוך השורה</b>, כמו מילה במשפט – קוראים להן <b>inline</b> (בתוך השורה).</p>
+    <div class="predict" id="pKinds"></div>
+    <div id="kindsDemo" hidden>
+      <div class="ctrls"><div class="seg" id="kindsSeg"></div></div>
+      <div id="kinds"></div>
+      <div class="kinds-legend"><span style="border-color:#2563eb">כחול = block</span><span style="border-color:#db2777">ורוד = inline</span></div>
+      <div class="what">הכחולים (h2, p, hr) נמתחים <b>לכל רוחב הדף</b>, גם כשהטקסט בתוכם קצר – ולכן כל אחד מתחיל בשורה חדשה. הוורודים (img, b, a) תופסים <b>רק את המקום שלהם</b>, ויושבים זה ליד זה בתוך השורה. לכן שתי התמונות עמדו אחת ליד השנייה.</div>
+    </div>
+    <table>
+      <tr><th>block – שורה שלמה</th><th>inline – בתוך השורה</th></tr>
+      <tr><td><code>h1</code>–<code>h6</code>, <code>p</code>, <code>hr</code></td><td><code>a</code>, <code>img</code>, <code>b</code>, <code>i</code>, <code>br</code></td></tr>
+    </table>
+    <div class="bridge">כמו בחיבור באנגלית: פסקה תמיד מתחילה בשורה חדשה (block), ומילה מודגשת בתוך משפט נשארת באותה שורה (inline). בשיעור 3 תלמדו לשנות את ההתנהגות הזו עם CSS – למשל להעמיד תמונה באמצע השורה.</div>
+  </article>
+  <article class="spread">
+    <h3>🍕 הכול ביחד: האתר של פיצה דני</h3>
+    <p>זה האתר המלא: דף בית ודף תפריט, עם תמונות וכל שלושת סוגי הקישורים. אפשר גם <b>לכתוב כתובת</b> בשורת הכתובת וללחוץ Enter. נסו לבצע את כל המשימות – הן מסומנות לבד:</p>
+    <ul class="chal site-tasks" id="siteTasks"></ul>
+    <div id="site" class="scrolly"></div>
+  </article>
+</section>
+
+<!-- ===================== 7. PRACTICE ===================== -->
+<section class="topic" data-id="practice" data-icon="🛠" data-title="תרגול וסיכום">
+  <article class="spread">
+    <h3>🛠 נסו עכשיו: כותבים בעצמכם</h3>
+    <p>זה דף הבית של פיצה דני – רק בלי קישורים ובלי תמונות. כתבו בעורך (רק את מה שבתוך body). כשמשימה מצליחה, היא נצבעת בירוק ✔. לחיצה על קישור בתצוגה לא עוזבת את הדף – רק אומרת לאן הוא היה מוביל.</p>
+    <div id="pg"></div>
+    <details><summary>🖥 רוצים לתרגל גם ב-Visual Studio? (5 דקות)</summary>
+      <p>שימו תמונה כלשהי בתיקייה Img ושנו את שמה ל-pic.jpg. צרו בתיקייה HTML דף בשם practice.html והדביקו:</p>
+      <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="he" dir="rtl"&gt;
+&lt;head&gt;
+    &lt;meta charset="utf-8" /&gt;
+    &lt;title&gt;תרגול תגיות&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1 id="top"&gt;החיה האהובה עליי&lt;/h1&gt;
+    &lt;hr /&gt;
+    &lt;p&gt;שורה ראשונה&lt;br /&gt;שורה שנייה&lt;/p&gt;
+    &lt;img src="../Img/pic.jpg" alt="תמונה לתרגול" width="150" /&gt;
+    &lt;p&gt;&lt;a href="https://www.google.com" target="_blank"&gt;חיפוש בגוגל&lt;/a&gt;&lt;/p&gt;
+    &lt;!-- this line will change --&gt;
+    &lt;p&gt;&lt;a href="#top"&gt;חזרה למעלה&lt;/a&gt;&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre></div>
+      <p>הריצו, ואז שנו ובדקו:</p>
+      <ul>
+        <li>שנו את width מ-150 ל-300 – התמונה תגדל פי שניים.</li>
+        <li>מחקו מהקישור לגוגל את <code>target="_blank"</code> ולחצו עליו – הוא ייפתח באותה לשונית.</li>
+        <li>שנו ב-src את שם הקובץ ל-pic2.jpg (קובץ שלא קיים) – תראו סמל שבור ואת הטקסט של alt. החזירו.</li>
+        <li>סמנו את שורת "חזרה למעלה" ולחצו Ctrl+K ואז Ctrl+C – השורה תהפוך להערה ותיעלם מהדף.</li>
+      </ul>
+    </details>
+  </article>
+  <article class="spread">
+    <h3>🧩 צעד בפרויקט – לקראת הגשה 1</h3>
+    <div class="stepbox">
+      <b>בונים את השלד של האתר שלכם: דף נחיתה ודף תוכן, מחוברים זה לזה.</b>
+      <ol>
+        <li>ב-wwwroot צרו תיקייה בשם <b>Img</b>, ושימו בה 2–3 תמונות שקשורות לנושא האתר שלכם (שמות באנגלית, בלי רווחים).</li>
+        <li>בתיקייה HTML פתחו את index.html – זה <b>דף הנחיתה</b>. בדקו את השלד: <code>&lt;html lang="he" dir="rtl"&gt;</code>, השורה של <code>meta charset</code>, ו-title עם שם האתר שלכם.</li>
+        <li>בשורה הראשונה של body הוסיפו הערה עם השם שלכם והכיתה.</li>
+        <li>בתוך body: כותרת h1 עם שם האתר, שתי פסקאות שמסבירות על מה האתר, ותמונה מהתיקייה Img – עם alt ועם width.</li>
+        <li>צרו באותה תיקייה <b>דף תוכן ראשון</b> (למשל page1.html), עם שלד מלא, כותרת h1 ופסקה.</li>
+        <li>חברו את הדפים: קישור מ-index.html ל-page1.html, וקישור חזרה מ-page1.html ל-index.html. (קיצור: גררו את הקובץ מ-Solution Explorer.)</li>
+        <li><b>בדיקה:</b> הריצו (▶), לחצו על הקישורים לשני הכיוונים, ובדקו שהתמונה מופיעה ושהשם בלשונית נכון.</li>
+      </ol>
+      <label style="display:flex;gap:8px;align-items:center;margin-top:8px"><input type="checkbox" id="stepDone" /> עשיתי את הצעד בפרויקט שלי</label>
+    </div>
+  </article>
+  <article class="spread" id="quiz">
+    <h3>✅ בדקו את עצמכם</h3>
+    <p>5 שאלות. טעיתם? ההסבר יגיד למה – ונסו שוב.</p>
+  </article>
+  <article class="spread" id="summary">
+    <h3>📄 דף סיכום: כל השיעור במסך אחד</h3>
+    <p>כל מה שצריך לזכור. אפשר לחזור לכאן בכל זמן, או להדפיס. <button class="btn" type="button" id="printBtn">🖨 הדפסה</button></p>
+    <div class="cheat">
+      <div class="card"><h4>השלד של כל דף</h4>
+        <div class="codeblock"><pre data-code="html">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="he" dir="rtl"&gt;
+&lt;head&gt;
+    &lt;meta charset="utf-8" /&gt;
+    &lt;title&gt;שם הדף&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;!-- the content goes here --&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre></div>
+        <p>head = הגדרות (לא בתוך הדף). body = כל מה שרואים.</p></div>
+      <div class="card"><h4>איך בנויה תגית</h4>
+        <div class="codeblock"><pre data-code="html">&lt;a href="menu.html"&gt;לתפריט&lt;/a&gt;</pre></div>
+        <ul><li>תגית פותחת, תוכן, תגית סוגרת (עם <code>/</code>)</li><li>מאפיין: <code>name="value"</code> – רק בתגית הפותחת</li><li>תגיות ריקות, בלי סוגרת: br, hr, img</li><li>קינון: מה שנפתח אחרון – נסגר ראשון</li><li>הערה: <code>&lt;!-- --&gt;</code> · ב-VS: Ctrl+K ואז Ctrl+C</li></ul></div>
+      <div class="card"><h4>תגיות הבסיס</h4>
+        <table>
+          <tr><td><code>h1</code>–<code>h6</code></td><td>כותרות, מהחשובה ביותר</td></tr>
+          <tr><td><code>p</code></td><td>פסקה</td></tr>
+          <tr><td><code>&lt;br /&gt;</code></td><td>ירידת שורה</td></tr>
+          <tr><td><code>&lt;hr /&gt;</code></td><td>קו מפריד</td></tr>
+          <tr><td><code>&amp;nbsp;</code></td><td>רווח שלא נעלם (ישות, לא תגית)</td></tr>
+          <tr><td><code>b</code> · <code>i</code></td><td>מודגש · נטוי</td></tr>
+          <tr><td><code>title</code></td><td>השם בלשונית (בתוך head)</td></tr>
+        </table></div>
+      <div class="card"><h4>קישורים</h4>
+        <table>
+          <tr><td><code>href="https://..."</code></td><td>אתר אחר (נתיב מוחלט)</td></tr>
+          <tr><td><code>href="menu.html"</code></td><td>דף באותה תיקייה (נתיב יחסי)</td></tr>
+          <tr><td><code>href="#prices"</code></td><td>קפיצה לתגית עם <code>id="prices"</code></td></tr>
+          <tr><td><code>target="_blank"</code></td><td>לפתוח בלשונית חדשה</td></tr>
+        </table></div>
+      <div class="card"><h4>תמונות</h4>
+        <div class="codeblock"><pre data-code="html">
+&lt;img src="../Img/pizza.jpg" alt="פיצה"
+     width="150" /&gt;
+</pre></div>
+        <ul><li><code>../</code> = עלו תיקייה אחת (מ-HTML ל-wwwroot)</li><li>alt בכל תמונה. גודל: מספיק width או height</li><li>תמונה כקישור: img בתוך a</li><li>block (h, p, hr) = שורה שלמה · inline (a, img, b) = בתוך השורה</li></ul></div>
+      <div class="card"><h4>התמונה לא מופיעה? בודקים:</h4>
+        <ul><li>הקובץ באמת בתיקייה Img</li><li>שם וסיומת זהים בדיוק</li><li>הנתיב מתחיל ב-<code>../</code></li><li>שם התיקייה בדיוק <code>Img</code></li><li>שמירה (Ctrl+S) ורענון</li></ul></div>
+    </div>
+  </article>
+</section>
+<div class="stepnav" id="stepnav"></div>
+</main>
+<footer>בניית אתרים · המדריך המעשי · שיעור 2 – תגיות, קישורים ותמונות · יוחאי פרץ<span id="oven"></span></footer>
+
+<script src="assets/course.js"></script>
+<script>
+(function(){
+"use strict";
+const {$, esc, state, save, Stage, Split, seg, predict, quiz, doneCheck, playground, codeLines, findEgg, toast, PIZZA_IMG, IMAGES} = Course;
+
+/* ---------- pictures for the pizza world ---------- */
+function pizzaSvg(top){
+  return "data:image/svg+xml;utf8," + encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100' preserveAspectRatio='none'><circle cx='50' cy='50' r='47' fill='#e9a23b'/><circle cx='50' cy='50' r='40' fill='#d9472b'/><circle cx='50' cy='50' r='37' fill='#f6d365'/>" + top + "</svg>");
+}
+/* like a real photo: a natural size of 100x100, and it stretches if width and height don't match */
+IMAGES['pizza.jpg'] = pizzaSvg("<circle cx='35' cy='38' r='6' fill='#c0392b'/><circle cx='63' cy='35' r='6' fill='#c0392b'/><circle cx='59' cy='63' r='6' fill='#c0392b'/><circle cx='36' cy='64' r='5' fill='#c0392b'/><circle cx='48' cy='50' r='3' fill='#2d6a2d'/><circle cx='71' cy='51' r='3' fill='#2d6a2d'/>");
+IMAGES['margherita.jpg'] = pizzaSvg("<circle cx='36' cy='38' r='8' fill='#fffbeb'/><circle cx='63' cy='40' r='8' fill='#fffbeb'/><circle cx='50' cy='65' r='8' fill='#fffbeb'/><ellipse cx='50' cy='44' rx='7' ry='3.5' fill='#2d6a2d' transform='rotate(-30 50 44)'/><ellipse cx='66' cy='60' rx='7' ry='3.5' fill='#2d6a2d' transform='rotate(40 66 60)'/><ellipse cx='33' cy='58' rx='7' ry='3.5' fill='#2d6a2d'/>");
+const mush = (x, y) => "<path d='M" + (x-8) + " " + y + " a8 7 0 0 1 16 0 z' fill='#9c7b5b'/><rect x='" + (x-2.5) + "' y='" + y + "' width='5' height='7' rx='1' fill='#e7d7bd'/>";
+IMAGES['mushrooms.jpg'] = pizzaSvg(mush(36,38) + mush(63,36) + mush(50,60) + mush(30,62) + mush(68,62));
+const olive = (x, y) => "<circle cx='" + x + "' cy='" + y + "' r='5' fill='none' stroke='#1f2937' stroke-width='3.2'/>";
+IMAGES['olives.jpg'] = pizzaSvg(olive(36,36) + olive(62,34) + olive(50,52) + olive(32,62) + olive(66,62) + olive(50,72));
+const BROKEN = 'data:image/png;base64,AA==';   // an invalid picture: shows the "broken image" look without any network request
+const breakImgs = stage => stage.page.querySelectorAll('img').forEach(i => i.src = BROKEN);
+
+/* ---------- a small fake browser frame (tabs + address bar) ---------- */
+function chrome(pane, o){
+  o = o || {};
+  const bar = document.createElement('div'); bar.className = 'bchrome';
+  bar.innerHTML = '<div class="btabs"></div><form class="burl"><span class="nav" aria-hidden="true">←→↻</span><input class="u" spellcheck="false" autocomplete="off" aria-label="שורת הכתובת"' + (o.editable ? '' : ' readonly tabindex="-1"') + ' />' + (o.editable ? '<button class="go" type="submit">Enter</button>' : '') + '</form>';
+  const host = pane.querySelector('.host'); host.parentNode.insertBefore(bar, host);
+  const tabsEl = bar.querySelector('.btabs'), input = bar.querySelector('.u');
+  const c = {
+    tabs: [{title: o.title || '', icon: o.icon || '🍕'}], on: 0, bar,
+    render(popIdx){
+      tabsEl.innerHTML = c.tabs.map((t,i) => '<div class="btab' + (i === c.on ? ' on' : '') + (i === popIdx ? ' pop' : '') + '"><span aria-hidden="true">' + t.icon + '</span><span class="tt" dir="auto">' + esc(t.title || 'ללא שם') + '</span><span class="x" aria-hidden="true">✕</span></div>').join('');
+      return c;
+    },
+    title(t, icon){ c.tabs[c.on].title = t; if (icon) c.tabs[c.on].icon = icon; return c.render(); },
+    add(t, icon){ if (c.tabs.length >= 4) c.tabs.splice(1, 1); c.tabs.push({title: t, icon: icon || '🌍'}); return c.render(c.tabs.length - 1); },
+    reset(t){ c.tabs = [{title: t, icon: o.icon || '🍕'}]; c.on = 0; return c.render(); },
+    url(u){ input.value = u; return c; },
+    flash(on){ const t = tabsEl.querySelector('.btab.on'); if (t) t.classList.toggle('flash', on); },
+    onGo: null
+  };
+  bar.querySelector('form').addEventListener('submit', e => { e.preventDefault(); if (c.onGo) c.onGo(input.value.trim()); });
+  return c.render();
+}
+const resultPane = split => split.el.querySelectorAll('.pane')[1];
+/* scroll a stage's host to an element with this id (anchor jump inside a demo) */
+function jumpTo(split, id){
+  const host = split.el.querySelector('.host');
+  const t = split.stage.page.querySelector('[id="' + String(id).replace(/"/g, '') + '"]');
+  if (!t) return false;
+  const top = host.scrollTop + t.getBoundingClientRect().top - host.getBoundingClientRect().top - 6;
+  host.scrollTo({top: Math.max(0, top), behavior: 'smooth'});
+  t.classList.add('peek'); setTimeout(() => t.classList.remove('peek'), 1600);
+  return true;
+}
+const URL0 = 'localhost:7123/HTML/';
+
+/* ---------- the running example: Danny's pizza site ---------- */
+const HOME = [
+'<h1>פיצה דני</h1>',
+'<p>הפיצה הכי טעימה באשקלון</p>',
+'<a href="menu.html">',
+'    <img src="../Img/pizza.jpg" alt="פיצה חמה – לחצו לתפריט" width="110" />',
+'</a>',
+'<p><a href="menu.html">לתפריט שלנו</a></p>',
+'<p><a href="https://maps.google.com" target="_blank">איך מגיעים? (מפה)</a></p>'].join('\n');
+const MENU = [
+'<h1 id="top">התפריט</h1>',
+'<p><a href="#prices">למחירון ↓</a></p>',
+'<img src="../Img/margherita.jpg" alt="פיצה מרגריטה" width="90" />',
+'<img src="../Img/mushrooms.jpg" alt="פיצה פטריות" width="90" />',
+'<img src="../Img/olives.jpg" alt="פיצה זיתים" width="90" />',
+'<p>כל הפיצות נאפות בתנור אבן.</p>',
+'<hr />',
+'<h2 id="prices">מחירון</h2>',
+'<p>מרגריטה – 45 שקל<br />',
+'פטריות – 39 שקל<br />',
+'זיתים – 39 שקל</p>',
+'<p>',
+'    <a href="#top">חזרה למעלה ↑</a> &nbsp;',
+'    <a href="index.html">לדף הבית</a>',
+'    <a href="kitchen.html">&nbsp;</a>',
+'</p>',
+'<h2 id="oven">התנור</h2>',
+'<p>תנור האבן שלנו חם – 400 מעלות!</p>'].join('\n');
+const KITCHEN = [
+'<h1>🔥 המטבח הסודי של דני</h1>',
+'<p>הגעתם דרך קישור שאי אפשר לראות – כי הטקסט שלו הוא רק רווח.</p>',
+'<p>קישור בלי טקסט ברור הוא קישור שאף גולש לא ימצא.</p>',
+'<p><a href="menu.html">חזרה לתפריט</a></p>'].join('\n');
+const NOTFOUND = '<h1>404</h1>\n<p>הדף לא נמצא. בדקו את שם הקובץ בכתובת.</p>';
+
+/* welcome preview */
+const wSt = new Stage($('#welcomeStage')).html(HOME);
+wSt.onLink = () => toast('🍕 את האתר הזה תבנו בעצמכם במהלך השיעור – כולל הקישורים.');
+
+/* recap tree */
+$('#recapTree').innerHTML = ['📁 MyFirstWeb', '└─ 📁 wwwroot', '   ├─ 📁 css', '   └─ 📁 HTML', '      └─ 📄 index.html'].join('\n');
+
+/* ---------- anatomy builder ---------- */
+const ANA = [
+  {t:'<a', g:0, c:'#93c5fd', name:'פתיחה + שם התגית', d:'הסימן <code>&lt;</code> פותח תגית, ומיד אחריו בא <b>שם התגית</b>: <code>a</code> (מהמילה anchor – עוגן). זו תגית של קישור.'},
+  {t:'href', g:0, c:'#fcd34d', name:'שם של מאפיין (attribute)', d:'מאפיין מוסיף לתגית מידע. השם <code>href</code> אומר: "הנה <b>לאן</b> הקישור מוביל".'},
+  {t:'=', g:0, c:'#cbd5e1', name:'סימן =', d:'מחבר בין שם המאפיין לבין הערך שלו – כמו השמה ב-C#.'},
+  {t:'"menu.html"', g:0, c:'#86efac', name:'ערך של המאפיין', d:'הערך כתוב תמיד <b>בתוך מירכאות</b>. כאן הערך הוא הדף menu.html.'},
+  {t:'target="_blank"', g:0, c:'#fcd34d', name:'עוד מאפיין: שם, = וערך', d:'בתגית אחת יכולים להיות כמה מאפיינים, עם רווח ביניהם. המאפיין הזה אומר: "לפתוח בלשונית חדשה".'},
+  {t:'>', g:0, c:'#93c5fd', name:'סוף התגית הפותחת', d:'כאן נגמרת התגית הפותחת. את כל המאפיינים כותבים <b>לפני</b> הסימן הזה.'},
+  {t:'לתפריט', g:1, c:'#f1f5f9', he:true, name:'התוכן', d:'מה שהגולשים <b>רואים</b> בדף. בקישור – זה הטקסט שלוחצים עליו.'},
+  {t:'</a>', g:2, c:'#93c5fd', name:'התגית הסוגרת', d:'אותו שם כמו בפותחת, עם <b>לוכסן</b> <code>/</code> לפני השם. היא אומרת: "כאן הקישור נגמר".'}
+];
+const GROUPS = [['תגית פותחת', '#93c5fd'], ['תוכן', '#86efac'], ['תגית סוגרת', '#f9a8d4']];
+$('#ana').innerHTML = GROUPS.map((g, gi) => '<span class="grp" style="--gc:' + g[1] + '"><span class="toks">' +
+  ANA.map((a, i) => a.g === gi ? '<button type="button" class="atok' + (a.he ? ' he' : '') + '" data-i="' + i + '" style="--tc:' + a.c + '">' + esc(a.t) + '</button>' : '').join('') +
+  '</span><span class="gl">' + g[0] + '</span></span>').join('');
+const AQ = [
+  {q:'לחצו על <b>שם התגית</b>.', ok:0},
+  {q:'לחצו על <b>השם</b> של המאפיין הראשון.', ok:1},
+  {q:'לחצו על <b>הערך</b> של המאפיין הראשון.', ok:3},
+  {q:'לחצו על החלק ש<b>הגולשים יראו</b> בדף.', ok:6},
+  {q:'לחצו על <b>התגית הסוגרת</b>.', ok:7}
+];
+let aq = Math.min(state.anaQ || 0, AQ.length);
+function paintAQ(fb){
+  $('#anaQ').innerHTML = aq < AQ.length
+    ? '<b>🎯 אתגר ' + (aq + 1) + ' מתוך ' + AQ.length + ':</b> ' + AQ[aq].q + (fb ? '<div class="fbk">' + fb + '</div>' : '')
+    : '🎉 <b>מצוין!</b> זיהיתם את כל החלקים של התגית. <button class="btn" type="button" id="anaAgain" style="margin-inline-start:8px">↺ שוב</button>';
+  const again = $('#anaAgain'); if (again) again.onclick = () => { aq = 0; state.anaQ = 0; save(); paintAQ(); };
+}
+$('#ana').addEventListener('click', e => {
+  const b = e.target.closest('.atok'); if (!b) return;
+  const i = +b.dataset.i, a = ANA[i];
+  document.querySelectorAll('#ana .atok').forEach(x => x.classList.toggle('sel', x === b));
+  $('#anaInfo').innerHTML = '<b>' + a.name + '</b> – ' + a.d;
+  if (aq < AQ.length) {
+    if (AQ[aq].ok === i) { aq++; state.anaQ = aq; save(); paintAQ('<span style="color:var(--ok)">✔ נכון!</span>'); }
+    else paintAQ('<span class="err">✘ זה ' + a.name + '. נסו שוב.</span>');
+  }
+});
+paintAQ();
+
+/* ---------- nesting ---------- */
+const NEST = [
+  {l:'<p>פטריות – <b><i>במבצע!</i></b></p>', what:'קודם נפתחה b, ובתוכה i. סוגרים <b>בסדר הפוך</b>: קודם את הפנימית (<code>&lt;/i&gt;</code>) ואחר כך את החיצונית (<code>&lt;/b&gt;</code>). המילה מודגשת וגם נטויה, ורק היא.'},
+  {l:'<p>פטריות – <b><i>במבצע!</b></i></p>', what:'כאן הסדר הפוך: i נפתחה אחרונה, אבל לא נסגרה ראשונה. הפעם הדפדפן <b>ניחש</b> מה התכוונתם ותיקן בשקט – ולכן זה נראה אותו דבר. אבל הוא לא תמיד מנחש נכון, ו-Visual Studio בדרך כלל מסמן טעות כזו בקו גלי. לא סומכים על ניחושים – סוגרים בסדר.'},
+  {l:'<p>פטריות – <b>במבצע!</p>', what:'שכחנו את <code>&lt;/b&gt;</code>. הדפדפן לא יודע איפה ההדגשה נגמרת – ולכן <b>כל מה שבא אחריה מודגש</b>, גם השורות הבאות. תגית אחת שנשכחה יכולה לקלקל את כל הדף.'}
+];
+const nest = new Split($('#nest'));
+function drawNest(i){
+  nest.setHtml(['<p>מרגריטה – 45 שקל</p>', NEST[i].l, '<p>זיתים – 39 שקל</p>', '<p>הזמנות בטלפון בלבד</p>'].join('\n'), i ? {1:'diff'} : {});
+  $('#nestWhat').innerHTML = NEST[i].what;
+}
+const NEST_LBL = ['סדר נכון', 'סדר הפוך', 'שכחנו לסגור את b'];
+let nestPick = seg($('#nestSeg'), NEST_LBL.slice(0, 2), (o,i) => drawNest(i), 0);
+predict('#pNest', {
+  q: 'ומה יקרה אם <b>נשכח</b> לכתוב את <code>&lt;/b&gt;</code> אחרי המילה "במבצע!"?',
+  opts: ['רק "במבצע!" יהיה מודגש', 'גם כל השורות שאחריה יהיו מודגשות', 'תופיע הודעת שגיאה בדף'],
+  correct: 1,
+  why: ['הדפדפן לא יודע איפה ההדגשה נגמרת – אין לו תגית סוגרת שתגיד לו.', 'בלי תגית סוגרת, ההדגשה "נמשכת" עד סוף הדף. הוספנו למעלה כפתור שלישי – לחצו עליו ובדקו.', 'ב-HTML אין הודעות שגיאה בדף. הדפדפן תמיד מנסה להציג משהו – גם כשהקוד שבור.'],
+  onCorrect: () => { nestPick = seg($('#nestSeg'), NEST_LBL, (o,i) => drawNest(i), 2); }
+});
+
+/* ---------- comments ---------- */
+const cm = new Split($('#cm'));
+function drawCm(off){
+  cm.setHtml(['<h1>פיצה דני</h1>', '<!-- opening hours: update every summer -->', '<p>פתוח כל יום, 12:00 עד 23:00</p>', off ? '<!-- <p>מבצע: משלוח חינם!</p> -->' : '<p>מבצע: משלוח חינם!</p>'].join('\n'), off ? {3:'diff'} : {});
+  if (off) cm.hPre.querySelector('.ln[data-i="3"]').innerHTML = '<span class="t-cm">&lt;!-- &lt;p&gt;<span class="he">מבצע: משלוח חינם!</span>&lt;/p&gt; --&gt;</span>';
+}
+seg($('#cmSeg'), ['כל השורות פעילות', 'הפכו את המבצע להערה'], (o,i) => drawCm(i === 1), 0);
+
+/* ---------- page skeleton ---------- */
+const SKEL = ['<!DOCTYPE html>', '<html lang="he" dir="rtl">', '<head>', '    <meta charset="utf-8" />', '    <title>פיצה דני</title>', '</head>', '<body>', '    <h1>פיצה דני</h1>', '    <p>הפיצה הכי טעימה באשקלון</p>', '</body>', '</html>'];
+codeLines($('#skelCode'), SKEL.join('\n'), 'html');
+const skelSt = new Stage($('#skelHost .host')).html('<h1>פיצה דני</h1>\n<p>הפיצה הכי טעימה באשקלון</p>');
+const skelBr = chrome($('#skelHost'), {title:'פיצה דני'}).url(URL0 + 'index.html');
+const SK = [
+  {label:'<!DOCTYPE html>', lines:[0], t:'השורה הראשונה אומרת לדפדפן: "זה דף HTML מודרני". היא לא תגית רגילה ואין לה סוגרת. כותבים אותה תמיד, בדיוק כך, בראש הקובץ.'},
+  {label:'html', lines:[1,10], t:'התגית html <b>עוטפת את כל הדף</b> – מהשורה השנייה ועד האחרונה. כל שאר התגיות נמצאות בתוכה. בתגית הפותחת שלה יש שני מאפיינים חשובים לעברית – נכיר אותם עוד שני שלבים.'},
+  {label:'head', lines:[2,3,4,5], tab:true, t:'<b>ראש הדף</b>: הגדרות ומידע על הדף. מה שכתוב כאן <b>לא מופיע בתוך הדף</b>. למשל title – השם שמופיע על הלשונית (מסומנת באדום למעלה).'},
+  {label:'body', lines:[6,7,8,9], body:true, t:'<b>גוף הדף</b>: כל מה שרואים בחלון – כותרות, פסקאות, תמונות, קישורים. כאן עבדתם בשיעור 1, וכאן תכתבו כמעט את כל הקוד שלכם.'}
+];
+seg($('#skelSeg'), SK.map(s => ({label: esc(s.label), mono: true, v: s})), o => {
+  const s = o.v;
+  document.querySelectorAll('#skelCode .ln').forEach(l => l.classList.toggle('peek', s.lines.includes(+l.dataset.i)));
+  skelBr.flash(!!s.tab); $('#skelHost .host').classList.toggle('hl', !!s.body);
+  $('#skelWhat').innerHTML = s.t;
+}, 0);
+
+/* ---------- title ---------- */
+const titleSt = new Stage($('#titleHost .host')).html('<h1>פיצה דני</h1>\n<p>הפיצה הכי טעימה באשקלון</p>');
+const titleBr = chrome($('#titleHost')).url(URL0 + 'index.html');
+function drawTitle(){
+  const t = $('#titleIn').value;
+  const src = ['<head>', '    <meta charset="utf-8" />', '    <title>' + t + '</title>', '</head>', '<body>', '    <h1>פיצה דני</h1>', '    <p>הפיצה הכי טעימה באשקלון</p>', '</body>'];
+  codeLines($('#titleCode'), src.join('\n'), 'html', {2:'new'});
+  titleBr.title(t);
+}
+$('#titleIn').addEventListener('input', drawTitle); drawTitle();
+predict('#pTitle', {
+  q: 'בתוך title כתוב "פיצה דני – הפיצה של אשקלון". <b>איפה</b> הטקסט הזה יופיע?',
+  opts: ['בראש הדף, בגדול – כמו h1', 'על הלשונית של הדפדפן', 'בשום מקום – head לא מוצג'],
+  correct: 1,
+  why: ['את הכותרת שבתוך הדף כותבים ב-h1. title זה משהו אחר.', 'title הוא השם של הדף – והדפדפן מציג אותו על הלשונית. נסו לשנות אותו למטה.', 'נכון ש-head לא מוצג בתוך הדף – אבל את title הדפדפן כן מציג, במקום אחר.'],
+  onCorrect: () => { $('#titleDemo').hidden = false; }
+});
+
+/* ---------- compare helper (code + live mini page, twice) ---------- */
+function compareBox(el, items){
+  el.innerHTML = '';
+  return items.map(it => {
+    const d = document.createElement('div');
+    d.innerHTML = '<pre class="cv"></pre><div class="host"></div><div class="cap">' + it.cap + '</div>';
+    el.appendChild(d);
+    codeLines(d.querySelector('pre'), it.code, 'html', it.m);
+    const st = new Stage(d.querySelector('.host')).html(it.html);
+    if (it.after) it.after(st);
+    return st;
+  });
+}
+/* charset */
+const CS_BODY = ['<body>', '    <h1>פיצה דני</h1>', '    <p>הפיצה הכי טעימה באשקלון</p>', '</body>'];
+compareBox($('#cmpCharset'), [
+  {code: ['<head>', '    <meta charset="utf-8" />', '    <title>פיצה דני</title>', '</head>'].concat(CS_BODY).join('\n'), m:{1:'diff'},
+   html: '<h1>פיצה דני</h1><p>הפיצה הכי טעימה באשקלון</p>', cap:'<b>עם meta charset</b>הדפדפן יודע איך לקרוא את האותיות.'},
+  {code: ['<head>', '    <!-- no charset line -->', '    <title>פיצה דני</title>', '</head>'].concat(CS_BODY).join('\n'), m:{1:'diff'},
+   html: '<h1 class="mb">×¤×™×¦×” ×“× ×™</h1><p class="mb">×”×¤×™×¦×” ×”×›×™ ×˜×¢×™×ž×” ×‘××©×§×œ×•×Ÿ</p>', cap:'<b>בלי meta charset</b>הדפדפן ניחש את הקידוד – וניחש לא נכון.'}
+]);
+/* dir / lang */
+const DIR_BODY = ['<body>', '    <h1>פיצה דני</h1>', '    <p>רעבים? הגעתם למקום הנכון!</p>', '</body>', '</html>'];
+compareBox($('#cmpDir'), [
+  {code: ['<html>'].concat(DIR_BODY).join('\n'), m:{0:'diff'}, html: '<h1>פיצה דני</h1><p>רעבים? הגעתם למקום הנכון!</p>',
+   after: st => { st.page.style.direction = 'ltr'; st.page.setAttribute('dir', 'ltr'); }, cap:'<b>בלי dir</b>הכול נצמד לשמאל, וסימן הקריאה קפץ לצד הלא נכון.'},
+  {code: ['<html lang="he" dir="rtl">'].concat(DIR_BODY).join('\n'), m:{0:'diff'}, html: '<h1>פיצה דני</h1><p>רעבים? הגעתם למקום הנכון!</p>',
+   cap:'<b>עם <code>dir="rtl"</code></b>מימין לשמאל, וכל סימן במקומו.'}
+]);
+
+/* ---------- headings ---------- */
+new Split($('#heads')).setHtml(['<h1>פיצה דני</h1>', '<h2>התפריט</h2>', '<h3>פיצות</h3>', '<h4>פיצות צמחוניות</h4>', '<h5>תוספות</h5>', '<h6>הערות קטנות</h6>', '<p>מרגריטה – 45 שקל</p>'].join('\n'));
+
+/* ---------- br ---------- */
+const br = new Split($('#br'));
+seg($('#brSeg'), ['כמו שכתבנו', 'עם <code>&lt;br /&gt;</code>'], (o,i) => {
+  br.setHtml(['<h2>איך מגיעים?</h2>', '<p>', '    רחוב הנמל 5' + (i ? '<br />' : ''), '    אשקלון' + (i ? '<br />' : ''), '    טלפון: 08-1234567', '</p>'].join('\n'), i ? {2:'new', 3:'new'} : {});
+  br.say(i ? 'שלוש שורות, בדיוק כמו שרצינו.' : 'הכול בשורה אחת – כאילו לא לחצנו Enter.');
+}, 0);
+predict('#pBr', {
+  q: 'איך הכתובת תופיע בדפדפן?',
+  opts: ['בשלוש שורות – בדיוק כמו בקוד', 'בשורה אחת', 'רק השורה הראשונה תופיע'],
+  correct: 1,
+  why: ['ככה זה נראה בקוד – אבל הדפדפן לא מתייחס ל-Enter שבקוד.', 'הדפדפן מתייחס ל-Enter בקוד כאל רווח רגיל. הנה ההוכחה:', 'כל הטקסט יופיע – השאלה רק באיזה סידור.'],
+  onCorrect: () => { $('#brDemo').hidden = false; }
+});
+
+/* ---------- hr & nbsp ---------- */
+const hr = new Split($('#hr'));
+const HR = [
+  {src:['<h2>פיצות</h2>', '<p>מרגריטה – 45 שקל</p>', '<hr />', '<h2>שתייה</h2>', '<p>קולה – 10 שקל</p>'], m:{2:'new'},
+   t:'<code>&lt;hr /&gt;</code> (horizontal rule – קו אופקי) מצייר קו לרוחב הדף, ומפריד בין חלקים. גם היא <b>תגית ריקה</b>, כמו br – בלי סוגרת.'},
+  {src:['<p>מרגריטה        45 שקל</p>', '<p>מרגריטה&nbsp;&nbsp;&nbsp;&nbsp;45 שקל</p>'], m:{0:'diff', 1:'diff'},
+   t:'בשורה הראשונה הקלדנו שמונה רווחים – והדפדפן צמצם אותם לרווח <b>אחד</b>. בשורה השנייה כתבנו ארבע פעמים <code>&amp;nbsp;</code> – וכל אחד מהם הוא רווח אמיתי שלא נעלם.'}
+];
+const heS = t => '<span class="he">' + t + '</span>', pT = c => '&lt;' + c + '<span class="t-tag">p</span>&gt;';
+seg($('#hrSeg'), ['<code>&lt;hr /&gt;</code> – קו מפריד', '<code>&amp;nbsp;</code> – רווח'], (o,i) => {
+  hr.setHtml(HR[i].src.join('\n'), HR[i].m); $('#hrWhat').innerHTML = HR[i].t;
+  // keep the Hebrew words and the spaces in code order (left to right)
+  if (i === 1) [' '.repeat(8), '&amp;nbsp;'.repeat(4)].forEach((gap, k) => { hr.hPre.querySelector('.ln[data-i="' + k + '"]').innerHTML = pT('') + heS('מרגריטה') + gap + heS('45 שקל') + pT('/'); });
+}, 0);
+
+/* ---------- links: a ---------- */
+const l1 = new Split($('#l1')).setHtml('<h1>פיצה דני</h1>\n<p>רעבים? <a href="menu.html">לתפריט שלנו</a></p>');
+l1.stage.onLink = () => l1.say('👆 לחצתם! בדפדפן אמיתי עכשיו הייתם עוברים לדף <code>menu.html</code>. בעוד שני שלבים נבנה את הדף הזה, ותראו את המעבר באמת.');
+l1.say('👆 לחצו על "לתפריט שלנו".');
+
+/* ---------- links: target ---------- */
+const l2 = new Split($('#l2'));
+const l2br = chrome(resultPane(l2), {title:'פיצה דני'});
+let l2blank = false;
+function drawL2(){
+  l2.setHtml('<p>רוצים להגיע אלינו?</p>\n<a href="https://maps.google.com"' + (l2blank ? '\n   target="_blank"' : '') + '>מפה: איך מגיעים</a>', l2blank ? {2:'new'} : {});
+  l2br.reset('פיצה דני').url(URL0 + 'index.html');
+  l2.say('👆 לחצו על הקישור בתוצאה.');
+  $('#l2what').innerHTML = l2blank
+    ? 'עם <code>target="_blank"</code> נפתחה <b>לשונית חדשה</b> (ראו בפס הלשוניות למעלה), והאתר של פיצה דני <b>נשאר פתוח</b> בלשונית שלו.'
+    : 'בלי target, הקישור נפתח <b>באותה לשונית</b>: המפה החליפה את האתר של פיצה דני. כדי לחזור, הגולש צריך ללחוץ "אחורה" – ורבים פשוט לא חוזרים.';
+}
+l2.stage.onLink = a => {
+  if (a.getAttribute('target') === '_blank') {
+    l2br.add('Google Maps', '🗺');
+    toast('🗂 הקישור נפתח בלשונית חדשה – והאתר שלכם נשאר פתוח.');
+    l2.say('נפתחה לשונית חדשה. האתר שלכם עדיין כאן. 👍');
+  } else {
+    l2.stage.html('<h1>🗺 Google Maps</h1>\n<p>(כאן הייתה נפתחת המפה)</p>');
+    l2br.title('Google Maps', '🗺').url('maps.google.com');
+    l2.say('<span class="err">האתר של פיצה דני נעלם מהלשונית!</span> <button class="btn" type="button" id="l2back">← חזרה</button>');
+    $('#l2back').onclick = drawL2;
+  }
+};
+seg($('#l2seg'), ['בלי target', {label:'target="_blank"', mono:true}], (o,i) => { l2blank = i === 1; drawL2(); }, 0);
+
+/* ---------- links: page in our site ---------- */
+$('#l3tree').innerHTML = ['📁 wwwroot', '└─ 📁 HTML', '   ├─ 📄 index.html', '   └─ 📄 menu.html'].join('\n');
+const L3 = {
+  'index.html': {title:'פיצה דני', src:['<h1>פיצה דני</h1>', '<p>הפיצה הכי טעימה באשקלון</p>', '<p><a href="menu.html">לתפריט שלנו</a></p>'].join('\n')},
+  'menu.html': {title:'התפריט – פיצה דני', src:['<h1>התפריט</h1>', '<p>מרגריטה – 45 שקל</p>', '<p>פטריות – 39 שקל</p>', '<p><a href="index.html">חזרה לדף הבית</a></p>'].join('\n')}
+};
+const l3 = new Split($('#l3'), {htmlTitle:'הקוד של הדף הנוכחי'});
+const l3br = chrome(resultPane(l3));
+function goL3(f){
+  l3.setHtml(L3[f].src);
+  l3.el.querySelector('.pane-h').innerHTML = '<span class="dot"></span>HTML/' + f;
+  l3br.title(L3[f].title).url(URL0 + f);
+  l3.say(f === 'index.html' ? 'אתם בדף הבית. 👆 לחצו על "לתפריט שלנו".' : 'עברתם לדף menu.html – ראו את הכתובת. 👆 עכשיו חזרו לדף הבית.');
+}
+l3.stage.onLink = a => { const f = a.getAttribute('href'); if (L3[f]) goL3(f); };
+goL3('index.html');
+
+/* ---------- links: anchors ---------- */
+const L4 = ['<h1 id="top">התפריט</h1>', '<p><a href="#prices">קפיצה למחירון ↓</a></p>', '<h2>על הפיצות שלנו</h2>', '<p>בצק שתופח 24 שעות.</p>', '<p>רוטב עגבניות ביתי.</p>', '<p>גבינה טרייה מהמחלבה.</p>', '<p>תנור אבן חם במיוחד.</p>', '<hr />', '<h2 id="prices">מחירון</h2>', '<p>מרגריטה – 45 שקל</p>', '<p>פטריות – 39 שקל</p>', '<p>זיתים – 39 שקל</p>', '<p><a href="#top">חזרה למעלה ↑</a></p>'].join('\n');
+const l4 = new Split($('#l4'));
+l4.el.classList.add('scrolly');
+l4.setHtml(L4, {1:'new', 8:'new'});
+const l4br = chrome(resultPane(l4), {title:'התפריט – פיצה דני'}).url(URL0 + 'menu.html');
+l4.say('👆 לחצו על "קפיצה למחירון", ואחר כך על "חזרה למעלה" (בתחתית).');
+l4.stage.onLink = a => {
+  const h = a.getAttribute('href') || '';
+  if (h[0] === '#' && jumpTo(l4, h.slice(1))) { l4br.url(URL0 + 'menu.html' + h); l4.say('קפצתם אל התגית עם <code>id="' + esc(h.slice(1)) + '"</code>. שימו לב: גם הכתובת למעלה קיבלה <code>' + esc(h) + '</code> בסוף.'); }
+};
+predict('#pJump', {
+  q: 'בקוד למטה יש קישור <code>href="#prices"</code>. מה יקרה כשתלחצו עליו?',
+  opts: ['ייפתח דף חדש בשם prices', 'הדף יגלול אל התגית שיש לה <code>id="prices"</code>', 'הדף תמיד יגלול לסוף'],
+  correct: 1,
+  why: ['בלי סולמית זה היה מחפש קובץ. הסולמית אומרת: "בתוך הדף הזה".', 'בדיוק. לחצו עליו בתוצאה ובדקו.', 'הוא לא הולך לסוף – הוא הולך בדיוק לתגית עם ה-id הזה, איפה שהיא לא תהיה.'],
+  onCorrect: () => { $('#l4what').hidden = false; }
+});
+
+/* ---------- links: three kinds ---------- */
+predict('#pTypes', {
+  q: 'בדף menu.html רוצים קישור לדף order.html, שנמצא <b>באותה תיקייה</b>. מה כותבים?',
+  opts: ['<code>href="https://order.html"</code>', '<code>href="order.html"</code>', '<code>href="#order"</code>'],
+  correct: 1,
+  why: ['<code>https://</code> הוא לכתובת מלאה של אתר באינטרנט. אין באינטרנט אתר בשם order.html.', 'דף באותה תיקייה = רק שם הקובץ. נתיב יחסי.', 'הסולמית קופצת למקום <b>בתוך הדף הנוכחי</b>, לא לדף אחר.']
+});
+
+/* ---------- images: img ---------- */
+new Split($('#i1')).setHtml('<h1>פיצה דני</h1>\n<img src="../Img/pizza.jpg" />', {1:'new'});
+
+/* ---------- images: path walker ---------- */
+const FT = [['wwwroot', 0, 'root'], ['css', 1, 'css'], ['HTML', 1, 'html'], ['index.html', 2, 'page'], ['menu.html', 2, 'menu'], ['Img', 1, 'img'], ['pizza.jpg', 2, 'file']];
+const FTG = ['', '├─ ', '├─ ', '│  ├─ ', '│  └─ ', '└─ ', '   └─ '];
+$('#ftree').innerHTML = FT.map(([n, d, id], i) => FTG[i] + '<span class="f" data-f="' + id + '"' + (id === 'file' ? ' title="🥚 הקוד הסודי: OREGANO"' : '') + '>' + (id === 'page' || id === 'menu' ? '📄 ' : id === 'file' ? '🖼 ' : '📁 ') + n + '</span>').join('\n');
+const WALK = [
+  {at:'page', path:'', t:'מתחילים <b>בדף</b> – index.html, שנמצא בתיקייה HTML. מכאן הדפדפן מתחיל לחפש. התמונה לא כאן.'},
+  {at:'root', path:'../', t:'<code>../</code> = "עלו תיקייה אחת למעלה". יצאנו מ-HTML, ועכשיו אנחנו ב-wwwroot.'},
+  {at:'img', path:'../Img/', t:'<code>Img/</code> = "היכנסו לתיקייה Img".'},
+  {at:'file', path:'../Img/pizza.jpg', t:'<code>pizza.jpg</code> = הקובץ עצמו. הגענו! זה הנתיב שכותבים ב-src.'}
+];
+let wi = 0;
+function drawWalk(){
+  const w = WALK[wi];
+  document.querySelectorAll('#ftree .f').forEach(f => { f.classList.toggle('here', f.dataset.f === w.at); f.classList.toggle('goal', f.dataset.f === 'file' && wi < 3); });
+  $('#pathbox').innerHTML = 'src=<span class="t-str">"' + esc(w.path) + '"</span>';
+  $('#walkTxt').innerHTML = w.t; $('#walkNext').disabled = wi === WALK.length - 1;
+}
+$('#walkNext').addEventListener('click', () => { if (wi < WALK.length - 1) { wi++; drawWalk(); } });
+$('#walkReset').addEventListener('click', () => { wi = 0; drawWalk(); });
+drawWalk();
+predict('#pPath', {
+  q: 'ואם הדף היה נמצא <b>ישר בתוך wwwroot</b> (לא בתוך HTML)? מה הנתיב לתמונה?',
+  opts: ['<code>../Img/pizza.jpg</code>', '<code>Img/pizza.jpg</code>', '<code>../../Img/pizza.jpg</code>'],
+  correct: 1,
+  why: ['<code>../</code> היה מוציא אותנו מ-wwwroot החוצה – ושם אין תיקייה Img.', 'הדף כבר נמצא ב-wwwroot, ליד Img – אז לא צריך לעלות. נכנסים ישר ל-Img.', 'זה עולה שתי תיקיות. הדף כבר נמצא בתיקייה הנכונה.']
+});
+
+/* ---------- images: size ---------- */
+const i3 = new Split($('#i3'));
+seg($('#i3seg'), ['60', '120', '200'].map(v => ({label:'width="' + v + '"', mono:true, v})), o => i3.setHtml('<p>המנה של היום:</p>\n<img src="../Img/pizza.jpg" alt="פיצה"\n     width="' + o.v + '" />', {2:'diff'}), 1);
+compareBox($('#i3cmp'), [
+  {code:'<img src="../Img/pizza.jpg" alt="פיצה"\n     width="120" />', m:{1:'diff'}, html:'<img src="../Img/pizza.jpg" alt="פיצה" width="120" />', cap:'<b>רק width</b>הגובה חושב לבד – הפיצה נשארה עגולה.'},
+  {code:'<img src="../Img/pizza.jpg" alt="פיצה"\n     width="120" height="60" />', m:{1:'diff'}, html:'<img src="../Img/pizza.jpg" alt="פיצה" width="120" height="60" />', cap:'<b>width וגם height</b>הגובה לא מתאים לרוחב – הפיצה נמעכה.'}
+]);
+
+/* ---------- images: alt ---------- */
+predict('#pAlt', {
+  q: 'כתבנו <code>src="../Img/piza.jpg"</code> – עם טעות בשם הקובץ. מה יופיע בדף?',
+  opts: ['כלום – רק מקום ריק', 'סמל של תמונה שבורה, ולידו הטקסט של alt', 'הודעת שגיאה אדומה בדף', 'הפיצה תופיע בכל זאת'],
+  correct: 1,
+  why: ['כמעט – הדפדפן כן מראה משהו, כדי שתדעו שהייתה כאן תמונה.', 'בדיוק. בגלל זה כותבים alt: הוא מה שנשאר כשהתמונה נשברת.', 'אין הודעות שגיאה בדף (את השגיאה רואים רק ב-F12).', 'הדפדפן מחפש בדיוק את השם שכתבתם. קובץ בשם piza.jpg לא קיים.'],
+  onCorrect: () => { $('#altDemo').hidden = false; }
+});
+compareBox($('#altCmp'), [
+  {code:'<img src="../Img/piza.jpg" alt="פיצה מרגריטה"\n     width="160" />', m:{0:'diff'}, html:'<p>המנה של היום:</p><img src="../Img/pizza.jpg" alt="פיצה מרגריטה" width="160" />', after: breakImgs, cap:'<b>נתיב שגוי (piza)</b>סמל שבור + הטקסט של alt.'},
+  {code:'<img src="../Img/pizza.jpg" alt="פיצה מרגריטה"\n     width="160" />', m:{0:'diff'}, html:'<p>המנה של היום:</p><img src="../Img/pizza.jpg" alt="פיצה מרגריטה" width="160" />', cap:'<b>נתיב נכון (pizza)</b>התמונה נטענה, וה-alt מחכה בשקט.'}
+]);
+$('#eggAlt').src = PIZZA_IMG;
+
+/* ---------- images: image as link ---------- */
+const i6 = new Split($('#i6')).setHtml(['<p>לחצו על הפיצה כדי לראות את התפריט:</p>', '<a href="menu.html">', '    <img src="../Img/pizza.jpg" alt="לתפריט" width="100" />', '</a>'].join('\n'), {1:'new', 3:'new'});
+i6.stage.onLink = () => i6.say('👆 בדפדפן אמיתי, לחיצה על התמונה הייתה מעבירה אתכם לדף <code>menu.html</code>.');
+
+/* ---------- block & inline ---------- */
+const kinds = new Split($('#kinds')).setHtml(['<h2>המנות של היום</h2>', '<img src="../Img/margherita.jpg" alt="מרגריטה" width="80" />', '<img src="../Img/mushrooms.jpg" alt="פטריות" width="80" />', '<p>מרגריטה – <b>45 שקל</b></p>', '<hr />', '<p>פטריות – <a href="#">להזמנה</a></p>'].join('\n'));
+seg($('#kindsSeg'), ['הדף כרגיל', 'הראו לי block ו-inline'], (o,i) => kinds.stage.page.classList.toggle('kinds', i === 1), 1);
+predict('#pKinds', {
+  q: 'בקוד יש שתי תמונות, כל אחת <b>בשורה נפרדת</b> בקוד. איפה הן יופיעו בדף?',
+  opts: ['אחת מתחת לשנייה', 'אחת ליד השנייה'],
+  correct: 1,
+  why: ['ככה מתנהגות פסקאות וכותרות (block). תמונה היא inline – כמו מילה. וזוכרים? Enter בקוד הוא רק רווח.', 'תמונה היא inline: היא יושבת בתוך השורה כמו מילה, ולכן התמונה הבאה ממשיכה לידה.'],
+  onCorrect: () => { $('#kindsDemo').hidden = false; }
+});
+
+/* ---------- the full live site ---------- */
+const SITE = {
+  'index.html': {title:'פיצה דני', src: HOME},
+  'menu.html': {title:'התפריט – פיצה דני', src: MENU},
+  'kitchen.html': {title:'המטבח הסודי', src: KITCHEN}
+};
+const STASKS = [
+  {id:'menu', t:'עברו מדף הבית לדף התפריט'},
+  {id:'img', t:'עברו לתפריט דרך <b>התמונה</b> בדף הבית'},
+  {id:'jump', t:'בתפריט, קפצו למחירון'},
+  {id:'home', t:'חזרו מהתפריט לדף הבית'},
+  {id:'ext', t:'פתחו את המפה – ושימו לב לפס הלשוניות'},
+  {id:'url', t:'כתבו בשורת הכתובת <code>menu.html</code> במקום <code>index.html</code> ולחצו Enter'}
+];
+const siteDone = state.site || {};
+$('#siteTasks').innerHTML = STASKS.map((t,i) => '<li data-t="' + t.id + '"><span class="st">' + (i+1) + '</span><span>' + t.t + '</span></li>').join('');
+function paintSite(){ STASKS.forEach((t,i) => { const li = $('#siteTasks [data-t="' + t.id + '"]'); li.classList.toggle('done', !!siteDone[t.id]); li.querySelector('.st').textContent = siteDone[t.id] ? '✔' : (i+1); }); }
+function siteTask(id){ if (!siteDone[id]) { siteDone[id] = true; state.site = siteDone; save(); paintSite(); } }
+const site = new Split($('#site'), {htmlTitle:'HTML/index.html'});
+const siteBr = chrome(resultPane(site), {editable:true});
+let siteCur = 'index.html';
+function goSite(f, hash, missing){
+  const host = site.el.querySelector('.host');
+  const ok = !!SITE[f] && !missing;
+  if (ok) { site.setHtml(SITE[f].src); siteBr.title(SITE[f].title, f === 'kitchen.html' ? '🔥' : '🍕'); }
+  else { site.setHtml(NOTFOUND); siteBr.title('404 – לא נמצא', '⚠'); }
+  site.el.querySelector('.pane-h').innerHTML = '<span class="dot"></span>' + (ok ? 'HTML/' + esc(f) : 'אין קובץ כזה!');
+  if (ok) siteCur = f;
+  host.scrollTop = 0;
+  if (ok) siteBr.url(URL0 + f + (hash ? '#' + hash : ''));
+  if (!ok) site.say('<span class="err">404: הדפדפן לא מצא קובץ בכתובת הזו.</span> בדקו את שם הקובץ (כולל <code>.html</code>) ואת שם התיקייה.');
+  else if (f === 'kitchen.html') { findEgg('kitchen'); site.say('🔑 מצאתם את הקישור הבלתי נראה!'); }
+  else site.say('');
+  if (hash) setTimeout(() => {
+    if (jumpTo(site, hash)) { if (f === 'menu.html' && hash === 'oven') { findEgg('oven'); site.say('🔥 קפצתם ישר לתנור – רק בעזרת <code>#oven</code> בכתובת!'); } }
+  }, 60);
+}
+site.stage.onLink = a => {
+  const h = a.getAttribute('href') || '';
+  if (/^https?:/.test(h)) {
+    if (a.getAttribute('target') === '_blank') { siteBr.add('Google Maps', '🗺'); toast('🗂 המפה נפתחה בלשונית חדשה – והאתר נשאר פתוח.'); siteTask('ext'); }
+    return;
+  }
+  if (h[0] === '#') { if (jumpTo(site, h.slice(1))) { siteBr.url(URL0 + siteCur + h); if (h === '#prices') siteTask('jump'); } return; }
+  const [f, hash] = h.split('#');
+  if (siteCur === 'index.html' && f === 'menu.html') { siteTask('menu'); if (a.querySelector('img')) siteTask('img'); }
+  if (siteCur === 'menu.html' && f === 'index.html') siteTask('home');
+  goSite(f, hash);
+};
+siteBr.onGo = v => {
+  const s = v.replace(/^https?:\/\//, '');
+  const m = s.match(/([^\/#?]*)(?:#(.*))?$/);
+  const f = (m && m[1]) || siteCur, hash = m && m[2];
+  // a path with folders must go through the HTML folder, like the real site
+  if (s.includes('/') && !/(^|\/)HTML\/[^\/]*$/.test(s)) return goSite(f, null, true);
+  if (f === 'menu.html' && siteCur !== 'menu.html') siteTask('url');
+  goSite(f, hash);
+};
+goSite('index.html'); paintSite();
+
+/* ---------- playground ---------- */
+const START_HTML = ['<h1>פיצה דני</h1>', '<p>הפיצה הכי טעימה באשקלון</p>', '<p>רחוב הנמל 5 אשקלון טלפון: 08-1234567</p>', '<p>מחכים לכם!</p>'].join('\n');
+let PG = null;
+const src = () => PG ? PG.edH.value : '';
+const TASKS = [
+  {id:'link', text:'הוסיפו קישור לדף התפריט: <code>menu.html</code>, עם טקסט שאומר לאן הוא מוביל.',
+   test: d => [...d.querySelectorAll('a')].some(a => a.getAttribute('href') === 'menu.html' && a.textContent.trim().length > 0)},
+  {id:'img', text:'הוסיפו תמונה של פיצה מהתיקייה Img (<code>../Img/pizza.jpg</code>) – <b>עם alt</b>.',
+   test: d => /<img[^>]*src\s*=\s*"\.\.\/Img\/[A-Za-z0-9_.-]+"/.test(src()) && [...d.images].some(i => (i.getAttribute('alt') || '').trim() && i.src.startsWith('data:'))},
+  {id:'width', text:'קבעו לתמונה רוחב של 150 פיקסלים.',
+   test: d => [...d.images].some(i => i.getAttribute('width') === '150')},
+  {id:'br', text:'פצלו את שורת הכתובת לשלוש שורות: רחוב, עיר, טלפון.',
+   test: d => [...d.querySelectorAll('p')].some(p => p.querySelectorAll('br').length >= 2)},
+  {id:'ext', text:'הוסיפו קישור לאתר אחר (כתובת מלאה, שמתחילה ב-<code>https://</code>) שנפתח <b>בלשונית חדשה</b>.',
+   test: d => [...d.querySelectorAll('a')].some(a => /^https:\/\/./.test(a.getAttribute('href') || '') && a.getAttribute('target') === '_blank')},
+  {id:'top', text:'קישור "חזרה למעלה": תנו לכותרת h1 את המאפיין <code>id="top"</code>, והוסיפו בסוף הדף קישור שקופץ אליה.',
+   test: d => { const h = d.querySelector('h1'); return !!h && h.id === 'top' && [...d.querySelectorAll('a')].some(a => a.getAttribute('href') === '#top'); }},
+  {id:'imglink', text:'אתגר: הפכו את התמונה לקישור לדף menu.html. (רמז: <a href="#" data-go="images:6">תמונה שהיא קישור</a>.)',
+   test: d => !!d.querySelector('a[href="menu.html"] img')}
+];
+PG = playground('#pg', {html: START_HTML, tasks: TASKS, htmlLabel: 'HTML – index.html (התוכן של body)', url: URL0 + 'index.html', height: 400,
+  onRender: (d, h) => {
+    if (/&#x0*1F95A;|&#0*129370;/i.test(h || '')) findEgg('emoji');
+    d.addEventListener('click', e => {
+      const a = e.target.closest && e.target.closest('a'); if (!a) return;
+      const href = a.getAttribute('href') || '';
+      e.preventDefault();
+      if (href[0] === '#') { const t = d.getElementById(href.slice(1)); if (t) d.scrollingElement.scrollTo({top: t.offsetTop - 8, behavior: 'smooth'}); else toast('⚠ אין בדף תגית עם <code>id="' + esc(href.slice(1)) + '"</code>'); return; }
+      toast((a.getAttribute('target') === '_blank' ? '🗂 בדפדפן אמיתי, הקישור היה נפתח בלשונית חדשה: ' : '👆 בדפדפן אמיתי, הייתם עוברים אל: ') + '<code>' + esc(href) + '</code>');
+    });
+  }});
+doneCheck('#stepDone', 'step');
+
+/* ---------- quiz ---------- */
+quiz('#quiz', [
+  {q:'הדף נמצא בתיקייה HTML, והתמונה בתיקייה Img. מה כותבים ב-src?', opts:['<code>Img/pizza.jpg</code>', '<code>../Img/pizza.jpg</code>', '<code>C:\\Users\\Pictures\\pizza.jpg</code>'], correct:1,
+   why:['זה מחפש תיקייה Img <b>בתוך</b> HTML – ואין שם כזו. צריך קודם לעלות.', 'עולים מ-HTML ל-wwwroot (<code>../</code>), ונכנסים ל-Img.', 'זה נתיב במחשב שלכם בלבד. באתר אמיתי אף גולש לא יראה את התמונה. ראו <a href="#" data-go="images:2">את הדרך אל התמונה</a>.']},
+  {q:'איזה קישור ייפתח <b>בלשונית חדשה</b>?', opts:['<code>target="_target"</code>', '<code>target="_blank"</code>', '<code>target="new"</code>'], correct:1,
+   why:['זה מה שכתוב במצגת – אבל זו טעות. הערך הנכון הוא _blank.', 'blank = ריק: "פתח לשונית חדשה וריקה".', 'זה לא ערך מוכר של target.']},
+  {q:'מה לא תקין בקוד <code>&lt;b&gt;&lt;i&gt;במבצע&lt;/b&gt;&lt;/i&gt;</code>?', opts:['אסור לשים תגית בתוך תגית', 'סדר הסגירה: i נפתחה אחרונה, אז היא צריכה להיסגר ראשונה', 'חסרה תגית br'], correct:1,
+   why:['מותר גם מותר – זה קינון.', 'נכון: <code>&lt;b&gt;&lt;i&gt;במבצע&lt;/i&gt;&lt;/b&gt;</code>. מה שנפתח אחרון – נסגר ראשון.', 'br היא ירידת שורה, אין קשר. <a href="#" data-go="anatomy:2">חזרה לקינון</a>.']},
+  {q:'בדף יש <code>&lt;h2 id="prices"&gt;מחירון&lt;/h2&gt;</code>. איך כותבים קישור שקופץ אליו?', opts:['<code>href="prices"</code>', '<code>href="#prices"</code>', '<code>id="#prices"</code>'], correct:1,
+   why:['בלי סולמית הדפדפן מחפש קובץ בשם prices.', 'הסולמית אומרת "בתוך הדף הזה", ואחריה ה-id.', 'את הסולמית כותבים בקישור (href), לא ב-id עצמו.']},
+  {q:'העברית בדף נראית כמו <span class="mojibake">×¤×™×¦×”</span>. מה כנראה חסר?', opts:['<code>dir="rtl"</code>', '<code>&lt;meta charset="utf-8" /&gt;</code>', '<code>lang="he"</code>'], correct:1,
+   why:['dir קובע כיוון, לא איך קוראים את האותיות.', 'בלי charset הדפדפן מנחש את הקידוד – וכאן ניחש לא נכון.', 'lang אומר באיזו שפה הדף, אבל לא איך לקרוא את האותיות מהקובץ.']}
+]);
+
+/* ---------- easter eggs ---------- */
+const EGGS = [
+  {id:'kitchen', icon:'🔑', name:'הקישור הבלתי נראה', learn:'הטקסט של קישור הוא מה שהגולש רואה. קישור שכל הטקסט שלו הוא <code>&amp;nbsp;</code> (רווח) הוא קישור שאף אחד לא ימצא – לכן כותבים בקישור טקסט ברור.',
+   h1:'באתר החי של פיצה דני (השלב האחרון בנושא "תמונות") מסתתר קישור שאי אפשר לראות. קראו את הקוד של דף התפריט...', h2:'בקוד של menu.html יש קישור שהטקסט שלו הוא רק <code>&amp;nbsp;</code>. בתוצאה, העבירו את העכבר לאט מימין לשמאל אחרי "לדף הבית" – כשהסמן הופך ליד 👆, לחצו.'},
+  {id:'oven', icon:'🔥', name:'התנור שבכתובת', learn:'החלק שאחרי # בכתובת אומר לדפדפן לאיזה id לקפוץ. ככה אפשר לשלוח לחבר קישור ישר לחלק מסוים בדף.',
+   h1:'בדף התפריט של האתר החי יש תגית עם id שאף קישור לא מוביל אליה. אבל קישור הוא לא הדרך היחידה לקפוץ ל-id...', h2:'בשורת הכתובת של האתר החי כתבו <code>localhost:7123/HTML/menu.html#oven</code> ולחצו Enter.'},
+  {id:'emoji', icon:'🥚', name:'הביצה שנכתבה במספר', learn:'לכל תו בעולם יש מספר (בתקן שנקרא Unicode), ואפשר לכתוב כל תו ב-HTML כישות לפי המספר שלו – למשל <code>&amp;#x1F95A;</code>.',
+   h1:'לכל תו יש מספר – גם לאימוג\'י. בשלב "קו מפריד ורווח" יש טבלה שמסבירה איך כותבים תו לפי המספר שלו. המספר של 🥚 הוא 1F95A.', h2:'בארגז החול (בנושא "תרגול וסיכום") כתבו בתוך פסקה: <code>&amp;#x1F95A;</code>'},
+  {id:'tooltip', icon:'💬', name:'הבועה הנסתרת', learn:'המאפיין title מציג "בועה" (tooltip) כשמחזיקים את העכבר מעל תגית – בלי שום קוד נוסף.',
+   h1:'למדתם על המאפיין title, שמציג בועה כשהעכבר מעל תגית. באחד משלבי "תמונות" מסתתרת בועה כזו.', h2:'בשלב "הדרך אל התמונה", החזיקו את העכבר מעל הקובץ pizza.jpg בעץ התיקיות וחכו שנייה. (בטלפון זה לא עובד – נסו במחשב.)', code:'T1JFR0FOTw=='},
+  {id:'alt', icon:'🖼', name:'מה שה-alt מסתיר', learn:'alt מופיע רק כשהתמונה לא נטענת. ב-F12 אפשר לראות את כל המאפיינים של כל תגית – גם את אלה שלא מוצגים.',
+   h1:'יש בדף תמונה שה-alt שלה מסתיר סוד. אבל alt מופיע רק כשמשהו משתבש...', h2:'בשלב "התמונה לא מופיעה!" יש פיצה קטנה בסוף. לחצו עליה קליק ימני ← Inspect (בדיקה), וקראו את ה-alt שלה. או: שנו שם את ה-src למשהו שגוי.', code:'QkFTSUw='}
+];
+/* the browser's own address bar works too (when this page is opened directly) */
+const ovenCheck = () => { if (location.hash === '#oven') { $('#oven').textContent = ' · 🔥 התנור של דני'; findEgg('oven'); } };
+window.addEventListener('hashchange', ovenCheck);
+const hash0 = location.hash;
+Course.start({eggs: EGGS, console: ['🍕 שלום, מפתחים!', 'בשיעור הזה הביצים לא בקונסול 😉\nאבל F12 יעזור לכם למצוא לפחות אחת מהן.\nרמז: לא כל מה שכתוב על תמונה – רואים.']});
+if (hash0 === '#oven') { $('#oven').textContent = ' · 🔥 התנור של דני'; findEgg('oven'); }
+})();
+</script>
+</body>
+</html>

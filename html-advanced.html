@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>שיעור 4 – טבלאות, רשימות וטפסים | המדריך המעשי</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/course.css" />
+<style>
+.trio{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:12px 0}
+@media (max-width:700px){.trio{grid-template-columns:1fr}}
+.trio .cap{font-size:15px;margin-top:6px;line-height:1.5}
+.trio .cap b{display:block}
+.compare .cv{margin-bottom:8px}
+.compare .res-note{min-height:1.6em}
+.flow{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px 10px;margin:14px 0}
+.flow .box{background:var(--surface2);border:1px solid var(--line);border-radius:12px;padding:8px 14px;text-align:center;font-size:15px;line-height:1.45}
+.flow .box b{display:block}
+.flow .arr{font-size:13px;color:var(--muted);text-align:center;line-height:1.3}
+.flow .arr span{display:block;font-size:20px;color:var(--accent)}
+@media (max-width:600px){.flow{flex-direction:column}.flow .arr span{transform:rotate(-90deg)}}
+.urlbar .url{min-width:0}
+.pg>div{min-width:0}
+.urlbar .url[contenteditable]{cursor:text}
+.urlbar .url[contenteditable]:focus{outline:2px solid var(--accent);outline-offset:1px;text-overflow:clip}
+#g2anat .tok code{font-size:15px;padding:4px 10px}
+#g2anat .tok{max-width:100%}
+#g2anat .tok code{white-space:normal;overflow-wrap:anywhere}
+.lockrow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:10px 0}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.spread>table td code,.predict .q code{white-space:nowrap}
+.ctl{padding-inline-start:20px}.ctl li{margin:6px 0}
+</style>
+</head>
+<body data-lesson="l4" data-title="שיעור 4" data-next="bootstrap.html" data-next-name="Bootstrap">
+<header class="topbar"><div class="in">
+  <span class="brand">🛠 שיעור 4 · טבלאות וטפסים</span>
+  <span class="now" id="now"></span>
+  <span class="progress" title="שלבים שעברתם בשיעור"><span class="bar"><i id="progBar"></i></span> <span id="progTxt">0/0</span></span>
+  <button class="eggbtn" id="eggBtn" type="button" title="ביצי הפתעה – לחצו לרמזים">🥚 <span id="eggCount">0/5</span></button>
+  <button class="themebtn" id="themeBtn" type="button">🌓 מצב תצוגה</button>
+</div></header>
+<dialog id="eggDlg" aria-labelledby="eggTitle">
+  <div class="dlg-h"><h3 id="eggTitle">🥚 ביצי הפתעה</h3><button class="btn" type="button" id="eggClose" aria-label="סגירה">✕</button></div>
+  <p class="muted" id="eggIntro">בדף מוחבאות 5 ביצים. כל אחת נמצאת בעזרת משהו שלומדים בשיעור. תקועים? לחצו על "רמז נוסף".</p>
+  <ul class="egglist" id="eggList"></ul>
+  <form class="codebox" id="codeForm"><label for="codeIn">מצאתם קוד סודי?</label><input id="codeIn" autocomplete="off" spellcheck="false" placeholder="הקלידו כאן" /><button class="btn primary" type="submit">בדיקה</button></form>
+  <p id="codeMsg" class="res-note"></p>
+</dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="party" id="party" aria-hidden="true"></div>
+
+<main>
+<div class="lesson-head">
+  <div class="school">אורט הנרי רונסון אשקלון · מגמת מדעי המחשב והנדסת תוכנה · יוחאי פרץ</div>
+  <h1>שיעור 4 – טבלאות, רשימות וטפסים</h1>
+</div>
+<nav class="topics" id="topics" aria-label="נושאי השיעור"></nav>
+<nav class="steps" id="steps" aria-label="השלבים בנושא"></nav>
+
+<!-- ===================== 1. opening ===================== -->
+<section class="topic" data-id="start" data-icon="🌱" data-title="פתיחה">
+  <article class="spread welcome">
+    <h3>ברוכים הבאים לשיעור 4 👋</h3>
+    <p class="lead">בשיעור 3 למדתם לעצב דפים. היום תוסיפו לאתר של פיצה דני שלושה כלים חדשים: <b>טבלה</b> שמסדרת מידע, <b>תפריט</b> של קישורים, ו<b>טופס</b> שקולט מידע מהגולשים. בסוף השיעור תדעו לבנות בעצמכם את הדף הזה:</p>
+    <div class="preview-goal"><div id="welcomeStage"></div></div>
+    <h4>איך לומדים את השיעור?</h4>
+    <div class="ways">
+      <div class="way main"><b>📖 כאן, בדף הזה</b>הדף מכסה את כל מה שיש בסרטון ובמצגת, ומוסיף דוגמאות חיות לשחק בהן. מתאים למי שאוהב לקרוא ולנסות.</div>
+      <div class="way"><b>🎬 מעדיפים סרטון?</b>הסרטון של השיעור נמצא בקלאסרום. אחריו, קפצו ישר ל<a href="#" data-go="practice:1">תרגול וסיכום</a>.</div>
+      <div class="way"><b>🎧 פודקסט</b>תוספת, לא חובה: לשמוע את הרעיונות הגדולים בדרך הביתה.</div>
+    </div>
+    <h4>איך הדף עובד?</h4>
+    <ul class="how">
+      <li>🧭 <b>7 נושאים</b> (הלשוניות למעלה), ובכל אחד כמה שלבים קצרים. רואים <b>שלב אחד בכל פעם</b>.</li>
+      <li>👆 כל דוגמה כאן <b>חיה</b>: ממלאים טפסים, לוחצים "שליחה" ורואים בדיוק מה נשלח. אי אפשר לשבור כלום.</li>
+      <li>❓ לפני חלק מהתוצאות יש שאלת ניחוש. מותר לטעות – בשביל זה היא שם.</li>
+      <li>💾 ההתקדמות נשמרת בדפדפן הזה. בערך 50 דקות בסך הכול – אפשר בכמה ישיבות.</li>
+    </ul>
+    <div class="eggnote">🥚 <b>ועוד משהו:</b> בדף מוחבאות <b>5 ביצי הפתעה</b>. הפעם הן מסתתרות בתוך טפסים וטבלאות – וכדי למצוא אותן תצטרכו את מה שתלמדו היום (וקצת F12). המונה למעלה; לחיצה עליו נותנת רמזים.</div>
+  </article>
+  <article class="spread">
+    <h3>שלושה כלים, שלוש משימות</h3>
+    <p>כל אחד מהכלים של היום פותר בעיה אחרת. הנה שלושתם, בגרסה קטנה:</p>
+    <div class="trio" id="trio"></div>
+    <div class="tip">🧩 בהגשה 1 תבנו שלושה טפסים: <b>כניסה</b>, <b>הרשמה</b> ו<b>שחזור סיסמה</b>. בסוף השיעור יהיו לכם כל הכלים לזה – ובצעד בפרויקט תתחילו לבנות אותם.</div>
+  </article>
+</section>
+
+<!-- ===================== 2. tables ===================== -->
+<section class="topic" data-id="tables" data-icon="📊" data-title="טבלאות">
+  <article class="spread">
+    <h3>טבלה בסיסית: table, tr, td</h3>
+    <p>טבלה בנויה משלוש תגיות שנכנסות אחת בתוך השנייה (קינון – כמו שלמדתם בשיעור 2):</p>
+    <div class="anat">
+      <div class="tok" style="--tc:#f9a8d4"><code>&lt;table&gt;</code><span><b>הטבלה</b>עוטפת את הכול</span></div>
+      <div class="tok" style="--tc:#93c5fd"><code>&lt;tr&gt;</code><span><b>שורה</b>table row</span></div>
+      <div class="tok" style="--tc:#86efac"><code>&lt;td&gt;</code><span><b>תא</b>table data</span></div>
+    </div>
+    <p>הנה התפריט של פיצה דני: שתי שורות, ובכל שורה שלושה תאים. העבירו את העכבר על שורה בקוד – והחלק שלה יסומן בתוצאה.</p>
+    <div class="ctrls"><div class="seg" id="t1seg"></div></div>
+    <div id="t1"></div>
+    <div class="what">כל <code>tr</code> הפך לשורה, וכל <code>td</code> לתא. הדפדפן סידר את התאים <b>בעמודות ישרות</b> לבד. ושימו לב: <b>בלי CSS אין קווים בכלל</b> – הטבלה נראית כמו טקסט מסודר. את הקווים מוסיפים עם <code>border</code>, שלמדתם בשיעור 3.</div>
+    <div class="bridge">חשבו על גיליון אקסל: יש בו שורות, ובכל שורה תאים. ב-HTML זה אותו מבנה בדיוק: <code>tr</code> = שורה באקסל, <code>td</code> = תא באקסל, ו-<code>table</code> = הגיליון כולו. ההבדל: באקסל השורות כבר מחכות לכם, וב-HTML כותבים כל שורה וכל תא בעצמכם.</div>
+    <div class="tip">💡 בדוגמאות ישנות ברשת תראו <code>&lt;table border="1"&gt;</code>. זה עובד, אבל היום את הקווים מעצבים ב-CSS – כמו כל עיצוב אחר.</div>
+  </article>
+  <article class="spread">
+    <h3>שורות, תאים – ואיפה העמודות?</h3>
+    <p>יש תגית לשורה (<code>tr</code>) ויש תגית לתא (<code>td</code>). ומה עם עמודות?</p>
+    <div class="predict" id="pCol"></div>
+    <p>בחרו מה לסמן, ובדקו מה נצבע באדום – בקוד ובתוצאה:</p>
+    <div class="ctrls"><div class="seg" id="t2seg"></div></div>
+    <div class="ctrls"><button class="btn" id="t2add" type="button">➕ הוסיפו שורה</button><button class="btn" id="t2break" type="button">🔨 תראו לי: שורה עם תא חסר</button></div>
+    <div id="t2"></div>
+    <div class="what" id="t2what" hidden>אין תגית לעמודה. הדפדפן בונה את העמודות <b>לפי הסדר</b>: ה-<code>td</code> הראשון בכל שורה נכנס לעמודה הראשונה, השני – לשנייה, וכן הלאה. לכן חשוב שבכל שורה יהיה <b>אותו מספר תאים</b>. שורה עם תא חסר – תיראה "שבורה" (נסו את הכפתור 🔨).</div>
+  </article>
+  <article class="spread">
+    <h3>ראש הטבלה: thead, tbody ו-th</h3>
+    <p>לטבלה טובה יש <b>שורת כותרות</b>: מנה, מחיר. כדי שהדפדפן ידע שזו כותרת ולא עוד שורה של מידע, יש שלוש תגיות:</p>
+    <table>
+      <tr><th>תגית</th><th>מה היא</th></tr>
+      <tr><td><code>thead</code></td><td>ראש הטבלה – עוטפת את שורת הכותרות</td></tr>
+      <tr><td><code>tbody</code></td><td>גוף הטבלה – עוטפת את שורות המידע</td></tr>
+      <tr><td><code>th</code></td><td>תא כותרת (table header) – נכתב במקום <code>td</code></td></tr>
+    </table>
+    <p>אותה טבלה, פעמיים. בראשונה שורת הכותרות היא שורה רגילה; בשנייה – עם התגיות החדשות:</p>
+    <div class="compare" id="t3"></div>
+    <div class="predict" id="pTh"></div>
+    <div id="t3after" hidden>
+      <div class="codeblock"><pre data-code="css">
+th {
+    background-color: orange;
+    color: white;
+}</pre></div>
+      <div class="what">גם בלי CSS כבר היה הבדל: הדפדפן מציג <code>th</code> <b>מודגש ובמרכז</b> – הוא יודע שזו כותרת. ועם CSS: אותו כלל בדיוק צבע רק את הטבלה השנייה, כי רק בה יש <code>th</code>. זו הסיבה העיקרית לחלוקה: <b>לעצב את הראש אחרת מהגוף</b>.</div>
+    </div>
+    <details class="more"><summary>🐢 רוצים הסבר לאט יותר?</summary>
+      <p>כל אחת משלוש התגיות אומרת לדפדפן משהו אחר:</p>
+      <ul>
+        <li><code>th</code> אומר: "<b>התא הזה</b> הוא כותרת של עמודה".</li>
+        <li><code>thead</code> אומר: "<b>השורות האלה</b> הן ראש הטבלה".</li>
+        <li><code>tbody</code> אומר: "מכאן מתחיל <b>המידע</b>".</li>
+      </ul>
+      <p>כשהדפדפן יודע מה כל חלק, אפשר לפנות לכל חלק בנפרד ב-CSS: <code>th</code> לכותרות בלבד, <code>tbody tr</code> לשורות המידע בלבד (תראו את זה בשלב 5). יש גם בונוס: תוכנות שמקריאות דפים לעיוורים (קוראי מסך) מקריאות את הכותרת יחד עם כל תא – "מחיר: 45 שקל".</p>
+    </details>
+  </article>
+  <article class="spread">
+    <h3>מה מותר לשים בתוך תא?</h3>
+    <p>בתוך <code>td</code> או <code>th</code> אפשר לשים <b>כל תגית</b>: טקסט, תמונה, קישור – ואפילו כפתור. אבל יש כלל אחד שאסור לשבור: <b>תוכן נכנס רק לתוך תאים</b>. השוו:</p>
+    <div class="ctrls"><div class="seg" id="t4seg"></div></div>
+    <div id="t4"></div>
+    <div class="what" id="t4what"></div>
+  </article>
+  <article class="spread">
+    <h3>מעצבים טבלה עם CSS</h3>
+    <p>עכשיו הופכים את התפריט לטבלה יפה, צעד אחר צעד. עברו בין השלבים ושימו לב לשורות שמסומנות "חדש":</p>
+    <div class="ctrls"><div class="seg" id="t5seg"></div></div>
+    <div id="t5"></div>
+    <div class="what" id="t5what"></div>
+  </article>
+</section>
+
+<!-- ===================== 3. lists & nav ===================== -->
+<section class="topic" data-id="lists" data-icon="📋" data-title="רשימות ותפריט">
+  <article class="spread">
+    <h3>ol ו-ul: ממוספרת או עם תבליטים</h3>
+    <p>רשימה בנויה מתגית עוטפת, ובתוכה תגית <code>li</code> (list item – פריט ברשימה) לכל פריט. יש שני סוגים של עוטפת:</p>
+    <table>
+      <tr><th>תגית</th><th>מה היא</th><th>מתי משתמשים</th></tr>
+      <tr><td><code>ol</code></td><td>רשימה ממוספרת (ordered list)</td><td>כשהסדר חשוב: שלבים במתכון, הוראות</td></tr>
+      <tr><td><code>ul</code></td><td>רשימה עם תבליטים – נקודות (unordered list)</td><td>כשהסדר לא חשוב: תוספות לפיצה</td></tr>
+    </table>
+    <div class="predict" id="pList"></div>
+    <div class="ctrls"><div class="seg" id="l1seg"></div></div>
+    <div id="l1"></div>
+    <div class="what" id="l1what" hidden>רק שתי שורות השתנו: הפתיחה והסגירה של העוטפת. ה-<code>li</code> נשארו בדיוק אותו דבר. את המספרים או הנקודות הדפדפן מוסיף <b>בעצמו</b> – לא כותבים אותם. הוספתם שלב באמצע? המספור מתעדכן לבד.</div>
+    <div class="bridge">גם כאן יש עץ משפחה, כמו בשיעור 3: <code>li</code> הוא <b>ילד</b> של <code>ol</code> או של <code>ul</code>, ומותר לשים אותו רק בתוך אחת מהן. ובתוך <code>li</code> מותר כמעט הכול – גם קישור. וזה בדיוק מה שנעשה בשלב הבא.</div>
+  </article>
+  <article class="spread">
+    <h3>nav: תפריט של קישורים</h3>
+    <p>התפריט של אתר הוא בעצם <b>רשימה של קישורים</b>: <code>ul</code>, ובכל <code>li</code> קישור <code>a</code>. את כל התפריט עוטפים בתגית <code>nav</code> (קיצור של navigation – ניווט).</p>
+    <div class="predict" id="pNav"></div>
+    <div class="ctrls"><div class="seg" id="l2seg"></div></div>
+    <div id="l2"></div>
+    <div class="what" id="l2what"></div>
+    <div class="bridge">שימו לב לבוררים: <code>nav a</code> הוא בורר צאצאים משיעור 3: כל <code>a</code> שנמצא בתוך <code>nav</code>. כך מעצבים רק את הקישורים של התפריט, בלי לגעת בשאר הקישורים בדף. זה עוד יתרון של nav: יש לנו שם לתפוס בו.</div>
+    <div class="tip">💡 בהגשה 1 צריך תפריט אחד שמופיע בכל הדפים. בשיעור 6 תלמדו לכתוב אותו פעם אחת בלבד, לכל האתר.</div>
+  </article>
+</section>
+
+<!-- ===================== 4. forms basics ===================== -->
+<section class="topic" data-id="forms" data-icon="📝" data-title="טפסים">
+  <article class="spread">
+    <h3>מה זה טופס?</h3>
+    <p>כל פעם שאתם נכנסים לאתר עם שם וסיסמה, מחפשים בגוגל או מזמינים משלוח – אתם ממלאים <b>טופס</b> (form). לטופס יש שני תפקידים: <b>לקלוט מידע</b> מהגולש, ו<b>לשלוח אותו לשרת</b> – המחשב שבו האתר יושב.</p>
+    <p>הנה טופס הכניסה של פיצה דני. נסו אותו:</p>
+    <div class="host" id="f1stage"></div>
+    <p class="res-note" id="f1note"></p>
+    <p>הטופס בנוי מתגית <code>form</code> אחת, שעוטפת <b>פקדים</b> (controls): תיבות טקסט, כפתורים ורשימות. כל פקד קולט סוג אחר של מידע. בשלבים הבאים נבנה את הטופס הזה – פקד אחרי פקד.</p>
+    <div class="bridge">ב-C# קלטתם מידע מהמשתמש עם <code>Console.ReadLine()</code>. טופס הוא ה-ReadLine של האתר: במקום חלון שחור עם שורה אחת – תיבות שהגולש ממלא. ההבדל הגדול: ב-C# המידע נשאר באותה תוכנית, ובאתר הוא <b>נשלח לשרת</b>.</div>
+  </article>
+  <article class="spread">
+    <h3>text, password ו-submit</h3>
+    <p>אלה הפקדים של טופס כניסה. רובם נכתבים עם אותה תגית – <code>input</code> – והמאפיין <code>type</code> (סוג) קובע מה היא תהיה:</p>
+    <ul class="ctl">
+      <li><code>&lt;label&gt;</code><br /><b>תווית</b>: טקסט שמסביר מה למלא. היא לא קולטת כלום.</li>
+      <li><code>&lt;input type="text" /&gt;</code><br /><b>תיבת טקסט</b> – מקלידים בה מה שרוצים.</li>
+      <li><code>&lt;input type="password" /&gt;</code><br /><b>תיבת סיסמה</b> – מציגה נקודות במקום אותיות.</li>
+      <li><code>&lt;input type="submit" /&gt;</code><br /><b>כפתור שליחה</b>. המאפיין <code>value</code> קובע את הטקסט שעל הכפתור.</li>
+    </ul>
+    <div id="f2"></div>
+    <div class="trap">ל-<code>input</code> <b>אין תגית סוגרת</b> – כמו <code>img</code> משיעור 2. כותבים <code>&lt;input … /&gt;</code>, ולא <code>&lt;/input&gt;</code>.</div>
+  </article>
+  <article class="spread">
+    <h3>label ו-for: לחיצה על המילה</h3>
+    <p>ל-<code>label</code> יש כוח נסתר: אם מחברים אותה לשדה, <b>לחיצה על המילה</b> מכניסה את הסמן לשדה. מחברים בשני חלקים: לשדה נותנים <code>id</code>, ול-label נותנים <code>for</code> עם <b>אותו שם בדיוק</b>.</p>
+    <div class="predict" id="pLabel"></div>
+    <div class="compare" id="f3"></div>
+    <div class="what" id="f3what" hidden>בטופס הראשון הלחיצה על המילה לא עשתה כלום. בשני – הסמן קפץ לשדה, כי ה-<code>for</code> של התווית <b>מצביע</b> על ה-<code>id</code> של השדה. זה חשוב במיוחד בטלפון: קל יותר ללחוץ על מילה מאשר לפגוע בתיבה קטנה. ובכפתורי בחירה (בנושא הבא) – לחיצה על המילה מסמנת את הכפתור.</div>
+    <div class="bridge">זה ה-<code>id</code> שלמדתם בשיעור 3: שם ייחודי לתגית אחת בדף. שם השתמשתם בו ב-CSS עם סולמית. כאן התווית משתמשת בו כדי למצוא את השדה שלה.</div>
+    <div class="tip">💡 במצגת ה-label מופיע בלי for. זה מציג את המילה, אבל בלי החיבור. מעכשיו – בכל טופס שאתם בונים – תנו לכל שדה <code>id</code>, ולכל label את ה-<code>for</code> המתאים.</div>
+  </article>
+  <article class="spread">
+    <h3>name: השם שאיתו הערך נשלח</h3>
+    <p>כשלוחצים על כפתור השליחה, הדפדפן אוסף מהטופס <b>זוגות</b>: שם וערך. את השם הוא לוקח מהמאפיין <code>name</code> של כל פקד, ואת הערך – ממה שהגולש הקליד.</p>
+    <div class="predict" id="pName"></div>
+    <div class="ctrls"><div class="seg" id="f4seg"></div></div>
+    <div id="f4"></div>
+    <div class="what" id="f4what" hidden>השדה בלי <code>name</code> פשוט <b>נעלם</b> מהמשלוח – בלי שום הודעת שגיאה. זו טעות נפוצה מאוד: הטופס נראה מושלם, אבל השרת מקבל רק חלק מהמידע. הכלל: <b>לכל פקד שקולט מידע – name.</b></div>
+    <div class="bridge">name הוא כמו <b>שם של משתנה</b> ב-C#. הזוג <code>user=dani</code> דומה ל-<code>string user = "dani";</code> – השם אומר לשרת מה זה הערך הזה. בהמשך הקורס תכתבו ב-C# קוד שמבקש מהשרת: "תן לי את הערך ששמו user".</div>
+    <details class="more"><summary>🐢 רגע, אז מה ההבדל בין id לבין name?</summary>
+      <p>לשדה יש שני שמות, ולכל אחד תפקיד אחר:</p>
+      <ul>
+        <li><b>id</b> – לשימוש <b>בתוך הדף</b>: ה-label מוצאת איתו את השדה, ו-CSS בוחר איתו (<code>#user</code>).</li>
+        <li><b>name</b> – לשימוש <b>בשליחה</b>: השרת מקבל את הערך תחת השם הזה.</li>
+      </ul>
+      <p>בדרך כלל נותנים לשניהם אותו שם, כמו כאן: <code>id="user" name="user"</code>. ככה לא מתבלבלים. (יש מקרה אחד שבו הם שונים – כפתורי רדיו, בנושא הבא.)</p>
+    </details>
+  </article>
+  <article class="spread">
+    <h3>שלושה כפתורים: submit, reset, button</h3>
+    <p>יש שלושה סוגים של כפתורים, וכולם נכתבים עם <code>input</code>. ההבדל הוא רק ב-<code>type</code>. הקלידו משהו בשדה, ולחצו על כל אחד מהכפתורים:</p>
+    <div id="f5"></div>
+    <table>
+      <tr><th>type</th><th>מה הוא עושה</th></tr>
+      <tr><td><code>submit</code></td><td>שולח את הטופס.</td></tr>
+      <tr><td><code>reset</code></td><td>מחזיר את כל השדות בטופס למצב ההתחלתי.</td></tr>
+      <tr><td><code>button</code></td><td>כפתור "ריק" – לא עושה כלום לבד. בהמשך הקורס תחברו אליו קוד JavaScript.</td></tr>
+    </table>
+    <p><b>ועוד מאפיין אחד:</b> <code>disabled</code> (מושבת) מכבה כפתור או שדה – הוא נראה אפור, ואי אפשר ללחוץ עליו. למשל, כפתור הזמנה כשהמסעדה סגורה:</p>
+    <div class="codeblock"><pre data-code="html">
+&lt;input type="submit" value="להזמנה" disabled /&gt;</pre></div>
+    <div class="lockrow"><button class="btn" id="lockBtn" type="button" disabled>🍕 להזמנה (המסעדה סגורה)</button></div>
+    <div class="tip">💡 יש גם תגית <code>button</code>, שהטקסט שלה כתוב בין הפתיחה לסגירה. היא עושה אותו דבר, ותפגשו אותה ב-Bootstrap:
+      <div class="codeblock"><pre data-code="html">
+&lt;button type="submit"&gt;שליחה&lt;/button&gt;</pre></div></div>
+  </article>
+</section>
+
+<!-- ===================== 5. more fields ===================== -->
+<section class="topic" data-id="fields" data-icon="🎛" data-title="עוד סוגי שדות">
+  <article class="spread">
+    <h3>תאריך ושעה: date, time, datetime-local</h3>
+    <p>עם <code>type="date"</code> הדפדפן מציג לוח שנה, ועם <code>type="time"</code> – בחירת שעה. <code>datetime-local</code> מציג את שניהם יחד. הגולש לא צריך להקליד – רק לבחור.</p>
+    <div class="predict" id="pDate"></div>
+    <div id="k1"></div>
+    <div class="what" id="k1what" hidden>התאריך <b>מוצג</b> לכם בפורמט של המחשב שלכם, אבל <b>נשלח</b> תמיד באותו פורמט: שנה-חודש-יום (<code>2026-10-09</code>). שעה נשלחת כמו <code>19:30</code>, ו-datetime-local שולח את שניהם עם T באמצע: <code>2026-10-09T19:30</code>. כך השרת מבין את התאריך בכל מדינה ובכל שפה.</div>
+    <div class="tip">💡 במצגת כתוב "המאפיין date". ליתר דיוק: המאפיין הוא <code>type</code>, ו-date הוא <b>ערך</b> שלו – בדיוק כמו text או password. ועוד דבר: לוח השנה נראה קצת אחרת בכל דפדפן. זה בסדר.</div>
+  </article>
+  <article class="spread">
+    <h3>radio: בחירה אחת מכמה</h3>
+    <p>כפתורי רדיו (radio) נותנים לבחור <b>רק אפשרות אחת</b> מתוך כמה – למשל גודל פיצה: רגילה או משפחתית. כל כפתור הוא <code>input</code> נפרד, ויש כלל אחד שחשוב לזכור: <b>לכל הכפתורים באותה קבוצה – אותו name</b>. מה קורה כששוכחים?</p>
+    <div class="predict" id="pRadio"></div>
+    <div class="compare" id="k2"></div>
+    <div class="what" id="k2what" hidden>בטופס הראשון הכפתורים "מכירים" זה את זה – כי יש להם אותו <code>name</code>. בוחרים אחד, והשני מתבטל. בשני כל כפתור בקבוצה משלו, ולכן אפשר לסמן את שניהם – בדיוק הבאג שקורה כשמעתיקים כפתור ושוכחים לתקן. ושימו לב מה נשלח: <code>size=L</code> – ה-<b>value</b> של הכפתור, ולא המילה "משפחתית" שכתובה לידו.</div>
+    <details class="more"><summary>🐢 למה לכל כפתור id אחר, אבל name זהה?</summary>
+      <ul>
+        <li><b>id</b> – כדי שכל label תמצא את הכפתור <b>שלה</b> (לחיצה על "משפחתית" מסמנת את הכפתור של משפחתית). לכן הוא שונה בכל כפתור.</li>
+        <li><b>name</b> – זו <b>השאלה</b> שהכפתורים עונים עליה: "איזה גודל?". כולם עונים על אותה שאלה, ולכן לכולם אותו name.</li>
+        <li><b>value</b> – <b>התשובה</b> שכל כפתור נותן: M או L.</li>
+      </ul>
+      <p>בשליחה נשלח זוג אחד: שם השאלה = התשובה שנבחרה. כלומר <code>size=L</code>.</p>
+    </details>
+    <div class="tip">💡 רוצים שאחד הכפתורים יהיה מסומן כבר כשהדף נפתח? מוסיפים לו את המאפיין <code>checked</code>.</div>
+  </article>
+  <article class="spread">
+    <h3>checkbox: אפשר לסמן כמה</h3>
+    <p>תיבת סימון (checkbox) מתאימה כשמותר לבחור <b>כמה אפשרויות</b> – או אף אחת. למשל: תוספות לפיצה. סמנו כמה תוספות, וראו מה יישלח:</p>
+    <div id="k3"></div>
+    <div class="what">כל תיבה מסומנת שולחת זוג משלה – גם כשה-name זהה: <code>extra=cheese</code> ועוד <code>extra=olives</code>. תיבה שלא סומנה <b>לא נשלחת בכלל</b>. ולחיצה על המילה "גבינה" מסמנת את התיבה – בזכות for ו-id.</div>
+    <div class="bridge">ב-C#: כל checkbox הוא כמו משתנה <code>bool</code> – מסומן או לא, בלי קשר לאחרים. קבוצת radio היא כמו משתנה <b>אחד</b> שמקבל ערך אחד מתוך כמה אפשרויות: הגודל הוא M <b>או</b> L – לא שניהם.</div>
+  </article>
+  <article class="spread">
+    <h3>select: רשימה נפתחת</h3>
+    <p>כשיש הרבה אפשרויות, כפתורי רדיו תופסים הרבה מקום. <b>רשימה נפתחת</b> מציגה רק את הבחירה הנוכחית, ונפתחת בלחיצה. בונים אותה משתי תגיות: <code>select</code> עוטפת, ו-<code>option</code> לכל אפשרות. בחרו פיצה:</p>
+    <div id="k4"></div>
+    <div class="what">המבנה דומה ל-<code>ul</code> ו-<code>li</code>: עוטפת, ובתוכה פריטים. ה-name כתוב פעם אחת – על ה-select. וכמו ברדיו: נשלח ה-<code>value</code> של האפשרות שנבחרה (למשל <code>pizza=olives</code>), ולא הטקסט שהגולש רואה.</div>
+    <div class="tip">💡 בהגשה 1, השאלות לשחזור סיסמה ("שם חיית המחמד הראשונה?") הן בדיוק select כזה.</div>
+  </article>
+  <article class="spread">
+    <h3>datalist: רשימת הצעות (לא סגורה!)</h3>
+    <p><code>datalist</code> מחברים לתיבת טקסט רגילה, והיא <b>מציעה</b> ערכים בזמן שמקלידים. החיבור דומה ל-label: ה-<code>list</code> של התיבה שווה ל-<code>id</code> של ה-datalist.</p>
+    <div class="predict" id="pDl"></div>
+    <div class="compare" id="k5"></div>
+    <div class="what" id="k5what" hidden>ב-select אין איפה להקליד – בוחרים רק מה שיש. ב-datalist ההצעות עוזרות, אבל הגולש יכול להקליד <b>כל ערך</b> – גם אננס. אז מה לבחור? הערך <b>חייב</b> להיות מתוך הרשימה – select. רוצים לעזור בהקלדה ולהשאיר חופש – datalist.</div>
+    <div class="tip">💡 במצגת כתוב ש-datalist היא "רשימה סגורה של ערכים". הנכון: datalist רק <b>מציעה</b>. רשימה סגורה היא select.</div>
+  </article>
+  <article class="spread">
+    <h3>ויש עוד פקדים</h3>
+    <p>יש עוד סוגים של input, ועוד פקדים. הנה שלושה שימושיים – נסו אותם:</p>
+    <div id="k6"></div>
+    <div class="what"><code>number</code> מקבל רק מספרים (ויש לו חצים למעלה ולמטה). <code>color</code> פותח בוחר צבעים. <code>textarea</code> היא תיבת טקסט גדולה, לכמה שורות – ובניגוד ל-input, <b>יש לה תגית סוגרת</b>.</div>
+    <div class="trap">יש גם <code>type="email"</code>, שבודק שיש @ בכתובת. אבל <b>בפרויקט שלנו בונים את שדה המייל עם <code>type="text"</code></b> – כי בשיעורי JavaScript תכתבו את הבדיקה הזו בעצמכם.</div>
+    <div class="tip">💡 לרשימה המלאה של הפקדים, עם דוגמאות: <a href="https://www.w3schools.com/html/html_forms.asp" target="_blank" rel="noopener">W3Schools – HTML Forms</a> (באנגלית).</div>
+  </article>
+</section>
+
+<!-- ===================== 6. sending ===================== -->
+<section class="topic" data-id="send" data-icon="📮" data-title="שליחה לשרת">
+  <article class="spread">
+    <h3>מה קורה כשלוחצים "שליחה"?</h3>
+    <p>עד עכשיו כל הטפסים נעצרו בלחיצה על "שליחה". עכשיו נראה לאן המידע הולך. כשלוחצים על submit, הדפדפן עושה ארבעה דברים:</p>
+    <ol class="ladder">
+      <li><span>עובר על כל הפקדים בטופס שיש להם <code>name</code>.</span></li>
+      <li><span>בונה מהם זוגות: name=ערך.</span></li>
+      <li><span>שולח את הזוגות לדף שכתוב במאפיין <code>action</code> של הטופס.</span></li>
+      <li><span>הדף בשרת מקבל את הנתונים ומחזיר תשובה – דף חדש שמוצג בדפדפן.</span></li>
+    </ol>
+    <div class="flow" aria-hidden="true">
+      <div class="box">📝<b>menu.html</b>הטופס בדפדפן</div>
+      <div class="arr"><span>←</span>הזוגות נשלחים</div>
+      <div class="box">🖥<b>order.html</b>הדף בשרת (ה-action)</div>
+      <div class="arr"><span>←</span>תשובה חוזרת</div>
+      <div class="box">📄<b>"ההזמנה התקבלה"</b>דף חדש בדפדפן</div>
+    </div>
+    <div class="codeblock"><pre data-code="html" data-marks="1:new">
+&lt;form action="order.html" method="get"&gt;
+    ...
+&lt;/form&gt;</pre></div>
+    <p><code>action</code> קובע <b>לאיזה דף</b> לשלוח. בלי action, הנתונים נשלחים <b>לאותו דף</b> שבו נמצא הטופס. את <code>method</code> נכיר בשני השלבים הבאים.</p>
+    <div class="tip">💡 במצגת הטופס נשלח לדף Privacy – דף שרת שכבר קיים בפרויקט. את התכנות של צד השרת – הקוד שמקבל את הנתונים, ב-C# – לומדים במחצית השנייה של הקורס. בינתיים בונים את הטפסים, ובודקים מה נשלח.</div>
+    <div class="bridge">זה כמו לקרוא לפעולה ב-C# ולהעביר לה ערכים. ה-<code>action</code> הוא <b>לאן</b> – איזה דף יטפל במידע. הזוגות name=ערך הם <b>מה</b> – הנתונים שהדף מקבל.</div>
+  </article>
+  <article class="spread">
+    <h3>שיטת get: הנתונים בכתובת</h3>
+    <p><code>method</code> (שיטה) קובע <b>איך</b> הנתונים נוסעים לשרת. יש שתי שיטות: get ו-post. נתחיל ב-get. זה טופס ההזמנה של פיצה דני, בתוך דפדפן קטן ואמיתי:</p>
+    <div class="predict" id="pGet"></div>
+    <div class="split">
+      <div class="pane"><div class="pane-h"><span class="dot"></span>HTML – menu.html</div><pre class="cv" id="g2code"></pre></div>
+      <div class="pane"><div class="pane-h"><span class="dot"></span>מלאו שם ולחצו "להזמנה"</div><div id="g2frame"></div>
+        <div class="ctrls"><button class="btn" id="g2back" type="button">↩ חזרה לטופס</button></div></div>
+    </div>
+    <div id="g2after" hidden>
+      <p><b>פירוק הכתובת שקיבלתם:</b></p>
+      <div class="anat" id="g2anat"></div>
+      <div class="what">הדפדפן עבר לדף <code>order.html</code> (מה-action), והנתונים <b>נכתבו בכתובת</b>, אחרי סימן שאלה. כל זוג הוא name=ערך, ובין הזוגות יש <code>&amp;</code>. כל מי שמסתכל על המסך רואה אותם – והם נשמרים גם בהיסטוריה של הדפדפן.</div>
+    </div>
+    <details class="more"><summary>🐢 איך קוראים כתובת כזו, לאט?</summary>
+      <p>קחו את הכתובת <code>order.html?name=דנה&amp;size=L</code> ופרקו אותה משמאל לימין:</p>
+      <ol>
+        <li><code>order.html</code> – הדף שמקבל את הנתונים (ה-action).</li>
+        <li><code>?</code> – "מכאן מתחילים הנתונים".</li>
+        <li><code>name=דנה</code> – הזוג הראשון: שם השדה, סימן שוויון, ומה שהוקלד.</li>
+        <li><code>&amp;</code> – "ועוד זוג".</li>
+        <li><code>size=L</code> – הזוג השני.</li>
+      </ol>
+      <p>רווח בתוך ערך נהפך ל-<code>+</code>. ואותיות בעברית? בכתובת האמיתית הן מקודדות לסימנים כמו <code>%D7%93</code>, אבל הדפדפן מציג לכם אותן כרגיל.</p>
+    </details>
+    <div class="tip">💡 שמתם לב ל-<code>discount=0</code> בכתובת? בקוד יש שדה עם <code>type="hidden"</code> (נסתר): לא רואים אותו בדף, אבל הוא נשלח כמו כל שדה. אתרים משתמשים בו כדי לשלוח מידע שהגולש לא צריך למלא.</div>
+  </article>
+  <article class="spread">
+    <h3>שיטת post: לא בכתובת – אבל לא סודי!</h3>
+    <p>עכשיו אותו טופס בדיוק, עם שינוי של מילה אחת:</p>
+    <div class="codeblock"><pre data-code="html" data-marks="1:diff">
+&lt;form action="order.html" method="post"&gt;</pre></div>
+    <p>מלאו ולחצו "להזמנה". הסתכלו על שורת הכתובת:</p>
+    <div id="g3frame"></div>
+    <div class="ctrls"><button class="btn" id="g3back" type="button">↩ חזרה לטופס</button></div>
+    <div id="g3after" hidden>
+      <div class="netpanel" id="g3net"></div>
+      <div class="what">הכתובת השתנתה רק לשם הדף מה-action: <code>order.html</code> – <b>בלי</b> סימן שאלה ובלי נתונים. ב-post הנתונים נוסעים <b>בגוף הבקשה</b> (request body) – חלק בהודעה לשרת שלא מוצג בשורת הכתובת. הלוח השחור מראה מה כל אחד יכול לראות בכלי המפתחים: F12 ← Network ← לחיצה על הבקשה ← Payload.</div>
+    </div>
+    <div class="predict" id="pPost"></div>
+    <div class="trap" id="g3trap" hidden>במצגת כתוב ש-post שולח את הנתונים "בצורה נסתרת". זה נכון רק לשורת הכתובת. post <b>לא מצפין</b> כלום: ב-F12 ← Network רואים את הנתונים, ובאתר בלי https הם עוברים ברשת כטקסט רגיל. מה שמגן על סיסמאות בדרך הוא <b>https</b> – המנעול 🔒 ליד הכתובת.</div>
+    <div class="tip">⚠ <b>בפרויקט, בינתיים, השתמשו ב-get.</b> דף html רגיל ב-Visual Studio לא יודע לקבל post, והשרת יחזיר שגיאה. עם post נעבוד בדפי Razor, בהמשך השנה.</div>
+  </article>
+  <article class="spread">
+    <h3>get או post – מתי מה?</h3>
+    <table>
+      <tr><th></th><th>get</th><th>post</th></tr>
+      <tr><td><b>איפה הנתונים?</b></td><td>בכתובת, אחרי <code>?</code></td><td>בגוף הבקשה</td></tr>
+      <tr><td><b>רואים בשורת הכתובת?</b></td><td>כן</td><td>לא</td></tr>
+      <tr><td><b>נשמר בהיסטוריה ובקישור?</b></td><td>כן – אפשר לשתף קישור</td><td>לא</td></tr>
+      <tr><td><b>מוצפן?</b></td><td>לא</td><td>לא! (רק https מצפין)</td></tr>
+      <tr><td><b>מתאים ל…</b></td><td>חיפוש וסינון – דברים שנוח לשתף</td><td>סיסמאות, הרשמה, הזמנות – מידע אישי</td></tr>
+    </table>
+    <div class="tip">💡 גוגל משתמש ב-get לחיפוש. חפשו משהו והסתכלו בשורת הכתובת: תמצאו <code>?q=</code> ואחריו מה שחיפשתם. לכן אפשר לשלוח לחבר קישור לתוצאות חיפוש.</div>
+    <div class="predict" id="pWhich"></div>
+  </article>
+  <article class="spread">
+    <h3>id לטופס: שם לכל הטופס</h3>
+    <p>גם לתגית <code>form</code> עצמה נותנים <code>id</code> – שם ייחודי, כמו לכל תגית. במצגת מוזכרים שלושה שימושים:</p>
+    <ol>
+      <li><b>JavaScript</b> – קוד שרץ בדפדפן ויכול, למשל, לבדוק את הטופס לפני השליחה. נלמד בהמשך.</li>
+      <li><b>C# בצד השרת</b> – קוד שמטפל בטופס שנשלח. נלמד בהמשך.</li>
+      <li><b>CSS</b> – לעצב את הטופס הזה בלבד. את זה אתם כבר יודעים:</li>
+    </ol>
+    <div id="g5"></div>
+    <div class="what"><code>#loginForm</code> בוחר את הטופס לפי ה-id שלו – בדיוק כמו <code>#logo</code> בשיעור 3. ו-<code>#loginForm input</code> בוחר רק פקדים <b>בתוך הטופס הזה</b>. אם יהיה בדף טופס נוסף, הוא לא יושפע.</div>
+  </article>
+</section>
+
+<!-- ===================== 7. practice ===================== -->
+<section class="topic" data-id="practice" data-icon="🛠" data-title="תרגול וסיכום">
+  <article class="spread">
+    <h3>🛠 נסו עכשיו: טבלה וטופס משלכם</h3>
+    <p>זה דף התפריט של פיצה דני, עם טופס הזמנה ריק. בצעו את המשימות לפי הסדר – כשמשימה מצליחה, היא נצבעת בירוק ✔. בסוף – מלאו את הטופס בדפדפן הקטן, לחצו על כפתור השליחה ובדקו את הכתובת. אחר כך עשו את אותו דבר אצלכם ב-Visual Studio.</p>
+    <div id="pg"></div>
+  </article>
+  <article class="spread">
+    <h3>🧩 צעד בפרויקט – לקראת הגשה 1</h3>
+    <div class="stepbox">
+      <b>בונים את שלושת הטפסים של הגשה 1.</b> בתיקייה HTML צרו שלושה דפים חדשים. איך? קליק ימני על התיקייה ← Add ← <bdi>New&nbsp;Item</bdi> ← <bdi>HTML&nbsp;Page</bdi>.
+      <ol>
+        <li><b>login.html – כניסה:</b> שם משתמש, סיסמה, כפתור שליחה, קישור לדף ההרשמה וקישור לדף שחזור הסיסמה.</li>
+        <li><b>register.html – הרשמה:</b> כל השדות בטבלה למטה, בלי לדלג על אף אחד.</li>
+        <li><b>recover.html – שחזור סיסמה:</b> שם משתמש, שתי שאלות לשחזור סיסמה (כל שאלה ברשימה נפתחת), ותשובה לכל שאלה.</li>
+        <li>בכל שדה: <code>label</code> עם <code>for</code>, ובשדה <code>id</code> ו-<code>name</code>.</li>
+        <li>בכל טופס: <code>method="get"</code>. עם post נעבוד רק בדפי Razor, בהמשך.</li>
+        <li>חברו את שלושת הדפים לקובץ העיצוב שלכם מהשיעור הקודם (site-style.css), ועצבו את הטפסים שם – בלי style בתוך התגיות.</li>
+        <li>בונוס: בדף תוכן אחד – טבלה או רשימה, למשל טבלת מידע על נושא האתר.</li>
+      </ol>
+      <table class="fields">
+        <tr><th>שדה בדף ההרשמה</th><th>פקד</th><th>name לדוגמה</th></tr>
+        <tr><td>שם משתמש</td><td><code>text</code></td><td><code>userName</code></td></tr>
+        <tr><td>סיסמה</td><td><code>password</code></td><td><code>password</code></td></tr>
+        <tr><td>אימות סיסמה</td><td><code>password</code></td><td><code>password2</code></td></tr>
+        <tr><td>שם פרטי</td><td><code>text</code></td><td><code>firstName</code></td></tr>
+        <tr><td>שם משפחה</td><td><code>text</code></td><td><code>lastName</code></td></tr>
+        <tr><td>עיר</td><td><code>text</code> + datalist</td><td><code>city</code></td></tr>
+        <tr><td>טלפון</td><td><code>text</code></td><td><code>phone</code></td></tr>
+        <tr><td>מייל</td><td><code>text</code> (לא email!)</td><td><code>email</code></td></tr>
+        <tr><td>מין</td><td>2 × <code>radio</code>, אותו name</td><td><code>gender</code></td></tr>
+        <tr><td>שאלה לשחזור 1 + תשובה</td><td><code>select</code> + <code>text</code></td><td><code>question1</code>, <code>answer1</code></td></tr>
+        <tr><td>שאלה לשחזור 2 + תשובה</td><td><code>select</code> + <code>text</code></td><td><code>question2</code>, <code>answer2</code></td></tr>
+        <tr><td>כפתורים</td><td><code>submit</code> + <code>reset</code></td><td>(בלי name)</td></tr>
+      </table>
+      <details><summary>קוד התחלה לדף הכניסה (login.html)</summary>
+        <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="he" dir="rtl"&gt;
+&lt;head&gt;
+    &lt;meta charset="utf-8" /&gt;
+    &lt;title&gt;כניסה&lt;/title&gt;
+    &lt;link rel="stylesheet" href="../css/site-style.css" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;כניסה לאתר&lt;/h1&gt;
+    &lt;form id="loginForm" method="get"&gt;
+        &lt;label for="userName"&gt;שם משתמש&lt;/label&gt;
+        &lt;input type="text" id="userName" name="userName" /&gt;
+        &lt;br /&gt;
+        &lt;label for="password"&gt;סיסמה&lt;/label&gt;
+        &lt;input type="password" id="password" name="password" /&gt;
+        &lt;br /&gt;
+        &lt;input type="submit" value="כניסה" /&gt;
+    &lt;/form&gt;
+    &lt;a href="register.html"&gt;עוד אין לכם משתמש? להרשמה&lt;/a&gt;
+    &lt;br /&gt;
+    &lt;a href="recover.html"&gt;שכחתי סיסמה&lt;/a&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre></div>
+      </details>
+      <details><summary>קוד לדוגמה: שאלה לשחזור סיסמה + תשובה</summary>
+        <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
+&lt;label for="question1"&gt;שאלה לשחזור סיסמה&lt;/label&gt;
+&lt;select id="question1" name="question1"&gt;
+    &lt;option value="pet"&gt;שם חיית המחמד הראשונה&lt;/option&gt;
+    &lt;option value="school"&gt;שם בית הספר היסודי&lt;/option&gt;
+    &lt;option value="city"&gt;עיר הלידה&lt;/option&gt;
+&lt;/select&gt;
+&lt;br /&gt;
+&lt;label for="answer1"&gt;התשובה&lt;/label&gt;
+&lt;input type="text" id="answer1" name="answer1" /&gt;</pre></div>
+      </details>
+      <p style="margin-bottom:0">✔ <b>בדיקה:</b> הריצו (▶ הירוק), מלאו כל טופס ולחצו על השליחה. בשורת הכתובת צריך להופיע <b>כל</b> שדה, עם ה-name שלו. שדה חסר? חסר לו name.</p>
+      <label style="display:flex;gap:8px;align-items:center;margin-top:8px"><input type="checkbox" id="stepDone" /> עשיתי את הצעד בפרויקט שלי</label>
+    </div>
+  </article>
+  <article class="spread" id="quiz">
+    <h3>✅ בדקו את עצמכם</h3>
+    <p>5 שאלות. טעיתם? ההסבר יגיד למה – ונסו שוב.</p>
+  </article>
+  <article class="spread" id="summary">
+    <h3>📄 דף סיכום: כל השיעור במסך אחד</h3>
+    <p>כל מה שצריך לזכור. אפשר לחזור לכאן בכל זמן, או להדפיס. <button class="btn" type="button" id="printBtn">🖨 הדפסה</button></p>
+    <div class="cheat">
+      <div class="card"><h4>טבלה</h4>
+        <div class="codeblock"><pre class="cv" id="sumTable"></pre></div>
+        <p><code>tr</code> = שורה · <code>td</code> = תא · <code>th</code> = תא כותרת. <b>תוכן רק בתוך td או th.</b> אין תגית לעמודה. לקו אחד בין תאים: <code>border-collapse: collapse</code>.</p></div>
+      <div class="card"><h4>רשימות ותפריט</h4>
+        <table>
+          <tr><td><code>ol</code></td><td>רשימה ממוספרת – כשהסדר חשוב</td></tr>
+          <tr><td><code>ul</code></td><td>רשימה עם תבליטים</td></tr>
+          <tr><td><code>li</code></td><td>פריט אחד ברשימה</td></tr>
+          <tr><td><code>nav</code></td><td>עוטפת את התפריט. לא משנה את המראה</td></tr>
+        </table></div>
+      <div class="card"><h4>הטופס ושלושת השמות</h4>
+        <table>
+          <tr><td><code>action</code></td><td>לאיזה דף לשלוח (בלי – לאותו דף)</td></tr>
+          <tr><td><code>method</code></td><td><code>get</code> או <code>post</code></td></tr>
+          <tr><td><code>name</code></td><td>השם שאיתו הערך נשלח. בלי name – לא נשלח</td></tr>
+          <tr><td><code>id</code> + <code>for</code></td><td>מחברים label לשדה: לחיצה על המילה = לחיצה על השדה</td></tr>
+          <tr><td><code>value</code></td><td>מה נשלח מכפתור radio, checkbox או option</td></tr>
+        </table></div>
+      <div class="card"><h4>פקדים</h4>
+        <table>
+          <tr><td><code>text</code> · <code>password</code></td><td>טקסט · סיסמה (נקודות)</td></tr>
+          <tr><td><code>submit</code> · <code>reset</code> · <code>button</code></td><td>שולח · מאפס · כפתור ריק</td></tr>
+          <tr><td><code>date</code> · <code>time</code> · <code>datetime-local</code></td><td>תאריך · שעה · שניהם</td></tr>
+          <tr><td><code>radio</code></td><td>אחד מכמה – <b>אותו name</b> לכל הקבוצה</td></tr>
+          <tr><td><code>checkbox</code></td><td>כמה שרוצים</td></tr>
+          <tr><td><code>select</code> + <code>option</code></td><td>רשימה נפתחת – <b>סגורה</b></td></tr>
+          <tr><td><code>datalist</code></td><td>רק <b>מציעה</b> – אפשר להקליד הכול</td></tr>
+        </table></div>
+      <div class="card"><h4>get מול post</h4>
+        <ul><li><b>get</b> – הנתונים בכתובת: <code>order.html?name=דנה&amp;size=L</code></li><li><b>post</b> – הנתונים בגוף הבקשה. לא בכתובת – <b>אבל לא סודי ולא מוצפן</b> (רואים ב-F12 ← Network). מה שמצפין: https.</li><li>בפרויקט, בינתיים: get.</li></ul></div>
+      <div class="card"><h4>מלכודות</h4>
+        <ul><li>טקסט מחוץ ל-td "קופץ" אל מעל הטבלה.</li><li>radio עם name שונה – אפשר לסמן את כולם.</li><li>פקד בלי name – לא נשלח, בלי שגיאה.</li><li>ל-<code>input</code> אין תגית סוגרת.</li><li>מייל בפרויקט: <code>type="text"</code>.</li></ul></div>
+    </div>
+  </article>
+</section>
+<div class="stepnav" id="stepnav"></div>
+</main>
+<footer>בניית אתרים · המדריך המעשי · שיעור 4 – טבלאות, רשימות וטפסים · יוחאי פרץ</footer>
+
+<script src="assets/course.js"></script>
+<script>
+(function(){
+"use strict";
+const {$, esc, state, save, Stage, Split, Frame, seg, predict, quiz, doneCheck, playground, codeLines, hlCssLine, findEgg} = Course;
+
+/* ---------- shared data: Danny's pizza menu ---------- */
+const MENU = [['מרגריטה','45 שקל','כן'],['פטריות','39 שקל','כן'],['זיתים','39 שקל','כן'],['פפרוני','52 שקל','לא']];
+const HEAD = ['מנה','מחיר','צמחוני'];
+const BASE = 'localhost:7123/HTML/';
+/* typing in a field of a live demo must not flip steps (arrow keys) */
+document.querySelector('main').addEventListener('keydown', e => { const t = e.composedPath()[0]; if (t && t.closest && t.closest('input,textarea,select,[contenteditable]')) e.stopPropagation(); });
+
+/* the browser adds an invisible <tbody> to tables that have none, so line<->element
+   linking must match tags by name instead of by count */
+function remap(split){
+  const want = [];
+  split.src.split('\n').forEach((l,i) => { const m = l.replace(/<!--[\s\S]*?-->/g,'').match(/<[a-zA-Z][a-zA-Z0-9]*/g); if (m) m.forEach(t => want.push({i, t:t.slice(1).toLowerCase()})); });
+  let k = 0;
+  split.stage.all().forEach(e => { const t = e.tagName.toLowerCase(); if (k < want.length && want[k].t === t) { e.dataset.ln = want[k].i; k++; } else delete e.dataset.ln; });
+}
+function setT(split, src, marks){ split.setHtml(src, marks); remap(split); return split; }
+
+/* what a form would send (name=value pairs), like the browser does */
+function collect(root){
+  const out = [];
+  root.querySelectorAll('input[name],select[name],textarea[name]').forEach(el => {
+    if (el.disabled || !el.name) return;
+    const t = (el.type || '').toLowerCase();
+    if (t === 'submit' || t === 'reset' || t === 'button') return;
+    if (t === 'radio' || t === 'checkbox') { if (el.checked) out.push([el.name, el.hasAttribute('value') ? el.value : 'on']); return; }
+    out.push([el.name, el.value]);
+  });
+  return out;
+}
+function pairsOf(fd){ return [...fd.entries()].filter(p => typeof p[1] === 'string'); }
+function netBox(list){ return '<div class="netpanel">' + (list.length ? list.map(([k,v]) => '<span class="k">' + esc(k) + '</span>=<span class="v">' + esc(v) + '</span>').join('\n') : '(nothing)') + '</div>'; }
+function sentNote(list, past){ return '<b>' + (past ? 'מה נשלח לשרת:' : 'מה יישלח לשרת:') + '</b>' + netBox(list) + (list.length ? '' : '<span class="muted">שום דבר לא יישלח.</span>'); }
+const qsText = list => list.map(([k,v]) => k + '=' + String(v).replace(/ /g, '+')).join('&');
+
+/* compare columns: code + live mini page + caption */
+function cmpCols(el, items){
+  el.innerHTML = '';
+  return items.map(it => {
+    const d = document.createElement('div');
+    d.innerHTML = '<pre class="cv"></pre><div class="host"></div><div class="cap">' + it.cap + '</div><div class="res-note"></div>';
+    el.appendChild(d);
+    codeLines(d.querySelector('pre'), it.html, 'html', it.m);
+    const st = new Stage(d.querySelector('.host')).html(it.html);
+    return {st, note: d.querySelector('.res-note')};
+  });
+}
+
+/* ---------- welcome preview + overview ---------- */
+const NAV_HTML = ['<nav>','    <ul>','        <li><a href="index.html">דף הבית</a></li>','        <li><a href="menu.html">תפריט</a></li>','        <li><a href="order.html">הזמנה</a></li>','    </ul>','</nav>'];
+const tableHtml = (rows, cols) => '<table>\n    <thead>\n        <tr>' + HEAD.slice(0, cols).map(h => '<th>' + h + '</th>').join('') + '</tr>\n    </thead>\n    <tbody>\n' +
+  MENU.slice(0, rows).map(r => '        <tr>' + r.slice(0, cols).map(c => '<td>' + c + '</td>').join('') + '</tr>').join('\n') + '\n    </tbody>\n</table>';
+const WELCOME_CSS = 'body { font-family: Arial, sans-serif; background-color: #fff8ee; }\nnav { background-color: #c0392b; padding: 8px; }\nnav ul { list-style: none; margin: 0; padding: 0; }\nnav li { display: inline; }\nnav a { color: white; text-decoration: none; padding: 0 10px; }\nh1 { color: #c0392b; text-align: center; margin: 10px 0; }\ntable { border-collapse: collapse; width: 100%; background-color: white; }\nth, td { border: 1px solid #e5c9a8; padding: 4px 10px; }\nth { background-color: #e67e22; color: white; }\nform { margin-top: 12px; background-color: white; border: 2px solid #e67e22; padding: 8px 12px; }';
+new Stage($('#welcomeStage')).html(NAV_HTML.join('\n') + '\n<h1>פיצה דני</h1>\n' + tableHtml(3, 3) + '\n<form>\n<label for="wn">שם</label> <input type="text" id="wn" />\n<input type="radio" id="wm" name="s" checked /><label for="wm">רגילה</label>\n<input type="radio" id="wl" name="s" /><label for="wl">משפחתית</label>\n<input type="submit" value="להזמנה" />\n</form>').css(WELCOME_CSS);
+
+const TRIO = [
+  {html: tableHtml(3, 2), css: 'table { border-collapse: collapse; }\nth, td { border: 1px solid #999; padding: 2px 8px; }\nth { background-color: #fde68a; }', cap: '<b>📊 טבלה</b>מידע שיש לו שורות ועמודות: מנה ומחיר.'},
+  {html: '<b>תוספות:</b>\n<ul>\n    <li>גבינה</li>\n    <li>זיתים</li>\n    <li>פטריות</li>\n</ul>', css: '', cap: '<b>📋 רשימה</b>פריטים אחד אחרי השני. גם תפריט של אתר הוא רשימה – של קישורים.'},
+  {html: '<form>\n    <label for="tn">שם</label>\n    <input type="text" id="tn" size="10" />\n    <br /><br />\n    <input type="submit" value="להזמנה" />\n</form>', css: '', cap: '<b>📝 טופס</b>קולט מידע מהגולש ושולח אותו לשרת.'}
+];
+TRIO.forEach(t => {
+  const d = document.createElement('div'); d.innerHTML = '<div class="host"></div><div class="cap">' + t.cap + '</div>'; $('#trio').appendChild(d);
+  const st = new Stage(d.querySelector('.host')).html(t.html).css(t.css); st.onSubmit = () => {};
+});
+
+/* ---------- tables ---------- */
+const rowsSrc = (rows, broken) => ['<table>'].concat(...rows.map((r,i) => ['    <tr>'].concat((broken === i ? r.slice(0,2) : r).map(c => '        <td>' + c + '</td>'), ['    </tr>']))).concat(['</table>']).join('\n');
+const TD_CSS = 'td {\n    border: 1px solid gray;\n}';
+/* t1 */
+const t1 = new Split($('#t1'));
+setT(t1, rowsSrc(MENU.slice(0,2)));
+seg($('#t1seg'), ['כמו שהדפדפן מציג', 'עם קווים (CSS)'], (o,i) => { t1.setCss(i ? TD_CSS : '', i ? {1:'new'} : {}); });
+
+/* t2 rows / cells / columns */
+const t2 = new Split($('#t2'));
+let t2rows = 2, t2broken = false, t2sel = 0;
+const T2SEL = [{s:'tr', msg: n => 'מסומנות ' + n + ' שורות – כל <code>tr</code> הוא שורה אחת.'},
+               {s:'td', msg: n => 'מסומנים ' + n + ' תאים – כל <code>td</code> הוא תא אחד.'},
+               {s:'td:nth-child(2)', msg: n => 'עמודה 2: ' + n + ' תאים – <b>התא השני בכל שורה</b>. בקוד אין לה תגית משלה.'}];
+function drawT2(){
+  const rows = MENU.slice(0, t2rows), marks = {};
+  const src = rowsSrc(rows, t2broken ? 1 : -1);
+  const lines = src.split('\n');
+  let row = -1;
+  lines.forEach((l,i) => { if (l.trim() === '<tr>') row++; if (row >= 2 && l.trim() !== '</table>') marks[i] = 'new'; if (t2broken && row === 1 && l.trim() === '<tr>') marks[i] = 'diff'; });
+  setT(t2, src, marks); t2.setCss(TD_CSS);
+  const l = t2.highlight(T2SEL[t2sel].s);
+  t2.say(T2SEL[t2sel].msg(l.length) + (t2broken ? ' <span class="err">בשורה 2 חסר תא – ושימו לב לחור בסוף השורה.</span>' : ''));
+  $('#t2add').disabled = t2rows >= MENU.length;
+  $('#t2break').textContent = t2broken ? '✔ החזירו את התא' : '🔨 תראו לי: שורה עם תא חסר';
+}
+seg($('#t2seg'), [{label:'tr – השורות'}, {label:'td – כל התאים'}, {label:'עמודה 2'}], (o,i) => { t2sel = i; drawT2(); });
+$('#t2add').addEventListener('click', () => { if (t2rows < MENU.length) { t2rows++; drawT2(); } });
+$('#t2break').addEventListener('click', () => { t2broken = !t2broken; drawT2(); });
+predict('#pCol', {
+  q: 'איזו תגית יוצרת <b>עמודה</b> בטבלה?',
+  opts: ['<code>&lt;tc&gt;</code>', 'אין תגית לעמודה', '<code>&lt;column&gt;</code>'], correct: 1,
+  onCorrect: () => { $('#t2what').hidden = false; },
+  why: ['אין תגית כזו ב-HTML.', 'עמודה נוצרת לבד: התא הראשון בכל שורה נכנס לעמודה הראשונה, התא השני – לשנייה, וכן הלאה. לחצו על "עמודה 2" וראו.', 'אין תגית כזו ב-HTML.']
+});
+
+/* t3 thead / th compare */
+const T3A = '<table>\n    <tr><td>מנה</td><td>מחיר</td></tr>\n    <tr><td>מרגריטה</td><td>45 שקל</td></tr>\n    <tr><td>פטריות</td><td>39 שקל</td></tr>\n</table>';
+const T3B = '<table>\n    <thead>\n        <tr><th>מנה</th><th>מחיר</th></tr>\n    </thead>\n    <tbody>\n        <tr><td>מרגריטה</td><td>45 שקל</td></tr>\n        <tr><td>פטריות</td><td>39 שקל</td></tr>\n    </tbody>\n</table>';
+const t3 = cmpCols($('#t3'), [
+  {html: T3A, m: {1:'diff'}, cap: '<b>בלי thead ו-th</b>שורת הכותרות היא עוד שורה רגילה של td.'},
+  {html: T3B, m: {1:'diff', 2:'diff', 3:'diff', 4:'diff', 7:'diff'}, cap: '<b>עם thead, tbody ו-th</b>הדפדפן יודע מה הראש ומה הגוף.'}
+]);
+predict('#pTh', {
+  q: 'לשתי הטבלאות נוסיף את אותו CSS בדיוק: <code>th { background-color: orange; }</code>. באיזו טבלה שורת הכותרות תיצבע?',
+  opts: ['בשתיהן', 'רק בשנייה – זו עם th', 'באף אחת'], correct: 1,
+  onCorrect: () => { t3.forEach(c => c.st.css('th { background-color: orange; color: white; }')); $('#t3after').hidden = false; },
+  why: ['בטבלה הראשונה אין אף th – הכלל לא מוצא את מי לצבוע.', 'הבורר th מחפש תגיות th – ויש כאלה רק בטבלה השנייה. הסתכלו: ה-CSS נוסף לשתי הטבלאות.', 'בטבלה השנייה יש th – והכלל מוצא אותם.']
+});
+
+/* t4 content only inside cells */
+const t4 = new Split($('#t4'));
+const T4 = [
+  {src: ['<table>','    <tr>','        <td><img src="../Img/pizza.jpg" width="40" /></td>','        <td><b>מרגריטה</b> – 45 שקל</td>','        <td><a href="order.html">להזמנה</a></td>','    </tr>','</table>'].join('\n'), m: {2:'new', 4:'new'},
+   what: 'התמונה, ההדגשה והקישור יושבים בתוך <code>td</code>, ולכן הם חלק מהטבלה – כל אחד בעמודה שלו. תא הוא כמו קופסה קטנה: מה שבתוכו מוצג כרגיל.'},
+  {src: ['<table>','    <tr>','        מבצע!','        <td><img src="../Img/pizza.jpg" width="40" /></td>','        <td><b>מרגריטה</b> – 45 שקל</td>','        <td><a href="order.html">להזמנה</a></td>','    </tr>','</table>'].join('\n'), m: {2:'diff'},
+   what: 'המילה "מבצע!" כתובה בתוך <code>tr</code> – אבל <b>לא בתוך td</b>. הדפדפן לא יודע באיזה תא לשים אותה, אז הוא <b>זורק אותה אל מחוץ לטבלה</b>, מעליה. ושוב – בלי הודעת שגיאה. אם תוכן "קופץ" לכם אל מעל הטבלה, חפשו טקסט שלא נמצא בתוך td או th.'}
+];
+t4.stage.onLink = () => t4.say('בדף אמיתי, הקישור היה עובר לדף order.html.');
+seg($('#t4seg'), ['תוכן בתוך התאים ✔', 'טקסט ישירות בתוך tr ✘'], (o,i) => { setT(t4, T4[i].src, T4[i].m); t4.setCss(TD_CSS); t4.say(''); $('#t4what').innerHTML = T4[i].what; });
+
+/* t5 styling a table */
+const t5 = new Split($('#t5'));
+setT(t5, tableHtml(4, 3));
+const T5 = [
+  {css: '', m: {}, what: 'טבלה בלי עיצוב: מסודרת, אבל בלי קווים, ובלי הבדל ברור בין הראש לגוף (רק ה-th מודגשים).'},
+  {css: 'th, td {\n    border: 1px solid #999;\n}', m: {0:'new', 1:'new', 2:'new'}, what: 'נתנו <code>border</code> לכל <code>th</code> ולכל <code>td</code> (פסיק = "וגם", משיעור 3). שימו לב: הקווים <b>כפולים</b> – לכל תא מסגרת משלו, ויש רווח קטן בין התאים.'},
+  {css: 'table {\n    border-collapse: collapse;\n}\nth, td {\n    border: 1px solid #999;\n}', m: {0:'new', 1:'new', 2:'new'}, what: '<code>border-collapse: collapse</code> (בערך: "לאחד את המסגרות") הופך את המסגרות של תאים צמודים לקו אחד. כמעט תמיד כותבים אותו כשמעצבים טבלה.'},
+  {css: 'table {\n    border-collapse: collapse;\n}\nth, td {\n    border: 1px solid #999;\n    padding: 6px 12px;\n}\nth {\n    background-color: #e67e22;\n    color: white;\n}\ntbody tr:hover {\n    background-color: #fff3e0;\n}', m: {5:'new', 7:'new', 8:'new', 9:'new', 10:'new', 11:'new', 12:'new', 13:'new'},
+   what: '<code>padding</code> נותן אוויר בתוך כל תא (מודל הקופסה משיעור 3), ו-th קיבל רקע כתום – בזכות ההפרדה בין הראש לגוף. ונסו להעביר את העכבר על שורה: <code>tbody tr:hover</code> צובע רק שורות של מידע, ולא את שורת הכותרות.'}
+];
+seg($('#t5seg'), ['1. בלי עיצוב', '2. מסגרות לתאים', '3. border-collapse', '4. ריווח וצבע'], (o,i) => { t5.setCss(T5[i].css, T5[i].m); $('#t5what').innerHTML = T5[i].what; });
+
+/* ---------- lists ---------- */
+const l1 = new Split($('#l1'));
+const RECIPE = ['<h3>איך מכינים פיצה</h3>', '<ol>', '    <li>מרדדים את הבצק</li>', '    <li>מורחים רוטב</li>', '    <li>מפזרים גבינה</li>', '    <li>אופים 10 דקות</li>', '</ol>'];
+seg($('#l1seg'), [{label:'ol', mono:true}, {label:'ul', mono:true}], (o,i) => {
+  const src = RECIPE.join('\n').replace(/<(\/?)ol>/g, '<$1' + (i ? 'ul' : 'ol') + '>');
+  l1.setHtml(src, i ? {1:'diff', 6:'diff'} : {});
+});
+predict('#pList', {
+  q: 'בקוד למטה יש רשימה <code>ol</code>. מה ישתנה אם נחליף אותה ב-<code>ul</code>?',
+  opts: ['המספרים יוחלפו בנקודות', 'הרשימה תעמוד בשורה אחת', 'שום דבר'], correct: 0,
+  onCorrect: () => { $('#l1what').hidden = false; },
+  why: ['ul = רשימה בלי סדר, ולכן במקום מספרים יש תבליטים. נסו בכפתורים.', 'כל li תמיד יורד שורה. כדי לסדר רשימה בשורה אחת צריך CSS – בשלב הבא.', 'יש הבדל במראה – נסו בכפתורים.']
+});
+
+const l2 = new Split($('#l2'));
+const NAV_CSS = 'nav {\n    background-color: #c0392b;\n    padding: 10px;\n}\nnav ul {\n    list-style: none;\n    margin: 0;\n    padding: 0;\n}\nnav li {\n    display: inline;\n}\nnav a {\n    color: white;\n    text-decoration: none;\n    padding: 10px 12px;\n}\nnav a:hover {\n    background-color: #e67e22;\n}';
+const L2 = [
+  {src: NAV_HTML.slice(1, 6).map(l => l.slice(4)).concat(['<h1>פיצה דני</h1>']).join('\n'), m: {}, css: '',
+   what: 'רשימה רגילה של קישורים – עם תבליטים, אחד מתחת לשני. עדיין לא נראה כמו תפריט.'},
+  {src: NAV_HTML.concat(['<h1>פיצה דני</h1>']).join('\n'), m: {0:'new', 6:'new'}, css: '',
+   what: 'הוספנו <code>nav</code> – והמראה <b>לא השתנה בכלל</b>. nav הוא רק שם: "החלק הזה הוא התפריט". זה עוזר לקוראי מסך ולמנועי חיפוש – וגם לנו, ב-CSS.'},
+  {src: NAV_HTML.concat(['<h1>פיצה דני</h1>']).join('\n'), m: {}, css: NAV_CSS,
+   what: 'עכשיו CSS עושה את העבודה. שלוש הוראות חדשות (מסומנות "חדש"): <code>list-style: none</code> מוריד את התבליטים, <code>display: inline</code> (משיעור 3) מעמיד את הפריטים בשורה אחת, ו-<code>text-decoration: none</code> מוריד את הקו מתחת לקישורים. העבירו את העכבר על קישור – זה ה-<code>:hover</code> שלמדתם.'}
+];
+l2.stage.onLink = a => l2.say('בדף אמיתי, הקישור היה עובר לדף ' + esc(a.getAttribute('href')) + '.');
+seg($('#l2seg'), ['רשימה רגילה', 'עטופה ב-nav', 'nav + CSS'], (o,i) => { l2.setHtml(L2[i].src, L2[i].m); l2.setCss(L2[i].css, i === 2 ? {5:'new', 10:'new', 14:'new'} : {}); l2.say(''); $('#l2what').innerHTML = L2[i].what; });
+predict('#pNav', {
+  q: 'עוטפים את רשימת הקישורים בתגית <code>nav</code>. מה ישתנה במראה?',
+  opts: ['הרשימה תהפוך לתפריט לרוחב', 'יופיע רקע צבעוני', 'שום דבר'], correct: 2,
+  why: ['nav לא משנה עיצוב – את זה עושה CSS (בכפתור השלישי).', 'nav לא מוסיפה עיצוב בכלל.', 'nav היא רק "מעטפת" עם שם: היא אומרת לדפדפן (ולקוראי מסך) "כאן התפריט", אבל לא משנה כלום במראה. בדקו בכפתור השני.']
+});
+
+/* ---------- forms ---------- */
+const LOGIN_HTML = ['<form id="loginForm">','    <label for="user">שם משתמש</label>','    <br />','    <input type="text" id="user" name="user" />','    <br />','    <label for="pass">סיסמה</label>','    <br />','    <input type="password" id="pass" name="pass" />','    <br />','    <input type="submit" value="כניסה" />','</form>','<p>אין לכם משתמש? <a href="register.html">להרשמה</a></p>'].join('\n');
+const LOGIN_CSS = '#loginForm {\n    background-color: #fff8ee;\n    border: 2px solid #e67e22;\n    padding: 12px 20px;\n    width: 220px;\n}\n#loginForm input {\n    margin-bottom: 8px;\n}';
+const f1 = new Stage($('#f1stage')).html(LOGIN_HTML).css(LOGIN_CSS);
+f1.onSubmit = () => { $('#f1note').innerHTML = '✔ לחצתם על "כניסה". בדמו הזה הנתונים לא נשלחים לשום מקום – בנושא "שליחה לשרת" תראו בדיוק לאן הם הולכים.'; };
+f1.onLink = () => { $('#f1note').innerHTML = 'בדף אמיתי, הקישור היה עובר לדף ההרשמה.'; };
+
+/* f2 text / password / submit – no for, id or name yet (they come next) */
+const f2 = new Split($('#f2'));
+f2.setHtml(['<form>','    <label>שם משתמש</label>','    <input type="text" />','    <br />','    <label>סיסמה</label>','    <input type="password" />','    <br />','    <input type="submit" value="כניסה" />','</form>'].join('\n'));
+(function(){ const ins = f2.stage.page.querySelectorAll('input'); ins[0].value = 'dani'; ins[1].value = atob('TU9aWkFSRUxMQQ=='); })();
+f2.say('דני כבר מילא את הטופס. נסו להקליד בשדה הסיסמה – רואים רק נקודות.');
+f2.stage.onSubmit = () => f2.say('✔ לחצתם על "כניסה" – כפתור submit שולח את הטופס. (מה בדיוק נשלח? עוד שני שלבים.)');
+
+/* f3 label for */
+const F3A = '<form>\n    <label>שם משתמש</label>\n    <input type="text" />\n</form>';
+const F3B = '<form>\n    <label for="user">שם משתמש</label>\n    <input type="text" id="user" />\n</form>';
+const f3 = cmpCols($('#f3'), [
+  {html: F3A, m: {1:'diff', 2:'diff'}, cap: '<b>בלי for ו-id</b>לחצו על המילה "שם משתמש".'},
+  {html: F3B, m: {1:'diff', 2:'diff'}, cap: '<b>עם for ו-id</b>לחצו על המילה "שם משתמש".'}
+]);
+f3.forEach(c => c.st.page.addEventListener('click', e => {
+  const l = e.target.closest('label'); if (!l) return;
+  c.note.innerHTML = l.control ? '<b style="color:var(--ok)">✔ הסמן קפץ לתוך השדה!</b>' : '<span class="err">✘ לחצתם על המילה – והסמן לא זז.</span>';
+}));
+predict('#pLabel', {
+  q: 'בטופס השני ה-label כתוב עם <code>for="user"</code>, והשדה עם <code>id="user"</code>. מה יקרה כשתלחצו על המילה "שם משתמש"?',
+  opts: ['כלום – זה רק טקסט', 'הסמן יקפוץ לתוך השדה', 'המילה תיכתב בתוך השדה'], correct: 1,
+  onCorrect: () => { $('#f3what').hidden = false; },
+  why: ['זה מה שקורה בטופס הראשון, בלי for. בשני – נסו!', 'for מחבר את התווית לשדה עם אותו id. לחיצה על התווית = לחיצה על השדה. נסו בשני הטפסים.', 'התווית לא מעתיקה טקסט – היא רק "מצביעה" על השדה.']
+});
+
+/* f4 name */
+const f4 = new Split($('#f4'));
+const F4 = ['<form>','    <label for="user">שם משתמש</label>','    <input type="text" id="user" name="user" />','    <br />','    <label for="city">עיר</label>','    <input type="text" id="city" name="city" />','    <br />','    <input type="submit" value="שליחה" />','</form>'];
+function drawF4(noName){
+  const src = F4.slice(); if (noName) src[5] = '    <input type="text" id="city" />';
+  f4.setHtml(src.join('\n'), {5: 'diff'});
+  const ins = f4.stage.page.querySelectorAll('input'); ins[0].value = 'dani'; ins[1].value = 'אשקלון';
+  f4.say('מילאנו בשבילכם. לחצו על "שליחה" כדי לראות מה נשלח.');
+}
+f4.stage.onSubmit = form => f4.say(sentNote(pairsOf(new FormData(form)), true));
+seg($('#f4seg'), ['עם name לשני השדות', 'בלי name לשדה העיר'], (o,i) => drawF4(i === 1), 1);
+predict('#pName', {
+  q: 'בטופס למטה לשדה "עיר" אין <code>name</code>. מה יישלח לשרת?',
+  opts: ['<code>user=dani</code> וגם <code>city=אשקלון</code>', 'רק <code>user=dani</code>', 'כלום – הטופס לא יישלח'], correct: 1,
+  onCorrect: () => { $('#f4what').hidden = false; },
+  why: ['לשדה העיר אין name – אז לדפדפן אין שם לשלוח איתו את הערך.', 'פקד בלי name לא נשלח בכלל – בלי שום אזהרה. לחצו על "שליחה" ובדקו.', 'הטופס נשלח – רק בלי השדה שאין לו name.']
+});
+
+/* f5 three buttons */
+const f5 = new Split($('#f5'));
+f5.setHtml(['<form>','    <label for="user">שם משתמש</label>','    <input type="text" id="user" name="user" />','    <br />','    <input type="submit" value="שליחה" />','    <input type="reset" value="ניקוי" />','    <input type="button" value="סתם כפתור" />','</form>'].join('\n'));
+f5.say('הקלידו שם בשדה, ולחצו על כל אחד מהכפתורים.');
+f5.stage.onSubmit = form => f5.say('📨 <b>submit:</b> הטופס נשלח. ' + sentNote(pairsOf(new FormData(form)), true));
+f5.stage.page.addEventListener('click', e => {
+  const t = e.target.type;
+  if (t === 'reset') setTimeout(() => f5.say('↺ <b>reset:</b> כל השדות חזרו למצב ההתחלתי – כאן, שדה ריק.'), 0);
+  if (t === 'button') f5.say('🤷 <b>button:</b> לא קרה כלום. כפתור כזה לא עושה דבר לבד – בהמשך הקורס תחברו אליו קוד JavaScript.');
+});
+$('#lockBtn').addEventListener('click', () => { $('#lockBtn').textContent = '🔓 פרצתם את המנעול!'; findEgg('locked'); });
+
+/* ---------- more fields ---------- */
+function liveSplit(el, src, hint){
+  const sp = new Split(el, {htmlTitle: 'HTML (חלק מטופס)'});
+  sp.setHtml(src); sp.say(hint);
+  const upd = () => sp.say(sentNote(collect(sp.stage.page)));
+  sp.stage.page.addEventListener('input', upd); sp.stage.page.addEventListener('change', upd);
+  return sp;
+}
+liveSplit($('#k1'), ['<label for="day">תאריך איסוף</label>','<input type="date" id="day" name="day" />','<br />','<label for="hour">שעת איסוף</label>','<input type="time" id="hour" name="hour" />','<br />','<label for="when">או הכול יחד</label>','<input type="datetime-local" id="when" name="when" />'].join('\n'), 'בחרו תאריך ושעה – וכאן תראו מה יישלח.');
+predict('#pDate', {
+  q: 'בחרתם בלוח השנה את 9 באוקטובר 2026. איך התאריך יישלח לשרת?',
+  opts: ['<code>09/10/2026</code>', '<code>2026-10-09</code>', '9 באוקטובר 2026'], correct: 1,
+  onCorrect: () => { $('#k1what').hidden = false; },
+  why: ['ככה הוא אולי <b>מוצג</b> לכם – אבל לא ככה הוא נשלח.', 'תמיד שנה-חודש-יום, לא משנה איך הוא מוצג על המסך. בחרו תאריך למטה ובדקו.', 'השרת מקבל מספרים, לא מילים.']
+});
+
+/* k2 radio */
+const K2A = '<form>\n    <input name="size" type="radio" id="r1" value="M" />\n    <label for="r1">רגילה</label>\n    <input name="size" type="radio" id="r2" value="L" />\n    <label for="r2">משפחתית</label>\n</form>';
+const K2B = '<form>\n    <input name="size1" type="radio" id="r1" value="M" />\n    <label for="r1">רגילה</label>\n    <input name="size2" type="radio" id="r2" value="L" />\n    <label for="r2">משפחתית</label>\n</form>';
+const k2 = cmpCols($('#k2'), [
+  {html: K2A, m: {1:'diff', 3:'diff'}, cap: '<b>אותו name לשני הכפתורים</b>נסו לסמן את שניהם.'},
+  {html: K2B, m: {1:'diff', 3:'diff'}, cap: '<b>name שונה לכל כפתור</b>נסו לסמן את שניהם.'}
+]);
+k2.forEach(c => {
+  const upd = () => { const l = collect(c.st.page); c.note.innerHTML = l.length ? 'יישלח: <code>' + esc(qsText(l)) + '</code>' : 'עוד לא נבחר כלום – לא יישלח כלום.'; };
+  c.st.page.addEventListener('change', upd); upd();
+});
+predict('#pRadio', {
+  q: 'בטופס השני לכל כפתור יש name אחר (<code>size1</code>, <code>size2</code>). מה יקרה אם תלחצו על שניהם?',
+  opts: ['רק אחד יישאר מסומן', 'שניהם יהיו מסומנים', 'הטופס לא יעבוד'], correct: 1,
+  onCorrect: () => { $('#k2what').hidden = false; },
+  why: ['ככה זה בטופס הראשון, שבו ה-name זהה. כאן כל כפתור בקבוצה משלו.', 'הדפדפן מקבץ כפתורי רדיו לפי name. name שונה = שתי קבוצות נפרדות, ובכל קבוצה אפשר לסמן אחד. נסו!', 'הטופס עובד – אבל לא כמו שרצינו.']
+});
+
+/* k3 checkbox, k4 select */
+liveSplit($('#k3'), ['<p>תוספות:</p>','<input type="checkbox" id="t1" name="extra" value="cheese" />','<label for="t1">גבינה</label>','<input type="checkbox" id="t2" name="extra" value="olives" />','<label for="t2">זיתים</label>','<input type="checkbox" id="t3" name="extra" value="onion" />','<label for="t3">בצל</label>'].join('\n'), 'סמנו תוספות – וכאן תראו מה יישלח.');
+liveSplit($('#k4'), ['<label for="pizza">איזו פיצה?</label>','<select id="pizza" name="pizza">','    <option value="margherita">מרגריטה</option>','    <option value="mushrooms">פטריות</option>','    <option value="olives">זיתים</option>','    <option value="pepperoni">פפרוני</option>','</select>'].join('\n'), 'בחרו פיצה מהרשימה – וכאן תראו מה יישלח.');
+
+/* k5 select vs datalist */
+const K5A = '<label for="top">תוספת</label>\n<select id="top" name="top">\n    <option value="cheese">גבינה</option>\n    <option value="olives">זיתים</option>\n    <option value="onion">בצל</option>\n</select>';
+const K5B = '<label for="top">תוספת</label>\n<input type="text" id="top" name="top" list="tops" />\n<datalist id="tops">\n    <option value="גבינה"></option>\n    <option value="זיתים"></option>\n    <option value="בצל"></option>\n</datalist>';
+const k5 = cmpCols($('#k5'), [
+  {html: K5A, m: {}, cap: '<b>select – רשימה סגורה</b>אפשר רק לבחור מתוך הרשימה.'},
+  {html: K5B, m: {1:'new', 2:'new'}, cap: '<b>datalist – רק הצעות</b>לחצו בתיבה כדי לראות הצעות, או הקלידו כל דבר.'}
+]);
+k5.forEach(c => {
+  const upd = () => { const l = collect(c.st.page); c.note.innerHTML = 'יישלח: <code>' + esc(qsText(l)) + '</code>'; };
+  c.st.page.addEventListener('input', upd); c.st.page.addEventListener('change', upd); upd();
+});
+predict('#pDl', {
+  q: 'רוצים להזמין תוספת אננס 🍍, והיא לא ברשימה. באיזה מהשניים אפשר להכניס אותה?',
+  opts: ['רק ב-select', 'רק ב-datalist', 'בשניהם', 'באף אחד'], correct: 1,
+  onCorrect: () => { $('#k5what').hidden = false; },
+  why: ['ב-select אין איפה להקליד – בוחרים רק מה שיש ברשימה.', 'datalist רק מציעה. התיבה עצמה היא תיבת טקסט רגילה – אפשר להקליד בה הכול. נסו!', 'ב-select אי אפשר להקליד.', 'ב-datalist אפשר – היא רק מציעה. נסו להקליד.']
+});
+
+/* k6 more controls */
+liveSplit($('#k6'), ['<label for="qty">כמה מגשים?</label>','<input type="number" id="qty" name="qty" />','<br />','<label for="clr">צבע אהוב</label>','<input type="color" id="clr" name="clr" />','<br />','<label for="note">הערות להזמנה</label>','<br />','<textarea id="note" name="note"></textarea>'].join('\n'), 'שחקו עם הפקדים – וכאן תראו מה יישלח.');
+
+/* ---------- sending: a real mini browser ---------- */
+const ORDER = method => ['<h3>הזמנה מפיצה דני</h3>','<form action="order.html" method="' + method + '">','    <label for="name">שם</label>','    <input type="text" id="name" name="name" />','    <br />','    <label for="pizza">פיצה</label>','    <select id="pizza" name="pizza">','        <option value="margherita">מרגריטה</option>','        <option value="mushrooms">פטריות</option>','        <option value="olives">זיתים</option>','    </select>','    <br />','    <input type="radio" id="m" name="size" value="M" checked />','    <label for="m">רגילה</label>','    <input type="radio" id="l" name="size" value="L" />','    <label for="l">משפחתית</label>','    <br />','    <input type="checkbox" id="cheese" name="extra" value="cheese" />','    <label for="cheese">תוספת גבינה</label>','    <br />','    <input type="hidden" name="discount" value="0" />','    <input type="submit" value="להזמנה" />','</form>'].join('\n');
+const FRAME_CSS = 'h3{margin:0 0 4px}form{line-height:2.2;font-size:16px}input[type=text],select{font:inherit;font-size:15px;padding:2px 6px}ul{line-height:1.8}.note{color:#6b7280;font-size:14px}.wow{color:#b91c1c}';
+function responsePage(list){
+  const disc = list.find(p => p[0] === 'discount');
+  return '<h3>📦 order.html קיבל את ההזמנה</h3><p>הנתונים שהגיעו לשרת:</p>' +
+    (list.length ? '<ul>' + list.map(([k,v]) => '<li><bdi dir="ltr"><b>' + esc(k) + '</b> = ' + esc(v) + '</bdi></li>').join('') + '</ul>' : '<p><b>שום נתון.</b></p>') +
+    (disc && disc[1] !== '0' ? '<p class="wow"><b>😮 הנחה של ' + esc(disc[1]) + '%?!</b> בגלל זה שרת אמיתי אף פעם לא סומך על מה שמגיע מהטופס.</p>' : '') +
+    '<p class="note">בהמשך הקורס תכתבו בעצמכם, ב-C#, את הקוד שמקבל את הנתונים ומטפל בהם.</p>';
+}
+function orderFrame(host, method, onSent){
+  const fr = new Frame(host, {url: BASE + 'menu.html', height: 340, title: 'טופס ההזמנה – ' + method});
+  fr.onLoad = doc => {
+    const f = doc.querySelector('form'); if (!f) return;
+    f.addEventListener('submit', e => {
+      e.preventDefault();
+      const list = pairsOf(new doc.defaultView.FormData(f));
+      const disc = list.find(p => p[0] === 'discount');
+      if (disc && disc[1] !== '0') findEgg('hidden');
+      onSent(list);
+      fr.show({html: responsePage(list), css: FRAME_CSS});
+    });
+  };
+  fr.home = () => { fr.show({html: ORDER(method), css: FRAME_CSS}); fr.url(BASE + 'menu.html'); };
+  fr.home();
+  return fr;
+}
+/* GET */
+codeLines($('#g2code'), ORDER('get'), 'html', {1:'new'});
+let lastGetUrl = '';
+function drawAnat(list){
+  const tok = (c, col, cap) => '<div class="tok" style="--tc:' + col + '"><code>' + esc(c) + '</code><span>' + (cap || '') + '</span></div>';
+  let h = tok('order.html', '#f9a8d4', '<b>הדף שמקבל</b>ה-action') + tok('?', '#cbd5e1', '<b>סימן שאלה</b>כאן מתחילים הנתונים');
+  list.forEach(([k,v], i) => { if (i) h += tok('&', '#cbd5e1', i === 1 ? '<b>מפריד</b>ועוד זוג' : ''); h += tok(k + '=' + String(v).replace(/ /g, '+'), '#86efac', i === 0 ? '<b>זוג</b>name=ערך' : ''); });
+  $('#g2anat').innerHTML = h; $('#g2after').hidden = false;
+}
+const g2 = orderFrame($('#g2frame'), 'get', list => { lastGetUrl = BASE + 'order.html?' + qsText(list); g2.url(lastGetUrl); drawAnat(list); });
+$('#g2back').addEventListener('click', () => g2.home());
+/* the little address bar can be edited: GET data can be typed by hand */
+const g2url = g2.bar.querySelector('.url');
+g2url.contentEditable = 'true'; g2url.spellcheck = false; g2url.title = 'אפשר לערוך את הכתובת וללחוץ Enter';
+g2url.addEventListener('keydown', e => {
+  if (e.key !== 'Enter') return;
+  e.preventDefault();
+  const txt = g2url.textContent.trim(); const q = txt.indexOf('?');
+  const list = q < 0 ? [] : [...new URLSearchParams(txt.slice(q + 1))].filter(p => p[0]);
+  if (list.length && txt !== lastGetUrl) findEgg('url');
+  g2.show({html: responsePage(list), css: FRAME_CSS});
+  if (list.length) drawAnat(list);
+  g2url.blur();
+});
+predict('#pGet', {
+  q: 'ממלאים שם ולוחצים "להזמנה" בטופס עם <code>method="get"</code>. איפה יופיעו הנתונים?',
+  opts: ['בשורת הכתובת של הדפדפן', 'בשום מקום – הם נשלחים בסתר', 'בחלון הודעה שקופץ'], correct: 0,
+  why: ['get מוסיף את הנתונים לסוף הכתובת. מלאו ושלחו – ותראו.', 'זה בערך מה ש-post עושה (וגם הוא לא באמת "בסתר" – בשלב הבא).', 'הדפדפן לא מקפיץ הודעה – הוא עובר לדף שכתוב ב-action.']
+});
+/* POST */
+const g3 = orderFrame($('#g3frame'), 'post', list => {
+  g3.url(BASE + 'order.html');
+  $('#g3net').innerHTML = '<span class="k">F12 → Network → order.html → Payload</span>\nRequest Method: <span class="v">POST</span>\nForm Data:\n' + list.map(([k,v]) => '  <span class="k">' + esc(k) + '</span>: <span class="v">' + esc(v) + '</span>').join('\n');
+  $('#g3after').hidden = false;
+});
+$('#g3back').addEventListener('click', () => g3.home());
+predict('#pPost', {
+  q: 'אז post שולח את הנתונים בצורה סודית ומוצפנת?',
+  opts: ['כן – אי אפשר לראות אותם', 'לא – הם רק לא מוצגים בכתובת'], correct: 1,
+  onCorrect: () => { $('#g3trap').hidden = false; },
+  why: ['אפשר גם אפשר: הלוח השחור הוא בדיוק מה שכל אחד רואה ב-F12. (שלחו את הטופס למעלה כדי לראות אותו.)', 'post רק מוציא את הנתונים מהכתובת. כל אחד רואה אותם ב-F12 ← Network, ובלי https הם עוברים ברשת כטקסט רגיל.']
+});
+predict('#pWhich', {
+  q: 'בונים טופס כניסה עם שם משתמש וסיסמה, באתר אמיתי. איזו שיטה מתאימה?',
+  opts: ['get', 'post'], correct: 1,
+  why: ['ב-get הסיסמה תופיע בכתובת – על המסך, בהיסטוריה, ובכל קישור שמעתיקים. לא רעיון טוב.', 'כך הסיסמה לא נשארת בכתובת ובהיסטוריה. (וכדי שתהיה מוגנת בדרך – האתר צריך https.) בהגשה 1, בינתיים, נשארים עם get – כי דף html רגיל לא מקבל post. כשהדפים יהפכו לדפי Razor, נעבור ל-post.']
+});
+
+/* g5 form id */
+const g5 = new Split($('#g5'), {cssTitle: 'CSS – style.css'});
+g5.setHtml(LOGIN_HTML, {0:'new'}); g5.setCss(LOGIN_CSS, {0:'new', 6:'new'});
+g5.stage.onSubmit = () => g5.say('✔ נשלח (בדמו – לשום מקום).');
+g5.stage.onLink = () => g5.say('בדף אמיתי, הקישור היה עובר לדף ההרשמה.');
+
+/* ---------- playground ---------- */
+const PG_HTML = ['<h1>פיצה דני</h1>','<h2>התפריט</h2>','<!-- task 1: build the table here -->','','<h2>הזמנה</h2>','<form method="get">','    <!-- tasks 3-6: add the fields here -->','','</form>'].join('\n');
+const PG_CSS = ['body {','    font-family: Arial, sans-serif;','}','/* task 2: style th and td here */',''].join('\n');
+const isColor = c => c && c !== 'transparent' && c !== 'rgba(0, 0, 0, 0)';
+const PG_TASKS = [
+  {id:'t1', text:'בנו טבלת מנות: שורת כותרות בתוך <code>thead</code> עם תאי <code>th</code>, ולפחות <b>3 שורות</b> של מנות בתוך <code>tbody</code>.',
+   test: d => { const t = d.querySelector('table'); if (!t) return false; return t.querySelectorAll('thead th').length >= 2 && [...t.querySelectorAll('tbody tr')].filter(r => r.querySelector('td')).length >= 3; }},
+  {id:'t2', text:'ב-CSS: תנו לתאי הכותרת (<code>th</code>) צבע רקע, ולכל התאים מסגרת (<code>border</code>).',
+   test: (d, w) => { const th = d.querySelector('th'), td = d.querySelector('td'); if (!th || !td) return false; const s = w.getComputedStyle(td); return isColor(w.getComputedStyle(th).backgroundColor) && s.borderTopStyle !== 'none' && parseFloat(s.borderTopWidth) > 0; }},
+  {id:'t3', text:'בטופס: תיבת טקסט לשם (<code>type="text"</code>) עם <code>name</code>, ו-label שמחוברת אליה עם <code>for</code> ו-<code>id</code>.',
+   test: d => [...d.querySelectorAll('form input[type=text][name]')].some(i => i.name.trim() && [...d.querySelectorAll('label')].some(l => l.control === i))},
+  {id:'t4', text:'תיבת סיסמה (<code>type="password"</code>) עם <code>name</code>.',
+   test: d => [...d.querySelectorAll('form input[type=password]')].some(i => i.name.trim())},
+  {id:'t5', text:'כפתורי radio לגודל הפיצה: לפחות 2 כפתורים עם <b>אותו name</b>.',
+   test: d => { const g = {}; d.querySelectorAll('form input[type=radio][name]').forEach(r => { const n = r.name.trim(); if (n) g[n] = (g[n] || 0) + 1; }); return Object.values(g).some(n => n >= 2); }},
+  {id:'t6', text:'כפתור שליחה (<code>type="submit"</code>).',
+   test: d => !!d.querySelector('form input[type=submit], form button[type=submit]')},
+  {id:'t7', text:'שלחו את הטופס: מלאו אותו בדפדפן הקטן ולחצו על כפתור השליחה. בדקו בשורת הכתובת שכל השדות הגיעו (שדה חסר? חסר לו name).',
+   test: () => false}
+];
+let pg = null;
+pg = playground('#pg', {html: PG_HTML, css: PG_CSS, tasks: PG_TASKS, htmlLabel: 'HTML – menu.html', url: BASE + 'menu.html', height: 460,
+  onRender: d => {
+    if (pg) pg.frame.url(BASE + 'menu.html');
+    if ([...d.querySelectorAll('td[colspan],th[colspan]')].some(c => c.colSpan >= 2)) findEgg('merge');
+    d.addEventListener('submit', e => {
+      e.preventDefault();
+      const f = e.target, list = pairsOf(new d.defaultView.FormData(f));
+      const post = (f.getAttribute('method') || '').toLowerCase() === 'post';
+      pg.frame.url(BASE + (f.getAttribute('action') || 'menu.html') + (post ? '' : '?' + qsText(list)));
+      if (!post && list.length >= 3) { state.tasks = state.tasks || {}; if (!state.tasks['pg:t7']) { state.tasks['pg:t7'] = true; save(); } }
+    });
+  }});
+doneCheck('#stepDone', 'step');
+
+/* ---------- quiz ---------- */
+quiz('#quiz', [
+  {q:'כתבתם טבלה, והמילה "מבצע" מופיעה <b>מעל</b> הטבלה במקום בתוכה. מה הסיבה הכי סבירה?', opts:['חסר thead','המילה כתובה בתוך tr, אבל לא בתוך td','הטבלה צריכה CSS'], correct:1,
+   why:['טבלה עובדת גם בלי thead.', 'תוכן חייב להיות בתוך td או th. מה שלא – הדפדפן זורק אל מחוץ לטבלה. <a href="#" data-go="tables:4">ראו כאן</a>.', 'CSS משנה מראה, לא את מקום התוכן.']},
+  {q:'בטופס ההרשמה אפשר לסמן גם "זכר" וגם "נקבה". מה מתקנים?', opts:['נותנים לשני הכפתורים אותו name','נותנים לשני הכפתורים אותו id','מחליפים ל-checkbox'], correct:0,
+   why:['אותו name = קבוצה אחת = בחירה אחת.', 'id חייב להיות שונה לכל תגית. את הקבוצה קובע ה-name.', 'checkbox דווקא מאפשר לסמן כמה – ההפך ממה שרוצים.']},
+  {q:'רוצים שהגולש יבחר שאלה לשחזור סיסמה <b>רק</b> מתוך רשימה קבועה. מה מתאים?', opts:['datalist','select','<code>input type="text"</code>'], correct:1,
+   why:['datalist רק מציעה – אפשר להקליד בה כל דבר.', 'select היא רשימה סגורה.', 'בתיבת טקסט אפשר לכתוב כל דבר.']},
+  {q:'שלחתם טופס ב-get, ובכתובת אין את הטלפון: <code>?user=dana&amp;city=ashkelon</code>. מה כנראה חסר בשדה הטלפון?', opts:['id','name','label'], correct:1,
+   why:['id משמש את ה-label ואת ה-CSS, לא את השליחה.', 'בלי name אין שם לשלוח איתו את הערך – והשדה לא נשלח. <a href="#" data-go="forms:4">ראו כאן</a>.', 'label רק מסבירה – היא לא קשורה למה שנשלח.']},
+  {q:'חבר אומר: "שלחתי את הסיסמה ב-post, אז היא מוצפנת ובטוחה". מה נכון?', opts:['הוא צודק','post רק מוציא את הנתונים מהכתובת. מה שמצפין הוא https','post מצפין רק סיסמאות'], correct:1,
+   why:['ב-F12 ← Network רואים הכול. <a href="#" data-go="send:3">ראו כאן</a>.', 'בדיוק.', 'post לא מצפין שום דבר.']}
+]);
+
+/* ---------- summary ---------- */
+codeLines($('#sumTable'), ['<table>','    <thead>','        <tr><th>מנה</th><th>מחיר</th></tr>','    </thead>','    <tbody>','        <tr><td>מרגריטה</td><td>45</td></tr>','    </tbody>','</table>'].join('\n'), 'html');
+
+/* ---------- easter eggs ---------- */
+const EGGS = [
+  {id:'password', icon:'🔑', name:'הסיסמה שנחשפה', learn:'<code>type="password"</code> רק מסתיר את התווים על המסך. הסיסמה עצמה נמצאת בדף כרגיל – ומי שפותח F12 יכול לראות אותה. ההגנה האמיתית היא בשרת וב-https.',
+   h1:'באחד הטפסים דני כבר הקליד את הסיסמה שלו. רואים רק נקודות... אבל נקודות זה לא כספת.',
+   h2:'בשלב "text, password ו-submit": קליק ימני על שדה הסיסמה ← Inspect (בדיקה). ב-Elements לחצו פעמיים על המילה password שבתוך type, כתבו במקומה text ולחצו Enter. הסיסמה היא הקוד.', code:'TU9aWkFSRUxMQQ=='},
+  {id:'hidden', icon:'🕳', name:'השדה הנסתר', learn:'שדה <code>type="hidden"</code> לא מוצג, אבל נשלח – וכל אחד יכול לשנות אותו ב-F12 לפני השליחה. לכן שרת אמיתי אף פעם לא סומך על מחיר או הנחה שמגיעים מהטופס.',
+   h1:'שלחו את טופס ההזמנה בשלב של get, והסתכלו טוב בכתובת. יש שם נתון שלא מילאתם... אפשר לשנות אותו?',
+   h2:'קליק ימני על טופס ההזמנה ← Inspect. מצאו את ה-input עם <code>name="discount"</code>, לחצו פעמיים על ה-0 שב-value, כתבו 100, לחצו Enter – ושלחו את הטופס שוב.'},
+  {id:'url', icon:'✍️', name:'כתובת בעבודת יד', learn:'ב-get הנתונים הם חלק מהכתובת – אז אפשר "לשלוח טופס" גם בלי טופס, רק בהקלדת כתובת. כך עובדים קישורים לחיפוש בגוגל.',
+   h1:'אחרי ששולחים בשיטת get, הנתונים כתובים בשורת הכתובת. ומה אם תכתבו אותם שם בעצמכם?',
+   h2:'בשלב של get: שלחו את הטופס, לחצו על שורת הכתובת של הדפדפן הקטן, שנו את מה שכתוב אחרי <code>name=</code> ולחצו Enter.'},
+  {id:'locked', icon:'🔓', name:'הכפתור הנעול', learn:'<code>disabled</code> נאכף רק בדפדפן של הגולש – ומחיקה שלו ב-F12 מבטלת אותו. לכן כל בדיקה חשובה חייבת לקרות גם בשרת.',
+   h1:'בשלב על שלושת הכפתורים יש כפתור שאי אפשר ללחוץ עליו. באמת אי אפשר?',
+   h2:'קליק ימני על הכפתור הנעול ← Inspect. ב-Elements לחצו פעמיים על המילה disabled, מחקו אותה ולחצו Enter. עכשיו לחצו על הכפתור.'},
+  {id:'merge', icon:'🧱', name:'מיזוג תאים', learn:'המאפיין <code>colspan</code> מותח תא על כמה עמודות (ו-<code>rowspan</code> – על כמה שורות). בדיוק כמו "מיזוג תאים" באקסל.',
+   h1:'באקסל אפשר למזג כמה תאים לתא אחד רחב. גם בטבלאות HTML! נסו בזירת התרגול.',
+   h2:'בזירת התרגול, הוסיפו לטבלה שורה עם תא אחד בלבד, ותנו לו את המאפיין <code>colspan="2"</code>. למשל: "כל המחירים כוללים מע״מ".'}
+];
+Course.start({eggs: EGGS, console: ['🍕 שלום למפתחים!', 'בשיעור הזה הביצים מסתתרות בתוך טפסים וטבלאות.\nרמז: קליק ימני על פקד ← Inspect (בדיקה) – ואפשר לשנות אותו בזמן אמת 😉']});
+})();
+</script>
+</body>
+</html>

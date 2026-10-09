@@ -1,0 +1,1413 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>שיעור 1 – מבוא ל-HTML ודף ראשון | המדריך המעשי</title>
+<meta name="secret" content="🥚 מצאתם! מה שכתוב בתוך head לא מוצג בדף – אבל כל מי שלוחץ Ctrl+U רואה אותו. הקוד הסודי: HEAD. הקלידו אותו במונה הביצים שבראש הדף." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/course.css" />
+<style>
+/* ===== lesson 1: drawn windows (Notepad, console, Visual Studio, Chrome) ===== */
+.spread code.wrap{white-space:normal;overflow-wrap:anywhere}
+.predict code{overflow-wrap:anywhere}
+.duo{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;margin:14px 0;align-items:start}
+@media (max-width:760px){.duo{grid-template-columns:minmax(0,1fr)}}
+.win{direction:ltr;text-align:left;border:1px solid #c9ced8;border-radius:10px;overflow:hidden;background:#fff;color:#1f2937;font-family:"Segoe UI",Arial,sans-serif;font-size:13px;line-height:1.5;box-shadow:0 4px 14px rgba(0,0,0,.08);min-width:0}
+.win .tb{display:flex;align-items:center;gap:8px;background:#eef0f4;border-bottom:1px solid #d6dae2;padding:5px 10px;font-size:12.5px;color:#374151;white-space:nowrap;overflow:hidden}
+.win .tb .nm{overflow:hidden;text-overflow:ellipsis}
+.win .tb .wx{margin-left:auto;color:#6b7280;letter-spacing:6px;flex:0 0 auto}
+.win .mb{display:flex;gap:14px;padding:3px 10px;font-size:12.5px;border-bottom:1px solid #e5e7eb;color:#374151}
+.npta{display:block;width:100%;min-height:250px;border:0;resize:vertical;padding:8px 10px;font-family:Consolas,"JetBrains Mono",monospace;font-size:13.5px;line-height:1.55;background:#fff;color:#111;direction:ltr;text-align:left;outline:none}
+.fname{display:flex;align-items:center;gap:6px;font-size:14px}
+.fname input{width:140px;direction:ltr;font-family:"JetBrains Mono",monospace;font-size:13px;padding:4px 8px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--text)}
+.npframe{display:block;width:100%;height:250px;border:0;background:#fff}
+.rawtxt{margin:0;padding:8px 10px;font-family:Consolas,monospace;font-size:13px;white-space:pre-wrap;word-break:break-all;color:#111;background:#fff;min-height:250px;direction:ltr;text-align:left}
+/* console window */
+.win.con{background:#0c0c0c;border-color:#2b2b2b;color:#cccccc}
+.win.con .tb{background:#1f1f1f;color:#e5e5e5;border-color:#2b2b2b}
+.con pre{margin:0;padding:8px 10px;font-family:Consolas,"JetBrains Mono",monospace;font-size:12px;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere;min-height:150px;color:#cccccc}
+.con pre .g{color:#16c60c}
+.con:focus{outline:3px solid #7aa2ff;outline-offset:2px}
+.con.off pre{color:#8a8a8a}
+.ph{display:grid;place-items:center;min-height:170px;border:2px dashed var(--line);border-radius:10px;color:var(--muted);font-size:14px;text-align:center;padding:10px}
+/* fake browser */
+.fbw{direction:ltr;text-align:left;border:1px solid #c9ced8;border-radius:10px;overflow:hidden;background:#fff;color:#1f2937;min-width:0;box-shadow:0 4px 14px rgba(0,0,0,.08)}
+.fbw .tabs{display:flex;align-items:flex-end;gap:8px;background:#dfe3ea;padding:6px 10px 0}
+.fbw .dots{display:flex;gap:5px;padding-bottom:8px;flex:0 0 auto}
+.fbw .dots i{width:10px;height:10px;border-radius:50%;background:#f87171}.fbw .dots i+i{background:#fbbf24}.fbw .dots i+i+i{background:#34d399}
+.fbw .tab{display:flex;align-items:center;gap:6px;background:#fff;border-radius:8px 8px 0 0;padding:4px 12px;font-size:12.5px;max-width:230px;min-width:0;font-family:Rubik,Arial,sans-serif;transition:box-shadow .2s}
+.fbw .tab .tt{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;unicode-bidi:plaintext}
+.fbw .tab.glow{box-shadow:0 0 0 3px #f43f5e inset}
+.fbw .addr{display:flex;align-items:center;gap:8px;padding:5px 10px;background:#fff;border-bottom:1px solid #e5e7eb}
+.fbw .addr .rl{color:#6b7280}
+.fbw .addr .url{flex:1;min-width:0;background:#f1f3f4;border-radius:99px;padding:2px 12px;font-family:"JetBrains Mono",monospace;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#111}
+.fbw .addr .url .dim{color:#6b7280}
+.fbw .addr .url .chipf{background:#e5e7eb;border-radius:4px;padding:0 5px;margin-right:6px;font-family:Arial,sans-serif;font-size:11px}
+.fbw .fbody{background:#fff;min-height:90px}
+.fbw .host{border:0;border-radius:0}
+.fbw .host[hidden]{display:none!important}
+.errpage{padding:16px 18px;color:#3c4043;font-family:Arial,sans-serif;font-size:13.5px;direction:ltr;text-align:left;line-height:1.5}
+.errpage .ico{font-size:30px}
+.errpage h4{margin:6px 0;font-size:17px;color:#202124;font-weight:500}
+.errpage p{margin:4px 0}
+.errpage p b{overflow-wrap:anywhere}
+.errpage .code{font-size:11.5px;color:#5f6368;margin-top:8px;font-family:Consolas,monospace;overflow-wrap:anywhere}
+.errpage.bad{background:#fff5f5}.errpage.bad h4{color:#b3261e}
+.blankpg{padding:24px 14px;color:#9ca3af;font-family:Rubik,Arial,sans-serif;text-align:center;direction:rtl;font-size:14px}
+/* anatomy */
+.aninfo{background:var(--surface2);border-radius:10px;padding:10px 14px;margin:10px 0;min-height:3.4em}
+#anCode .ln,#vsTree .row{cursor:pointer}
+/* save-as dialog */
+.savedlg{max-width:460px;margin:12px auto}
+.savedlg .sd{padding:10px 12px;display:grid;gap:7px}
+.savedlg .row{display:grid;grid-template-columns:92px minmax(0,1fr) 22px;gap:8px;align-items:center}
+.savedlg .k{color:#374151;font-size:12.5px}
+.savedlg .v{border:1px solid #9ca3af;border-radius:3px;padding:2px 8px;background:#fff;font-size:12.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.n3{width:22px;height:22px;border-radius:50%;background:#f59e0b;color:#fff;font-weight:700;display:inline-grid;place-items:center;font-size:12px;flex:0 0 22px}
+.savedlg .end{display:flex;justify-content:flex-end;gap:6px}
+.legend3{list-style:none;padding:0;margin:6px 0}
+.legend3 li{display:flex;gap:8px;align-items:flex-start;margin:5px 0}
+/* plain light dialogs and buttons */
+.xbtn{font:inherit;font-size:13px;border:1px solid #9ca3af;background:#f3f4f6;color:#111;border-radius:4px;padding:3px 16px;cursor:pointer}
+.xbtn.pri{background:#2563eb;border-color:#2563eb;color:#fff}
+.xbtn:disabled{opacity:.45;cursor:not-allowed}
+.wdlg{max-width:460px}
+.wdlg .dbody{display:flex;gap:12px;padding:12px 14px;font-size:13px}
+.wdlg .dic{font-size:26px;line-height:1}
+.wdlg .dbt{display:flex;justify-content:flex-end;gap:8px;padding:8px 14px;background:#f3f4f6;border-top:1px solid #e5e7eb}
+/* installer */
+.inst .tb{background:#f3eefc}
+.inst .itabs{display:flex;gap:16px;padding:6px 12px;border-bottom:1px solid #e5e7eb;font-size:12.5px;color:#6b7280;white-space:nowrap;overflow:hidden}
+.inst .itabs b{color:#5b21b6;border-bottom:2px solid #7c3aed;font-weight:600}
+.wls{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px;padding:10px}
+.wl{display:flex;gap:8px;align-items:flex-start;text-align:left;font:inherit;font-size:13px;background:#fff;color:#1f2937;border:1px solid #d1d5db;border-radius:8px;padding:8px 10px;cursor:pointer}
+.wl .bx{flex:0 0 16px;height:16px;border:2px solid #9ca3af;border-radius:3px;margin-top:2px;display:grid;place-items:center;font-size:11px;color:#fff;line-height:1}
+.wl.on{border-color:#7c3aed;background:#f5f3ff}.wl.on .bx{background:#7c3aed;border-color:#7c3aed}
+.wl.on.no{border-color:#dc2626;background:#fef2f2}.wl.on.no .bx{background:#dc2626;border-color:#dc2626}
+.ifoot{display:flex;justify-content:flex-end;padding:8px 12px;border-top:1px solid #e5e7eb}
+/* template picker + project name */
+.srch{padding:8px 10px;border-bottom:1px solid #e5e7eb}
+.srch input,.fld input{width:100%;font:inherit;font-size:13px;padding:5px 8px;border:1px solid #9ca3af;border-radius:4px;background:#fff;color:#111;direction:ltr}
+.tpl{list-style:none;margin:0;padding:6px;max-height:340px;overflow:auto}
+.tpl li{padding:7px 10px;border-radius:6px;cursor:pointer;border:1px solid transparent}
+.tpl li:hover{background:#f3f4f6}
+.tpl li.sel{background:#e0ecff;border-color:#2563eb}
+.tpl li.bad{background:#fef2f2;border-color:#fca5a5}
+.tpl .tn{font-weight:600}.tpl .td{font-size:12px;color:#4b5563}
+.tpl .tg{display:flex;gap:4px;margin-top:3px;flex-wrap:wrap}.tpl .tg span{font-size:11px;background:#e5e7eb;border-radius:3px;padding:0 5px}
+.fld{display:grid;grid-template-columns:120px minmax(0,1fr);gap:6px 10px;align-items:center;padding:10px 12px}
+@media (max-width:500px){.fld{grid-template-columns:minmax(0,1fr)}}
+.fld .k{font-size:12.5px;color:#374151}
+.fld .ro{font-family:Consolas,monospace;font-size:12.5px;background:#f3f4f6;border:1px solid #d1d5db;border-radius:4px;padding:4px 8px;overflow-wrap:anywhere}
+/* Visual Studio (dark) */
+.vsx{background:#1e1e1e;color:#dcdcdc;border-color:#3f3f46}
+.vsx .tb{background:#2d2d30;color:#f1f1f1;border-color:#3f3f46}
+.vslogo{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:4px;background:#7b45c4;color:#fff;font-size:9px;font-weight:700}
+.se{padding:6px 0;font-size:13px;min-height:200px}
+.se .row{display:flex;gap:6px;align-items:center;padding:2px 8px;white-space:nowrap;border-radius:3px;user-select:none;-webkit-user-select:none}
+.se .row:hover{background:#2a2d2e}
+.se .row.sel{background:#094771}
+.se .tw{width:10px;color:#9a9a9a;font-size:10px;flex:0 0 10px}
+.se .ic{width:18px;text-align:center;font-size:12px;flex:0 0 18px}
+.csb{font-size:9px;font-weight:700;background:#68217a;color:#fff;border-radius:3px;padding:0 3px}
+.se .ren{background:#fff;color:#000;border:1px solid #007acc;font:inherit;font-size:13px;padding:0 4px;width:130px;min-width:0}
+.cmenu{background:#252526;border:1px solid #454545;box-shadow:0 6px 18px rgba(0,0,0,.5);padding:4px 0;margin:2px 8px 6px;max-width:300px;color:#e6e6e6;font-size:13px}
+.cmenu .mi{display:flex;justify-content:space-between;gap:16px;padding:3px 14px;cursor:pointer;white-space:nowrap;border-radius:2px}
+.cmenu .mi:hover,.cmenu .mi.open{background:#04395e}
+.cmenu .mi .sc{color:#a0a0a0;font-size:11.5px}
+.cmenu .sep{border-top:1px solid #454545;margin:3px 0}
+.cmenu .cmenu{margin:2px 4px 4px 22px}
+.vsdlg{margin:8px;background:#2d2d30;border:1px solid #3f3f46;color:#e6e6e6;font-size:13px}
+.vsdlg .dh{background:#3f3f46;padding:4px 10px;font-weight:600}
+.vsdlg .db{padding:10px;display:grid;gap:8px}
+.vsdlg input{width:100%;font:inherit;font-size:13px;padding:3px 6px;background:#1e1e1e;color:#fff;border:1px solid #555;border-radius:2px}
+.vsdlg .bt{display:flex;gap:6px;justify-content:flex-end;flex-wrap:wrap}
+.vsdlg .bt .left{margin-right:auto}
+.vsdlg .hint{color:#a0a0a0;font-size:12px}
+.xb{font:inherit;font-size:12.5px;background:#3e3e42;color:#fff;border:1px solid #555;padding:3px 12px;cursor:pointer;border-radius:2px}
+.xb.pri{background:#0e639c;border-color:#1177bb}
+.vtl{list-style:none;margin:0;padding:0;max-height:220px;overflow:auto;border:1px solid #3f3f46}
+.vtl li{display:flex;gap:8px;padding:4px 8px;cursor:pointer}
+.vtl li:hover{background:#2a2d2e}.vtl li.sel{background:#094771}
+.vtl .lang{margin-left:auto;color:#9a9a9a;font-size:11.5px}
+.vsed2 .vtabs{background:#2d2d30;padding:0 6px;font-size:12px}
+.vsed2 .vtabs span{display:inline-block;padding:3px 10px;background:#1e1e1e;border-top:2px solid #007acc}
+.vsed2 pre.cv{border-radius:0;margin:0}
+.pulse{animation:pulse 1.1s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(250,204,21,0)}50%{box-shadow:0 0 0 3px rgba(250,204,21,.95)}}
+.sim{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:14px;align-items:start;margin:12px 0}
+@media (max-width:760px){.sim{grid-template-columns:minmax(0,1fr)}}
+.simsteps{list-style:none;padding:0;margin:0}
+.simsteps li{display:flex;gap:8px;align-items:flex-start;padding:6px 10px;border-radius:10px;margin-bottom:6px;background:var(--surface2);font-size:15px}
+.simsteps li .st{flex:0 0 24px;height:24px;border-radius:50%;display:grid;place-items:center;border:2px solid var(--line);font-size:12px;font-weight:700}
+.simsteps li.cur{outline:2px solid var(--accent)}
+.simsteps li.done{background:var(--ok-soft)}.simsteps li.done .st{background:var(--ok);border-color:var(--ok);color:#fff}
+.simfb{border-radius:10px;padding:8px 12px;margin:8px 0;background:var(--surface2);min-height:2.6em}
+.simfb.ok{background:var(--ok-soft)}.simfb.bad{background:var(--bad-soft)}
+/* VS overview mock */
+.vsmenu{display:flex;gap:12px;padding:3px 10px;background:#1f1f1f;color:#ddd;font-size:12.5px;white-space:nowrap;overflow:hidden}
+.vstool{display:flex;align-items:center;gap:10px;padding:4px 10px;background:#2d2d30;border-bottom:1px solid #3f3f46;font-size:12px;color:#aaa;white-space:nowrap;overflow:hidden}
+.runb{font:inherit;font-size:12.5px;background:#2d2d30;color:#e6e6e6;border:1px solid #555;border-radius:3px;padding:2px 10px;cursor:pointer}
+.runb .grn{color:#3fb950}
+.vsbody{display:grid;grid-template-columns:minmax(0,1fr) 250px;min-height:250px}
+.vsed{border-right:1px solid #3f3f46;display:flex;flex-direction:column}
+.vstabs{background:#2d2d30;padding:0 6px}
+.vt{display:inline-block;padding:3px 10px;background:#1e1e1e;border-top:2px solid #007acc;font-size:12px}
+.vsedc{flex:1;display:grid;place-items:center;text-align:center;color:#9aa;padding:10px;font-size:16px}
+.vsse{min-width:0}.vsse .se{overflow-x:auto}
+.vsse .seh{background:#2d2d30;padding:3px 8px;font-size:12px;color:#ccc}
+.hot{cursor:pointer;border-radius:3px}
+.hot:hover{outline:1px dashed #facc15}
+.hot.on{outline:2px solid #facc15;outline-offset:1px}
+@media (max-width:640px){.vsbody{grid-template-columns:minmax(0,1fr)}.vsed{display:none}}
+/* request / response flow */
+.flow{display:grid;grid-template-columns:minmax(0,1.25fr) 76px minmax(0,1.25fr) 66px minmax(0,.8fr);gap:8px;align-items:center;margin:14px 0}
+.flow .node{border:2px solid var(--line);border-radius:12px;padding:8px;background:var(--surface);transition:border-color .3s,box-shadow .3s,opacity .3s;min-width:0}
+.flow .node.on{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.flow .node.dead{border-color:var(--bad);opacity:.75}
+.flow .nh{font-weight:600;font-size:14px;margin-bottom:6px}
+.flow .arr{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:13px;color:var(--muted)}
+.flow .arr span{direction:ltr;unicode-bidi:isolate;border-radius:99px;padding:1px 8px;border:1px solid var(--line);background:var(--surface2);white-space:nowrap;transition:background .3s,color .3s}
+.flow .arr span.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.flow .arr span.fail{background:var(--bad);color:#fff;border-color:var(--bad)}
+.flow .arr .v{display:none}
+.flow .con pre{min-height:96px;font-size:11px}
+.ftree.mini{font-size:12px;padding:8px 10px;line-height:1.8}
+@media (max-width:900px){.flow{grid-template-columns:minmax(0,1fr)}.flow .arr{flex-direction:row;justify-content:center}.flow .arr .h{display:none}.flow .arr .v{display:inline}}
+.ftree .f.click{cursor:pointer;text-decoration:underline dotted}
+.ftree .note{font-family:Rubik,Arial,sans-serif;font-size:12px;color:var(--muted);direction:rtl;unicode-bidi:isolate;margin-left:8px}
+/* address builder */
+.abld{display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px 12px;align-items:center;margin:12px 0}
+.abld .lbl{font-size:14px;color:var(--muted)}
+@media (max-width:600px){.abld{grid-template-columns:minmax(0,1fr);gap:2px 0}.abld .lbl{margin-top:6px}}
+.urlparts{direction:ltr;text-align:left;font-family:"JetBrains Mono",monospace;font-size:16px;background:var(--code-bg);color:var(--code-text);border-radius:10px;padding:10px 14px;overflow-wrap:anywhere;margin:10px 0}
+.urlparts span{border-radius:4px;padding:0 1px}
+.urlparts .p0{color:#94a3b8}.urlparts .p1{color:#93c5fd}.urlparts .p2{color:#fcd34d}.urlparts .p3{color:#86efac}
+.urlparts .bad{background:rgba(244,63,94,.35);text-decoration:underline wavy #f43f5e}
+/* doctor */
+.docout{background:var(--surface2);border-radius:10px;padding:10px 14px;margin:10px 0}
+.docout h4{margin:0 0 4px}
+.docout ol{margin:4px 0;padding-inline-start:22px}
+/* playground tab */
+#pg .pg>*{min-width:0}
+#pg .urlbar .url{min-width:0}
+.pgtab{flex:0 1 auto;min-width:0;max-width:45%;background:#fff;color:#111;border-radius:6px;padding:1px 8px;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;unicode-bidi:plaintext;font-family:Rubik,Arial,sans-serif}
+</style>
+</head>
+<body data-lesson="l1" data-title="שיעור 1" data-next="html-basics.html" data-next-name="תגיות בסיסיות">
+<header class="topbar"><div class="in">
+  <span class="brand">🛠 שיעור 1 · מבוא ל-HTML</span>
+  <span class="now" id="now"></span>
+  <span class="progress" title="שלבים שעברתם בשיעור"><span class="bar"><i id="progBar"></i></span> <span id="progTxt">0/0</span></span>
+  <button class="eggbtn" id="eggBtn" type="button" title="ביצי הפתעה – לחצו לרמזים">🥚 <span id="eggCount">0/5</span></button>
+  <button class="themebtn" id="themeBtn" type="button">🌓 מצב תצוגה</button>
+</div></header>
+<dialog id="eggDlg" aria-labelledby="eggTitle">
+  <div class="dlg-h"><h3 id="eggTitle">🥚 ביצי הפתעה</h3><button class="btn" type="button" id="eggClose" aria-label="סגירה">✕</button></div>
+  <p class="muted" id="eggIntro">בדף מוחבאות 5 ביצים. כל אחת נמצאת בעזרת משהו שלומדים בשיעור. תקועים? לחצו על "רמז נוסף".</p>
+  <ul class="egglist" id="eggList"></ul>
+  <form class="codebox" id="codeForm"><label for="codeIn">מצאתם קוד סודי?</label><input id="codeIn" autocomplete="off" spellcheck="false" placeholder="הקלידו כאן" /><button class="btn primary" type="submit">בדיקה</button></form>
+  <p id="codeMsg" class="res-note"></p>
+</dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="party" id="party" aria-hidden="true"></div>
+
+<main>
+<div class="lesson-head">
+  <div class="school">אורט הנרי רונסון אשקלון · מגמת מדעי המחשב והנדסת תוכנה · יוחאי פרץ</div>
+  <h1>שיעור 1 – מבוא ל-HTML ודף ראשון</h1>
+</div>
+<nav class="topics" id="topics" aria-label="נושאי השיעור"></nav>
+<nav class="steps" id="steps" aria-label="השלבים בנושא"></nav>
+
+<!-- ===================== 1. opening ===================== -->
+<section class="topic" data-id="start" data-icon="🌱" data-title="פתיחה">
+  <article class="spread welcome">
+    <h3>ברוכים הבאים לשיעור הראשון 👋</h3>
+    <p class="lead">היום מתחילים לבנות אתרים. תכתבו את הדף הראשון שלכם – ותראו אותו פתוח בדפדפן, מאתר שרץ <b>על המחשב שלכם</b>. בסוף השיעור יהיה לכם בדיוק דף כזה:</p>
+    <div class="preview-goal"><div id="welcomeBr"></div></div>
+    <h4>איך לומדים את השיעור?</h4>
+    <div class="ways">
+      <div class="way main"><b>📖 כאן, בדף הזה</b>הדף מכסה את כל מה שיש בסרטון ובמצגת, ומוסיף דוגמאות חיות וסימולטורים לתרגל בהם. מתאים למי שאוהב לקרוא ולנסות.</div>
+      <div class="way"><b>🎬 מעדיפים סרטון?</b>הסרטונים של השיעור (וגם של ההתקנה) נמצאים בקלאסרום. אחריהם, קפצו ישר ל<a href="#" data-go="practice:1">תרגול וסיכום</a>.</div>
+      <div class="way"><b>🎧 פודקסט</b>תוספת, לא חובה: לשמוע את הרעיונות הגדולים בדרך הביתה.</div>
+    </div>
+    <h4>איך הדף עובד?</h4>
+    <ul class="how">
+      <li>🧭 <b>6 נושאים</b> (הלשוניות למעלה), ובכל אחד כמה שלבים קצרים. רואים <b>שלב אחד בכל פעם</b>.</li>
+      <li>👆 כל דוגמה כאן <b>חיה</b>. יש גם <b>סימולטורים של Visual Studio</b>: מתרגלים כאן את הלחיצות, בלי לחץ – ואז עושים אותן באמת.</li>
+      <li>❓ לפני חלק מהתוצאות יש שאלת ניחוש. מותר לטעות – בשביל זה היא שם.</li>
+      <li>💾 ההתקדמות נשמרת בדפדפן הזה. בערך 45 דקות (בלי זמן ההתקנה של Visual Studio) – אפשר בכמה ישיבות.</li>
+      <li>🖥 הכי נוח: הדף הזה בחצי מסך, ו-Visual Studio בחצי השני.</li>
+    </ul>
+    <div class="eggnote">🥚 <b>ועוד משהו:</b> בדף מוחבאות <b>5 ביצי הפתעה</b>. כדי למצוא אותן צריך סקרנות – וכמה דברים שתלמדו היום. המונה למעלה; לחיצה עליו נותנת רמזים.</div>
+  </article>
+  <article class="spread">
+    <h3>דף אינטרנט הוא קובץ טקסט</h3>
+    <p>כל דף באינטרנט – גם הדף שאתם קוראים עכשיו – הוא <b>קובץ טקסט</b> שכתוב בשפה שנקראת <b>HTML</b>. בקובץ יש טקסט רגיל, ומסביב לטקסט יש סימונים מיוחדים שנקראים <b>תגיות</b> (tags).</p>
+    <p><b>הדפדפן</b> (browser) – Chrome, Edge או Safari – הוא התוכנה שפותחת את הקובץ, קוראת את התגיות ו<b>מציירת</b> לפיהן את הדף. הנה קובץ קטן, ולידו מה שהדפדפן מצייר ממנו:</p>
+    <div id="s12"></div>
+    <div class="what">את התגיות עצמן הדפדפן <b>לא מציג</b>. הוא רק לומד מהן מה כל חלק: <code>&lt;h1&gt;</code> אומרת "זו כותרת ראשית" – ולכן הטקסט גדול ומודגש. <code>&lt;p&gt;</code> אומרת "זו פסקה". העבירו את העכבר על שורה בקוד – והחלק שלה יסומן בתוצאה.</div>
+    <div class="tip">💡 רוצים לראות HTML של אתר אמיתי? במחשב, בכל אתר, לחצו <b>Ctrl+U</b> – ייפתח <b>קוד המקור</b> (source) של הדף. רוב מה שתראו שם עוד לא מובן, וזה בסדר גמור.</div>
+  </article>
+  <article class="spread">
+    <h3>שפת סימון – לא שפת תכנות</h3>
+    <p>HTML הם ראשי תיבות של <span class="ltr">HyperText Markup Language</span>. המילה החשובה היא <b>Markup</b> – <b>סימון</b>. ב-HTML <b>מסמנים</b> חלקים בטקסט: "זו כותרת", "זו פסקה", "זו תמונה". וזהו.</p>
+    <div class="predict" id="p13"></div>
+    <div id="s13more" hidden>
+      <div class="bridge">ב-<bdi>C#</bdi> כתבתם <code>Console.WriteLine("שלום");</code> – זו <b>פקודה</b>: המחשב מבצע פעולה. ב-HTML כותבים <code>&lt;h1&gt;שלום&lt;/h1&gt;</code> – זה <b>תיאור</b>: "כאן יש כותרת ראשית, ובה המילה שלום". ב-<bdi>C#</bdi> יש משתנים, if ולולאות. ב-HTML אין אף אחד מהם. ועוד הבדל: תוכנית <bdi>C#</bdi> רצה בעצמה. דף HTML לא "רץ" – צריך דפדפן שיפתח אותו.</div>
+      <p>באתר שלנו יעבדו יחד שלוש שפות. כל אחת עם תפקיד משלה:</p>
+      <table>
+        <tr><th>שפה</th><th>מה היא קובעת</th><th>מתי לומדים</th></tr>
+        <tr><td><b>HTML</b></td><td><b>מה יש</b> בדף: כותרות, פסקאות, תמונות, קישורים</td><td>היום ובשיעור 2</td></tr>
+        <tr><td><b>CSS</b></td><td><b>איך זה נראה</b>: צבעים, גדלים, סידור</td><td>שיעור 3</td></tr>
+        <tr><td><b><bdi>C#</bdi></b></td><td>מה קורה <b>בשרת</b> – המחשב שמגיש את האתר</td><td>שיעור 6</td></tr>
+      </table>
+    </div>
+  </article>
+</section>
+
+<!-- ===================== 2. first page in Notepad ===================== -->
+<section class="topic" data-id="notepad" data-icon="📝" data-title="דף ראשון בפנקס רשימות">
+  <article class="spread">
+    <h3>תגית: פותחת, תוכן, סוגרת</h3>
+    <p>רוב התגיות באות <b>בזוג</b>: תגית שפותחת, ותגית שסוגרת. ביניהן – התוכן.</p>
+    <div class="anat">
+      <div class="tok" style="--tc:#93c5fd"><code>&lt;h1&gt;</code><span><b>תגית פותחת</b>כאן מתחילה כותרת</span></div>
+      <div class="tok" style="--tc:#86efac"><code>פיצה דני</code><span><b>תוכן</b>מה שרואים בדף</span></div>
+      <div class="tok" style="--tc:#f9a8d4"><code>&lt;/h1&gt;</code><span><b>תגית סוגרת</b>עם לוכסן: כאן הכותרת נגמרת</span></div>
+    </div>
+    <p>שם התגית כתוב בתוך <b>סוגריים משולשים</b>: <code>&lt;</code> ו-<code>&gt;</code>. בתגית הסוגרת יש <b>לוכסן</b> (<code>/</code>) לפני השם. <b>h1</b> הוא קיצור של heading 1 – כותרת ראשית. <b>p</b> הוא קיצור של paragraph – פסקה.</p>
+    <p>אבל למה צריך תגיות בכלל? השוו:</p>
+    <div class="ctrls"><div class="seg" id="s21seg"></div></div>
+    <div id="s21"></div>
+    <div class="what">בלי תגיות, הדפדפן לא יודע מה כל שורה – והוא <b>מחבר הכול לשורה אחת</b>, באותו גודל. הירידות לשורה שהקלדתם בקובץ? הדפדפן מתעלם מהן. עם תגיות – כל חלק מקבל תפקיד, והדף נבנה כמו שרצינו.</div>
+    <div class="bridge">זה כמו הסוגריים המסולסלים ב-<bdi>C#</bdi>: <code>{</code> פותח בלוק, <code>}</code> סוגר אותו, וכל מה שביניהם שייך לבלוק. ב-HTML <code>&lt;h1&gt;</code> פותחת, <code>&lt;/h1&gt;</code> סוגרת, וכל מה שביניהן – הכותרת.</div>
+    <details class="more"><summary>🐢 רוצים הסבר לאט יותר?</summary>
+      <p>חשבו על מרקר זוהר במחברת. כשמסמנים משפט, מתחילים במקום אחד ועוצרים במקום אחר.</p>
+      <p><b>התגית הפותחת</b> היא הרגע שהמרקר נוגע בדף. <b>התגית הסוגרת</b> היא הרגע שמרימים אותו. כל מה שבאמצע – מסומן.</p>
+      <p>ובמילים של HTML: הטקסט שבין <code>&lt;p&gt;</code> ל-<code>&lt;/p&gt;</code> מסומן כ"פסקה". לשלושתם יחד – תגית פותחת, תוכן ותגית סוגרת – קוראים <b>אלמנט</b> (element).</p>
+    </details>
+  </article>
+  <article class="spread">
+    <h3>שכחתם את הלוכסן?</h3>
+    <p>טעות נפוצה מאוד: כותבים את התגית הסוגרת בלי הלוכסן – <code>&lt;h1&gt;</code> במקום <code>&lt;/h1&gt;</code>.</p>
+    <div class="predict" id="p22"></div>
+    <div class="ctrls"><div class="seg" id="s22seg"></div></div>
+    <div id="s22"></div>
+    <div class="what" id="s22what" hidden>הדפדפן ראה עוד <code>&lt;h1&gt;</code> – ופתח <b>כותרת חדשה</b>. היא אף פעם לא נסגרה, ולכן שתי הפסקאות נבלעו בתוכה – ונראות גדולות ומודגשות. ושימו לב: <b>אין שום הודעת שגיאה</b>. ב-<bdi>C#</bdi> הקומפיילר מסמן לכם שגיאה באדום. הדפדפן לא – הוא פשוט מציג משהו מוזר. לכן אחרי כל שינוי מסתכלים על התוצאה.</div>
+    <div class="tip">💡 ב-Visual Studio, כשמקלידים תגית פותחת כמו <code>&lt;p&gt;</code>, התגית הסוגרת נוספת לבד. בפנקס רשימות אין עזרה כזו – כותבים הכול בעצמכם.</div>
+  </article>
+  <article class="spread" id="anatomy">
+    <h3>השלד של כל דף HTML</h3>
+    <p>לדף שלם צריך עוד כמה תגיות מסביב לתוכן. זה <b>השלד</b> – כותבים אותו בכל דף מחדש. לחצו על שורה בקוד (או העבירו עליה את העכבר), וקראו מה היא עושה:</p>
+    <div class="split">
+      <div class="pane"><div class="pane-h"><span class="dot"></span>hello.html</div><pre class="cv" id="anCode"></pre></div>
+      <div class="pane"><div class="pane-h"><span class="dot"></span>מה רואים בדפדפן</div><div id="anBr"></div><div class="aninfo" id="anInfo"></div></div>
+    </div>
+    <div class="what">לדף יש שני חלקים גדולים. <b>head</b> (ראש) – הגדרות על הדף, שלא רואים אותן בתוך הדף. <b>body</b> (גוף) – כל מה שרואים. ושימו לב להזחה (indentation): תגית שנמצאת <b>בתוך</b> תגית אחרת כתובה קצת פנימה, כמו קוד בתוך בלוק ב-<bdi>C#</bdi>. בשיעור 2 נעמיק בכל התגיות.</div>
+    <div class="tip">💡 במצגת דוגמת ה-Hello World כתובה בלי השורה <code>&lt;meta charset="utf-8" /&gt;</code> ובלי <code>dir="rtl"</code>. כאן הוספנו את שתיהן, כי הדף שלנו בעברית. (מה קורה בלי meta charset – תראו בעוד שלושה שלבים.)</div>
+  </article>
+  <article class="spread">
+    <h3>כותבים דף בפנקס רשימות</h3>
+    <p>כדי לכתוב HTML לא צריך שום תוכנה מיוחדת. מספיק <b>עורך טקסט פשוט</b> – כזה שלא מעצב את הטקסט. ב-Windows יש אחד כזה: <b>פנקס רשימות</b> (Notepad).</p>
+    <ol>
+      <li>פתחו את פנקס הרשימות: לחצו על כפתור התחל (Start), הקלידו <b>Notepad</b> ולחצו Enter.</li>
+      <li>העתיקו לתוכו את השלד מהשלב הקודם:</li>
+    </ol>
+    <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="he" dir="rtl"&gt;
+&lt;head&gt;
+    &lt;meta charset="utf-8" /&gt;
+    &lt;title&gt;פיצה דני&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;פיצה דני&lt;/h1&gt;
+    &lt;p&gt;הפיצה הכי טעימה באשקלון&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre></div>
+    <ol start="3">
+      <li>שמרו: <b>File &rlm;←&rlm; Save as</b>. בחלון השמירה בודקים שלושה דברים:</li>
+    </ol>
+    <div class="win savedlg" aria-hidden="true">
+      <div class="tb">💾 Save as</div>
+      <div class="sd">
+        <div class="row"><span class="k">File name:</span><span class="v">hello.html</span><span class="n3">1</span></div>
+        <div class="row"><span class="k">Save as type:</span><span class="v">All files (*.*)</span><span class="n3">2</span></div>
+        <div class="row"><span class="k">Encoding:</span><span class="v">UTF-8</span><span class="n3">3</span></div>
+        <div class="end"><span class="xbtn pri">Save</span><span class="xbtn">Cancel</span></div>
+      </div>
+    </div>
+    <ul class="legend3">
+      <li><span class="n3">1</span><span><b>שם הקובץ</b> באנגלית, עם הסיומת html: hello.html</span></li>
+      <li><span class="n3">2</span><span><b>סוג הקובץ</b>: All files – כדי שלא תתווסף לקובץ בטעות הסיומת txt.</span></li>
+      <li><span class="n3">3</span><span><b>קידוד</b> (Encoding): UTF-8. בדרך כלל הוא כבר נבחר.</span></li>
+    </ul>
+    <ol start="4">
+      <li>פתחו את הקובץ ב-Chrome, באחת משלוש דרכים: <b>גוררים</b> את הקובץ לחלון של Chrome · בתוך Chrome לוחצים <b>Ctrl+O</b> ובוחרים את הקובץ · <b>קליק ימני</b> על הקובץ &rlm;←&rlm; Open with (פתח באמצעות) &rlm;←&rlm; Chrome.</li>
+    </ol>
+    <div class="trap">Windows מסתיר סיומות של קבצים. אם לא בחרתם All files, הקובץ עלול להישמר בשם <code>hello.html.txt</code> – ובתיקייה הוא ייראה כאילו קוראים לו hello.html. איך מזהים? הסמל של הקובץ הוא של פנקס רשימות ולא של הדפדפן, והוא נפתח כטקסט.</div>
+  </article>
+  <article class="spread">
+    <h3>שומרים &rlm;←&rlm; מרעננים: סימולטור</h3>
+    <p>ככה עובדים עם HTML כל הזמן: משנים בקובץ &rlm;←&rlm; <b>שומרים</b> (Ctrl+S) &rlm;←&rlm; <b>מרעננים</b> את הדפדפן (F5). הנה פנקס רשימות ו-Chrome, זה ליד זה. הקובץ כבר פתוח בשניהם.</p>
+    <div class="predict" id="p25"></div>
+    <div class="duo" id="np">
+      <div>
+        <div class="win">
+          <div class="tb"><span>📝</span><span class="nm"><span id="npName">hello.html</span> - Notepad</span><span class="wx">– ▢ ✕</span></div>
+          <div class="mb"><span>File</span><span>Edit</span><span>View</span></div>
+          <textarea class="npta" id="npText" wrap="off" spellcheck="false" aria-label="פנקס רשימות – עורך הקובץ"></textarea>
+        </div>
+        <div class="ctrls"><button class="btn primary" type="button" id="npSave">💾 שמירה (Ctrl+S)</button><label class="fname">שם הקובץ: <input id="npFile" value="hello.html" spellcheck="false" autocomplete="off" /></label></div>
+      </div>
+      <div>
+        <div id="npBr"></div>
+        <div class="ctrls"><button class="btn primary" type="button" id="npRefresh">⟳ רענון (F5)</button><button class="btn" type="button" id="npOpen">📂 פתיחת קובץ (Ctrl+O)</button></div>
+      </div>
+    </div>
+    <div class="simfb" id="npMsg">נסו: שנו בפנקס הרשימות את המשפט "הפיצה הכי טעימה באשקלון" למשפט אחר. אחר כך – שמירה, ואז רענון.</div>
+    <div class="what" id="npWhat" hidden>הדפדפן <b>לא מסתכל על הקובץ כל הזמן</b>. הוא קורא אותו רק ברגע שפותחים אותו או מרעננים. לכן: שינוי שלא נשמר – עוד לא קיים בקובץ. שינוי שנשמר – קיים, אבל הדפדפן יראה אותו רק אחרי רענון. ככה זה גם ב-Visual Studio: Ctrl+S ואז F5.</div>
+    <div class="tip">💡 נסו לשנות גם את הטקסט שבתוך title – ותראו מה משתנה בדפדפן.</div>
+  </article>
+  <article class="spread">
+    <h3>עברית משובשת? השורה meta charset</h3>
+    <p>המחשב שומר כל אות כ<b>מספר</b>. <b>קידוד</b> (encoding) הוא הטבלה שאומרת איזה מספר הוא איזו אות. השורה <code>&lt;meta charset="utf-8" /&gt;</code> אומרת לדפדפן: "קרא את הקובץ לפי הטבלה UTF-8".</p>
+    <p>בלעדיה, הדפדפן צריך <b>לנחש</b> – ולפעמים הוא מנחש לא נכון. אותו קובץ בדיוק, פעמיים:</p>
+    <div class="compare" id="s26"></div>
+    <div class="what">הקובץ עצמו תקין – הדפדפן פשוט קרא את המספרים לפי טבלה לא נכונה, וכל אות עברית הפכה לשני סימנים מוזרים. הפתרון: השורה <code>meta charset</code> בתוך ה-head, בכל דף. החדשות הטובות: ב-Visual Studio התבנית של דף HTML כבר כוללת אותה.</div>
+  </article>
+</section>
+
+<!-- ===================== 3. Visual Studio ===================== -->
+<section class="topic" data-id="vs" data-icon="💻" data-title="Visual Studio">
+  <article class="spread">
+    <h3>הכנה: מתקינים את Visual Studio</h3>
+    <p>את האתר שלנו נבנה ב-<b>Visual Studio Community 2022</b> – תוכנה חינמית של מיקרוסופט. היא עוזרת לכתוב קוד, מסמנת טעויות, ו<b>מריצה את האתר</b> על המחשב שלכם. מורידים אותה מהאתר <a href="https://visualstudio.microsoft.com/" target="_blank" rel="noopener">visualstudio.microsoft.com</a>. סרטון הדרכה להתקנה נמצא בקלאסרום.</p>
+    <div class="trap">שימו לב לשם: <b>Visual Studio</b> (הסמל הסגול) – ולא Visual Studio Code (הסמל הכחול). אלה שתי תוכנות שונות, ו-Code לא מתאימה לפרויקט שלנו. וגם: <b>Community</b> היא הגרסה החינמית – לא צריך Professional או Enterprise.</div>
+    <p>באמצע ההתקנה נפתח מסך של <b>תוספות</b> (Workloads) – חבילות של כלים. מסמנים בדיוק שלוש:</p>
+    <ul>
+      <li><b>ASP.NET and web development</b> – בניית אתרים. הכי חשובה!</li>
+      <li><b><bdi>.NET desktop development</bdi></b> – תוכנות למחשב בשפת <bdi>C#</bdi>.</li>
+      <li><b>Data storage and processing</b> – בסיסי נתונים, בהמשך השנה.</li>
+    </ul>
+    <p>במסך האמיתי יש הרבה תוספות. מצאו וסמנו כאן את שלוש הנכונות:</p>
+    <div class="win inst">
+      <div class="tb"><span class="vslogo">VS</span><span class="nm">Installing — Visual Studio Community 2022</span><span class="wx">✕</span></div>
+      <div class="itabs"><b>Workloads</b><span>Individual components</span><span>Language packs</span><span>Installation locations</span></div>
+      <div class="wls" id="wls"></div>
+      <div class="ifoot"><button class="xbtn pri" type="button" id="instBtn" disabled>Install</button></div>
+    </div>
+    <div class="simfb" id="instMsg">לחצו על תוספת כדי לסמן אותה (לחיצה נוספת מבטלת).</div>
+    <div class="tip">💡 שכחתם תוספת, או רוצים להוסיף אחת אחר כך? פותחים את התוכנה <b>Visual Studio Installer</b> (היא מותקנת יחד עם Visual Studio), לוחצים <b>Modify</b>, מסמנים – ומתקינים. ההתקנה עצמה לוקחת זמן, לפעמים יותר מחצי שעה.</div>
+  </article>
+  <article class="spread">
+    <h3>פרויקט חדש: בוחרים תבנית</h3>
+    <p><b>פרויקט</b> (project) הוא תיקייה עם כל הקבצים של האתר. לא מתחילים מאפס: Visual Studio יודע ליצור פרויקט מ<b>תבנית</b> (template) – אתר קטן ומוכן שכבר עובד.</p>
+    <ol>
+      <li>פותחים את Visual Studio 2022 ולוחצים <b>Create a new project</b>.</li>
+      <li>בתיבת החיפוש למעלה מקלידים <b>Razor</b>.</li>
+      <li>בוחרים בדיוק את <b><bdi>ASP.NET Core Web App (Razor Pages)</bdi></b> ולוחצים <b>Next</b>.</li>
+    </ol>
+    <p>יש כמה תבניות עם שמות דומים מאוד – וקל לטעות. נסו כאן:</p>
+    <div class="win">
+      <div class="tb"><span class="vslogo">VS</span><span class="nm">Create a new project</span><span class="wx">✕</span></div>
+      <div class="srch"><input id="tplSearch" placeholder="Search for templates (Alt+S)" spellcheck="false" autocomplete="off" aria-label="חיפוש תבנית" /></div>
+      <ul class="tpl" id="tplList"></ul>
+      <div class="ifoot"><button class="xbtn pri" type="button" id="tplNext" disabled>Next</button></div>
+    </div>
+    <div class="simfb" id="tplMsg">הקלידו בתיבת החיפוש, או לחצו על תבנית ברשימה.</div>
+    <div class="trap">התבנית לא מופיעה בכלל? כנראה שבהתקנה לא סומנה התוספת ASP.NET and web development. פותחים את Visual Studio Installer &rlm;←&rlm; Modify &rlm;←&rlm; מסמנים אותה &rlm;←&rlm; Modify.</div>
+  </article>
+  <article class="spread">
+    <h3>שם ומיקום לפרויקט</h3>
+    <p>במסך הבא (Configure your new project) נותנים לפרויקט <b>שם</b> ובוחרים <b>איפה לשמור</b> אותו. כתבו בשדה Project name את השם <b>MyFirstWeb</b> – או שם אחר שתבחרו – ובדקו מה הסימולטור אומר:</p>
+    <div class="win">
+      <div class="tb"><span class="vslogo">VS</span><span class="nm">Configure your new project</span><span class="wx">✕</span></div>
+      <div class="fld">
+        <span class="k">Project name</span><input id="pName" value="WebApplication1" spellcheck="false" autocomplete="off" aria-label="שם הפרויקט" />
+        <span class="k">Location</span><span class="ro">C:\Users\student\source\repos</span>
+        <span class="k">Solution name</span><span class="ro" id="pSol">WebApplication1</span>
+      </div>
+      <div class="ifoot"><button class="xbtn pri" type="button" id="pNext" disabled>Next</button></div>
+    </div>
+    <div class="simfb" id="pMsg"></div>
+    <ul>
+      <li><b>שם:</b> באנגלית בלבד, ובלי רווחים. למשל MyFirstWeb.</li>
+      <li><b>מיקום</b> (Location): אפשר להשאיר את מה שמוצע, או לבחור תיקייה קבועה משלכם. <b>לא</b> בתיקיית ההורדות (Downloads) – וזכרו איפה שמרתם.</li>
+      <li>לוחצים <b>Next</b>. במסך הבא, Additional information, <b>משאירים הכול כמו שהוא</b> ולוחצים <b>Create</b>.</li>
+    </ul>
+    <div class="tip">💡 בפעם הבאה שתרצו לפתוח את הפרויקט: פותחים את Visual Studio ובוחרים אותו ברשימת הפרויקטים האחרונים – או פותחים את הקובץ עם הסיומת <code>.sln</code> שבתיקייה של הפרויקט.</div>
+  </article>
+  <article class="spread">
+    <h3>מכירים את המסך: Solution Explorer</h3>
+    <p>כשהפרויקט נוצר, נפתח מסך כזה. את דף הפתיחה (Overview) אפשר לסגור. החלון החשוב הוא <b>Solution Explorer</b>: הוא מציג את כל הקבצים והתיקיות של הפרויקט. לחצו על החלקים בתמונה, וקראו מה כל אחד:</p>
+    <div class="win vsx" id="vsMock">
+      <div class="tb"><span class="vslogo">VS</span><span class="nm">MyFirstWeb – Microsoft Visual Studio</span><span class="wx">– ▢ ✕</span></div>
+      <div class="vsmenu"><span>File</span><span>Edit</span><span class="hot" data-k="view">View</span><span>Git</span><span>Project</span><span>Build</span><span>Debug</span><span>Test</span><span>Tools</span><span>Window</span><span>Help</span></div>
+      <div class="vstool"><button type="button" class="runb hot" data-k="run"><span class="grn">▶</span> https ▾</button><span>Debug · Any CPU</span></div>
+      <div class="vsbody">
+        <div class="vsed"><div class="vstabs"><span class="vt hot" data-k="overview">Overview ✕</span></div><div class="vsedc"><div>MyFirstWeb<br /><small>Overview · Connected Services · Publish</small></div></div></div>
+        <div class="vsse"><div class="seh">Solution Explorer</div><div class="se" id="vsTree"></div></div>
+      </div>
+    </div>
+    <div class="aninfo" id="vsInfo">👆 לחצו על אחד החלקים בתמונה – למשל על wwwroot.</div>
+    <div class="tip">💡 Solution Explorer נעלם? בתפריט <b>View</b> בוחרים <b>Solution Explorer</b> (או בקיצור Ctrl+Alt+L).</div>
+    <div class="bridge">מי שכבר כתב <bdi>C#</bdi> ב-Visual Studio מכיר את החלון הזה: גם שם יש Solution Explorer, והקוד נמצא בקובץ Program.cs. גם בפרויקט של האתר יש Program.cs – זה קוד <bdi>C#</bdi> שמפעיל את האתר.</div>
+  </article>
+</section>
+
+<!-- ===================== 4. run: server + browser ===================== -->
+<section class="topic" data-id="run" data-icon="▶️" data-title="הרצה: שרת ודפדפן">
+  <article class="spread">
+    <h3>לוחצים ▶ – ונפתחים שני חלונות</h3>
+    <p>התבנית כוללת אתר קטן ומוכן. כדי לראות אותו – <b>מריצים</b> את הפרויקט: לוחצים על <b>המשולש הירוק</b> ▶ בסרגל הכלים של Visual Studio (או F5).</p>
+    <div class="predict" id="p41"></div>
+    <div class="win vsx">
+      <div class="vstool"><button type="button" class="runb pulse" id="runBtn"><span class="grn">▶</span> https ▾</button><span>← לחצו כאן</span></div>
+    </div>
+    <div class="duo">
+      <div id="runCon"><div class="ph">החלון השחור ייפתח כאן</div></div>
+      <div id="runBrWrap"><div class="ph">הדפדפן ייפתח כאן</div></div>
+    </div>
+    <div class="what" id="runWhat" hidden>נפתחו <b>שני חלונות</b>. <b>הדפדפן</b> – עם האתר המוכן של התבנית: דף בית (Home), דף פרטיות (Privacy) ותפריט קטן. <b>החלון השחור</b> – תוכנית קונסול (console application) שמריצה את <b>השרת</b> של האתר, על המחשב שלכם. בלי החלון הזה האתר לא עובד – אז לא סוגרים אותו בזמן העבודה. מה זה שרת? בשלב הבא.</div>
+    <div class="tip">💡 בהרצה הראשונה ייתכן שיקפצו קודם הודעות על "תעודת אבטחה" – לוחצים Yes (פרטים בעוד שני שלבים). וסיימתם לעבוד? עוצרים את ההרצה בריבוע האדום ■ ב-Visual Studio (או Shift+F5).</div>
+  </article>
+  <article class="spread">
+    <h3>מה זה שרת? ולמה localhost?</h3>
+    <p><b>שרת</b> (server) הוא תוכנית ש<b>מחכה לבקשות</b> ועונה עליהן. הדפדפן מבקש דף &rlm;←&rlm; השרת מוצא את הקובץ &rlm;←&rlm; ושולח אותו בחזרה. לחצו "שלחו בקשה" וצפו:</p>
+    <div class="flow" id="flow">
+      <div class="node" id="fnB"><div class="nh">🌐 הדפדפן</div><div id="flowBr"></div></div>
+      <div class="arr"><span class="h" id="fa1">← בקשה</span><span class="v" id="fa1v">↓ בקשה</span><span class="h" id="fa1r">תשובה →</span><span class="v" id="fa1rv">↑ תשובה</span></div>
+      <div class="node" id="fnS"><div class="nh">🖥 השרת – החלון השחור</div><div id="flowCon"></div></div>
+      <div class="arr"><span class="h" id="fa2">← חיפוש</span><span class="v" id="fa2v">↓ חיפוש</span><span class="h" id="fa2r">הקובץ →</span><span class="v" id="fa2rv">↑ הקובץ</span></div>
+      <div class="node" id="fnW"><div class="nh">📁 wwwroot</div><div class="ftree mini" id="flowTree"></div></div>
+    </div>
+    <div class="ctrls"><button class="btn primary" type="button" id="flowGo">▶ שלחו בקשה</button><button class="btn" type="button" id="flowPower">🛑 כבו את השרת</button></div>
+    <div class="simfb" id="flowCap">הדפדפן רוצה את הדף <code>/HTML/index.html</code>. לחצו "שלחו בקשה".</div>
+    <p>אתרים באינטרנט יושבים על שרתים במקומות אחרים בעולם. אצלנו השרת רץ <b>על המחשב שלכם</b> – בתוך החלון השחור. לכן הכתובת מתחילה ב-<b>localhost</b>: "המחשב הזה" (local = מקומי, host = מארח). כך בנויה הכתובת:</p>
+    <div class="anat">
+      <div class="tok" style="--tc:#cbd5e1"><code>https://</code><span><b>פרוטוקול</b>חיבור מאובטח (s = secure)</span></div>
+      <div class="tok" style="--tc:#93c5fd"><code>localhost</code><span><b>השרת</b>המחשב הזה</span></div>
+      <div class="tok" style="--tc:#fcd34d"><code>:7123</code><span><b>פורט (port)</b>"מספר הדלת" של התוכנית</span></div>
+      <div class="tok" style="--tc:#86efac"><code>/HTML/index.html</code><span><b>נתיב (path)</b>איזה קובץ רוצים</span></div>
+    </div>
+    <p>במחשב רצות הרבה תוכניות בבת אחת. <b>הפורט</b> אומר לדפדפן באיזו "דלת" לדפוק – כדי להגיע בדיוק לתוכנית של השרת. אצלכם המספר יהיה אחר מ-7123, וזה בסדר.</p>
+    <div class="bridge">השרת הוא תוכנית <bdi>C#</bdi> – מאותו סוג כמו תוכניות הקונסול שאתם כותבים. ההבדל: תוכנית רגילה מסיימת את העבודה ונסגרת. השרת נשאר פתוח ומחכה לבקשות, כמו לולאה שלא נגמרת: <code>while (true)</code>.</div>
+    <details class="more"><summary>🐢 רוצים הסבר לאט יותר?</summary>
+      <p>דמיינו את הפיצרייה של דני:</p>
+      <ul>
+        <li><b>לקוח</b> מזמין פיצה בדלפק. הלקוח הוא <b>הדפדפן</b>, וההזמנה היא <b>בקשה</b> (request): "תנו לי את הדף הזה".</li>
+        <li><b>הטבח</b> מקבל את ההזמנה. הטבח הוא <b>השרת</b> – התוכנית בחלון השחור.</li>
+        <li>הטבח לוקח מהמקרר את מה שהוזמן. המקרר הוא <b>wwwroot</b> – התיקייה עם הקבצים של האתר.</li>
+        <li>הפיצה חוזרת ללקוח. זו <b>התשובה</b> (response): הקובץ של הדף, שהדפדפן מצייר.</li>
+      </ul>
+      <p>ואם הפיצרייה סגורה? אף אחד לא עונה להזמנה. זה בדיוק מה שקורה כשהחלון השחור סגור: הדפדפן לא מקבל תשובה ומציג שגיאה. נסו – כבו את השרת ושלחו בקשה.</p>
+    </details>
+  </article>
+  <article class="spread">
+    <h3>בפעם הראשונה: תעודת אבטחה</h3>
+    <p>בהרצה הראשונה, Visual Studio עושה בדיקת אבטחה, ועלולות לקפוץ <b>שתי הודעות</b> באנגלית. <b>בשתיהן לוחצים Yes.</b> נסו כאן – ונסו גם מה קורה כשלוחצים No:</p>
+    <div class="duo">
+      <div id="sslDlg"></div>
+      <div id="sslBrWrap"><div class="ph">הדפדפן ייפתח אחרי ההודעות</div></div>
+    </div>
+    <div class="ctrls"><button class="btn" type="button" id="sslReset">↺ מההתחלה</button></div>
+    <div class="what" id="sslWhat" hidden>הכתובת מתחילה ב-<b>https</b>. ה-s היא secure (מאובטח): המידע בין הדפדפן לשרת מוצפן. בשביל זה לשרת צריכה <b>תעודת אבטחה</b> (SSL certificate) – מעין תעודת זהות שמוכיחה לדפדפן שאפשר לסמוך עליו. Visual Studio יצר תעודה כזו למחשב שלכם, ושואל אם לסמוך עליה. זה בטוח: השרת הוא המחשב שלכם עצמו. לחצתם No? הדפדפן לא סומך על השרת – ומציג אזהרה במקום הדף.</div>
+    <p><b>לחצתם בטעות No?</b> אפשר לתקן. ב-Visual Studio פתחו את התפריט <b>View &rlm;←&rlm; Terminal</b>. בחלון שנפתח למטה, הקלידו (או העתיקו) את שתי הפקודות, אחת אחרי השנייה, עם Enter אחרי כל אחת. הראשונה מוחקת את התעודות הישנות, והשנייה יוצרת תעודה חדשה ומאשרת אותה. בכל חלון שקופץ – Yes:</p>
+    <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="text">
+dotnet dev-certs https --clean
+dotnet dev-certs https --trust
+</pre></div>
+    <div class="tip">💡 במצגת הפקודה השנייה כתובה עם מקף ארוך (<code>–trust</code>), ואז היא לא עובדת. הנכון: <b>שני מקפים רגילים</b> – <code>--trust</code>. לכן עדיף להעתיק מכאן. אחרי הפקודות – סגרו את הדפדפן והריצו שוב ▶.</div>
+  </article>
+</section>
+
+<!-- ===================== 5. first page in the project ===================== -->
+<section class="topic" data-id="page" data-icon="📄" data-title="הדף הראשון בפרויקט">
+  <article class="spread">
+    <h3>wwwroot: התיקייה שהדפדפן רואה</h3>
+    <p>השרת לא שולח לדפדפן כל קובץ בפרויקט – רק קבצים מהתיקייה <b>wwwroot</b>. והכלל לכתובת: <b>כתובת האתר + הנתיב של הקובץ בתוך wwwroot</b>. המילה wwwroot עצמה לא נכתבת בכתובת.</p>
+    <div class="predict" id="p51"></div>
+    <div id="wmap" hidden>
+      <p>לחצו על קובץ בעץ – ותראו מה הכתובת שלו:</p>
+      <div class="walk">
+        <div class="ftree" id="wtree"></div>
+        <div><div class="pathbox" id="wpath" dir="ltr"></div><p id="wtxt" style="min-height:3.5em"></p></div>
+      </div>
+    </div>
+    <details class="more"><summary>🐢 רוצים הסבר לאט יותר?</summary>
+      <p>חשבו על <b>חלון הראווה</b> של הפיצרייה. מה שמונח בחלון – לקוחות יכולים לראות ולבקש. מה שבמטבח – לא.</p>
+      <p>בפרויקט: התיקייה <b>wwwroot</b> היא חלון הראווה. כל קובץ בתוכה – הדפדפן יכול לבקש לפי הכתובת שלו. קבצים כמו Program.cs נמצאים "במטבח": השרת משתמש בהם, אבל אף פעם לא שולח אותם לדפדפן.</p>
+      <p>ולמה wwwroot לא מופיעה בכתובת? כי היא נקודת ההתחלה של כל הכתובות – כמו שלא אומרים "תנו לי מחלון הראווה את המגש" אלא רק "תנו לי את המגש".</p>
+    </details>
+    <p>לכן את דפי ה-HTML נשמור בתיקייה משלהם בתוך wwwroot, בשם <b>HTML</b>. ככה הכול מסודר: דפים ב-HTML, תמונות ב-Img (שיעור 2), עיצוב ב-css (שיעור 3).</p>
+  </article>
+  <article class="spread">
+    <h3>סימולטור: יוצרים את התיקייה HTML</h3>
+    <p>ב-Visual Studio: <b>קליק ימני</b> על wwwroot &rlm;←&rlm; <b>Add</b> &rlm;←&rlm; <b>New Folder</b> &rlm;←&rlm; כותבים את השם <b>HTML</b> &rlm;←&rlm; Enter. תרגלו כאן בלי לחץ – כל טעות רק תסביר לכם מה לא נכון:</p>
+    <div id="sim1"></div>
+    <div class="tip">💡 בסימולטור אפשר ללחוץ גם לחיצה רגילה. ב-Visual Studio עצמו – <b>קליק ימני</b> (הכפתור הימני של העכבר) פותח את התפריט.</div>
+  </article>
+  <article class="spread">
+    <h3>סימולטור: מוסיפים דף HTML</h3>
+    <p>עכשיו דף בתוך התיקייה: <b>קליק ימני</b> על HTML &rlm;←&rlm; <b>Add</b> &rlm;←&rlm; <b><bdi>New Item...</bdi></b> &rlm;←&rlm; מחפשים <b>HTML Page</b> &rlm;←&rlm; נותנים שם באנגלית בלי רווחים: <b>index.html</b> &rlm;←&rlm; <b>Add</b>.</p>
+    <div class="tip">💡 בגרסאות חדשות של Visual Studio 2022 החלון New Item נפתח <b>קטן</b>, בלי רשימת תבניות. לוחצים בו <b>Show All Templates</b> – ואז מחפשים HTML Page.</div>
+    <div id="sim2"></div>
+    <p>למה דווקא index? זה השם המקובל לדף הראשי. בפרויקט שלכם הוא יהיה דף הנחיתה – הדף הראשון שרואים.</p>
+  </article>
+  <article class="spread">
+    <h3>כותבים את הדף של פיצה דני</h3>
+    <p>Visual Studio יצר את הקובץ עם <b>שלד מוכן</b> – כמעט כמו זה שכתבתם בפנקס רשימות. עכשיו ממלאים אותו. עברו בין שני המצבים:</p>
+    <div class="ctrls"><div class="seg" id="s54seg"></div></div>
+    <div class="split">
+      <div class="pane"><div class="pane-h"><span class="dot"></span>wwwroot/HTML/index.html</div><pre class="cv" id="s54code"></pre></div>
+      <div class="pane"><div class="pane-h"><span class="dot"></span>מה רואים בדפדפן</div><div id="s54br"></div></div>
+    </div>
+    <div class="what" id="s54what"></div>
+    <p>ולמה צריך את <code>dir="rtl"</code>? אותו דף, פעמיים – ההבדל היחיד בשורה הראשונה:</p>
+    <div class="compare" id="s54cmp"></div>
+    <div class="tip">💡 כשיש בקובץ שינויים שלא נשמרו, Visual Studio מוסיף כוכבית לשם שלו בלשונית: <code>index.html*</code>. לוחצים Ctrl+S – והכוכבית נעלמת.</div>
+  </article>
+  <article class="spread">
+    <h3>רואים את הדף: בונים את הכתובת</h3>
+    <p>מריצים ▶. הדפדפן נפתח בדף הבית של התבנית. עכשיו משנים את הכתובת: אחרי מספר הפורט מוסיפים <code>/HTML/index.html</code> ולוחצים Enter.</p>
+    <p>בנו כאן את הכתובת מחלקים – ובדקו מה קורה כשחלק אחד לא נכון:</p>
+    <div class="abld">
+      <span class="lbl">השרת והפורט:</span><div class="seg" id="aHost"></div>
+      <span class="lbl">התיקייה:</span><div class="seg" id="aDir"></div>
+      <span class="lbl">הקובץ:</span><div class="seg" id="aFile"></div>
+      <span class="lbl">השרת רץ?</span><div class="seg" id="aRun"></div>
+    </div>
+    <div class="urlparts" id="aUrl"></div>
+    <div id="aBr"></div>
+    <div class="simfb" id="aMsg"></div>
+    <div class="tip">💡 את מספר הפורט לא צריך לזכור – הוא כבר כתוב בכתובת שנפתחת כשמריצים. רק מוסיפים אחריו את <code>/HTML/index.html</code>.</div>
+  </article>
+  <article class="spread">
+    <h3>דרך קצרה: View in Browser</h3>
+    <p>יש דרך מהירה יותר: ב-Solution Explorer, <b>קליק ימני</b> על index.html &rlm;←&rlm; <b>View in Browser</b>. הדף נפתח ישר בכתובת הנכונה.</p>
+    <div class="win vsx" style="max-width:420px;margin:12px auto" aria-hidden="true">
+      <div class="tb">Solution Explorer</div>
+      <div class="se" style="min-height:0">
+        <div class="row"><span class="tw">▾</span><span class="ic">📁</span>HTML</div>
+        <div class="row sel" style="padding-left:30px"><span class="tw"></span><span class="ic">📄</span>index.html</div>
+        <div class="cmenu" style="margin-left:40px">
+          <div class="mi">Open</div><div class="mi">Open With...</div><div class="sep"></div>
+          <div class="mi open">View in Browser <span class="sc">Ctrl+Shift+W</span></div>
+          <div class="mi">Browse With...</div><div class="sep"></div>
+          <div class="mi">Cut</div><div class="mi">Copy</div><div class="mi">Delete</div><div class="mi">Rename</div>
+        </div>
+      </div>
+    </div>
+    <p>שני דברים שכדאי לדעת:</p>
+    <ul>
+      <li>ייתכן שהדף ייפתח בדפדפן אחר, למשל Edge. זה בסדר גמור.</li>
+      <li>בחלק מהגרסאות של Visual Studio האפשרות הזו לא מופיעה בתפריט. לא נורא: מריצים ▶ ומקלידים את הכתובת, כמו <a href="#" data-go="page:5">בשלב הקודם</a>.</li>
+    </ul>
+  </article>
+  <article class="spread">
+    <h3>הדף לא נפתח? מאבחנים</h3>
+    <p>זה קורה לכולם, במיוחד בהתחלה. בחרו <b>מה אתם רואים</b> – ותקבלו רשימת בדיקה, לפי הסדר:</p>
+    <div class="ctrls"><div class="seg" id="docSeg"></div></div>
+    <div class="docout" id="docOut"></div>
+    <div class="tip">💡 כלל זהב: אחרי כל תיקון – שומרים (Ctrl+S) ומרעננים (F5). ואם עדיין תקועים: בודקים לבד &rlm;←&rlm; שואלים חבר או חברה &rlm;←&rlm; שואלים את המורה.</div>
+  </article>
+</section>
+
+<!-- ===================== 6. practice ===================== -->
+<section class="topic" data-id="practice" data-icon="🛠" data-title="תרגול וסיכום">
+  <article class="spread">
+    <h3>🛠 נסו עכשיו: הדף הראשון שלכם</h3>
+    <p>זה קובץ index.html, כמו שיש לכם ב-Visual Studio. בצעו את המשימות לפי הסדר – כל משימה שמצליחה נצבעת בירוק ✔. בפס העליון של הדפדפן יש גם לשונית, כדי שתראו את ה-title.</p>
+    <div id="pg"></div>
+  </article>
+  <article class="spread">
+    <h3>🧩 צעד בפרויקט – לקראת הגשה 1</h3>
+    <div class="stepbox">
+      <b>שיעורי בית, שהם גם הצעד הראשון בפרויקט:</b>
+      <ol>
+        <li>התקינו את Visual Studio Community 2022 במחשב בבית, עם שלוש התוספות (לפי <a href="#" data-go="vs:1">שלב ההכנה</a> והסרטון בקלאסרום).</li>
+        <li>צרו את הפרויקט שאותו תגישו: התבנית <bdi>ASP.NET Core Web App (Razor Pages)</bdi>, שם באנגלית (למשל MyFirstWeb), במקום קבוע – לא בתיקיית ההורדות.</li>
+        <li>הריצו פעם אחת ▶, ואשרו את תעודת האבטחה (Yes, Yes).</li>
+        <li>ב-wwwroot צרו את התיקייה HTML, ובתוכה דף HTML Page בשם index.html.</li>
+        <li>כתבו בדף: title עם השם שלכם, כותרת h1 עם השם שלכם, ופסקה אחת – על מה יהיה האתר שאתם רוצים לבנות.</li>
+        <li>הציגו את הדף בדפדפן, צלמו מסך (Win+Shift+S) והעלו את צילום המסך למשימה בקלאסרום.</li>
+      </ol>
+      <p style="margin:8px 0 0">הדף הזה הוא ההתחלה של <b>דף הנחיתה</b> – הדף הראשי של הגשה 1. בשיעור הבא תבנו בו את השלד.</p>
+      <label style="display:flex;gap:8px;align-items:center;margin-top:8px"><input type="checkbox" id="stepDone" /> עשיתי את הצעד בפרויקט שלי</label>
+    </div>
+  </article>
+  <article class="spread" id="quiz">
+    <h3>✅ בדקו את עצמכם</h3>
+    <p>5 שאלות. טעיתם? ההסבר יגיד למה – ונסו שוב.</p>
+  </article>
+  <article class="spread" id="summary">
+    <h3>📄 דף סיכום: כל השיעור במסך אחד</h3>
+    <p>כל מה שצריך לזכור. אפשר לחזור לכאן בכל זמן, או להדפיס. <button class="btn" type="button" id="printBtn">🖨 הדפסה</button></p>
+    <div class="cheat">
+      <div class="card"><h4>HTML – מה זה?</h4>
+        <ul><li>שפת <b>סימון</b> (markup) שמתארת <b>מה יש</b> בדף – לא שפת תכנות.</li><li>הדפדפן קורא את הקובץ ומצייר את הדף.</li><li>כותבים בכל עורך טקסט, ושומרים עם הסיומת html.</li><li>משנים &rlm;←&rlm; <b>Ctrl+S</b> &rlm;←&rlm; <b>F5</b>.</li><li>את המראה קובע CSS (שיעור 3).</li></ul></div>
+      <div class="card"><h4>השלד של כל דף</h4>
+        <div class="codeblock"><pre class="cv" id="sumSkel"></pre></div>
+        <p>head = הגדרות (לא רואים). body = מה שרואים. title = הטקסט בלשונית.</p></div>
+      <div class="card"><h4>תגית</h4>
+        <div class="codeblock"><pre class="cv" id="sumTag"></pre></div>
+        <p>פותחת · תוכן · סוגרת (עם <code>/</code>). h1 = כותרת ראשית, p = פסקה. שכחתם לוכסן? אין שגיאה – רק דף מוזר.</p></div>
+      <div class="card"><h4>Visual Studio</h4>
+        <ul><li>Community 2022, עם 3 תוספות:<ul><li><bdi>ASP.NET and web development</bdi></li><li><bdi>.NET desktop development</bdi></li><li><bdi>Data storage and processing</bdi></li></ul></li><li>תבנית: <b><bdi>ASP.NET Core Web App (Razor Pages)</bdi></b>.</li><li>שם באנגלית, בלי רווחים.</li><li>Solution Explorer נעלם? View &rlm;←&rlm; Solution Explorer.</li></ul></div>
+      <div class="card"><h4>הרצה</h4>
+        <ul><li>▶ &rlm;←&rlm; נפתחים <b>דפדפן</b> + <b>חלון שחור</b> (השרת). לא סוגרים אותו.</li><li><b>localhost</b> = המחשב הזה. המספר אחרי הנקודתיים = פורט.</li><li>תעודת אבטחה: Yes, Yes. אחרת – ב-Terminal:</li></ul>
+        <div class="codeblock"><pre class="cv" id="sumCert"></pre></div></div>
+      <div class="card"><h4>דף ראשון בפרויקט</h4>
+        <ol><li>קליק ימני על wwwroot &rlm;←&rlm; Add &rlm;←&rlm; New Folder &rlm;←&rlm; HTML.</li><li>קליק ימני על HTML &rlm;←&rlm; Add &rlm;←&rlm; New Item &rlm;←&rlm; HTML Page &rlm;←&rlm; index.html.</li><li>כתובת: <code class="wrap">https://localhost:PORT/HTML/index.html</code>, או קליק ימני &rlm;←&rlm; View in Browser.</li></ol></div>
+      <div class="card"><h4>הדף לא נפתח?</h4>
+        <ul><li><b>404</b> – הכתובת, התיקייה או שם הקובץ (בלי wwwroot בכתובת!).</li><li><b>can’t be reached</b> – השרת כבוי. ▶ שוב.</li><li><b>not private</b> – תעודת האבטחה.</li><li><b>השינוי לא מופיע</b> – Ctrl+S ואז F5.</li><li><b>עברית משובשת</b> – meta charset.</li></ul></div>
+    </div>
+  </article>
+</section>
+<div class="stepnav" id="stepnav"></div>
+</main>
+<footer>בניית אתרים · המדריך המעשי · שיעור 1 – מבוא ל-HTML · יוחאי פרץ</footer>
+
+<script src="assets/course.js"></script>
+<script>
+(function(){
+"use strict";
+const {$, esc, state, save, Stage, Split, seg, predict, quiz, doneCheck, playground, codeLines, findEgg, toast} = Course;
+
+/* ---------- the running example: Danny's pizza, first page ---------- */
+const PORT = '7123';
+const SITE = 'https://localhost:' + PORT;
+const PAGE_URL = SITE + '/HTML/index.html';
+const PIZZA_BODY = '<h1>פיצה דני</h1>\n<p>הפיצה הכי טעימה באשקלון</p>';
+const P1 = '<h1>פיצה דני</h1>\n<p>הפיצה הכי טעימה באשקלון</p>\n<p>הזמנות בטלפון בלבד</p>';
+const HELLO = ['<!DOCTYPE html>','<html lang="he" dir="rtl">','<head>','    <meta charset="utf-8" />','    <title>פיצה דני</title>','</head>','<body>','    <h1>פיצה דני</h1>','    <p>הפיצה הכי טעימה באשקלון</p>','</body>','</html>'].join('\n');
+const VS_TPL = ['<!DOCTYPE html>','<html lang="en">','<head>','    <meta charset="utf-8" />','    <title></title>','</head>','<body>','','</body>','</html>'].join('\n');
+const DESK = 'C:/Users/student/Desktop/';
+
+/* ---------- a drawn browser window: tab + address bar + live page ---------- */
+const ERR = {
+  '404': u => ({ico:'📄', h:'This localhost page can’t be found', p:'No webpage was found for the web address: <b>' + esc(u) + '</b>', c:'HTTP ERROR 404', t:u.replace(/^https:\/\//, '')}),
+  refused: () => ({ico:'😕', h:'This site can’t be reached', p:'<b>localhost</b> refused to connect.', c:'ERR_CONNECTION_REFUSED', t:'localhost'}),
+  dns: h => ({ico:'😕', h:'This site can’t be reached', p:'Check if there is a typo in <b>' + esc(h) + '</b>.', c:'DNS_PROBE_FINISHED_NXDOMAIN', t:h}),
+  cert: () => ({ico:'⚠️', h:'Your connection is not private', p:'Attackers might be trying to steal your information from <b>localhost</b>.', c:'NET::ERR_CERT_AUTHORITY_INVALID', t:'Privacy error', bad:true})
+};
+class Browser {
+  constructor(host, o){
+    o = o || {};
+    host.classList.add('fbw');
+    host.innerHTML = '<div class="tabs"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="tab"><span class="fav" aria-hidden="true">📄</span><span class="tt"></span></span></div>' +
+      '<div class="addr"><span class="rl" aria-hidden="true">⟳</span><span class="url"></span></div><div class="fbody"><div class="host"></div><div class="alt" hidden></div></div>';
+    this.el = host; this.tabEl = host.querySelector('.tab'); this.tt = host.querySelector('.tt'); this.urlEl = host.querySelector('.url');
+    this.hostEl = host.querySelector('.host'); this.alt = host.querySelector('.alt');
+    this.stage = new Stage(this.hostEl);
+    this.title(o.title || ''); this.url(o.url || '');
+  }
+  title(t){ this.tt.textContent = t || 'New Tab'; return this; }
+  url(u){
+    this._url = u; let h;
+    if (u.startsWith('https://')) h = '🔒 <span class="dim">https://</span>' + esc(u.slice(8));
+    else if (u.startsWith('file:')) h = '<span class="chipf">File</span>' + esc(u.slice(5));
+    else h = esc(u);
+    this.urlEl.innerHTML = h; return this;
+  }
+  page(html, css){ this.alt.hidden = true; this.hostEl.hidden = false; this.stage.html(html); this.stage.css(css || ''); return this; }
+  show(html){ this.hostEl.hidden = true; this.alt.hidden = false; this.alt.innerHTML = html; return this; }
+  error(kind, arg){
+    const e = ERR[kind](arg);
+    this.title(e.t);
+    return this.show('<div class="errpage' + (e.bad ? ' bad' : '') + '"><div class="ico">' + e.ico + '</div><h4>' + e.h + '</h4><p>' + e.p + '</p><div class="code">' + e.c + '</div></div>');
+  }
+  blank(msg){ return this.show('<div class="blankpg">' + msg + '</div>'); }
+}
+/* the ready-made template site (what you see after ▶) */
+const TPL_SITE = '<div class="nb"><b>MyFirstWeb</b><a href="#">Home</a><a href="#">Privacy</a></div>\n<div class="ct"><h1>Welcome</h1><p>Learn about <a href="#">building Web apps with ASP.NET Core</a>.</p></div>\n<div class="ft">© 2026 - MyFirstWeb - <a href="#">Privacy</a></div>';
+const TPL_CSS = 'body{direction:ltr;text-align:left;font-family:Arial,sans-serif;padding:0;font-size:14px}.nb{display:flex;gap:14px;align-items:center;padding:8px 12px;border-bottom:1px solid #ddd;box-shadow:0 2px 4px rgba(0,0,0,.05)}.nb b{font-weight:500;font-size:16px}.nb a{color:#333;text-decoration:none}.ct{text-align:center;padding:16px 12px 24px}.ct h1{font-weight:300;font-size:32px;margin:0 0 8px}.ct a,.ft a{color:#1b6ec2}.ft{border-top:1px solid #ddd;color:#6c757d;font-size:12px;padding:8px 12px}';
+
+/* ---------- a drawn console window (the server). Ctrl+C stops it, like a real console app ---------- */
+const BOOT = ['info: Microsoft.Hosting.Lifetime[14]','      Now listening on: https://localhost:' + PORT,'info: Microsoft.Hosting.Lifetime[14]','      Now listening on: http://localhost:5123','info: Microsoft.Hosting.Lifetime[0]','      Application started. Press Ctrl+C to shut down.','info: Microsoft.Hosting.Lifetime[0]','      Hosting environment: Development','info: Microsoft.Hosting.Lifetime[0]','      Content root path: C:\\Users\\student\\source\\repos\\MyFirstWeb'];
+class Term {
+  constructor(host, o){
+    o = o || {};
+    host.innerHTML = '<div class="win con" tabindex="0" aria-label="חלון השרת"><div class="tb"><span>▪</span><span class="nm">C:\\…\\MyFirstWeb.exe</span><span class="wx">– ▢ ✕</span></div><pre></pre></div>';
+    this.win = host.querySelector('.con'); this.pre = host.querySelector('pre'); this.lines = o.lines || BOOT; this.running = false; this.onStop = o.onStop; this.timers = [];
+    this.win.addEventListener('keydown', e => {
+      if ((e.ctrlKey || e.metaKey) && (e.code === 'KeyC' || (e.key || '').toLowerCase() === 'c')) { e.preventDefault(); if (this.running) { this.stop(); findEgg('stop'); } }
+    });
+  }
+  line(t){ this.pre.insertAdjacentHTML('beforeend', esc(t).replace(/^info:/, '<span class="g">info</span>:') + '\n'); }
+  boot(animate, done){
+    this.timers.forEach(clearTimeout); this.timers = [];
+    this.pre.textContent = ''; this.win.classList.remove('off'); this.running = true;
+    if (!animate) { this.lines.forEach(l => this.line(l)); if (done) done(); return; }
+    this.lines.forEach((l,i) => this.timers.push(setTimeout(() => { this.line(l); if (i === this.lines.length - 1 && done) done(); }, 140 * (i + 1))));
+  }
+  stop(){
+    this.timers.forEach(clearTimeout); this.running = false; this.win.classList.add('off');
+    this.line('info: Microsoft.Hosting.Lifetime[0]'); this.line('      Application is shutting down...');
+    if (this.onStop) this.onStop();
+  }
+}
+
+/* ---------- 1. opening ---------- */
+new Browser($('#welcomeBr'), {title:'פיצה דני', url:PAGE_URL}).page(PIZZA_BODY);
+new Split($('#s12'), {htmlTitle:'הקובץ index.html', resultTitle:'מה הדפדפן מצייר'}).setHtml(P1);
+predict('#p13', {
+  q:'אז HTML היא שפת תכנות, כמו <bdi>C#</bdi>?',
+  opts:['כן – כותבים בה קוד, אז היא שפת תכנות', 'לא – היא רק מתארת מה יש בדף', 'כן, אבל רק בתוך Visual Studio'],
+  correct:1,
+  why:['כותבים בה קוד, נכון – אבל אין בה פקודות שמבצעות פעולות: אין משתנים, אין תנאים ואין לולאות.', 'בדיוק. HTML מתארת את התוכן, והדפדפן מחליט איך לצייר אותו.', 'HTML לא קשורה לתוכנה מסוימת – אפשר לכתוב אותה גם בפנקס רשימות, כמו שתראו עוד מעט.'],
+  onCorrect: () => { $('#s13more').hidden = false; }
+});
+
+/* ---------- 2. tags ---------- */
+const s21 = new Split($('#s21'), {htmlTitle:'הקובץ', resultTitle:'מה הדפדפן מצייר'});
+seg($('#s21seg'), ['בלי תגיות', 'עם תגיות'], (o,i) => {
+  s21.setHtml(i ? P1 : 'פיצה דני\nהפיצה הכי טעימה באשקלון\nהזמנות בטלפון בלבד', i ? {0:'new',1:'new',2:'new'} : {});
+  s21.say(i ? 'כותרת אחת ושתי פסקאות – כל אחת בשורה משלה.' : '<span class="err">שלוש שורות בקובץ – אבל בדפדפן הכול נדבק לשורה אחת.</span>');
+}, 0);
+
+const s22 = new Split($('#s22'));
+const BROKEN = '<h1>פיצה דני<h1>\n<p>הפיצה הכי טעימה באשקלון</p>\n<p>הזמנות בטלפון בלבד</p>';
+const pick22 = seg($('#s22seg'), ['תקין', 'בלי הלוכסן'], (o,i) => {
+  s22.setHtml(i ? BROKEN : P1, i ? {0:'diff'} : {});
+  s22.say(i ? '<span class="err">גם שתי הפסקאות נראות כמו כותרת</span> – ואין שום הודעת שגיאה.' : 'הכול תקין: כותרת אחת ושתי פסקאות.');
+  if (i) $('#s22what').hidden = false;
+}, 0);
+predict('#p22', {
+  q:'בקוד כתוב <code>&lt;h1&gt;פיצה דני&lt;h1&gt;</code> (בלי לוכסן בסוף), ואחריו שתי פסקאות. מה יקרה?',
+  opts:['הדפדפן יציג הודעת שגיאה', 'רק המילים "פיצה דני" ייראו לא תקין', 'גם הפסקאות שאחרי הכותרת ייראו כמו כותרת'],
+  correct:2,
+  why:['לדפדפן אין הודעות שגיאה. הוא תמיד מנסה להציג משהו – גם כשהקוד שבור.', '"פיצה דני" דווקא ייראה בסדר. הבעיה מתחילה אחרי.', 'הדפדפן חושב שנפתחה כותרת חדשה – וכל מה שבא אחריה נבלע בתוכה. ראו בתוצאה.'],
+  onCorrect: () => { pick22(1); }
+});
+
+/* anatomy of a full page */
+const AN = {
+  doctype:{t:'<b><code>&lt;!DOCTYPE html&gt;</code></b> – השורה הראשונה בכל דף. היא אומרת לדפדפן: "זה דף HTML מודרני". לא מוצגת בדף.'},
+  html:{t:'<b>html</b> עוטפת את <b>כל הדף</b> – מההתחלה ועד הסוף. <code>lang="he"</code> אומר שהדף בעברית, ו-<code>dir="rtl"</code> מסדר אותו מימין לשמאל (right-to-left).', hl:'page'},
+  head:{t:'<b>head</b> (ראש) – הגדרות על הדף. <b>שום דבר מה-head לא מוצג בתוך הדף.</b> רק ה-title מופיע – אבל בלשונית, לא בדף.', hl:'tab'},
+  meta:{t:'<b><code>meta charset="utf-8"</code></b> אומרת לדפדפן באיזה <b>קידוד</b> (encoding) לקרוא את האותיות. בזכותה העברית נראית תקין. לא מוצגת בדף.'},
+  title:{t:'<b>title</b> – הטקסט שמופיע <b>בלשונית של הדפדפן</b>, למעלה. לא בתוך הדף! (מסומן באדום.)', hl:'tab'},
+  body:{t:'<b>body</b> (גוף) – <b>כל מה שרואים בדף</b> נמצא כאן, בין <code>&lt;body&gt;</code> ל-<code>&lt;/body&gt;</code>.', hl:'page'},
+  h1:{t:'<b>h1</b> – הכותרת הראשית של הדף. בדרך כלל יש רק אחת כזו בדף.', hl:'h1'},
+  p:{t:'<b>p</b> – פסקה (paragraph) של טקסט רגיל.', hl:'p'}
+};
+const AN_LINES = ['doctype','html','head','meta','title','head','body','h1','p','body','html'];
+codeLines($('#anCode'), HELLO, 'html');
+const anBr = new Browser($('#anBr'), {title:'פיצה דני', url:'file:' + DESK + 'hello.html'}).page(PIZZA_BODY);
+$('#anInfo').innerHTML = '👆 לחצו על שורה בקוד (או העבירו עליה את העכבר).';
+let anCur = -1;
+function anSel(i){
+  if (i === anCur) return; anCur = i;
+  const key = AN_LINES[i];
+  $('#anCode').querySelectorAll('.ln').forEach(l => l.classList.toggle('hit', AN_LINES[+l.dataset.i] === key));
+  anBr.tabEl.classList.remove('glow'); anBr.stage.page.style.outline = '';
+  anBr.stage.page.querySelectorAll('.hit').forEach(x => x.classList.remove('hit'));
+  const a = AN[key]; if (!a) return;
+  if (a.hl === 'tab') anBr.tabEl.classList.add('glow');
+  else if (a.hl === 'page') { anBr.stage.page.style.outline = '3px solid #f43f5e'; anBr.stage.page.style.outlineOffset = '-3px'; }
+  else if (a.hl) anBr.stage.page.querySelectorAll(a.hl).forEach(x => x.classList.add('hit'));
+  $('#anInfo').innerHTML = a.t;
+}
+['click','mouseover'].forEach(ev => $('#anCode').addEventListener(ev, e => { const l = e.target.closest('.ln'); if (l) anSel(+l.dataset.i); }));
+
+/* Notepad + Chrome simulator: edit -> save -> refresh */
+predict('#p25', {
+  q:'שיניתם משפט בפנקס הרשימות ושמרתם. הדפדפן כבר פתוח על הקובץ, ולא נגעתם בו. מה מוצג בו?',
+  opts:['המשפט החדש – מיד', 'הגרסה הישנה – עד שירעננו', 'דף ריק'],
+  correct:1,
+  why:['הדפדפן לא "מרגיש" שהקובץ השתנה. הוא קרא אותו פעם אחת – כשפתחתם אותו.', 'בדיוק. הדפדפן קורא את הקובץ רק כשפותחים אותו או מרעננים. נסו בסימולטור.', 'הדף לא נעלם – הדפדפן ממשיך להציג את מה שקרא קודם.']
+});
+const disk = {'hello.html': HELLO};
+let npCur = 'hello.html', npShown = 'hello.html', npShownSrc = HELLO;
+const npText = $('#npText'), npFile = $('#npFile'), npMsg = $('#npMsg');
+const npBr = new Browser($('#npBr'));
+npText.value = HELLO;
+const isHtml = n => /\.html?$/i.test(n), isTxt = n => /\.txt$/i.test(n);
+function npDirty(){ return npText.value !== disk[npCur]; }
+function npPaint(){ $('#npName').textContent = (npDirty() ? '*' : '') + npCur; }
+function npSay(html, kind){ npMsg.innerHTML = html; npMsg.className = 'simfb' + (kind ? ' ' + kind : ''); }
+function npRender(name){
+  npShown = name; npShownSrc = disk[name];
+  npBr.url('file:' + DESK + name);
+  if (isTxt(name)) {
+    npBr.title(name).show('<pre class="rawtxt">' + esc(npShownSrc) + '</pre>');
+    findEgg('txt');
+    return;
+  }
+  const f = document.createElement('iframe');
+  f.className = 'npframe'; f.title = 'הדף בדפדפן'; f.setAttribute('sandbox', 'allow-same-origin');
+  f.addEventListener('load', () => { let t = ''; try { t = f.contentDocument.title.trim(); } catch(e){} npBr.title(t || name); });
+  npBr.show(''); npBr.alt.appendChild(f); f.srcdoc = npShownSrc;
+}
+npRender('hello.html');
+npText.addEventListener('input', () => { npPaint(); if (npDirty()) npSay('יש שינוי <b>שלא נשמר</b> – רואים כוכבית (*) ליד שם הקובץ (ב-Windows 11: נקודה בלשונית של הקובץ). הדפדפן עדיין מציג את הגרסה הקודמת.'); });
+function npSave(){
+  let name = npFile.value.trim();
+  if (!name) { name = npCur; npFile.value = name; }
+  if (!isHtml(name) && !isTxt(name)) { npSay('בסימולטור אפשר לשמור קובץ עם הסיומת html או txt. בדקו את שם הקובץ.', 'bad'); return; }
+  const isNew = name !== npCur;
+  disk[name] = npText.value; npCur = name; npPaint();
+  if (isNew) npSay('נשמר קובץ <b>חדש</b> בשם <span class="ltr">' + esc(name) + '</span>. הדפדפן עדיין פתוח על הקובץ הקודם. כדי לראות את הקובץ החדש – לחצו "פתיחת קובץ".');
+  else if (name === npShown && disk[name] !== npShownSrc) npSay('נשמר ✔ – הכוכבית נעלמה. אבל בדפדפן עוד אין שינוי: הוא לא יודע שהקובץ השתנה. עכשיו – <b>רענון</b>.');
+  else npSay('נשמר ✔.');
+}
+function npRefresh(){
+  const before = npShownSrc;
+  npRender(npShown);
+  if (disk[npShown] !== before) { npSay('✔ הדפדפן קרא את הקובץ מחדש – ועכשיו רואים את השינוי.', 'ok'); $('#npWhat').hidden = false; }
+  else if (npShown === npCur && npDirty()) npSay('רעננתם – אבל השינוי <b>עוד לא נשמר</b> בקובץ, אז הדפדפן קרא שוב את אותה גרסה. קודם שומרים (Ctrl+S), ואז מרעננים.', 'bad');
+  else npSay('הדפדפן קרא את הקובץ מחדש. אין בו שום שינוי חדש.');
+  if (isTxt(npShown)) npSay('הסיומת היא txt – אז הדפדפן מציג את הקובץ <b>כטקסט</b>, אות באות, בלי לצייר דף. החזירו את השם ל-hello.html.', 'bad');
+}
+function npOpen(){
+  npRender(npCur);
+  npSay(isTxt(npCur) ? 'הסיומת היא txt – אז הדפדפן מציג את הקובץ <b>כטקסט</b>, אות באות, בלי לצייר דף. החזירו את השם ל-hello.html.' : 'פתחתם בדפדפן את הקובץ <span class="ltr">' + esc(npCur) + '</span>.', isTxt(npCur) ? 'bad' : '');
+}
+$('#npSave').addEventListener('click', npSave);
+$('#npRefresh').addEventListener('click', npRefresh);
+$('#npOpen').addEventListener('click', npOpen);
+$('#np').addEventListener('keydown', e => {
+  if (e.key === 'F5') { e.preventDefault(); npRefresh(); }
+  else if ((e.ctrlKey || e.metaKey) && e.code === 'KeyS') { e.preventDefault(); npSave(); }
+  else if ((e.ctrlKey || e.metaKey) && e.code === 'KeyO') { e.preventDefault(); npOpen(); }
+});
+
+/* meta charset: same file, read with the right / wrong table */
+function mojibake(s){ try { return new TextDecoder('windows-1252').decode(new TextEncoder().encode(s)); } catch(e){ return '×¤×™×¦×” ×“× ×™'; } }
+function compareBox(el, items){
+  el.innerHTML = '';
+  items.forEach(it => {
+    const d = document.createElement('div');
+    d.innerHTML = '<pre class="cv"></pre><div class="host"></div><div class="cap">' + it.cap + '</div>';
+    el.appendChild(d);
+    codeLines(d.querySelector('pre'), it.code, 'html', it.m);
+    const st = new Stage(d.querySelector('.host')).html(it.page);
+    if (it.ltr) st.page.style.direction = 'ltr';
+  });
+}
+const CS_HEAD = (meta) => ['<head>', meta ? '    <meta charset="utf-8" />' : '    <!-- no meta charset -->', '    <title>פיצה דני</title>', '</head>', '<body>', '    <h1>פיצה דני</h1>', '    <p>הזמנות בטלפון בלבד</p>', '</body>'].join('\n');
+compareBox($('#s26'), [
+  {code:CS_HEAD(true), m:{1:'diff'}, page:'<h1>פיצה דני</h1><p>הזמנות בטלפון בלבד</p>', cap:'<b>עם meta charset</b>העברית תקינה.'},
+  {code:CS_HEAD(false), m:{1:'diff'}, page:'<h1>' + esc(mojibake('פיצה דני')) + '</h1><p>' + esc(mojibake('הזמנות בטלפון בלבד')) + '</p>', ltr:true, cap:'<b>בלי meta charset</b>הדפדפן ניחש טבלה אחרת – והעברית הפכה לג׳יבריש.'}
+]);
+
+/* ---------- 3. Visual Studio ---------- */
+/* installer workloads */
+const WL = [
+  {n:'ASP.NET and web development', ok:true, d:'✔ בניית אתרים – התוספת הכי חשובה לקורס.'},
+  {n:'Azure development', d:'Azure הוא שירות הענן של מיקרוסופט. לא צריך בקורס.'},
+  {n:'Python development', d:'שפת Python – לא בקורס הזה.'},
+  {n:'Node.js development', d:'אתרים בטכנולוגיה אחרת (Node.js). אנחנו עובדים עם ASP.NET.'},
+  {n:'.NET Multi-platform App UI development', d:'אפליקציות לטלפון (MAUI). לא צריך.'},
+  {n:'.NET desktop development', ok:true, d:'✔ תוכנות למחשב בשפת <bdi>C#</bdi> – מסמנים, כמו במצגת.'},
+  {n:'Desktop development with C++', d:'שפת C++ – לא בקורס.'},
+  {n:'Data storage and processing', ok:true, d:'✔ בסיסי נתונים – נצטרך בהמשך השנה.'},
+  {n:'Game development with Unity', d:'פיתוח משחקים. כיף – אבל לא עכשיו 🙂'}
+];
+const wlOn = new Set();
+$('#wls').innerHTML = WL.map((w,i) => '<button type="button" class="wl' + (w.ok ? '' : ' x') + '" data-w="' + i + '"><span class="bx"></span><span>' + esc(w.n) + '</span></button>').join('');
+$('#wls').addEventListener('click', e => {
+  const b = e.target.closest('[data-w]'); if (!b) return;
+  const i = +b.dataset.w, w = WL[i];
+  if (wlOn.has(i)) wlOn.delete(i); else wlOn.add(i);
+  const on = wlOn.has(i);
+  b.classList.toggle('on', on); b.classList.toggle('no', on && !w.ok); b.querySelector('.bx').textContent = on ? (w.ok ? '✓' : '✕') : '';
+  const right = [...wlOn].filter(k => WL[k].ok).length, wrong = [...wlOn].filter(k => !WL[k].ok).length;
+  const m = $('#instMsg');
+  if (right === 3 && !wrong) { m.className = 'simfb ok'; m.innerHTML = '✔ מושלם: שלוש התוספות מסומנות. עכשיו לוחצים <b>Install</b> – ומחכים בסבלנות.'; }
+  else if (on && !w.ok) { m.className = 'simfb bad'; m.innerHTML = '✘ ' + w.d + ' לחצו שוב כדי לבטל.'; }
+  else { m.className = 'simfb'; m.innerHTML = (on ? w.d + ' ' : '') + 'סימנתם ' + right + ' מתוך 3' + (wrong ? ', ויש ' + wrong + ' מיותרות.' : '.'); }
+  $('#instBtn').disabled = !(right === 3 && !wrong);
+});
+
+/* project template picker */
+const TPL = [
+  {n:'Console App', d:'A project for creating a command-line application.', tags:['C#','Windows','Console'], why:'זו התבנית של תוכניות <bdi>C#</bdi> בקונסול – לא אתר.'},
+  {n:'ASP.NET Core Web App (Model-View-Controller)', d:'Example ASP.NET Core MVC Views and Controllers.', tags:['C#','Web'], why:'גם זה אתר – אבל בשיטה אחרת (MVC). שימו לב למה שכתוב בסוגריים: אנחנו צריכים Razor Pages.'},
+  {n:'ASP.NET Core Empty', d:'An empty project template for an ASP.NET Core application.', tags:['C#','Web'], why:'פרויקט ריק – בלי האתר המוכן ובלי התיקייה wwwroot. אנחנו רוצים תבנית שיש בה כבר הכול.'},
+  {n:'ASP.NET Core Web App (Razor Pages)', ok:true, d:'Example ASP.NET Razor Pages content.', tags:['C#','Web']},
+  {n:'Blazor Web App', d:'A project template for creating a Blazor web app.', tags:['C#','Web'], why:'Blazor היא טכנולוגיה אחרת לבניית אתרים. לא בקורס שלנו.'},
+  {n:'Windows Forms App', d:'A project template for creating a Windows Forms app.', tags:['C#','Windows','Desktop'], why:'תוכנה עם חלונות למחשב – לא אתר.'}
+];
+let tplSel = -1;
+function tplDraw(){
+  const q = $('#tplSearch').value.trim().toLowerCase().split(/\s+/).filter(Boolean);
+  const list = TPL.map((t,i) => [t,i]).filter(([t]) => q.every(w => t.n.toLowerCase().includes(w)));
+  $('#tplList').innerHTML = list.length ? list.map(([t,i]) => '<li data-t="' + i + '" class="' + (i === tplSel ? (t.ok ? 'sel' : 'bad') : '') + '"><div class="tn">' + esc(t.n) + '</div><div class="td">' + esc(t.d) + '</div><div class="tg">' + t.tags.map(g => '<span>' + g + '</span>').join('') + '</div></li>').join('')
+    : '<li style="cursor:default;color:#6b7280">No templates found</li>';
+}
+$('#tplSearch').addEventListener('input', tplDraw);
+$('#tplList').addEventListener('click', e => {
+  const li = e.target.closest('[data-t]'); if (!li) return;
+  tplSel = +li.dataset.t; const t = TPL[tplSel]; tplDraw();
+  const m = $('#tplMsg');
+  if (t.ok) { m.className = 'simfb ok'; m.innerHTML = '✔ זו התבנית! עכשיו לוחצים <b>Next</b>.'; }
+  else { m.className = 'simfb bad'; m.innerHTML = '✘ ' + t.why; }
+  $('#tplNext').disabled = !t.ok;
+});
+$('#tplNext').addEventListener('click', () => { $('#tplMsg').innerHTML = '✔ מעולה. במסך הבא נותנים שם לפרויקט – <a href="#" data-go="vs:3">השלב הבא</a>.'; });
+tplDraw();
+
+/* project name */
+function checkName(){
+  const v = $('#pName').value.trim(); $('#pSol').textContent = v || ' ';
+  const m = $('#pMsg'); let ok = false, t;
+  if (!v) t = 'צריך לתת שם לפרויקט.';
+  else if (/[\u0590-\u05FF]/.test(v)) t = '✘ יש אותיות בעברית. שם של פרויקט – באנגלית בלבד.';
+  else if (/\s/.test(v)) t = '✘ יש רווח. כתבו בלי רווחים – למשל MyFirstWeb במקום My First Web.';
+  else if (!/^[A-Za-z0-9_.]+$/.test(v)) t = '✘ יש בשם סימן שלא מתאים. השתמשו רק באותיות באנגלית ובמספרים.';
+  else if (/^[0-9]/.test(v)) t = '⚠ עדיף שהשם יתחיל באות, לא במספר.';
+  else if (v === 'WebApplication1') t = 'זה השם שהמחשב הציע. עדיף לתת שם משלכם – למשל MyFirstWeb.';
+  else { ok = true; t = '✔ שם מצוין. הפרויקט יישמר בתיקייה <span class="ltr">C:\\Users\\student\\source\\repos\\' + esc(v) + '</span>. עכשיו Next.'; }
+  m.className = 'simfb ' + (ok ? 'ok' : (t.startsWith('✘') ? 'bad' : '')); m.innerHTML = t; $('#pNext').disabled = !ok;
+}
+$('#pName').addEventListener('input', checkName); checkName();
+$('#pNext').addEventListener('click', () => { $('#pMsg').innerHTML = '✔ במסך Additional information משאירים הכול כמו שהוא ולוחצים <b>Create</b>. Visual Studio יוצר את הפרויקט – וזה המסך שתראו (השלב הבא).'; });
+
+/* the Visual Studio screen: click to learn */
+const TREE = phase => [
+  {id:'sln', t:"Solution 'MyFirstWeb' (1 of 1 project)", ic:'▣', d:0},
+  {id:'proj', t:'MyFirstWeb', ic:'🌐', d:1, f:1},
+  {id:'cs', t:'Connected Services', ic:'🔗', d:2},
+  {id:'dep', t:'Dependencies', ic:'📦', d:2, f:0},
+  {id:'prop', t:'Properties', ic:'🔧', d:2, f:0},
+  {id:'www', t:'wwwroot', ic:'🌐', d:2, f:1},
+  {id:'css', t:'css', ic:'📁', d:3, f:0},
+  ...(phase === 2 ? [{id:'html', t:'HTML', ic:'📁', d:3, f:1}] : []),
+  {id:'js', t:'js', ic:'📁', d:3, f:0},
+  {id:'lib', t:'lib', ic:'📁', d:3, f:0},
+  {id:'fav', t:'favicon.ico', ic:'⭐', d:3},
+  {id:'pages', t:'Pages', ic:'📁', d:2, f:0},
+  {id:'app', t:'appsettings.json', ic:'⚙', d:2},
+  {id:'prog', t:'Program.cs', ic:'<span class="csb">C#</span>', d:2}
+];
+const rowHtml = (n, extra) => '<div class="row' + (extra || '') + '" data-n="' + n.id + '" style="padding-left:' + (8 + n.d * 14) + 'px"><span class="tw">' + (n.f === 1 ? '▾' : n.f === 0 ? '▸' : '') + '</span><span class="ic">' + n.ic + '</span><span>' + (n.edit ? '<input class="ren" value="NewFolder" spellcheck="false" autocomplete="off" aria-label="שם התיקייה" />' : esc(n.t)) + '</span></div>';
+const VSI = {
+  sln:'<b>Solution</b> – "מעטפת" שיכולה להכיל כמה פרויקטים. אצלנו יש בה פרויקט אחד. הקובץ שלה מסתיים ב-<code>.sln</code>.',
+  proj:'<b>MyFirstWeb</b> – הפרויקט עצמו. כל מה שמתחתיו – הקבצים והתיקיות שלו.',
+  cs:'<b>Connected Services</b> – חיבור לשירותים חיצוניים. לא צריך אותו בקורס.',
+  dep:'<b>Dependencies</b> – ספריות קוד שהפרויקט צריך. Visual Studio מנהל אותן לבד.',
+  prop:'<b>Properties</b> – הגדרות הפרויקט. בתוכה הקובץ launchSettings.json, ושם כתוב גם מספר הפורט (port) של האתר. מה זה פורט? בנושא הבא.',
+  www:'<b>wwwroot</b> – הקבצים שהדפדפן יכול לבקש: דפי HTML, תמונות ועיצוב. <b>כאן נעבוד כמעט כל השנה.</b> בתוכה כבר יש css, js ו-lib (ספריות מוכנות, למשל Bootstrap).',
+  css:'<b>css</b> – תיקייה לקובצי עיצוב. נשתמש בה בשיעור 3.', js:'<b>js</b> – תיקייה לקובצי JavaScript. בינתיים לא נוגעים בה.', lib:'<b>lib</b> – ספריות מוכנות, למשל Bootstrap (שיעור 5).',
+  fav:'<b>favicon.ico</b> – הסמל הקטן שמופיע בלשונית של הדפדפן, ליד שם הדף.',
+  pages:'<b>Pages</b> – דפי Razor (סיומת cshtml) של האתר המוכן. נגיע אליהם בשיעור 6. בינתיים – לא נוגעים.',
+  app:'<b>appsettings.json</b> – הגדרות של האתר. לא נוגעים.',
+  prog:'<b>Program.cs</b> – קוד <bdi>C#</bdi> שמפעיל את השרת של האתר. לא משנים אותו בינתיים.',
+  run:'<b>▶ https</b> – כפתור ההרצה (Run). לחיצה עליו מריצה את האתר. זה הנושא הבא.',
+  view:'<b>View</b> – אם Solution Explorer נסגר, מחזירים אותו מכאן: View &rlm;←&rlm; Solution Explorer.',
+  overview:'<b>Overview</b> – דף פתיחה עם קישורים. לא צריך אותו – אפשר לסגור ב-✕ שבלשונית.'
+};
+$('#vsTree').innerHTML = TREE(1).map(n => rowHtml(n, ' hot')).join('');
+$('#vsTree').querySelector('[data-n="www"]').classList.add('pulse');
+$('#vsMock').addEventListener('click', e => {
+  const h = e.target.closest('[data-n],[data-k]'); if (!h) return;
+  const k = h.dataset.n || h.dataset.k;
+  $('#vsMock').querySelectorAll('.hot.on,.pulse').forEach(x => x.classList.remove('on','pulse'));
+  h.classList.add('on'); $('#vsInfo').innerHTML = VSI[k] || '';
+});
+
+/* ---------- 4. run ---------- */
+predict('#p41', {
+  q:'כשלוחצים ▶, מה ייפתח?',
+  opts:['חלון דפדפן עם האתר', 'חלון שחור, כמו בתוכניות <bdi>C#</bdi> בקונסול', 'גם וגם – שני חלונות'],
+  correct:2,
+  why:['נכון שייפתח דפדפן – אבל לא רק הוא.', 'נכון שייפתח חלון שחור – אבל לא רק הוא.', 'בדיוק: דפדפן עם האתר, וחלון שחור שבו רץ השרת. לחצו ▶ וראו.']
+});
+let runTerm = null;
+$('#runBtn').addEventListener('click', () => {
+  $('#runBtn').classList.remove('pulse');
+  if (!runTerm) runTerm = new Term($('#runCon'));
+  $('#runBrWrap').innerHTML = '<div class="ph">הדפדפן נפתח…</div>';
+  runTerm.boot(true, () => {
+    $('#runBrWrap').innerHTML = '<div></div>';
+    new Browser($('#runBrWrap').firstChild, {title:'Home page - MyFirstWeb', url:SITE + '/'}).page(TPL_SITE, TPL_CSS);
+    $('#runWhat').hidden = false;
+  });
+});
+
+/* request / response flow */
+const flowTerm = new Term($('#flowCon'), {lines: BOOT.slice(0, 6), onStop: () => flowPowerUi(false)});
+flowTerm.boot(false);
+const flowBr = new Browser($('#flowBr'), {title:'New Tab', url:''}).blank('עוד לא ביקשנו כלום');
+$('#flowTree').innerHTML = '<span class="f" data-f="www">wwwroot</span>\n├─ <span class="f">css</span>\n└─ <span class="f">HTML</span>\n   └─ <span class="f" data-f="idx">index.html</span>';
+let flowBusy = false;
+function flowPowerUi(on){ $('#flowPower').textContent = on ? '🛑 כבו את השרת' : '▶ הפעילו את השרת'; $('#fnS').classList.toggle('dead', !on); if (!on) $('#flowCap').innerHTML = 'השרת כבוי – בחלון השחור כתוב Application is shutting down. עכשיו שלחו בקשה וראו מה קורה.'; }
+function flowClear(){ document.querySelectorAll('#flow .on,#flow .fail').forEach(x => x.classList.remove('on','fail')); document.querySelectorAll('#flowTree .here').forEach(x => x.classList.remove('here')); }
+const both = (id, cls) => { [$('#' + id), $('#' + id + 'v')].forEach(x => x.classList.add(cls)); };
+$('#flowGo').addEventListener('click', () => {
+  if (flowBusy) return; flowBusy = true; flowClear();
+  const cap = $('#flowCap'), alive = flowTerm.running;
+  const steps = [
+    () => { $('#fnB').classList.add('on'); both('fa1', 'on'); flowBr.url(PAGE_URL).title('localhost').blank('טוען…'); cap.innerHTML = '<b>1.</b> הדפדפן שולח <b>בקשה</b> (request) לשרת: "תנו לי את <code>/HTML/index.html</code>".'; },
+    () => {
+      $('#fnB').classList.remove('on');
+      if (!alive) { both('fa1', 'fail'); flowBr.error('refused'); cap.innerHTML = '<b>2.</b> <span class="err">אף אחד לא עונה – השרת כבוי.</span> הדפדפן מציג <b>This site can’t be reached</b>. הפעילו את השרת ונסו שוב.'; return 'stop'; }
+      $('#fnS').classList.add('on'); cap.innerHTML = '<b>2.</b> <b>השרת</b> (התוכנית בחלון השחור) מקבל את הבקשה – ומחפש את הקובץ בתוך wwwroot.';
+    },
+    () => { $('#fnS').classList.remove('on'); both('fa2', 'on'); $('#fnW').classList.add('on'); document.querySelectorAll('#flowTree [data-f="idx"]').forEach(x => x.classList.add('here')); cap.innerHTML = '<b>3.</b> הקובץ נמצא: <span class="ltr">wwwroot/HTML/index.html</span>.'; },
+    () => { $('#fnW').classList.remove('on'); both('fa2r', 'on'); both('fa1r', 'on'); $('#fnB').classList.add('on'); flowBr.page(PIZZA_BODY).title('פיצה דני'); cap.innerHTML = '<b>4.</b> השרת שולח את הקובץ בחזרה – זו <b>התשובה</b> (response). הדפדפן מצייר את הדף. ✔'; }
+  ];
+  let i = 0;
+  (function next(){ const r = steps[i++](); if (r === 'stop' || i >= steps.length) { flowBusy = false; return; } setTimeout(next, 1100); })();
+});
+$('#flowPower').addEventListener('click', () => { if (flowTerm.running) flowTerm.stop(); else { flowTerm.boot(true); flowPowerUi(true); $('#flowCap').innerHTML = 'השרת רץ שוב. שלחו בקשה.'; } });
+
+/* SSL certificate dialogs */
+let sslBr = null;
+function sslStart(){
+  $('#sslBrWrap').innerHTML = '<div class="ph">הדפדפן ייפתח אחרי ההודעות</div>'; sslBr = null;
+  sslDialog(1);
+}
+function sslDialog(n){
+  const d1 = ['Microsoft Visual Studio', '⚠️', 'This project is configured to use SSL. To avoid SSL warnings in the browser you can choose to trust the self-signed certificate that ASP.NET Core has generated.<br /><br /><b>Would you like to trust the ASP.NET Core SSL certificate?</b>'];
+  const d2 = ['Security Warning', '🛡️', 'You are about to install a certificate from a certification authority (CA) claiming to represent: <b>localhost</b> …<br /><br /><b>Do you want to install this certificate?</b>'];
+  const d = n === 1 ? d1 : d2;
+  $('#sslDlg').innerHTML = '<div class="win wdlg"><div class="tb"><span class="nm">' + d[0] + '</span><span class="wx">✕</span></div><div class="dbody"><span class="dic">' + d[1] + '</span><div>' + d[2] + '</div></div><div class="dbt"><button type="button" class="xbtn pri" data-ssl="yes">Yes</button><button type="button" class="xbtn" data-ssl="no">No</button></div></div><p class="muted" style="margin:6px 0 0">הודעה ' + n + ' מתוך 2</p>';
+  $('#sslDlg').dataset.n = n;
+}
+function sslOpen(ok){
+  $('#sslDlg').innerHTML = '<div class="ph">' + (ok ? '✔ אישרתם את שתי ההודעות' : '✘ לחצתם No') + '</div>';
+  $('#sslBrWrap').innerHTML = '<div></div>';
+  sslBr = new Browser($('#sslBrWrap').firstChild, {title:'Home page - MyFirstWeb', url:SITE + '/'});
+  if (ok) sslBr.page(TPL_SITE, TPL_CSS); else sslBr.error('cert');
+  $('#sslWhat').hidden = false;
+}
+$('#sslDlg').addEventListener('click', e => {
+  const b = e.target.closest('[data-ssl]'); if (!b) return;
+  if (b.dataset.ssl === 'no') return sslOpen(false);
+  if ($('#sslDlg').dataset.n === '1') sslDialog(2); else sslOpen(true);
+});
+$('#sslReset').addEventListener('click', sslStart);
+sslStart();
+
+/* ---------- 5. first page in the project ---------- */
+predict('#p51', {
+  q:'ניצור דף בנתיב <span class="ltr">wwwroot/HTML/index.html</span>. מה תהיה הכתובת שלו?',
+  opts:['<code>https://localhost:7123/wwwroot/HTML/index.html</code>', '<code>https://localhost:7123/HTML/index.html</code>', '<code>https://localhost:7123/index.html</code>'],
+  correct:1,
+  why:['wwwroot היא נקודת ההתחלה של הכתובות – היא עצמה לא נכתבת בכתובת.', 'בדיוק: מורידים את wwwroot, ומשאירים את כל השאר – כולל התיקייה HTML.', 'הקובץ נמצא בתוך התיקייה HTML – אז גם היא חלק מהכתובת.'],
+  onCorrect: () => { $('#wmap').hidden = false; }
+});
+const WT = [
+  ['📁 MyFirstWeb', null], ['├─ 🌐 wwwroot', null], ['│  ├─ 📁 css', null], ['│  │  └─ ', 'css/site.css', '📄 site.css'],
+  ['│  ├─ 📁 HTML', null, null, 'ניצור עכשיו'], ['│  │  └─ ', 'HTML/index.html', '📄 index.html'], ['│  ├─ 📁 js', null], ['│  │  └─ ', 'js/site.js', '📄 site.js'],
+  ['│  └─ ', 'favicon.ico', '⭐ favicon.ico'], ['├─ 📁 Pages', null], ['└─ ', '#prog', 'C# Program.cs']
+];
+$('#wtree').innerHTML = WT.map(([g, p, lbl, note]) => esc(g) + (p ? '<span class="f click" data-p="' + p + '">' + esc(lbl) + '</span>' : '') + (note ? '<span class="note">(' + note + ')</span>' : '')).join('\n');
+function wSel(p){
+  document.querySelectorAll('#wtree .f').forEach(f => f.classList.toggle('here', f.dataset.p === p));
+  if (p === '#prog') { $('#wpath').innerHTML = '<span class="err">✘ אין כתובת</span>'; $('#wtxt').innerHTML = 'Program.cs <b>לא</b> נמצא בתוך wwwroot – ולכן השרת אף פעם לא שולח אותו לדפדפן. זה טוב: הקוד של השרת נשאר אצלכם.'; return; }
+  $('#wpath').innerHTML = '<span class="t-str">' + esc(SITE) + '/</span><span style="color:#fcd34d">' + esc(p) + '</span>';
+  $('#wtxt').innerHTML = 'הנתיב בתוך wwwroot הוא <span class="ltr">' + esc(p) + '</span> – והוא מודבק אחרי כתובת האתר. ' + (p === 'HTML/index.html' ? '<b>זה הדף שניצור בשלבים הבאים.</b>' : '');
+}
+$('#wtree').addEventListener('click', e => { const f = e.target.closest('[data-p]'); if (f) wSel(f.dataset.p); });
+wSel('HTML/index.html');
+
+/* ---------- Visual Studio simulator: folder (phase 1) and page (phase 2) ---------- */
+const SIM_STEPS = {
+  1: ['קליק ימני על <b>wwwroot</b>', 'בתפריט: <b>Add</b>', 'בתפריט המשני: <b>New Folder</b>', 'כותבים את השם <b>HTML</b> ולוחצים Enter'],
+  2: ['קליק ימני על התיקייה <b>HTML</b>', 'בתפריט: <b>Add</b>', 'בתפריט המשני: <b><bdi>New Item...</bdi></b>', 'בחלון הקטן: <b>Show All Templates</b>', 'מחפשים ובוחרים <b>HTML Page</b>', 'משנים את השם ל-<b>index.html</b> ולוחצים <b>Add</b>']
+};
+const MENU = [['add','Add','▸'],['sep'],['open','Open Folder in File Explorer'],['sep'],['cut','Cut','Ctrl+X'],['copy','Copy','Ctrl+C'],['del','Delete','Del'],['ren','Rename','F2'],['sep'],['props','Properties','Alt+Enter']];
+const SUB = [['newitem','New Item...','Ctrl+Shift+A'],['existing','Existing Item...','Shift+Alt+A'],['newfolder','New Folder'],['sep'],['razor','Razor Page...'],['class','Class...']];
+const MI_WHY = {
+  open:'זה פותח את התיקייה בסייר הקבצים של Windows. לא מה שצריך כאן – חפשו <b>Add</b>.',
+  cut:'Cut ו-Copy הם להעברה ולהעתקה – לא ליצירה של משהו חדש. חפשו <b>Add</b>.', copy:'Cut ו-Copy הם להעברה ולהעתקה – לא ליצירה של משהו חדש. חפשו <b>Add</b>.',
+  del:'😱 זהירות! Delete מוחק. ב-Visual Studio זה היה מוחק את התיקייה עם כל מה שבתוכה. חפשו <b>Add</b> ("הוספה").',
+  ren:'Rename משנה שם של מה שכבר קיים. אנחנו רוצים להוסיף משהו חדש – <b>Add</b>.',
+  props:'Properties מציג פרטים. חפשו <b>Add</b>.',
+  existing:'Existing Item מוסיף קובץ שכבר קיים במחשב. אנחנו יוצרים משהו חדש.',
+  razor:'Razor Page הוא דף cshtml – לשיעור 6.', class:'Class היא מחלקה של <bdi>C#</bdi> – לא קשור.'
+};
+const VTPL = [['razor','Razor Page - Empty'],['view','Razor View - Empty'],['class','Class'],['js','JavaScript File'],['css','Style Sheet'],['html','HTML Page'],['json','JSON File'],['txt','Text File']];
+const VTPL_WHY = {razor:'דף Razor (cshtml) – לשיעור 6. עכשיו צריך דף HTML רגיל.', view:'Razor View שייך לשיטה אחרת. לא מה שצריך.', class:'מחלקה של <bdi>C#</bdi> – לא דף.', js:'קובץ JavaScript – לא דף.', css:'קובץ עיצוב CSS – לשיעור 3.', json:'קובץ נתונים – לא דף.', txt:'קובץ טקסט רגיל – בלי השלד של HTML. חפשו <b>HTML Page</b>.'};
+function VsSim(el, phase){
+  const S = SIM_STEPS[phase];
+  let nodes, k, menu, dlg, tplPick, miss, done, fb, fbKind, search, fileName, folderName;
+  function reset(){ nodes = TREE(phase); k = 0; menu = null; dlg = null; tplPick = null; miss = 0; done = false; search = ''; fileName = ''; folderName = 'NewFolder'; say(phase === 1 ? 'התחילו: קליק ימני על wwwroot.' : 'התחילו: קליק ימני על התיקייה HTML.'); }
+  function say(t, kind){ fb = t; fbKind = kind || ''; }
+  function wrong(t){ miss++; say('✘ ' + t, 'bad'); }
+  function good(t){ miss = 0; say(t, 'ok'); }
+  const target = () => {
+    if (done) return null;
+    if (phase === 1) return [['n','www'],['m','add'],['s','newfolder'],['ren']][k];
+    return [['n','html'],['m','add'],['s','newitem'],['b','all'],['t','html'],['b','addf']][k];
+  };
+  function menuHtml(){
+    const item = ([id, t, sc]) => id === 'sep' ? '<div class="sep"></div>' : '<div class="mi' + (menu.sub && id === 'add' ? ' open' : '') + '" data-mi="' + id + '"><span>' + esc(t) + '</span>' + (sc ? '<span class="sc">' + esc(sc) + '</span>' : '') + '</div>';
+    const subItem = ([id, t, sc]) => id === 'sep' ? '<div class="sep"></div>' : '<div class="mi" data-si="' + id + '"><span>' + esc(t) + '</span>' + (sc ? '<span class="sc">' + esc(sc) + '</span>' : '') + '</div>';
+    return '<div class="cmenu">' + MENU.map(m => item(m) + (m[0] === 'add' && menu.sub ? '<div class="cmenu">' + SUB.map(subItem).join('') + '</div>' : '')).join('') + '</div>';
+  }
+  function dlgHtml(){
+    if (dlg === 'compact') return '<div class="vsdlg"><div class="dh">Add New Item – MyFirstWeb</div><div class="db"><label>Name: <input data-in="cname" placeholder="Type a file name" /></label><div class="bt"><button type="button" class="xb left" data-b="all">Show All Templates</button><button type="button" class="xb pri" data-b="addc">Add</button><button type="button" class="xb" data-b="cancel">Cancel</button></div></div></div>';
+    const q = search.trim().toLowerCase();
+    const list = VTPL.filter(([, t]) => !q || t.toLowerCase().includes(q));
+    return '<div class="vsdlg"><div class="dh">Add New Item – MyFirstWeb</div><div class="db"><input data-in="search" placeholder="Search (Ctrl+E)" value="' + esc(search) + '" aria-label="חיפוש תבנית" />' +
+      '<ul class="vtl" data-list="1">' + (list.length ? list.map(([id, t]) => '<li data-t="' + id + '" class="' + (tplPick === id ? 'sel' : '') + '"><span>📄</span><span>' + esc(t) + '</span><span class="lang">ASP.NET Core</span></li>').join('') : '<li>No items found</li>') + '</ul>' +
+      '<label>Name: <input data-in="fname" value="' + esc(fileName) + '" spellcheck="false" autocomplete="off" /></label><div class="bt"><button type="button" class="xb pri" data-b="addf">Add</button><button type="button" class="xb" data-b="cancel">Cancel</button></div></div></div>';
+  }
+  function render(){
+    const tg = target(), pulse = miss >= 2 && tg;
+    let tree = '';
+    nodes.forEach(n => {
+      tree += rowHtml(n, (menu && menu.node === n.id ? ' sel' : '') + (pulse && tg[0] === 'n' && tg[1] === n.id ? ' pulse' : '') + (n.id === 'idx' ? ' sel' : ''));
+      if (menu && menu.node === n.id) tree += menuHtml();
+    });
+    const editor = done && phase === 2 ? '<div class="vsed2"><div class="vtabs"><span>index.html ✕</span></div><pre class="cv" data-ed="1"></pre></div>' : '';
+    el.innerHTML = '<div class="sim"><div><div class="win vsx"><div class="tb">Solution Explorer</div><div class="se">' + tree + '</div>' + (dlg ? dlgHtml() : '') + editor + '</div>' +
+      '<div class="simfb ' + fbKind + '" aria-live="polite">' + fb + '</div></div>' +
+      '<div><ol class="simsteps">' + S.map((s,i) => '<li class="' + (i < k || done ? 'done' : i === k ? 'cur' : '') + '"><span class="st">' + (i < k || done ? '✔' : i + 1) + '</span><span>' + s + '</span></li>').join('') + '</ol>' +
+      '<button class="btn" type="button" data-b="reset">↺ מההתחלה</button></div></div>';
+    if (pulse) {
+      let sel = null;
+      if (tg[0] === 'm') sel = '[data-mi="' + tg[1] + '"]'; else if (tg[0] === 's') sel = '[data-si="' + tg[1] + '"]';
+      else if (tg[0] === 'b') sel = '[data-b="' + tg[1] + '"]'; else if (tg[0] === 't') sel = '[data-t="' + tg[1] + '"]'; else if (tg[0] === 'ren') sel = '.ren';
+      const x = sel && el.querySelector(sel); if (x) x.classList.add('pulse');
+    }
+    const ed = el.querySelector('[data-ed]'); if (ed) codeLines(ed, VS_TPL, 'html');
+    const ren = el.querySelector('.ren'); if (ren) { ren.value = folderName; ren.focus(); ren.select(); }
+  }
+  function nodeClick(id){
+    if (done) return;
+    if (phase === 1 && k === 3) { wrong('קודם סיימו לכתוב את שם התיקייה ולחצו Enter.'); return render(); }
+    if (dlg) { wrong('קודם סיימו בחלון Add New Item – או לחצו בו Cancel.'); return render(); }
+    const want = phase === 1 ? 'www' : 'html';
+    if (id === want) { menu = {node:id, sub:false}; k = 1; good('יפה! נפתח תפריט. עכשיו: <b>Add</b>.'); }
+    else {
+      menu = null; k = 0;
+      const W = {
+        pages:'Pages היא תיקייה של דפי Razor – לשיעור 6. דפי HTML שמים בתוך wwwroot.',
+        proj:'זה הפרויקט כולו. מה שתיצרו כאן לא יהיה בתוך wwwroot – והדפדפן לא יוכל לבקש אותו.',
+        sln:'זה ה-Solution, לא תיקייה של האתר.',
+        css:'css היא תיקייה לקובצי עיצוב (שיעור 3).', js:'js היא תיקייה לקובצי JavaScript.', lib:'lib היא תיקייה של ספריות מוכנות.',
+        www: phase === 2 ? 'כמעט! הדף צריך להיות <b>בתוך</b> התיקייה HTML – לחצו עליה.' : '',
+        html:'', idx:''
+      };
+      wrong((W[id] || 'זה קובץ או תיקייה אחרים.') + ' ' + (phase === 1 ? 'לחצו על <b>wwwroot</b>.' : 'לחצו על <b>HTML</b>.'));
+    }
+    render();
+  }
+  function menuClick(id){
+    if (id === 'add') { if (k === 1) { menu.sub = true; k = 2; good('עכשיו בתפריט המשני: ' + (phase === 1 ? '<b>New Folder</b>.' : '<b><bdi>New Item...</bdi></b>')); } }
+    else wrong(MI_WHY[id] || 'חפשו Add.');
+    render();
+  }
+  function subClick(id){
+    const want = phase === 1 ? 'newfolder' : 'newitem';
+    if (id === want) {
+      menu = null;
+      if (phase === 1) { k = 3; const i = nodes.findIndex(n => n.id === 'www'); nodes.splice(i + 1, 0, {id:'newf', d:3, ic:'📁', edit:true}); good('נוצרה תיקייה חדשה, והשם שלה מסומן. כתבו <b>HTML</b> ולחצו Enter.'); }
+      else { k = 3; dlg = 'compact'; good('נפתח החלון Add New Item – בגרסה הקטנה. לחצו <b>Show All Templates</b>.'); }
+    } else if (id === 'newfolder') wrong('New Folder יוצר תיקייה. אנחנו צריכים דף – <b><bdi>New Item...</bdi></b>');
+    else if (id === 'newitem') wrong('New Item יוצר קובץ. קודם צריך תיקייה – <b>New Folder</b>.');
+    else wrong(MI_WHY[id] || '');
+    render();
+  }
+  function nameFolder(){
+    const v = folderName.trim();
+    if (v === 'HTML') {
+      const i = nodes.findIndex(n => n.id === 'newf'); nodes.splice(i, 1);
+      const c = nodes.findIndex(n => n.id === 'css'); nodes.splice(c + 1, 0, {id:'html', t:'HTML', ic:'📁', d:3, f:1});
+      done = true; k = S.length; state.sim1 = true; save();
+      say('🎉 יש לכם תיקייה בשם HTML בתוך wwwroot! ב-Visual Studio היא תופיע בדיוק ככה. עכשיו – <a href="#" data-go="page:3">מוסיפים לתוכה דף</a>.', 'ok');
+    } else if (!v) wrong('השם ריק. כתבו HTML.');
+    else if (/[\u0590-\u05FF]/.test(v)) wrong('שמות של תיקיות וקבצים – רק באנגלית. כתבו HTML.');
+    else if (v.toLowerCase() === 'html') wrong('כמעט! כתבו <b>HTML</b> באותיות גדולות – כך הוא כתוב בכל הכתובות בקורס.');
+    else if (v === 'NewFolder') wrong('זה השם שהמחשב הציע. מחקו אותו וכתבו HTML.');
+    else wrong('השם צריך להיות בדיוק <b>HTML</b>.');
+    render();
+  }
+  function addFile(){
+    if (tplPick !== 'html') { wrong('קודם בחרו ברשימה את <b>HTML Page</b>.'); return render(); }
+    const v = fileName.trim();
+    if (/^index(\.html)?$/.test(v)) {
+      dlg = null; done = true; k = S.length;
+      const h = nodes.findIndex(n => n.id === 'html'); nodes.splice(h + 1, 0, {id:'idx', t:'index.html', ic:'📄', d:4});
+      state.sim2 = true; save();
+      say('🎉 יש לכם דף! הקובץ index.html נוצר בתוך HTML, ונפתח עם שלד מוכן' + (v === 'index' ? ' (את הסיומת html, Visual Studio הוסיף לבד)' : '') + '. בשלב הבא – ממלאים אותו.', 'ok');
+    } else if (!v) wrong('השם ריק. כתבו index.html.');
+    else if (/[\u0590-\u05FF]/.test(v)) wrong('שם של קובץ – רק באנגלית.');
+    else if (/\s/.test(v)) wrong('בלי רווחים בשם של קובץ. כתבו index.html.');
+    else if (v === 'HTMLPage1.html') wrong('זה השם שהמחשב הציע. שנו אותו ל-<b>index.html</b>.');
+    else if (v.toLowerCase().replace(/\.html$/, '') === 'index') wrong('כמעט! כתבו index באותיות קטנות: <b>index.html</b>.');
+    else wrong('השם תקין, אבל לדף הראשון קוראים <b>index.html</b> – ככה הכתובת שלו תהיה <code>/HTML/index.html</code>.');
+    render();
+  }
+  function btn(b){
+    if (b === 'reset') { reset(); return render(); }
+    if (b === 'all') { if (dlg === 'compact') { dlg = 'full'; k = 4; good('עכשיו רואים את כל התבניות. חפשו <b>HTML</b> ובחרו <b>HTML Page</b>.'); } }
+    else if (b === 'addc') wrong('כדי לקבל את התבנית HTML Page עם השלד המוכן, לחצו קודם <b>Show All Templates</b>.');
+    else if (b === 'cancel') { dlg = null; k = 0; tplPick = null; search = ''; say('סגרתם את החלון. מתחילים שוב: קליק ימני על HTML.'); }
+    else if (b === 'addf') return addFile();
+    render();
+  }
+  function tplClick(id){
+    tplPick = id;
+    if (id === 'html') { fileName = 'HTMLPage1.html'; if (k === 4) k = 5; good('✔ HTML Page. עכשיו שנו את השם (Name) ל-<b>index.html</b> ולחצו <b>Add</b>.'); }
+    else wrong(VTPL_WHY[id] || '');
+    render();
+  }
+  const handle = e => {
+    const t = e.target;
+    if (t.matches('input')) return;
+    const b = t.closest('[data-b]'); if (b) { e.preventDefault(); return btn(b.dataset.b); }
+    const mi = t.closest('[data-mi]'); if (mi) { e.preventDefault(); return menuClick(mi.dataset.mi); }
+    const si = t.closest('[data-si]'); if (si) { e.preventDefault(); return subClick(si.dataset.si); }
+    const tp = t.closest('[data-t]'); if (tp) return tplClick(tp.dataset.t);
+    const r = t.closest('[data-n]'); if (r) { e.preventDefault(); return nodeClick(r.dataset.n); }
+  };
+  el.addEventListener('click', handle);
+  el.addEventListener('contextmenu', e => { if (e.target.closest('[data-n],[data-mi],[data-si]')) handle(e); });
+  el.addEventListener('input', e => {
+    const n = e.target.dataset.in;
+    if (e.target.classList.contains('ren')) folderName = e.target.value;
+    else if (n === 'fname') fileName = e.target.value;
+    else if (n === 'search') { search = e.target.value; const ul = el.querySelector('[data-list]'); const q = search.trim().toLowerCase(); const list = VTPL.filter(([, t]) => !q || t.toLowerCase().includes(q)); ul.innerHTML = list.length ? list.map(([id, t]) => '<li data-t="' + id + '" class="' + (tplPick === id ? 'sel' : '') + '"><span>📄</span><span>' + esc(t) + '</span><span class="lang">ASP.NET Core</span></li>').join('') : '<li>No items found</li>'; }
+  });
+  el.addEventListener('keydown', e => {
+    if (e.key !== 'Enter') return;
+    if (e.target.classList.contains('ren')) { e.preventDefault(); folderName = e.target.value; nameFolder(); }
+    else if (e.target.dataset.in === 'fname') { e.preventDefault(); fileName = e.target.value; addFile(); }
+    else if (e.target.dataset.in === 'cname') { e.preventDefault(); btn('addc'); }
+  });
+  reset(); render();
+  return {reset: () => { reset(); render(); }};
+}
+VsSim($('#sim1'), 1);
+VsSim($('#sim2'), 2);
+
+/* write the page */
+const FILLED = ['<!DOCTYPE html>','<html lang="he" dir="rtl">','<head>','    <meta charset="utf-8" />','    <title>פיצה דני</title>','</head>','<body>','    <h1>פיצה דני</h1>','    <p>הפיצה הכי טעימה באשקלון</p>','</body>','</html>'].join('\n');
+const s54br = new Browser($('#s54br'));
+seg($('#s54seg'), ['התבנית ש-Visual Studio יצר', 'אחרי שמילאנו'], (o,i) => {
+  codeLines($('#s54code'), i ? FILLED : VS_TPL, 'html', i ? {1:'new',4:'new',7:'new',8:'new'} : {});
+  s54br.url(PAGE_URL);
+  if (i) s54br.title('פיצה דני').page(PIZZA_BODY); else s54br.title('localhost:' + PORT + '/HTML/index.html').page('');
+  $('#s54what').innerHTML = i ? 'שינינו ארבעה דברים (מסומנים "חדש"): <code>lang="he" dir="rtl"</code> – כי הדף בעברית, הטקסט בתוך <b>title</b>, כותרת <b>h1</b> ופסקה <b>p</b>. ו<b>לא לשכוח לשמור</b> – Ctrl+S.'
+    : 'התבנית כמעט ריקה: ה-title ריק, וגם ה-body. הדף לבן לגמרי – ובלשונית מופיעה הכתובת, כי אין title. שימו לב: <code>meta charset</code> כבר נמצאת בתבנית.';
+}, 0);
+const DIRC = (rtl) => [rtl ? '<html lang="he" dir="rtl">' : '<html lang="en">', '<body>', '    <h1>פיצה דני</h1>', '    <p>הפיצה הכי טעימה באשקלון</p>', '</body>', '</html>'].join('\n');
+compareBox($('#s54cmp'), [
+  {code:DIRC(false), m:{0:'diff'}, page:PIZZA_BODY, ltr:true, cap:'<b>בלי <code>dir="rtl"</code></b>הטקסט נצמד לשמאל, כמו באנגלית.'},
+  {code:DIRC(true), m:{0:'diff'}, page:PIZZA_BODY, cap:'<b>עם <code>dir="rtl"</code></b>הטקסט מתחיל מימין – כמו שצריך בעברית.'}
+]);
+
+/* address builder */
+const AB = {host:0, dir:0, file:0, run:0};
+const HOSTS = ['localhost:' + PORT, 'localhost', 'myfirstweb'], DIRS = ['/HTML/', '/wwwroot/HTML/', '/'], FILES = ['index.html', 'index', 'idnex.html'];
+const aBr = new Browser($('#aBr'));
+function abDraw(){
+  const h = HOSTS[AB.host], d = DIRS[AB.dir], f = FILES[AB.file], url = 'https://' + h + d + f;
+  let bad = null, msg, kind = 'bad';
+  aBr.url(url);
+  if (AB.host === 2) { bad = 1; aBr.error('dns', h); msg = '✘ <b>myfirstweb</b> הוא השם של הפרויקט – לא כתובת. אין באינטרנט מחשב בשם הזה, אז הדפדפן לא מוצא לאן לפנות. האתר שלנו נמצא על המחשב שלכם: localhost.'; }
+  else if (AB.run === 1) { aBr.error('refused'); msg = '✘ השרת כבוי – אין מי שיענה. הריצו את הפרויקט (▶) והשאירו את החלון השחור פתוח.'; }
+  else if (AB.host === 1) { bad = 1; aBr.error('refused'); msg = '✘ חסר מספר הפורט. בלי <code>:7123</code> הדפדפן דופק בדלת אחרת במחשב – ואף תוכנית לא עונה שם.'; }
+  else if (AB.dir !== 0) { bad = 2; aBr.error('404', url); msg = AB.dir === 1 ? '✘ <b>404 = "לא נמצא"</b>. השרת עובד וקיבל את הבקשה – אבל wwwroot <b>לא נכתבת</b> בכתובת. היא נקודת ההתחלה. מחקו אותה.' : '✘ <b>404 = "לא נמצא"</b>. הקובץ נמצא בתוך התיקייה HTML – אז גם היא צריכה להיות בכתובת.'; }
+  else if (AB.file !== 0) { bad = 3; aBr.error('404', url); msg = AB.file === 1 ? '✘ <b>404 = "לא נמצא"</b>. חסרה הסיומת <code>.html</code>. בכתובת כותבים את שם הקובץ המלא.' : '✘ <b>404 = "לא נמצא"</b>. טעות הקלדה אחת – והשרת מחפש קובץ שלא קיים. השוו אות אחר אות.'; }
+  else { aBr.title('פיצה דני').page(PIZZA_BODY); msg = '✔ זו הכתובת! השרת מצא את <span class="ltr">wwwroot/HTML/index.html</span> ושלח אותו.'; kind = 'ok'; }
+  const part = (cls, t, i) => '<span class="' + cls + (bad === i ? ' bad' : '') + '">' + esc(t) + '</span>';
+  $('#aUrl').innerHTML = part('p0', 'https://', 0) + part('p1', h, 1) + part('p2', d, 2) + part('p3', f, 3);
+  $('#aMsg').className = 'simfb ' + kind; $('#aMsg').innerHTML = msg;
+}
+const mono = arr => arr.map(v => ({label:esc(v), mono:true, v}));
+seg($('#aHost'), mono(HOSTS), (o,i) => { AB.host = i; abDraw(); });
+seg($('#aDir'), mono(DIRS), (o,i) => { AB.dir = i; abDraw(); });
+seg($('#aFile'), mono(FILES), (o,i) => { AB.file = i; abDraw(); });
+seg($('#aRun'), ['כן – החלון השחור פתוח', 'לא – סגרתי אותו'], (o,i) => { AB.run = i; abDraw(); });
+
+/* troubleshooting doctor */
+const DOC = [
+  {l:'404 – הדף לא נמצא', h:'This localhost page can’t be found (HTTP ERROR 404)', items:['בכתובת, אחרי הפורט, כתוב בדיוק <code>/HTML/index.html</code>? בלי wwwroot ובלי טעויות הקלדה.', 'הקובץ באמת נמצא בתוך wwwroot &rlm;←&rlm; HTML? בדקו ב-Solution Explorer – לא בתוך Pages ולא ישר בפרויקט.', 'שם הקובץ באנגלית, בלי רווחים, עם הסיומת html? שם עם רווחים או עברית יוצר כתובת מסובכת שקל לטעות בה.', 'שם התיקייה בכתובת (HTML) זהה לשם שלה ב-Solution Explorer.']},
+  {l:'This site can’t be reached', h:'This site can’t be reached / refused to connect', items:['השרת לא רץ: החלון השחור נסגר, או שעצרתם את ההרצה. לחצו ▶ שוב.', 'מספר הפורט שגוי – העתיקו אותו מהכתובת שנפתחת כשמריצים.']},
+  {l:'Your connection is not private', h:'Your connection is not private', items:['לא אישרתם את תעודת האבטחה. ראו את <a href="#" data-go="run:3">השלב על תעודת האבטחה</a> – יש שם שתי פקודות שמתקנות את זה.']},
+  {l:'השינוי לא מופיע', h:'הדף נפתח, אבל השינוי שלי לא מופיע', items:['שמרתם? כוכבית ליד שם הקובץ בלשונית של Visual Studio = לא נשמר. Ctrl+S.', 'רעננתם? F5. ואם עדיין לא – Ctrl+F5 (רענון מלא).', 'אתם עורכים את הקובץ הנכון? השוו את שם הקובץ בלשונית של Visual Studio לכתובת בדפדפן.']},
+  {l:'עברית משובשת', h:'העברית נראית כמו ×¤×™×¦×”', items:['חסרה השורה <code>&lt;meta charset="utf-8" /&gt;</code> בתוך ה-head. <a href="#" data-go="notepad:6">ראו כאן</a>.']},
+  {l:'אין View in Browser', h:'אין View in Browser בתפריט', items:['זו לא תקלה – בחלק מהגרסאות האפשרות הזו לא קיימת. מריצים ▶ ומקלידים את הכתובת.']},
+  {l:'אין תבנית Razor Pages', h:'התבנית לא מופיעה ביצירת פרויקט', items:['לא סומנה בהתקנה התוספת ASP.NET and web development. פותחים Visual Studio Installer &rlm;←&rlm; Modify &rlm;←&rlm; מסמנים אותה.']}
+];
+seg($('#docSeg'), DOC.map(d => d.l), (o,i) => { const d = DOC[i]; $('#docOut').innerHTML = '<h4><bdi>' + d.h + '</bdi></h4><ol>' + d.items.map(x => '<li>' + x + '</li>').join('') + '</ol>'; }, 0);
+
+/* ---------- 6. practice ---------- */
+const START = ['<!DOCTYPE html>','<html lang="he" dir="rtl">','<head>','    <meta charset="utf-8" />','    <title>ניסוי</title>','</head>','<body>','    <h1>שלום עולם</h1>','</body>','</html>'].join('\n');
+let pgApi = null;
+const pText = d => [...d.querySelectorAll('p')].filter(p => p.textContent.trim().length > 1);
+const TASKS = [
+  {id:'t1', text:'שנו את הטקסט בכותרת h1 ל-<b>פיצה דני</b>.', test: d => { const h = d.querySelector('h1'); return !!h && h.textContent.includes('פיצה דני'); }},
+  {id:'t2', text:'מתחת לכותרת, הוסיפו פסקה p עם משפט על הפיצרייה. למשל: הפיצה הכי טעימה באשקלון.', test: d => { const h = d.querySelector('h1'), p = pText(d)[0]; return !!h && !!p && !!(h.compareDocumentPosition(p) & 4); }},
+  {id:'t3', text:'הוסיפו פסקה שנייה, למשל: הזמנות בטלפון בלבד.', test: d => pText(d).length >= 2},
+  {id:'t4', text:'שנו את הטקסט בתוך title ל-<b>פיצה דני</b> – ובדקו את הלשונית בפס העליון.', test: d => d.title.includes('פיצה דני')},
+  {id:'t5', text:'בדיקת סגירה: לכל <code>&lt;h1&gt;</code> ולכל <code>&lt;p&gt;</code> יש תגית סוגרת עם לוכסן. (נבדק כשיש כותרת ושתי פסקאות.)', test: () => {
+    const s = pgApi ? pgApi.edH.value : ''; const c = re => (s.match(re) || []).length;
+    const h = c(/<h1[\s>]/gi), hc = c(/<\/h1\s*>/gi), p = c(/<p[\s>]/gi), pc = c(/<\/p\s*>/gi);
+    return h >= 1 && p >= 2 && h === hc && p === pc; }},
+  {id:'t6', text:'עכשיו באמת: כתבו את אותו הדף ב-Visual Studio, בקובץ index.html שבתיקייה HTML, והציגו אותו בדפדפן.', manual:true}
+];
+pgApi = playground('#pg', {html:START, tasks:TASKS, htmlLabel:'HTML – wwwroot/HTML/index.html', url:'localhost:' + PORT + '/HTML/index.html', height:300,
+  onRender: d => { const t = $('#pg .pgtab'); if (t) t.textContent = '📄 ' + (d.title.trim() || 'localhost:' + PORT + '/HTML/index.html'); }});
+(function(){ const bar = $('#pg .urlbar'), url = bar.querySelector('.url'); const tab = document.createElement('span'); tab.className = 'pgtab'; tab.textContent = '📄 ניסוי'; bar.insertBefore(tab, url); pgApi.render(); })();
+doneCheck('#stepDone', 'step');
+
+const QUIZ = [
+  {q:'מה התפקיד של HTML?', opts:['להריץ את האתר על השרת', 'לתאר מה יש בדף: כותרות, פסקאות, תמונות', 'לקבוע צבעים וגדלים'], correct:1,
+   why:['את זה עושה השרת – אצלנו, תוכנית <bdi>C#</bdi>.', 'בדיוק. HTML היא שפת סימון של התוכן.', 'זה התפקיד של CSS – בשיעור 3.']},
+  {q:'שיניתם את הקובץ ושמרתם, אבל בדפדפן עדיין רואים את הגרסה הישנה. מה עושים?', opts:['מרעננים את הדפדפן (F5)', 'מתקינים מחדש את Visual Studio', 'כותבים את הקובץ מחדש'], correct:0,
+   why:['נכון. הדפדפן קורא את הקובץ רק כשפותחים אותו או מרעננים.', 'ממש לא 🙂', 'הקובץ בסדר – הדפדפן פשוט עוד לא קרא אותו מחדש. <a href="#" data-go="notepad:5">נסו בסימולטור</a>.']},
+  {q:'הקובץ site.css נמצא בנתיב <span class="ltr">wwwroot/css/site.css</span>. מה הכתובת שלו?', opts:['<code>https://localhost:7123/css/site.css</code>', '<code>https://localhost:7123/wwwroot/css/site.css</code>', '<code>https://localhost:7123/site.css</code>'], correct:0,
+   why:['נכון: מורידים את wwwroot, ומשאירים את כל השאר.', 'wwwroot לא נכתבת בכתובת – היא נקודת ההתחלה.', 'הקובץ נמצא בתוך התיקייה css – אז גם היא חלק מהכתובת.']},
+  {q:'סגרתם את החלון השחור, רעננתם, והדפדפן כותב This site can’t be reached. למה?', opts:['הקובץ נמחק', 'השרת כבוי – אין מי שיענה לדפדפן', 'חסרה השורה meta charset'], correct:1,
+   why:['הקובץ עדיין במקום. הבעיה היא שאין מי שישלח אותו.', 'בדיוק. החלון השחור הוא השרת. ▶ שוב – והאתר חוזר.', 'meta charset קשורה לעברית משובשת, לא לדף שלא נפתח.']},
+  {q:'איפה יוצרים את התיקייה HTML לדפים שלנו?', opts:['בתוך Pages', 'בתוך wwwroot', 'ישר בתוך הפרויקט, ליד Program.cs'], correct:1,
+   why:['Pages היא לדפי Razor – בשיעור 6.', 'נכון – רק קבצים בתוך wwwroot נשלחים לדפדפן.', 'קבצים מחוץ ל-wwwroot לא נשלחים לדפדפן – תקבלו 404.']}
+];
+quiz('#quiz', QUIZ);
+
+codeLines($('#sumSkel'), ['<!DOCTYPE html>','<html lang="he" dir="rtl">','<head>','    <meta charset="utf-8" />','    <title>…</title>','</head>','<body>','    …','</body>','</html>'].join('\n'), 'html');
+codeLines($('#sumTag'), '<h1>פיצה דני</h1>\n<p>הפיצה הכי טעימה באשקלון</p>', 'html');
+codeLines($('#sumCert'), 'dotnet dev-certs https --clean\ndotnet dev-certs https --trust', 'text');
+
+/* ---------- easter eggs ---------- */
+const EGGS = [
+  {id:'tab', icon:'🏷️', name:'הלשונית שמדברת', learn:'התגית title קובעת את הטקסט בלשונית של הדפדפן – גם בדף הזה. ודף בלי title? בלשונית יופיע שם הקובץ או הכתובת.',
+   h1:'באחד השלבים, הדף הזה משנה משהו שנמצא <b>מחוץ</b> לדף עצמו. איפה מופיע הטקסט שבתוך title?', h2:'עברו לשלב "השלד של כל דף HTML" בנושא "דף ראשון בפנקס רשימות", והסתכלו על הלשונית של הדף הזה בדפדפן – למעלה, מעל שורת הכתובת.', code:'VElUTEU='},
+  {id:'head', icon:'🧠', name:'הסוד שב-head', learn:'מה שכתוב בתוך head לא מוצג בדף – אבל כל אחד יכול לקרוא אותו בקוד המקור (Ctrl+U). לכן אף פעם לא כותבים בקוד של דף סיסמאות או סודות.',
+   h1:'גם הדף הזה הוא קובץ HTML. יש בו חלק שלא מוצג על המסך בכלל... מה מסתתר שם?', h2:'לחצו Ctrl+U (קוד המקור של הדף), וחפשו בשורות הראשונות – בתוך ה-head. (Ctrl+F וחפשו 🥚)', code:'SEVBRA=='},
+  {id:'lost', icon:'🧭', name:'הכתובת שלא קיימת', learn:'בדף הזה, הסוף של הכתובת (מה שאחרי #) אומר איזה שלב להציג. ביקשתם שלב שלא קיים – זה כמו 404 ("לא נמצא") באתר אמיתי, כשמבקשים קובץ שאין בשרת.',
+   h1:'הסתכלו על שורת הכתובת של הדף הזה: היא משתנה בכל פעם שעוברים שלב. מה יקרה אם תבקשו שלב שלא קיים?', h2:'בסוף הכתובת כתוב משהו כמו <code>#run-2</code>. שנו את המספר ל-99 ולחצו Enter.'},
+  {id:'stop', icon:'🛑', name:'עצרתם את השרת', learn:'Ctrl+C בחלון של תוכנית קונסול עוצר אותה – גם את השרת, וגם תוכנית <bdi>C#</bdi> שלכם שנתקעה בלולאה אינסופית. בלי שרת – הדפדפן לא מקבל דפים.',
+   h1:'השרת כותב בחלון השחור שלו הודעה – ויש בה הצעה. קראו אותה עד הסוף.', h2:'בשלב "מה זה שרת?" לחצו על החלון השחור, ואז Ctrl+C במקלדת.'},
+  {id:'txt', icon:'📄', name:'הדפדפן שלא מצייר', learn:'הסיומת של הקובץ אומרת לדפדפן איך לקרוא אותו: html – לצייר דף. txt – להציג את הטקסט כמו שהוא. לכן בשמירה בוחרים All files – כדי שהקובץ לא יישמר בטעות כ-txt.',
+   h1:'בסימולטור של פנקס הרשימות: מה יקרה אם תשמרו את הקובץ עם סיומת אחרת?', h2:'שנו את שם הקובץ ל-hello.txt, לחצו שמירה, ואז "פתיחת קובץ".'}
+];
+/* egg 1: this page's own tab title changes on the anatomy step */
+const ORIG_TITLE = document.title;
+document.addEventListener('stepshow', e => { document.title = e.target.id === 'anatomy' ? '🥚 ' + atob('VElUTEU=') + ' · הקוד הסודי' : ORIG_TITLE; });
+/* egg 3: a step address that does not exist */
+const TOPICS = [...document.querySelectorAll('section.topic')].map(s => ({id:s.dataset.id, n:s.querySelectorAll(':scope > .spread').length}));
+function hashStep(h){ const m = (h || '').match(/^#([a-z0-9]+)-(\d+)$/); if (!m) return null; const t = TOPICS.find(x => x.id === m[1]); return t && +m[2] >= 1 && +m[2] <= t.n ? [m[1], +m[2]] : null; }
+const badAtLoad = location.hash.length > 1 && !hashStep(location.hash);
+window.addEventListener('hashchange', () => {
+  if (location.hash.length <= 1) return;
+  const ok = hashStep(location.hash);
+  if (ok) { Course.go(ok[0], ok[1]); return; }
+  if (state.eggs && state.eggs.lost) toast('🧭 אין שלב כזה – החזרנו אתכם לשלב קיים.');
+  findEgg('lost');
+  const m = location.hash.match(/^#([a-z0-9]+)-/), t = m && TOPICS.find(x => x.id === m[1]);
+  const p = state.pos || {ti:0, si:0};
+  if (t) Course.go(t.id, t.n); else Course.go(TOPICS[p.ti] ? TOPICS[p.ti].id : 'start', (p.si || 0) + 1);
+});
+
+Course.start({eggs: EGGS, console: ['👋 שלום, מפתחים!', 'זה ה-Console: המקום שבו דפים כותבים הודעות למפתחים.\nבשיעור הזה אין כאן ביצה 😉\nאבל רמז: גם הדף הזה הוא קובץ HTML – ו-Ctrl+U מראה את כולו.']});
+if (badAtLoad) findEgg('lost');
+})();
+</script>
+</body>
+</html>
