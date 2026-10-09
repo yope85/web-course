@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>שיעור 3 – עיצוב עם CSS | המדריך המעשי</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --bg:#f6f7fb; --surface:#ffffff; --surface2:#eef1f7; --text:#1d2433; --muted:#5b6476; --line:#d9deea;
+  --accent:#2f6fec; --accent-soft:#e3ecff; --ok:#16a34a; --ok-soft:#dcfce7; --warn:#b45309; --warn-soft:#fef3c7;
+  --code-bg:#0f172a; --code-text:#e2e8f0; --code-muted:#94a3b8;
+  --m:#f9cc9d; --b:#fddd9b; --pd:#c3d08b; --c:#8cb6c0;
+  --radius:14px; --shadow:0 1px 2px rgba(16,24,40,.06),0 4px 16px rgba(16,24,40,.06);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0e1320; --surface:#151c2c; --surface2:#1c2538; --text:#e6e9f2; --muted:#9aa4b8; --line:#2a3550;
+    --accent:#7aa2ff; --accent-soft:#1f2b4a; --ok:#4ade80; --ok-soft:#14321f; --warn:#fbbf24; --warn-soft:#3a2d0b;
+    --code-bg:#0a0f1c; --shadow:none;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0e1320; --surface:#151c2c; --surface2:#1c2538; --text:#e6e9f2; --muted:#9aa4b8; --line:#2a3550;
+  --accent:#7aa2ff; --accent-soft:#1f2b4a; --ok:#4ade80; --ok-soft:#14321f; --warn:#fbbf24; --warn-soft:#3a2d0b;
+  --code-bg:#0a0f1c; --shadow:none;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Rubik,Arial,sans-serif;font-size:17px;line-height:1.7}
+a{color:var(--accent)}
+.topbar{position:sticky;top:0;z-index:20;background:var(--surface);border-bottom:1px solid var(--line);}
+.topbar .in{max-width:1100px;margin:auto;padding:10px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.brand{font-weight:700}
+.school{color:var(--muted);font-size:13px}
+.progress{margin-inline-start:auto;display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted)}
+.bar{width:120px;height:8px;background:var(--surface2);border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .4s}
+.themebtn{border:1px solid var(--line);background:var(--surface2);color:var(--text);border-radius:99px;padding:4px 10px;cursor:pointer;font:inherit;font-size:13px}
+main{max-width:1100px;margin:auto;padding:24px 16px 80px}
+.hero{background:linear-gradient(135deg,var(--accent-soft),var(--surface));border:1px solid var(--line);border-radius:var(--radius);padding:24px;margin-bottom:24px}
+.hero h1{margin:0 0 4px;font-size:30px}
+.hero .src{color:var(--muted);font-size:14px}
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.toc a{text-decoration:none;background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:4px 12px;font-size:14px;color:var(--text)}
+section{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px;margin:0 0 20px;box-shadow:var(--shadow)}
+section>h2{margin:0 0 10px;font-size:23px}
+.tag{display:inline-block;font-size:12px;font-weight:500;border-radius:99px;padding:2px 10px;margin-inline-start:8px;vertical-align:middle;background:var(--accent-soft);color:var(--accent)}
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:15px}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:right;vertical-align:top}
+th{background:var(--surface2)}
+code,.ltr{font-family:"JetBrains Mono",Consolas,monospace;direction:ltr;unicode-bidi:isolate;font-size:.92em}
+td code{background:var(--surface2);padding:1px 6px;border-radius:6px}
+.codeblock{position:relative;direction:ltr;text-align:left;background:var(--code-bg);color:var(--code-text);border-radius:12px;margin:12px 0;overflow:auto}
+.codeblock pre{margin:0;padding:16px 16px 16px 16px;font-family:"JetBrains Mono",Consolas,monospace;font-size:14px;line-height:1.6;white-space:pre}
+.codeblock .copy{position:absolute;top:8px;right:8px;font:inherit;font-size:12px;border:0;border-radius:8px;padding:4px 10px;background:#334155;color:#fff;cursor:pointer;direction:rtl}
+.k{color:#93c5fd}.v{color:#fca5a5}.s{color:#86efac}.cm{color:var(--code-muted)}
+.tip{background:var(--warn-soft);border-inline-start:4px solid var(--warn);border-radius:10px;padding:10px 14px;margin:12px 0}
+.lab{border:2px dashed var(--line);border-radius:12px;padding:16px;margin-top:12px;background:var(--surface2)}
+.lab h3{margin:0 0 8px;font-size:18px}
+.row{display:flex;gap:16px;flex-wrap:wrap}
+.col{flex:1 1 300px;min-width:0}
+/* selector lab */
+.sel-input{display:flex;gap:8px;align-items:center;margin:8px 0}
+.sel-input input{flex:1;direction:ltr;text-align:left;font-family:"JetBrains Mono",monospace;font-size:16px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--text)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{direction:ltr;font-family:"JetBrains Mono",monospace;font-size:13px;border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:99px;padding:3px 10px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--accent);color:#fff;border-color:var(--accent)}
+.stage{background:#fff;color:#111;border-radius:10px;padding:14px;border:1px solid var(--line)}
+.stage .box{border:1px dashed #94a3b8;padding:8px 12px;margin:6px 0;border-radius:8px}
+.stage .box .inner{border:1px dotted #cbd5e1;padding:4px 10px;margin:6px 0}
+.stage p,.stage h1,.stage h2{margin:6px 0}
+.stage h1{font-size:20px}.stage h2{font-size:17px}
+.stage .hit{outline:3px solid #f43f5e;outline-offset:2px;background:#ffe4e6;border-radius:4px}
+.sel-out{min-height:52px;margin-top:8px}
+.sel-out .count{font-weight:700}
+.err{color:#dc2626}
+/* box lab */
+.sliders{display:grid;grid-template-columns:auto 1fr auto;gap:6px 10px;align-items:center}
+.sliders label{font-weight:500}
+.sliders output{font-family:"JetBrains Mono",monospace;min-width:52px;text-align:left;direction:ltr}
+input[type=range]{width:100%;accent-color:var(--accent)}
+.boxstage{background:#fff;border-radius:10px;padding:16px;border:1px solid var(--line);display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-start}
+.mm{background:var(--m);transition:padding .15s}
+.bb{border-style:solid;border-color:#c79300;background:var(--b);transition:border-width .15s}
+.pp{background:var(--pd);transition:padding .15s}
+.cc{background:var(--c);color:#0b2530;width:76px;min-height:60px;padding:6px;font-size:14px;text-align:center}
+.plain .mm,.plain .pp{background:transparent}
+.plain .bb{background:#fff;border-color:#334155}
+.plain .cc{background:#fff}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:14px;margin-top:10px}
+.legend span::before{content:"";display:inline-block;width:14px;height:14px;border-radius:3px;margin-inline-end:6px;vertical-align:-2px;background:var(--sw)}
+.switch{display:inline-flex;gap:6px;margin:8px 0}
+.switch button{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--surface);color:var(--text);padding:4px 12px;border-radius:99px;cursor:pointer}
+.switch button[aria-pressed="true"]{background:var(--accent);color:#fff;border-color:var(--accent)}
+/* specificity lab */
+.rules label{display:flex;gap:10px;align-items:center;padding:6px 8px;border-radius:8px;cursor:pointer}
+.rules label:hover{background:var(--surface)}
+.rules .ltr{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:1px 8px}
+.winner{font-weight:700}
+#specText{font-size:26px;font-weight:700;margin:6px 0}
+/* playground */
+.pg{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:820px){.pg{grid-template-columns:1fr}}
+.editor{display:flex;flex-direction:column;gap:6px}
+.editor .lbl{font-size:13px;color:var(--muted)}
+.editor textarea{direction:ltr;text-align:left;width:100%;min-height:210px;resize:vertical;font-family:"JetBrains Mono",monospace;font-size:14px;line-height:1.55;background:var(--code-bg);color:var(--code-text);border:0;border-radius:10px;padding:12px;tab-size:4}
+.preview{background:#fff;border-radius:10px;border:1px solid var(--line);width:100%;height:440px}
+.tasks{list-style:none;padding:0;margin:12px 0 0}
+.tasks li{display:flex;gap:10px;align-items:flex-start;padding:8px 10px;border-radius:10px;margin-bottom:6px;background:var(--surface2)}
+.tasks li .st{flex:0 0 26px;height:26px;border-radius:50%;display:grid;place-items:center;border:2px solid var(--line);font-size:14px;font-weight:700}
+.tasks li.done{background:var(--ok-soft)}
+.tasks li.done .st{background:var(--ok);border-color:var(--ok);color:#fff}
+.btn{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--surface);color:var(--text);padding:6px 14px;border-radius:10px;cursor:pointer}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+details{background:var(--surface2);border-radius:10px;padding:10px 14px;margin:8px 0}
+details summary{cursor:pointer;font-weight:500}
+.step{background:var(--accent-soft);border-radius:12px;padding:14px 16px}
+.step ol{margin:6px 0 0;padding-inline-start:22px}
+footer{color:var(--muted);font-size:13px;text-align:center;padding:20px}
+@media (max-width:600px){ body{font-size:16px} section{padding:16px} .hero h1{font-size:24px} .bar{width:70px} .school{display:none} }
+</style>
+</head>
+<body>
+<header class="topbar"><div class="in">
+  <span class="brand">🛠 המדריך המעשי</span>
+  <span class="school">אורט הנרי רונסון אשקלון · מגמת מדעי המחשב והנדסת תוכנה · יוחאי פרץ</span>
+  <span class="progress" title="המשימות שסימנתם בדף הזה">התקדמות <span class="bar"><i id="progBar"></i></span> <span id="progTxt">0/0</span></span>
+  <button class="themebtn" id="themeBtn" type="button">🌓 מצב תצוגה</button>
+</div></header>
+
+<main>
+  <div class="hero">
+    <h1>שיעור 3 – עיצוב עם CSS</h1>
+    <div class="src">מבוסס על המצגת 3-CSS · קוראים, משחקים, וכותבים במקביל ב-Visual Studio</div>
+    <nav class="toc" aria-label="תוכן השיעור">
+      <a href="#why">בשביל מה</a><a href="#ways">שלוש דרכים</a><a href="#selectors">🔬 מעבדת בוררים</a>
+      <a href="#box">🔬 מודל הקופסה</a><a href="#wins">🔬 מי מנצח</a><a href="#props">מאפיינים</a>
+      <a href="#mistake">טעות נפוצה</a><a href="#try">🛠 נסו עכשיו</a><a href="#step">🧩 צעד בפרויקט</a><a href="#check">✅ בדקו</a>
+    </nav>
+  </div>
+
+  <section id="why">
+    <h2>בשביל מה זה</h2>
+    <p>HTML בונה את השלד, ו-CSS הוא המראה: צבעים, גופנים, מרווחים ויישור. בהגשה 1 כל העיצוב יהיה בקובץ CSS חיצוני אחד, ו-25 נקודות במחוון ניתנות על <b>התרשמות כללית מהעיצוב</b>.</p>
+    <div class="tip">💡 רוצים לראות CSS אמיתי עכשיו? לחצו F12 על הדף הזה עצמו. כל מה שאתם רואים כאן מעוצב ב-CSS – ותוכלו לשנות ערכים ולראות מה קורה.</div>
+  </section>
+
+  <section id="ways">
+    <h2>שלוש דרכים להוסיף עיצוב</h2>
+    <table>
+      <thead><tr><th>שיטה</th><th>איפה כותבים</th><th>מתי</th></tr></thead>
+      <tbody>
+        <tr><td><b>Inline</b></td><td>במאפיין <code>style</code> בתוך התגית</td><td>לניסוי מהיר בלבד</td></tr>
+        <tr><td><b>Internal</b></td><td>בתגית <code>style</code> בתוך ה-head</td><td>לדף בודד</td></tr>
+        <tr><td><b>External</b></td><td>בקובץ נפרד עם סיומת css, שמחובר בתגית <code>link</code></td><td>השיטה שלנו: קובץ אחד לכל הדפים</td></tr>
+      </tbody>
+    </table>
+    <p>כך מחברים קובץ חיצוני מדף שנמצא בתיקייה HTML (עולים תיקייה אחת למעלה ונכנסים ל-css):</p>
+    <div class="codeblock"><button class="copy" type="button">העתקה</button><pre>&lt;<span class="k">link</span> <span class="v">href</span>=<span class="s">"../css/style.css"</span> <span class="v">rel</span>=<span class="s">"stylesheet"</span> /&gt;</pre></div>
+    <p>כלל CSS בנוי מ<b>בורר</b> (selector) – את מי מעצבים, ובתוך סוגריים מסולסלים זוגות של <b>מאפיין: ערך;</b></p>
+    <div class="codeblock"><button class="copy" type="button">העתקה</button><pre><span class="k">p</span> {
+    <span class="v">color</span>: <span class="s">navy</span>;
+    <span class="v">font-size</span>: <span class="s">18px</span>;
+}</pre></div>
+  </section>
+
+  <section id="selectors">
+    <h2>🔬 מעבדת בוררים <span class="tag">משחקים כאן</span></h2>
+    <p>הבורר אומר לדפדפן <b>על מי</b> הכלל חל. בחרו בורר או כתבו אחד – ומה שהוא בוחר יסומן באדום בדף הקטן.</p>
+    <div class="lab">
+      <div class="chips" id="selChips"></div>
+      <div class="sel-input"><input id="selInput" value="p" aria-label="בורר CSS" spellcheck="false" autocomplete="off" /></div>
+      <div class="row">
+        <div class="col">
+          <div class="stage" id="selStage" dir="rtl">
+            <h1 id="logo">כותרת עם id בשם logo</h1>
+            <div class="box">
+              box
+              <p>פסקה שהיא ילד ישיר של box</p>
+              <div class="inner"><p>פסקה עמוקה יותר – צאצא של box, אבל לא ילד ישיר</p></div>
+            </div>
+            <p class="note">פסקה מחוץ ל-box, עם class בשם note</p>
+            <h2 class="note">כותרת משנה, גם היא עם class בשם note</h2>
+          </div>
+        </div>
+        <div class="col"><div class="sel-out" id="selOut"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="box">
+    <h2>🔬 מודל הקופסה <span class="tag">גוררים ורואים</span></h2>
+    <p>כל תגית היא קופסה עם ארבע שכבות, מבפנים החוצה: <b>תוכן</b> ← <b>padding</b> (ריפוד – רווח בתוך המסגרת) ← <b>border</b> (מסגרת) ← <b>margin</b> (שוליים – רווח מחוץ למסגרת, בין הקופסה לשכנות שלה). הזיזו כל פס בנפרד, ושימו לב מה זז.</p>
+    <div class="lab">
+      <div class="switch" role="group" aria-label="סוג תצוגה">
+        <button type="button" id="viewF12" aria-pressed="true">צבעים כמו ב-F12</button>
+        <button type="button" id="viewPlain" aria-pressed="false">איך זה נראה באתר</button>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="sliders">
+            <label for="rM">margin</label><input type="range" id="rM" min="0" max="50" value="10" /><output id="oM">10px</output>
+            <label for="rB">border</label><input type="range" id="rB" min="0" max="14" value="3" /><output id="oB">3px</output>
+            <label for="rP">padding</label><input type="range" id="rP" min="0" max="50" value="12" /><output id="oP">12px</output>
+          </div>
+          <div class="codeblock"><pre id="boxCode"></pre></div>
+          <p id="boxHint" class="tip" style="margin:0"></p>
+        </div>
+        <div class="col">
+          <div class="boxstage" id="boxStage"></div>
+          <div class="legend">
+            <span style="--sw:var(--c)">תוכן</span><span style="--sw:var(--pd)">padding – ריפוד</span>
+            <span style="--sw:var(--b)">border – מסגרת</span><span style="--sw:var(--m)">margin – שוליים</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="wins">
+    <h2>🔬 מי מנצח כשכללים מתנגשים?</h2>
+    <p>לפסקה אחת יש id בשם msg ו-class בשם note. סמנו אילו כללים קיימים – וראו איזה צבע מנצח, ולמה.</p>
+    <div class="lab">
+      <div class="row">
+        <div class="col rules" id="rules"></div>
+        <div class="col">
+          <div class="stage"><div id="specStage"><p id="msg" class="note">הטקסט שלי</p></div></div>
+          <p id="specWhy"></p>
+        </div>
+      </div>
+    </div>
+    <div class="tip">💡 הכלל: Inline גובר על כולם. אחריו – כלל ספציפי גובר על כללי: id חזק מ-class, ו-class חזק משם תגית. כשהכללים שווים – מנצח מי שנכתב אחרון. ועוד דבר: חלק מהמאפיינים, כמו צבע וגופן, <b>עוברים בירושה</b> לתגיות הפנימיות; מסגרת ושוליים – לא.</div>
+  </section>
+
+  <section id="props">
+    <h2>מאפיינים שימושיים</h2>
+    <table>
+      <thead><tr><th>מאפיין</th><th>מה הוא עושה</th><th>דוגמה</th></tr></thead>
+      <tbody>
+        <tr><td><code>color</code></td><td>צבע הטקסט</td><td><code>red</code></td></tr>
+        <tr><td><code>background-color</code></td><td>צבע רקע</td><td><code>lightblue</code></td></tr>
+        <tr><td><code>border</code></td><td>מסגרת: עובי, סוג, צבע</td><td><code>2px solid black</code></td></tr>
+        <tr><td><code>width</code> / <code>height</code></td><td>רוחב / גובה</td><td><code>100px</code> · <code>50%</code> · <code>auto</code></td></tr>
+        <tr><td><code>text-align</code></td><td>יישור טקסט</td><td><code>center</code></td></tr>
+        <tr><td><code>font-family</code> / <code>font-size</code></td><td>גופן / גודל</td><td><code>Arial</code> · <code>20px</code></td></tr>
+        <tr><td><code>display</code></td><td>איך התגית תופסת מקום</td><td><code>block</code> · <code>inline</code> · <code>flex</code> · <code>none</code></td></tr>
+      </tbody>
+    </table>
+    <details><summary>div לעומת span</summary><p>שתיהן "קופסאות" בלי עיצוב משלהן. <code>div</code> תופסת שורה שלמה ועוטפת כמה תגיות; <code>span</code> עוטפת רק חלק מתוך שורה – למשל מילה אחת שרוצים לצבוע.</p></details>
+    <details><summary>מרכוז תמונה, ומרכוז כמה תמונות</summary>
+      <div class="codeblock"><button class="copy" type="button">העתקה</button><pre><span class="k">#logo</span> {
+    <span class="v">display</span>: <span class="s">block</span>;
+    <span class="v">margin-left</span>: <span class="s">auto</span>;
+    <span class="v">margin-right</span>: <span class="s">auto</span>;
+    <span class="v">width</span>: <span class="s">40%</span>;
+}
+
+<span class="k">.gallery</span> {
+    <span class="v">display</span>: <span class="s">flex</span>;
+    <span class="v">justify-content</span>: <span class="s">center</span>;
+    <span class="v">gap</span>: <span class="s">10px</span>;
+}</pre></div>
+      <p>הכלל הראשון ממרכז תמונה אחת עם id בשם logo. השני ממרכז כמה תמונות שעטופות ב-div עם class בשם gallery.</p></details>
+    <details><summary>הערות ב-CSS</summary><div class="codeblock"><pre><span class="cm">/* the browser ignores comments */</span></pre></div><p>שימושי לתיעוד, וגם כדי "לכבות" כלל לרגע בלי למחוק אותו.</p></details>
+  </section>
+
+  <section id="mistake">
+    <h2>⚠ טעות נפוצה</h2>
+    <p>כתבתם קובץ CSS, והדף לא משתנה בכלל. בודקים לפי הסדר:</p>
+    <ol>
+      <li>תגית <code>link</code> נמצאת בתוך ה-head.</li>
+      <li>הנתיב מתחיל בעלייה תיקייה (שתי נקודות ולוכסן), כי הדף בתיקייה HTML.</li>
+      <li>יש בה <code>rel</code> עם הערך stylesheet.</li>
+      <li>שם המאפיין כתוב נכון – <code>height</code> ולא hight. טעות כתיב לא מציגה שגיאה, היא פשוט לא עובדת.</li>
+      <li>שמרתם (Ctrl+S) ורעננתם (F5).</li>
+    </ol>
+  </section>
+
+  <section id="try">
+    <h2>🛠 נסו עכשיו <span class="tag">5 דקות · נבדק אוטומטית</span></h2>
+    <p>כאן אפשר לכתוב קוד ולראות אותו חי. בצעו את המשימות למטה – הדף בודק לבד, וכשמשימה מצליחה היא נצבעת בירוק ✔. אחר כך עשו את אותו דבר אצלכם ב-Visual Studio.</p>
+    <div class="pg">
+      <div class="editor">
+        <span class="lbl">HTML – הקובץ css-test.html</span>
+        <textarea id="edHtml" spellcheck="false" aria-label="עורך HTML"></textarea>
+        <span class="lbl">CSS – הקובץ style.css</span>
+        <textarea id="edCss" spellcheck="false" aria-label="עורך CSS"></textarea>
+        <div style="display:flex;gap:8px"><button class="btn" id="resetPg" type="button">↺ התחלה מחדש</button></div>
+      </div>
+      <iframe class="preview" id="preview" title="תצוגה חיה" sandbox="allow-same-origin"></iframe>
+    </div>
+    <ul class="tasks" id="tasks"></ul>
+  </section>
+
+  <section id="step">
+    <h2>🧩 צעד בפרויקט</h2>
+    <div class="step">
+      <b>בונים את קובץ העיצוב של האתר שלכם:</b>
+      <ol>
+        <li>בתיקייה css צרו קובץ חדש: קליק ימני ← Add ← New Item ← Style Sheet ← השם site-style.css.</li>
+        <li>חברו אותו בתגית link לדף הנחיתה ולדף התוכן הראשון.</li>
+        <li>קבעו בו: צבע רקע, גופן, צבע לכותרות, ו-class אחד לקופסת תוכן שתשתמשו בו בכל דפי התוכן.</li>
+        <li>מעכשיו – בלי style בתוך התגיות. כל העיצוב בקובץ אחד.</li>
+      </ol>
+      <label style="display:flex;gap:8px;align-items:center;margin-top:8px"><input type="checkbox" id="stepDone" /> עשיתי את הצעד בפרויקט שלי</label>
+    </div>
+  </section>
+
+  <section id="check">
+    <h2>✅ בדקו את עצמכם</h2>
+    <details><summary>יש לכם 10 דפי תוכן. למה עדיף קובץ CSS חיצוני אחד על פני style בכל דף?</summary><p>כי משנים במקום אחד וכל הדפים מתעדכנים יחד – וכל הדפים נראים אחידים, בדיוק מה שהמחוון בודק.</p></details>
+    <details><summary>הגדלתם padding. הכרטיס גדל או רק התרחק מהשכנים?</summary><p>גדל. padding הוא רווח <b>בתוך</b> המסגרת. כדי להרחיק בלי להגדיל – משנים margin.</p></details>
+    <details><summary>לתגית יש גם class וגם id, ולכל אחד כלל עם צבע אחר. איזה צבע ינצח?</summary><p>הצבע של כלל ה-id, כי id ספציפי יותר מ-class – לא משנה איזה נכתב קודם.</p></details>
+  </section>
+</main>
+<footer>בניית אתרים · המדריך המעשי · שיעור 3 – CSS</footer>
+
+<script>
+(function(){
+  "use strict";
+  const $ = s => document.querySelector(s);
+  const store = {
+    get(k){ try { return JSON.parse(localStorage.getItem('guide-css-'+k)); } catch(e){ return null; } },
+    set(k,v){ try { localStorage.setItem('guide-css-'+k, JSON.stringify(v)); } catch(e){} }
+  };
+
+  /* theme */
+  const savedTheme = store.get('theme'); if (savedTheme) document.documentElement.dataset.theme = savedTheme;
+  $('#themeBtn').addEventListener('click', () => {
+    const dark = document.documentElement.dataset.theme ? document.documentElement.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+    const next = dark ? 'light' : 'dark'; document.documentElement.dataset.theme = next; store.set('theme', next);
+  });
+
+  /* copy buttons */
+  document.querySelectorAll('.codeblock .copy').forEach(b => b.addEventListener('click', async () => {
+    const t = b.parentElement.querySelector('pre').innerText;
+    try { await navigator.clipboard.writeText(t); b.textContent = 'הועתק ✔'; } catch(e){ b.textContent = 'סמנו והעתיקו'; }
+    setTimeout(() => b.textContent = 'העתקה', 1500);
+  }));
+
+  /* ---------- selector lab ---------- */
+  const presets = [
+    ['p', 'בורר תגית: כל הפסקאות בדף.'],
+    ['.note', 'בורר class (נקודה לפני השם): כל תגית עם class בשם note – גם פסקה וגם כותרת.'],
+    ['#logo', 'בורר id (סולמית לפני השם): התגית האחת עם id בשם logo. id הוא ייחודי – רק תגית אחת בדף.'],
+    ['h1, h2', 'כמה בוררים יחד, מופרדים בפסיק: כל h1 וכל h2.'],
+    ['.box p', 'צאצאים (רווח): כל p שנמצא איפשהו בתוך box – גם עמוק.'],
+    ['.box > p', 'ילדים ישירים (סימן גדול מ): רק p שנמצא ישירות בתוך box, בלי שכבה באמצע.'],
+    ['p.note', 'תגית עם class יחד, בלי רווח: רק p שיש לו class בשם note.']
+  ];
+  const chips = $('#selChips'), inp = $('#selInput'), stage = $('#selStage'), out = $('#selOut');
+  presets.forEach(([s]) => { const c = document.createElement('button'); c.type='button'; c.className='chip'; c.textContent=s; c.addEventListener('click', ()=>{ inp.value=s; runSel(); }); chips.appendChild(c); });
+  function runSel(){
+    stage.querySelectorAll('.hit').forEach(e => e.classList.remove('hit'));
+    const s = inp.value.trim();
+    chips.querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed', c.textContent === s));
+    if (!s) { out.innerHTML = 'כתבו בורר בתיבה.'; return; }
+    let list;
+    try { list = stage.querySelectorAll(s); } catch(e){ out.innerHTML = '<span class="err">הבורר הזה לא תקין. בדקו נקודה, סולמית ורווחים.</span>'; return; }
+    list.forEach(e => e.classList.add('hit'));
+    const p = presets.find(x => x[0] === s);
+    const cnt = '<div class="count">נבחרו: ' + list.length + '</div>';
+    out.innerHTML = cnt + (p ? '<p>' + p[1] + '</p>' : (list.length ? '' : '<p>הבורר תקין, אבל אף תגית בדף לא מתאימה לו.</p>'));
+  }
+  inp.addEventListener('input', runSel); runSel();
+
+  /* ---------- box model lab ---------- */
+  const rM = $('#rM'), rB = $('#rB'), rP = $('#rP'), boxStage = $('#boxStage');
+  for (let i = 0; i < 2; i++) boxStage.insertAdjacentHTML('beforeend', '<div class="mm"><div class="bb"><div class="pp"><div class="cc">כרטיס ' + (i+1) + '</div></div></div></div>');
+  let prev = {m:+rM.value, b:+rB.value, p:+rP.value};
+  function drawBox(){
+    const m = +rM.value, b = +rB.value, p = +rP.value;
+    boxStage.querySelectorAll('.mm').forEach(e => e.style.padding = m + 'px');
+    boxStage.querySelectorAll('.bb').forEach(e => e.style.borderWidth = b + 'px');
+    boxStage.querySelectorAll('.pp').forEach(e => e.style.padding = p + 'px');
+    $('#oM').value = m + 'px'; $('#oB').value = b + 'px'; $('#oP').value = p + 'px';
+    $('#boxCode').innerHTML = '<span class="k">.card</span> {\n    <span class="v">margin</span>: <span class="s">' + m + 'px</span>;\n    <span class="v">border</span>: <span class="s">' + b + 'px solid</span>;\n    <span class="v">padding</span>: <span class="s">' + p + 'px</span>;\n}';
+    let hint = 'הזיזו פס אחד ושימו לב מה משתנה.';
+    if (m !== prev.m) hint = 'שיניתם margin: הכרטיס עצמו לא גדל – רק הרווח בינו לבין השכן (הכתום).';
+    else if (p !== prev.p) hint = 'שיניתם padding: הכרטיס גדל מבפנים – התוכן מתרחק מהמסגרת (הירוק).';
+    else if (b !== prev.b) hint = 'שיניתם border: המסגרת מתעבה, והיא נמצאת בין הריפוד לשוליים.';
+    $('#boxHint').textContent = '💡 ' + hint; prev = {m,b,p};
+  }
+  [rM,rB,rP].forEach(r => r.addEventListener('input', drawBox)); drawBox();
+  const setView = plain => { boxStage.classList.toggle('plain', plain); $('#viewF12').setAttribute('aria-pressed', !plain); $('#viewPlain').setAttribute('aria-pressed', plain); };
+  $('#viewF12').addEventListener('click', () => setView(false)); $('#viewPlain').addEventListener('click', () => setView(true));
+
+  /* ---------- specificity lab ---------- */
+  const rules = [
+    {id:'tag', code:'p { color: blue; }', css:'p{color:#2563eb}', name:'כחול', why:'כלל לפי שם תגית – הכי כללי.'},
+    {id:'cls', code:'.note { color: green; }', css:'.note{color:#16a34a}', name:'ירוק', why:'כלל class – ספציפי יותר משם תגית.'},
+    {id:'idr', code:'#msg { color: red; }', css:'#msg{color:#dc2626}', name:'אדום', why:'כלל id – ספציפי יותר מ-class.'},
+    {id:'inl', code:'style="color: purple"', css:null, name:'סגול', why:'Inline – בתוך התגית עצמה. גובר על כל הכללים.'},
+    {id:'tag2', code:'p { color: orange; }', css:'p{color:#ea580c}', name:'כתום', why:'עוד כלל תגית, שנכתב אחרון. מול כלל התגית הראשון – הוא מנצח כי הוא אחרון.'}
+  ];
+  const rulesBox = $('#rules'), specP = $('#msg');
+  const specStyle = document.createElement('style'); document.head.appendChild(specStyle);
+  rules.forEach((r,i) => rulesBox.insertAdjacentHTML('beforeend', '<label><input type="checkbox" data-r="'+r.id+'" '+(i<2?'checked':'')+' /> <span class="ltr">'+r.code.replace(/</g,'&lt;')+'</span></label>'));
+  function runSpec(){
+    const on = id => rulesBox.querySelector('[data-r="'+id+'"]').checked;
+    specStyle.textContent = rules.filter(r => r.css && on(r.id)).map(r => '#specStage ' + r.css).join('\n');
+    if (on('inl')) specP.setAttribute('style','color:#7e22ce'); else specP.removeAttribute('style');
+    let w = null;
+    if (on('inl')) w = 'inl'; else if (on('idr')) w = 'idr'; else if (on('cls')) w = 'cls'; else if (on('tag2')) w = 'tag2'; else if (on('tag')) w = 'tag';
+    const r = rules.find(x => x.id === w);
+    $('#specWhy').innerHTML = r ? 'מנצח: <span class="winner">' + r.name + '</span>. ' + r.why : 'אין כללים – הדפדפן משתמש בברירת המחדל שלו (שחור).';
+  }
+  rulesBox.addEventListener('change', runSpec); runSpec();
+
+  /* ---------- playground with auto-checked tasks ---------- */
+  const START_HTML = '<div class="card">\n    <h2>כרטיס ראשון</h2>\n    <p>טקסט בתוך הכרטיס</p>\n</div>\n<div class="card">\n    <h2>כרטיס שני</h2>\n    <p>עוד טקסט <span>צבוע</span></p>\n</div>';
+  const START_CSS = 'body {\n    background-color: whitesmoke;\n    font-family: Arial, sans-serif;\n}\n\n.card {\n    background-color: white;\n    border: 2px solid steelblue;\n    padding: 20px;\n    margin: 15px;\n    text-align: center;\n}';
+  const edH = $('#edHtml'), edC = $('#edCss'), frame = $('#preview');
+  const tasks = [
+    {id:'t1', text:'שנו ב-CSS את ה-margin של card מ-15px ל-40px. (מה קורה לרווח בין הכרטיסים?)',
+     test: d => { const c = d.querySelector('.card'); return c && d.defaultView.getComputedStyle(c).marginTop === '40px'; }},
+    {id:'t2', text:'שנו את ה-padding של card ל-2px. (הטקסט נצמד למסגרת – והכרטיס מתכווץ.)',
+     test: d => { const c = d.querySelector('.card'); return c && d.defaultView.getComputedStyle(c).paddingTop === '2px'; }},
+    {id:'t3', text:'ב-HTML: הוסיפו לכותרת הראשונה מאפיין style עם הצבע green – ותראו שה-Inline מנצח.',
+     test: d => { const h = d.querySelector('h2'); return h && /green/i.test(h.getAttribute('style')||'') && d.defaultView.getComputedStyle(h).color === 'rgb(0, 128, 0)'; }},
+    {id:'t4', text:'צבעו רק את המילה "צבוע": הוסיפו ל-span את class בשם hot, וכתבו ב-CSS כלל ל-hot עם color: crimson.',
+     test: d => { const s = d.querySelector('span.hot'); return s && d.defaultView.getComputedStyle(s).color === 'rgb(220, 20, 60)'; }},
+    {id:'t5', text:'אתגר: גרמו לכרטיס לשנות רקע ל-lightyellow כשהעכבר עליו (רמז: hover). סמנו בעצמכם כשזה עובד.', manual:true}
+  ];
+  const tasksBox = $('#tasks');
+  const done = store.get('done') || {};
+  tasks.forEach((t,i) => {
+    const li = document.createElement('li'); li.id = 'task-' + t.id;
+    li.innerHTML = '<span class="st">' + (i+1) + '</span><div>' + t.text + (t.manual ? ' <label style="margin-inline-start:6px"><input type="checkbox" data-manual="'+t.id+'" /> עובד אצלי</label>' : '') + '</div>';
+    tasksBox.appendChild(li);
+  });
+  tasksBox.querySelectorAll('[data-manual]').forEach(cb => { cb.checked = !!done[cb.dataset.manual]; cb.addEventListener('change', () => { done[cb.dataset.manual] = cb.checked; store.set('done', done); paintTasks(); }); });
+  const stepCb = $('#stepDone'); stepCb.checked = !!done.step; stepCb.addEventListener('change', () => { done.step = stepCb.checked; store.set('done', done); paintTasks(); });
+  function paintTasks(){
+    tasks.forEach((t,i) => { const li = $('#task-' + t.id); const ok = !!done[t.id]; li.classList.toggle('done', ok); li.querySelector('.st').textContent = ok ? '✔' : (i+1); });
+    const total = tasks.length + 1, n = tasks.filter(t => done[t.id]).length + (done.step ? 1 : 0);
+    $('#progBar').style.width = (100*n/total) + '%'; $('#progTxt').textContent = n + '/' + total;
+  }
+  function render(){
+    const doc = '<!DOCTYPE html><html lang="he" dir="rtl"><head><meta charset="utf-8"><style>' + edC.value.replace(/<\/style/gi,'') + '</style></head><body>' + edH.value + '</body></html>';
+    frame.srcdoc = doc;
+  }
+  frame.addEventListener('load', () => {
+    let d; try { d = frame.contentDocument; } catch(e){ return; }
+    if (!d) return;
+    tasks.forEach(t => { if (!t.manual) { let ok = false; try { ok = !!t.test(d); } catch(e){} if (ok) done[t.id] = true; } });
+    store.set('done', done); paintTasks();
+  });
+  let timer; const sched = () => { clearTimeout(timer); timer = setTimeout(() => { store.set('code', {h:edH.value, c:edC.value}); render(); }, 350); };
+  [edH, edC].forEach(t => {
+    t.addEventListener('input', sched);
+    t.addEventListener('keydown', e => { if (e.key === 'Tab') { e.preventDefault(); const s = t.selectionStart; t.setRangeText('    ', s, t.selectionEnd, 'end'); sched(); } });
+  });
+  const savedCode = store.get('code');
+  edH.value = savedCode ? savedCode.h : START_HTML; edC.value = savedCode ? savedCode.c : START_CSS;
+  $('#resetPg').addEventListener('click', () => { edH.value = START_HTML; edC.value = START_CSS; store.set('code', null); render(); });
+  render(); paintTasks();
+})();
+</script>
+</body>
+</html>

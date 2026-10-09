@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>המדריך המעשי – בניית אתרים</title>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+:root{--bg:#f6f7fb;--surface:#fff;--text:#1d2433;--muted:#5b6476;--line:#d9deea;--accent:#2f6fec;--soft:#e3ecff}
+@media (prefers-color-scheme: dark){:root{--bg:#0e1320;--surface:#151c2c;--text:#e6e9f2;--muted:#9aa4b8;--line:#2a3550;--accent:#7aa2ff;--soft:#1f2b4a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Rubik,Arial,sans-serif;line-height:1.7}
+main{max-width:960px;margin:auto;padding:32px 16px}
+.school{color:var(--muted);font-size:14px}
+h1{font-size:32px;margin:6px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;margin-top:22px}
+.card{display:block;text-decoration:none;color:inherit;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;transition:transform .15s,border-color .15s}
+a.card:hover{transform:translateY(-3px);border-color:var(--accent)}
+.card .n{font-size:13px;color:var(--accent);font-weight:500}
+.card h2{margin:4px 0;font-size:20px}
+.card p{margin:0;color:var(--muted);font-size:15px}
+.soon{opacity:.55}
+.badge{display:inline-block;background:var(--soft);color:var(--accent);border-radius:99px;padding:2px 10px;font-size:12px}
+</style>
+</head>
+<body>
+<main>
+  <div class="school">אורט הנרי רונסון אשקלון · מגמת מדעי המחשב והנדסת תוכנה · יוחאי פרץ</div>
+  <h1>🛠 המדריך המעשי – בניית אתרים</h1>
+  <p>קוראים, משחקים וכותבים במקביל: המדריך בחצי מסך, Visual Studio בחצי השני. בכל שיעור יש מעבדות להתנסות, משימות שנבדקות אוטומטית, וצעד אמיתי בפרויקט.</p>
+  <div class="grid">
+    <div class="card soon"><span class="n">שיעור 0</span><h2>התקנת סביבת העבודה</h2><p><span class="badge">בקרוב</span></p></div>
+    <div class="card soon"><span class="n">שיעור 1</span><h2>מבוא ל-HTML</h2><p><span class="badge">בקרוב</span></p></div>
+    <div class="card soon"><span class="n">שיעור 2</span><h2>תגיות, קישורים ותמונות</h2><p><span class="badge">בקרוב</span></p></div>
+    <a class="card" href="css.html"><span class="n">שיעור 3</span><h2>עיצוב עם CSS</h2><p>מעבדת בוררים, מודל הקופסה החי, מי מנצח – ומשימות עם ✔</p></a>
+    <div class="card soon"><span class="n">שיעור 4</span><h2>טבלאות, רשימות וטפסים</h2><p><span class="badge">בקרוב</span></p></div>
+    <div class="card soon"><span class="n">שיעור 5</span><h2>Bootstrap ועיצוב רספונסיבי</h2><p><span class="badge">בקרוב</span></p></div>
+    <div class="card soon"><span class="n">שיעור 6</span><h2>Razor Pages ותבנית Layout</h2><p><span class="badge">בקרוב</span></p></div>
+    <div class="card soon"><span class="n">הגשה 1</span><h2>האתר המעוצב</h2><p><span class="badge">בקרוב</span></p></div>
+  </div>
+</main>
+</body>
+</html>
