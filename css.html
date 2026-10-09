@@ -9,454 +9,1253 @@
 <style>
 :root{
   --bg:#f6f7fb; --surface:#ffffff; --surface2:#eef1f7; --text:#1d2433; --muted:#5b6476; --line:#d9deea;
-  --accent:#2f6fec; --accent-soft:#e3ecff; --ok:#16a34a; --ok-soft:#dcfce7; --warn:#b45309; --warn-soft:#fef3c7;
+  --accent:#2f6fec; --accent-soft:#e3ecff; --ok:#16a34a; --ok-soft:#dcfce7; --bad:#dc2626; --bad-soft:#fee2e2;
+  --warn:#b45309; --warn-soft:#fef3c7; --what:#0f766e; --what-soft:#dff5f1;
   --code-bg:#0f172a; --code-text:#e2e8f0; --code-muted:#94a3b8;
   --m:#f9cc9d; --b:#fddd9b; --pd:#c3d08b; --c:#8cb6c0;
-  --radius:14px; --shadow:0 1px 2px rgba(16,24,40,.06),0 4px 16px rgba(16,24,40,.06);
+  --radius:16px; --shadow:0 1px 2px rgba(16,24,40,.06),0 6px 20px rgba(16,24,40,.06);
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     --bg:#0e1320; --surface:#151c2c; --surface2:#1c2538; --text:#e6e9f2; --muted:#9aa4b8; --line:#2a3550;
-    --accent:#7aa2ff; --accent-soft:#1f2b4a; --ok:#4ade80; --ok-soft:#14321f; --warn:#fbbf24; --warn-soft:#3a2d0b;
-    --code-bg:#0a0f1c; --shadow:none;
+    --accent:#7aa2ff; --accent-soft:#1f2b4a; --ok:#4ade80; --ok-soft:#14321f; --bad:#f87171; --bad-soft:#3b1717;
+    --warn:#fbbf24; --warn-soft:#3a2d0b; --what:#5eead4; --what-soft:#0f2e2b; --code-bg:#0a0f1c; --shadow:none;
   }
 }
 :root[data-theme="dark"]{
   --bg:#0e1320; --surface:#151c2c; --surface2:#1c2538; --text:#e6e9f2; --muted:#9aa4b8; --line:#2a3550;
-  --accent:#7aa2ff; --accent-soft:#1f2b4a; --ok:#4ade80; --ok-soft:#14321f; --warn:#fbbf24; --warn-soft:#3a2d0b;
-  --code-bg:#0a0f1c; --shadow:none;
+  --accent:#7aa2ff; --accent-soft:#1f2b4a; --ok:#4ade80; --ok-soft:#14321f; --bad:#f87171; --bad-soft:#3b1717;
+  --warn:#fbbf24; --warn-soft:#3a2d0b; --what:#5eead4; --what-soft:#0f2e2b; --code-bg:#0a0f1c; --shadow:none;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Rubik,Arial,sans-serif;font-size:17px;line-height:1.7}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Rubik,Arial,sans-serif;font-size:17px;line-height:1.75}
 a{color:var(--accent)}
-.topbar{position:sticky;top:0;z-index:20;background:var(--surface);border-bottom:1px solid var(--line);}
-.topbar .in{max-width:1100px;margin:auto;padding:10px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+b{font-weight:600}
+.topbar{position:sticky;top:0;z-index:20;background:var(--surface);border-bottom:1px solid var(--line)}
+.topbar .in{max-width:1120px;margin:auto;padding:8px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .brand{font-weight:700}
-.school{color:var(--muted);font-size:13px}
+.now{color:var(--muted);font-size:14px}
 .progress{margin-inline-start:auto;display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted)}
 .bar{width:120px;height:8px;background:var(--surface2);border-radius:99px;overflow:hidden}
 .bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .4s}
 .themebtn{border:1px solid var(--line);background:var(--surface2);color:var(--text);border-radius:99px;padding:4px 10px;cursor:pointer;font:inherit;font-size:13px}
-main{max-width:1100px;margin:auto;padding:24px 16px 80px}
-.hero{background:linear-gradient(135deg,var(--accent-soft),var(--surface));border:1px solid var(--line);border-radius:var(--radius);padding:24px;margin-bottom:24px}
-.hero h1{margin:0 0 4px;font-size:30px}
-.hero .src{color:var(--muted);font-size:14px}
-.toc{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
-.toc a{text-decoration:none;background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:4px 12px;font-size:14px;color:var(--text)}
-section{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px;margin:0 0 20px;box-shadow:var(--shadow)}
-section>h2{margin:0 0 10px;font-size:23px}
-.tag{display:inline-block;font-size:12px;font-weight:500;border-radius:99px;padding:2px 10px;margin-inline-start:8px;vertical-align:middle;background:var(--accent-soft);color:var(--accent)}
+main{max-width:1120px;margin:auto;padding:24px 16px 80px}
+.hero{background:linear-gradient(135deg,var(--accent-soft),var(--surface));border:1px solid var(--line);border-radius:var(--radius);padding:24px;margin-bottom:28px}
+.hero .school{color:var(--muted);font-size:13px}
+.hero h1{margin:4px 0 6px;font-size:32px;line-height:1.3}
+.hero .lead{font-size:19px;margin:0 0 14px}
+.ways{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
+.way{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px;font-size:15px}
+.way b{display:block;font-size:16px}
+.goals{margin:8px 0 0;padding-inline-start:22px}
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.toc a{text-decoration:none;background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:3px 12px;font-size:14px;color:var(--text)}
+.toc a .n{color:var(--accent);font-weight:700;margin-inline-end:4px}
+.chapter{margin:0 0 36px;scroll-margin-top:70px}
+.chapter>header{display:flex;align-items:center;gap:12px;margin:0 0 12px}
+.chapter>header .num{flex:0 0 44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:grid;place-items:center;font-size:22px;font-weight:700}
+.chapter>header h2{margin:0;font-size:26px;line-height:1.3}
+.chapter>header .sub{color:var(--muted);font-size:15px}
+.spread{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px;margin:0 0 18px;box-shadow:var(--shadow);scroll-margin-top:70px}
+.spread>h3{margin:0 0 8px;font-size:21px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.spread>h3 .sn{font-size:14px;color:var(--accent);background:var(--accent-soft);border-radius:99px;padding:1px 10px;font-weight:600}
+.spread p{margin:8px 0}
+.what{background:var(--what-soft);border-inline-start:4px solid var(--what);border-radius:10px;padding:10px 14px;margin:14px 0 4px}
+.what::before{content:"🔎 מה קרה פה?";display:block;font-weight:700;color:var(--what);margin-bottom:2px}
+.bridge{background:var(--accent-soft);border-radius:10px;padding:10px 14px;margin:12px 0}
+.bridge::before{content:"🔗 בשפה של הקורס";display:block;font-weight:700;color:var(--accent);margin-bottom:2px}
+.tip{background:var(--warn-soft);border-inline-start:4px solid var(--warn);border-radius:10px;padding:10px 14px;margin:12px 0}
+.trap{background:var(--bad-soft);border-inline-start:4px solid var(--bad);border-radius:10px;padding:10px 14px;margin:12px 0}
+.trap::before{content:"⚠ מלכודת";display:block;font-weight:700;color:var(--bad);margin-bottom:2px}
+code,.ltr{font-family:"JetBrains Mono",Consolas,monospace;direction:ltr;unicode-bidi:isolate;font-size:.9em}
+p code,li code,.what code,.tip code,.bridge code,.trap code{background:var(--surface2);padding:1px 6px;border-radius:6px;white-space:nowrap}
 table{width:100%;border-collapse:collapse;margin:10px 0;font-size:15px}
+td code{background:var(--surface2);padding:1px 6px;border-radius:6px;overflow-wrap:anywhere}
+.compare>div,.walk>div,.minis>div,.split>.pane{min-width:0}
 th,td{border:1px solid var(--line);padding:8px 10px;text-align:right;vertical-align:top}
 th{background:var(--surface2)}
-code,.ltr{font-family:"JetBrains Mono",Consolas,monospace;direction:ltr;unicode-bidi:isolate;font-size:.92em}
-td code{background:var(--surface2);padding:1px 6px;border-radius:6px}
+/* static code blocks */
 .codeblock{position:relative;direction:ltr;text-align:left;background:var(--code-bg);color:var(--code-text);border-radius:12px;margin:12px 0;overflow:auto}
-.codeblock pre{margin:0;padding:16px 16px 16px 16px;font-family:"JetBrains Mono",Consolas,monospace;font-size:14px;line-height:1.6;white-space:pre}
-.codeblock .copy{position:absolute;top:8px;right:8px;font:inherit;font-size:12px;border:0;border-radius:8px;padding:4px 10px;background:#334155;color:#fff;cursor:pointer;direction:rtl}
-.k{color:#93c5fd}.v{color:#fca5a5}.s{color:#86efac}.cm{color:var(--code-muted)}
-.tip{background:var(--warn-soft);border-inline-start:4px solid var(--warn);border-radius:10px;padding:10px 14px;margin:12px 0}
-.lab{border:2px dashed var(--line);border-radius:12px;padding:16px;margin-top:12px;background:var(--surface2)}
-.lab h3{margin:0 0 8px;font-size:18px}
-.row{display:flex;gap:16px;flex-wrap:wrap}
-.col{flex:1 1 300px;min-width:0}
-/* selector lab */
-.sel-input{display:flex;gap:8px;align-items:center;margin:8px 0}
-.sel-input input{flex:1;direction:ltr;text-align:left;font-family:"JetBrains Mono",monospace;font-size:16px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--text)}
-.chips{display:flex;flex-wrap:wrap;gap:6px}
-.chip{direction:ltr;font-family:"JetBrains Mono",monospace;font-size:13px;border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:99px;padding:3px 10px;cursor:pointer}
-.chip[aria-pressed="true"]{background:var(--accent);color:#fff;border-color:var(--accent)}
-.stage{background:#fff;color:#111;border-radius:10px;padding:14px;border:1px solid var(--line)}
-.stage .box{border:1px dashed #94a3b8;padding:8px 12px;margin:6px 0;border-radius:8px}
-.stage .box .inner{border:1px dotted #cbd5e1;padding:4px 10px;margin:6px 0}
-.stage p,.stage h1,.stage h2{margin:6px 0}
-.stage h1{font-size:20px}.stage h2{font-size:17px}
-.stage .hit{outline:3px solid #f43f5e;outline-offset:2px;background:#ffe4e6;border-radius:4px}
-.sel-out{min-height:52px;margin-top:8px}
-.sel-out .count{font-weight:700}
-.err{color:#dc2626}
+.codeblock pre{margin:0;padding:14px 16px;font-family:"JetBrains Mono",Consolas,monospace;font-size:14px;line-height:1.65;white-space:pre}
+.codeblock .cv{margin:0;border-radius:0;background:transparent}
+.codeblock .copy{z-index:1;position:absolute;top:8px;right:8px;font:inherit;font-size:12px;border:0;border-radius:8px;padding:3px 10px;background:#334155;color:#fff;cursor:pointer;direction:rtl}
+.t-tag{color:#93c5fd}.t-attr{color:#fcd34d}.t-str{color:#86efac}.t-sel{color:#f9a8d4}.t-prop{color:#93c5fd}.t-val{color:#86efac}.t-cm{color:var(--code-muted);font-style:italic}
+.he{direction:rtl;unicode-bidi:isolate;font-family:Rubik,Arial,sans-serif}
+/* split = code beside live result */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
+@media (max-width:860px){.split{grid-template-columns:1fr}}
+.pane{min-width:0}
+.pane-h{font-size:13px;color:var(--muted);margin:0 0 4px;display:flex;align-items:center;gap:6px}
+.pane-h .dot{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.cv{direction:ltr;text-align:left;background:var(--code-bg);color:var(--code-text);border-radius:12px;margin:0 0 10px;padding:10px 0;font-family:"JetBrains Mono",Consolas,monospace;font-size:13.5px;line-height:1.7;overflow:auto;white-space:pre;counter-reset:ln}
+.cv .ln{display:block;padding:0 12px 0 0;border-left:4px solid transparent;min-height:1.7em;transition:background .2s}
+.cv .ln::before{counter-increment:ln;content:counter(ln);display:inline-block;width:2.2em;padding-right:.8em;text-align:right;color:#475569;user-select:none}
+.cv .ln.hit{background:rgba(244,63,94,.28);border-left-color:#f43f5e}
+.cv .ln.peek{background:rgba(96,165,250,.22)}
+.cv .ln.new{border-left-color:#22c55e;background:rgba(34,197,94,.14)}
+.cv .ln.new::after{content:"חדש";font-family:Rubik,Arial,sans-serif;font-size:11px;background:#22c55e;color:#04210f;border-radius:99px;padding:0 7px;margin-left:10px;vertical-align:1px}
+.cv .ln.diff{background:rgba(250,204,21,.18);border-left-color:#facc15}
+.cv .ln.diff::after{content:"ההבדל";font-family:Rubik,Arial,sans-serif;font-size:11px;background:#facc15;color:#2b2100;border-radius:99px;padding:0 7px;margin-left:10px;vertical-align:1px}
+.cv .ln.warn{background:rgba(250,204,21,.18);border-left-color:#facc15}
+.cv .ln.warn::after{content:"חוזר על עצמו";font-family:Rubik,Arial,sans-serif;font-size:11px;background:#facc15;color:#2b2100;border-radius:99px;padding:0 7px;margin-left:10px;vertical-align:1px}
+.host{border-radius:12px;border:1px solid var(--line);overflow:hidden;background:#fff}
+.res-note{font-size:15px;margin-top:6px;min-height:1.5em}
+.res-note .count{font-weight:700}
+/* controls */
+.ctrls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}
+.ctrls .lbl{font-size:14px;color:var(--muted)}
+.seg{display:inline-flex;flex-wrap:wrap;gap:6px}
+.seg button,.chip{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--surface);color:var(--text);padding:4px 12px;border-radius:99px;cursor:pointer}
+.chip{font-family:"JetBrains Mono",monospace;direction:ltr;font-size:13px}
+.seg button[aria-pressed="true"],.chip[aria-pressed="true"]{background:var(--accent);color:#fff;border-color:var(--accent)}
+.seg button:focus-visible,.chip:focus-visible,.btn:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.btn{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--surface);color:var(--text);padding:6px 14px;border-radius:10px;cursor:pointer}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+/* anatomy diagram */
+.anat{direction:ltr;display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:16px 0 8px}
+.anat .tok{display:flex;flex-direction:column;align-items:center;gap:6px;max-width:190px}
+.anat .tok code{white-space:nowrap}
+.anat .tok code{font-size:22px;background:var(--code-bg);color:var(--code-text);padding:6px 14px;border-radius:10px;border-bottom:4px solid var(--tc)}
+.anat .tok span{direction:rtl;text-align:center;font-size:14px;line-height:1.4;color:var(--muted)}
+.anat .tok span b{display:block;color:var(--text)}
+/* predict */
+.predict{border:2px dashed var(--accent);border-radius:12px;padding:12px 16px;margin:14px 0;background:var(--surface)}
+.predict .q{font-weight:600}
+.predict .q::before{content:"❓ נחשו לפני שרואים: ";color:var(--accent)}
+.predict.quiz .q::before{content:"❓ "}
+.predict .opts{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.predict .opts button{font:inherit;font-size:15px;border:1px solid var(--line);background:var(--surface2);color:var(--text);padding:6px 14px;border-radius:10px;cursor:pointer;text-align:right}
+.predict .opts button.right{background:var(--ok-soft);border-color:var(--ok)}
+.predict .opts button.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.predict .fb{margin-top:8px;border-radius:10px;padding:8px 12px}
+.predict .fb.right{background:var(--ok-soft)}
+.predict .fb.wrong{background:var(--bad-soft)}
+.predict.solved{border-style:solid;border-color:var(--ok)}
+/* compare */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
+@media (max-width:700px){.compare{grid-template-columns:1fr}}
+.compare .cap{font-size:15px;margin-top:6px}
+.compare .cap b{display:block}
+/* family tree */
+.tree{direction:ltr;text-align:left;font-family:"JetBrains Mono",monospace;font-size:14px;background:var(--surface2);border-radius:12px;padding:12px 16px;line-height:2}
+.tree .node{display:inline-block;border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:0 8px;cursor:default}
+.tree .node.hit{background:#ffe4e6;border-color:#f43f5e;color:#9f1239}
+.tree .node.peek{border-color:var(--accent)}
+.tree .role{font-family:Rubik,Arial,sans-serif;font-size:13px;color:var(--muted);direction:rtl;unicode-bidi:isolate;margin-left:8px}
+.tree .g{color:var(--muted);white-space:pre}
 /* box lab */
 .sliders{display:grid;grid-template-columns:auto 1fr auto;gap:6px 10px;align-items:center}
-.sliders label{font-weight:500}
 .sliders output{font-family:"JetBrains Mono",monospace;min-width:52px;text-align:left;direction:ltr}
 input[type=range]{width:100%;accent-color:var(--accent)}
-.boxstage{background:#fff;border-radius:10px;padding:16px;border:1px solid var(--line);display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-start}
-.mm{background:var(--m);transition:padding .15s}
-.bb{border-style:solid;border-color:#c79300;background:var(--b);transition:border-width .15s}
-.pp{background:var(--pd);transition:padding .15s}
-.cc{background:var(--c);color:#0b2530;width:76px;min-height:60px;padding:6px;font-size:14px;text-align:center}
-.plain .mm,.plain .pp{background:transparent}
-.plain .bb{background:#fff;border-color:#334155}
-.plain .cc{background:#fff}
+.boxstage{background:#fff;border-radius:12px;padding:16px;border:1px solid var(--line);display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-start}
+.mm{background:var(--m)}.bb{border-style:solid;border-color:#c79300;background:var(--b)}.pp{background:var(--pd)}
+.cc{background:var(--c);color:#0b2530;width:84px;min-height:56px;padding:6px;font-size:14px;text-align:center;line-height:1.4}
+.plain .mm,.plain .pp{background:transparent}.plain .bb{background:#fff;border-color:#334155}.plain .cc{background:#fff}
 .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:14px;margin-top:10px}
 .legend span::before{content:"";display:inline-block;width:14px;height:14px;border-radius:3px;margin-inline-end:6px;vertical-align:-2px;background:var(--sw)}
-.switch{display:inline-flex;gap:6px;margin:8px 0}
-.switch button{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--surface);color:var(--text);padding:4px 12px;border-radius:99px;cursor:pointer}
-.switch button[aria-pressed="true"]{background:var(--accent);color:#fff;border-color:var(--accent)}
-/* specificity lab */
-.rules label{display:flex;gap:10px;align-items:center;padding:6px 8px;border-radius:8px;cursor:pointer}
-.rules label:hover{background:var(--surface)}
-.rules .ltr{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:1px 8px}
-.winner{font-weight:700}
-#specText{font-size:26px;font-weight:700;margin:6px 0}
+/* devtools sketch */
+.dt{direction:ltr;margin:12px auto;max-width:360px;font-family:"JetBrains Mono",monospace;font-size:12px;text-align:center;color:#1f2937}
+.dt div{padding:8px 14px;border:1px dashed #6b7280}
+.dt .l{display:block;text-align:left;font-size:11px;margin:-4px 0 2px}
+/* path walker */
+.walk{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+@media (max-width:700px){.walk{grid-template-columns:1fr}}
+.ftree{direction:ltr;text-align:left;font-family:"JetBrains Mono",monospace;font-size:14px;background:var(--surface2);border-radius:12px;padding:12px 16px;line-height:1.9;white-space:pre}
+.ftree .f{border-radius:6px;padding:0 4px;transition:background .2s}
+.ftree .f.here{background:#fde68a;color:#422006}
+.ftree .f.goal{outline:2px dashed var(--ok)}
+.pathbox{direction:ltr;font-family:"JetBrains Mono",monospace;font-size:18px;background:var(--code-bg);color:var(--code-text);border-radius:10px;padding:10px 14px;min-height:48px}
+.pathbox .t-str{color:#86efac}
+/* mini pages for external demo */
+.minis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media (max-width:700px){.minis{grid-template-columns:1fr}}
+.minis .cap{font-size:13px;color:var(--muted);text-align:center;direction:ltr}
+/* ladder */
+.ladder{list-style:none;padding:0;margin:12px 0;counter-reset:lad}
+.ladder li{counter-increment:lad;display:flex;gap:10px;align-items:center;padding:8px 12px;border-radius:10px;margin-bottom:6px;background:var(--surface2)}
+.ladder li::before{content:counter(lad);flex:0 0 28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-weight:700}
+.rules label{display:flex;gap:10px;align-items:center;padding:5px 8px;border-radius:8px;cursor:pointer}
+.rules label:hover{background:var(--surface2)}
+.rules .ltr{background:var(--code-bg);color:var(--code-text);border-radius:6px;padding:1px 8px}
+/* challenges */
+.chal{list-style:none;padding:0;margin:10px 0}
+.chal li{display:flex;gap:10px;align-items:flex-start;padding:7px 10px;border-radius:10px;margin-bottom:6px;background:var(--surface2);cursor:pointer}
+.chal li.cur{outline:2px solid var(--accent)}
+.chal li.done{background:var(--ok-soft)}
+.chal .st{flex:0 0 26px;height:26px;border-radius:50%;display:grid;place-items:center;border:2px solid var(--line);font-size:13px;font-weight:700}
+.chal li.done .st{background:var(--ok);border-color:var(--ok);color:#fff}
+.sel-input{display:flex;gap:8px;align-items:center;margin:8px 0}
+.sel-input input{flex:1;min-width:0;direction:ltr;text-align:left;font-family:"JetBrains Mono",monospace;font-size:16px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--text)}
+.err{color:var(--bad)}
 /* playground */
 .pg{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-@media (max-width:820px){.pg{grid-template-columns:1fr}}
+@media (max-width:860px){.pg{grid-template-columns:1fr}}
 .editor{display:flex;flex-direction:column;gap:6px}
 .editor .lbl{font-size:13px;color:var(--muted)}
-.editor textarea{direction:ltr;text-align:left;width:100%;min-height:210px;resize:vertical;font-family:"JetBrains Mono",monospace;font-size:14px;line-height:1.55;background:var(--code-bg);color:var(--code-text);border:0;border-radius:10px;padding:12px;tab-size:4}
-.preview{background:#fff;border-radius:10px;border:1px solid var(--line);width:100%;height:440px}
+.editor textarea{direction:ltr;text-align:left;width:100%;min-height:200px;resize:vertical;font-family:"JetBrains Mono",monospace;font-size:14px;line-height:1.55;background:var(--code-bg);color:var(--code-text);border:0;border-radius:10px;padding:12px;tab-size:4}
+.preview{background:#fff;border-radius:10px;border:1px solid var(--line);width:100%;height:460px}
 .tasks{list-style:none;padding:0;margin:12px 0 0}
 .tasks li{display:flex;gap:10px;align-items:flex-start;padding:8px 10px;border-radius:10px;margin-bottom:6px;background:var(--surface2)}
 .tasks li .st{flex:0 0 26px;height:26px;border-radius:50%;display:grid;place-items:center;border:2px solid var(--line);font-size:14px;font-weight:700}
 .tasks li.done{background:var(--ok-soft)}
 .tasks li.done .st{background:var(--ok);border-color:var(--ok);color:#fff}
-.btn{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--surface);color:var(--text);padding:6px 14px;border-radius:10px;cursor:pointer}
-.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
-details{background:var(--surface2);border-radius:10px;padding:10px 14px;margin:8px 0}
-details summary{cursor:pointer;font-weight:500}
-.step{background:var(--accent-soft);border-radius:12px;padding:14px 16px}
-.step ol{margin:6px 0 0;padding-inline-start:22px}
+.stepbox{background:var(--accent-soft);border-radius:12px;padding:14px 16px}
+.stepbox ol{margin:6px 0 0;padding-inline-start:22px}
+.next{display:block;text-align:left;margin-top:-6px;font-size:15px}
+details{background:var(--surface2);border-radius:10px;padding:10px 14px;margin:10px 0}
+details summary{cursor:pointer;font-weight:600}
 footer{color:var(--muted);font-size:13px;text-align:center;padding:20px}
-@media (max-width:600px){ body{font-size:16px} section{padding:16px} .hero h1{font-size:24px} .bar{width:70px} .school{display:none} }
+@media (max-width:600px){
+  body{font-size:16px} table{font-size:14px} th,td{padding:6px} .spread{padding:16px} .hero{padding:18px} .hero h1{font-size:25px}
+  .chapter>header h2{font-size:21px} .bar{width:64px} .now{display:none} .plbl{display:none} .themebtn{font-size:0;padding:4px 8px} .themebtn::before{content:'🌓';font-size:15px} .ways{grid-template-columns:1fr}
+  .anat .tok code{font-size:17px;padding:5px 10px}
+}
 </style>
 </head>
 <body>
 <header class="topbar"><div class="in">
-  <span class="brand">🛠 המדריך המעשי</span>
-  <span class="school">אורט הנרי רונסון אשקלון · מגמת מדעי המחשב והנדסת תוכנה · יוחאי פרץ</span>
-  <span class="progress" title="המשימות שסימנתם בדף הזה">התקדמות <span class="bar"><i id="progBar"></i></span> <span id="progTxt">0/0</span></span>
+  <span class="brand">🛠 שיעור 3 · CSS</span>
+  <span class="now" id="now"></span>
+  <span class="progress" title="ניחושים, אתגרים ומשימות שפתרתם בדף הזה"><span class="plbl">התקדמות</span> <span class="bar"><i id="progBar"></i></span> <span id="progTxt">0/0</span></span>
   <button class="themebtn" id="themeBtn" type="button">🌓 מצב תצוגה</button>
 </div></header>
 
 <main>
-  <div class="hero">
-    <h1>שיעור 3 – עיצוב עם CSS</h1>
-    <div class="src">מבוסס על המצגת 3-CSS · קוראים, משחקים, וכותבים במקביל ב-Visual Studio</div>
-    <nav class="toc" aria-label="תוכן השיעור">
-      <a href="#why">בשביל מה</a><a href="#ways">שלוש דרכים</a><a href="#selectors">🔬 מעבדת בוררים</a>
-      <a href="#box">🔬 מודל הקופסה</a><a href="#wins">🔬 מי מנצח</a><a href="#props">מאפיינים</a>
-      <a href="#mistake">טעות נפוצה</a><a href="#try">🛠 נסו עכשיו</a><a href="#step">🧩 צעד בפרויקט</a><a href="#check">✅ בדקו</a>
-    </nav>
+<div class="hero">
+  <div class="school">אורט הנרי רונסון אשקלון · מגמת מדעי המחשב והנדסת תוכנה · יוחאי פרץ</div>
+  <h1>שיעור 3 – עיצוב עם CSS</h1>
+  <p class="lead">בשיעורים 1 ו-2 בניתם דפים עם תוכן: כותרות, פסקאות, קישורים ותמונות. היום תלמדו לקבוע <b>איך</b> הם נראים.</p>
+  <div class="ways">
+    <div class="way"><b>🎬 1. צפו בסרטון</b>הסרטון של השיעור בקלאסרום – הדרך הראשית.</div>
+    <div class="way"><b>📖 2. עברו על הדף הזה</b>עם Visual Studio פתוח לידכם. כל דוגמה כאן – נסו גם אצלכם.</div>
+    <div class="way"><b>🎧 3. פודקסט (לא חובה)</b>להבין את הרעיונות הגדולים בדרך הביתה.</div>
   </div>
+  <b>בסוף השיעור תדעו:</b>
+  <ul class="goals">
+    <li>להסביר מה ההבדל בין HTML ל-CSS.</li>
+    <li>לכתוב הוראת עיצוב, ולבחור על אילו תגיות היא תחול.</li>
+    <li>לשלוט ברווחים בעזרת "מודל הקופסה".</li>
+    <li>לחבר קובץ עיצוב אחד לכל הדפים באתר.</li>
+  </ul>
+  <nav class="toc" aria-label="פרקי השיעור" id="toc"></nav>
+</div>
 
-  <section id="why">
-    <h2>בשביל מה זה</h2>
-    <p>HTML בונה את השלד, ו-CSS הוא המראה: צבעים, גופנים, מרווחים ויישור. בהגשה 1 כל העיצוב יהיה בקובץ CSS חיצוני אחד, ו-25 נקודות במחוון ניתנות על <b>התרשמות כללית מהעיצוב</b>.</p>
-    <div class="tip">💡 רוצים לראות CSS אמיתי עכשיו? לחצו F12 על הדף הזה עצמו. כל מה שאתם רואים כאן מעוצב ב-CSS – ותוכלו לשנות ערכים ולראות מה קורה.</div>
-  </section>
+<!-- ============ 1 ============ -->
+<section class="chapter" id="c1" data-title="מה זה CSS?">
+  <header><span class="num">1</span><div><h2>מה זה CSS?</h2><div class="sub">אותו תוכן – מראה אחר לגמרי</div></div></header>
+  <article class="spread">
+    <h3><span class="sn">1.1</span>HTML זה התוכן. CSS זה המראה.</h3>
+    <p>עד עכשיו כתבתם HTML. ה-HTML קובע <b>מה יש בדף</b>: כותרת, פסקה, תמונה. אבל הדפדפן מציג הכול בשחור על לבן, באותו גופן.</p>
+    <p><b>CSS</b> היא שפה שקובעת <b>איך הדף נראה</b>: צבעים, גדלים, גופנים, רווחים וסידור. לאורך כל השיעור נעבוד על דף אחד – הדף של "פיצה דני". לחצו על הכפתורים והשוו:</p>
+    <div class="ctrls"><div class="seg" id="s11seg"></div></div>
+    <div id="s11"></div>
+    <div class="what">ה-HTML לא השתנה באף אות – בדקו בקוד. הוספנו רק כמה שורות CSS, והדף נראה אחרת לגמרי. זה כל הרעיון: <b>התוכן לחוד, והעיצוב לחוד</b>. את השורות האלה עוד לא צריך להבין – עד סוף השיעור תדעו לכתוב אותן בעצמכם.</div>
+    <div class="tip">💡 השם CSS הוא ראשי תיבות של Cascading Style Sheets – בערך "דפי סגנון". לא צריך לזכור את זה.</div>
+  </article>
+</section>
 
-  <section id="ways">
-    <h2>שלוש דרכים להוסיף עיצוב</h2>
+<!-- ============ 2 ============ -->
+<section class="chapter" id="c2" data-title="ההוראה הראשונה">
+  <header><span class="num">2</span><div><h2>ההוראה הראשונה: style בתוך התגית</h2><div class="sub">Inline – עיצוב שכותבים ישר בתוך התגית</div></div></header>
+  <article class="spread">
+    <h3><span class="sn">2.1</span>מאפיין שאתם כבר מכירים</h3>
+    <p>בשיעור 2 הוספתם לתגיות <b>מאפיינים</b> (attributes): <code>href</code> לקישור, <code>src</code> לתמונה. לעיצוב יש מאפיין משלו: <code>style</code>. בתוכו כותבים הוראות עיצוב.</p>
+    <p>כל הוראה בנויה מארבעה חלקים:</p>
+    <div class="anat">
+      <div class="tok" style="--tc:#93c5fd"><code>color</code><span><b>מאפיין (property)</b>מה רוצים לשנות</span></div>
+      <div class="tok" style="--tc:#cbd5e1"><code>:</code><span><b>נקודתיים</b>מפרידות</span></div>
+      <div class="tok" style="--tc:#86efac"><code>red</code><span><b>ערך (value)</b>למה לשנות</span></div>
+      <div class="tok" style="--tc:#cbd5e1"><code>;</code><span><b>נקודה-פסיק</b>סוף ההוראה</span></div>
+    </div>
+    <div class="bridge">ב-C# כתבתם <code>x = 5;</code> – "שימו 5 בתוך x". כאן זה אותו רעיון: <code>color: red;</code> – "שימו אדום בצבע". שני הבדלים בלבד: במקום <code>=</code> כותבים נקודתיים, ואת הערך לא שמים במירכאות. הנקודה-פסיק בסוף – בדיוק כמו ב-C#.</div>
+  </article>
+  <article class="spread">
+    <h3><span class="sn">2.2</span>נסו: שנו את הכותרת</h3>
+    <p>בחרו צבע וגודל, וראו איך הקוד והתוצאה משתנים יחד. אפשר לכתוב כמה הוראות באותו style – מפרידים ביניהן בנקודה-פסיק.</p>
+    <div class="ctrls"><span class="lbl ltr">color:</span><div class="seg" id="s22c"></div></div>
+    <div class="ctrls"><span class="lbl ltr">font-size:</span><div class="seg" id="s22s"></div></div>
+    <div id="s22"></div>
+    <div class="predict" id="p22"></div>
+    <div class="ctrls"><button class="btn" id="s22break" type="button">🔨 תראו לי: מחקו את ה-; באמצע</button></div>
+    <div class="what" id="s22what" hidden>הדפדפן מפריד בין ההוראות לפי ה-<code>;</code>. בלי הנקודה-פסיק הוא לא יודע איפה הוראה אחת נגמרת, ולכן <b>זורק את שתיהן</b>. ושימו לב: <b>אין הודעת שגיאה</b>. ב-CSS טעות פשוט "לא עובדת" בשקט. זו הסיבה שצריך לבדוק כל שינוי בדפדפן.</div>
+  </article>
+</section>
+
+<!-- ============ 3 ============ -->
+<section class="chapter" id="c3" data-title="div ו-span">
+  <header><span class="num">3</span><div><h2>div ו-span: קופסאות לעיצוב</h2><div class="sub">כשרוצים לעצב כמה תגיות יחד, או רק מילה אחת</div></div></header>
+  <article class="spread">
+    <h3><span class="sn">3.1</span>שתי תגיות בלי שום מראה משלהן</h3>
+    <p>לפעמים רוצים לעצב <b>כמה תגיות ביחד</b> – למשל את כל התפריט, כולל הכותרת שלו. ולפעמים רוצים לעצב <b>רק חלק משורה</b> – למשל את המילה "במבצע". בשביל זה יש שתי תגיות שלא עושות כלום בעצמן – הן רק "עוטפות":</p>
     <table>
-      <thead><tr><th>שיטה</th><th>איפה כותבים</th><th>מתי</th></tr></thead>
-      <tbody>
-        <tr><td><b>Inline</b></td><td>במאפיין <code>style</code> בתוך התגית</td><td>לניסוי מהיר בלבד</td></tr>
-        <tr><td><b>Internal</b></td><td>בתגית <code>style</code> בתוך ה-head</td><td>לדף בודד</td></tr>
-        <tr><td><b>External</b></td><td>בקובץ נפרד עם סיומת css, שמחובר בתגית <code>link</code></td><td>השיטה שלנו: קובץ אחד לכל הדפים</td></tr>
-      </tbody>
+      <tr><th>תגית</th><th>מה היא עוטפת</th><th>איך היא תופסת מקום</th></tr>
+      <tr><td><code>&lt;div&gt;</code></td><td>כמה תגיות יחד – קופסה גדולה</td><td>שורה שלמה (יורדת שורה לפני ואחרי)</td></tr>
+      <tr><td><code>&lt;span&gt;</code></td><td>חלק מתוך שורה – מילה או כמה מילים</td><td>רק את המקום של המילים (לא יורדת שורה)</td></tr>
     </table>
-    <p>כך מחברים קובץ חיצוני מדף שנמצא בתיקייה HTML (עולים תיקייה אחת למעלה ונכנסים ל-css):</p>
-    <div class="codeblock"><button class="copy" type="button">העתקה</button><pre>&lt;<span class="k">link</span> <span class="v">href</span>=<span class="s">"../css/style.css"</span> <span class="v">rel</span>=<span class="s">"stylesheet"</span> /&gt;</pre></div>
-    <p>כלל CSS בנוי מ<b>בורר</b> (selector) – את מי מעצבים, ובתוך סוגריים מסולסלים זוגות של <b>מאפיין: ערך;</b></p>
-    <div class="codeblock"><button class="copy" type="button">העתקה</button><pre><span class="k">p</span> {
-    <span class="v">color</span>: <span class="s">navy</span>;
-    <span class="v">font-size</span>: <span class="s">18px</span>;
-}</pre></div>
-  </section>
+    <p>הדליקו כל אחת בנפרד, ושימו לב לשורות שמסומנות "חדש":</p>
+    <div class="ctrls"><div class="seg" id="s31seg"></div></div>
+    <div id="s31"></div>
+    <div class="what">ה-<code>div</code> הפך את הכותרת ושתי הפסקאות ל<b>יחידה אחת</b> – והרקע והמסגרת עוטפים את שלושתן יחד. ה-<code>span</code> צבע <b>רק את המילה</b> שבתוכו, והשורה נשארה שורה אחת. בלי עיצוב – שתיהן בלתי נראות לגמרי. בזה הן שונות מ-<code>h1</code> או <code>p</code>, שיש להן מראה משלהן.</div>
+  </article>
+</section>
 
-  <section id="selectors">
-    <h2>🔬 מעבדת בוררים <span class="tag">משחקים כאן</span></h2>
-    <p>הבורר אומר לדפדפן <b>על מי</b> הכלל חל. בחרו בורר או כתבו אחד – ומה שהוא בוחר יסומן באדום בדף הקטן.</p>
-    <div class="lab">
-      <div class="chips" id="selChips"></div>
-      <div class="sel-input"><input id="selInput" value="p" aria-label="בורר CSS" spellcheck="false" autocomplete="off" /></div>
-      <div class="row">
-        <div class="col">
-          <div class="stage" id="selStage" dir="rtl">
-            <h1 id="logo">כותרת עם id בשם logo</h1>
-            <div class="box">
-              box
-              <p>פסקה שהיא ילד ישיר של box</p>
-              <div class="inner"><p>פסקה עמוקה יותר – צאצא של box, אבל לא ילד ישיר</p></div>
-            </div>
-            <p class="note">פסקה מחוץ ל-box, עם class בשם note</p>
-            <h2 class="note">כותרת משנה, גם היא עם class בשם note</h2>
-          </div>
-        </div>
-        <div class="col"><div class="sel-out" id="selOut"></div></div>
-      </div>
-    </div>
-  </section>
-
-  <section id="box">
-    <h2>🔬 מודל הקופסה <span class="tag">גוררים ורואים</span></h2>
-    <p>כל תגית היא קופסה עם ארבע שכבות, מבפנים החוצה: <b>תוכן</b> ← <b>padding</b> (ריפוד – רווח בתוך המסגרת) ← <b>border</b> (מסגרת) ← <b>margin</b> (שוליים – רווח מחוץ למסגרת, בין הקופסה לשכנות שלה). הזיזו כל פס בנפרד, ושימו לב מה זז.</p>
-    <div class="lab">
-      <div class="switch" role="group" aria-label="סוג תצוגה">
-        <button type="button" id="viewF12" aria-pressed="true">צבעים כמו ב-F12</button>
-        <button type="button" id="viewPlain" aria-pressed="false">איך זה נראה באתר</button>
-      </div>
-      <div class="row">
-        <div class="col">
-          <div class="sliders">
-            <label for="rM">margin</label><input type="range" id="rM" min="0" max="50" value="10" /><output id="oM">10px</output>
-            <label for="rB">border</label><input type="range" id="rB" min="0" max="14" value="3" /><output id="oB">3px</output>
-            <label for="rP">padding</label><input type="range" id="rP" min="0" max="50" value="12" /><output id="oP">12px</output>
-          </div>
-          <div class="codeblock"><pre id="boxCode"></pre></div>
-          <p id="boxHint" class="tip" style="margin:0"></p>
-        </div>
-        <div class="col">
-          <div class="boxstage" id="boxStage"></div>
-          <div class="legend">
-            <span style="--sw:var(--c)">תוכן</span><span style="--sw:var(--pd)">padding – ריפוד</span>
-            <span style="--sw:var(--b)">border – מסגרת</span><span style="--sw:var(--m)">margin – שוליים</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="wins">
-    <h2>🔬 מי מנצח כשכללים מתנגשים?</h2>
-    <p>לפסקה אחת יש id בשם msg ו-class בשם note. סמנו אילו כללים קיימים – וראו איזה צבע מנצח, ולמה.</p>
-    <div class="lab">
-      <div class="row">
-        <div class="col rules" id="rules"></div>
-        <div class="col">
-          <div class="stage"><div id="specStage"><p id="msg" class="note">הטקסט שלי</p></div></div>
-          <p id="specWhy"></p>
-        </div>
-      </div>
-    </div>
-    <div class="tip">💡 הכלל: Inline גובר על כולם. אחריו – כלל ספציפי גובר על כללי: id חזק מ-class, ו-class חזק משם תגית. כשהכללים שווים – מנצח מי שנכתב אחרון. ועוד דבר: חלק מהמאפיינים, כמו צבע וגופן, <b>עוברים בירושה</b> לתגיות הפנימיות; מסגרת ושוליים – לא.</div>
-  </section>
-
-  <section id="props">
-    <h2>מאפיינים שימושיים</h2>
-    <table>
-      <thead><tr><th>מאפיין</th><th>מה הוא עושה</th><th>דוגמה</th></tr></thead>
-      <tbody>
+<!-- ============ 4 ============ -->
+<section class="chapter" id="c4" data-title="מאפיינים שימושיים">
+  <header><span class="num">4</span><div><h2>מאפיינים שימושיים</h2><div class="sub">ארגז הכלים: צבע, גודל, גופן, מסגרת, יישור</div></div></header>
+  <article class="spread">
+    <h3><span class="sn">4.1</span>חוקרים מאפיין אחרי מאפיין</h3>
+    <p>בחרו מאפיין, ואז ערך. הקו המקווקו האפור מראה את גבולות התגית – ככה רואים גם שינויים ברוחב.</p>
+    <div class="ctrls"><div class="seg" id="s41p"></div></div>
+    <div class="ctrls"><span class="lbl">ערך:</span><div class="seg" id="s41v"></div></div>
+    <div id="s41"></div>
+    <div class="what" id="s41what"></div>
+    <details><summary>כל המאפיינים בטבלה אחת (לחזרה)</summary>
+      <table>
+        <tr><th>מאפיין</th><th>מה הוא עושה</th><th>דוגמה</th></tr>
         <tr><td><code>color</code></td><td>צבע הטקסט</td><td><code>red</code></td></tr>
-        <tr><td><code>background-color</code></td><td>צבע רקע</td><td><code>lightblue</code></td></tr>
+        <tr><td><code>background-color</code></td><td>צבע הרקע</td><td><code>lightyellow</code></td></tr>
+        <tr><td><code>font-size</code></td><td>גודל הטקסט</td><td><code>20px</code></td></tr>
+        <tr><td><code>font-family</code></td><td>הגופן</td><td><code>Arial</code></td></tr>
+        <tr><td><code>text-align</code></td><td>יישור הטקסט בתוך התגית</td><td><code>center</code></td></tr>
+        <tr><td><code>direction</code></td><td>כיוון הטקסט (לא יישור!)</td><td><code>rtl</code></td></tr>
         <tr><td><code>border</code></td><td>מסגרת: עובי, סוג, צבע</td><td><code>2px solid black</code></td></tr>
-        <tr><td><code>width</code> / <code>height</code></td><td>רוחב / גובה</td><td><code>100px</code> · <code>50%</code> · <code>auto</code></td></tr>
-        <tr><td><code>text-align</code></td><td>יישור טקסט</td><td><code>center</code></td></tr>
-        <tr><td><code>font-family</code> / <code>font-size</code></td><td>גופן / גודל</td><td><code>Arial</code> · <code>20px</code></td></tr>
-        <tr><td><code>display</code></td><td>איך התגית תופסת מקום</td><td><code>block</code> · <code>inline</code> · <code>flex</code> · <code>none</code></td></tr>
-      </tbody>
-    </table>
-    <details><summary>div לעומת span</summary><p>שתיהן "קופסאות" בלי עיצוב משלהן. <code>div</code> תופסת שורה שלמה ועוטפת כמה תגיות; <code>span</code> עוטפת רק חלק מתוך שורה – למשל מילה אחת שרוצים לצבוע.</p></details>
-    <details><summary>מרכוז תמונה, ומרכוז כמה תמונות</summary>
-      <div class="codeblock"><button class="copy" type="button">העתקה</button><pre><span class="k">#logo</span> {
-    <span class="v">display</span>: <span class="s">block</span>;
-    <span class="v">margin-left</span>: <span class="s">auto</span>;
-    <span class="v">margin-right</span>: <span class="s">auto</span>;
-    <span class="v">width</span>: <span class="s">40%</span>;
-}
+        <tr><td><code>width</code> / <code>height</code></td><td>רוחב / גובה</td><td><code>150px</code> · <code>50%</code></td></tr>
+        <tr><td><code>opacity</code></td><td>שקיפות, מ-0 (שקוף) עד 1 (מלא)</td><td><code>0.5</code></td></tr>
+        <tr><td><code>display</code></td><td>איך התגית תופסת מקום, או הסתרה</td><td><code>block</code> · <code>none</code></td></tr>
+      </table>
+      <p>⚠ במצגת כתוב <code>hight</code> – הנכון הוא <code>height</code>. טעות כתיב במאפיין לא מציגה שגיאה, היא פשוט לא עובדת.</p>
+    </details>
+  </article>
+  <article class="spread">
+    <h3><span class="sn">4.2</span>איך ממרכזים תמונה?</h3>
+    <p>תמונה מתנהגת כמו <b>מילה בתוך שורה</b> – היא יושבת בצד (אצלנו בימין, כי הדף בעברית). <code>text-align</code> לא עוזר כאן אם רוצים לשלוט בתמונה עצמה. יש שני מקרים:</p>
+    <div class="ctrls"><div class="seg" id="s42seg"></div></div>
+    <div id="s42"></div>
+    <div class="what" id="s42what"></div>
+  </article>
+</section>
 
-<span class="k">.gallery</span> {
-    <span class="v">display</span>: <span class="s">flex</span>;
-    <span class="v">justify-content</span>: <span class="s">center</span>;
-    <span class="v">gap</span>: <span class="s">10px</span>;
-}</pre></div>
-      <p>הכלל הראשון ממרכז תמונה אחת עם id בשם logo. השני ממרכז כמה תמונות שעטופות ב-div עם class בשם gallery.</p></details>
-    <details><summary>הערות ב-CSS</summary><div class="codeblock"><pre><span class="cm">/* the browser ignores comments */</span></pre></div><p>שימושי לתיעוד, וגם כדי "לכבות" כלל לרגע בלי למחוק אותו.</p></details>
-  </section>
-
-  <section id="mistake">
-    <h2>⚠ טעות נפוצה</h2>
-    <p>כתבתם קובץ CSS, והדף לא משתנה בכלל. בודקים לפי הסדר:</p>
+<!-- ============ 5 ============ -->
+<section class="chapter" id="c5" data-title="מודל הקופסה">
+  <header><span class="num">5</span><div><h2>מודל הקופסה</h2><div class="sub">איך שולטים ברווחים – בפנים ובחוץ</div></div></header>
+  <article class="spread">
+    <h3><span class="sn">5.1</span>כל תגית היא מלבן</h3>
+    <p>הדפדפן רואה כל תגית כ<b>קופסה מלבנית</b>. רוב הזמן לא רואים את הקופסאות – אבל הן שם. לחצו וראו:</p>
+    <div class="ctrls"><div class="seg" id="s51seg"></div></div>
+    <div id="s51"></div>
+    <div class="what">כל כותרת וכל פסקה היא מלבן ש<b>תופס את כל רוחב השורה</b>, גם אם הטקסט קצר. לכן הן מסודרות אחת מתחת לשנייה. לסידור לפי "שורות שלמות" קוראים <code>block</code>. מעכשיו, כשמעצבים רווחים – חושבים על המלבנים האלה.</div>
+  </article>
+  <article class="spread">
+    <h3><span class="sn">5.2</span>padding – ריפוד: רווח <u>בתוך</u> המסגרת</h3>
+    <p>אותה קופסה בדיוק, פעמיים. ההבדל היחיד: ה-<code>padding</code>.</p>
+    <div class="compare" id="s52"></div>
+    <div class="what">padding מרחיק את <b>התוכן מהמסגרת של עצמו</b>. המסגרת "התנפחה" החוצה, והקופסה גדלה. בלי padding הטקסט צמוד לקו – וזה נראה צפוף ולא מקצועי.</div>
+  </article>
+  <article class="spread">
+    <h3><span class="sn">5.3</span>margin – שוליים: רווח <u>מחוץ</u> למסגרת</h3>
+    <p>עכשיו שתי קופסאות, אחת מעל השנייה. ההבדל היחיד: ה-<code>margin</code>.</p>
+    <div class="compare" id="s53"></div>
+    <div class="what">margin <b>לא משנה את הקופסה עצמה</b> – המסגרת נשארת באותו גודל. הוא מרחיק אותה <b>מהשכנות שלה</b>. כלל אצבע: רוצים אוויר בין הטקסט לקו? padding. רוצים אוויר בין שתי קופסאות? margin.</div>
+  </article>
+  <article class="spread">
+    <h3><span class="sn">5.4</span>כל השכבות יחד – מעבדה</h3>
+    <p>מבפנים החוצה: <b>תוכן</b> ← <b>padding</b> ← <b>border</b> (המסגרת עצמה) ← <b>margin</b>. הזיזו כל פס לבד, ושימו לב מה זז ומה לא.</p>
+    <div class="ctrls"><div class="seg" id="s54view"></div></div>
+    <div class="split" style="margin-top:0">
+      <div class="pane">
+        <div class="sliders">
+          <label for="rM">margin</label><input type="range" id="rM" min="0" max="40" value="10" /><output id="oM">10px</output>
+          <label for="rB">border</label><input type="range" id="rB" min="0" max="12" value="3" /><output id="oB">3px</output>
+          <label for="rP">padding</label><input type="range" id="rP" min="0" max="40" value="12" /><output id="oP">12px</output>
+        </div>
+        <div class="pane-h" style="margin-top:10px"><span class="dot"></span>HTML</div>
+        <pre class="cv" id="boxCode"></pre>
+      </div>
+      <div class="pane">
+        <div class="pane-h"><span class="dot"></span>מה רואים בדפדפן</div>
+        <div class="boxstage" id="boxStage"></div>
+        <div class="legend">
+          <span style="--sw:var(--c)">תוכן</span><span style="--sw:var(--pd)">padding</span>
+          <span style="--sw:var(--b)">border</span><span style="--sw:var(--m)">margin</span>
+        </div>
+      </div>
+    </div>
+    <div class="what" id="boxHint">הזיזו פס אחד ושימו לב מה משתנה.</div>
+  </article>
+  <article class="spread">
+    <h3><span class="sn">5.5</span>לראות את הקופסה באתר אמיתי: F12</h3>
+    <p>בכל דפדפן יש <b>כלי מפתחים</b> (Developer Tools). הם מראים את הקופסה של כל תגית – באותם צבעים של המעבדה.</p>
     <ol>
-      <li>תגית <code>link</code> נמצאת בתוך ה-head.</li>
-      <li>הנתיב מתחיל בעלייה תיקייה (שתי נקודות ולוכסן), כי הדף בתיקייה HTML.</li>
-      <li>יש בה <code>rel</code> עם הערך stylesheet.</li>
-      <li>שם המאפיין כתוב נכון – <code>height</code> ולא hight. טעות כתיב לא מציגה שגיאה, היא פשוט לא עובדת.</li>
-      <li>שמרתם (Ctrl+S) ורעננתם (F5).</li>
+      <li>לחצו <b>F12</b> (או Ctrl+Shift+I).</li>
+      <li>לחצו על סמל החץ בפינה של חלון הכלים ("בחירת אלמנט"), ואז על כותרת כלשהי בדף.</li>
+      <li>בלשונית <b>Styles</b> גללו למטה עד הריבועים הצבעוניים:</li>
     </ol>
-  </section>
+    <div class="dt" aria-hidden="true">
+      <div style="background:var(--m)"><span class="l">margin</span>
+        <div style="background:var(--b)"><span class="l">border</span>
+          <div style="background:var(--pd)"><span class="l">padding</span>
+            <div style="background:var(--c)">content</div>
+          </div></div></div>
+    </div>
+    <div class="tip">💡 נסו עכשיו, על הדף הזה עצמו: לחצו F12 ובחרו את הכותרת של פרק 5. כל מה שאתם רואים כאן מעוצב ב-CSS. אפשר אפילו לשנות שם ערך ולראות מה קורה – זה זמני, ונעלם ברענון.</div>
+  </article>
+</section>
 
-  <section id="try">
-    <h2>🛠 נסו עכשיו <span class="tag">5 דקות · נבדק אוטומטית</span></h2>
-    <p>כאן אפשר לכתוב קוד ולראות אותו חי. בצעו את המשימות למטה – הדף בודק לבד, וכשמשימה מצליחה היא נצבעת בירוק ✔. אחר כך עשו את אותו דבר אצלכם ב-Visual Studio.</p>
+<!-- ============ 6 ============ -->
+<section class="chapter" id="c6" data-title="עיצוב במקום אחד">
+  <header><span class="num">6</span><div><h2>עיצוב במקום אחד: כלל CSS</h2><div class="sub">Internal – תגית style בראש הדף</div></div></header>
+  <article class="spread">
+    <h3><span class="sn">6.1</span>הבעיה עם style בתוך התגית</h3>
+    <p>בתפריט יש שתי מנות במבצע, ורוצים לצבוע את שתיהן באדום. עם מה שלמדנו עד עכשיו – כותבים אותו דבר פעמיים:</p>
+    <div id="s61"></div>
+    <div class="what">עכשיו דמיינו 8 מנות במבצע – 8 פעמים אותה הוראה. מחר מחליטים על כתום? מתקנים 8 מקומות, ובטוח שוכחים אחד. ובאתר עם 10 דפים? הצרה רק גדלה. <b>הפתרון:</b> לכתוב את העיצוב <b>פעם אחת</b>, ולהגיד לדפדפן <b>על מי</b> הוא חל.</div>
+  </article>
+  <article class="spread">
+    <h3><span class="sn">6.2</span>כלל CSS: "על מי" + "מה לעשות"</h3>
+    <p>במקום style בתוך כל תגית, כותבים <b>כללים</b> (rules) בתוך תגית <code>&lt;style&gt;</code> אחת, ב-head של הדף. כל כלל עונה על שתי שאלות:</p>
+    <div class="anat">
+      <div class="tok" style="--tc:#f9a8d4"><code>h1</code><span><b>בורר (selector)</b>על מי הכלל חל</span></div>
+      <div class="tok" style="--tc:#cbd5e1"><code>{</code><span><b>פותח</b></span></div>
+      <div class="tok" style="--tc:#86efac"><code>color: red;</code><span><b>הוראות</b>מה לעשות להן – בדיוק כמו בפרק 2</span></div>
+      <div class="tok" style="--tc:#cbd5e1"><code>}</code><span><b>סוגר</b></span></div>
+    </div>
+    <p>הכלל הזה אומר: "<b>כל</b> תגיות h1 בדף – צבע אדום". וכך זה נראה בתוך הדף:</p>
+    <div class="codeblock"><button class="copy" type="button">העתקה</button><pre class="cv" id="s62code"></pre></div>
+    <div class="bridge">הסוגריים המסולסלים עובדים כמו ב-C#: הם תוחמים בלוק. ב-C# הבלוק שייך לפעולה או ל-if; כאן הוא שייך לבורר. ובתוך הבלוק – ההוראות מפרק 2, בלי שום שינוי.</div>
+  </article>
+</section>
+
+<!-- ============ 7 ============ -->
+<section class="chapter" id="c7" data-title="בוררים">
+  <header><span class="num">7</span><div><h2>בוררים: איך מסמנים על מי לעבוד</h2><div class="sub">הלב של השיעור – לאט, צעד אחר צעד</div></div></header>
+  <article class="spread">
+    <h3><span class="sn">7.1</span>בורר של שם תגית</h3>
+    <p>הבורר הכי פשוט הוא <b>שם של תגית</b>. הכלל <code>p { color: blue; }</code> אומר "כל תגיות p – בכחול". הסתכלו בקוד ה-HTML וספרו כמה תגיות p יש בו.</p>
+    <div class="predict" id="p71"></div>
+    <div id="s71"></div>
+    <div class="what" id="s71what" hidden>בורר של שם תגית תופס <b>את כל</b> התגיות מהסוג הזה בדף – בכל מקום. השורות שנבחרו מסומנות באדום גם בקוד וגם בתוצאה (העבירו את העכבר על שורה בקוד – והתגית שלה תסומן). זה מצוין לעיצוב כללי, אבל מה אם רוצים לצבוע <b>רק</b> את המנות במבצע? צריך לתת להן שם.</div>
+  </article>
+
+  <article class="spread">
+    <h3><span class="sn">7.2</span>class – שם לקבוצה</h3>
+    <p><code>class</code> הוא מאפיין שמוסיפים לתגית ב-HTML – בדיוק כמו href או style. הערך שלו הוא <b>שם שאתם ממציאים</b> (באנגלית, בלי רווחים). כל התגיות שמקבלות את אותו שם – הן קבוצה אחת.</p>
+    <div class="bridge">דמיינו שיעור ספורט: "כל מי שלובש חולצה אדומה – לקבוצה הזו". ב-HTML, <code>class="sale"</code> הוא החולצה שמלבישים על תגית. ב-CSS, <code>.sale</code> פירושו "כל מי שלובש את החולצה sale". <b>הנקודה</b> לפני השם אומרת לדפדפן: "זה שם של class".</div>
+    <p><b>שלב א':</b> מלבישים את החולצה – מוסיפים class לשתי המנות במבצע. <b>שלב ב':</b> כותבים כלל שמשתמש בה.</p>
+    <div class="ctrls"><div class="seg" id="s72seg"></div></div>
+    <div id="s72"></div>
+    <div class="predict" id="p72"></div>
+    <div class="what" id="s72what" hidden>בשלב א' לא קרה כלום במראה – <b>class הוא רק שם</b>. רק כשכתבנו כלל עם <code>.sale</code>, הדפדפן חיפש את כל מי שקיבל את השם הזה – ומצא בדיוק שתיים. רוצים מנה שלישית במבצע? מוסיפים לה <code>class="sale"</code> וזהו – בלי לגעת ב-CSS.</div>
+    <div class="trap">שוכחים את הנקודה: <code>sale { … }</code> בלי נקודה מחפש <b>תגית</b> בשם sale – ואין כזו. לא נבחר כלום, ואין הודעת שגיאה. <button class="btn" id="s72nodot" type="button" style="margin-top:6px">🔨 תראו לי</button></div>
+  </article>
+
+  <article class="spread">
+    <h3><span class="sn">7.3</span>id – שם לתגית אחת בלבד</h3>
+    <p>גם <code>id</code> הוא מאפיין שמוסיפים ב-HTML. ההבדל: id הוא <b>מזהה ייחודי</b> – רק תגית אחת בכל הדף יכולה לקבל את השם הזה. ב-CSS כותבים <b>סולמית</b> לפני השם: <code>#logo</code>.</p>
+    <div class="bridge">class הוא כמו חולצת קבוצה – הרבה ילדים לובשים אותה. id הוא כמו מספר תעודת זהות – יש רק אדם אחד עם המספר הזה. ב-C# זה כמו ההבדל בין סוג (כמה משתנים מאותו סוג) לבין שם של משתנה (אחד ויחיד).</div>
+    <div id="s73"></div>
+    <table>
+      <tr><th></th><th>כותבים ב-HTML</th><th>כותבים ב-CSS</th><th>לכמה תגיות?</th></tr>
+      <tr><td><b>class</b></td><td><code>class="sale"</code></td><td><code>.sale</code> (נקודה)</td><td>כמה שרוצים</td></tr>
+      <tr><td><b>id</b></td><td><code>id="logo"</code></td><td><code>#logo</code> (סולמית)</td><td>אחת בלבד</td></tr>
+    </table>
+    <div class="predict" id="p73"></div>
+  </article>
+
+  <article class="spread">
+    <h3><span class="sn">7.4</span>פסיק: כמה בוררים באותו כלל</h3>
+    <p>רוצים לתת לכל הכותרות – גם h1 וגם h2 – את אותו צבע? במקום שני כללים, כותבים את שני הבוררים עם <b>פסיק</b> ביניהם. הפסיק פירושו "<b>וגם</b>".</p>
+    <div id="s74"></div>
+    <div class="what">הכלל חל על כל h1 <b>וגם</b> על כל h2 – בדיוק כאילו כתבנו שני כללים נפרדים, רק קצר יותר. (שימו לב שבדף יש עכשיו שתי כותרות h2 – אחת לתפריט ואחת לתוספות.)</div>
+  </article>
+
+  <article class="spread">
+    <h3><span class="sn">7.5</span>עץ המשפחה של הדף</h3>
+    <p>בשיעור 2 ראיתם שתגית יכולה להיות <b>בתוך</b> תגית אחרת (קינון – nesting). לתגיות שבתוך תגיות קוראים בשמות של משפחה:</p>
+    <ul>
+      <li><b>הורה (parent)</b> – התגית שעוטפת.</li>
+      <li><b>ילד (child)</b> – תגית שנמצאת <b>ישירות</b> בתוך ההורה, שכבה אחת פנימה.</li>
+      <li><b>צאצא (descendant)</b> – כל תגית שנמצאת בפנים, <b>בכל עומק</b>: ילדים, נכדים ונינים.</li>
+    </ul>
+    <p>נתנו לשתי הקופסאות שמות: התפריט קיבל <code>class="menu"</code>, וקופסת התוספות שבתוכו קיבלה <code>class="extras"</code>. הנה עץ המשפחה של התפריט, ולידו הקוד. העבירו את העכבר על תגית בעץ – והשורה שלה תסומן בקוד:</p>
+    <div class="split">
+      <div class="pane"><div class="pane-h"><span class="dot"></span>עץ המשפחה של התפריט</div><div class="tree" id="s75tree"></div></div>
+      <div class="pane"><div class="pane-h"><span class="dot"></span>HTML</div><pre class="cv" id="s75code"></pre></div>
+    </div>
+    <div class="bridge">ההזחה (indentation) בקוד היא בדיוק עץ המשפחה: כל רמת הזחה = דור אחד פנימה. לכן מקפידים על הזחה מסודרת – היא מראה מי בתוך מי. זה כמו בלוקים מקוננים ב-C#: לולאה בתוך if בתוך פעולה.</div>
+  </article>
+
+  <article class="spread">
+    <h3><span class="sn">7.6</span>רווח מול גדול-מ: צאצאים או רק ילדים</h3>
+    <p>עכשיו אפשר לבחור תגיות <b>לפי המקום שלהן</b> במשפחה:</p>
+    <ul>
+      <li><code>.menu p</code> (עם <b>רווח</b>) – כל p שנמצא איפשהו בתוך menu: ילדים <b>וגם</b> נכדים.</li>
+      <li><code>.menu > p</code> (עם <b>&gt;</b>) – רק p שהוא <b>ילד ישיר</b> של menu.</li>
+    </ul>
+    <div class="predict" id="p76"></div>
+    <div class="ctrls"><div class="seg" id="s76seg"></div></div>
+    <div class="tree" id="s76tree"></div>
+    <div id="s76"></div>
+    <div class="what" id="s76what" hidden>ההבדל היחיד הוא "גבינה". היא נמצאת בתוך extras, ו-extras נמצאת בתוך menu – כלומר היא <b>נכדה</b> של menu. הרווח תופס אותה (צאצא), וה-&gt; לא (לא ילדה ישירה).</div>
+    <div class="tip">💡 במצגת הסימן מופיע הפוך (<code>&lt;</code>). הנכון הוא <code>&gt;</code> – "גדול מ", כמו חץ שמצביע מההורה אל הילד.</div>
+  </article>
+
+  <article class="spread">
+    <h3><span class="sn">7.7</span>מצבים: hover ועוד</h3>
+    <p>אפשר לעצב תגית <b>רק כשהיא במצב מסוים</b> – למשל כשהעכבר עליה. כותבים נקודתיים ואת שם המצב. לזה קוראים <b>pseudo-class</b>. העבירו את העכבר על הכפתור בתוצאה:</p>
+    <div id="s77"></div>
+    <div class="what">הכלל הראשון חל על הכפתור תמיד. הכלל השני – עם <code>:hover</code> – חל <b>רק</b> כשהעכבר מעליו. עוד מצבים שימושיים: <code>:focus</code> (שדה שלוחצים עליו כדי להקליד – יהיה חשוב בטפסים) ו-<code>:visited</code> (קישור שכבר ביקרתם בו).</div>
+    <details><summary>להרחבה: pseudo-element – לעצב רק חלק מתגית</summary>
+      <p>עם <b>שני</b> נקודתיים מעצבים חלק מתוך תגית. למשל <code>p::first-letter</code> מעצב רק את האות הראשונה של כל פסקה, ו-<code>p::first-line</code> רק את השורה הראשונה.</p>
+    </details>
+  </article>
+
+  <article class="spread">
+    <h3><span class="sn">7.8</span>🔬 מעבדת בוררים: עכשיו תורכם</h3>
+    <p>זה כל הדף של פיצה דני. בחרו אתגר, וכתבו בתיבה בורר שבוחר <b>בדיוק</b> את מה שמבקשים. התגיות שהבורר שלכם בוחר יסומנו באדום – גם בקוד וגם בתוצאה.</p>
+    <ul class="chal" id="chal"></ul>
+    <div class="sel-input"><input id="selInput" aria-label="כתבו בורר CSS" spellcheck="false" autocomplete="off" placeholder="למשל: p" /></div>
+    <div id="s78"></div>
+  </article>
+</section>
+
+<!-- ============ 8 ============ -->
+<section class="chapter" id="c8" data-title="קובץ חיצוני">
+  <header><span class="num">8</span><div><h2>קובץ CSS חיצוני: עיצוב אחד לכל האתר</h2><div class="sub">External – השיטה שבה תעבדו בפרויקט</div></div></header>
+  <article class="spread">
+    <h3><span class="sn">8.1</span>למה קובץ נפרד?</h3>
+    <p>תגית style ב-head פותרת את החזרות <b>בתוך דף אחד</b>. אבל לאתר יש הרבה דפים. אם בכל דף יש style משלו – שוב צריך לתקן בכל דף. הפתרון: לכתוב את כל הכללים <b>בקובץ אחד</b> עם סיומת css, ולחבר אליו את כל הדפים.</p>
+    <p>כאן יש שלושה דפים שמחוברים לאותו קובץ. שנו את הצבע בקובץ – ושימו לב מה קורה:</p>
+    <div class="ctrls"><span class="lbl">צבע הכותרת h1 בקובץ style.css:</span><div class="seg" id="s81c"></div></div>
+    <div class="split" style="grid-template-columns:minmax(0,1fr) minmax(0,2fr)">
+      <div class="pane"><div class="pane-h"><span class="dot"></span>css/style.css</div><pre class="cv" id="s81code"></pre></div>
+      <div class="pane"><div class="pane-h"><span class="dot"></span>שלושה דפים באתר</div><div class="minis" id="s81minis"></div></div>
+    </div>
+    <div class="what">שיניתם <b>מקום אחד</b> – ו<b>כל הדפים</b> השתנו יחד. זה בדיוק מה שהמחוון בהגשה בודק: שהאתר נראה <b>אחיד</b>. לכן בפרויקט כל העיצוב יהיה בקובץ אחד.</div>
+  </article>
+  <article class="spread">
+    <h3><span class="sn">8.2</span>יוצרים את הקובץ ב-Visual Studio</h3>
+    <ol>
+      <li>ב-Solution Explorer, בתוך <b>wwwroot</b>, כבר יש תיקייה בשם <b>css</b>.</li>
+      <li>קליק ימני עליה ← Add ← New Item.</li>
+      <li>מחפשים <b>Style Sheet</b>, נותנים שם (למשל style.css) ← Add.</li>
+    </ol>
+    <p>בתוך הקובץ כותבים <b>רק כללים</b> – בלי תגית style ובלי שום HTML:</p>
+    <div class="codeblock"><button class="copy" type="button">העתקה</button><pre class="cv" id="s82code"></pre></div>
+    <div class="trap">כותבים בתוך קובץ ה-css גם <code>&lt;style&gt;</code>. זה HTML, והוא לא שייך לקובץ CSS – הדפדפן יתבלבל ויתעלם מהכלל הראשון.</div>
+  </article>
+  <article class="spread">
+    <h3><span class="sn">8.3</span>מחברים את הדף לקובץ: תגית link</h3>
+    <p>בכל דף, בתוך ה-head, מוסיפים שורה אחת:</p>
+    <div class="codeblock"><button class="copy" type="button">העתקה</button><pre class="cv" id="s83code"></pre></div>
+    <p><code>rel="stylesheet"</code> אומר "זה קובץ עיצוב". <code>href</code> אומר <b>איפה</b> הקובץ – והחלק הזה מבלבל, אז בואו נלך בדרך צעד אחר צעד. הדף שלנו נמצא בתיקייה HTML, והקובץ בתיקייה css:</p>
+    <div class="walk">
+      <div class="ftree" id="ftree"></div>
+      <div>
+        <div class="pathbox" id="pathbox"></div>
+        <p id="walkTxt" style="min-height:3.5em"></p>
+        <div class="ctrls"><button class="btn primary" id="walkNext" type="button">הצעד הבא ←</button><button class="btn" id="walkReset" type="button">↺ מההתחלה</button></div>
+      </div>
+    </div>
+    <div class="bridge">זה אותו נתיב יחסי שהשתמשתם בו לתמונות בשיעור 2: <code>../Img/pic.jpg</code>. שתי נקודות = "עלו תיקייה אחת למעלה".</div>
+  </article>
+  <article class="spread">
+    <h3><span class="sn">8.4</span>⚠ כתבתי CSS והדף לא משתנה!</h3>
+    <p>זו התקלה הכי נפוצה בשיעור. בודקים לפי הסדר:</p>
+    <ol>
+      <li>תגית <code>link</code> נמצאת בתוך ה-head?</li>
+      <li>הנתיב נכון? מתחיל ב-<code>../</code> כי הדף בתיקייה HTML, ושם התיקייה css כתוב בדיוק כמו ב-Solution Explorer?</li>
+      <li>יש <code>rel="stylesheet"</code>?</li>
+      <li>הבורר נכון? נקודה ל-class, סולמית ל-id, והשם זהה לשם ב-HTML?</li>
+      <li>שם המאפיין כתוב נכון? (height ולא hight)</li>
+      <li>שמרתם (Ctrl+S) ורעננתם (Ctrl+F5 – רענון מלא)?</li>
+    </ol>
+    <div class="tip">💡 F12 עוזר כאן: בלשונית Console תראו שגיאה אדומה אם הקובץ לא נמצא (404), ובלשונית Styles תראו אם הכלל שלכם בכלל הגיע לתגית.</div>
+  </article>
+</section>
+
+<!-- ============ 9 ============ -->
+<section class="chapter" id="c9" data-title="מי מנצח?">
+  <header><span class="num">9</span><div><h2>מי מנצח כשכללים מתווכחים?</h2><div class="sub">סדר קדימויות</div></div></header>
+  <article class="spread">
+    <h3><span class="sn">9.1</span>שני כללים, תגית אחת</h3>
+    <p>לפעמים כמה כללים רוצים לצבוע את <b>אותה תגית</b> בצבעים שונים. לדוגמה, לפסקה הזו יש גם class וגם id:</p>
+    <div class="codeblock"><pre class="cv" id="s91code"></pre></div>
+    <p>הדפדפן מחליט לפי סדר הכוח הזה – מהחזק לחלש:</p>
+    <ol class="ladder">
+      <li><b>Inline</b> – style בתוך התגית עצמה</li>
+      <li><b>id</b> – בורר עם סולמית</li>
+      <li><b>class</b> – בורר עם נקודה</li>
+      <li><b>שם תגית</b> – בורר כמו p</li>
+    </ol>
+    <p>ואם שני כללים <b>שווים בכוח</b> (למשל שני כללי class)? מנצח <b>זה שנכתב אחרון</b>.</p>
+    <div class="bridge">ככל שהבורר <b>מדויק יותר</b>, הוא חזק יותר. "כל הפסקאות" (p) הוא כללי מאוד. "הקבוצה note" מדויק יותר. "התגית האחת msg" (id) – הכי מדויק. הגיוני: מי שכיוון בדיוק לתגית הזו כנראה התכוון אליה.</div>
+    <div class="predict" id="p91"></div>
+    <p>עכשיו נסו בעצמכם: סמנו אילו כללים קיימים, וראו מי מנצח ולמה.</p>
+    <div class="split">
+      <div class="pane rules" id="rules"></div>
+      <div class="pane"><div id="specHost"></div><p id="specWhy" class="res-note"></p></div>
+    </div>
+  </article>
+  <article class="spread">
+    <h3><span class="sn">9.2</span>ירושה: מה עובר מהורה לילדים</h3>
+    <p>חלק מהמאפיינים <b>עוברים בירושה</b> מההורה לכל הצאצאים שלו – כמו שילדים יורשים שם משפחה. לחצו והשוו:</p>
+    <div class="ctrls"><div class="seg" id="s92seg"></div></div>
+    <div id="s92"></div>
+    <div class="what" id="s92what"></div>
+    <div class="tip">💡 במצגת כתוב שזו המשמעות של המילה cascading. זה לא מדויק: cascading הוא בעצם סדר הקדימויות מ-9.1 (מי מנצח), והירושה היא נושא נפרד.</div>
+  </article>
+</section>
+
+<!-- ============ 10 ============ -->
+<section class="chapter" id="c10" data-title="הערות">
+  <header><span class="num">10</span><div><h2>הערות ב-CSS</h2><div class="sub">טקסט שהדפדפן מדלג עליו</div></div></header>
+  <article class="spread">
+    <h3><span class="sn">10.1</span>להסביר, ולכבות לרגע</h3>
+    <p>ב-CSS כותבים הערה בין <code>/*</code> ל-<code>*/</code>. הדפדפן מדלג עליה. משתמשים בזה לשני דברים: להסביר את הקוד, ו<b>לכבות הוראה לרגע</b> בלי למחוק אותה – כדי לבדוק מה היא עושה.</p>
+    <div class="ctrls"><div class="seg" id="s101seg"></div></div>
+    <div id="s101"></div>
+    <div class="bridge">ב-C# כתבתם הערות עם <code>//</code>. ב-CSS <b>אין</b> <code>//</code> – רק <code>/* */</code>. ב-HTML, כזכור משיעור 2: <code>&lt;!-- --&gt;</code>. ב-Visual Studio, Ctrl+K ואז Ctrl+C הופך שורה להערה בכל השפות.</div>
+  </article>
+</section>
+
+<!-- ============ practice ============ -->
+<section class="chapter" id="c11" data-title="נסו עכשיו">
+  <header><span class="num">🛠</span><div><h2>נסו עכשיו</h2><div class="sub">כותבים בעצמכם – הדף בודק לבד</div></div></header>
+  <article class="spread">
+    <p>זה הדף של פיצה דני, עם קובץ CSS. בצעו את המשימות לפי הסדר – כשמשימה מצליחה, היא נצבעת בירוק ✔. אחר כך עשו את אותו דבר אצלכם ב-Visual Studio.</p>
     <div class="pg">
       <div class="editor">
-        <span class="lbl">HTML – הקובץ css-test.html</span>
+        <span class="lbl">HTML – menu.html</span>
         <textarea id="edHtml" spellcheck="false" aria-label="עורך HTML"></textarea>
-        <span class="lbl">CSS – הקובץ style.css</span>
+        <span class="lbl">CSS – style.css</span>
         <textarea id="edCss" spellcheck="false" aria-label="עורך CSS"></textarea>
-        <div style="display:flex;gap:8px"><button class="btn" id="resetPg" type="button">↺ התחלה מחדש</button></div>
+        <div><button class="btn" id="resetPg" type="button">↺ התחלה מחדש</button></div>
       </div>
       <iframe class="preview" id="preview" title="תצוגה חיה" sandbox="allow-same-origin"></iframe>
     </div>
     <ul class="tasks" id="tasks"></ul>
-  </section>
+  </article>
+</section>
 
-  <section id="step">
-    <h2>🧩 צעד בפרויקט</h2>
-    <div class="step">
+<section class="chapter" id="c12" data-title="צעד בפרויקט">
+  <header><span class="num">🧩</span><div><h2>צעד בפרויקט</h2><div class="sub">מתקדמים לקראת הגשה 1</div></div></header>
+  <article class="spread">
+    <div class="stepbox">
       <b>בונים את קובץ העיצוב של האתר שלכם:</b>
       <ol>
-        <li>בתיקייה css צרו קובץ חדש: קליק ימני ← Add ← New Item ← Style Sheet ← השם site-style.css.</li>
-        <li>חברו אותו בתגית link לדף הנחיתה ולדף התוכן הראשון.</li>
-        <li>קבעו בו: צבע רקע, גופן, צבע לכותרות, ו-class אחד לקופסת תוכן שתשתמשו בו בכל דפי התוכן.</li>
+        <li>בתיקייה css צרו קובץ חדש: קליק ימני ← Add ← New Item ← Style Sheet, בשם site-style.css.</li>
+        <li>חברו אותו עם תגית link לדף הנחיתה ולדף התוכן הראשון שלכם.</li>
+        <li>כתבו בו: גופן וצבע רקע ל-body, צבע לכותרות h1 ו-h2, ו-class אחד בשם box לקופסת תוכן (עם padding, border ו-margin).</li>
+        <li>הוסיפו <code>class="box"</code> לפחות לשתי קופסאות תוכן, בשני דפים שונים.</li>
         <li>מעכשיו – בלי style בתוך התגיות. כל העיצוב בקובץ אחד.</li>
       </ol>
       <label style="display:flex;gap:8px;align-items:center;margin-top:8px"><input type="checkbox" id="stepDone" /> עשיתי את הצעד בפרויקט שלי</label>
     </div>
-  </section>
+  </article>
+</section>
 
-  <section id="check">
-    <h2>✅ בדקו את עצמכם</h2>
-    <details><summary>יש לכם 10 דפי תוכן. למה עדיף קובץ CSS חיצוני אחד על פני style בכל דף?</summary><p>כי משנים במקום אחד וכל הדפים מתעדכנים יחד – וכל הדפים נראים אחידים, בדיוק מה שהמחוון בודק.</p></details>
-    <details><summary>הגדלתם padding. הכרטיס גדל או רק התרחק מהשכנים?</summary><p>גדל. padding הוא רווח <b>בתוך</b> המסגרת. כדי להרחיק בלי להגדיל – משנים margin.</p></details>
-    <details><summary>לתגית יש גם class וגם id, ולכל אחד כלל עם צבע אחר. איזה צבע ינצח?</summary><p>הצבע של כלל ה-id, כי id ספציפי יותר מ-class – לא משנה איזה נכתב קודם.</p></details>
-  </section>
+<section class="chapter" id="c13" data-title="בדקו את עצמכם">
+  <header><span class="num">✅</span><div><h2>בדקו את עצמכם</h2><div class="sub">5 שאלות. טעיתם? ההסבר יגיד למה – ונסו שוב.</div></div></header>
+  <article class="spread" id="quiz"></article>
+</section>
 </main>
-<footer>בניית אתרים · המדריך המעשי · שיעור 3 – CSS</footer>
+<footer>בניית אתרים · המדריך המעשי · שיעור 3 – CSS · יוחאי פרץ</footer>
 
 <script>
 (function(){
-  "use strict";
-  const $ = s => document.querySelector(s);
-  const store = {
-    get(k){ try { return JSON.parse(localStorage.getItem('guide-css-'+k)); } catch(e){ return null; } },
-    set(k,v){ try { localStorage.setItem('guide-css-'+k, JSON.stringify(v)); } catch(e){} }
-  };
+"use strict";
+const $ = s => document.querySelector(s);
+const store = {
+  get(k){ try { return JSON.parse(localStorage.getItem('css3-'+k)); } catch(e){ return null; } },
+  set(k,v){ try { localStorage.setItem('css3-'+k, JSON.stringify(v)); } catch(e){} }
+};
+const state = store.get('state') || {};
+const save = () => { store.set('state', state); paintProgress(); };
 
-  /* theme */
-  const savedTheme = store.get('theme'); if (savedTheme) document.documentElement.dataset.theme = savedTheme;
-  $('#themeBtn').addEventListener('click', () => {
-    const dark = document.documentElement.dataset.theme ? document.documentElement.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
-    const next = dark ? 'light' : 'dark'; document.documentElement.dataset.theme = next; store.set('theme', next);
+/* ---------- theme ---------- */
+const savedTheme = store.get('theme'); if (savedTheme) document.documentElement.dataset.theme = savedTheme;
+$('#themeBtn').addEventListener('click', () => {
+  const cur = document.documentElement.dataset.theme;
+  const dark = cur ? cur === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+  const next = dark ? 'light' : 'dark'; document.documentElement.dataset.theme = next; store.set('theme', next);
+});
+
+/* ---------- syntax highlight ---------- */
+const HE = /[֐-׿]/;
+const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+function hlHtmlLine(line){
+  const cont = !line.includes('<') && line.match(/^(\s+)([a-z-]+:[^"]*)("?\s*\/?>?)$/);
+  if (cont) return cont[1] + '<span class="t-str">' + esc(cont[2]) + '</span>' + '<span class="t-str">' + esc(cont[3].replace(/\s*\/?>$/, '')) + '</span>' + esc(cont[3].replace(/^"?/, ''));
+  let out = ''; const re = /<!--[\s\S]*?-->|<[^>]*>?|[^<]+/g; let m;
+  while ((m = re.exec(line))) {
+    const t = m[0];
+    if (t.startsWith('<!--')) out += '<span class="t-cm">' + esc(t) + '</span>';
+    else if (t[0] === '<') {
+      let e = esc(t);
+      e = e.replace(/([a-zA-Z-]+)=(&quot;|")([^"]*)"/g, (x, an, q, av) => '<span class="t-attr">' + an + '</span>=<span class="t-str">"' + av + '"</span>');
+      e = e.replace(/ ([a-zA-Z-]+)="([^"]*)$/, (x, an, av) => ' <span class="t-attr">' + an + '</span>=<span class="t-str">"' + av + '</span>');
+      e = e.replace(/^(&lt;\/?)([a-zA-Z0-9!]+)/, '$1<span class="t-tag">$2</span>');
+      out += e;
+    } else out += HE.test(t) ? t.replace(/^(\s*)(.*?)(\s*)$/, (x,a,b,c) => a + '<span class="he">' + esc(b) + '</span>' + c) : esc(t);
+  }
+  return out;
+}
+function hlCssLine(line){
+  if (/\/\*/.test(line)) return '<span class="t-cm">' + esc(line) + '</span>';
+  if (line.includes('{')) { const i = line.indexOf('{'); return '<span class="t-sel">' + esc(line.slice(0,i)) + '</span>' + esc(line.slice(i)); }
+  const m = line.match(/^(\s*)([a-zA-Z-]+)(\s*:\s*)([^;]*)(;?)(.*)$/);
+  if (m) return m[1] + '<span class="t-prop">' + m[2] + '</span>' + esc(m[3]) + '<span class="t-val">' + esc(m[4]) + '</span>' + m[5] + esc(m[6]);
+  return esc(line);
+}
+const hlHtml = src => src.split('\n').map(hlHtmlLine).join('\n');
+const hlCss = src => src.split('\n').map(hlCssLine).join('\n');
+function codeLines(pre, src, kind, marks){
+  marks = marks || {};
+  const f = kind === 'css' ? hlCssLine : hlHtmlLine;
+  pre.innerHTML = src.split('\n').map((l,i) => '<span class="ln' + (marks[i] ? ' ' + marks[i] : '') + '" data-i="' + i + '">' + (f(l) || ' ') + '</span>').join('');
+}
+document.querySelectorAll('.codeblock .copy').forEach(b => b.addEventListener('click', async () => {
+  const t = b.parentElement.querySelector('pre').innerText;
+  try { await navigator.clipboard.writeText(t); b.textContent = 'הועתק ✔'; } catch(e){ b.textContent = 'סמנו והעתיקו'; }
+  setTimeout(() => b.textContent = 'העתקה', 1500);
+}));
+
+/* ---------- live stage (shadow DOM = isolated mini page) ---------- */
+const PIZZA_IMG = "data:image/svg+xml;utf8," + encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='47' fill='#e9a23b'/><circle cx='50' cy='50' r='40' fill='#d9472b'/><circle cx='50' cy='50' r='37' fill='#f6d365'/><circle cx='35' cy='38' r='6' fill='#c0392b'/><circle cx='63' cy='35' r='6' fill='#c0392b'/><circle cx='59' cy='63' r='6' fill='#c0392b'/><circle cx='36' cy='64' r='5' fill='#c0392b'/><circle cx='48' cy='50' r='3' fill='#2d6a2d'/><circle cx='71' cy='51' r='3' fill='#2d6a2d'/></svg>");
+const BASE_CSS = ':host{display:block}x-page{display:block;background:#fff;color:#111;padding:12px 16px;font-family:Rubik,Arial,sans-serif;font-size:16px;line-height:1.5;direction:rtl;min-height:40px}' +
+  '.hit{outline:3px solid #f43f5e!important;outline-offset:2px}.peek{outline:2px dashed #2f6fec;outline-offset:2px}' +
+  'x-page.boxes *{outline:2px dashed #f97316;outline-offset:-2px;background-color:rgba(249,115,22,.07)}x-page.boxes *::before{content:attr(data-tag);font:11px monospace;color:#c2410c;background:#fff7ed;padding:0 4px;margin-inline-end:6px;border-radius:3px}';
+function mapCss(css){ return css.replace(/(^|[\s,}])body(?=[\s,{:.])/g, '$1x-page'); }
+class Stage {
+  constructor(host){
+    this.root = host.attachShadow({mode:'open'});
+    this.root.innerHTML = '<style>' + BASE_CSS + '</style><style class="u"></style><x-page></x-page>';
+    this.page = this.root.querySelector('x-page'); this.u = this.root.querySelector('style.u');
+  }
+  html(src){ this.page.innerHTML = src.replace(/\.\.\/Img\/pizza\.jpg/g, PIZZA_IMG); return this; }
+  css(src){ this.u.textContent = mapCss(src || ''); return this; }
+  all(){ return [...this.page.querySelectorAll('*')]; }
+}
+/* Split: code (HTML [+CSS]) beside the live result, with line <-> element linking */
+class Split {
+  constructor(el, o){
+    o = o || {};
+    this.el = el; el.classList.add('split');
+    el.innerHTML = '<div class="pane"><div class="pane-h"><span class="dot"></span>' + (o.htmlTitle || 'HTML') + '</div><pre class="cv h"></pre>' +
+      '<div class="cssw" hidden><div class="pane-h"><span class="dot"></span>' + (o.cssTitle || 'CSS – בתוך תגית style') + '</div><pre class="cv c"></pre></div></div>' +
+      '<div class="pane"><div class="pane-h"><span class="dot"></span>מה רואים בדפדפן</div><div class="host"></div><div class="res-note"></div></div>';
+    this.hPre = el.querySelector('pre.h'); this.cPre = el.querySelector('pre.c'); this.cssw = el.querySelector('.cssw');
+    this.note = el.querySelector('.res-note');
+    this.stage = new Stage(el.querySelector('.host'));
+    this.hPre.addEventListener('mouseover', e => { const ln = e.target.closest('.ln'); this.peek(ln ? +ln.dataset.i : -1); });
+    this.hPre.addEventListener('mouseleave', () => this.peek(-1));
+    this.stage.page.addEventListener('mouseover', e => { const t = e.target.closest('[data-ln]'); this.peek(t ? +t.dataset.ln : -1); });
+    this.stage.page.addEventListener('mouseleave', () => this.peek(-1));
+  }
+  setHtml(src, marks){
+    this.src = src; codeLines(this.hPre, src, 'html', marks);
+    this.stage.html(src);
+    // k-th opening tag in the source <-> k-th element in document order
+    const lineOf = []; src.split('\n').forEach((l,i) => { const m = l.match(/<[a-zA-Z][a-zA-Z0-9]*/g); if (m) m.forEach(() => lineOf.push(i)); });
+    this.stage.all().forEach((e,k) => { e.dataset.ln = lineOf[k]; e.dataset.tag = e.tagName.toLowerCase(); });
+    return this;
+  }
+  setCss(css, marks){
+    this.cssSrc = css || '';
+    this.cssw.hidden = !css; if (css) codeLines(this.cPre, css, 'css', marks);
+    this.stage.css(css); return this;
+  }
+  peek(i){
+    this.hPre.querySelectorAll('.ln.peek').forEach(x => x.classList.remove('peek'));
+    this.stage.page.querySelectorAll('.peek').forEach(x => x.classList.remove('peek'));
+    if (i < 0) return;
+    const els = this.stage.all().filter(e => +e.dataset.ln === i);
+    if (!els.length) return;
+    els.forEach(e => e.classList.add('peek'));
+    const ln = this.hPre.querySelector('.ln[data-i="' + i + '"]'); if (ln) ln.classList.add('peek');
+  }
+  highlight(sel){
+    this.hPre.querySelectorAll('.ln.hit').forEach(x => x.classList.remove('hit'));
+    this.stage.page.querySelectorAll('.hit').forEach(x => x.classList.remove('hit'));
+    if (!sel) return [];
+    let list; try { list = [...this.stage.page.querySelectorAll(sel)]; } catch(e){ return null; }
+    list.forEach(e => { e.classList.add('hit'); const ln = this.hPre.querySelector('.ln[data-i="' + e.dataset.ln + '"]'); if (ln) ln.classList.add('hit'); });
+    return list;
+  }
+  say(html){ this.note.innerHTML = html || ''; }
+}
+
+/* ---------- small UI helpers ---------- */
+function seg(el, options, onPick, start){
+  el.innerHTML = ''; const btns = [];
+  options.forEach((o,i) => {
+    const b = document.createElement('button'); b.type = 'button'; b.innerHTML = o.label || o;
+    if (o.mono) b.className = 'chip';
+    b.addEventListener('click', () => pick(i)); el.appendChild(b); btns.push(b);
   });
-
-  /* copy buttons */
-  document.querySelectorAll('.codeblock .copy').forEach(b => b.addEventListener('click', async () => {
-    const t = b.parentElement.querySelector('pre').innerText;
-    try { await navigator.clipboard.writeText(t); b.textContent = 'הועתק ✔'; } catch(e){ b.textContent = 'סמנו והעתיקו'; }
-    setTimeout(() => b.textContent = 'העתקה', 1500);
-  }));
-
-  /* ---------- selector lab ---------- */
-  const presets = [
-    ['p', 'בורר תגית: כל הפסקאות בדף.'],
-    ['.note', 'בורר class (נקודה לפני השם): כל תגית עם class בשם note – גם פסקה וגם כותרת.'],
-    ['#logo', 'בורר id (סולמית לפני השם): התגית האחת עם id בשם logo. id הוא ייחודי – רק תגית אחת בדף.'],
-    ['h1, h2', 'כמה בוררים יחד, מופרדים בפסיק: כל h1 וכל h2.'],
-    ['.box p', 'צאצאים (רווח): כל p שנמצא איפשהו בתוך box – גם עמוק.'],
-    ['.box > p', 'ילדים ישירים (סימן גדול מ): רק p שנמצא ישירות בתוך box, בלי שכבה באמצע.'],
-    ['p.note', 'תגית עם class יחד, בלי רווח: רק p שיש לו class בשם note.']
-  ];
-  const chips = $('#selChips'), inp = $('#selInput'), stage = $('#selStage'), out = $('#selOut');
-  presets.forEach(([s]) => { const c = document.createElement('button'); c.type='button'; c.className='chip'; c.textContent=s; c.addEventListener('click', ()=>{ inp.value=s; runSel(); }); chips.appendChild(c); });
-  function runSel(){
-    stage.querySelectorAll('.hit').forEach(e => e.classList.remove('hit'));
-    const s = inp.value.trim();
-    chips.querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed', c.textContent === s));
-    if (!s) { out.innerHTML = 'כתבו בורר בתיבה.'; return; }
-    let list;
-    try { list = stage.querySelectorAll(s); } catch(e){ out.innerHTML = '<span class="err">הבורר הזה לא תקין. בדקו נקודה, סולמית ורווחים.</span>'; return; }
-    list.forEach(e => e.classList.add('hit'));
-    const p = presets.find(x => x[0] === s);
-    const cnt = '<div class="count">נבחרו: ' + list.length + '</div>';
-    out.innerHTML = cnt + (p ? '<p>' + p[1] + '</p>' : (list.length ? '' : '<p>הבורר תקין, אבל אף תגית בדף לא מתאימה לו.</p>'));
+  function pick(i){ btns.forEach((b,j) => b.setAttribute('aria-pressed', i === j)); onPick(options[i], i); }
+  pick(start || 0); return pick;
+}
+const predicts = [];
+function predict(el, o){
+  predicts.push(el.id);
+  if (o.quiz) el.classList.add('quiz');
+  el.innerHTML = '<div class="q">' + o.q + '</div><div class="opts"></div><div class="fb" hidden></div>';
+  const opts = el.querySelector('.opts'), fb = el.querySelector('.fb');
+  const bs = o.opts.map((t,i) => { const b = document.createElement('button'); b.type = 'button'; b.innerHTML = t; b.addEventListener('click', () => answer(i)); opts.appendChild(b); return b; });
+  function answer(i, silent){
+    const ok = i === o.correct;
+    bs[i].classList.add(ok ? 'right' : 'wrong');
+    fb.hidden = false; fb.className = 'fb ' + (ok ? 'right' : 'wrong');
+    fb.innerHTML = (ok ? '✔ נכון! ' : '✘ לא בדיוק. ') + (o.why[i] || '') + (ok ? '' : ' נסו שוב.');
+    if (ok) { el.classList.add('solved'); bs.forEach(b => b.disabled = true); if (!silent) { state[el.id] = true; save(); } if (o.onCorrect) o.onCorrect(); }
   }
-  inp.addEventListener('input', runSel); runSel();
+  if (state[el.id]) answer(o.correct, true);
+}
 
-  /* ---------- box model lab ---------- */
-  const rM = $('#rM'), rB = $('#rB'), rP = $('#rP'), boxStage = $('#boxStage');
-  for (let i = 0; i < 2; i++) boxStage.insertAdjacentHTML('beforeend', '<div class="mm"><div class="bb"><div class="pp"><div class="cc">כרטיס ' + (i+1) + '</div></div></div></div>');
-  let prev = {m:+rM.value, b:+rB.value, p:+rP.value};
-  function drawBox(){
-    const m = +rM.value, b = +rB.value, p = +rP.value;
-    boxStage.querySelectorAll('.mm').forEach(e => e.style.padding = m + 'px');
-    boxStage.querySelectorAll('.bb').forEach(e => e.style.borderWidth = b + 'px');
-    boxStage.querySelectorAll('.pp').forEach(e => e.style.padding = p + 'px');
-    $('#oM').value = m + 'px'; $('#oB').value = b + 'px'; $('#oP').value = p + 'px';
-    $('#boxCode').innerHTML = '<span class="k">.card</span> {\n    <span class="v">margin</span>: <span class="s">' + m + 'px</span>;\n    <span class="v">border</span>: <span class="s">' + b + 'px solid</span>;\n    <span class="v">padding</span>: <span class="s">' + p + 'px</span>;\n}';
-    let hint = 'הזיזו פס אחד ושימו לב מה משתנה.';
-    if (m !== prev.m) hint = 'שיניתם margin: הכרטיס עצמו לא גדל – רק הרווח בינו לבין השכן (הכתום).';
-    else if (p !== prev.p) hint = 'שיניתם padding: הכרטיס גדל מבפנים – התוכן מתרחק מהמסגרת (הירוק).';
-    else if (b !== prev.b) hint = 'שיניתם border: המסגרת מתעבה, והיא נמצאת בין הריפוד לשוליים.';
-    $('#boxHint').textContent = '💡 ' + hint; prev = {m,b,p};
-  }
-  [rM,rB,rP].forEach(r => r.addEventListener('input', drawBox)); drawBox();
-  const setView = plain => { boxStage.classList.toggle('plain', plain); $('#viewF12').setAttribute('aria-pressed', !plain); $('#viewPlain').setAttribute('aria-pressed', plain); };
-  $('#viewF12').addEventListener('click', () => setView(false)); $('#viewPlain').addEventListener('click', () => setView(true));
+/* ---------- the running example: Danny's pizza ---------- */
+const P0 = [
+'<h1>פיצה דני</h1>',
+'<p>הפיצה הכי טעימה באשקלון</p>',
+'<div>',
+'    <h2>התפריט</h2>',
+'    <p>מרגריטה – 45 שקל</p>',
+'    <p>פטריות – 39 שקל במבצע</p>',
+'    <p>זיתים – 39 שקל במבצע</p>',
+'</div>',
+'<p>הזמנות בטלפון בלבד</p>'].join('\n');
 
-  /* ---------- specificity lab ---------- */
-  const rules = [
-    {id:'tag', code:'p { color: blue; }', css:'p{color:#2563eb}', name:'כחול', why:'כלל לפי שם תגית – הכי כללי.'},
-    {id:'cls', code:'.note { color: green; }', css:'.note{color:#16a34a}', name:'ירוק', why:'כלל class – ספציפי יותר משם תגית.'},
-    {id:'idr', code:'#msg { color: red; }', css:'#msg{color:#dc2626}', name:'אדום', why:'כלל id – ספציפי יותר מ-class.'},
-    {id:'inl', code:'style="color: purple"', css:null, name:'סגול', why:'Inline – בתוך התגית עצמה. גובר על כל הכללים.'},
-    {id:'tag2', code:'p { color: orange; }', css:'p{color:#ea580c}', name:'כתום', why:'עוד כלל תגית, שנכתב אחרון. מול כלל התגית הראשון – הוא מנצח כי הוא אחרון.'}
-  ];
-  const rulesBox = $('#rules'), specP = $('#msg');
-  const specStyle = document.createElement('style'); document.head.appendChild(specStyle);
-  rules.forEach((r,i) => rulesBox.insertAdjacentHTML('beforeend', '<label><input type="checkbox" data-r="'+r.id+'" '+(i<2?'checked':'')+' /> <span class="ltr">'+r.code.replace(/</g,'&lt;')+'</span></label>'));
-  function runSpec(){
-    const on = id => rulesBox.querySelector('[data-r="'+id+'"]').checked;
-    specStyle.textContent = rules.filter(r => r.css && on(r.id)).map(r => '#specStage ' + r.css).join('\n');
-    if (on('inl')) specP.setAttribute('style','color:#7e22ce'); else specP.removeAttribute('style');
-    let w = null;
-    if (on('inl')) w = 'inl'; else if (on('idr')) w = 'idr'; else if (on('cls')) w = 'cls'; else if (on('tag2')) w = 'tag2'; else if (on('tag')) w = 'tag';
-    const r = rules.find(x => x.id === w);
-    $('#specWhy').innerHTML = r ? 'מנצח: <span class="winner">' + r.name + '</span>. ' + r.why : 'אין כללים – הדפדפן משתמש בברירת המחדל שלו (שחור).';
-  }
-  rulesBox.addEventListener('change', runSpec); runSpec();
+/* 1.1 with / without CSS */
+const s11 = new Split($('#s11')).setHtml(P0);
+const S11_CSS = ['body {','    font-family: Arial, sans-serif;','    background-color: #fff8ee;','}','h1 {','    color: #c0392b;','    text-align: center;','}','div {','    background-color: white;','    border: 2px solid #e67e22;','    border-radius: 12px;','    padding: 4px 20px;','}','h2 {','    color: #e67e22;','}'].join('\n');
+seg($('#s11seg'), ['בלי CSS', 'עם CSS'], (o,i) => s11.setCss(i ? S11_CSS : ''), 0);
 
-  /* ---------- playground with auto-checked tasks ---------- */
-  const START_HTML = '<div class="card">\n    <h2>כרטיס ראשון</h2>\n    <p>טקסט בתוך הכרטיס</p>\n</div>\n<div class="card">\n    <h2>כרטיס שני</h2>\n    <p>עוד טקסט <span>צבוע</span></p>\n</div>';
-  const START_CSS = 'body {\n    background-color: whitesmoke;\n    font-family: Arial, sans-serif;\n}\n\n.card {\n    background-color: white;\n    border: 2px solid steelblue;\n    padding: 20px;\n    margin: 15px;\n    text-align: center;\n}';
-  const edH = $('#edHtml'), edC = $('#edCss'), frame = $('#preview');
-  const tasks = [
-    {id:'t1', text:'שנו ב-CSS את ה-margin של card מ-15px ל-40px. (מה קורה לרווח בין הכרטיסים?)',
-     test: d => { const c = d.querySelector('.card'); return c && d.defaultView.getComputedStyle(c).marginTop === '40px'; }},
-    {id:'t2', text:'שנו את ה-padding של card ל-2px. (הטקסט נצמד למסגרת – והכרטיס מתכווץ.)',
-     test: d => { const c = d.querySelector('.card'); return c && d.defaultView.getComputedStyle(c).paddingTop === '2px'; }},
-    {id:'t3', text:'ב-HTML: הוסיפו לכותרת הראשונה מאפיין style עם הצבע green – ותראו שה-Inline מנצח.',
-     test: d => { const h = d.querySelector('h2'); return h && /green/i.test(h.getAttribute('style')||'') && d.defaultView.getComputedStyle(h).color === 'rgb(0, 128, 0)'; }},
-    {id:'t4', text:'צבעו רק את המילה "צבוע": הוסיפו ל-span את class בשם hot, וכתבו ב-CSS כלל ל-hot עם color: crimson.',
-     test: d => { const s = d.querySelector('span.hot'); return s && d.defaultView.getComputedStyle(s).color === 'rgb(220, 20, 60)'; }},
-    {id:'t5', text:'אתגר: גרמו לכרטיס לשנות רקע ל-lightyellow כשהעכבר עליו (רמז: hover). סמנו בעצמכם כשזה עובד.', manual:true}
-  ];
-  const tasksBox = $('#tasks');
-  const done = store.get('done') || {};
-  tasks.forEach((t,i) => {
-    const li = document.createElement('li'); li.id = 'task-' + t.id;
-    li.innerHTML = '<span class="st">' + (i+1) + '</span><div>' + t.text + (t.manual ? ' <label style="margin-inline-start:6px"><input type="checkbox" data-manual="'+t.id+'" /> עובד אצלי</label>' : '') + '</div>';
-    tasksBox.appendChild(li);
+/* 2.2 inline playground */
+const s22 = new Split($('#s22'));
+let c22 = 'red', z22 = '32px', broken = false;
+function draw22(){
+  const st = broken ? 'color: ' + c22 + ' font-size: ' + z22 : 'color: ' + c22 + '; font-size: ' + z22 + ';';
+  s22.setHtml('<h1 style="' + st + '">פיצה דני</h1>\n<p>הפיצה הכי טעימה באשקלון</p>', {0: broken ? 'warn' : ''});
+  s22.say(broken ? '<span class="err">חסרה נקודה-פסיק – והדפדפן התעלם משתי ההוראות. הכותרת חזרה לשחור ולגודל הרגיל.</span>' : '');
+  $('#s22break').textContent = broken ? '✔ החזירו את ה-;' : '🔨 תראו לי: מחקו את ה-; באמצע';
+}
+seg($('#s22c'), ['red','blue','green','darkorange'].map(c => ({label:c, mono:true, v:c})), o => { c22 = o.v; draw22(); });
+seg($('#s22s'), ['20px','32px','48px'].map(c => ({label:c, mono:true, v:c})), o => { z22 = o.v; draw22(); }, 1);
+$('#s22break').addEventListener('click', () => { broken = !broken; draw22(); $('#s22what').hidden = false; });
+predict($('#p22'), {
+  q: 'מה יקרה אם נמחק את ה-<code>;</code> שבין שתי ההוראות?',
+  opts: ['רק הצבע יעבוד', 'רק הגודל יעבוד', 'אף אחת מהן לא תעבוד', 'תופיע הודעת שגיאה'],
+  correct: 2,
+  onCorrect: () => { $('#s22what').hidden = false; },
+  why: ['הדפדפן לא יודע איפה ההוראה הראשונה נגמרת – הוא קורא "red font-size: 32px" כערך אחד של צבע.', 'גם הגודל נבלע בתוך ההוראה הראשונה.', 'בלי ה-; הדפדפן רואה הוראה אחת ארוכה ושבורה, וזורק את כולה. לחצו על הכפתור למטה כדי לראות.', 'ב-CSS אין הודעות שגיאה. מה ששבור פשוט לא עובד – בשקט.']
+});
+
+/* 3.1 div & span */
+const s31 = new Split($('#s31'));
+function draw31(d, s){
+  const lines = [
+    d ? '<div style="background-color: lightyellow; border: 2px solid orange;">' : '<div>',
+    '    <h2>התפריט</h2>',
+    '    <p>מרגריטה – 45 שקל</p>',
+    s ? '    <p>פטריות – 39 שקל <span style="color: crimson;">במבצע</span></p>' : '    <p>פטריות – 39 שקל <span>במבצע</span></p>',
+    '</div>',
+    '<p>הזמנות בטלפון בלבד</p>'];
+  s31.setHtml(lines.join('\n'), {0: d ? 'new' : '', 3: s ? 'new' : ''});
+}
+seg($('#s31seg'), ['בלי עיצוב', 'לעצב את ה-div', 'לעצב את ה-span', 'את שתיהן'], (o,i) => draw31(i === 1 || i === 3, i === 2 || i === 3), 0);
+
+/* 4.1 property explorer */
+const PROPS = [
+  {p:'color', v:['red','blue','green'], t:'<code>color</code> משנה את צבע <b>הטקסט</b> – רק הטקסט, לא הרקע.'},
+  {p:'background-color', v:['lightyellow','lightblue','pink'], t:'<code>background-color</code> צובע את <b>כל המלבן</b> של התגית – שימו לב שהרקע מגיע עד הקצה השני של השורה, לא רק מאחורי המילים.'},
+  {p:'font-size', v:['12px','20px','32px'], t:'<code>font-size</code> קובע את גודל הטקסט. px הם פיקסלים – נקודות על המסך. ברירת המחדל לפסקה היא 16px.'},
+  {p:'font-family', v:['Arial','"Times New Roman"','"Courier New"'], t:'<code>font-family</code> בוחר גופן. שם עם רווח כותבים בתוך מירכאות. אם הגופן לא מותקן במחשב, הדפדפן משתמש בגופן אחר.'},
+  {p:'text-align', v:['right','center','left'], t:'<code>text-align</code> מזיז את הטקסט <b>בתוך</b> המלבן של התגית. המלבן עצמו לא זז – ראו את הקו המקווקו.'},
+  {p:'border', v:['2px solid black','4px dashed red','6px double blue'], t:'<code>border</code> מקבל שלושה ערכים ברווח ביניהם: <b>עובי</b>, <b>סוג קו</b> (solid רציף, dashed מקווקו, double כפול) ו<b>צבע</b>.'},
+  {p:'width', v:['auto','50%','150px'], t:'<code>width</code> קובע את רוחב המלבן. <code>auto</code> = כל השורה (ברירת המחדל). אחוזים – יחסית לרוחב של ההורה. פיקסלים – רוחב קבוע.'},
+  {p:'opacity', v:['1','0.5','0.2'], t:'<code>opacity</code> היא שקיפות: 1 = רגיל, 0 = בלתי נראה לגמרי, וכל מה שביניהם.'},
+  {p:'display', v:['block','inline','none'], t:'<code>display: none</code> מעלים את התגית לגמרי – והתגית שאחריה עולה למקומה. <code>inline</code> גורם לה לתפוס רק את המקום של המילים, כמו span. <code>block</code> = שורה שלמה (ברירת המחדל של p).'}
+];
+const s41 = new Split($('#s41'));
+let p41 = PROPS[0], v41 = PROPS[0].v[0];
+function draw41(){
+  s41.setHtml('<h2>התפריט</h2>\n<p style="' + p41.p + ': ' + v41 + ';">מרגריטה – 45 שקל</p>\n<p>פטריות – 39 שקל</p>', {1:'new'});
+  s41.setCss('');
+  s41.stage.u.textContent = 'x-page p:nth-of-type(1){outline:1px dashed #94a3b8;outline-offset:0}';
+  $('#s41what').innerHTML = p41.t;
+}
+const pickV41 = () => seg($('#s41v'), p41.v.map(v => ({label:v, mono:true, v})), o => { v41 = o.v; draw41(); }, 0);
+seg($('#s41p'), PROPS.map(p => ({label:p.p, mono:true, v:p})), o => { p41 = o.v; pickV41(); });
+
+/* 4.2 centering */
+const s42 = new Split($('#s42'));
+const C42 = [
+  {html:'<h2>המנה של היום</h2>\n<img src="../Img/pizza.jpg" width="100" />', what:'התמונה יושבת בצד, כמו מילה בתחילת שורה.'},
+  {html:'<h2>המנה של היום</h2>\n<img src="../Img/pizza.jpg" width="100"\n     style="display: block; margin-left: auto; margin-right: auto;" />', m:{1:'new',2:'new'},
+   what:'שני צעדים: <code>display: block</code> הופך את התמונה ממילה-בשורה למלבן בשורה משלו. ואז <code>margin-left: auto</code> ו-<code>margin-right: auto</code> אומרים לדפדפן: "קח את כל המקום הפנוי וחלק אותו <b>שווה בשווה</b> – חצי מימין, חצי משמאל". (את margin נכיר לעומק בפרק 5.)'},
+  {html:'<h2>המנות של היום</h2>\n<div>\n    <img src="../Img/pizza.jpg" width="100" />\n    <img src="../Img/pizza.jpg" width="100" />\n</div>', what:'שתי תמונות יושבות בצד אחת ליד השנייה.'},
+  {html:'<h2>המנות של היום</h2>\n<div style="display: flex; justify-content: center; gap: 10px;">\n    <img src="../Img/pizza.jpg" width="100" />\n    <img src="../Img/pizza.jpg" width="100" />\n</div>', m:{1:'new'},
+   what:'כאן לא מעצבים את התמונות – אלא את <b>ה-div שעוטף אותן</b>. <code>display: flex</code> מסדר את מה שבתוכו בשורה, <code>justify-content: center</code> שם את השורה באמצע, ו-<code>gap</code> מוסיף רווח בין התמונות.'}
+];
+seg($('#s42seg'), ['תמונה אחת: לפני','תמונה אחת: אחרי','שתי תמונות: לפני','שתי תמונות: אחרי'], (o,i) => { s42.setHtml(C42[i].html, C42[i].m); $('#s42what').innerHTML = C42[i].what; });
+
+/* 5.1 show boxes */
+const s51 = new Split($('#s51')).setHtml(P0);
+seg($('#s51seg'), ['הדף כרגיל', 'הראו לי את הקופסאות'], (o,i) => s51.stage.page.classList.toggle('boxes', i === 1));
+
+/* 5.2 / 5.3 compare */
+function compareBox(el, items){
+  el.innerHTML = '';
+  items.forEach(it => {
+    const d = document.createElement('div');
+    d.innerHTML = '<pre class="cv"></pre><div class="host"></div><div class="cap">' + it.cap + '</div>';
+    el.appendChild(d);
+    codeLines(d.querySelector('pre'), it.html, 'html', it.m);
+    new Stage(d.querySelector('.host')).html(it.html);
   });
-  tasksBox.querySelectorAll('[data-manual]').forEach(cb => { cb.checked = !!done[cb.dataset.manual]; cb.addEventListener('change', () => { done[cb.dataset.manual] = cb.checked; store.set('done', done); paintTasks(); }); });
-  const stepCb = $('#stepDone'); stepCb.checked = !!done.step; stepCb.addEventListener('change', () => { done.step = stepCb.checked; store.set('done', done); paintTasks(); });
-  function paintTasks(){
-    tasks.forEach((t,i) => { const li = $('#task-' + t.id); const ok = !!done[t.id]; li.classList.toggle('done', ok); li.querySelector('.st').textContent = ok ? '✔' : (i+1); });
-    const total = tasks.length + 1, n = tasks.filter(t => done[t.id]).length + (done.step ? 1 : 0);
-    $('#progBar').style.width = (100*n/total) + '%'; $('#progTxt').textContent = n + '/' + total;
-  }
-  function render(){
-    const doc = '<!DOCTYPE html><html lang="he" dir="rtl"><head><meta charset="utf-8"><style>' + edC.value.replace(/<\/style/gi,'') + '</style></head><body>' + edH.value + '</body></html>';
-    frame.srcdoc = doc;
-  }
-  frame.addEventListener('load', () => {
-    let d; try { d = frame.contentDocument; } catch(e){ return; }
-    if (!d) return;
-    tasks.forEach(t => { if (!t.manual) { let ok = false; try { ok = !!t.test(d); } catch(e){} if (ok) done[t.id] = true; } });
-    store.set('done', done); paintTasks();
-  });
-  let timer; const sched = () => { clearTimeout(timer); timer = setTimeout(() => { store.set('code', {h:edH.value, c:edC.value}); render(); }, 350); };
-  [edH, edC].forEach(t => {
-    t.addEventListener('input', sched);
-    t.addEventListener('keydown', e => { if (e.key === 'Tab') { e.preventDefault(); const s = t.selectionStart; t.setRangeText('    ', s, t.selectionEnd, 'end'); sched(); } });
-  });
-  const savedCode = store.get('code');
-  edH.value = savedCode ? savedCode.h : START_HTML; edC.value = savedCode ? savedCode.c : START_CSS;
-  $('#resetPg').addEventListener('click', () => { edH.value = START_HTML; edC.value = START_CSS; store.set('code', null); render(); });
-  render(); paintTasks();
+}
+const box = (pad, mar, txt) => '<div style="width: 200px;\n            border: 3px solid orange;\n            padding: ' + pad + ';' + (mar ? '\n            margin: ' + mar + ';' : '') + '">\n    ' + txt + '\n</div>';
+compareBox($('#s52'), [
+  {html: box('0px', null, 'מרגריטה – 45 שקל'), m:{2:'diff'}, cap:'<b>padding: 0px</b>הטקסט נדבק לקו.'},
+  {html: box('24px', null, 'מרגריטה – 45 שקל'), m:{2:'diff'}, cap:'<b>padding: 24px</b>יש אוויר בין הטקסט לקו – והמסגרת התרחבה החוצה.'}
+]);
+compareBox($('#s53'), [
+  {html: box('10px', '0px', 'מרגריטה') + '\n' + box('10px', '0px', 'פטריות'), m:{3:'diff', 9:'diff'}, cap:'<b>margin: 0px</b>הקופסאות דבוקות – הקווים נוגעים.'},
+  {html: box('10px', '24px', 'מרגריטה') + '\n' + box('10px', '24px', 'פטריות'), m:{3:'diff', 9:'diff'}, cap:'<b>margin: 24px</b>הקופסאות באותו גודל בדיוק – רק רחוקות זו מזו (ומקצה הדף).'}
+]);
+
+/* 5.4 box lab */
+const rM = $('#rM'), rB = $('#rB'), rP = $('#rP'), boxStage = $('#boxStage');
+for (let i = 0; i < 2; i++) boxStage.insertAdjacentHTML('beforeend', '<div class="mm"><div class="bb"><div class="pp"><div class="cc">' + (i ? 'פטריות' : 'מרגריטה') + '</div></div></div></div>');
+let prev = {m:+rM.value, b:+rB.value, p:+rP.value};
+function drawBox(){
+  const m = +rM.value, b = +rB.value, p = +rP.value;
+  boxStage.querySelectorAll('.mm').forEach(e => e.style.padding = m + 'px');
+  boxStage.querySelectorAll('.bb').forEach(e => e.style.borderWidth = b + 'px');
+  boxStage.querySelectorAll('.pp').forEach(e => e.style.padding = p + 'px');
+  $('#oM').value = m + 'px'; $('#oB').value = b + 'px'; $('#oP').value = p + 'px';
+  codeLines($('#boxCode'), '<div style="margin: ' + m + 'px;\n            border: ' + b + 'px solid;\n            padding: ' + p + 'px;">\n    מרגריטה\n</div>', 'html');
+  let hint = null;
+  if (m !== prev.m) hint = 'שיניתם <b>margin</b> (הכתום): הקופסה עצמה לא גדלה – רק המרחק בינה לבין השכנה.';
+  else if (p !== prev.p) hint = 'שיניתם <b>padding</b> (הירוק): הקופסה גדלה מבפנים – התוכן מתרחק מהמסגרת.';
+  else if (b !== prev.b) hint = 'שיניתם <b>border</b> (הצהוב): המסגרת מתעבה. היא נמצאת בין ה-padding ל-margin.';
+  if (hint) $('#boxHint').innerHTML = hint; prev = {m,b,p};
+}
+[rM,rB,rP].forEach(r => r.addEventListener('input', drawBox)); drawBox();
+seg($('#s54view'), ['צבעים כמו ב-F12', 'איך זה נראה באתר'], (o,i) => boxStage.classList.toggle('plain', i === 1));
+
+/* 6.1 repetition */
+new Split($('#s61')).setHtml(['<h2>התפריט</h2>','<p>מרגריטה – 45 שקל</p>','<p style="color: crimson;">פטריות – 39 שקל במבצע</p>','<p style="color: crimson;">זיתים – 39 שקל במבצע</p>'].join('\n'), {2:'warn',3:'warn'});
+codeLines($('#s62code'), ['<head>','    <meta charset="utf-8" />','    <title>פיצה דני</title>','    <style>','        h1 {','            color: red;','        }','    </style>','</head>','<body>','    <h1>פיצה דני</h1>','</body>'].join('\n'), 'html');
+// highlight CSS lines inside the <style> block nicely
+(function(){ const pre = $('#s62code'); [4,5,6].forEach(i => { const ln = pre.querySelector('.ln[data-i="'+i+'"]'); const raw = ['        h1 {','            color: red;','        }'][i-4]; ln.innerHTML = hlCssLine(raw); }); })();
+
+/* 7.x selectors – one page, attributes added step by step */
+const P7 = cls => [
+  '<h1' + (cls.id ? ' id="logo"' : '') + '>פיצה דני</h1>',
+  '<p>הפיצה הכי טעימה באשקלון</p>',
+  '<div' + (cls.fam ? ' class="menu"' : '') + '>',
+  '    <h2>התפריט</h2>',
+  '    <p>מרגריטה – 45 שקל</p>',
+  '    <p' + (cls.sale ? ' class="sale"' : '') + '>פטריות – 39 שקל במבצע</p>',
+  '    <p' + (cls.sale ? ' class="sale"' : '') + '>זיתים – 39 שקל במבצע</p>',
+  '    <div' + (cls.fam ? ' class="extras"' : '') + '>',
+  '        <h2>תוספות</h2>',
+  '        <p>גבינה – 5 שקל</p>',
+  '    </div>',
+  '</div>',
+  '<p>הזמנות בטלפון בלבד</p>'].join('\n');
+function ruleCss(sel, decl){ return sel + ' {\n    ' + decl + '\n}'; }
+function applyRule(split, sel, decl){
+  split.setCss(ruleCss(sel, decl));
+  const list = split.highlight(sel);
+  return list;
+}
+function countMsg(list){ if (list === null) return '<span class="err">הבורר לא תקין.</span>'; const n = list.length; return '<span class="count">' + (n === 1 ? 'נבחרה תגית אחת' : n === 0 ? 'לא נבחרה אף תגית' : 'נבחרו ' + n + ' תגיות') + '</span>' + (n ? ' – ' + (n === 1 ? 'מסומנת' : 'מסומנות') + ' באדום.' : '.'); }
+
+/* 7.1 */
+const s71 = new Split($('#s71')).setHtml(P7({}));
+predict($('#p71'), {
+  q: 'הכלל הוא <code>p { color: blue; }</code>. אילו פסקאות ייצבעו בכחול?',
+  opts: ['רק הראשונה', 'רק אלה שבתוך התפריט', 'כל ה-p בדף – 6 פסקאות'],
+  correct: 2,
+  why: ['בורר של שם תגית לא עוצר אחרי הראשונה.', 'הבורר p לא יודע כלום על התפריט – הוא מחפש p בכל מקום.', 'בורר של שם תגית תופס את כל התגיות מהסוג הזה, בכל מקום בדף.'],
+  onCorrect: () => { s71.say(countMsg(applyRule(s71, 'p', 'color: blue;'))); $('#s71what').hidden = false; }
+});
+
+/* 7.2 class */
+const s72 = new Split($('#s72'));
+let s72step = 0;
+function draw72(i, nodot){
+  s72step = i;
+  s72.setHtml(P7({sale: i >= 1}), i >= 1 ? {5:'new', 6:'new'} : {});
+  if (i === 2) { const sel = nodot ? 'sale' : '.sale'; s72.setCss(ruleCss(sel, 'color: crimson;'), {0:'new'}); const l = s72.highlight(sel); s72.say(nodot ? '<span class="err">נבחרו 0 תגיות.</span> בלי הנקודה הדפדפן מחפש תגית &lt;sale&gt; – ואין כזו.' : countMsg(l)); }
+  else { s72.setCss(''); s72.highlight(null); s72.say(i === 1 ? 'הוספנו class – ו<b>שום דבר לא השתנה</b> במראה. עדיין אין כלל שמשתמש בו.' : 'המצב ההתחלתי: אין class לאף תגית.'); }
+}
+const pick72 = seg($('#s72seg'), ['לפני', 'שלב א׳: מוסיפים class ב-HTML', 'שלב ב׳: כותבים כלל ב-CSS'], (o,i) => draw72(i), 0);
+$('#s72nodot').addEventListener('click', () => { pick72(2); draw72(2, true); });
+predict($('#p72'), {
+  q: 'בשלב ב׳ הכלל הוא <code>.sale { color: crimson; }</code>. כמה שורות ייצבעו?',
+  opts: ['כל 6 הפסקאות', 'רק 2 – אלה עם <code>class="sale"</code>', 'אף אחת, צריך גם לכתוב p'],
+  correct: 1,
+  onCorrect: () => { $('#s72what').hidden = false; },
+  why: ['הנקודה אומרת "רק מי שקיבל את ה-class הזה", לא "כל הפסקאות".', 'הדפדפן מחפש את כל מי שלובש את "החולצה" sale – ומצא שתיים. לחצו על שלב ב׳ ובדקו.', 'לא צריך – <code>.sale</code> לבד מספיק, והוא תופס כל תגית עם ה-class הזה, מכל סוג.']
+});
+
+/* 7.3 id */
+const s73 = new Split($('#s73')).setHtml(P7({sale:true, id:true}), {0:'new'});
+s73.setCss(ruleCss('#logo', 'color: darkorange;\n    font-size: 40px;'), {0:'new'});
+s73.say(countMsg(s73.highlight('#logo')));
+predict($('#p73'), {
+  q: 'רוצים לסמן את כל המנות הצמחוניות בתפריט, כדי לצבוע אותן בירוק. מה מתאים?',
+  opts: ['class – כי יש כמה כאלה', 'id – כי זה מזהה'],
+  correct: 0,
+  why: ['יש כמה מנות צמחוניות, וכולן צריכות אותו עיצוב – בדיוק בשביל זה יש class.', 'id מותר לתגית <b>אחת</b> בלבד בדף. לכמה מנות צריך שם של קבוצה.']
+});
+
+/* 7.4 comma */
+const s74 = new Split($('#s74')).setHtml(P7({sale:true, id:true}));
+s74.setCss(ruleCss('h1, h2', 'color: teal;'), {0:'new'}); s74.say(countMsg(s74.highlight('h1, h2')));
+
+/* 7.5 family tree */
+const PF = P7({sale:true, id:true, fam:true});
+const TREE = [
+  ['div.menu', 0, 'הורה', 2],
+  ['h2', 1, 'ילד', 3], ['p', 1, 'ילד', 4], ['p.sale', 1, 'ילד', 5], ['p.sale', 1, 'ילד', 6],
+  ['div.extras', 1, 'ילד', 7],
+  ['h2', 2, 'נכד – צאצא, לא ילד', 8], ['p', 2, 'נכד – צאצא, לא ילד', 9]
+];
+const treeHtml = () => TREE.map(([n, d, role, ln], i) => {
+  const pre = d === 0 ? '' : d === 1 ? (i === 5 ? '└─ ' : '├─ ') : '   ' + (i === 7 ? '└─ ' : '├─ ');
+  return '<div><span class="g">' + pre + '</span><span class="node" data-ln="' + ln + '">' + n + '</span><span class="role">' + role + '</span></div>';
+}).join('');
+$('#s75tree').innerHTML = treeHtml(); $('#s76tree').innerHTML = treeHtml();
+
+/* 7.6 descendant vs child */
+const s76 = new Split($('#s76')).setHtml(PF, {2:'new', 7:'new'});
+function draw76(sel){
+  s76.setCss(ruleCss(sel, 'color: crimson;'), {0:'new'});
+  const l = s76.highlight(sel); s76.say(countMsg(l));
+  document.querySelectorAll('#s76tree .node').forEach(n => n.classList.toggle('hit', l.some(e => +e.dataset.ln === +n.dataset.ln)));
+}
+seg($('#s76seg'), [{label:'.menu p', mono:true, v:'.menu p'}, {label:'.menu > p', mono:true, v:'.menu > p'}], o => draw76(o.v), 0);
+predict($('#p76'), {
+  q: 'כמה פסקאות ייבחרו ב-<code>.menu > p</code>? (היעזרו בעץ המשפחה מ-7.5)',
+  opts: ['4', '3', '1'],
+  correct: 1,
+  onCorrect: () => { $('#s76what').hidden = false; },
+  why: ['4 זה התשובה של <code>.menu p</code> עם רווח – כולל הנכדה "גבינה".', 'מרגריטה, פטריות וזיתים – שלושת ה-p שהם ילדים ישירים. "גבינה" היא נכדה.', 'יש יותר מ-p אחד שהוא ילד ישיר של menu.']
+});
+// tree hover -> peek in the selector split below
+codeLines($('#s75code'), PF, 'html', {2:'new', 7:'new'});
+const peek75 = ln => { document.querySelectorAll('#s75code .ln').forEach(x => x.classList.toggle('peek', +x.dataset.i === ln)); document.querySelectorAll('#s75tree .node').forEach(x => x.classList.toggle('peek', +x.dataset.ln === ln)); };
+document.querySelectorAll('#s75tree .node').forEach(n => { n.addEventListener('mouseenter', () => peek75(+n.dataset.ln)); n.addEventListener('mouseleave', () => peek75(-1)); });
+$('#s75code').addEventListener('mouseover', e => { const l = e.target.closest('.ln'); peek75(l ? +l.dataset.i : -1); });
+$('#s75code').addEventListener('mouseleave', () => peek75(-1));
+document.querySelectorAll('#s76tree .node').forEach(n => {
+  n.addEventListener('mouseenter', () => { n.classList.add('peek'); s76.peek(+n.dataset.ln); });
+  n.addEventListener('mouseleave', () => { n.classList.remove('peek'); s76.peek(-1); });
+});
+
+/* 7.7 hover */
+const s77 = new Split($('#s77')).setHtml('<h2>רעבים?</h2>\n<button class="order">להזמנה</button>');
+s77.setCss(['.order {','    background-color: white;','    border: 2px solid crimson;','    padding: 8px 20px;','}','.order:hover {','    background-color: crimson;','    color: white;','}'].join('\n'), {5:'new'});
+s77.say('👆 העבירו את העכבר על "להזמנה".');
+
+/* 7.8 selector lab */
+const s78 = new Split($('#s78')).setHtml(PF);
+const CHAL = [
+  {t:'רק הכותרת הראשית', ref:'#logo'},
+  {t:'רק שתי המנות במבצע', ref:'.sale'},
+  {t:'כל הכותרות – h1 וגם h2', ref:'h1, h2'},
+  {t:'כל הפסקאות שבתוך התפריט – כולל התוספות', ref:'.menu p'},
+  {t:'רק הפסקאות שהן ילדים ישירים של התפריט', ref:'.menu > p'},
+  {t:'רק הכותרת של קופסת התוספות', ref:'.extras h2'}
+];
+const chalDone = state.chal || {};
+const refSets = CHAL.map(c => s78.stage.page.querySelectorAll(c.ref));
+let cur = CHAL.findIndex((c,i) => !chalDone[i]); if (cur < 0) cur = 0;
+const chalUl = $('#chal');
+CHAL.forEach((c,i) => {
+  const li = document.createElement('li'); li.innerHTML = '<span class="st">' + (i+1) + '</span><span>' + c.t + '</span>';
+  li.addEventListener('click', () => { cur = i; paintChal(); $('#selInput').focus(); }); chalUl.appendChild(li);
+});
+function paintChal(){ [...chalUl.children].forEach((li,i) => { li.classList.toggle('cur', i === cur); li.classList.toggle('done', !!chalDone[i]); li.querySelector('.st').textContent = chalDone[i] ? '✔' : (i+1); }); }
+function same(a, b){ if (!a || a.length !== b.length) return false; const s = new Set(b); return [...a].every(x => s.has(x)); }
+function runLab(){
+  const sel = $('#selInput').value.trim();
+  s78.setCss('');
+  if (!sel) { s78.highlight(null); s78.say('כתבו בורר בתיבה. למשל <code>p</code>, ואז נסו לפתור את האתגר המסומן.'); return; }
+  const l = s78.highlight(sel);
+  if (l === null) { s78.say('<span class="err">הבורר לא תקין. בדקו נקודה (class), סולמית (id), פסיקים ורווחים.</span>'); return; }
+  let msg = countMsg(l);
+  if (same(l, [...refSets[cur]])) {
+    msg += ' <b style="color:var(--ok)">✔ פתרתם את אתגר ' + (cur+1) + '!</b>';
+    if (!chalDone[cur]) { chalDone[cur] = true; state.chal = chalDone; save(); }
+    const nx = CHAL.findIndex((c,i) => !chalDone[i]);
+    if (nx >= 0) { msg += ' עברו לאתגר הבא.'; cur = nx; } else msg += ' 🎉 סיימתם את כל האתגרים.';
+  } else if (l.length) {
+    const want = refSets[cur].length;
+    msg += ' לאתגר ' + (cur+1) + ' צריך לבחור בדיוק ' + want + (want === 1 ? ' תגית.' : ' תגיות.');
+  } else msg += ' אף תגית לא מתאימה – אולי חסרה נקודה או סולמית?';
+  s78.say(msg); paintChal();
+}
+$('#selInput').addEventListener('input', runLab); paintChal(); runLab();
+
+/* 8.1 external – three pages, one file */
+const MINIS = [['index.html','ברוכים הבאים','הפיצה הכי טעימה באשקלון'],['menu.html','התפריט','מרגריטה – 45 שקל'],['contact.html','צרו קשר','הזמנות בטלפון בלבד']];
+const miniStages = MINIS.map(([f,h,p]) => {
+  const d = document.createElement('div'); d.innerHTML = '<div class="host"></div><div class="cap">' + f + '</div>'; $('#s81minis').appendChild(d);
+  return new Stage(d.querySelector('.host')).html('<h1>' + h + '</h1>\n<p>' + p + '</p>');
+});
+seg($('#s81c'), ['crimson','teal','darkorange','purple'].map(c => ({label:c, mono:true, v:c})), o => {
+  const css = 'body {\n    background-color: #fffaf3;\n}\nh1 {\n    color: ' + o.v + ';\n    font-size: 22px;\n}';
+  codeLines($('#s81code'), css, 'css', {4:'new'}); miniStages.forEach(s => s.css(css));
+});
+codeLines($('#s82code'), ['/* style.css – the design of the whole site */','body {','    font-family: Arial, sans-serif;','}','h1, h2 {','    color: crimson;','}','.sale {','    color: green;','}'].join('\n'), 'css');
+codeLines($('#s83code'), ['<head>','    <meta charset="utf-8" />','    <title>פיצה דני</title>','    <link rel="stylesheet" href="../css/style.css" />','</head>'].join('\n'), 'html', {3:'new'});
+
+/* 8.3 path walker */
+const FT = [
+  ['wwwroot', 0, 'root'], ['css', 1, 'css'], ['style.css', 2, 'file'], ['HTML', 1, 'html'], ['menu.html', 2, 'page'], ['Img', 1, 'img']
+];
+const FTG = ['', '├─ ', '│  └─ ', '├─ ', '│  └─ ', '└─ '];
+$('#ftree').innerHTML = FT.map(([n,d,id], i) => FTG[i] + '<span class="f" data-f="' + id + '">' + (id === 'file' || id === 'page' ? '📄 ' : '📁 ') + n + '</span>').join('\n');
+const WALK = [
+  {at:'page', path:'', t:'מתחילים <b>בדף</b> – menu.html, שנמצא בתיקייה HTML. משם הדפדפן מחפש את הקובץ.'},
+  {at:'root', path:'../', t:'<code>../</code> = "עלו תיקייה אחת למעלה". יצאנו מ-HTML ועכשיו אנחנו ב-wwwroot.'},
+  {at:'css', path:'../css/', t:'<code>css/</code> = "היכנסו לתיקייה css".'},
+  {at:'file', path:'../css/style.css', t:'<code>style.css</code> = הקובץ עצמו. הגענו! זה הנתיב שכותבים ב-href.'}
+];
+let wi = 0;
+function drawWalk(){
+  const w = WALK[wi];
+  document.querySelectorAll('#ftree .f').forEach(f => { f.classList.toggle('here', f.dataset.f === w.at); f.classList.toggle('goal', f.dataset.f === 'file' && wi < 3); });
+  $('#pathbox').innerHTML = 'href=<span class="t-str">"' + esc(w.path) + '"</span>';
+  $('#walkTxt').innerHTML = w.t; $('#walkNext').disabled = wi === WALK.length - 1;
+}
+$('#walkNext').addEventListener('click', () => { if (wi < WALK.length - 1) { wi++; drawWalk(); } });
+$('#walkReset').addEventListener('click', () => { wi = 0; drawWalk(); });
+drawWalk();
+
+/* 9.1 specificity */
+codeLines($('#s91code'), '<p id="msg" class="note">הטקסט שלי</p>', 'html');
+predict($('#p91'), {
+  q: 'יש כלל <code>#msg</code> שצובע באדום, וכלל <code>.note</code> שצובע בירוק. הכלל של <code>.note</code> כתוב <b>אחרי</b> הכלל של <code>#msg</code>. איזה צבע יהיה?',
+  opts: ['ירוק – כי הוא נכתב אחרון', 'אדום – כי id חזק יותר'],
+  correct: 1,
+  why: ['"האחרון מנצח" עובד רק בין כללים <b>שווים בכוח</b>. כאן id חזק מ-class, אז הסדר לא משנה.', 'id נמצא מעל class בסולם – הוא מנצח, לא משנה מי נכתב קודם.']
+});
+const RULES = [
+  {id:'tag', code:'p { color: blue; }', css:'p{color:#2563eb}', name:'כחול', why:'כלל לפי שם תגית – הכי כללי, הכי חלש.'},
+  {id:'cls', code:'.note { color: green; }', css:'.note{color:#16a34a}', name:'ירוק', why:'כלל class – חזק משם תגית.'},
+  {id:'idr', code:'#msg { color: red; }', css:'#msg{color:#dc2626}', name:'אדום', why:'כלל id – חזק מ-class ומשם תגית.'},
+  {id:'inl', code:'style="color: purple"', css:null, name:'סגול', why:'Inline – כתוב בתוך התגית עצמה. גובר על כל הכללים.'},
+  {id:'tag2', code:'p { color: orange; }', css:'p{color:#ea580c}', name:'כתום', why:'עוד כלל של שם תגית, שנכתב אחרון. מול כלל ה-p הראשון הם שווים בכוח – אז האחרון מנצח.'}
+];
+const specStage = new Stage($('#specHost'));
+specStage.html('<p id="msg" class="note">הטקסט שלי</p>');
+specStage.page.style.fontSize = '24px'; specStage.page.style.fontWeight = '700';
+const rulesBox = $('#rules');
+rulesBox.innerHTML = '<div class="pane-h"><span class="dot"></span>הכללים (לפי סדר הכתיבה)</div>';
+RULES.forEach((r,i) => rulesBox.insertAdjacentHTML('beforeend', '<label><input type="checkbox" data-r="' + r.id + '" ' + (i < 2 ? 'checked' : '') + ' /> <span class="ltr">' + esc(r.code) + '</span></label>'));
+function runSpec(){
+  const on = id => rulesBox.querySelector('[data-r="' + id + '"]').checked;
+  specStage.u.textContent = RULES.filter(r => r.css && on(r.id)).map(r => r.css).join('\n');
+  const p = specStage.page.querySelector('p');
+  if (on('inl')) p.setAttribute('style', 'color:#7e22ce'); else p.removeAttribute('style');
+  let w = null;
+  if (on('inl')) w = 'inl'; else if (on('idr')) w = 'idr'; else if (on('cls')) w = 'cls'; else if (on('tag2')) w = 'tag2'; else if (on('tag')) w = 'tag';
+  const r = RULES.find(x => x.id === w);
+  $('#specWhy').innerHTML = r ? 'מנצח: <b>' + r.name + '</b>. ' + r.why : 'אין אף כלל – הדפדפן משתמש בצבע ברירת המחדל (שחור).';
+}
+rulesBox.addEventListener('change', runSpec); runSpec();
+
+/* 9.2 inheritance */
+const s92 = new Split($('#s92'));
+s92.setHtml('<div>\n    <h2>התפריט</h2>\n    <p>מרגריטה – 45 שקל</p>\n</div>');
+const I92 = [
+  {css:'div {\n    color: crimson;\n}', what:'כתבנו צבע רק ל-<b>div</b> – וגם h2 וגם p שבתוכו נצבעו. <b>צבע עובר בירושה</b> לכל הצאצאים. כך גם גופן וגודל טקסט. לכן מספיק לכתוב <code>font-family</code> פעם אחת ל-body, וכל האתר מקבל אותו.'},
+  {css:'div {\n    border: 2px solid crimson;\n}', what:'כתבנו מסגרת ל-<b>div</b> – ורק ה-div קיבל מסגרת. ה-h2 וה-p שבתוכו <b>לא</b> קיבלו מסגרת משלהם. <b>מסגרת לא עוברת בירושה</b> – וגם לא padding, margin ורקע. (תארו לעצמכם שכל תגית בדף הייתה מקבלת מסגרת משלה...)'}
+];
+seg($('#s92seg'), ['color ל-div', 'border ל-div'], (o,i) => { s92.setCss(I92[i].css); $('#s92what').innerHTML = I92[i].what; });
+
+/* 10 comments */
+const s101 = new Split($('#s101')).setHtml('<h1>פיצה דני</h1>\n<p class="sale">פטריות – 39 שקל במבצע</p>');
+const C101 = [
+  ['/* colors of the menu */','h1 {','    color: teal;','}','.sale {','    color: crimson;','}'].join('\n'),
+  ['/* colors of the menu */','h1 {','    /* color: teal; */','}','.sale {','    color: crimson;','}'].join('\n')
+];
+seg($('#s101seg'), ['ההוראה פעילה', 'הפכו את ההוראה להערה'], (o,i) => s101.setCss(C101[i], i ? {2:'new'} : {}));
+
+/* ---------- playground with auto-checked tasks ---------- */
+const START_HTML = ['<h1 id="logo">פיצה דני</h1>','<div class="menu">','    <h2>התפריט</h2>','    <p>מרגריטה – 45 שקל</p>','    <p class="sale">פטריות – 39 שקל במבצע</p>','    <p class="sale">זיתים – 39 שקל במבצע</p>','</div>','<button class="order">להזמנה</button>'].join('\n');
+const START_CSS = ['body {','    font-family: Arial, sans-serif;','    background-color: #fff8ee;','}','','.menu {','    background-color: white;','    border: 2px solid orange;','}'].join('\n');
+const edH = $('#edHtml'), edC = $('#edCss'), frame = $('#preview');
+const TASKS = [
+  {id:'t1', text:'צבעו את <b>המנות במבצע</b> בצבע <code>crimson</code>. (רמז: כבר יש להן class – כתבו לו כלל.)',
+   test: d => [...d.querySelectorAll('.sale')].every(e => d.defaultView.getComputedStyle(e).color === 'rgb(220, 20, 60)') && d.querySelectorAll('.sale').length === 2},
+  {id:'t2', text:'הגדילו את <b>הכותרת הראשית</b> ל-<code>40px</code>, בעזרת ה-id שלה.',
+   test: d => { const h = d.querySelector('h1'); return h && d.defaultView.getComputedStyle(h).fontSize === '40px' && !h.hasAttribute('style'); }},
+  {id:'t3', text:'תנו לתפריט אוויר מבפנים: <code>padding: 20px</code> לכלל של <code>.menu</code>.',
+   test: d => { const m = d.querySelector('.menu'); return m && d.defaultView.getComputedStyle(m).paddingTop === '20px'; }},
+  {id:'t4', text:'הרחיקו את התפריט מהשכנים שלו: <code>margin: 30px</code>.',
+   test: d => { const m = d.querySelector('.menu'); return m && d.defaultView.getComputedStyle(m).marginTop === '30px'; }},
+  {id:'t5', text:'אתגר: כשהעכבר על הכפתור "להזמנה", הרקע שלו נהיה <code>orange</code>. (רמז: <code>:hover</code>, פרק 7.7.) בדקו עם העכבר וסמנו בעצמכם.', manual:true}
+];
+const done = state.tasks || {};
+const tasksBox = $('#tasks');
+TASKS.forEach((t,i) => {
+  const li = document.createElement('li'); li.id = 'task-' + t.id;
+  li.innerHTML = '<span class="st">' + (i+1) + '</span><div>' + t.text + (t.manual ? ' <label style="margin-inline-start:6px;white-space:nowrap"><input type="checkbox" data-manual="' + t.id + '" /> עובד אצלי</label>' : '') + '</div>';
+  tasksBox.appendChild(li);
+});
+tasksBox.querySelectorAll('[data-manual]').forEach(cb => { cb.checked = !!done[cb.dataset.manual]; cb.addEventListener('change', () => { done[cb.dataset.manual] = cb.checked; state.tasks = done; save(); }); });
+const stepCb = $('#stepDone'); stepCb.checked = !!state.step; stepCb.addEventListener('change', () => { state.step = stepCb.checked; save(); });
+function render(){ frame.srcdoc = '<!DOCTYPE html><html lang="he" dir="rtl"><head><meta charset="utf-8"><style>' + edC.value.replace(/<\/style/gi,'') + '</style></head><body>' + edH.value + '</body></html>'; }
+frame.addEventListener('load', () => {
+  let d; try { d = frame.contentDocument; } catch(e){ return; } if (!d) return;
+  TASKS.forEach(t => { if (!t.manual) { let ok = false; try { ok = !!t.test(d); } catch(e){} if (ok) done[t.id] = true; } });
+  state.tasks = done; save();
+});
+let timer; const sched = () => { clearTimeout(timer); timer = setTimeout(() => { store.set('code', {h:edH.value, c:edC.value}); render(); }, 350); };
+[edH, edC].forEach(t => {
+  t.addEventListener('input', sched);
+  t.addEventListener('keydown', e => { if (e.key === 'Tab') { e.preventDefault(); t.setRangeText('    ', t.selectionStart, t.selectionEnd, 'end'); sched(); } });
+});
+const savedCode = store.get('code');
+edH.value = savedCode ? savedCode.h : START_HTML; edC.value = savedCode ? savedCode.c : START_CSS;
+$('#resetPg').addEventListener('click', () => { edH.value = START_HTML; edC.value = START_CSS; store.set('code', null); render(); });
+render();
+
+/* ---------- quiz ---------- */
+const QUIZ = [
+  {q:'יש לכם 10 דפים באתר. למה עדיף קובץ CSS חיצוני אחד על פני תגית style בכל דף?', opts:['כי הוא נטען מהר יותר','כי משנים במקום אחד וכל הדפים מתעדכנים יחד','כי ב-style אי אפשר לכתוב class'], correct:1,
+   why:['זה לא העיקר.', 'בדיוק. וגם כל הדפים נראים אחידים – מה שהמחוון בודק.', 'אפשר גם אפשר – הבעיה היא החזרה על אותו עיצוב בכל דף.']},
+  {q:'הגדלתם <code>padding</code> של קופסה. מה קרה?', opts:['הקופסה התרחקה מהשכנות, בלי לגדול','הקופסה גדלה – התוכן התרחק מהמסגרת','הטקסט נהיה גדול יותר'], correct:1,
+   why:['זה margin – רווח מחוץ למסגרת.', 'padding הוא ריפוד בתוך המסגרת.', 'גודל טקסט קובעים ב-font-size.']},
+  {q:'ב-HTML כתוב <code>class="vegan"</code>. איך כותבים את הבורר ב-CSS?', opts:['<code>vegan</code>','<code>#vegan</code>','<code>.vegan</code>'], correct:2,
+   why:['בלי סימן – הדפדפן מחפש תגית בשם vegan.', 'סולמית היא ל-id.', 'נקודה = class.']},
+  {q:'מה ההבדל בין <code>.menu p</code> לבין <code>.menu > p</code>?', opts:['אין הבדל','הראשון: כל p בתוך menu בכל עומק. השני: רק ילדים ישירים','הראשון: רק ילדים ישירים. השני: כל p בכל עומק'], correct:1,
+   why:['יש – נסו בפרק 7.6.', 'רווח = צאצאים בכל עומק, > = רק ילדים ישירים.', 'הפוך.']},
+  {q:'כתבתם קובץ CSS, חיברתם אותו, והדף לא משתנה בכלל. מה הדבר הראשון לבדוק?', opts:['להתקין מחדש את Visual Studio','את הנתיב בתגית link (וש-link בתוך ה-head)','להחליף דפדפן'], correct:1,
+   why:['ממש לא 🙂', 'רוב הפעמים הנתיב שגוי – למשל חסר <code>../</code>. ראו את רשימת הבדיקה בפרק 8.4.', 'זה כמעט אף פעם לא הדפדפן.']}
+];
+QUIZ.forEach((qq,i) => { const d = document.createElement('div'); d.className = 'predict'; d.id = 'q' + (i+1); $('#quiz').appendChild(d); predict(d, Object.assign({quiz:true}, qq, {q:(i+1) + '. ' + qq.q})); });
+
+/* ---------- progress + chapter tracking ---------- */
+function paintProgress(){
+  const items = predicts.length + CHAL.length + TASKS.length + 1;
+  const n = predicts.filter(id => state[id]).length + CHAL.filter((c,i) => (state.chal||{})[i]).length + TASKS.filter(t => (state.tasks||{})[t.id]).length + (state.step ? 1 : 0);
+  $('#progBar').style.width = (100 * n / items) + '%'; $('#progTxt').textContent = n + '/' + items;
+  TASKS.forEach((t,i) => { const li = $('#task-' + t.id); const ok = !!(state.tasks||{})[t.id]; li.classList.toggle('done', ok); li.querySelector('.st').textContent = ok ? '✔' : (i+1); });
+}
+paintProgress();
+const chapters = [...document.querySelectorAll('.chapter')];
+$('#toc').innerHTML = chapters.map(c => { const n = c.querySelector('.num').textContent; return '<a href="#' + c.id + '"><span class="n">' + n + '</span>' + c.dataset.title + '</a>'; }).join('');
+const io = new IntersectionObserver(es => { es.forEach(e => { if (e.isIntersecting) $('#now').textContent = '· ' + e.target.querySelector('.num').textContent + ' ' + e.target.dataset.title; }); }, {rootMargin:'-20% 0px -70% 0px'});
+chapters.forEach(c => io.observe(c));
 })();
 </script>
 </body>
