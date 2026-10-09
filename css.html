@@ -208,44 +208,125 @@ details summary{cursor:pointer;font-weight:600}
 footer{color:var(--muted);font-size:13px;text-align:center;padding:20px}
 @media (max-width:600px){
   body{font-size:16px} table{font-size:14px} th,td{padding:6px} .spread{padding:16px} .hero{padding:18px} .hero h1{font-size:25px}
-  .chapter>header h2{font-size:21px} .bar{width:64px} .now{display:none} .plbl{display:none} .themebtn{font-size:0;padding:4px 8px} .themebtn::before{content:'🌓';font-size:15px} .ways{grid-template-columns:1fr}
+  .chapter>header h2{font-size:21px} .bar{width:44px} .now{display:none} .plbl{display:none} .themebtn{font-size:0;padding:4px 8px} .themebtn::before{content:'🌓';font-size:15px} .ways{grid-template-columns:1fr}
   .anat .tok code{font-size:17px;padding:5px 10px}
 }
+
+/* ---------- course player ---------- */
+.lesson-head{margin:4px 0 14px}
+.lesson-head .school{color:var(--muted);font-size:13px}
+.lesson-head h1{margin:2px 0 0;font-size:28px;line-height:1.3}
+.topics{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 10px;scrollbar-width:thin}
+.topics button{flex:0 0 auto;font:inherit;font-size:15px;display:flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:12px;padding:8px 14px;cursor:pointer}
+.topics button .ic{font-size:18px}
+.topics button[aria-current="true"]{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:var(--shadow)}
+.topics button.done:not([aria-current="true"])::after{content:"✔";color:var(--ok);font-weight:700}
+.steps{display:flex;gap:6px;overflow-x:auto;padding:2px 2px 12px;margin-bottom:6px;border-bottom:1px solid var(--line);scrollbar-width:thin}
+.steps button{flex:0 0 auto;max-width:230px;font:inherit;font-size:13.5px;border:1px solid var(--line);background:var(--surface2);color:var(--text);border-radius:99px;padding:4px 12px 4px 10px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.steps button .k{display:inline-block;min-width:20px;height:20px;line-height:20px;border-radius:50%;background:var(--surface);text-align:center;font-weight:700;font-size:12px;margin-inline-end:6px}
+.steps button.seen .k{background:var(--ok);color:#fff}
+.steps button[aria-current="true"]{border-color:var(--accent);background:var(--accent-soft);color:var(--accent);font-weight:600}
+.topic[hidden],.spread[hidden]{display:none}
+.spread>h3 .sn{font-weight:500}
+.stepnav{display:flex;justify-content:space-between;gap:12px;margin:6px 0 30px}
+.stepnav button{font:inherit;font-size:15px;border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:12px;padding:10px 16px;cursor:pointer;text-align:right;max-width:48%}
+.stepnav button small{display:block;color:var(--muted);font-size:12.5px}
+.stepnav button.next{background:var(--accent);border-color:var(--accent);color:#fff;margin-inline-start:auto}
+.stepnav button.next small{color:#dbe6ff}
+.stepnav button:disabled{visibility:hidden}
+.welcome .lead{font-size:18px}
+.welcome h4{margin:18px 0 6px;font-size:18px}
+.ways{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:8px 0}
+.way{background:var(--surface2);border:1px solid var(--line);border-radius:12px;padding:10px 14px;font-size:15px}
+.way b{display:block;font-size:16px}
+.way.main{border:2px solid var(--accent);background:var(--accent-soft)}
+.how{list-style:none;padding:0;margin:6px 0}
+.how li{margin:4px 0}
+.eggnote{background:linear-gradient(135deg,#fff7d6,#ffe9f3);color:#3b2a00;border-radius:12px;padding:10px 14px;margin:14px 0 4px}
+.preview-goal{max-width:520px;zoom:.78;margin:10px auto;transform:rotate(-1deg);box-shadow:0 10px 30px rgba(0,0,0,.15);border-radius:12px}
+.preview-goal .host{border:0}
+details.more{background:var(--surface);border:1px dashed var(--what);margin:14px 0}
+details.more summary{color:var(--what)}
+.cheat{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.cheat .card{border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:var(--surface2)}
+.cheat .card h4{margin:0 0 6px}
+.cheat .card{min-width:0}.cheat table{font-size:14px}.cheat td code{white-space:nowrap;overflow-wrap:normal}.cheat td{background:var(--surface)}
+.cheat ol,.cheat ul{margin:4px 0;padding-inline-start:22px}
+/* eggs */
+.eggbtn{border:1px solid var(--line);background:linear-gradient(135deg,#fff7d6,#ffe9f3);color:#3b2a00;border-radius:99px;padding:3px 10px;cursor:pointer;font:inherit;font-size:13px}
+.eggbtn.bump{animation:bump .6s}
+@keyframes bump{30%{transform:scale(1.35) rotate(-8deg)}60%{transform:scale(.95) rotate(6deg)}}
+dialog#eggDlg{border:1px solid var(--line);border-radius:16px;background:var(--surface);color:var(--text);max-width:520px;width:calc(100% - 32px);padding:16px 18px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+dialog#eggDlg::backdrop{background:rgba(10,15,30,.45)}
+.dlg-h{display:flex;justify-content:space-between;align-items:center}
+.dlg-h h3{margin:0}
+.muted{color:var(--muted);font-size:14px}
+.egglist{list-style:none;padding:0;margin:10px 0}
+.egglist li{border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin-bottom:8px;background:var(--surface2)}
+.egglist li.found{background:var(--ok-soft);border-color:var(--ok)}
+.egglist li b{display:block}
+.egglist .h2{display:block;margin-top:4px;color:var(--muted);font-size:14px}
+.egglist .hintbtn{font:inherit;font-size:13px;background:none;border:0;color:var(--accent);cursor:pointer;padding:0;margin-top:4px}
+.codebox{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.codebox input{flex:1;min-width:120px;direction:ltr;text-align:left;font-family:"JetBrains Mono",monospace;font-size:15px;padding:6px 10px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--text)}
+.toast{position:fixed;bottom:18px;left:50%;transform:translate(-50%,120px);background:#1d2433;color:#fff;border-radius:14px;padding:10px 18px;font-size:15px;box-shadow:0 10px 30px rgba(0,0,0,.3);transition:transform .35s;z-index:60;max-width:calc(100% - 32px)}
+.toast{opacity:0;visibility:hidden}
+.toast.show{transform:translate(-50%,0);opacity:1;visibility:visible}
+.party{position:fixed;inset:0;pointer-events:none;z-index:70;overflow:hidden}
+.party span{position:absolute;top:-40px;font-size:28px;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(540deg)}}
+.ghost{background:#ede9fe;color:#4c1d95;border-radius:10px;padding:10px 14px;margin-top:12px;font-weight:600}
+@media (max-width:700px){.cheat td code{white-space:normal;overflow-wrap:anywhere} .ways,.cheat{grid-template-columns:1fr} .stepnav button{max-width:60%} .lesson-head h1{font-size:23px}}
+@media print{.topbar,.topics,.steps,.stepnav,.lesson-head,footer,#printBtn{display:none!important} body{background:#fff} .spread{box-shadow:none;border:0}}
 </style>
 </head>
 <body>
 <header class="topbar"><div class="in">
   <span class="brand">🛠 שיעור 3 · CSS</span>
   <span class="now" id="now"></span>
-  <span class="progress" title="ניחושים, אתגרים ומשימות שפתרתם בדף הזה"><span class="plbl">התקדמות</span> <span class="bar"><i id="progBar"></i></span> <span id="progTxt">0/0</span></span>
+  <span class="progress" title="שלבים שעברתם בשיעור"><span class="bar"><i id="progBar"></i></span> <span id="progTxt">0/0</span></span>
+  <button class="eggbtn" id="eggBtn" type="button" title="ביצי הפתעה – לחצו לרמזים">🥚 <span id="eggCount">0/5</span></button>
   <button class="themebtn" id="themeBtn" type="button">🌓 מצב תצוגה</button>
 </div></header>
+<dialog id="eggDlg" aria-labelledby="eggTitle">
+  <div class="dlg-h"><h3 id="eggTitle">🥚 ביצי הפתעה</h3><button class="btn" type="button" id="eggClose" aria-label="סגירה">✕</button></div>
+  <p class="muted" id="eggIntro">בדף מוחבאות 5 ביצים. כל אחת נמצאת בעזרת משהו שלומדים בשיעור. תקועים? לחצו על "רמז נוסף".</p>
+  <ul class="egglist" id="eggList"></ul>
+  <form class="codebox" id="codeForm"><label for="codeIn">מצאתם קוד סודי?</label><input id="codeIn" autocomplete="off" spellcheck="false" placeholder="הקלידו כאן" /><button class="btn primary" type="submit">בדיקה</button></form>
+  <p id="codeMsg" class="res-note"></p>
+</dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="party" id="party" aria-hidden="true"></div>
 
 <main>
-<div class="hero">
+<div class="lesson-head">
   <div class="school">אורט הנרי רונסון אשקלון · מגמת מדעי המחשב והנדסת תוכנה · יוחאי פרץ</div>
   <h1>שיעור 3 – עיצוב עם CSS</h1>
-  <p class="lead">בשיעורים 1 ו-2 בניתם דפים עם תוכן: כותרות, פסקאות, קישורים ותמונות. היום תלמדו לקבוע <b>איך</b> הם נראים.</p>
-  <div class="ways">
-    <div class="way"><b>🎬 1. צפו בסרטון</b>הסרטון של השיעור בקלאסרום – הדרך הראשית.</div>
-    <div class="way"><b>📖 2. עברו על הדף הזה</b>עם Visual Studio פתוח לידכם. כל דוגמה כאן – נסו גם אצלכם.</div>
-    <div class="way"><b>🎧 3. פודקסט (לא חובה)</b>להבין את הרעיונות הגדולים בדרך הביתה.</div>
-  </div>
-  <b>בסוף השיעור תדעו:</b>
-  <ul class="goals">
-    <li>להסביר מה ההבדל בין HTML ל-CSS.</li>
-    <li>לכתוב הוראת עיצוב, ולבחור על אילו תגיות היא תחול.</li>
-    <li>לשלוט ברווחים בעזרת "מודל הקופסה".</li>
-    <li>לחבר קובץ עיצוב אחד לכל הדפים באתר.</li>
-  </ul>
-  <nav class="toc" aria-label="פרקי השיעור" id="toc"></nav>
 </div>
-
-<!-- ============ 1 ============ -->
-<section class="chapter" id="c1" data-title="מה זה CSS?">
-  <header><span class="num">1</span><div><h2>מה זה CSS?</h2><div class="sub">אותו תוכן – מראה אחר לגמרי</div></div></header>
+<nav class="topics" id="topics" aria-label="נושאי השיעור"></nav>
+<nav class="steps" id="steps" aria-label="השלבים בנושא"></nav>
+<section class="topic" data-id="start" data-icon="🌱" data-title="פתיחה">
+  <article class="spread welcome">
+    <h3>ברוכים הבאים לשיעור 3 👋</h3>
+    <p class="lead">בשיעורים 1 ו-2 בניתם דפים עם תוכן. היום תלמדו לקבוע <b>איך הם נראים</b>: צבעים, גדלים, רווחים וסידור. בסוף השיעור תדעו לבנות בעצמכם את הדף הזה:</p>
+    <div class="preview-goal"><div id="welcomeStage"></div></div>
+    <h4>איך לומדים את השיעור?</h4>
+    <div class="ways">
+      <div class="way main"><b>📖 כאן, בדף הזה</b>הדף מכסה את כל מה שיש בסרטון ובמצגת, ומוסיף דוגמאות חיות לשחק בהן. מתאים למי שאוהב לקרוא ולנסות.</div>
+      <div class="way"><b>🎬 מעדיפים סרטון?</b>הסרטון של השיעור נמצא בקלאסרום. אחריו, קפצו ישר ל<a href="#" data-go="practice:1">תרגול וסיכום</a>.</div>
+      <div class="way"><b>🎧 פודקסט</b>תוספת, לא חובה: לשמוע את הרעיונות הגדולים בדרך הביתה.</div>
+    </div>
+    <h4>איך הדף עובד?</h4>
+    <ul class="how">
+      <li>🧭 <b>7 נושאים</b> (הלשוניות למעלה), ובכל אחד כמה שלבים קצרים. רואים <b>שלב אחד בכל פעם</b>.</li>
+      <li>👆 כל דוגמה כאן <b>חיה</b>: לוחצים, משנים ורואים. אי אפשר לשבור כלום.</li>
+      <li>❓ לפני חלק מהתוצאות יש שאלת ניחוש. מותר לטעות – בשביל זה היא שם.</li>
+      <li>💾 ההתקדמות נשמרת בדפדפן הזה. בערך 45 דקות בסך הכול – אפשר בכמה ישיבות.</li>
+    </ul>
+    <div class="eggnote">🥚 <b>ועוד משהו:</b> בדף מוחבאות <b>5 ביצי הפתעה</b>. כדי למצוא אותן צריך סקרנות – וכמה דברים שתלמדו היום. המונה למעלה; לחיצה עליו נותנת רמזים.</div>
+  </article>
   <article class="spread">
-    <h3><span class="sn">1.1</span>HTML זה התוכן. CSS זה המראה.</h3>
+    <h3>HTML זה התוכן. CSS זה המראה.</h3>
     <p>עד עכשיו כתבתם HTML. ה-HTML קובע <b>מה יש בדף</b>: כותרת, פסקה, תמונה. אבל הדפדפן מציג הכול בשחור על לבן, באותו גופן.</p>
     <p><b>CSS</b> היא שפה שקובעת <b>איך הדף נראה</b>: צבעים, גדלים, גופנים, רווחים וסידור. לאורך כל השיעור נעבוד על דף אחד – הדף של "פיצה דני". לחצו על הכפתורים והשוו:</p>
     <div class="ctrls"><div class="seg" id="s11seg"></div></div>
@@ -254,12 +335,9 @@ footer{color:var(--muted);font-size:13px;text-align:center;padding:20px}
     <div class="tip">💡 השם CSS הוא ראשי תיבות של Cascading Style Sheets – בערך "דפי סגנון". לא צריך לזכור את זה.</div>
   </article>
 </section>
-
-<!-- ============ 2 ============ -->
-<section class="chapter" id="c2" data-title="ההוראה הראשונה">
-  <header><span class="num">2</span><div><h2>ההוראה הראשונה: style בתוך התגית</h2><div class="sub">Inline – עיצוב שכותבים ישר בתוך התגית</div></div></header>
+<section class="topic" data-id="basics" data-icon="✏️" data-title="ההוראה הראשונה">
   <article class="spread">
-    <h3><span class="sn">2.1</span>מאפיין שאתם כבר מכירים</h3>
+    <h3>מאפיין שאתם כבר מכירים</h3>
     <p>בשיעור 2 הוספתם לתגיות <b>מאפיינים</b> (attributes): <code>href</code> לקישור, <code>src</code> לתמונה. לעיצוב יש מאפיין משלו: <code>style</code>. בתוכו כותבים הוראות עיצוב.</p>
     <p>כל הוראה בנויה מארבעה חלקים:</p>
     <div class="anat">
@@ -269,9 +347,14 @@ footer{color:var(--muted);font-size:13px;text-align:center;padding:20px}
       <div class="tok" style="--tc:#cbd5e1"><code>;</code><span><b>נקודה-פסיק</b>סוף ההוראה</span></div>
     </div>
     <div class="bridge">ב-C# כתבתם <code>x = 5;</code> – "שימו 5 בתוך x". כאן זה אותו רעיון: <code>color: red;</code> – "שימו אדום בצבע". שני הבדלים בלבד: במקום <code>=</code> כותבים נקודתיים, ואת הערך לא שמים במירכאות. הנקודה-פסיק בסוף – בדיוק כמו ב-C#.</div>
+    <details class="more"><summary>🐢 רוצים הסבר לאט יותר?</summary>
+      <p>חשבו על טופס: יש בו שדות, ובכל שדה ממלאים ערך. "צבע עיניים: חום". "גובה: 1.70".</p>
+      <p>ב-CSS זה אותו דבר. <b>המאפיין</b> הוא שם השדה (color = צבע), ו<b>הערך</b> הוא מה שממלאים בו (red). הנקודתיים מפרידות בין השם לערך, והנקודה-פסיק אומרת "סיימתי את השדה הזה".</p>
+      <p>לכן <code>color: red; font-size: 32px;</code> הם שני שדות מלאים: צבע = אדום, גודל = 32 פיקסלים.</p>
+    </details>
   </article>
   <article class="spread">
-    <h3><span class="sn">2.2</span>נסו: שנו את הכותרת</h3>
+    <h3>נסו: שנו את הכותרת</h3>
     <p>בחרו צבע וגודל, וראו איך הקוד והתוצאה משתנים יחד. אפשר לכתוב כמה הוראות באותו style – מפרידים ביניהן בנקודה-פסיק.</p>
     <div class="ctrls"><span class="lbl ltr">color:</span><div class="seg" id="s22c"></div></div>
     <div class="ctrls"><span class="lbl ltr">font-size:</span><div class="seg" id="s22s"></div></div>
@@ -280,13 +363,8 @@ footer{color:var(--muted);font-size:13px;text-align:center;padding:20px}
     <div class="ctrls"><button class="btn" id="s22break" type="button">🔨 תראו לי: מחקו את ה-; באמצע</button></div>
     <div class="what" id="s22what" hidden>הדפדפן מפריד בין ההוראות לפי ה-<code>;</code>. בלי הנקודה-פסיק הוא לא יודע איפה הוראה אחת נגמרת, ולכן <b>זורק את שתיהן</b>. ושימו לב: <b>אין הודעת שגיאה</b>. ב-CSS טעות פשוט "לא עובדת" בשקט. זו הסיבה שצריך לבדוק כל שינוי בדפדפן.</div>
   </article>
-</section>
-
-<!-- ============ 3 ============ -->
-<section class="chapter" id="c3" data-title="div ו-span">
-  <header><span class="num">3</span><div><h2>div ו-span: קופסאות לעיצוב</h2><div class="sub">כשרוצים לעצב כמה תגיות יחד, או רק מילה אחת</div></div></header>
   <article class="spread">
-    <h3><span class="sn">3.1</span>שתי תגיות בלי שום מראה משלהן</h3>
+    <h3>שתי תגיות בלי שום מראה משלהן</h3>
     <p>לפעמים רוצים לעצב <b>כמה תגיות ביחד</b> – למשל את כל התפריט, כולל הכותרת שלו. ולפעמים רוצים לעצב <b>רק חלק משורה</b> – למשל את המילה "במבצע". בשביל זה יש שתי תגיות שלא עושות כלום בעצמן – הן רק "עוטפות":</p>
     <table>
       <tr><th>תגית</th><th>מה היא עוטפת</th><th>איך היא תופסת מקום</th></tr>
@@ -299,12 +377,9 @@ footer{color:var(--muted);font-size:13px;text-align:center;padding:20px}
     <div class="what">ה-<code>div</code> הפך את הכותרת ושתי הפסקאות ל<b>יחידה אחת</b> – והרקע והמסגרת עוטפים את שלושתן יחד. ה-<code>span</code> צבע <b>רק את המילה</b> שבתוכו, והשורה נשארה שורה אחת. בלי עיצוב – שתיהן בלתי נראות לגמרי. בזה הן שונות מ-<code>h1</code> או <code>p</code>, שיש להן מראה משלהן.</div>
   </article>
 </section>
-
-<!-- ============ 4 ============ -->
-<section class="chapter" id="c4" data-title="מאפיינים שימושיים">
-  <header><span class="num">4</span><div><h2>מאפיינים שימושיים</h2><div class="sub">ארגז הכלים: צבע, גודל, גופן, מסגרת, יישור</div></div></header>
+<section class="topic" data-id="look" data-icon="🎨" data-title="מראה ורווחים">
   <article class="spread">
-    <h3><span class="sn">4.1</span>חוקרים מאפיין אחרי מאפיין</h3>
+    <h3>חוקרים מאפיין אחרי מאפיין</h3>
     <p>בחרו מאפיין, ואז ערך. הקו המקווקו האפור מראה את גבולות התגית – ככה רואים גם שינויים ברוחב.</p>
     <div class="ctrls"><div class="seg" id="s41p"></div></div>
     <div class="ctrls"><span class="lbl">ערך:</span><div class="seg" id="s41v"></div></div>
@@ -326,40 +401,36 @@ footer{color:var(--muted);font-size:13px;text-align:center;padding:20px}
       </table>
       <p>⚠ במצגת כתוב <code>hight</code> – הנכון הוא <code>height</code>. טעות כתיב במאפיין לא מציגה שגיאה, היא פשוט לא עובדת.</p>
     </details>
+    <div class="ghost" id="eggGhost" style="display: none;">👻 תפסתם אותי! הקוד הסודי: GHOST. הקלידו אותו במונה הביצים למעלה.</div>
   </article>
   <article class="spread">
-    <h3><span class="sn">4.2</span>איך ממרכזים תמונה?</h3>
+    <h3>איך ממרכזים תמונה?</h3>
     <p>תמונה מתנהגת כמו <b>מילה בתוך שורה</b> – היא יושבת בצד (אצלנו בימין, כי הדף בעברית). <code>text-align</code> לא עוזר כאן אם רוצים לשלוט בתמונה עצמה. יש שני מקרים:</p>
     <div class="ctrls"><div class="seg" id="s42seg"></div></div>
     <div id="s42"></div>
     <div class="what" id="s42what"></div>
   </article>
-</section>
-
-<!-- ============ 5 ============ -->
-<section class="chapter" id="c5" data-title="מודל הקופסה">
-  <header><span class="num">5</span><div><h2>מודל הקופסה</h2><div class="sub">איך שולטים ברווחים – בפנים ובחוץ</div></div></header>
   <article class="spread">
-    <h3><span class="sn">5.1</span>כל תגית היא מלבן</h3>
+    <h3>כל תגית היא מלבן</h3>
     <p>הדפדפן רואה כל תגית כ<b>קופסה מלבנית</b>. רוב הזמן לא רואים את הקופסאות – אבל הן שם. לחצו וראו:</p>
     <div class="ctrls"><div class="seg" id="s51seg"></div></div>
     <div id="s51"></div>
     <div class="what">כל כותרת וכל פסקה היא מלבן ש<b>תופס את כל רוחב השורה</b>, גם אם הטקסט קצר. לכן הן מסודרות אחת מתחת לשנייה. לסידור לפי "שורות שלמות" קוראים <code>block</code>. מעכשיו, כשמעצבים רווחים – חושבים על המלבנים האלה.</div>
   </article>
   <article class="spread">
-    <h3><span class="sn">5.2</span>padding – ריפוד: רווח <u>בתוך</u> המסגרת</h3>
+    <h3>padding – ריפוד: רווח <u>בתוך</u> המסגרת</h3>
     <p>אותה קופסה בדיוק, פעמיים. ההבדל היחיד: ה-<code>padding</code>.</p>
     <div class="compare" id="s52"></div>
     <div class="what">padding מרחיק את <b>התוכן מהמסגרת של עצמו</b>. המסגרת "התנפחה" החוצה, והקופסה גדלה. בלי padding הטקסט צמוד לקו – וזה נראה צפוף ולא מקצועי.</div>
   </article>
   <article class="spread">
-    <h3><span class="sn">5.3</span>margin – שוליים: רווח <u>מחוץ</u> למסגרת</h3>
+    <h3>margin – שוליים: רווח <u>מחוץ</u> למסגרת</h3>
     <p>עכשיו שתי קופסאות, אחת מעל השנייה. ההבדל היחיד: ה-<code>margin</code>.</p>
     <div class="compare" id="s53"></div>
     <div class="what">margin <b>לא משנה את הקופסה עצמה</b> – המסגרת נשארת באותו גודל. הוא מרחיק אותה <b>מהשכנות שלה</b>. כלל אצבע: רוצים אוויר בין הטקסט לקו? padding. רוצים אוויר בין שתי קופסאות? margin.</div>
   </article>
   <article class="spread">
-    <h3><span class="sn">5.4</span>כל השכבות יחד – מעבדה</h3>
+    <h3>כל השכבות יחד – מעבדה</h3>
     <p>מבפנים החוצה: <b>תוכן</b> ← <b>padding</b> ← <b>border</b> (המסגרת עצמה) ← <b>margin</b>. הזיזו כל פס לבד, ושימו לב מה זז ומה לא.</p>
     <div class="ctrls"><div class="seg" id="s54view"></div></div>
     <div class="split" style="margin-top:0">
@@ -381,10 +452,11 @@ footer{color:var(--muted);font-size:13px;text-align:center;padding:20px}
         </div>
       </div>
     </div>
+    <div class="tip">💡 טריק לזיכרון: <b>p</b>adding – <b>פ</b>׳ כמו <b>פְּנים</b>. <b>m</b>argin – <b>מ</b>׳ כמו <b>מִחוץ</b>.</div>
     <div class="what" id="boxHint">הזיזו פס אחד ושימו לב מה משתנה.</div>
   </article>
   <article class="spread">
-    <h3><span class="sn">5.5</span>לראות את הקופסה באתר אמיתי: F12</h3>
+    <h3>לראות את הקופסה באתר אמיתי: F12</h3>
     <p>בכל דפדפן יש <b>כלי מפתחים</b> (Developer Tools). הם מראים את הקופסה של כל תגית – באותם צבעים של המעבדה.</p>
     <ol>
       <li>לחצו <b>F12</b> (או Ctrl+Shift+I).</li>
@@ -398,47 +470,38 @@ footer{color:var(--muted);font-size:13px;text-align:center;padding:20px}
             <div style="background:var(--c)">content</div>
           </div></div></div>
     </div>
-    <div class="tip">💡 נסו עכשיו, על הדף הזה עצמו: לחצו F12 ובחרו את הכותרת של פרק 5. כל מה שאתם רואים כאן מעוצב ב-CSS. אפשר אפילו לשנות שם ערך ולראות מה קורה – זה זמני, ונעלם ברענון.</div>
+    <div class="tip">💡 נסו עכשיו, על הדף הזה עצמו: לחצו F12 ובחרו את הכותרת של השלב הזה. כל מה שאתם רואים כאן מעוצב ב-CSS. אפשר אפילו לשנות שם ערך ולראות מה קורה – זה זמני, ונעלם ברענון.</div>
   </article>
 </section>
-
-<!-- ============ 6 ============ -->
-<section class="chapter" id="c6" data-title="עיצוב במקום אחד">
-  <header><span class="num">6</span><div><h2>עיצוב במקום אחד: כלל CSS</h2><div class="sub">Internal – תגית style בראש הדף</div></div></header>
+<section class="topic" data-id="rules" data-icon="🎯" data-title="כללים ובוררים">
   <article class="spread">
-    <h3><span class="sn">6.1</span>הבעיה עם style בתוך התגית</h3>
+    <h3>הבעיה עם style בתוך התגית</h3>
     <p>בתפריט יש שתי מנות במבצע, ורוצים לצבוע את שתיהן באדום. עם מה שלמדנו עד עכשיו – כותבים אותו דבר פעמיים:</p>
     <div id="s61"></div>
     <div class="what">עכשיו דמיינו 8 מנות במבצע – 8 פעמים אותה הוראה. מחר מחליטים על כתום? מתקנים 8 מקומות, ובטוח שוכחים אחד. ובאתר עם 10 דפים? הצרה רק גדלה. <b>הפתרון:</b> לכתוב את העיצוב <b>פעם אחת</b>, ולהגיד לדפדפן <b>על מי</b> הוא חל.</div>
   </article>
   <article class="spread">
-    <h3><span class="sn">6.2</span>כלל CSS: "על מי" + "מה לעשות"</h3>
+    <h3>כלל CSS: "על מי" + "מה לעשות"</h3>
     <p>במקום style בתוך כל תגית, כותבים <b>כללים</b> (rules) בתוך תגית <code>&lt;style&gt;</code> אחת, ב-head של הדף. כל כלל עונה על שתי שאלות:</p>
     <div class="anat">
       <div class="tok" style="--tc:#f9a8d4"><code>h1</code><span><b>בורר (selector)</b>על מי הכלל חל</span></div>
       <div class="tok" style="--tc:#cbd5e1"><code>{</code><span><b>פותח</b></span></div>
-      <div class="tok" style="--tc:#86efac"><code>color: red;</code><span><b>הוראות</b>מה לעשות להן – בדיוק כמו בפרק 2</span></div>
+      <div class="tok" style="--tc:#86efac"><code>color: red;</code><span><b>הוראות</b>מה לעשות להן – כמו שכבר למדתם</span></div>
       <div class="tok" style="--tc:#cbd5e1"><code>}</code><span><b>סוגר</b></span></div>
     </div>
     <p>הכלל הזה אומר: "<b>כל</b> תגיות h1 בדף – צבע אדום". וכך זה נראה בתוך הדף:</p>
     <div class="codeblock"><button class="copy" type="button">העתקה</button><pre class="cv" id="s62code"></pre></div>
-    <div class="bridge">הסוגריים המסולסלים עובדים כמו ב-C#: הם תוחמים בלוק. ב-C# הבלוק שייך לפעולה או ל-if; כאן הוא שייך לבורר. ובתוך הבלוק – ההוראות מפרק 2, בלי שום שינוי.</div>
+    <div class="bridge">הסוגריים המסולסלים עובדים כמו ב-C#: הם תוחמים בלוק. ב-C# הבלוק שייך לפעולה או ל-if; כאן הוא שייך לבורר. ובתוך הבלוק – ההוראות שכבר למדתם, בלי שום שינוי.</div>
   </article>
-</section>
-
-<!-- ============ 7 ============ -->
-<section class="chapter" id="c7" data-title="בוררים">
-  <header><span class="num">7</span><div><h2>בוררים: איך מסמנים על מי לעבוד</h2><div class="sub">הלב של השיעור – לאט, צעד אחר צעד</div></div></header>
   <article class="spread">
-    <h3><span class="sn">7.1</span>בורר של שם תגית</h3>
+    <h3>בורר של שם תגית</h3>
     <p>הבורר הכי פשוט הוא <b>שם של תגית</b>. הכלל <code>p { color: blue; }</code> אומר "כל תגיות p – בכחול". הסתכלו בקוד ה-HTML וספרו כמה תגיות p יש בו.</p>
     <div class="predict" id="p71"></div>
     <div id="s71"></div>
     <div class="what" id="s71what" hidden>בורר של שם תגית תופס <b>את כל</b> התגיות מהסוג הזה בדף – בכל מקום. השורות שנבחרו מסומנות באדום גם בקוד וגם בתוצאה (העבירו את העכבר על שורה בקוד – והתגית שלה תסומן). זה מצוין לעיצוב כללי, אבל מה אם רוצים לצבוע <b>רק</b> את המנות במבצע? צריך לתת להן שם.</div>
   </article>
-
   <article class="spread">
-    <h3><span class="sn">7.2</span>class – שם לקבוצה</h3>
+    <h3>class – שם לקבוצה</h3>
     <p><code>class</code> הוא מאפיין שמוסיפים לתגית ב-HTML – בדיוק כמו href או style. הערך שלו הוא <b>שם שאתם ממציאים</b> (באנגלית, בלי רווחים). כל התגיות שמקבלות את אותו שם – הן קבוצה אחת.</p>
     <div class="bridge">דמיינו שיעור ספורט: "כל מי שלובש חולצה אדומה – לקבוצה הזו". ב-HTML, <code>class="sale"</code> הוא החולצה שמלבישים על תגית. ב-CSS, <code>.sale</code> פירושו "כל מי שלובש את החולצה sale". <b>הנקודה</b> לפני השם אומרת לדפדפן: "זה שם של class".</div>
     <p><b>שלב א':</b> מלבישים את החולצה – מוסיפים class לשתי המנות במבצע. <b>שלב ב':</b> כותבים כלל שמשתמש בה.</p>
@@ -446,11 +509,20 @@ footer{color:var(--muted);font-size:13px;text-align:center;padding:20px}
     <div id="s72"></div>
     <div class="predict" id="p72"></div>
     <div class="what" id="s72what" hidden>בשלב א' לא קרה כלום במראה – <b>class הוא רק שם</b>. רק כשכתבנו כלל עם <code>.sale</code>, הדפדפן חיפש את כל מי שקיבל את השם הזה – ומצא בדיוק שתיים. רוצים מנה שלישית במבצע? מוסיפים לה <code>class="sale"</code> וזהו – בלי לגעת ב-CSS.</div>
+    <details class="more"><summary>🐢 רוצים הסבר לאט יותר?</summary>
+      <p>כך הדפדפן עובד, צעד אחר צעד, כשהוא פוגש את הכלל <code>.sale { color: crimson; }</code>:</p>
+      <ol>
+        <li>הוא רואה <b>נקודה</b>: "אה, מחפשים class".</li>
+        <li>הוא קורא את השם: <b>sale</b>.</li>
+        <li>הוא עובר על <b>כל</b> התגיות בדף, אחת אחת, ושואל כל אחת: "יש לך class בשם sale?"</li>
+        <li>כל תגית שעונה "כן" – נצבעת. כל השאר – לא.</li>
+      </ol>
+      <p>לכן סוג התגית לא משנה: אם גם לכותרת h2 היה <code>class="sale"</code>, גם היא הייתה נצבעת.</p>
+    </details>
     <div class="trap">שוכחים את הנקודה: <code>sale { … }</code> בלי נקודה מחפש <b>תגית</b> בשם sale – ואין כזו. לא נבחר כלום, ואין הודעת שגיאה. <button class="btn" id="s72nodot" type="button" style="margin-top:6px">🔨 תראו לי</button></div>
   </article>
-
   <article class="spread">
-    <h3><span class="sn">7.3</span>id – שם לתגית אחת בלבד</h3>
+    <h3>id – שם לתגית אחת בלבד</h3>
     <p>גם <code>id</code> הוא מאפיין שמוסיפים ב-HTML. ההבדל: id הוא <b>מזהה ייחודי</b> – רק תגית אחת בכל הדף יכולה לקבל את השם הזה. ב-CSS כותבים <b>סולמית</b> לפני השם: <code>#logo</code>.</p>
     <div class="bridge">class הוא כמו חולצת קבוצה – הרבה ילדים לובשים אותה. id הוא כמו מספר תעודת זהות – יש רק אדם אחד עם המספר הזה. ב-C# זה כמו ההבדל בין סוג (כמה משתנים מאותו סוג) לבין שם של משתנה (אחד ויחיד).</div>
     <div id="s73"></div>
@@ -461,16 +533,14 @@ footer{color:var(--muted);font-size:13px;text-align:center;padding:20px}
     </table>
     <div class="predict" id="p73"></div>
   </article>
-
   <article class="spread">
-    <h3><span class="sn">7.4</span>פסיק: כמה בוררים באותו כלל</h3>
+    <h3>פסיק: כמה בוררים באותו כלל</h3>
     <p>רוצים לתת לכל הכותרות – גם h1 וגם h2 – את אותו צבע? במקום שני כללים, כותבים את שני הבוררים עם <b>פסיק</b> ביניהם. הפסיק פירושו "<b>וגם</b>".</p>
     <div id="s74"></div>
     <div class="what">הכלל חל על כל h1 <b>וגם</b> על כל h2 – בדיוק כאילו כתבנו שני כללים נפרדים, רק קצר יותר. (שימו לב שבדף יש עכשיו שתי כותרות h2 – אחת לתפריט ואחת לתוספות.)</div>
   </article>
-
   <article class="spread">
-    <h3><span class="sn">7.5</span>עץ המשפחה של הדף</h3>
+    <h3>עץ המשפחה של הדף</h3>
     <p>בשיעור 2 ראיתם שתגית יכולה להיות <b>בתוך</b> תגית אחרת (קינון – nesting). לתגיות שבתוך תגיות קוראים בשמות של משפחה:</p>
     <ul>
       <li><b>הורה (parent)</b> – התגית שעוטפת.</li>
@@ -484,9 +554,8 @@ footer{color:var(--muted);font-size:13px;text-align:center;padding:20px}
     </div>
     <div class="bridge">ההזחה (indentation) בקוד היא בדיוק עץ המשפחה: כל רמת הזחה = דור אחד פנימה. לכן מקפידים על הזחה מסודרת – היא מראה מי בתוך מי. זה כמו בלוקים מקוננים ב-C#: לולאה בתוך if בתוך פעולה.</div>
   </article>
-
   <article class="spread">
-    <h3><span class="sn">7.6</span>רווח מול גדול-מ: צאצאים או רק ילדים</h3>
+    <h3>רווח מול גדול-מ: צאצאים או רק ילדים</h3>
     <p>עכשיו אפשר לבחור תגיות <b>לפי המקום שלהן</b> במשפחה:</p>
     <ul>
       <li><code>.menu p</code> (עם <b>רווח</b>) – כל p שנמצא איפשהו בתוך menu: ילדים <b>וגם</b> נכדים.</li>
@@ -499,9 +568,8 @@ footer{color:var(--muted);font-size:13px;text-align:center;padding:20px}
     <div class="what" id="s76what" hidden>ההבדל היחיד הוא "גבינה". היא נמצאת בתוך extras, ו-extras נמצאת בתוך menu – כלומר היא <b>נכדה</b> של menu. הרווח תופס אותה (צאצא), וה-&gt; לא (לא ילדה ישירה).</div>
     <div class="tip">💡 במצגת הסימן מופיע הפוך (<code>&lt;</code>). הנכון הוא <code>&gt;</code> – "גדול מ", כמו חץ שמצביע מההורה אל הילד.</div>
   </article>
-
   <article class="spread">
-    <h3><span class="sn">7.7</span>מצבים: hover ועוד</h3>
+    <h3>מצבים: hover ועוד</h3>
     <p>אפשר לעצב תגית <b>רק כשהיא במצב מסוים</b> – למשל כשהעכבר עליה. כותבים נקודתיים ואת שם המצב. לזה קוראים <b>pseudo-class</b>. העבירו את העכבר על הכפתור בתוצאה:</p>
     <div id="s77"></div>
     <div class="what">הכלל הראשון חל על הכפתור תמיד. הכלל השני – עם <code>:hover</code> – חל <b>רק</b> כשהעכבר מעליו. עוד מצבים שימושיים: <code>:focus</code> (שדה שלוחצים עליו כדי להקליד – יהיה חשוב בטפסים) ו-<code>:visited</code> (קישור שכבר ביקרתם בו).</div>
@@ -509,21 +577,17 @@ footer{color:var(--muted);font-size:13px;text-align:center;padding:20px}
       <p>עם <b>שני</b> נקודתיים מעצבים חלק מתוך תגית. למשל <code>p::first-letter</code> מעצב רק את האות הראשונה של כל פסקה, ו-<code>p::first-line</code> רק את השורה הראשונה.</p>
     </details>
   </article>
-
   <article class="spread">
-    <h3><span class="sn">7.8</span>🔬 מעבדת בוררים: עכשיו תורכם</h3>
+    <h3>🔬 מעבדת בוררים: עכשיו תורכם</h3>
     <p>זה כל הדף של פיצה דני. בחרו אתגר, וכתבו בתיבה בורר שבוחר <b>בדיוק</b> את מה שמבקשים. התגיות שהבורר שלכם בוחר יסומנו באדום – גם בקוד וגם בתוצאה.</p>
     <ul class="chal" id="chal"></ul>
     <div class="sel-input"><input id="selInput" aria-label="כתבו בורר CSS" spellcheck="false" autocomplete="off" placeholder="למשל: p" /></div>
     <div id="s78"></div>
   </article>
 </section>
-
-<!-- ============ 8 ============ -->
-<section class="chapter" id="c8" data-title="קובץ חיצוני">
-  <header><span class="num">8</span><div><h2>קובץ CSS חיצוני: עיצוב אחד לכל האתר</h2><div class="sub">External – השיטה שבה תעבדו בפרויקט</div></div></header>
+<section class="topic" data-id="site" data-icon="🌐" data-title="קובץ לכל האתר">
   <article class="spread">
-    <h3><span class="sn">8.1</span>למה קובץ נפרד?</h3>
+    <h3>למה קובץ נפרד?</h3>
     <p>תגית style ב-head פותרת את החזרות <b>בתוך דף אחד</b>. אבל לאתר יש הרבה דפים. אם בכל דף יש style משלו – שוב צריך לתקן בכל דף. הפתרון: לכתוב את כל הכללים <b>בקובץ אחד</b> עם סיומת css, ולחבר אליו את כל הדפים.</p>
     <p>כאן יש שלושה דפים שמחוברים לאותו קובץ. שנו את הצבע בקובץ – ושימו לב מה קורה:</p>
     <div class="ctrls"><span class="lbl">צבע הכותרת h1 בקובץ style.css:</span><div class="seg" id="s81c"></div></div>
@@ -534,7 +598,7 @@ footer{color:var(--muted);font-size:13px;text-align:center;padding:20px}
     <div class="what">שיניתם <b>מקום אחד</b> – ו<b>כל הדפים</b> השתנו יחד. זה בדיוק מה שהמחוון בהגשה בודק: שהאתר נראה <b>אחיד</b>. לכן בפרויקט כל העיצוב יהיה בקובץ אחד.</div>
   </article>
   <article class="spread">
-    <h3><span class="sn">8.2</span>יוצרים את הקובץ ב-Visual Studio</h3>
+    <h3>יוצרים את הקובץ ב-Visual Studio</h3>
     <ol>
       <li>ב-Solution Explorer, בתוך <b>wwwroot</b>, כבר יש תיקייה בשם <b>css</b>.</li>
       <li>קליק ימני עליה ← Add ← New Item.</li>
@@ -545,7 +609,7 @@ footer{color:var(--muted);font-size:13px;text-align:center;padding:20px}
     <div class="trap">כותבים בתוך קובץ ה-css גם <code>&lt;style&gt;</code>. זה HTML, והוא לא שייך לקובץ CSS – הדפדפן יתבלבל ויתעלם מהכלל הראשון.</div>
   </article>
   <article class="spread">
-    <h3><span class="sn">8.3</span>מחברים את הדף לקובץ: תגית link</h3>
+    <h3>מחברים את הדף לקובץ: תגית link</h3>
     <p>בכל דף, בתוך ה-head, מוסיפים שורה אחת:</p>
     <div class="codeblock"><button class="copy" type="button">העתקה</button><pre class="cv" id="s83code"></pre></div>
     <p><code>rel="stylesheet"</code> אומר "זה קובץ עיצוב". <code>href</code> אומר <b>איפה</b> הקובץ – והחלק הזה מבלבל, אז בואו נלך בדרך צעד אחר צעד. הדף שלנו נמצא בתיקייה HTML, והקובץ בתיקייה css:</p>
@@ -558,9 +622,26 @@ footer{color:var(--muted);font-size:13px;text-align:center;padding:20px}
       </div>
     </div>
     <div class="bridge">זה אותו נתיב יחסי שהשתמשתם בו לתמונות בשיעור 2: <code>../Img/pic.jpg</code>. שתי נקודות = "עלו תיקייה אחת למעלה".</div>
+    <details class="more"><summary>🐢 רוצים הסבר לאט יותר?</summary>
+      <p>דמיינו שאתם בסייר הקבצים של Windows, בתוך התיקייה HTML, ורוצים להגיע לקובץ style.css:</p>
+      <ol>
+        <li>לוחצים על החץ "למעלה" – וחוזרים לתיקייה wwwroot. זה בדיוק מה ש-<code>../</code> אומר.</li>
+        <li>נכנסים לתיקייה css. זה ה-<code>css/</code>.</li>
+        <li>בוחרים את הקובץ. זה ה-<code>style.css</code>.</li>
+      </ol>
+      <p>הדפדפן הולך באותו מסלול בדיוק. אתם רק כותבים לו את המסלול במילים.</p>
+    </details>
   </article>
   <article class="spread">
-    <h3><span class="sn">8.4</span>⚠ כתבתי CSS והדף לא משתנה!</h3>
+    <h3>אותו עיצוב, שלושה מקומות: תרגיל ההמרה</h3>
+    <p>במצגת יש תרגיל חשוב: לוקחים דף שכל העיצוב שלו כתוב <b>בתוך התגיות</b>, ומעבירים אותו <b>לקובץ חיצוני</b>. עברו בין שלושת השלבים, ושימו לב שהתוצאה בדפדפן <b>לא משתנה בכלל</b>.</p>
+    <div class="ctrls"><div class="seg" id="sCvSeg"></div></div>
+    <div id="sCv"></div>
+    <div class="what" id="sCvWhat"></div>
+    <div class="tip">💡 לשינוי כזה – הקוד מסודר אחרת, אבל התוצאה זהה – קוראים <b>refactoring</b> (ארגון מחדש). מתכנתים עושים את זה כל הזמן, גם ב-C#.</div>
+  </article>
+  <article class="spread">
+    <h3>⚠ כתבתי CSS והדף לא משתנה!</h3>
     <p>זו התקלה הכי נפוצה בשיעור. בודקים לפי הסדר:</p>
     <ol>
       <li>תגית <code>link</code> נמצאת בתוך ה-head?</li>
@@ -573,12 +654,9 @@ footer{color:var(--muted);font-size:13px;text-align:center;padding:20px}
     <div class="tip">💡 F12 עוזר כאן: בלשונית Console תראו שגיאה אדומה אם הקובץ לא נמצא (404), ובלשונית Styles תראו אם הכלל שלכם בכלל הגיע לתגית.</div>
   </article>
 </section>
-
-<!-- ============ 9 ============ -->
-<section class="chapter" id="c9" data-title="מי מנצח?">
-  <header><span class="num">9</span><div><h2>מי מנצח כשכללים מתווכחים?</h2><div class="sub">סדר קדימויות</div></div></header>
+<section class="topic" data-id="wins" data-icon="⚖️" data-title="קדימויות והערות">
   <article class="spread">
-    <h3><span class="sn">9.1</span>שני כללים, תגית אחת</h3>
+    <h3>שני כללים, תגית אחת</h3>
     <p>לפעמים כמה כללים רוצים לצבוע את <b>אותה תגית</b> בצבעים שונים. לדוגמה, לפסקה הזו יש גם class וגם id:</p>
     <div class="codeblock"><pre class="cv" id="s91code"></pre></div>
     <p>הדפדפן מחליט לפי סדר הכוח הזה – מהחזק לחלש:</p>
@@ -590,6 +668,16 @@ footer{color:var(--muted);font-size:13px;text-align:center;padding:20px}
     </ol>
     <p>ואם שני כללים <b>שווים בכוח</b> (למשל שני כללי class)? מנצח <b>זה שנכתב אחרון</b>.</p>
     <div class="bridge">ככל שהבורר <b>מדויק יותר</b>, הוא חזק יותר. "כל הפסקאות" (p) הוא כללי מאוד. "הקבוצה note" מדויק יותר. "התגית האחת msg" (id) – הכי מדויק. הגיוני: מי שכיוון בדיוק לתגית הזו כנראה התכוון אליה.</div>
+    <details class="more"><summary>🐢 רוצים דוגמה מלאה, לאט?</summary>
+      <p>לפסקה יש <code>id="msg"</code> וגם <code>class="note"</code>. כתובים שלושה כללים: <code>p</code> בכחול, <code>.note</code> בירוק, <code>#msg</code> באדום.</p>
+      <p>הדפדפן שואל: "מי מהכללים כיוון <b>הכי בדיוק</b> לתגית הזו?"</p>
+      <ul>
+        <li><code>p</code> = "כל הפסקאות בדף" – כללי מאוד.</li>
+        <li><code>.note</code> = "כל מי שבקבוצה note" – יותר מדויק.</li>
+        <li><code>#msg</code> = "התגית האחת והיחידה msg" – הכי מדויק. <b>אדום מנצח.</b></li>
+      </ul>
+      <p>ואם מוסיפים <code>style="color: purple"</code> בתוך התגית עצמה? אין דבר מדויק יותר מהוראה שכתובה צמוד לתגית. <b>סגול מנצח.</b></p>
+    </details>
     <div class="predict" id="p91"></div>
     <p>עכשיו נסו בעצמכם: סמנו אילו כללים קיימים, וראו מי מנצח ולמה.</p>
     <div class="split">
@@ -598,31 +686,25 @@ footer{color:var(--muted);font-size:13px;text-align:center;padding:20px}
     </div>
   </article>
   <article class="spread">
-    <h3><span class="sn">9.2</span>ירושה: מה עובר מהורה לילדים</h3>
+    <h3>ירושה: מה עובר מהורה לילדים</h3>
     <p>חלק מהמאפיינים <b>עוברים בירושה</b> מההורה לכל הצאצאים שלו – כמו שילדים יורשים שם משפחה. לחצו והשוו:</p>
     <div class="ctrls"><div class="seg" id="s92seg"></div></div>
     <div id="s92"></div>
     <div class="what" id="s92what"></div>
-    <div class="tip">💡 במצגת כתוב שזו המשמעות של המילה cascading. זה לא מדויק: cascading הוא בעצם סדר הקדימויות מ-9.1 (מי מנצח), והירושה היא נושא נפרד.</div>
+    <div class="tip">💡 במצגת כתוב שזו המשמעות של המילה cascading. זה לא מדויק: cascading הוא בעצם סדר הקדימויות מהשלב הקודם (מי מנצח), והירושה היא נושא נפרד.</div>
   </article>
-</section>
-
-<!-- ============ 10 ============ -->
-<section class="chapter" id="c10" data-title="הערות">
-  <header><span class="num">10</span><div><h2>הערות ב-CSS</h2><div class="sub">טקסט שהדפדפן מדלג עליו</div></div></header>
   <article class="spread">
-    <h3><span class="sn">10.1</span>להסביר, ולכבות לרגע</h3>
+    <!-- 🥚 לחישה: הדפדפן מדלג על הערות – אבל אתם לא! הקוד הסודי: WHISPER. הקלידו אותו במונה הביצים למעלה. -->
+    <h3>להסביר, ולכבות לרגע</h3>
     <p>ב-CSS כותבים הערה בין <code>/*</code> ל-<code>*/</code>. הדפדפן מדלג עליה. משתמשים בזה לשני דברים: להסביר את הקוד, ו<b>לכבות הוראה לרגע</b> בלי למחוק אותה – כדי לבדוק מה היא עושה.</p>
     <div class="ctrls"><div class="seg" id="s101seg"></div></div>
     <div id="s101"></div>
     <div class="bridge">ב-C# כתבתם הערות עם <code>//</code>. ב-CSS <b>אין</b> <code>//</code> – רק <code>/* */</code>. ב-HTML, כזכור משיעור 2: <code>&lt;!-- --&gt;</code>. ב-Visual Studio, Ctrl+K ואז Ctrl+C הופך שורה להערה בכל השפות.</div>
   </article>
 </section>
-
-<!-- ============ practice ============ -->
-<section class="chapter" id="c11" data-title="נסו עכשיו">
-  <header><span class="num">🛠</span><div><h2>נסו עכשיו</h2><div class="sub">כותבים בעצמכם – הדף בודק לבד</div></div></header>
+<section class="topic" data-id="practice" data-icon="🛠" data-title="תרגול וסיכום">
   <article class="spread">
+    <h3>🛠 נסו עכשיו: כותבים בעצמכם</h3>
     <p>זה הדף של פיצה דני, עם קובץ CSS. בצעו את המשימות לפי הסדר – כשמשימה מצליחה, היא נצבעת בירוק ✔. אחר כך עשו את אותו דבר אצלכם ב-Visual Studio.</p>
     <div class="pg">
       <div class="editor">
@@ -636,11 +718,8 @@ footer{color:var(--muted);font-size:13px;text-align:center;padding:20px}
     </div>
     <ul class="tasks" id="tasks"></ul>
   </article>
-</section>
-
-<section class="chapter" id="c12" data-title="צעד בפרויקט">
-  <header><span class="num">🧩</span><div><h2>צעד בפרויקט</h2><div class="sub">מתקדמים לקראת הגשה 1</div></div></header>
   <article class="spread">
+    <h3>🧩 צעד בפרויקט – לקראת הגשה 1</h3>
     <div class="stepbox">
       <b>בונים את קובץ העיצוב של האתר שלכם:</b>
       <ol>
@@ -653,12 +732,45 @@ footer{color:var(--muted);font-size:13px;text-align:center;padding:20px}
       <label style="display:flex;gap:8px;align-items:center;margin-top:8px"><input type="checkbox" id="stepDone" /> עשיתי את הצעד בפרויקט שלי</label>
     </div>
   </article>
+  <article class="spread" id="quiz">
+    <h3>✅ בדקו את עצמכם</h3>
+    <p>5 שאלות. טעיתם? ההסבר יגיד למה – ונסו שוב.</p>
+  </article>
+  <article class="spread" id="summary">
+    <h3>📄 דף סיכום: כל השיעור במסך אחד</h3>
+    <p>כל מה שצריך לזכור. אפשר לחזור לכאן בכל זמן, או להדפיס. <button class="btn" type="button" id="printBtn">🖨 הדפסה</button></p>
+    <div class="cheat">
+      <div class="card"><h4>איפה כותבים CSS?</h4>
+        <table>
+          <tr><td><b>Inline</b></td><td><code>&lt;p style="color: red;"&gt;</code></td></tr>
+          <tr><td><b>Internal</b></td><td>תגית <code>&lt;style&gt;</code> בתוך ה-head</td></tr>
+          <tr><td><b>External</b> ⭐</td><td>קובץ css נפרד, ובכל דף שורת link בתוך ה-head:</td></tr>
+        </table>
+        <div class="codeblock"><pre class="cv" id="sumLink"></pre></div></div>
+      <div class="card"><h4>מבנה של כלל</h4>
+        <div class="codeblock"><pre class="cv" id="sumRule"></pre></div>
+        <p>בורר = <b>על מי</b>. בתוך הסוגריים = <b>מה לעשות</b>. כל הוראה: מאפיין, נקודתיים, ערך, נקודה-פסיק.</p></div>
+      <div class="card"><h4>בוררים</h4>
+        <table>
+          <tr><td><code>p</code></td><td>כל תגיות p</td></tr>
+          <tr><td><code>.sale</code></td><td>כל מי שיש לו <code>class="sale"</code></td></tr>
+          <tr><td><code>#logo</code></td><td>התגית האחת עם <code>id="logo"</code></td></tr>
+          <tr><td><code>h1, h2</code></td><td>כל h1 וגם כל h2</td></tr>
+          <tr><td><code>.menu p</code></td><td>כל p בתוך menu, בכל עומק</td></tr>
+          <tr><td><code>.menu > p</code></td><td>רק p שהוא ילד ישיר של menu</td></tr>
+          <tr><td><code>.order:hover</code></td><td>רק כשהעכבר מעל</td></tr>
+        </table></div>
+      <div class="card"><h4>מודל הקופסה (מבפנים החוצה)</h4>
+        <ol><li><b>תוכן</b> – הטקסט או התמונה</li><li><b>padding</b> – אוויר <b>בתוך</b> המסגרת (פ׳ כמו פְּנים)</li><li><b>border</b> – המסגרת</li><li><b>margin</b> – אוויר <b>מחוץ</b> למסגרת (מ׳ כמו מִחוץ)</li></ol></div>
+      <div class="card"><h4>מי מנצח?</h4>
+        <ol><li>Inline</li><li>id</li><li>class</li><li>שם תגית</li></ol>
+        <p>שווים בכוח? מנצח האחרון שנכתב.</p></div>
+      <div class="card"><h4>הדף לא משתנה? בודקים:</h4>
+        <ul><li>link בתוך ה-head, עם <code>rel="stylesheet"</code></li><li>נתיב שמתחיל ב-<code>../</code></li><li>נקודה ל-class, סולמית ל-id</li><li>שם מאפיין בלי טעות כתיב</li><li>שמירה (Ctrl+S) ורענון (Ctrl+F5)</li></ul></div>
+    </div>
+  </article>
 </section>
-
-<section class="chapter" id="c13" data-title="בדקו את עצמכם">
-  <header><span class="num">✅</span><div><h2>בדקו את עצמכם</h2><div class="sub">5 שאלות. טעיתם? ההסבר יגיד למה – ונסו שוב.</div></div></header>
-  <article class="spread" id="quiz"></article>
-</section>
+<div class="stepnav" id="stepnav"></div>
 </main>
 <footer>בניית אתרים · המדריך המעשי · שיעור 3 – CSS · יוחאי פרץ</footer>
 
@@ -671,7 +783,8 @@ const store = {
   set(k,v){ try { localStorage.setItem('css3-'+k, JSON.stringify(v)); } catch(e){} }
 };
 const state = store.get('state') || {};
-const save = () => { store.set('state', state); paintProgress(); };
+let T = [];
+const save = () => { store.set('state', state); if (T.length) paintProgress(); };
 
 /* ---------- theme ---------- */
 const savedTheme = store.get('theme'); if (savedTheme) document.documentElement.dataset.theme = savedTheme;
@@ -893,7 +1006,7 @@ const s42 = new Split($('#s42'));
 const C42 = [
   {html:'<h2>המנה של היום</h2>\n<img src="../Img/pizza.jpg" width="100" />', what:'התמונה יושבת בצד, כמו מילה בתחילת שורה.'},
   {html:'<h2>המנה של היום</h2>\n<img src="../Img/pizza.jpg" width="100"\n     style="display: block; margin-left: auto; margin-right: auto;" />', m:{1:'new',2:'new'},
-   what:'שני צעדים: <code>display: block</code> הופך את התמונה ממילה-בשורה למלבן בשורה משלו. ואז <code>margin-left: auto</code> ו-<code>margin-right: auto</code> אומרים לדפדפן: "קח את כל המקום הפנוי וחלק אותו <b>שווה בשווה</b> – חצי מימין, חצי משמאל". (את margin נכיר לעומק בפרק 5.)'},
+   what:'שני צעדים: <code>display: block</code> הופך את התמונה ממילה-בשורה למלבן בשורה משלו. ואז <code>margin-left: auto</code> ו-<code>margin-right: auto</code> אומרים לדפדפן: "קח את כל המקום הפנוי וחלק אותו <b>שווה בשווה</b> – חצי מימין, חצי משמאל". (את margin נכיר לעומק בנושא הבא, "מודל הקופסה".)'},
   {html:'<h2>המנות של היום</h2>\n<div>\n    <img src="../Img/pizza.jpg" width="100" />\n    <img src="../Img/pizza.jpg" width="100" />\n</div>', what:'שתי תמונות יושבות בצד אחת ליד השנייה.'},
   {html:'<h2>המנות של היום</h2>\n<div style="display: flex; justify-content: center; gap: 10px;">\n    <img src="../Img/pizza.jpg" width="100" />\n    <img src="../Img/pizza.jpg" width="100" />\n</div>', m:{1:'new'},
    what:'כאן לא מעצבים את התמונות – אלא את <b>ה-div שעוטף אותן</b>. <code>display: flex</code> מסדר את מה שבתוכו בשורה, <code>justify-content: center</code> שם את השורה באמצע, ו-<code>gap</code> מוסיף רווח בין התמונות.'}
@@ -1041,7 +1154,7 @@ function draw76(sel){
 }
 seg($('#s76seg'), [{label:'.menu p', mono:true, v:'.menu p'}, {label:'.menu > p', mono:true, v:'.menu > p'}], o => draw76(o.v), 0);
 predict($('#p76'), {
-  q: 'כמה פסקאות ייבחרו ב-<code>.menu > p</code>? (היעזרו בעץ המשפחה מ-7.5)',
+  q: 'כמה פסקאות ייבחרו ב-<code>.menu > p</code>? (היעזרו בעץ המשפחה מהשלב הקודם)',
   opts: ['4', '3', '1'],
   correct: 1,
   onCorrect: () => { $('#s76what').hidden = false; },
@@ -1089,6 +1202,7 @@ function runLab(){
   if (!sel) { s78.highlight(null); s78.say('כתבו בורר בתיבה. למשל <code>p</code>, ואז נסו לפתור את האתגר המסומן.'); return; }
   const l = s78.highlight(sel);
   if (l === null) { s78.say('<span class="err">הבורר לא תקין. בדקו נקודה (class), סולמית (id), פסיקים ורווחים.</span>'); return; }
+  if (l.length === s78.stage.all().length && window.__egg) window.__egg('star');
   let msg = countMsg(l);
   if (same(l, [...refSets[cur]])) {
     msg += ' <b style="color:var(--ok)">✔ פתרתם את אתגר ' + (cur+1) + '!</b>';
@@ -1202,7 +1316,7 @@ const TASKS = [
    test: d => { const m = d.querySelector('.menu'); return m && d.defaultView.getComputedStyle(m).paddingTop === '20px'; }},
   {id:'t4', text:'הרחיקו את התפריט מהשכנים שלו: <code>margin: 30px</code>.',
    test: d => { const m = d.querySelector('.menu'); return m && d.defaultView.getComputedStyle(m).marginTop === '30px'; }},
-  {id:'t5', text:'אתגר: כשהעכבר על הכפתור "להזמנה", הרקע שלו נהיה <code>orange</code>. (רמז: <code>:hover</code>, פרק 7.7.) בדקו עם העכבר וסמנו בעצמכם.', manual:true}
+  {id:'t5', text:'אתגר: כשהעכבר על הכפתור "להזמנה", הרקע שלו נהיה <code>orange</code>. (רמז: <code>:hover</code> – <a href="#" data-go="rules:9">השלב על מצבים</a>.) בדקו עם העכבר וסמנו בעצמכם.', manual:true}
 ];
 const done = state.tasks || {};
 const tasksBox = $('#tasks');
@@ -1238,24 +1352,150 @@ const QUIZ = [
   {q:'ב-HTML כתוב <code>class="vegan"</code>. איך כותבים את הבורר ב-CSS?', opts:['<code>vegan</code>','<code>#vegan</code>','<code>.vegan</code>'], correct:2,
    why:['בלי סימן – הדפדפן מחפש תגית בשם vegan.', 'סולמית היא ל-id.', 'נקודה = class.']},
   {q:'מה ההבדל בין <code>.menu p</code> לבין <code>.menu > p</code>?', opts:['אין הבדל','הראשון: כל p בתוך menu בכל עומק. השני: רק ילדים ישירים','הראשון: רק ילדים ישירים. השני: כל p בכל עומק'], correct:1,
-   why:['יש – נסו בפרק 7.6.', 'רווח = צאצאים בכל עומק, > = רק ילדים ישירים.', 'הפוך.']},
+   why:['יש – <a href="#" data-go="rules:8">נסו כאן</a>.', 'רווח = צאצאים בכל עומק, > = רק ילדים ישירים.', 'הפוך.']},
   {q:'כתבתם קובץ CSS, חיברתם אותו, והדף לא משתנה בכלל. מה הדבר הראשון לבדוק?', opts:['להתקין מחדש את Visual Studio','את הנתיב בתגית link (וש-link בתוך ה-head)','להחליף דפדפן'], correct:1,
-   why:['ממש לא 🙂', 'רוב הפעמים הנתיב שגוי – למשל חסר <code>../</code>. ראו את רשימת הבדיקה בפרק 8.4.', 'זה כמעט אף פעם לא הדפדפן.']}
+   why:['ממש לא 🙂', 'רוב הפעמים הנתיב שגוי – למשל חסר <code>../</code>. ראו <a href="#" data-go="site:5">את רשימת הבדיקה</a>.', 'זה כמעט אף פעם לא הדפדפן.']}
 ];
 QUIZ.forEach((qq,i) => { const d = document.createElement('div'); d.className = 'predict'; d.id = 'q' + (i+1); $('#quiz').appendChild(d); predict(d, Object.assign({quiz:true}, qq, {q:(i+1) + '. ' + qq.q})); });
 
-/* ---------- progress + chapter tracking ---------- */
-function paintProgress(){
-  const items = predicts.length + CHAL.length + TASKS.length + 1;
-  const n = predicts.filter(id => state[id]).length + CHAL.filter((c,i) => (state.chal||{})[i]).length + TASKS.filter(t => (state.tasks||{})[t.id]).length + (state.step ? 1 : 0);
-  $('#progBar').style.width = (100 * n / items) + '%'; $('#progTxt').textContent = n + '/' + items;
-  TASKS.forEach((t,i) => { const li = $('#task-' + t.id); const ok = !!(state.tasks||{})[t.id]; li.classList.toggle('done', ok); li.querySelector('.st').textContent = ok ? '✔' : (i+1); });
+/* ---------- conversion exercise: inline -> internal -> external ---------- */
+const CV_BODY = ['<h1>פיצה דני</h1>','<p>מרגריטה – 45 שקל</p>','<p class="sale">פטריות – 39 שקל במבצע</p>','<p class="sale">זיתים – 39 שקל במבצע</p>'];
+const CV_RULES = 'h1 {\n    color: teal;\n}\n.sale {\n    color: crimson;\n}';
+const CV = [
+  {src: ['<h1 style="color: teal;">פיצה דני</h1>','<p>מרגריטה – 45 שקל</p>','<p style="color: crimson;">פטריות – 39 שקל במבצע</p>','<p style="color: crimson;">זיתים – 39 שקל במבצע</p>'].join('\n'), m:{2:'warn',3:'warn'},
+   what:'כל תגית נושאת את העיצוב שלה בתוכה. שתי המנות במבצע – אותה הוראה פעמיים. עובד, אבל קשה לתחזק.'},
+  {src: ['<head>','    <style>','        h1 { color: teal; }','        .sale { color: crimson; }','    </style>','</head>','<body>'].concat(CV_BODY.map(l => '    ' + l)).concat(['</body>']).join('\n'), m:{1:'new',2:'new',3:'new',4:'new',9:'new',10:'new'}, css:[2,3],
+   what:'העיצוב עבר לתגית style ב-head. במקום style בכל תגית – <code>class="sale"</code> ב-HTML וכלל אחד ב-CSS. הרבה יותר מסודר – אבל זה עדיין עובד <b>רק בדף הזה</b>.'},
+  {src: ['<head>','    <link rel="stylesheet" href="../css/style.css" />','</head>','<body>'].concat(CV_BODY.map(l => '    ' + l)).concat(['</body>']).join('\n'), m:{1:'new'}, ext:true,
+   what:'הכללים עברו לקובץ נפרד, וב-head נשארה <b>שורה אחת</b>: link. כל דף באתר יכול לקבל את אותו עיצוב עם אותה שורה. זה בדיוק המצב שאליו מכוונים בפרויקט.'}
+];
+const sCv = new Split($('#sCv'));
+const cvCssTitle = sCv.cssw.querySelector('.pane-h');
+seg($('#sCvSeg'), ['1. בתוך התגיות (inline)', '2. בראש הדף (internal)', '3. קובץ חיצוני (external)'], (o,i) => {
+  const c = CV[i];
+  sCv.setHtml(c.src, c.m);
+  if (c.css) c.css.forEach(k => { const ln = sCv.hPre.querySelector('.ln[data-i="' + k + '"]'); ln.innerHTML = hlCssLine(c.src.split('\n')[k]); });
+  if (i === 0) sCv.setCss('');
+  else if (i === 1) { sCv.setCss(''); sCv.stage.html(CV_BODY.join('\n')).css(CV_RULES); }
+  else { sCv.setCss(CV_RULES); cvCssTitle.innerHTML = '<span class="dot"></span>css/style.css – קובץ נפרד'; sCv.stage.html(CV_BODY.join('\n')); }
+  $('#sCvWhat').innerHTML = c.what + ' <b>והתוצאה בדפדפן? זהה בכל שלושת השלבים.</b>';
+});
+
+/* ---------- welcome preview + summary ---------- */
+new Stage($('#welcomeStage')).html(PF).css(['body {','    font-family: Arial, sans-serif;','    background-color: #fff8ee;','}','#logo {','    color: #c0392b;','    text-align: center;','}','.menu {','    background-color: white;','    border: 2px solid orange;','    border-radius: 12px;','    padding: 4px 20px;','    margin: 12px 0;','}','.menu h2 {','    color: #e67e22;','}','.sale {','    color: crimson;','    font-weight: bold;','}','.extras {','    border-top: 2px dashed orange;','}'].join('\n'));
+codeLines($('#sumRule'), 'selector {\n    property: value;\n}', 'css');
+codeLines($('#sumLink'), '<link rel="stylesheet" href="../css/style.css" />', 'html');
+$('#printBtn').addEventListener('click', () => window.print());
+
+/* ---------- easter eggs ---------- */
+const EGGS = [
+  {id:'console', icon:'🕵️', name:'הודעה סודית למפתחים', learn:'כלי המפתחים (F12) הם חלון אל מאחורי הקלעים של כל אתר – גם של אתרים שלא אתם בניתם.',
+   h1:'מפתחים אמיתיים מסתכלים גם מאחורי הקלעים של הדף. איפה הדפדפן כותב הודעות שמיועדות רק למפתחים?', h2:'לחצו F12 ועברו ללשונית <b>Console</b>.', code:'REVWVE9PTFM='},
+  {id:'ghost', icon:'👻', name:'הרוח הנסתרת', learn:'<code>display: none</code> מעלים תגית מהמסך – אבל היא עדיין שם, בקוד.',
+   h1:'באחד השלבים של "מראה ורווחים" מסתתר משפט שאי אפשר לראות. איזה מאפיין גורם לתגית להיעלם?', h2:'F12 ← לשונית Elements ← Ctrl+F וחפשו ghost. מצאתם? בטלו לו את ה-<code>display: none</code> (לחיצה על תיבת הסימון ליד ההוראה).', code:'R0hPU1Q='},
+  {id:'whisper', icon:'💬', name:'הלחישה', learn:'הערות לא מוצגות בדף, אבל כל אחד יכול לקרוא אותן בקוד המקור. אל תכתבו בהן סודות אמיתיים!',
+   h1:'למדתם שהדפדפן מדלג על הערות. אבל הן עדיין כתובות בקוד של הדף...', h2:'Ctrl+U פותח את קוד המקור של הדף. שם, Ctrl+F וחפשו את המילה "לחישה".', code:'V0hJU1BFUg=='},
+  {id:'star', icon:'⭐', name:'הכוכב שבוחר הכול', learn:'הבורר <code>*</code> (כוכבית) בוחר את כל התגיות. לא לימדנו אותו – גיליתם לבד!',
+   h1:'במעבדת הבוררים: אפשר לבחור את כל 11 התגיות בבת אחת?', h2:'יש בורר של תו אחד בלבד שעושה את זה. הוא נראה כמו כוכב.'},
+  {id:'paint', icon:'🎨', name:'צובעים את המדריך', learn:'משתני CSS (כמו <code>--accent</code>) מאפשרים לשנות צבע בכל האתר ממקום אחד – אותו רעיון כמו קובץ חיצוני.',
+   h1:'גם הדף הזה בנוי מ-CSS. מה יקרה אם תשנו לו את הצבע הראשי?', h2:'F12 ← Elements ← בחרו את השורה הראשונה, &lt;html&gt; ← בחלון Styles חפשו <code>--accent</code> ושנו את הערך לצבע אחר.'}
+];
+const found = state.eggs || {}; const hints = state.hints || {};
+function toast(html){ const t = $('#toast'); t.innerHTML = html; t.classList.add('show'); clearTimeout(toast.tm); toast.tm = setTimeout(() => t.classList.remove('show'), 4200); }
+function party(){
+  const p = $('#party'); const em = ['🍕','🥚','🎉','🍕','⭐'];
+  for (let i = 0; i < 45; i++) { const s = document.createElement('span'); s.textContent = em[i % em.length]; s.style.left = Math.random() * 100 + '%'; s.style.animationDuration = (2.5 + Math.random() * 2.5) + 's'; s.style.animationDelay = Math.random() * 1.5 + 's'; p.appendChild(s); }
+  setTimeout(() => p.innerHTML = '', 7000);
 }
-paintProgress();
-const chapters = [...document.querySelectorAll('.chapter')];
-$('#toc').innerHTML = chapters.map(c => { const n = c.querySelector('.num').textContent; return '<a href="#' + c.id + '"><span class="n">' + n + '</span><bdi>' + c.dataset.title + '</bdi></a>'; }).join('');
-const io = new IntersectionObserver(es => { es.forEach(e => { if (e.isIntersecting) $('#now').innerHTML = '· ' + e.target.querySelector('.num').textContent + ' <bdi>' + e.target.dataset.title + '</bdi>'; }); }, {rootMargin:'-20% 0px -70% 0px'});
-chapters.forEach(c => io.observe(c));
+function paintEggs(){
+  const n = EGGS.filter(e => found[e.id]).length;
+  $('#eggCount').textContent = n + '/' + EGGS.length;
+  $('#eggIntro').innerHTML = n === EGGS.length ? '🏆 <b>מצאתם את כל הביצים!</b> סקרנות היא התכונה הכי חשובה של מפתחים – ויש לכם אותה.' : 'בדף מוחבאות 5 ביצים. כל אחת נמצאת בעזרת משהו שלומדים בשיעור. תקועים? לחצו על "רמז נוסף".';
+  $('#eggList').innerHTML = EGGS.map(e => found[e.id]
+    ? '<li class="found"><b>' + e.icon + ' ' + e.name + ' ✔</b>' + e.learn + '</li>'
+    : '<li><b>❓ ביצה נסתרת</b>' + e.h1 + (hints[e.id] ? '<span class="h2">💡 ' + e.h2 + '</span>' : '<br><button class="hintbtn" type="button" data-hint="' + e.id + '">רמז נוסף</button>') + '</li>').join('');
+}
+function findEgg(id){
+  if (found[id]) return;
+  found[id] = true; state.eggs = found; save(); paintEggs();
+  const e = EGGS.find(x => x.id === id), n = EGGS.filter(x => found[x.id]).length;
+  toast(e.icon + ' מצאתם ביצה: <b>' + e.name + '</b> (' + n + '/' + EGGS.length + ')' + (n === EGGS.length ? ' – כולן! 🏆' : ''));
+  const b = $('#eggBtn'); b.classList.remove('bump'); void b.offsetWidth; b.classList.add('bump');
+  if (n === EGGS.length) party();
+}
+window.__egg = findEgg;
+$('#eggBtn').addEventListener('click', () => { paintEggs(); $('#codeMsg').textContent = ''; try { $('#eggDlg').showModal(); } catch(e){ $('#eggDlg').setAttribute('open',''); } });
+$('#eggClose').addEventListener('click', () => $('#eggDlg').close());
+$('#eggDlg').addEventListener('click', e => { if (e.target === $('#eggDlg')) $('#eggDlg').close(); });
+$('#eggList').addEventListener('click', e => { const b = e.target.closest('[data-hint]'); if (b) { hints[b.dataset.hint] = true; state.hints = hints; save(); paintEggs(); } });
+$('#codeForm').addEventListener('submit', e => {
+  e.preventDefault();
+  let v = ''; try { v = btoa($('#codeIn').value.trim().toUpperCase()); } catch(err){}
+  const egg = EGGS.find(x => x.code && x.code === v);
+  if (egg) { const was = found[egg.id]; findEgg(egg.id); $('#codeMsg').innerHTML = was ? 'את הביצה הזו כבר מצאתם 🙂' : '✔ נכון!'; $('#codeIn').value = ''; }
+  else $('#codeMsg').innerHTML = '<span class="err">הקוד לא נכון. בדקו שוב 🙂</span>';
+});
+console.log('%c🥚 מצאתם ביצה!', 'font-size:22px;font-weight:bold;color:#e67e22');
+console.log('%cמפתחים אמיתיים מציצים מאחורי הקלעים 🕵️\nהקוד הסודי: DEVTOOLS\nהקלידו אותו במונה הביצים שבראש הדף.\nשמתם לב? גם ההודעה הזו מעוצבת ב-CSS. ויש עוד 4 ביצים בדף 😉', 'font-size:14px;color:#2f6fec;line-height:1.6');
+setInterval(() => {
+  const g = $('#eggGhost'); if (g && getComputedStyle(g).display !== 'none') findEgg('ghost');
+  const acc = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim().toLowerCase();
+  if (acc && acc !== '#2f6fec' && acc !== '#7aa2ff') findEgg('paint');
+}, 1500);
+paintEggs();
+
+/* ---------- course player: topics -> steps, one step at a time ---------- */
+T = [...document.querySelectorAll('section.topic')].map(el => ({el, id:el.dataset.id, title:el.dataset.title, icon:el.dataset.icon, steps:[...el.querySelectorAll(':scope > .spread')]}));
+state.seen = state.seen || {};
+T.forEach(t => t.steps.forEach((st,si) => { const h = st.querySelector('h3'); if (h) { const b = document.createElement('span'); b.className = 'sn'; b.textContent = 'שלב ' + (si+1) + ' מתוך ' + t.steps.length; h.prepend(b); } }));
+const stepTitle = st => { const h = st.querySelector('h3'); if (!h) return ''; const c = h.cloneNode(true); const sn = c.querySelector('.sn'); if (sn) sn.remove(); return c.textContent.trim(); };
+const escA = x => esc(x).replace(/"/g,'&quot;');
+let pos = {ti:0, si:0};
+function show(ti, si, scroll){
+  ti = Math.max(0, Math.min(T.length - 1, ti)); si = Math.max(0, Math.min(T[ti].steps.length - 1, si));
+  pos = {ti, si};
+  T.forEach((t,a) => { t.el.hidden = a !== ti; t.steps.forEach((st,b) => st.hidden = !(a === ti && b === si)); });
+  state.seen[T[ti].id + ':' + si] = true; state.pos = pos; save();
+  $('#topics').innerHTML = T.map((t,a) => '<button type="button" data-t="' + a + '"' + (a === ti ? ' aria-current="true"' : '') + (t.steps.every((x,b) => state.seen[t.id + ':' + b]) ? ' class="done"' : '') + '><span class="ic">' + t.icon + '</span><bdi>' + t.title + '</bdi></button>').join('');
+  $('#steps').innerHTML = T[ti].steps.map((st,b) => '<button type="button" data-s="' + b + '"' + (b === si ? ' aria-current="true"' : '') + (state.seen[T[ti].id + ':' + b] ? ' class="seen"' : '') + ' title="' + escA(stepTitle(st)) + '"><span class="k">' + (b+1) + '</span><bdi>' + esc(stepTitle(st)) + '</bdi></button>').join('');
+  const prev = si > 0 ? [ti, si-1] : ti > 0 ? [ti-1, T[ti-1].steps.length - 1] : null;
+  const next = si < T[ti].steps.length - 1 ? [ti, si+1] : ti < T.length - 1 ? [ti+1, 0] : null;
+  const label = (p, isNext) => {
+    const st = T[p[0]].steps[p[1]], other = p[0] !== ti;
+    const top = isNext ? (ti === 0 && si === 0 ? 'בואו נתחיל ←' : other ? 'לנושא הבא: ' + T[p[0]].title + ' ←' : 'הבא ←') : (other ? '→ לנושא הקודם' : '→ הקודם');
+    return '<small>' + top + '</small><bdi>' + esc(stepTitle(st)) + '</bdi>';
+  };
+  $('#stepnav').innerHTML = (prev ? '<button type="button" class="prev">' + label(prev, false) + '</button>' : '<span></span>') +
+    (next ? '<button type="button" class="next">' + label(next, true) + '</button>' : '<div class="what" style="margin:0">🎉 סיימתם את שיעור 3! ' + (EGGS.every(e => found[e.id]) ? '' : 'עוד לא מצאתם את כל הביצים? <a href="#" id="openEggs">רמזים כאן</a>.') + '</div>');
+  if (prev) $('#stepnav .prev').onclick = () => show(prev[0], prev[1], true);
+  if (next) $('#stepnav .next').onclick = () => show(next[0], next[1], true);
+  const oe = $('#openEggs'); if (oe) oe.onclick = e => { e.preventDefault(); $('#eggBtn').click(); };
+  $('#now').innerHTML = '· ' + T[ti].icon + ' <bdi>' + T[ti].title + '</bdi>';
+  try { history.replaceState(null, '', '#' + T[ti].id + '-' + (si+1)); } catch(e){}
+  ['#topics', '#steps'].forEach(q => { const ac = $(q + ' [aria-current="true"]'); if (ac && ac.scrollIntoView) ac.scrollIntoView({block:'nearest', inline:'center'}); });
+  if (scroll) { const y = $('#topics').getBoundingClientRect().top + scrollY - 64; window.scrollTo({top: Math.max(0, y), behavior: 'smooth'}); }
+}
+$('#topics').addEventListener('click', e => { const b = e.target.closest('[data-t]'); if (!b) return; const t = +b.dataset.t; const u = T[t].steps.findIndex((x,i) => !state.seen[T[t].id + ':' + i]); show(t, u < 0 ? 0 : u, true); });
+$('#steps').addEventListener('click', e => { const b = e.target.closest('[data-s]'); if (b) show(pos.ti, +b.dataset.s, false); });
+document.addEventListener('click', e => { const a = e.target.closest('[data-go]'); if (!a) return; e.preventDefault(); const [id, n] = a.dataset.go.split(':'); const t = T.findIndex(x => x.id === id); if (t >= 0) { try { $('#eggDlg').close(); } catch(err){} show(t, (+n || 1) - 1, true); } });
+document.addEventListener('keydown', e => {
+  if (e.target.closest('input,textarea,select,dialog') || e.altKey || e.ctrlKey || e.metaKey) return;
+  if (e.key === 'ArrowLeft') { const b = $('#stepnav .next'); if (b) b.click(); }
+  if (e.key === 'ArrowRight') { const b = $('#stepnav .prev'); if (b) b.click(); }
+});
+function paintProgress(){
+  TASKS.forEach((t,i) => { const li = $('#task-' + t.id); const ok = !!(state.tasks||{})[t.id]; li.classList.toggle('done', ok); li.querySelector('.st').textContent = ok ? '✔' : (i+1); });
+  const total = T.reduce((n,t) => n + t.steps.length, 0); if (!total) return;
+  const n = T.reduce((k,t) => k + t.steps.filter((x,b) => state.seen[t.id + ':' + b]).length, 0);
+  $('#progBar').style.width = (100 * n / total) + '%'; $('#progTxt').textContent = n + '/' + total;
+}
+window.__goto = sel => { const sp = document.querySelector(sel).closest('.spread'); T.forEach((t,a) => t.steps.forEach((st,b) => { if (st === sp) show(a, b, false); })); };
+(function start(){
+  const m = location.hash.match(/^#([a-z]+)-(\d+)$/);
+  if (m) { const t = T.findIndex(x => x.id === m[1]); if (t >= 0) return show(t, +m[2] - 1, false); }
+  if (state.pos) return show(state.pos.ti, state.pos.si, false);
+  show(0, 0, false);
+})();
 })();
 </script>
 </body>
