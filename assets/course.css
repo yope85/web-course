@@ -421,3 +421,40 @@ details.ask>summary{color:var(--text)}
 .topics button{position:relative}
 .cp-q .opts code,.expect code,.vsbody p code,.tk-hint code,.tk-sol code,.cp-fb code{white-space:normal;overflow-wrap:anywhere}
 .lock-cover>.veil-cover{border-style:dotted}
+
+/* ---------- 🎉 celebrate ---------- */
+.cel-layer{position:absolute;width:0;height:0;z-index:80;pointer-events:none}
+.cel-cheer{position:absolute;left:0;top:0;transform:translate(-50%,-50%);white-space:nowrap;font-weight:700;font-size:17px;color:var(--ok);background:var(--surface);border:2px solid var(--ok);border-radius:99px;padding:3px 14px;box-shadow:0 8px 24px rgba(0,0,0,.18);animation:celCheer 1.5s ease-out forwards}
+.cel-cheer.big{font-size:21px;padding:5px 18px}
+@keyframes celCheer{0%{opacity:0;transform:translate(-50%,-30%) scale(.6)}15%{opacity:1;transform:translate(-50%,-90%) scale(1.08)}30%{transform:translate(-50%,-95%) scale(1)}80%{opacity:1}100%{opacity:0;transform:translate(-50%,-150%) scale(.95)}}
+.cel-p{position:absolute;left:0;top:0;animation:celFly 1.1s cubic-bezier(.2,.7,.3,1) forwards;opacity:0}
+.cel-p.sq{width:9px;height:9px;border-radius:2px}
+.cel-p.em{font-size:20px;line-height:1}
+@keyframes celFly{0%{opacity:1;transform:translate(-50%,-50%) rotate(0) scale(.6)}70%{opacity:1}100%{opacity:0;transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy) + 40px)) rotate(var(--rot)) scale(1)}}
+.cel-stamp{position:absolute;left:0;top:0;font-size:58px;font-weight:800;color:var(--ok);transform:translate(-50%,-50%);animation:celStamp 1s ease-out forwards;text-shadow:0 4px 18px rgba(0,0,0,.2)}
+@keyframes celStamp{0%{opacity:0;transform:translate(-50%,-50%) scale(2.6) rotate(-18deg)}35%{opacity:1;transform:translate(-50%,-50%) scale(.9) rotate(-8deg)}55%{transform:translate(-50%,-50%) scale(1.05) rotate(-8deg)}100%{opacity:0;transform:translate(-50%,-50%) scale(1) rotate(-8deg)}}
+.cel-ring{position:absolute;left:0;top:0;width:16px;height:16px;border-radius:50%;border:4px solid hsl(var(--h) 90% 55%);transform:translate(-50%,-50%);animation:celRing .9s ease-out forwards}
+@keyframes celRing{0%{opacity:1;width:10px;height:10px}100%{opacity:0;width:190px;height:190px;border-width:1px}}
+.cel-rocket{position:absolute;left:0;top:0;font-size:30px;animation:celRocket 1.1s ease-in forwards}
+@keyframes celRocket{0%{opacity:1;transform:translate(-50%,0) rotate(-45deg)}100%{opacity:0;transform:translate(120px,-220px) rotate(-45deg)}}
+.cel-glow{animation:celGlow 1.2s ease-out}
+@keyframes celGlow{0%{box-shadow:0 0 0 0 rgba(34,197,94,.55)}100%{box-shadow:0 0 0 14px rgba(34,197,94,0)}}
+@media (prefers-reduced-motion:reduce){.cel-cheer{animation:none;transform:translate(-50%,-110%)}}
+/* engine fixes */
+#stepnav .what.finish::before{content:none}
+.spread>h3{display:block}
+.spread>h3 .sn{display:inline-block;margin-inline-end:10px;vertical-align:2px}
+.cv .ln::after{text-indent:0}
+
+/* ⏱ time plan */
+details.timeplan{background:var(--surface2);border:1px solid var(--line)}
+details.timeplan table{font-size:14px;margin:6px 0 0}
+details.timeplan td:nth-child(n+2),details.timeplan th:nth-child(n+2){text-align:center;white-space:nowrap}
+.topictime{font-size:13.5px;color:var(--muted);margin:-4px 0 10px}
+.topictime:empty{display:none}
+html,body{overflow-x:clip}
+
+/* 🎬 after-the-video mode */
+.videobox{background:var(--accent-soft);border:1px solid var(--accent);border-radius:12px;padding:10px 14px;margin:10px 0;font-size:15.5px}
+.steps button.skim{opacity:.62;border-style:dashed}
+.steps button.skim::after{content:"📖";font-size:11px;margin-inline-start:4px}
