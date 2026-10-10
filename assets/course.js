@@ -744,7 +744,7 @@ function celebrateNow(el, level){
     const big = level === 'big';
     const layer = document.createElement('div'); layer.className = 'cel-layer'; layer.setAttribute('aria-hidden', 'true');
     layer.style.left = x + 'px'; layer.style.top = y + 'px'; document.body.appendChild(layer);
-    const cheer = pickNot(big ? CHEERS_B : CHEERS_S, lastCheer); lastCheer = cheer;
+    const st = SFX.streak(); const cheer = (!big && st >= 3) ? '🔥 ' + st + ' ברצף!' : pickNot(big ? CHEERS_B : CHEERS_S, lastCheer); lastCheer = cheer;
     const bubble = document.createElement('div'); bubble.className = 'cel-cheer' + (big ? ' big' : ''); bubble.textContent = cheer; layer.appendChild(bubble);
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (!reduce) {
@@ -777,7 +777,7 @@ function celebrateNow(el, level){
 }
 
 /* ---------- sequence: an animation made of steps, played automatically or "step by step"
-   (the student clicks ⏭ for every step – time to read each caption). The mode is remembered for the whole course.
+   (the student clicks "הצעד הבא ←" for every step – time to read each caption). The mode is remembered for the whole course.
    const seq = Course.sequence(ctrlsEl, {delay}); seq.run([fn, fn, …], onEnd)  – a step may return 'stop' to end early. ---------- */
 function sequence(ctrls, o){
   o = o || {}; if (typeof ctrls === 'string') ctrls = $(ctrls);
@@ -795,14 +795,14 @@ function sequence(ctrls, o){
     const r = steps[i++](); 
     if (r === 'stop' || i >= steps.length) return finish();
     if (getMode() === 'auto') { nextBtn.hidden = true; timer = setTimeout(stepOnce, o.delay || 2000); }
-    else { nextBtn.hidden = false; nextBtn.textContent = '⏭ הצעד הבא (' + (i + 1) + '/' + steps.length + ')'; }
+    else { nextBtn.hidden = false; nextBtn.textContent = 'הצעד הבא (' + (i + 1) + '/' + steps.length + ') ←'; }
   }
   nextBtn.addEventListener('click', () => { const had = document.activeElement === nextBtn; stepOnce(); if (had && !nextBtn.hidden) nextBtn.focus(); });
   box.querySelector('.seqmode').addEventListener('click', e => {
     const b = e.target.closest('[data-m]'); if (!b) return;
     try { localStorage.setItem('course-seqmode', b.dataset.m); } catch(err){}
     document.querySelectorAll('.seqbox').forEach(x => x.dispatchEvent(new Event('seqmode')));
-    if (running) { clearTimeout(timer); if (b.dataset.m === 'auto') { nextBtn.hidden = true; timer = setTimeout(stepOnce, 600); } else { nextBtn.hidden = false; nextBtn.textContent = '⏭ הצעד הבא (' + (i + 1) + '/' + steps.length + ')'; } }
+    if (running) { clearTimeout(timer); if (b.dataset.m === 'auto') { nextBtn.hidden = true; timer = setTimeout(stepOnce, 600); } else { nextBtn.hidden = false; nextBtn.textContent = 'הצעד הבא (' + (i + 1) + '/' + steps.length + ') ←'; } }
   });
   box.addEventListener('seqmode', paintMode); paintMode();
   return {
@@ -812,12 +812,14 @@ function sequence(ctrls, o){
 }
 
 /* ---------- sounds: short synthesized feedback (Web Audio – no files, nothing to download).
-   'ok'  = a bright two-note "ding" that climbs a little with every correct answer in a row (combo),
+   'ok'  = a bright two-note "ding" that climbs a clear step (pentatonic) with every correct answer in a row (streak);
+           from 3 in a row a third sparkle note is added and the cheer bubble says "🔥 N ברצף!",
    'big' = a short rising arpeggio (topic / all tasks done),
    'bad' = a soft, low two-note "hmm" – quiet and never harsh (feedback on the task, not a punishment).
    On by default; one small 🔊 button in the top bar mutes it on every lesson (localStorage 'course-sound'). ---------- */
 const SFX = (() => {
   let ctx = null, combo = 0;
+  const STEPS = [0, 2, 4, 7, 9, 12, 14, 16];   /* pentatonic climb: each step is clearly higher */
   const isOn = () => { try { return localStorage.getItem('course-sound') !== 'off'; } catch(e){ return true; } };
   function ac(){
     if (!ctx) { const C = window.AudioContext || window.webkitAudioContext; if (!C) return null; try { ctx = new C(); } catch(e){ return null; } }
@@ -832,25 +834,28 @@ const SFX = (() => {
   }
   const ST = n => Math.pow(2, n / 12);
   function play(kind){
-    if (kind === 'bad') combo = 0;
+    /* the streak counts even when muted (the cheer bubble shows it) */
+    if (kind === 'bad') combo = 0; else if (kind === 'ok' || kind === 'big') combo++;
     if (!isOn()) return;
     const c = ac(); if (!c) return; const t = c.currentTime + 0.01;
     try {
       if (kind === 'ok') {
-        const k = ST(Math.min(combo, 7)); combo++;
-        tone(c, 880 * k, t, 0.16, 0.13, 'triangle'); tone(c, 1760 * k, t, 0.10, 0.03, 'sine');
-        tone(c, 1318.5 * k, t + 0.085, 0.30, 0.13, 'triangle'); tone(c, 2637 * k, t + 0.085, 0.18, 0.03, 'sine');
+        const k = ST(STEPS[Math.min(combo - 1, STEPS.length - 1)]);
+        tone(c, 659.25 * k, t, 0.16, 0.13, 'triangle'); tone(c, 1318.5 * k, t, 0.10, 0.03, 'sine');
+        tone(c, 987.77 * k, t + 0.085, 0.30, 0.13, 'triangle'); tone(c, 1975.5 * k, t + 0.085, 0.18, 0.03, 'sine');
+        if (combo >= 3) tone(c, 1318.5 * k, t + 0.17, 0.35, 0.07, 'sine', 1318.5 * k * 1.5);
       } else if (kind === 'big') {
-        combo++;
         [523.25, 659.25, 783.99, 1046.5, 1318.5].forEach((f, i) => { tone(c, f, t + i * 0.075, i === 4 ? 0.55 : 0.2, 0.12, 'triangle'); tone(c, f * 2, t + i * 0.075, 0.12, 0.025, 'sine'); });
         tone(c, 2093, t + 0.4, 0.5, 0.035, 'sine', 2637);
+      } else if (kind === 'on') {
+        tone(c, 784, t, 0.12, 0.09, 'sine'); tone(c, 1046.5, t + 0.07, 0.18, 0.09, 'sine');
       } else if (kind === 'bad') {
         tone(c, 330, t, 0.13, 0.07, 'sine'); tone(c, 262, t + 0.12, 0.22, 0.07, 'sine');
       }
     } catch(e){}
   }
   function paintBtn(b){ const on = isOn(); b.textContent = on ? '🔊' : '🔇'; b.setAttribute('aria-pressed', String(!on)); b.setAttribute('aria-label', on ? 'צלילים פועלים – לחצו כדי לכבות' : 'צלילים כבויים – לחצו כדי להפעיל'); b.title = b.getAttribute('aria-label'); }
-  function set(on){ try { localStorage.setItem('course-sound', on ? 'on' : 'off'); } catch(e){} document.querySelectorAll('.sndbtn').forEach(paintBtn); if (on) play('ok'); }
+  function set(on){ try { localStorage.setItem('course-sound', on ? 'on' : 'off'); } catch(e){} document.querySelectorAll('.sndbtn').forEach(paintBtn); if (on) play('on'); }
   function init(){
     const tb = $('#themeBtn'); if (!tb || $('#sndBtn')) return;
     const b = document.createElement('button'); b.type = 'button'; b.id = 'sndBtn'; b.className = 'sndbtn';
@@ -866,7 +871,7 @@ const SFX = (() => {
       if (x.dataset.s === 'off') set(false); else set(true);
       n.remove(); b.focus(); });
   }
-  return {play, init, isOn};
+  return {play, init, isOn, streak: () => combo};
 })();
 
 /* ---------- toast + celebration ---------- */
