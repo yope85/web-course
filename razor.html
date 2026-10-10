@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>שיעור 6 – Razor Pages ותבנית Layout | המדריך המעשי</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/course.css" />
+<style>
+/* lesson-local styles (engine styles stay in assets/course.css) */
+.t-rz{color:#fda4af;font-weight:600}
+.t-kw{color:#c4b5fd}
+.cv .ln.slot{background:rgba(167,139,250,.24);border-left-color:#a78bfa}
+.cv .ln.slot::after{content:"כאן נכנס הדף";font-family:Rubik,Arial,sans-serif;font-size:11px;background:#a78bfa;color:#1e1036;border-radius:99px;padding:0 7px;margin-left:10px;vertical-align:1px}
+.cv .ln.out,.cv .ln.lay,.cv .ln.gone{text-decoration:line-through;text-decoration-thickness:1px}
+.cv .ln.out{background:rgba(248,113,113,.14);border-left-color:#f87171}
+.cv .ln.out::after{content:"לא מעתיקים";font-family:Rubik,Arial,sans-serif;font-size:11px;background:#fca5a5;color:#3b0a0a;border-radius:99px;padding:0 7px;margin-left:10px;vertical-align:1px;display:inline-block;text-decoration:none}
+.cv .ln.lay{background:rgba(167,139,250,.16);border-left-color:#a78bfa}
+.cv .ln.lay::after{content:"כבר בתבנית";font-family:Rubik,Arial,sans-serif;font-size:11px;background:#c4b5fd;color:#1e1036;border-radius:99px;padding:0 7px;margin-left:10px;vertical-align:1px;display:inline-block;text-decoration:none}
+.cv .ln.gone{background:rgba(248,113,113,.14);border-left-color:#f87171}
+.cv .ln.out::after,.cv .ln.lay::after,.cv .ln.gone::after{text-indent:0;white-space:nowrap}
+.cv .ln.gone::after{content:"נמחקה";font-family:Rubik,Arial,sans-serif;font-size:11px;background:#fca5a5;color:#3b0a0a;border-radius:99px;padding:0 7px;margin-left:10px;vertical-align:1px;display:inline-block;text-decoration:none}
+.tri{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:"a b" "a c";gap:4px 14px;margin:12px 0;align-items:start}
+.tri>:nth-child(1){grid-area:a}.tri>:nth-child(2){grid-area:b}.tri>:nth-child(3){grid-area:c}
+@media (max-width:860px){.tri{grid-template-columns:1fr;grid-template-areas:"a" "b" "c"}}
+/* code panes beside a result: wrap long lines instead of scrolling sideways */
+.wrapcode .cv{white-space:pre-wrap;overflow-wrap:anywhere}
+.wrapcode .cv .ln{padding-left:2.6em;text-indent:-2.6em}
+.tri>div,.compare>div{min-width:0}
+.tabstrip{background:#cbd5e1;padding:6px 8px 0;display:flex}
+.tabstrip .tab{max-width:100%;background:#e5e7eb;color:#111827;border-radius:8px 8px 0 0;padding:3px 12px;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tabdemo{border:1px solid var(--line);border-radius:12px;overflow:hidden;max-width:420px}
+.tabdemo .tabstrip .tab{font-size:15px;padding:6px 14px}
+.tabdemo .urlbar{border-radius:0}
+.files{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;margin:10px 0}
+.file{border:2px solid var(--line);border-radius:10px;padding:6px 10px;background:var(--surface2);font-size:14px;line-height:1.5;min-width:0}
+.file b{display:block;font-family:"JetBrains Mono",monospace;font-size:13px;direction:ltr;text-align:right;overflow-wrap:anywhere}
+.file.edit{border-color:var(--warn);background:var(--warn-soft)}
+.file.auto{border-color:var(--ok);background:var(--ok-soft);border-style:dashed}
+.count2{font-weight:700;font-size:17px;margin:6px 0}
+.slotlegend{display:flex;gap:14px;flex-wrap:wrap;font-size:14px;margin-top:8px}
+.slotlegend span{border:2px dashed #7c3aed;border-radius:6px;padding:0 8px}
+.slotlegend span.solid{border:2px solid var(--line)}
+.ftree{overflow-x:auto}
+.mapin{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:8px 0}
+.mapin input,.ttlin input{flex:1;min-width:0;font-size:16px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--text)}
+.mapin input{direction:ltr;text-align:left;font-family:"JetBrains Mono",monospace}
+.mapin .pre{font-family:"JetBrains Mono",monospace;direction:ltr;color:var(--muted);font-size:14px}
+.ttlin{display:flex;gap:8px;align-items:center;margin:8px 0;max-width:420px}
+.verdict{border-radius:10px;padding:8px 12px;margin-top:8px;background:var(--surface2)}
+.verdict.ok{background:var(--ok-soft)}
+.verdict.bad{background:var(--bad-soft)}
+.verdict.st{background:var(--accent-soft)}
+.walkout{margin-top:8px}
+.walkout .pathbox{font-size:15px;line-height:1.9;min-height:0}
+.walkout .row2{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:8px}
+.walkout img{width:72px;height:50px;border:1px solid var(--line);border-radius:6px;background:#fff}
+.mini404{direction:ltr;text-align:left;font-family:Arial,sans-serif;color:#333;background:#fff;padding:16px;border:1px solid var(--line);border-radius:12px}
+.cslbl{font-size:13px;color:var(--muted);margin:0 0 4px}
+.nw{white-space:nowrap}
+code.brk{white-space:normal!important;overflow-wrap:anywhere}
+.stepbox code,.expect code,.vsbody code,td code{white-space:normal;overflow-wrap:anywhere}
+.split .pane .cv{max-height:none}
+table.nwcode td code{white-space:normal;overflow-wrap:normal;word-break:keep-all}
+</style>
+</head>
+<body data-lesson="l6" data-title="שיעור 6" data-next="submission1.html" data-next-name="הגשה 1">
+<header class="topbar"><div class="in">
+  <span class="brand">🛠 שיעור 6 · Razor</span>
+  <span class="now" id="now"></span>
+  <span class="progress" title="שלבים שעברתם בשיעור"><span class="bar"><i id="progBar"></i></span> <span id="progTxt">0/0</span></span>
+  <button class="eggbtn" id="eggBtn" type="button" title="ביצי הפתעה – לחצו לרמזים">🥚 <span id="eggCount">0/5</span></button>
+  <button class="themebtn" id="themeBtn" type="button">🌓 מצב תצוגה</button>
+</div></header>
+<dialog id="eggDlg" aria-labelledby="eggTitle">
+  <div class="dlg-h"><h3 id="eggTitle">🥚 ביצי הפתעה</h3><button class="btn" type="button" id="eggClose" aria-label="סגירה">✕</button></div>
+  <p class="muted" id="eggIntro">בדף מוחבאות 5 ביצים. כל אחת נמצאת בעזרת משהו שלומדים בשיעור. תקועים? לחצו על "רמז נוסף".</p>
+  <ul class="egglist" id="eggList"></ul>
+  <form class="codebox" id="codeForm"><label for="codeIn">מצאתם קוד סודי?</label><input id="codeIn" autocomplete="off" spellcheck="false" placeholder="הקלידו כאן" /><button class="btn primary" type="submit">בדיקה</button></form>
+  <p id="codeMsg" class="res-note"></p>
+</dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="party" id="party" aria-hidden="true"></div>
+
+<main>
+<div class="lesson-head">
+  <div class="school">אורט הנרי רונסון אשקלון · מגמת מדעי המחשב והנדסת תוכנה · יוחאי פרץ</div>
+  <h1>שיעור 6 – Razor Pages ותבנית Layout</h1>
+</div>
+<nav class="topics" id="topics" aria-label="נושאי השיעור"></nav>
+<nav class="steps" id="steps" aria-label="השלבים בנושא"></nav>
+
+<!-- ====================================================== 1. opening -->
+<section class="topic" data-id="start" data-icon="🌱" data-title="פתיחה">
+  <article class="spread welcome">
+    <h3>ברוכים הבאים לשיעור 6 👋</h3>
+    <p class="lead">היום תעבירו את האתר ל-<b>Razor Pages</b>: <b>תבנית אחת</b> שכל הדפים נכנסים לתוכה, והתפריט כתוב בה <b>פעם אחת</b>. כך ייראה האתר – לחצו בתפריט:</p>
+    <div id="welcomeSite"></div>
+    <h4>איך לומדים את השיעור?</h4>
+    <div class="ways">
+      <div class="way main"><b>📖 כאן, בדף הזה</b>כל מה שבסרטון ובמצגת, ועוד דוגמאות חיות.</div>
+      <div class="way"><b>🎬 מעדיפים סרטון?</b>הסרטון בקלאסרום. אחריו עשו כאן את שלבי <b>💻 "עכשיו אצלכם"</b> (<a href="#" data-go="razor:4">הראשון כאן</a>), ואז <a href="#" data-go="practice:1">תרגול וסיכום</a>.</div>
+      <div class="way"><b>🎧 פודקסט</b>תוספת, לא חובה.</div>
+    </div>
+    <h4>איך הדף עובד?</h4>
+    <ul class="how">
+            <li>🖥 הדפדפן לא מריץ <bdi>C#</bdi>, ולכן <b>המדריך מדמה את השרת</b>.</li>
+      <li>❓ לפני חלק מהתוצאות יש שאלת ניחוש. מותר לטעות.</li>
+      <li>💻 בסוף כל נושא – <b>"עכשיו אצלכם ב-Visual Studio"</b>, ואחריו 🎯 בדיקה קצרה, בלי ציון.</li>
+      <li>💾 ההתקדמות נשמרת בדפדפן הזה. כמה זמן זה לוקח? פתחו את <b>⏱ כמה זמן זה לוקח?</b> למטה – ותכננו בעצמכם. אפשר (ורצוי) בכמה ישיבות.</li>
+    </ul>
+    <div class="eggnote">🥚 בדף מוחבאות <b>5 ביצי הפתעה</b> – מוצאים אותן עם מה שתלמדו היום. רמזים: במונה למעלה.</div>
+  </article>
+  <article class="spread">
+    <h3>למה? תפריט אחד במקום שישה</h3>
+    <p>בשיעור 5 הדבקתם את אותו navbar בכל דף. רוצים להוסיף לתפריט קישור? בחרו סוג אתר ולחצו ➕:</p>
+    <div class="ctrls"><div class="seg" id="whySeg"></div><button class="btn primary" type="button" id="whyAdd">➕ הוסיפו לתפריט: צור קשר</button></div>
+    <p class="count2" id="whyCount" aria-live="polite"></p>
+    <div class="files" id="whyFiles"></div>
+    <div class="what">בדפי HTML כל קובץ מחזיק <b>עותק</b> של התפריט – ובטוח שוכחים אחד. עם תבנית התפריט כתוב רק ב-<code>_Layout.cshtml</code>, וכל הדפים מקבלים אותו ממנה. זה מה שהגשה 1 דורשת.</div>
+    <div class="bridge">כמו פעולה ב-<bdi>C#</bdi>: קוד שחוזר על עצמו כותבים <b>פעם אחת</b>, וקוראים לו מכל מקום.</div>
+  </article>
+</section>
+
+<!-- ====================================================== 2. razor page -->
+<section class="topic" data-id="razor" data-icon="⚙️" data-title="דף Razor">
+  <article class="spread">
+    <h3><span>דף Razor: HTML ו-<bdi>C#</bdi> בשני קבצים</span></h3>
+    <p>דף Razor הוא דף שיש בו HTML וגם <b><bdi>C#</bdi></b>, וה-<bdi>C#</bdi> רץ <b>בשרת</b> – לפני שהדף נשלח לדפדפן. Visual Studio יוצר לכל דף שני קבצים. כך הם נראים בדף ריק בשם About:</p>
+    <div class="compare">
+      <div><p class="cslbl"><b>About.cshtml</b> – התצוגה (view): HTML עם <bdi>C#</bdi>. כאן כותבים.</p><div class="codeblock"><pre data-rz="rz">
+@page
+@model MyFirstWeb.Pages.Site.AboutModel
+@{
+}
+</pre></div></div>
+      <div><p class="cslbl"><b>About.cshtml.cs</b> – קוד השרת: מחלקה (class) של <bdi>C#</bdi> (מקוצר).</p><div class="codeblock"><pre data-rz="cs">
+namespace MyFirstWeb.Pages.Site
+{
+    public class AboutModel : PageModel
+    {
+        public void OnGet() { }
+    }
+}
+</pre></div></div>
+    </div>
+    <p>כותבים <b>רק בקובץ cshtml</b>, ואת שלוש השורות שבראשו <b>לא מוחקים</b>:</p>
+    <ul>
+      <li><code>@page</code> – "אני דף, ויש לי כתובת".</li>
+      <li><code>@model</code> – מחבר את הדף למחלקה AboutModel שבקובץ <code>About.cshtml.cs</code>. במקום MyFirstWeb יופיע שם הפרויקט שלכם.</li>
+      <li><code>@{ }</code> – בלוק ריק של <bdi>C#</bdi>, נמלא אותו בהמשך.</li>
+    </ul>
+    <div class="ctrls"><button class="btn" type="button" id="noPageBtn">🔨 תראו לי: מחקו את <code>@page</code></button></div>
+    <div id="noPageOut" hidden>
+      <div class="codeblock"><pre class="cv" id="noPageCode"></pre></div>
+      <div class="mini404" role="img" aria-label="דף שגיאה 404 בדפדפן"><div style="font-size:30px" aria-hidden="true">📄❓</div><div style="font-size:17px">This localhost page can’t be found</div><div style="font-size:13px;color:#555">HTTP ERROR 404</div></div>
+      <div class="what">בלי <code>@page</code> הקובץ כבר לא דף – אין לו כתובת, והשרת עונה <b>404</b> ("לא נמצא").</div>
+    </div>
+    <div class="bridge">הקובץ cs הוא מחלקה רגילה של <bdi>C#</bdi>, ובה הפעולה <code>OnGet</code> – היא רצה בכל פעם שמישהו פותח את הדף. בהמשך השנה תכתבו בה קוד.</div>
+    <div class="trap">דף חדש בהעתקה של קובץ (Copy, Paste)? בשני הקבצים תהיה מחלקה <b>באותו שם</b> – שגיאה. דף חדש יוצרים תמיד דרך Add &rlm;←&rlm; Razor Page.</div>
+  </article>
+
+  <article class="spread">
+    <h3><span><code>@</code> – מכאן מתחיל <bdi>C#</bdi></span></h3>
+    <p>בתוך ה-HTML, התו <code>@</code> אומר ל-Razor: "מכאן זה <bdi>C#</bdi>". השרת מריץ את הקוד, ו<b>במקומו</b> כותב את התוצאה. הנה About.cshtml עם תוכן:</p>
+    <div class="predict" id="p22"></div>
+    <div class="tri wrapcode">
+      <div><div class="pane-h"><span class="dot"></span>About.cshtml – מה שכתבתם</div><pre class="cv" id="rzSrc"></pre></div>
+      <div id="rzRcvPane"><div class="pane-h"><span class="dot"></span>מה הדפדפן מקבל (Ctrl+U)</div><pre class="cv" id="rzRcv"></pre></div>
+      <div id="rzResPane"><div class="pane-h"><span class="dot"></span>מה רואים בדפדפן</div><div id="rzRes"></div></div>
+    </div>
+    <div class="ctrls" id="rzCtrls"><button class="btn" type="button" id="rzTick">⏩ עברה דקה – רעננו את הדף</button></div>
+    <div class="what" id="w22">השרת מריץ את ה-<bdi>C#</bdi> <b>מחדש בכל טעינה</b> – לכן השעה מתעדכנת. ב-Ctrl+U (קוד המקור) אין אף <code>@</code> – הדפדפן מקבל HTML רגיל. ועוד שני סימנים: הערה של Razor, <code>@* … *@</code>, נמחקת בשרת ולא נשלחת; וכדי להציג את התו @ עצמו כותבים <code>@@</code> בדף. (על <code>~/</code> – בנושא "כתובות ונתיבים".)</div>
+    <div class="bridge">כמו <code>Console.WriteLine("Time: " + x)</code> ב-<bdi>C#</bdi>: על המסך לא מופיעה האות x – מופיע <b>הערך</b> שלה. כך גם מה שאחרי <code>@</code>.</div>
+  </article>
+
+  <article class="spread">
+    <h3><span><code>ViewData["Title"]</code> – הכותרת בלשונית</span></h3>
+    <p>את הכותרת שבלשונית קובעים בבלוק <code>@{ }</code> – בלוק של <b>פקודות</b> <bdi>C#</bdi>, כל אחת עם <code>;</code> בסוף. כתבו כותרת בתיבה וראו מה קורה:</p>
+    <div class="ttlin"><label for="ttlIn">הכותרת:</label><input id="ttlIn" value="אודות" autocomplete="off" spellcheck="false" /></div>
+    <div class="pane-h"><span class="dot"></span>About.cshtml – הדף שומר את הכותרת</div>
+    <pre class="cv" id="ttlPage"></pre>
+    <div class="pane-h"><span class="dot"></span><code>_Layout.cshtml</code> – התבנית (בנושא הבא) קוראת אותה</div>
+    <pre class="cv" id="ttlLay"></pre>
+    <div class="tabdemo"><div class="tabstrip"><span class="tab"><span aria-hidden="true">🌐 </span><bdi id="ttlTab"></bdi></span></div><div class="urlbar"><span class="dots"><i></i><i></i><i></i></span><span class="url" dir="ltr">localhost:7123/Site/About</span></div></div>
+    <div class="what">הדף <b>שומר</b> את הכותרת ב-ViewData, והתבנית המשותפת <b>קוראת</b> אותה לתוך התגית title – ואחריה מוסיפה את שם הפרויקט. דף בלי כותרת? בלשונית יופיע רק <bdi>" - MyFirstWeb"</bdi>.</div>
+    <div class="bridge">ViewData הוא כמו <code>Dictionary&lt;string, object&gt;</code> ב-<bdi>C#</bdi> – או כמו מערך שבו לתא קוראים בשם ("Title") ולא במספר. הדף כותב לתא, והתבנית קוראת ממנו.</div>
+    <details class="more"><summary>🚀 להעמקה: למה ב-Ctrl+U הכותרת בעברית נראית כמו קוד מוזר?</summary>
+      <p>כל מה שיוצא מ-<code>@</code>, Razor <b>מקודד</b> (encode) לפני השליחה – כדי שאף אחד לא יוכל "להשתיל" קוד בדף דרך טקסט. כברירת מחדל רק אותיות באנגלית נשארות כמו שהן; כל אות אחרת נכתבת כקוד מספרי. אז ב-Ctrl+U תראו:</p>
+      <div class="codeblock"><pre data-code="html">
+&lt;title&gt;&amp;#x5D0;&amp;#x5D5;&amp;#x5D3;&amp;#x5D5;&amp;#x5EA; - MyFirstWeb&lt;/title&gt;
+</pre></div>
+      <p>הדפדפן מתרגם את הקודים בחזרה, ובלשונית כתוב "אודות" כרגיל. עברית שכתבתם <b>ישר</b> ב-HTML (לא דרך <code>@</code>) נשלחת כמו שהיא. להרחבה: <a href="https://learn.microsoft.com/aspnet/core/security/cross-site-scripting" target="_blank" rel="noopener">Microsoft Learn: Cross-site scripting</a> (באנגלית).</p>
+    </details>
+  </article>
+
+  <article class="spread vsstep">
+    <h3>💻 עכשיו אצלכם ב-Visual Studio</h3>
+    <p>יוצרים בפרויקט שלכם את דף ה-Razor הראשון – "אודות" – בתיקייה חדשה, Site. בתיקייה הזו יהיו כל הדפים של האתר.</p>
+    <ol class="vsdo">
+      <li>ב-Solution Explorer: <b>קליק ימני</b> על התיקייה <b>Pages</b> &rlm;←&rlm; <b>Add</b> &rlm;←&rlm; <b>New Folder</b>. קראו לה <b>Site</b> ולחצו Enter.</li>
+      <li><b>קליק ימני</b> על <b>Site</b> &rlm;←&rlm; <b>Add</b> &rlm;←&rlm; <b><bdi>Razor Page...</bdi></b> &rlm;←&rlm; בחרו <b>Razor Page - Empty</b> &rlm;←&rlm; <b>Add</b>. בשדה השם מופיע Index.cshtml – מחקו וכתבו <b>About</b> (את הסיומת Visual Studio מוסיף לבד) &rlm;←&rlm; <b>Add</b>. נוצרו שני קבצים: About.cshtml, ומתחתיו (חץ קטן לידו) About.cshtml.cs. (לא מוצאים <bdi>Razor Page...</bdi>? Add &rlm;←&rlm; <bdi>New Item...</bdi> &rlm;←&rlm; Razor Page - Empty. <span class="unverified">לא אומת</span>)</li>
+      <li>ב-About.cshtml השאירו את שתי השורות הראשונות (<code>@page</code> ו-<code>@model</code>). את כל מה שמתחתיהן מחקו, והדביקו במקומו. ב-src כתבו שם של תמונה <b>שיש לכם</b> בתיקייה Img:
+        <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-rz="rz">
+@{
+    ViewData["Title"] = "אודות";
+}
+&lt;h2&gt;אודות האתר&lt;/h2&gt;
+&lt;p&gt;הדף הזה נכנס לתוך התבנית המשותפת&lt;/p&gt;
+&lt;p&gt;השעה עכשיו: @DateTime.Now.ToShortTimeString()&lt;/p&gt;
+&lt;img src="~/Img/pic.jpg" alt="תמונה" width="150" /&gt;
+</pre></div></li>
+      <li>שמרו (Ctrl+S) והריצו (▶ הירוק). הדפדפן נפתח בדף הבית של האתר. בשורת הכתובת הוסיפו בסוף <code>/Site/About</code> ולחצו Enter.</li>
+      <li>🔨 <b>נסו לשנות:</b> שנו את הכותרת ל-"מי אנחנו", שמרו, לחצו 🔥 <b>Hot Reload</b> בסרגל של Visual Studio (כמו בסרטון – דפי cshtml עוברים הידור, ולכן צריך את הלהבה) ורעננו את הדפדפן – הלשונית השתנתה? חכו דקה ורעננו – השעה התעדכנה? ולבסוף Ctrl+U וחפשו (Ctrl+F) את התו <code>@</code> – הוא לא שם.</li>
+    </ol>
+    <div class="expect">בכתובת שמסתיימת ב-<code>/Site/About</code> רואים: למעלה תפריט באנגלית (Home, Privacy) ולמטה שורת זכויות – הם מהתבנית, ונטפל בהם בנושא הבא. ביניהם: "אודות האתר", שתי פסקאות (עם השעה עכשיו) והתמונה שלכם. הכול עדיין מיושר לשמאל – גם את זה נתקן בנושא הבא. בלשונית: <bdi>אודות - MyFirstWeb</bdi> (עם שם הפרויקט שלכם).</div>
+    <div class="trouble" id="trRazor"></div>
+  </article>
+  <article class="spread cpstep">
+    <h3>🎯 הבנתם את כל מה שלמדתם עד עכשיו?</h3>
+    <div id="cpRazor"></div>
+  </article>
+</section>
+
+<!-- ====================================================== 3. layout -->
+<section class="topic" data-id="layout" data-icon="🧱" data-title="התבנית המשותפת">
+  <article class="spread">
+    <h3><span><code>_Layout.cshtml</code> – מה שמשותף לכל הדפים</span></h3>
+    <p>בתיקייה <code>Pages/Shared</code> יש קובץ ש-Visual Studio יצר: <b><code>_Layout.cshtml</code></b> – התבנית. כתוב בו מה שמשותף לכל הדפים: head, תפריט ותחתית (footer).</p>
+    <div class="predict" id="p31"></div>
+    <div class="ctrls"><span class="lbl">פתחו דף:</span><div class="seg" id="lySeg"></div></div>
+    <div class="split wrapcode">
+      <div class="pane">
+        <div class="pane-h"><span class="dot"></span>Pages/Shared/_Layout.cshtml (מקוצר)</div><pre class="cv" id="lyCode"></pre>
+        <div class="pane-h"><span class="dot"></span><bdi id="lyPageName"></bdi></div><pre class="cv" id="lyPage"></pre>
+      </div>
+      <div class="pane"><div class="pane-h"><span class="dot"></span>מה רואים בדפדפן</div><div id="lySite"></div>
+        <div class="slotlegend" data-lock><span>סגול מקווקו = התוכן של הדף</span><span class="solid">כל השאר = מ-<code>_Layout</code></span></div></div>
+    </div>
+    <div class="what">בכל דף התפריט והתחתית <b>זהים</b> – הם מ-<code>_Layout</code>. משתנה רק החלק המקווקו: התוכן של הדף, שנכנס במקום <code>@RenderBody()</code> שבתבנית. (הכול משמאל לימין, כי בתבנית אין <code>dir="rtl"</code> ומקושר Bootstrap הרגיל – תתקנו בשלב 💻.)</div>
+    <div class="bridge" data-lock><code>@RenderBody()</code> הוא כמו קריאה לפעולה שמחזירה את התוכן של הדף: התבנית "קוראת" לה, ובמקום הקריאה נכתב מה שחזר.</div>
+    <details class="more" data-lock><summary>🚀 להעמקה: מי מחבר בין הדף לתבנית?</summary>
+      <p>שני קבצים קטנים בתיקייה Pages, שגם אותם Visual Studio יצר. <code>Pages/_ViewStart.cshtml</code> רץ לפני כל דף, וקובע שכולם משתמשים בתבנית:</p>
+      <div class="codeblock"><pre data-rz="rz">
+@{
+    Layout = "_Layout";
+}
+</pre></div>
+      <p><code>Pages/_ViewImports.cshtml</code> הוא כמו שורות ה-using בראש קובץ <bdi>C#</bdi> – אבל לכל הדפים יחד. השורה האחרונה בו מפעילה Tag Helpers – מאפיינים (attributes) כמו asp-page, בנושא הבא:</p>
+      <div class="codeblock"><pre data-rz="rz">
+@using MyFirstWeb
+@namespace MyFirstWeb.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+</pre></div>
+      <p>הקו התחתון בתחילת השמות הוא <b>מוסכמה</b> (convention): "זה לא דף שגולשים אליו – זה קובץ שעוזר לדפים אחרים". ובתחתית התבנית יש עוד מקום שדף <b>יכול</b> למלא: <code>@await RenderSectionAsync("Scripts", required: false)</code> – למשל קוד JavaScript שרק הדף הזה צריך, בתוך <code>@section Scripts { … }</code> בדף. להרחבה: <a href="https://learn.microsoft.com/aspnet/core/mvc/views/layout" target="_blank" rel="noopener">Microsoft Learn: Layout in ASP.NET Core</a> (באנגלית).</p>
+    </details>
+  </article>
+
+  <article class="spread">
+    <h3>🔨 ומה אם מוחקים את RenderBody?</h3>
+    <p>בתבנית יש מקום <b>אחד</b> לתוכן של הדף – השורה <code>@RenderBody()</code> שראיתם. מה יקרה אם נמחק את השורה הזו?</p>
+    <div class="predict" id="p32"></div>
+    <div class="ctrls"><div class="seg" id="rbSeg"></div></div>
+    <pre class="cv" id="rbCode"></pre>
+    <div id="rbSite"></div>
+    <div class="what">זו הודעת השגיאה האמיתית. בתרגום: "בדף <code>/Pages/Shared/_Layout.cshtml</code> לא קראו ל-RenderBody". השרת לא "בולע" דף בשקט – הוא עוצר ומודיע. בדף שגיאה כזה תמיד כתוב <b>מה</b> הבעיה ו<b>באיזה קובץ</b> – קוראים את השורה הראשונה לפני שמנחשים.</div>
+  </article>
+
+  <article class="spread vsstep">
+    <h3>💻 עכשיו אצלכם ב-Visual Studio</h3>
+    <p>מתאימים את התבנית לאתר שלכם: עברית מימין לשמאל, Bootstrap RTL, העיצוב שלכם – והתפריט שלכם, <b>פעם אחת</b> לכל האתר.</p>
+    <ol class="vsdo">
+      <li>ב-Solution Explorer פתחו את <b>Pages</b> &rlm;←&rlm; <b>Shared</b> &rlm;←&rlm; <b><code>_Layout.cshtml</code></b> (לחיצה כפולה).</li>
+      <li>בשורה 2 שנו את <code>&lt;html lang="en"&gt;</code> ל-<code>&lt;html lang="he" dir="rtl"&gt;</code> – עברית, מימין לשמאל.</li>
+      <li>ב-head, בשורה של Bootstrap, שנו את <code>bootstrap.min.css</code> ל-<code>bootstrap.rtl.min.css</code> (מוסיפים rtl – כמו בשיעור 5).</li>
+      <li>ב-head יש עוד שתי שורות link: <code>site.css</code> של התבנית, ושורה שבה שם הפרויקט שלכם ו-<code>styles.css</code> – עיצוב של התבנית עצמה. משאירים את שתיהן. <b>אחריהן</b> – לפני <code>&lt;/head&gt;</code> – הדביקו את העיצוב שלכם. אחרון = מנצח (שיעור 5):
+        <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
+&lt;link rel="stylesheet" href="~/css/site-style.css" /&gt;
+</pre></div>
+        (בפרויקט של ‎.NET 9 יש ב-head גם שורה <code>&lt;script type="importmap"&gt;&lt;/script&gt;</code> – לא נוגעים בה.)</li>
+      <li><b>התפריט:</b> ב-<code>_Layout</code> סמנו את כל ה-header של התבנית – מ-<code>&lt;header&gt;</code> ועד <code>&lt;/header&gt;</code> כולל – ומחקו. במקומו הדביקו את ה-navbar שלכם מ-page1.html (שיעור 5), מ-<code>&lt;nav</code> ועד <code>&lt;/nav&gt;</code> כולל. (למה בלי header? בתוך header, ה-<code>sticky-top</code> שלכם לא "נדבק" למעלה.) הקישורים בו עוד לא יעבדו – נתקן בנושא הבא.</li>
+      <li><b>צבע הקישורים:</b> ליד <code>_Layout.cshtml</code> (חץ קטן לידו) יש קובץ בשם <code>_Layout.cshtml.css</code> – עיצוב שחל רק על התבנית. פתחו אותו ומחקו ממנו שני כללים: <code>a { color: #0077cc; }</code> – צובע בכחול כל קישור בתפריט, וגובר על כללים כמו <code>.nav-link</code> שלכם; ו-<code>a.navbar-brand { … }</code> – שובר את שם האתר באמצע מילה. את הקובץ עצמו <b>לא</b> מוחקים (אחרת הקובץ <code>styles.css</code> מה-head עלול להיעלם – 404).</li>
+      <li><b>התחתית:</b> ב-footer מחקו את השורה עם <code>&amp;copy;</code> והקישור Privacy, וכתבו במקומה למשל <code>&amp;copy; 2026 - שם האתר שלכם</code> (הקוד <code>&amp;copy;</code> מציג את הסימן ©).</li>
+      <li>שמרו (Ctrl+S) והריצו (▶). פתחו את דף הבית, ואז הוסיפו בסוף הכתובת <code>/Site/About</code> ולחצו Enter.</li>
+    </ol>
+    <div class="expect">בשני הדפים – הכתובת שמסתיימת ב-<code>/</code> והכתובת שמסתיימת ב-<code>/Site/About</code> – רואים למעלה <b>את התפריט שלכם</b>, והטקסט מיושר לימין, בגופן ובצבעים מ-<span class="nw">site-style.css</span>. התוכן של כל דף שונה, התפריט והתחתית זהים. ברוחב טלפון (F12, ואז Ctrl+Shift+M) כפתור ☰ פותח וסוגר את התפריט.</div>
+    <div class="trouble" id="trLayout"></div>
+  </article>
+  <article class="spread cpstep">
+    <h3>🎯 הבנתם את כל מה שלמדתם עד עכשיו?</h3>
+    <div id="cpLayout"></div>
+  </article>
+</section>
+
+<!-- ====================================================== 4. paths -->
+<section class="topic" data-id="paths" data-icon="🧭" data-title="כתובות ונתיבים">
+  <article class="spread">
+    <h3>איזו כתובת פותחת איזה קובץ?</h3>
+    <p>ראיתם שהדף About נפתח בכתובת <code>/Site/About</code>. ודף עמוק יותר?</p>
+    <div class="predict" id="p41"></div>
+    <div id="mapCtrls">
+      <div class="mapin"><label for="mapIn" class="pre">localhost:7123</label><input id="mapIn" spellcheck="false" autocomplete="off" value="/Site/About" aria-label="כתבו כתובת" /></div>
+      <div class="ctrls" id="mapChips"></div>
+    </div>
+    <div id="mapOut" class="walk"><div class="ftree" id="mapTree"></div><div class="verdict" id="mapVerdict" aria-live="polite"></div></div>
+    <div class="what" id="w41"><b>דף Razor</b>: התיקיות שבתוך Pages ושם הדף – <b>בלי</b> Pages ובלי סיומת; השרת מריץ אותו. <b>קובץ ב-wwwroot</b> (תמונה, css, html): עם הסיומת; נשלח כמו שהוא. ודף Index הוא ברירת המחדל: <code>Pages/Index.cshtml</code> נפתח בכתובת <code>/</code> – דף הבית.</div>
+    <details class="more"><summary>🚀 להעמקה: מי מחליט על כל זה? Program.cs</summary>
+      <p>בקובץ Program.cs שבפרויקט יש השורות שמפעילות את שני העולמות. <code>app.MapRazorPages()</code> נותן כתובת לכל קובץ ב-Pages שיש בו <code>@page</code> בראש. ומי שולח קבצים מ-wwwroot? בפרויקט של ‎.NET 8 – השורה <code>app.UseStaticFiles();</code> ובפרויקט של ‎.NET 9 – השורה <code>app.MapStaticAssets();</code> (שתי דרכים לאותו רעיון). רוצים לבדוק איזה ‎.NET יש לכם? קליק ימני על הפרויקט &rlm;←&rlm; Properties &rlm;←&rlm; Target framework.</p>
+    </details>
+  </article>
+
+  <article class="spread">
+    <h3>asp-page: קישור שהשרת בונה</h3>
+    <p>בתפריט של התבנית אין href. זו שורה אמיתית מתוך התבנית, <code>_Layout.cshtml</code> של Visual Studio:</p>
+    <div class="codeblock"><pre data-rz="rz">
+&lt;a class="nav-link text-dark" asp-area="" asp-page="/Privacy"&gt;Privacy&lt;/a&gt;
+</pre></div>
+    <p><code>asp-page</code> הוא <b>Tag Helper</b>: מאפיין (attribute) שהשרת קורא – הוא מוצא את הדף ובונה ממנו href. בחרו ערך וראו מה הדפדפן מקבל:</p>
+    <div class="ctrls"><div class="seg" id="apSeg"></div></div>
+    <div class="pane-h"><span class="dot"></span>ב-<code>_Layout.cshtml</code></div><pre class="cv" id="apSrc"></pre>
+    <div class="pane-h"><span class="dot"></span>מה הדפדפן מקבל (Ctrl+U)</div><pre class="cv" id="apOut"></pre>
+    <p class="verdict" id="apNote" aria-live="polite"></p>
+    <div class="tip">💡 כותבים תמיד עם <code>/</code> בהתחלה ובלי סיומת, למשל <code>asp-page="/Site/About"</code>. ואת <code>asp-area=""</code> שבתבנית אפשר להשאיר או למחוק – לא נשתמש בו.</div>
+    <details class="more"><summary>🚀 להעמקה: למה לא פשוט <bdi dir="ltr">href="/Site/About"</bdi>?</summary>
+      <p>גם זה עובד. היתרון של asp-page: השרת בונה את הכתובת לפי הדפים <b>שקיימים באמת</b>. אם האתר יעלה פעם לכתובת משנה (למשל <code>/dana/</code> בשרת של בית הספר), הקישורים יתעדכנו לבד. ובלי <code>/</code> בהתחלה, asp-page מחפש את הדף <b>יחסית לתיקייה</b> של הדף הנוכחי. להרחבה: <a href="https://learn.microsoft.com/aspnet/core/mvc/views/tag-helpers/built-in/anchor-tag-helper" target="_blank" rel="noopener">Microsoft Learn: Anchor Tag Helper</a> (באנגלית).</p>
+    </details>
+  </article>
+
+  <article class="spread">
+    <h3><span><code>~/</code> – נתיב שמתחיל מ-wwwroot</span></h3>
+    <p>בדף About ראיתם שהשרת הופך <code>~/Img/pic.jpg</code> ל-<code>/Img/pic.jpg</code> – נתיב מהשורש של האתר. אבל בשיעורים 2–3 כתבתם <code>../Img/pizza.jpg</code>, "עלו תיקייה אחת". זה עדיין עובד?</p>
+    <div class="predict" id="p43"></div>
+    <div id="walkCtrls">
+      <div class="ctrls"><span class="lbl">הכתובת בדפדפן:</span><div class="seg" id="wkPage"></div></div>
+      <div class="ctrls"><span class="lbl">בדף כתוב <code>src="…"</code> עם:</span><div class="seg" id="wkPath"></div></div>
+    </div>
+    <div class="walkout" id="walkOut"><div class="pathbox" id="wkBox"></div><div class="row2"><img id="wkImg" alt="התמונה pic.jpg" /><span id="wkVerdict" aria-live="polite"></span></div></div>
+    <div class="what" id="w43">הדפדפן רואה רק את <b>הכתובת</b>, ולפיה מחשב נתיב יחסי. לכן <code>../Img</code> עובד רק "במזל", בכתובות בעומק תיקייה אחת. <code>~/</code> עובד <b>תמיד</b>: השרת הופך אותו לנתיב מהשורש של האתר.</div>
+    <div class="bridge">נתיב <b>יחסי</b> (relative) תלוי איפה עומדים; נתיב <b>מוחלט</b> (absolute) מתחיל תמיד מאותה נקודה – כמו <bdi dir="ltr">C:\Users</bdi> בסייר הקבצים.</div>
+  </article>
+
+  <article class="spread vsstep">
+    <h3>💻 עכשיו אצלכם ב-Visual Studio</h3>
+    <p>מתקנים את הקישורים בתפריט שב-<code>_Layout</code>, ומוסיפים קישור לדף "אודות".</p>
+    <ol class="vsdo">
+      <li>ב-<code>_Layout.cshtml</code>, בתפריט שלכם, החליפו כל <code>href="....html"</code> ב-asp-page לפי הטבלה. את דפי התוכן, הכניסה וההרשמה תיצרו בנושא הבא, עם השמות האלה (או שמות משלכם – באנגלית, באות גדולה):
+        <table class="nwcode">
+          <tr><th>היה בתפריט</th><th>כותבים עכשיו</th></tr>
+          <tr><td><code>href=<wbr>"index.html"</code></td><td><code>asp-page=<wbr>"/Index"</code></td></tr>
+          <tr><td><code>href=<wbr>"page1.html"</code></td><td><code>asp-page=<wbr>"/Site/Page1"</code></td></tr>
+          <tr><td><code>href=<wbr>"login.html"</code></td><td><code>asp-page=<wbr>"/Site/Login"</code></td></tr>
+        </table>
+        גם בשם האתר (navbar-brand) כותבים <code>asp-page="/Index"</code> במקום href.</li>
+      <li>הוסיפו לרשימת הקישורים, לפני <code>&lt;/ul&gt;</code>, קישור לדף "אודות":
+        <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-rz="rz">
+&lt;li class="nav-item"&gt;&lt;a class="nav-link" asp-page="/Site/About"&gt;אודות&lt;/a&gt;&lt;/li&gt;
+</pre></div></li>
+      <li>שמרו והריצו. בדף הבית לחצו בתפריט על "אודות", ומשם על שם האתר – חזרה לדף הבית.</li>
+      <li>בדף "אודות" לחצו Ctrl+U וחפשו (Ctrl+F) <code>Site/About</code>: מצאתם <code>href="/Site/About"</code> – ואף asp-page? חפשו גם <code>Img</code> – ב-src כתוב <code>/Img/…</code> ואין שם <code>~</code> בכלל.</li>
+    </ol>
+    <div class="expect">בתפריט מופיע "אודות", והלחיצה פותחת את הכתובת שמסתיימת ב-<code>/Site/About</code> עם הדף שלכם. לחיצה על שם האתר מחזירה לדף הבית. הקישורים לדפים שעוד לא יצרתם (Page1, Login) עדיין לא מובילים לשום מקום – ב-Ctrl+U כתוב בהם <code>href=""</code>. הם יתחילו לעבוד ברגע שתיצרו את הדפים, בנושא הבא.</div>
+    <div class="trouble" id="trPaths"></div>
+  </article>
+  <article class="spread cpstep">
+    <h3>🎯 הבנתם את כל מה שלמדתם עד עכשיו?</h3>
+    <div id="cpPaths"></div>
+  </article>
+</section>
+
+<!-- ====================================================== 5. move -->
+<section class="topic" data-id="move" data-icon="🚚" data-title="מעבירים את האתר">
+  <article class="spread">
+    <h3>⚠ מדביקים את כל הדף?</h3>
+    <p>עכשיו מעבירים את דפי ה-HTML שלכם לדפי Razor. הנה הטעות הכי נפוצה בשלב הזה:</p>
+    <div class="predict" id="p51"></div>
+    <div class="compare">
+      <div><p class="cslbl">✘ הדבקתי את <b>כל</b> login.html</p><div id="ppBad"></div></div>
+      <div><p class="cslbl">✔ הדבקתי רק את <b>התוכן</b></p><div id="ppGood"></div></div>
+    </div>
+    <div data-lock><p class="cslbl">ב-Ctrl+U של הדף השבור – שתי תגיות html:</p><pre class="cv" id="ppSrc"></pre></div>
+    <div class="what">התבנית <b>כבר</b> נותנת לכל דף html, head, body, תפריט, container ו-script. כשמדביקים דף שלם, הכול מגיע <b>פעמיים</b>: שני תפריטים, ודף שלם בתוך המקום של RenderBody. לכן מדף HTML מעתיקים רק את <b>התוכן</b> – בשלב הבא בדיוק איך.</div>
+  </article>
+
+  <article class="spread">
+    <h3>המתכון: מדף HTML לדף Razor</h3>
+    <p>ככה מעבירים כל דף. הנה login.html משיעורים 4–5 – עברו על ארבעת הצעדים:</p>
+    <div class="ctrls"><div class="seg" id="mvSeg"></div></div>
+    <div class="split wrapcode">
+      <div class="pane"><div class="pane-h"><span class="dot"></span>wwwroot/HTML/login.html – הדף הישן</div><pre class="cv" id="mvOld"></pre></div>
+      <div class="pane"><div class="pane-h"><span class="dot"></span>Pages/Site/Login.cshtml – הדף החדש</div><pre class="cv" id="mvNew"></pre><div id="mvSiteWrap" hidden><div id="mvSite"></div></div></div>
+    </div>
+    <div class="verdict st" id="mvWhat" aria-live="polite"></div>
+    <div class="tip">💡 טופס עם <code>method="get"</code> ממשיך לעבוד גם בדף Razor: הנתונים נשלחים לאותו דף, ומופיעים בכתובת. נסו בצעד 4. עם post נעבוד בהמשך השנה, כשתכתבו קוד בקובץ cs.</div>
+  </article>
+
+  <article class="spread vsstep">
+    <h3>💻 עכשיו אצלכם ב-Visual Studio</h3>
+    <p>מעבירים שני דפים, לפי <a href="#" data-go="move:2">המתכון</a>: דף התוכן ודף הכניסה. כל השאר – בצעד הפרויקט, בסוף השיעור.</p>
+    <ol class="vsdo">
+      <li><b>דף התוכן:</b> קליק ימני על <b>Site</b> &rlm;←&rlm; Add &rlm;←&rlm; <bdi>Razor Page...</bdi> &rlm;←&rlm; Razor Page - Empty, בשם <b>Page1</b> (השם שכתבתם בתפריט). השאירו את <code>@page</code> ו-<code>@model</code>, ובמקום הבלוק הריק כתבו כותרת: <code>@{ ViewData["Title"] = "..."; }</code></li>
+      <li>פתחו את page1.html. העתיקו רק את מה שבתוך body – <b>בלי</b> ה-nav, בלי ה-div של container (את מה שבתוכו – כן) ובלי שורת ה-script – והדביקו ב-Page1.cshtml, מתחת לכותרת.</li>
+      <li>בדף החדש: כל <code>../Img/</code> &rlm;←&rlm; <code>~/Img/</code>. וקישור לדף אחר באתר: <code>href="x.html"</code> &rlm;←&rlm; <code>asp-page="/Site/X"</code> – חוץ מ-index.html, שהופך ל-<code>asp-page="/Index"</code> (דף הבית). שמרו, הריצו ולחצו בתפריט על הקישור לדף.</li>
+      <li><b>דף הכניסה:</b> אותו דבר ל-login.html, בדף בשם <b>Login</b>. בדקו: מלאו את הטופס ולחצו "כניסה".</li>
+      <li>את קובצי ה-HTML הישנים השאירו בינתיים – הם לא מפריעים, והם הגיבוי שלכם.</li>
+    </ol>
+    <div class="expect">הקישורים בתפריט לדף התוכן ולכניסה פותחים את <code>/Site/Page1</code> ואת <code>/Site/Login</code> – בלי סיומת – ובכל דף יש <b>תפריט אחד</b>, התמונות מופיעות ובלשונית הכותרת של הדף. אחרי "כניסה" הכתובת מסתיימת בערך כך: <code>/Site/Login?userName=dana&amp;password=1234</code> (עם מה שהקלדתם).</div>
+    <div class="trouble" id="trMove"></div>
+  </article>
+  <article class="spread cpstep">
+    <h3>🎯 הבנתם את כל מה שלמדתם עד עכשיו?</h3>
+    <div id="cpMove"></div>
+  </article>
+</section>
+
+<!-- ====================================================== 6. practice -->
+<section class="topic" data-id="practice" data-icon="🛠" data-title="תרגול וסיכום">
+  <article class="spread">
+    <h3>🛠 נסו עכשיו: מתקנים דף Razor</h3>
+    <p>זה About.cshtml – אבל מישהו הדביק בו דף HTML <b>שלם</b>. תקנו אותו לפי המשימות. בתצוגה רואים את הדף בתוך התבנית, כמו בשרת אמיתי (המדריך מדמה את השרת). כשמשימה מצליחה – היא נצבעת בירוק ✔. תקועים? בכל משימה יש רמזים, ובסוף גם פתרון.</p>
+    <div id="pg"></div>
+  </article>
+
+  <article class="spread">
+    <h3>🧩 צעד בפרויקט – לקראת הגשה 1</h3>
+    <div class="stepbox">
+      <b>האתר שלכם – כולו ב-Razor, בתבנית אחת.</b> שני דפים כבר עברו (<a href="#" data-go="move:3">בשלב 💻</a>). עכשיו כל השאר, באותה דרך:
+      <ol>
+        <li><b>register.html</b> ו-<b>recover.html</b> &rlm;←&rlm; דפים Register ו-Recover ב-<code>Pages/Site</code>, וכל דף תוכן נוסף שיש לכם.</li>
+        <li><b>דף הנחיתה:</b> פתחו את <code>Pages/Index.cshtml</code> (הוא נפתח בכתובת <code>/</code>). השאירו את <code>@page</code> ו-<code>@model IndexModel</code>, החליפו את "Home page" בכותרת שלכם, ואת כל ה-div של "Welcome" – בתוכן של index.html (בלי nav ו-script).</li>
+        <li>בתפריט ב-<code>_Layout</code> – קישור asp-page לכל דף. הוספתם דף? מוסיפים לו קישור <b>רק כאן</b>.</li>
+        <li>בכל דף: <code>@page</code> ו-<code>@model</code> למעלה, כותרת עם ViewData, תמונות עם <code>~/Img/…</code>, טפסים עם <code>method="get"</code> – ובלי html, head, body, nav ו-script.</li>
+        <li><b>בדיקה:</b> עברו על <b>כל</b> הקישורים – גם ברוחב טלפון (F12, ואז Ctrl+Shift+M). בכל דף: תפריט אחד, תמונות, כותרת בלשונית, ובלי שגיאה אדומה ב-Console.</li>
+      </ol>
+      <label style="display:flex;gap:8px;align-items:center;margin-top:8px"><input type="checkbox" id="stepDone" /> עשיתי את הצעד בפרויקט שלי</label>
+    </div>
+  </article>
+
+  <article class="spread" id="quiz">
+    <h3>✅ בדקו את עצמכם</h3>
+    <p>3 שאלות על מצבים חדשים. טעיתם? ההסבר יגיד למה – ונסו שוב.</p>
+  </article>
+
+  <article class="spread" id="summary">
+    <h3>📄 דף סיכום: כל השיעור במסך אחד</h3>
+    <p>כל מה שצריך לזכור. אפשר לחזור לכאן בכל זמן, או להדפיס. <button class="btn" type="button" id="printBtn">🖨 הדפסה</button></p>
+    <div class="cheat">
+      <div class="card"><h4>דף Razor</h4>
+        <ul>
+          <li>שני קבצים: <code>About.cshtml</code> (כאן כותבים) ו-<code>About.cshtml.cs</code> (קוד השרת).</li>
+          <li>בראש הדף: <code>@page</code> ו-<code>@model</code> – לא מוחקים.</li>
+          <li><code>@</code> = מכאן <bdi>C#</bdi>. השרת מריץ, והדפדפן מקבל רק את התוצאה.</li>
+          <li>בלוק פקודות: <code>@{ … }</code> · כותרת: <code>ViewData["Title"] = "אודות";</code></li>
+          <li>התו @ עצמו בטקסט: <code>@@</code> · הערה שלא נשלחת: <code>@* … *@</code></li>
+        </ul></div>
+      <div class="card wrapcode"><h4>התבנית</h4>
+        <div class="codeblock"><pre class="cv" id="sumLayout"></pre></div>
+        <p style="margin:4px 0 0">התפריט – רק כאן. כל דף נכנס במקום <code>@RenderBody()</code> בתבנית.</p></div>
+      <div class="card"><h4>כתובות</h4>
+        <table>
+          <tr><th>הקובץ</th><th>הכתובת</th></tr>
+          <tr><td><code>Pages/Index.cshtml</code></td><td><code>/</code></td></tr>
+          <tr><td><code>Pages/Site/About.cshtml</code></td><td><code>/Site/About</code></td></tr>
+          <tr><td><code>wwwroot/Img/pic.jpg</code></td><td><code>/Img/pic.jpg</code></td></tr>
+        </table>
+        <p style="margin:2px 0">דף Razor – בלי Pages ובלי סיומת. קובץ ב-wwwroot – עם הסיומת.</p></div>
+      <div class="card"><h4>נתיבים וקישורים בדף Razor</h4>
+        <table>
+          <tr><td>תמונה, css</td><td><code>~/Img/pic.jpg</code></td></tr>
+          <tr><td>קישור לדף</td><td><code>asp-page="/Site/About"</code></td></tr>
+          <tr><td>דף הבית</td><td><code>asp-page="/Index"</code></td></tr>
+        </table>
+        <p style="margin:2px 0"><code>~/</code> = מתחילת wwwroot, מכל דף. הדפדפן מקבל <code>/Img/pic.jpg</code> – נתיב מהשורש.</p></div>
+      <div class="card"><h4>מעבירים דף HTML ל-Razor</h4>
+        <ol>
+          <li>Site &rlm;←&rlm; Add &rlm;←&rlm; <bdi>Razor Page...</bdi> &rlm;←&rlm; Razor Page - Empty</li>
+          <li>כותרת: <code>@{ ViewData["Title"] = "…"; }</code></li>
+          <li>מעתיקים רק את מה שבתוך body – בלי nav, container ו-script</li>
+          <li><code>../Img</code> &rlm;←&rlm; <code>~/Img</code> · href &rlm;←&rlm; asp-page (ל-index.html: <code>asp-page="/Index"</code>)</li>
+          <li>קישור בתפריט – רק ב-<code>_Layout</code></li>
+        </ol></div>
+      <div class="card"><h4>הדף לא עובד? בודקים:</h4>
+        <ul>
+          <li>404? כתובת בלי <code>.cshtml</code>, ו-<code>@page</code> בשורה הראשונה.</li>
+          <li>שני תפריטים? הודבקו html, head, body או nav.</li>
+          <li>קישור "לא עושה כלום"? בודקים את ה-asp-page.</li>
+        </ul>
+        <p style="margin:4px 0 0">הרשימה המלאה: <a href="#" data-go="move:3">"עבד באתר ולא אצלי?"</a></p></div>
+    </div>
+  </article>
+</section>
+<div class="stepnav" id="stepnav"></div>
+</main>
+<footer>בניית אתרים · המדריך המעשי · שיעור 6 – Razor Pages ותבנית Layout · יוחאי פרץ</footer>
+
+<script src="assets/course.js"></script>
+<script>
+(function(){
+"use strict";
+const {$, esc, state, save, Frame, seg, predict, quiz, doneCheck, playground, codeLines, hlHtmlLine, checkpoint, trouble, toast, IMAGES, fakeImg, findEgg} = Course;
+const HE = /[\u0590-\u05FF]/;
+
+/* =====================================================================
+   1. Razor-aware code colouring: HTML lines with @-tokens, and C# lines
+   ===================================================================== */
+const RZ_RE = /@\*.*?\*@|@\{|@await RenderSectionAsync\([^)]*\)|@RenderBody\(\)|@ViewData\["\w+"\]|@DateTime(?:\.[A-Za-z]+)+(?:\(\))?|@@/g;
+function hlMixed(line){
+  let out = '', last = 0, m; RZ_RE.lastIndex = 0;
+  while ((m = RZ_RE.exec(line))) {
+    if (m.index > last) out += hlHtmlLine(line.slice(last, m.index));
+    out += '<span class="' + (m[0].startsWith('@*') ? 't-cm' : 't-rz') + '">' + esc(m[0]) + '</span>';
+    last = m.index + m[0].length;
+  }
+  if (last < line.length) out += hlHtmlLine(line.slice(last));
+  return out;
+}
+const CS_KW = /\b(using|namespace|public|class|void|var|new|return|null|false|true)\b/g;
+function hlCs(line){
+  let out = ''; const re = /("(?:[^"\\]|\\.)*")|(\/\/.*$)|(@\*.*?\*@|@\{|@[A-Za-z]+)|([^"@\/]+|[@\/])/g; let m;
+  while ((m = re.exec(line))) {
+    if (m[1]) out += '<span class="t-str">' + (HE.test(m[1]) ? '"<span class="he">' + esc(m[1].slice(1, -1)) + '</span>"' : esc(m[1])) + '</span>';
+    else if (m[2]) out += '<span class="t-cm">' + esc(m[2]) + '</span>';
+    else if (m[3]) out += '<span class="' + (m[3].startsWith('@*') ? 't-cm' : 't-rz') + '">' + esc(m[3]) + '</span>';
+    else out += esc(m[4]).replace(CS_KW, '<span class="t-kw">$1</span>');
+  }
+  return out;
+}
+function rzHtml(src, kind){
+  let inCs = false;
+  return src.split('\n').map(l => {
+    const t = l.trim();
+    if (kind === 'cs') return hlCs(l);
+    if (kind === 'html') return hlHtmlLine(l);
+    if (inCs) { if (t === '}') inCs = false; return hlCs(l); }
+    if (/^@\{/.test(t)) { if (!/\}\s*$/.test(t)) inCs = true; return hlCs(l); }
+    if (/^@section\b/.test(t)) return hlCs(l);
+    if (/^@(page|model|using|namespace|addTagHelper|inject)\b/.test(t)) return hlCs(l);
+    if (/^@\*/.test(t)) return '<span class="t-cm">' + esc(l) + '</span>';
+    return hlMixed(l);
+  });
+}
+function rzLines(pre, src, kind, marks){
+  marks = marks || {}; pre.classList.add('cv');
+  pre.innerHTML = rzHtml(src, kind).map((h, i) => '<span class="ln' + (marks[i] ? ' ' + marks[i] : '') + '" data-i="' + i + '">' + (h || ' ') + '</span>').join('');
+  return pre;
+}
+/* static blocks: <pre data-rz="rz|cs" data-marks="3:slot"> raw text </pre> */
+document.querySelectorAll('pre[data-rz]').forEach(pre => {
+  const raw = pre.textContent.replace(/^\n/, '').replace(/\s+$/, '');
+  const marks = {}; (pre.dataset.marks || '').split(',').filter(Boolean).forEach(p => { const [i, m] = p.split(':'); marks[+i - 1] = m || 'new'; });
+  rzLines(pre, raw, pre.dataset.rz, marks);
+});
+
+/* =====================================================================
+   2. A tiny "Razor server" simulation (the browser cannot run C#)
+   ===================================================================== */
+const BS_RTL = 'assets/bootstrap.rtl.min.css', BS_LTR = 'assets/bootstrap.min.css', BS_JS = 'assets/bootstrap.bundle.min.js';
+const NOW = {t: new Date()};
+const two = n => String(n).padStart(2, '0');
+const hhmm = () => two(NOW.t.getHours()) + ':' + two(NOW.t.getMinutes());
+/* Razor's default HtmlEncoder keeps only Basic Latin; everything else becomes &#x...; */
+const enc = s => Array.from(String(s)).map(c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#x27;'})[c] || (c.codePointAt(0) > 127 ? '&#x' + c.codePointAt(0).toString(16).toUpperCase() + ';' : c)).join('');
+
+const ABOUT_SRC = `@page
+@model MyFirstWeb.Pages.Site.AboutModel
+@{
+    ViewData["Title"] = "אודות";
+}
+<h2>אודות האתר</h2>
+<p>הדף הזה נכנס לתוך התבנית המשותפת</p>
+<p>השעה עכשיו: @DateTime.Now.ToShortTimeString()</p>
+<img src="~/Img/pic.jpg" alt="תמונה" width="150" />`;
+const ABOUT_EGG = `@page
+@model MyFirstWeb.Pages.Site.AboutModel
+@{
+    ViewData["Title"] = "אודות";
+}
+@* note to self: the secret code is SERVER *@
+<\!-- this HTML comment reaches the browser -->
+<h2>אודות האתר</h2>
+<p>הדף הזה נכנס לתוך התבנית המשותפת</p>
+<p>השעה עכשיו: @DateTime.Now.ToShortTimeString()</p>
+<img src="~/Img/pic.jpg" alt="תמונה" width="150" />`;
+const LOGIN_RZ = `@page
+@model MyFirstWeb.Pages.Site.LoginModel
+@{
+    ViewData["Title"] = "כניסה";
+}
+<h1>כניסה לאתר</h1>
+<img src="~/Img/logo.jpg" alt="לוגו" width="80" />
+<form id="loginForm" method="get">
+    <label for="userName" class="form-label">שם משתמש</label>
+    <input type="text" id="userName" name="userName" class="form-control" />
+    <label for="password" class="form-label">סיסמה</label>
+    <input type="password" id="password" name="password" class="form-control" />
+    <input type="submit" value="כניסה" class="btn btn-primary mt-3" />
+</form>
+<a asp-page="/Site/Register">עוד אין לכם משתמש? להרשמה</a>`;
+/* the student's site (Danny's pizza) after the lesson */
+const MY = {
+  '/': {file:'Pages/Index.cshtml', src:`@page
+@model IndexModel
+@{
+    ViewData["Title"] = "דף הבית";
+}
+<div class="text-center">
+    <h1>🍕 פיצה דני</h1>
+    <p>הפיצה הכי טעימה באשקלון</p>
+    <img src="~/Img/pizza.jpg" alt="פיצה" width="140" />
+</div>`},
+  '/Site/Menu': {file:'Pages/Site/Menu.cshtml', src:`@page
+@model MyFirstWeb.Pages.Site.MenuModel
+@{
+    ViewData["Title"] = "התפריט";
+}
+<h2>התפריט</h2>
+<ul>
+    <li>מרגריטה – 45 שקל</li>
+    <li>פטריות – 39 שקל</li>
+    <li>זיתים – 39 שקל</li>
+</ul>`},
+  '/Site/About': {file:'Pages/Site/About.cshtml', src: ABOUT_SRC},
+  '/Site/Login': {file:'Pages/Site/Login.cshtml', src: LOGIN_RZ},
+  '/Site/Register': {file:'Pages/Site/Register.cshtml', src:`@page
+@model MyFirstWeb.Pages.Site.RegisterModel
+@{
+    ViewData["Title"] = "הרשמה";
+}
+<h1>הרשמה</h1>
+<p>כאן יהיה טופס ההרשמה שלכם, משיעור 4.</p>
+<a asp-page="/Site/Login">כבר יש לכם משתמש? לכניסה</a>`}
+};
+/* the Visual Studio template, as students first meet it (real Index / Privacy content) */
+const TPL = {
+  '/': {file:'Pages/Index.cshtml', src:`@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>`},
+  '/Privacy': {file:'Pages/Privacy.cshtml', src:`@page
+@model PrivacyModel
+@{
+    ViewData["Title"] = "Privacy Policy";
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>Use this page to detail your site's privacy policy.</p>`},
+  '/Site/About': {file:'Pages/Site/About.cshtml', src: ABOUT_SRC}
+};
+function pageHref(p, pages, from){
+  /* absolute "/Site/About", or relative to the current page's folder ("Menu", "./Menu", "../Index") – like Razor */
+  let path = p.startsWith('/') ? p : new URL(p, 'https://h' + (from || '/')).pathname;
+  path = path.replace(/\/Index$/i, '/');
+  const key = Object.keys(pages || {}).find(k => k.toLowerCase() === path.toLowerCase());
+  return key === undefined ? '' : key;
+}
+/* run a .cshtml source: directives, @{ } blocks, @ expressions, Razor comments, ~/ and asp-page.
+   Anything the guide cannot run is shown as a yellow note instead of being faked. */
+const NOT_RUN = '<span style="background:#fef3c7;color:#713f12;border:1px dashed #b45309;border-radius:6px;padding:0 6px;font-size:.85em">⚙ המדריך לא מריץ את זה – ב-Visual Studio זה ירוץ</span>';
+function razor(src, pages, from){
+  let title = '';
+  let s = src.replace(/@\*[\s\S]*?\*@[ \t]*\n?/g, '');
+  const noPage = !/^\s*@page\b/.test(s);
+  s = s.replace(/^[ \t]*@page\b.*\n?/m, '').replace(/^[ \t]*@model\b.*\n?/m, '');
+  s = s.replace(/@\{([\s\S]*?)\}[ \t]*\n?/g, (x, code) => { const m = code.match(/ViewData\[\s*"Title"\s*\]\s*=\s*"([^"]*)"\s*;/); if (m) title = m[1]; return ''; });
+  s = s.replace(/@@/g, '\u0001');
+  s = s.replace(/@ViewData\[\s*"Title"\s*\]/g, () => enc(title));
+  s = s.replace(/@DateTime\.Now\.ToShortTimeString\(\)/g, hhmm());
+  s = s.replace(/@\(\s*DateTime\.(?:Now|Today)\.Year\s*\)|@DateTime\.(?:Now|Today)\.Year\b/g, String(NOW.t.getFullYear()));
+  s = s.replace(/(^|[^\w.\u0001])@(\([^)]*\)|[A-Za-z_][\w.]*(?:\([^)]*\))?(?:\[[^\]]*\])?)/gm, (x, pre) => pre + NOT_RUN);
+  s = s.replace(/\u0001/g, '@');
+  s = s.replace(/<a\b([^>]*)>/g, (x, attrs) => { const m = attrs.match(/\sasp-page\s*=\s*"([^"]*)"/); if (!m) return x; return '<a' + attrs.replace(/\sasp-(page|area)\s*=\s*"[^"]*"/g, '') + ' href="' + pageHref(m[1], pages, from) + '">'; });
+  s = s.replace(/\s+asp-append-version="true"/g, '');
+  s = s.replace(/(\s(?:src|href)\s*=\s*")~\//g, '$1/');
+  return {out: s.replace(/^\s*\n/, '').replace(/\s+$/, ''), title, noPage};
+}
+/* images: resolve like a browser would, from the page URL; /Img/x exists, anything else is a 404 */
+function imgFix(html, path){
+  return html.replace(/(<img\b[^>]*?\ssrc=")([^"]*)(")/gi, (x, a, src, b) => {
+    if (/^data:/.test(src)) return x;
+    let p = ''; try { p = new URL(src, 'https://h' + path).pathname; } catch(e){}
+    const m = p.match(/^\/img\/([\w.-]+)$/i);
+    return a + (m ? (IMAGES[m[1].toLowerCase()] || fakeImg(m[1].replace(/\.[a-z]+$/i, ''))) : 'data:,') + b;
+  });
+}
+const SIM_CSS = 'body{padding:0!important}main{min-height:60px}.rb-slot{outline:3px dashed #7c3aed;outline-offset:4px;border-radius:4px;position:relative;margin-top:30px;padding:2px}.rb-slot::before{content:"@RenderBody()";position:absolute;top:-30px;left:0;font:12px monospace;background:#7c3aed;color:#fff;padding:1px 8px;border-radius:6px;direction:ltr}footer{padding:8px 0;margin-top:14px;font-size:14px}';
+const slot = (body, mark) => mark ? '<div class="rb-slot">' + body + '</div>' : body;
+function wrapTpl(body, mark){
+  return '<header><nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"><div class="container"><a class="navbar-brand" href="/">MyFirstWeb</a>' +
+    '<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>' +
+    '<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between"><ul class="navbar-nav flex-grow-1"><li class="nav-item"><a class="nav-link text-dark" href="/">Home</a></li><li class="nav-item"><a class="nav-link text-dark" href="/Privacy">Privacy</a></li></ul></div></div></nav></header>' +
+    '<div class="container"><main role="main" class="pb-3">' + slot(body, mark) + '</main></div>' +
+    '<footer class="border-top footer text-muted"><div class="container">&copy; 2026 - MyFirstWeb - <a href="/Privacy">Privacy</a></div></footer>';
+}
+const MENU = [['/', 'דף הבית'], ['/Site/Menu', 'התפריט'], ['/Site/About', 'אודות'], ['/Site/Login', 'כניסה']];
+function navHtml(cur, oldLinks){
+  return '<nav class="navbar navbar-expand-md bg-warning sticky-top"><div class="container"><a class="navbar-brand" href="' + (oldLinks ? 'index.html' : '/') + '">🍕 פיצה דני</a>' +
+    '<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenu" aria-controls="mainMenu" aria-expanded="false" aria-label="פתיחת התפריט"><span class="navbar-toggler-icon"></span></button>' +
+    '<div class="collapse navbar-collapse" id="mainMenu"><ul class="navbar-nav">' +
+    MENU.map(([h, t]) => { const href = oldLinks ? (h === '/' ? 'index.html' : h.split('/').pop().toLowerCase() + '.html') : h;
+      return '<li class="nav-item"><a class="nav-link' + (h === cur ? ' active fw-bold" aria-current="page' : '') + '" href="' + href + '">' + t + '</a></li>'; }).join('') +
+    '</ul></div></div></nav>';
+}
+function wrapMine(body, mark, cur){
+  return navHtml(cur) + '<div class="container"><main role="main" class="pb-3">' + slot(body, mark) + '</main></div>' +
+    '<footer class="border-top footer text-muted"><div class="container">&copy; 2026 - פיצה דני</div></footer>';
+}
+const NOT_FOUND = '<div style="direction:ltr;text-align:left;font-family:Arial,sans-serif;color:#333;padding:18px"><div style="font-size:34px">📄❓</div><div style="font-size:18px">This localhost page can’t be found</div><div style="font-size:13px;color:#555;margin-top:4px">HTTP ERROR 404</div></div>';
+const ERR_RB = '<div style="direction:ltr;text-align:left;font-family:Segoe UI,Arial,sans-serif;padding:16px;color:#222"><h1 style="font-size:19px;font-weight:400;color:#c00;margin:0 0 12px">An unhandled exception occurred while processing the request.</h1>' +
+  '<div style="font-size:15px;font-weight:600">InvalidOperationException: RenderBody has not been called for the page at \'/Pages/Shared/_Layout.cshtml\'. To ignore call IgnoreBody().</div>' +
+  '<div style="font-size:12.5px;color:#555;margin-top:6px">Microsoft.AspNetCore.Mvc.Razor.RazorPage.EnsureRenderedBodyOrSections()</div></div>';
+
+/* a mini browser = engine Frame + a tab strip that shows the page title */
+function browser(host, o){
+  o = o || {};
+  const fr = new Frame(host, {height: o.height || 340, url: o.url || 'localhost:7123/'});
+  addTab(fr);
+  return fr;
+}
+function addTab(fr){
+  if (fr.tabT) return fr;
+  const strip = document.createElement('div'); strip.className = 'tabstrip';
+  strip.innerHTML = '<span class="tab"><span aria-hidden="true">🌐 </span><bdi></bdi></span>';
+  fr.wrap.insertBefore(strip, fr.bar);
+  fr.tabT = strip.querySelector('bdi');
+  fr.title = t => { fr.tabT.textContent = t; return fr; };
+  return fr;
+}
+const tabTitle = t => (t ? t + ' - ' : ' - ') + 'MyFirstWeb';
+/* a clickable mini web site: links and get-forms inside the frame stay inside the simulation */
+function siteSim(host, o){
+  const fr = browser(host, {height: o.height || 360});
+  const sim = {fr, url: o.start || '/', mark: !!o.mark, err: null};
+  const find = path => { const p = (path.replace(/\/+$/, '') || '/').toLowerCase(); return Object.keys(o.pages).find(k => k.toLowerCase() === p); };
+  sim.go = url => { sim.url = url; sim.render(); };
+  sim.render = () => {
+    const path = sim.url.split('?')[0], key = find(path);
+    let html, title, links = [o.kind === 'tpl' ? BS_LTR : BS_RTL], css = SIM_CSS + (o.kind === 'tpl' ? 'body{direction:ltr;text-align:left}' : '');
+    if (sim.err) { html = sim.err; title = 'Internal Server Error'; links = []; }
+    else if (key === undefined) { html = NOT_FOUND; title = 'localhost'; links = []; }
+    else { const r = razor(o.pages[key].src, o.pages, key); title = tabTitle(r.title); html = o.kind === 'tpl' ? wrapTpl(r.out, sim.mark) : wrapMine(r.out, sim.mark, key); }
+    let shown = sim.url; try { shown = decodeURIComponent(sim.url.replace(/\+/g, ' ')); } catch(e){}
+    fr.url('localhost:7123' + shown).title(title);
+    fr.show({html: imgFix(html, path), links, scripts: [BS_JS], css});
+    if (o.onNav) o.onNav(key, sim);
+  };
+  fr.onLoad = d => {
+    d.addEventListener('click', e => {
+      const a = e.target.closest('a'); if (!a) return; e.preventDefault();
+      const h = a.getAttribute('href'); if (h === null) return;
+      if (/^https?:/i.test(h)) { toast('🔗 קישור לאתר אחר – בהדגמה נשארים באתר שלנו'); return; }
+      if (h === '') { toast('🔗 <code>href=""</code> – הקישור טוען שוב את אותו דף'); sim.render(); return; }
+      const u = new URL(h, 'https://h' + sim.url.split('?')[0]); sim.go(u.pathname + u.search);
+    });
+    d.addEventListener('submit', e => {
+      e.preventDefault(); const f = e.target;
+      const qs = new URLSearchParams(new FormData(f)).toString();
+      sim.go(sim.url.split('?')[0] + (qs ? '?' + qs : ''));
+    });
+  };
+  sim.render();
+  return sim;
+}
+
+/* =====================================================================
+   3. Topic "start"
+   ===================================================================== */
+siteSim($('#welcomeSite'), {kind:'mine', pages: MY, start:'/', height: 380});
+
+const WHY = [
+  {files: ['index.html', 'page1.html', 'page2.html', 'login.html', 'register.html', 'recover.html'].map(f => ({f, s:'☰ עותק של התפריט'})),
+   done: () => '✎ 6 קבצים לערוך – בכל אחד אותו שינוי בדיוק'},
+  {files: [{f:'_Layout.cshtml', s:'☰ התפריט – רק כאן', lay:true}].concat(['Index.cshtml', 'Site/Page1.cshtml', 'Site/Page2.cshtml', 'Site/Login.cshtml', 'Site/Register.cshtml', 'Site/Recover.cshtml'].map(f => ({f, s:'בלי תפריט – מקבל מהתבנית'}))),
+   done: () => '✎ קובץ אחד לערוך – וכל הדפים מתעדכנים לבד'}
+];
+let whyI = 0, whyDone = false;
+function drawWhy(){
+  const w = WHY[whyI];
+  $('#whyFiles').innerHTML = w.files.map(x => {
+    const cls = !whyDone ? '' : (whyI === 0 || x.lay) ? ' edit' : ' auto';
+    const st = !whyDone ? x.s : (whyI === 0 ? '✎ צריך לערוך' : x.lay ? '✎ עורכים כאן – פעם אחת' : '✔ התעדכן לבד');
+    return '<div class="file' + cls + '"><b>' + x.f + '</b>' + st + '</div>'; }).join('');
+  $('#whyCount').textContent = whyDone ? w.done() : 'לחצו על ➕ כדי להוסיף קישור לתפריט.';
+  $('#whyAdd').textContent = whyDone ? '↺ מההתחלה' : '➕ הוסיפו לתפריט: צור קשר';
+}
+seg($('#whySeg'), ['📄 דפי HTML (עד היום)', '🧱 Razor עם תבנית (מהיום)'], (o, i) => { whyI = i; whyDone = false; drawWhy(); });
+$('#whyAdd').addEventListener('click', () => { whyDone = !whyDone; drawWhy(); });
+
+/* =====================================================================
+   4. Topic "razor"
+   ===================================================================== */
+/* 1: delete @page -> 404 */
+const NOPAGE = '@page\n@model MyFirstWeb.Pages.Site.AboutModel\n@{\n}';
+rzLines($('#noPageCode'), NOPAGE, 'rz', {0:'gone'});
+$('#noPageBtn').addEventListener('click', () => { const o = $('#noPageOut'); o.hidden = !o.hidden; $('#noPageBtn').innerHTML = o.hidden ? '🔨 תראו לי: מחקו את <code>@page</code>' : '↺ החזירו את <code>@page</code>'; });
+
+/* 2: @ runs on the server */
+rzLines($('#rzSrc'), ABOUT_EGG, 'rz', {9:'diff', 10:'diff'});
+const rzFr = browser($('#rzRes'), {height: 250, url:'localhost:7123/Site/About'});
+function drawRz(){
+  const r = razor(ABOUT_EGG, MY);
+  codeLines($('#rzRcv'), r.out, 'html', {3:'diff', 4:'diff'});
+  rzFr.title(tabTitle(r.title));
+  rzFr.show({html: imgFix(r.out, '/Site/About'), links:[BS_RTL], css:'body{padding:12px}'});
+}
+drawRz();
+$('#rzTick').addEventListener('click', () => { NOW.t = new Date(NOW.t.getTime() + 60000); drawRz(); toast('🔄 השרת הריץ את הדף שוב – והשעה התעדכנה'); });
+predict('#p22', {
+  veil: '#rzRcvPane, #rzResPane, #w22', lock: '#rzCtrls',
+  q: 'מה יקבל הדפדפן במקום <code>@DateTime.Now.ToShortTimeString()</code> שבשורה 10?',
+  opts: ['את אותה שורה בדיוק – והדפדפן יריץ אותה', 'רק את השעה, למשל 14:05', 'הודעת שגיאה – דפדפן לא מבין <bdi>C#</bdi>'],
+  correct: 1,
+  why: ['דפדפן לא יודע להריץ <bdi>C#</bdi>. את העבודה עושה השרת – עוד לפני שהדף יוצא אליכם.', 'השרת הריץ את הקוד ושלח רק את <b>התוצאה</b>. השוו את שני החלונות.', 'נכון שדפדפן לא מבין <bdi>C#</bdi> – אבל הוא גם לא רואה אותו: השרת כבר החליף את הקוד בתוצאה.']
+});
+
+/* 3: ViewData["Title"] */
+rzLines($('#ttlLay'), '<title>@ViewData["Title"] - MyFirstWeb</title>', 'rz');
+function drawTtl(){
+  const v = $('#ttlIn').value;
+  rzLines($('#ttlPage'), '@{\n    ViewData["Title"] = "' + v + '";\n}', 'rz', {1:'diff'});
+  $('#ttlTab').textContent = tabTitle(v);
+  if (v.trim() === 'ביצה') findEgg('title');
+}
+$('#ttlIn').addEventListener('input', drawTtl); drawTtl();
+
+/* =====================================================================
+   5. Topic "layout"
+   ===================================================================== */
+const LAYOUT_SHORT = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>@ViewData["Title"] - MyFirstWeb</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <\!-- + meta, site.css, MyFirstWeb.styles.css -->
+</head>
+<body>
+    <header><\!-- the menu: MyFirstWeb, Home, Privacy --></header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+    <footer class="border-top footer text-muted"><\!-- © 2026 - MyFirstWeb --></footer>
+    <\!-- script lines + RenderSectionAsync -->
+</body>
+</html>`;
+/* the "the page goes in here" badge would give the answer away: only after the guess */
+const drawLyCode = () => rzLines($('#lyCode'), LAYOUT_SHORT, 'rz', state.p31 ? {11:'slot'} : {});
+drawLyCode();
+const LY_KEYS = ['/', '/Privacy', '/Site/About'];
+let lyBusy = false, pickLy;
+const lySim = siteSim($('#lySite'), {kind:'tpl', pages: TPL, start:'/Site/About', mark:true, height: 400, onNav: key => {
+  if (key === undefined) return;
+  $('#lyPageName').textContent = TPL[key].file + ' – הדף';
+  rzLines($('#lyPage'), TPL[key].src, 'rz');
+  if (pickLy && !lyBusy) { lyBusy = true; pickLy(LY_KEYS.indexOf(key)); lyBusy = false; }
+}});
+pickLy = seg($('#lySeg'), LY_KEYS.map(k => ({label:k, mono:true, v:k})), o => { if (!lyBusy) lySim.go(o.v); }, 2);
+predict('#p31', {
+  q: 'ב-About.cshtml יש רק תוכן – בלי html, head, body ובלי תפריט. מה יופיע בדפדפן בכתובת <code>/Site/About</code> בשורת הכתובת?',
+  opts: ['רק התוכן של About, בלי תפריט', 'התפריט והתחתית מהתבנית, וביניהם התוכן של About', 'דף ריק – כי חסרות התגיות html ו-body'],
+  correct: 1, onCorrect: drawLyCode,
+  why: ['מה שבקובץ About.cshtml הוא רק החלק האמצעי. השרת עוטף אותו בתבנית.', 'השרת לוקח את <code>_Layout</code>, ובמקום השורה <code>@RenderBody()</code> מכניס את התוכן של הדף. החליפו דף וראו מה משתנה.', 'את html, head ו-body הדף מקבל מהתבנית – לכן אסור לכתוב אותם בו שוב.']
+});
+
+/* 2: no RenderBody -> error page */
+const RB_SNIP = '    <div class="container">\n        <main role="main" class="pb-3">\n            @RenderBody()\n        </main>\n    </div>';
+const rbSim = siteSim($('#rbSite'), {kind:'tpl', pages: TPL, start:'/Site/About', height: 260});
+const pickRb = seg($('#rbSeg'), ['עם <code>@RenderBody()</code>', '🔨 בלי <code>@RenderBody()</code>'], (o, i) => {
+  rzLines($('#rbCode'), RB_SNIP, 'rz', {2: i ? 'gone' : 'slot'});
+  rbSim.err = i ? ERR_RB : null; rbSim.render();
+});
+predict('#p32', {
+  q: 'מוחקים מ-<code>_Layout</code> את השורה <code>@RenderBody()</code> ופותחים את <code>/Site/About</code> בדפדפן. מה יופיע?',
+  opts: ['התוכן של About – בסוף, אחרי התחתית', 'רק התפריט והתחתית, בלי התוכן', 'דף שגיאה'],
+  correct: 2, onCorrect: () => pickRb(1),
+  why: ['השרת לא מחפש מקום אחר – RenderBody הוא המקום היחיד שבו התבנית מכניסה את הדף.', 'הגיוני – אבל השרת לא מוכן "לבלוע" דף בשקט. הוא עוצר.', 'השרת שם לב שהתוכן של הדף לא נכנס לשום מקום, ועוצר עם שגיאה. ראו בתוצאה.']
+});
+
+/* =====================================================================
+   6. Topic "paths"
+   ===================================================================== */
+/* 1: URL -> file */
+const MT = [
+  ['📁 MyFirstWeb', '', ''], ['📁 wwwroot', '├─ ', ''], ['📁 css', '│  ├─ ', ''], ['📄 site-style.css', '│  │  └─ ', 'w:/css/site-style.css'],
+  ['📁 HTML', '│  ├─ ', ''], ['📄 index.html', '│  │  └─ ', 'w:/HTML/index.html'], ['📁 Img', '│  └─ ', ''], ['🖼 pic.jpg', '│     └─ ', 'w:/Img/pic.jpg'],
+  ['📁 Pages', '└─ ', ''], ['📄 Index.cshtml', '   ├─ ', 'p:/'], ['📄 Privacy.cshtml', '   ├─ ', 'p:/Privacy'], ['📁 Shared', '   ├─ ', ''], ['📄 _Layout.cshtml', '   │  └─ ', 'x:layout'],
+  ['📁 Site', '   └─ ', ''], ['📄 About.cshtml', '      ├─ ', 'p:/Site/About'], ['📄 Menu.cshtml', '      ├─ ', 'p:/Site/Menu'], ['📁 Forms', '      └─ ', ''], ['📄 Order.cshtml', '         └─ ', 'p:/Site/Forms/Order']
+];
+const MFILE = {'p:/':'Pages/Index.cshtml', 'p:/Privacy':'Pages/Privacy.cshtml', 'p:/Site/About':'Pages/Site/About.cshtml', 'p:/Site/Menu':'Pages/Site/Menu.cshtml', 'p:/Site/Forms/Order':'Pages/Site/Forms/Order.cshtml',
+  'w:/css/site-style.css':'wwwroot/css/site-style.css', 'w:/HTML/index.html':'wwwroot/HTML/index.html', 'w:/Img/pic.jpg':'wwwroot/Img/pic.jpg', 'x:layout':'Pages/Shared/_Layout.cshtml'};
+$('#mapTree').innerHTML = MT.map(([n, g, id]) => '<span class="g">' + g + '</span><span class="f"' + (id ? ' data-f="' + id + '"' : '') + '>' + esc(n) + '</span>').join('\n');
+function mapUrl(raw){
+  let u = raw.trim().replace(/^https?:\/\/[^\/]*/i, '').replace(/^localhost(:\d+)?/i, '');
+  if (!u.startsWith('/')) u = '/' + u;
+  const path = u.split(/[?#]/)[0], low = path.toLowerCase(), p = low.replace(/\/+$/, '') || '/';
+  if (/\.cshtml$/i.test(path)) return {egg:true, cls:'bad', id: /_layout/i.test(path) ? 'x:layout' : null, msg:'✘ <b>404 – לא נמצא.</b> לכתובת של דף Razor <b>אין סיומת</b>: השרת לא שולח קובצי cshtml – הוא מריץ אותם. נסו בלי <code>.cshtml</code> בסוף.'};
+  if (/^\/pages(\/|$)/.test(low)) return {cls:'bad', msg:'✘ <b>404 – לא נמצא.</b> Pages היא תיקיית הבית של הדפים – היא <b>לא</b> חלק מהכתובת.'};
+  const PG = {'/':'p:/', '/index':'p:/', '/privacy':'p:/Privacy', '/site/about':'p:/Site/About', '/site/menu':'p:/Site/Menu', '/site/forms/order':'p:/Site/Forms/Order'};
+  if (PG[p]) { const id = PG[p], canon = id.slice(2);
+    const note = (path !== canon && path.replace(/\/+$/, '') !== canon) ? ' (אותיות גדולות/קטנות ו-<code>/</code> בסוף לא משנים בכתובת של דף.)' : '';
+    return {id, cls:'ok', msg:'✔ <b>דף Razor:</b> השרת מריץ את <code>' + MFILE[id] + '</code>, מכניס אותו לתבנית ושולח HTML.' + (p === '/index' ? ' (<code>/Index</code> ו-<code>/</code> – אותו דף.)' : note)}; }
+  const ST = {'/css/site-style.css':'w:/css/site-style.css', '/html/index.html':'w:/HTML/index.html', '/img/pic.jpg':'w:/Img/pic.jpg'};
+  if (ST[low]) return {id: ST[low], cls:'st', msg:'✔ <b>קובץ מ-wwwroot:</b> <code>' + MFILE[ST[low]] + '</code> נשלח כמו שהוא – בלי להריץ כלום.'};
+  if (/^\/shared\/_layout$/.test(p)) return {id:'x:layout', cls:'bad', msg:'✘ <b>404.</b> התבנית היא לא דף: אין בה <code>@page</code>, ולכן אין לה כתובת.'};
+  if (p === '/site') return {cls:'bad', msg:'✘ <b>404.</b> בתיקייה Site אין דף בשם Index – לכן לכתובת של התיקייה עצמה אין דף.'};
+  return {cls:'bad', msg:'✘ <b>404 – לא נמצא.</b> אין דף או קובץ כזה בפרויקט.'};
+}
+function runMap(){
+  const r = mapUrl($('#mapIn').value);
+  document.querySelectorAll('#mapTree .f').forEach(f => f.classList.toggle('here', !!r.id && f.dataset.f === r.id));
+  const v = $('#mapVerdict'); v.className = 'verdict ' + r.cls; v.innerHTML = r.msg;
+  if (r.egg && state.p41) findEgg('ext');
+}
+$('#mapChips').innerHTML = ['/', '/Site/Forms/Order', '/site/about', '/Site/About.cshtml', '/Pages/Site/About', '/HTML/index.html', '/Img/pic.jpg', '/Shared/_Layout'].map(c => '<button type="button" class="chip">' + c + '</button>').join('');
+$('#mapChips').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; $('#mapIn').value = b.textContent; runMap(); });
+$('#mapIn').addEventListener('input', runMap); runMap();
+predict('#p41', {
+  veil: '#mapOut, #w41', lock: '#mapCtrls',
+  q: 'יצרתם בתוך Site תיקייה Forms, ובה דף: <code>Pages/Site/Forms/Order.cshtml</code>. איזו כתובת פותחת אותו?',
+  opts: ['<code>/Forms/Order</code>', '<code>/Order</code>', '<code>/Site/Forms/Order</code>', '<code>/Site/Forms/Order.cshtml</code>'],
+  correct: 2, onCorrect: () => { $('#mapIn').value = '/Site/Forms/Order'; runMap(); },
+  why: ['חסרה התיקייה Site: כל התיקיות שבתוך Pages הן חלק מהכתובת.', 'שם הדף לבד לא מספיק – גם כל התיקיות שבתוך Pages נכנסות לכתובת.', 'כל התיקיות שבתוך Pages, ושם הדף – בלי Pages ובלי סיומת. נסו כתובות נוספות במפה.', 'קרוב! אבל עם הסיומת השרת לא מוצא את הדף (404).']
+});
+
+/* 2: asp-page -> href */
+const AP = [{p:'/Index', t:'דף הבית', n:'לדף Index הכתובת היא פשוט <code>/</code> – דף הבית של האתר.'},
+  {p:'/Site/About', t:'אודות', n:'השרת מצא את <code>Pages/Site/About.cshtml</code>, וכתב את הכתובת שלו.'},
+  {p:'/Site/Abuot', t:'אודות', n:'⚠ טעות הקלדה: אין דף כזה, ולכן השרת כותב <code>href=""</code> – קישור שלא מוביל לשום מקום, <b>בלי הודעת שגיאה</b>. קישור בתפריט "לא עושה כלום"? בדקו את ה-asp-page שלו.'}];
+seg($('#apSeg'), AP.map(a => ({label:'asp-page="' + a.p + '"', mono:true, v:a})), o => {
+  const src = '<a class="nav-link" asp-page="' + o.v.p + '">' + o.v.t + '</a>';
+  rzLines($('#apSrc'), src, 'rz');
+  codeLines($('#apOut'), razor(src, MY).out, 'html', {0:'diff'});
+  $('#apNote').innerHTML = o.v.n; $('#apNote').className = 'verdict ' + (o.v.p === '/Site/Abuot' ? 'bad' : 'ok');
+});
+
+/* 3: ~/ vs ../ path walker */
+const WK = {p:'/Site/Forms/Login', s:'../Img/pic.jpg'}, wkSeen = {};
+function drawWalk(){
+  const sent = WK.s.startsWith('~/') ? WK.s.slice(1) : WK.s;
+  const res = new URL(sent, 'https://h' + WK.p).pathname, ok = /^\/img\/pic\.jpg$/i.test(res);
+  $('#wkBox').innerHTML = '<span style="color:#94a3b8">page   </span>' + esc(WK.p) + '<br><span style="color:#94a3b8">src    </span><span class="t-str">"' + esc(WK.s) + '"</span>' +
+    '<br><span style="color:#94a3b8">sent   </span><span class="t-str">"' + esc(sent) + '"</span>' + (sent !== WK.s ? ' <span style="color:#fda4af">← ~/ became /</span>' : '') +
+    '<br><span style="color:#94a3b8">result </span>' + esc(res) + (ok ? ' ✔' : ' ✘ 404');
+  $('#wkImg').src = ok ? IMAGES['pic.jpg'] || fakeImg('pic') : 'data:,';
+  let why;
+  if (WK.s.startsWith('~/')) why = '✔ השרת הפך את <code>~/</code> ל-<code>/</code>, והדפדפן מתחיל מהשורש של האתר. זה עובד מכל כתובת.';
+  else if (ok && WK.p === '/') why = '✔ הדף נמצא בשורש, אז אין לאן לעלות – הדפדפן נשאר ב-<code>/</code> ומוצא את Img.';
+  else if (ok) why = '✔ עובד – אבל <b>במזל</b>: מהכתובת <code>' + esc(WK.p) + '</code> הנתיב היחסי מגיע במקרה ל-<code>/Img</code> שבשורש.';
+  else why = '✘ הדפדפן חישב את הנתיב מהכתובת <code>' + esc(WK.p) + '</code> והגיע ל-<code>' + esc(res) + '</code> – ושם אין תמונה.';
+  $('#wkVerdict').innerHTML = why;
+  if (WK.s.startsWith('~/') && state.p43) { wkSeen[WK.p] = true; if (Object.keys(wkSeen).length === 4) findEgg('everywhere'); }
+}
+seg($('#wkPage'), ['/', '/Site/About', '/Site/About/', '/Site/Forms/Login'].map(p => ({label:p, mono:true, v:p})), o => { WK.p = o.v; drawWalk(); }, 3);
+seg($('#wkPath'), ['../Img/pic.jpg', '~/Img/pic.jpg', 'Img/pic.jpg'].map(p => ({label:p, mono:true, v:p})), o => { WK.s = o.v; drawWalk(); }, 0);
+predict('#p43', {
+  veil: '#walkOut, #w43', lock: '#walkCtrls',
+  q: 'הדף <code>Pages/Site/Forms/Login.cshtml</code> נפתח בכתובת <code>/Site/Forms/Login</code>, וכתוב בו <code>src="../Img/pic.jpg"</code>. התמונה תופיע?',
+  opts: ['כן – <code>../</code> עולה תמיד ל-wwwroot', 'לא – הדפדפן יחפש אותה ב-<code>/Site/Img</code>', 'כן – אבל רק אחרי Ctrl+F5'],
+  correct: 1,
+  why: ['<code>../</code> עולה תיקייה אחת <b>מהכתובת</b> – כאן מ-<code>/Site/Forms/</code> ל-<code>/Site/</code>, לא ל-wwwroot.', 'הדפדפן מחשב נתיב יחסי מהכתובת: מ-<code>/Site/Forms/</code> עולה ל-<code>/Site/</code>, ושם אין Img. בדקו במעבדה.', 'רענון לא משנה את החישוב: הנתיב עדיין מוביל ל-<code>/Site/Img</code>.']
+});
+
+/* =====================================================================
+   7. Topic "move"
+   ===================================================================== */
+const LOGIN_OLD = `<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>כניסה</title>
+    <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.rtl.min.css" />
+    <link rel="stylesheet" href="../css/site-style.css" />
+</head>
+<body>
+    <nav class="navbar navbar-expand-md bg-warning sticky-top">
+        <\!-- the same menu as in every page -->
+    </nav>
+    <div class="container">
+        <h1>כניסה לאתר</h1>
+        <img src="../Img/logo.jpg" alt="לוגו" width="80" />
+        <form id="loginForm" method="get">
+            <label for="userName" class="form-label">שם משתמש</label>
+            <input type="text" id="userName" name="userName" class="form-control" />
+            <label for="password" class="form-label">סיסמה</label>
+            <input type="password" id="password" name="password" class="form-control" />
+            <input type="submit" value="כניסה" class="btn btn-primary mt-3" />
+        </form>
+        <a href="register.html">עוד אין לכם משתמש? להרשמה</a>
+    </div>
+    <script src="../lib/bootstrap/dist/js/bootstrap.bundle.min.js"><\/script>
+</body>
+</html>`;
+/* 1: page inside a page */
+const pasteAll = '@page\n@model MyFirstWeb.Pages.Site.LoginModel\n@{\n    ViewData["Title"] = "כניסה";\n}\n' +
+  LOGIN_OLD.replace(/<nav[\s\S]*?<\/nav>/, navHtml('', true)).replace(/<link\b[^>]*>/g, '').replace(/<script\b[^>]*><\/script>/g, '');
+[['#ppBad', pasteAll], ['#ppGood', LOGIN_RZ]].forEach(([h, src]) => {
+  const fr = browser($(h), {height: 330, url:'localhost:7123/Site/Login'}); const r = razor(src, MY);
+  fr.title(tabTitle(r.title)).show({html: imgFix(wrapMine(r.out, false, '/Site/Login'), '/Site/Login'), links:[BS_RTL], scripts:[BS_JS], css: SIM_CSS});
+  fr.onLoad = d => d.addEventListener('click', e => { if (e.target.closest('a')) { e.preventDefault(); toast('בהדגמה הזו הקישורים לא פעילים – רק משווים.'); } });
+});
+codeLines($('#ppSrc'), ['<html lang="he" dir="rtl">', '<head> … </head>', '<body>', '    <nav class="navbar …"> … </nav>', '    <div class="container">', '        <main role="main" class="pb-3">', '<!DOCTYPE html>', '<html lang="he" dir="rtl">', '<head> … </head>', '<body>', '    <nav class="navbar …"> … </nav>'].join('\n'), 'html', {0:'warn', 3:'warn', 7:'warn', 10:'warn'});
+predict('#p51', {
+  q: 'העתקתם את <b>כל</b> login.html – מ-<code>&lt;!DOCTYPE html&gt;</code> ועד <code>&lt;/html&gt;</code> – והדבקתם ב-Login.cshtml, מתחת לשורות של <code>@page</code> ו-<code>@model</code> – מה יקרה?',
+  opts: ['הדף ייראה בדיוק כמו קודם', 'שני תפריטים – ודף שלם בתוך דף', 'Visual Studio ימחק לבד את מה שמיותר'],
+  correct: 1,
+  why: ['התבנית כבר נותנת לדף html, head, body ותפריט – ועכשיו הם מגיעים פעמיים.', 'הדף כולו נכנס במקום RenderBody – כולל התפריט הישן שבתוכו. השוו את שתי התוצאות.', 'Visual Studio מדביק בדיוק מה שהעתקתם. גם השרת לא מתקן.']
+});
+
+/* 2: the recipe, step by step */
+const OUT = [0,1,2,3,4,5,6,7,8,9,26,27], LAY = [10,11,12,13,24,25];
+const oldMarks = {}; OUT.forEach(i => oldMarks[i] = 'out'); LAY.forEach(i => oldMarks[i] = 'lay');
+const NEW1 = '@page\n@model MyFirstWeb.Pages.Site.LoginModel\n@{\n}';
+const NEW2 = LOGIN_RZ.replace('~/Img/logo.jpg', '../Img/logo.jpg').replace('<a asp-page="/Site/Register">', '<a href="register.html">');
+const MV = [
+  {nw: NEW1, m: {}, t:'<b>1. מה מעתיקים?</b> <b>לא מעתיקים</b> (אדום) את מה שמחוץ ל-body. <b>כבר בתבנית</b> (סגול): התפריט, ה-container וה-script. מה שבלי סימון – זה התוכן. בצד החדש: הדף הריק Login שנוצר ב-Site.'},
+  {nw: NEW2, m: {3:'new', 5:'new', 6:'new', 7:'new', 8:'new', 9:'new', 10:'new', 11:'new', 12:'new', 13:'new', 14:'new'}, t:'<b>2. מדביקים.</b> משאירים את <code>@page</code> ו-<code>@model</code>, ממלאים את הבלוק בכותרת ללשונית, ומתחת מדביקים את התוכן. (ההזחה – הרווחים בתחילת השורות – יכולה לקטון: התוכן כבר לא בתוך body ו-container.)'},
+  {nw: LOGIN_RZ, m: {6:'diff', 14:'diff'}, t:'<b>3. מתקנים נתיבים.</b> <code>../Img</code> &rlm;←&rlm; <code>~/Img</code>, וקישור לדף אחר באתר: <code>href="register.html"</code> &rlm;←&rlm; <code>asp-page="/Site/Register"</code>. (וקישור ל-index.html הופך ל-<code>asp-page="/Index"</code> – דף הבית.)'},
+  {nw: LOGIN_RZ, m: {}, t:'<b>4. בודקים.</b> הדף בתוך התבנית, עם תפריט אחד. מלאו שם וסיסמה ולחצו "כניסה" – והסתכלו בשורת הכתובת. לחצו גם "להרשמה".'}
+];
+rzLines($('#mvOld'), LOGIN_OLD, 'html', oldMarks);
+let mvSim = null;
+seg($('#mvSeg'), ['1. מה מעתיקים', '2. מדביקים', '3. נתיבים', '4. בודקים'], (o, i) => {
+  const s = MV[i];
+  rzLines($('#mvNew'), s.nw, 'rz', s.m);
+  $('#mvWhat').innerHTML = s.t;
+  $('#mvSiteWrap').hidden = i !== 3;
+  if (i === 3 && !mvSim) mvSim = siteSim($('#mvSite'), {kind:'mine', pages: MY, start:'/Site/Login', height: 380});
+}, 0);
+
+/* =====================================================================
+   8. Practice: playground (the "server" is simulated inside its preview)
+   ===================================================================== */
+const PG_START = `@page
+@model MyFirstWeb.Pages.Site.AboutModel
+@{
+}
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <title>אודות</title>
+    <link rel="stylesheet" href="../css/site-style.css" />
+</head>
+<body>
+    <nav class="navbar bg-warning">
+        <a class="navbar-brand" href="index.html">🍕 פיצה דני</a>
+    </nav>
+    <h2>אודות האתר</h2>
+    <p>פיצה דני – מאז 1998 באשקלון.</p>
+    <img src="../Img/pizza.jpg" alt="פיצה" width="150" />
+</body>
+</html>`;
+const showOrig = Frame.prototype.show;
+Frame.prototype.show = function(o){
+  if (this.wrap && this.wrap.closest && this.wrap.closest('#pg')) {
+    addTab(this);
+    const r = razor(o.html || '', MY, '/Site/About');
+    const body = r.out.replace(/<link\b[^>]*>/gi, '').replace(/<script\b[\s\S]*?<\/script>/gi, '');
+    this.url('localhost:7123/Site/About');
+    if (r.noPage) { this.title('localhost'); return showOrig.call(this, {html: NOT_FOUND + '<p style="direction:rtl;font-family:Arial;padding:0 18px;color:#555">(בדף חסרה השורה <b>@page</b> בראש הקובץ – ולכן אין לו כתובת.)</p>'}); }
+    this.title(tabTitle(r.title));
+    if (r.title.trim() === 'ביצה') findEgg('title');
+    return showOrig.call(this, {html: imgFix(wrapMine(body, false, '/Site/About'), '/Site/About'), links:[BS_RTL], scripts:[BS_JS], css: SIM_CSS});
+  }
+  return showOrig.call(this, o);
+};
+let pgApi = null;
+const pgSrc = () => pgApi ? pgApi.edH.value : '';
+const noCm = s => s.replace(/@\*[\s\S]*?\*@/g, '').replace(/<\!--[\s\S]*?-->/g, '');
+const TASKS = [
+  {id:'t1', text:'<b>דף בתוך דף:</b> השאירו רק את <b>התוכן</b>. מחקו את כל מה שמחוץ ל-body, את body עצמו – וגם את התפריט (nav), כי הוא כבר בתבנית. את שלוש השורות של <code>@</code> בראש הקובץ – השאירו.',
+   test: () => { const s = noCm(pgSrc()); return !/<!doctype|<\/?html\b|<\/?head\b|<\/?body\b|<title\b|<meta\b|<link\b|<nav\b|<script\b/i.test(s) && /^\s*@page\b/.test(s) && /^\s*@model\s+\S+/m.test(s) && /<h2\b/i.test(s) && /<p\b/i.test(s); },
+   hints: ['השרת כבר נותן לכל דף html, head, body ותפריט – מהתבנית. בדף נשאר רק מה שהיה <b>בתוך</b> body, בלי ה-nav.',
+           'מחקו מ-<code>&lt;!DOCTYPE html&gt;</code> ועד <code>&lt;body&gt;</code> (כולל), את שלוש שורות ה-nav, ואת <code>&lt;/body&gt;</code> ו-<code>&lt;/html&gt;</code> בסוף. שימו לב שבתצוגה נשאר תפריט אחד.'],
+   solution: {lang:'html', code:'@page\n@model MyFirstWeb.Pages.Site.AboutModel\n@{\n}\n<h2>אודות האתר</h2>\n<p>פיצה דני – מאז 1998 באשקלון.</p>\n<img src="../Img/pizza.jpg" alt="פיצה" width="150" />',
+     explain:'הדף נכנס במקום <code>@RenderBody()</code>, בתוך התבנית – וב-<code>_Layout</code> כבר יש html, head, body והתפריט. לכן בדף נשאר רק התוכן, ומתחת לשלוש השורות של Razor.'},
+   back:'move:1'},
+  {id:'t2', text:'תנו לדף <b>כותרת ללשונית</b> (למשל: אודות) – בעזרת ViewData, בתוך הבלוק <code>@{ }</code> שבראש הקובץ.',
+   test: () => { const s = noCm(pgSrc()); const m = s.match(/@\{[^}]*ViewData\[\s*"Title"\s*\]\s*=\s*"[^"]*\S[^"]*"\s*;[^}]*\}/); return !!m && s.indexOf(m[0]) > s.search(/@page\b/) && s.search(/@page\b/) >= 0; },
+   hints: ['כותרת ללשונית שומרים ב-ViewData, בבלוק של פקודות <bdi>C#</bdi>. ויש לכם כבר בלוק ריק: <code>@{</code> ומתחתיו <code>}</code> – כתבו בתוכו.',
+           'בין <code>@{</code> לבין <code>}</code> כתבו: <code>ViewData["Title"] = "אודות";</code> – עם מירכאות ישרות ונקודה-פסיק. הסתכלו על הלשונית בתצוגה.'],
+   solution: {lang:'html', code:'@{\n    ViewData["Title"] = "אודות";\n}', explain:'הדף כותב את הכותרת ל-ViewData, והתבנית קוראת אותה בשורה <code>&lt;title&gt;@ViewData["Title"] - MyFirstWeb&lt;/title&gt;</code> של התבנית.'},
+   back:'razor:3'},
+  {id:'t3', text:'תקנו את נתיב התמונה כך שיעבוד <b>מכל דף</b> – כתבו <code>~/</code> במקום <code>../</code> בתחילת הנתיב.',
+   test: () => { const s = noCm(pgSrc()); const imgs = s.match(/<img\b[^>]*>/gi) || []; return imgs.length > 0 && imgs.every(t => /\ssrc\s*=\s*"~\/Img\/[^"]+"/i.test(t)); },
+   hints: ['בדף Razor נתיב לקובץ שב-wwwroot מתחיל ב-<code>~/</code> – "מתחילת wwwroot".',
+           'ב-src של התמונה החליפו את <code>../</code> ב-<code>~/</code>, כך: <code>src="~/Img/pizza.jpg"</code>'],
+   solution: {lang:'html', code:'<img src="~/Img/pizza.jpg" alt="פיצה" width="150" />', explain:'השרת הופך את <code>~/</code> ל-<code>/</code>, והדפדפן מחפש את התמונה ב-<code>/Img/pizza.jpg</code> – מכל כתובת, בכל עומק.'},
+   back:'paths:3'},
+  {id:'t5', text:'⭐ אתגר (רשות): הציגו בדף את <b>השנה הנוכחית</b> – בעזרת <bdi>C#</bdi>, לא במספר שכתבתם בעצמכם.',
+   test: () => { const s = noCm(pgSrc()).replace(/@\{[\s\S]*?\}/g, '').replace(/@@/g, ''); return /@\(\s*DateTime\.(Now|Today)\.Year\s*\)|@DateTime\.(Now|Today)\.Year\b/.test(s); },
+   hints: ['<code>@</code> אומר "מכאן <bdi>C#</bdi>". ב-<bdi>C#</bdi>, <code>DateTime.Now</code> הוא הרגע הזה, ויש לו מאפיין שמחזיר את השנה.', 'כתבו בפסקה חדשה: <code>&lt;p&gt;© @DateTime.Now.Year&lt;/p&gt;</code>'],
+   solution: {lang:'html', code:'<p>© @DateTime.Now.Year פיצה דני</p>', explain:'השרת מריץ את <code>DateTime.Now.Year</code> בכל טעינה – ובשנה הבאה המספר יתעדכן לבד.'},
+   back:'razor:2'}
+];
+pgApi = playground('#pg', {id:'pg6', html: PG_START, tasks: TASKS, htmlLabel: 'Pages/Site/About.cshtml', url: 'localhost:7123/Site/About', height: 440,
+  onRender: d => {
+    d.addEventListener('click', e => { const a = e.target.closest('a'); if (!a) return; e.preventDefault(); const h = a.getAttribute('href'); toast(h ? '🔗 הקישור מוביל ל-<code>' + esc(h) + '</code> ✔' : '🔗 <code>href=""</code> – הקישור לא מוביל לשום מקום'); });
+    d.addEventListener('submit', e => e.preventDefault());
+  }});
+pgApi.render();
+doneCheck('#stepDone', 'step');
+
+/* ---------- quiz: new situations, mixing the topics (not a repeat of the 🎯 checks) ---------- */
+quiz('#quiz', [
+  {q:'דנה הוסיפה קישור חדש לתפריט ב-<code>_Layout.cshtml</code>. מה עוד צריך לעשות כדי שיופיע בכל הדפים?', opts:['כלום – כל הדפים מקבלים את התפריט מהתבנית', 'להוסיף אותו גם בכל קובץ cshtml באתר', 'להוסיף אותו גם ב-<code>_ViewStart.cshtml</code>'], correct:0,
+   why:['התפריט כתוב רק בתבנית, וכל דף נכנס לתוכה – לכן שינוי אחד מגיע לכולם.', 'זה בדיוק מה שהתבנית חוסכת: אין עותק של התפריט בדפים. <a href="#" data-go="layout:1">חזרו לשלב על _Layout</a>', '_ViewStart רק קובע <b>איזו</b> תבנית הדפים מקבלים – התפריט עצמו בתבנית. <a href="#" data-go="layout:1">חזרו לשלב על _Layout</a>']},
+  {q:'ב-<code>Pages/Site/Gallery.cshtml</code> כתוב <code>&lt;img src="Img/cat.jpg" /&gt;</code>, ובכתובת <code>/Site/Gallery</code> התמונה חסרה. מה התיקון?', opts:['לכתוב <code>src="~/Img/cat.jpg"</code>', 'להעביר את התמונה לתיקייה Pages/Site', 'לכתוב <code>src="/Pages/Img/cat.jpg"</code>'], correct:0,
+   why:['<code>~/</code> = מתחילת wwwroot, ושם נמצאת Img – מכל דף.', 'בתיקייה Pages יש דפים, לא תמונות: השרת שולח קבצים רק מ-wwwroot. <a href="#" data-go="paths:1">חזרו למפת הכתובות</a>', 'Pages לא חלק מאף כתובת, והתמונות ב-wwwroot. <a href="#" data-go="paths:3">חזרו למעבדת הנתיבים</a>']},
+  {q:'בכל הדפים באתר כתוב בלשונית רק <bdi>" - MyFirstWeb"</bdi>, בלי שם הדף. מה חסר בדפים?', opts:['שורת <code>@{ ViewData["Title"] = "…"; }</code>', 'תגית <code>&lt;title&gt;</code> בכל דף', 'השורה <code>@page</code> בראש כל דף'], correct:0,
+   why:['התבנית כותבת בלשונית את ViewData["Title"] ואחריו את שם הפרויקט – וכשהדף לא שמר כותרת, נשאר רק " - MyFirstWeb".', 'תגית title כבר יש – בתבנית. דף שכותב title משלו יוצר דף בתוך דף. <a href="#" data-go="razor:3">חזרו לשלב על ViewData</a>', 'בלי <code>@page</code> לא הייתה בכלל כותרת – היה 404. <a href="#" data-go="razor:3">חזרו לשלב על ViewData</a>']}
+]);
+
+/* ---------- summary ---------- */
+rzLines($('#sumLayout'), `<html lang="he" dir="rtl">
+<head><\!-- bootstrap.rtl.min.css, then site-style.css --></head>
+<body>
+    <nav class="navbar"><\!-- the menu: only here --></nav>
+    <div class="container">@RenderBody()</div>
+</body>`, 'rz', {4:'slot'});
+
+/* =====================================================================
+   9. 💻 "works on the site but not for me?" lists
+   ===================================================================== */
+const T_SAVE = {t:'שמרתם את הקובץ? (Ctrl+S)', how:'כוכבית <b>*</b> ליד שם הקובץ בלשונית של Visual Studio = יש שינויים שלא נשמרו.'};
+const T_REFRESH = {t:'רעננתם את הדפדפן?', how:'שמרו, ולחצו <b>בתוך הדפדפן</b> Ctrl+F5. בדף cshtml: לפני הרענון לחצו 🔥 <b>Hot Reload</b> בסרגל של Visual Studio. עדיין לא מופיע? עצרו ■ והריצו ▶ שוב.'};
+const T_F12 = {t:'יש שגיאה אדומה ב-F12?', how:'בדפדפן F12 &rlm;←&rlm; Console. <b>404</b> = קובץ לא נמצא (תמונה או css) – כמעט תמיד נתיב או שם שגוי.'};
+const T_ERR = {t:'קיבלתם דף שגיאה באנגלית, עם כותרת אדומה?', how:'קראו את השורה הראשונה: היא אומרת מה הבעיה ובאיזה קובץ. שגיאות של <bdi>C#</bdi> מופיעות גם ב-Visual Studio, בחלון <b>Error List</b>.'};
+const T_WHERE = {t:'הדף נמצא בתוך Pages?', how:'דפי Razor יוצרים ב-<code>Pages</code> (אצלנו: <code>Pages/Site</code>), לא ב-wwwroot. קובץ cshtml שנמצא ב-wwwroot לא ירוץ.'};
+const T_URL = {t:'הכתובת נכונה?', how:'התיקיות שבתוך Pages ושם הדף, <b>בלי</b> <code>.cshtml</code> ובלי Pages – למשל <code>/Site/About</code> (<a href="#" data-go="paths:1">מפת הכתובות</a>).'};
+const T_PAGE = {t:'<code>@page</code> עדיין בשורה הראשונה?', how:'בלי השורה הזו הקובץ הוא לא דף – והכתובת מחזירה 404. את השורות של <code>@page</code> ו-<code>@model</code> שבראש הקובץ לא מוחקים.'};
+const T_AT = {t:'יש <code>@</code> בתוך הטקסט שלכם?', how:'Razor חושב שאחרי <code>@</code> מתחיל <bdi>C#</bdi>. כדי להציג את התו עצמו כותבים <code>@@</code> – פעמיים. (כתובת מייל מלאה, כמו <code>dana@gmail.com</code>, Razor מזהה ומשאיר כמו שהיא.)'};
+const T_COPY = {t:'שגיאה "already contains a definition for…"?', how:'יצרתם דף בהעתקה של קובץ אחר, ועכשיו לשני דפים יש מחלקה באותו שם. מחקו את ההעתק וצרו דף חדש דרך Add &rlm;←&rlm; <bdi>Razor Page...</bdi>'};
+const T_TILDE = {t:'התמונה לא מופיעה?', how:'בדף Razor הנתיב מתחיל ב-<code>~/</code>, למשל <code>~/Img/pic.jpg</code> – והקובץ באמת נמצא ב-<code>wwwroot/Img</code>, באותו שם בדיוק (כולל הסיומת).'};
+const T_BLUE = {t:'הקישורים בתפריט כחולים, או ששם האתר נשבר באמצע מילה?', how:'זה הקובץ <code>_Layout.cshtml.css</code> של התבנית: הכלל <code>a { color: #0077cc; }</code> צובע בכחול כל קישור בתבנית וגובר על כללים כמו <code>.nav-link</code>, והכלל <code>a.navbar-brand</code> שובר מילים. מחקו את שני הכללים מהקובץ – את הקובץ עצמו משאירים (<a href="#" data-go="layout:3">שלב 💻</a>).'};
+const T_MENU = {t:'☰ לא נפתח בטלפון (או נפתח ונסגר מיד)?', how:'הדבקתם בדף גם את שורת ה-script של <span class="nw">bootstrap.bundle</span>? כך Bootstrap נטען <b>פעמיים</b>, וכל לחיצה פותחת וסוגרת יחד. ה-script כבר בתבנית – מחקו אותו מהדף.'};
+trouble('#trRazor', {base:false, items:[T_SAVE, T_REFRESH, T_WHERE, T_URL, T_PAGE, T_ERR, T_COPY, T_AT, T_TILDE, T_F12]});
+trouble('#trLayout', {base:false, items:[T_SAVE, T_REFRESH,
+  {t:'עורכים את הקובץ הנכון?', how:'התבנית היא <code>Pages/Shared/_Layout.cshtml</code>. בקובץ <code>_Layout.cshtml.css</code> שלידה מוחקים רק את שני הכללים מצעד 6 – לא את הקובץ.'},
+  {t:'הדף עדיין באנגלית ומיושר לשמאל?', how:'ב-<code>_Layout</code>, בשורה 2 צריך להיות כתוב <code>&lt;html lang="he" dir="rtl"&gt;</code>, וב-head צריך להיות <code>bootstrap.rtl.min.css</code> (עם rtl) במקום <code>bootstrap.min.css</code>.'},
+  {t:'העיצוב שלכם (<span class="nw">site-style.css</span>) לא מופיע?', how:'ב-head של <code>_Layout</code> צריכה להיות <code>&lt;link rel="stylesheet" href="~/css/site-style.css" /&gt;</code> – <b>אחרונה</b>, אחרי כל שורות ה-link. ובדקו שהקובץ באמת נמצא ב-<code>wwwroot/css</code>.'},
+  T_BLUE,
+  {t:'התפריט לא נשאר למעלה כשגוללים?', how:'השארתם את ה-nav שלכם בתוך <code>&lt;header&gt;</code> של התבנית – ושם <code>sticky-top</code> לא נדבק. מחקו את <code>&lt;header&gt;</code> ואת <code>&lt;/header&gt;</code>, כך שה-nav יהיה ישר בתוך body.'},
+  {t:'שני תפריטים?', how:'השארתם ב-<code>_Layout</code> גם את התפריט של התבנית. צריך להיות nav <b>אחד</b> – שלכם.'},
+  {t:'האותיות קצת קטנות מבדפי ה-HTML שלכם?', how:'הקובץ site.css של התבנית קובע לכל האתר גודל טקסט 14px במסכים צרים, ו-16px ממסך ברוחב 768px. רוצים אחרת? כתבו כלל משלכם ל-html ב-<span class="nw">site-style.css</span> – הוא מקושר אחרון, ולכן מנצח.'},
+  {t:'כל דף מציג שגיאה?', how:'בדקו ש-<code>@RenderBody()</code> עדיין בתבנית (<a href="#" data-go="layout:2">ראיתם בשלב 2</a>), וקראו את השורה הראשונה בדף השגיאה.'},
+  T_F12]});
+trouble('#trPaths', {base:false, items:[T_SAVE, T_REFRESH,
+  {t:'קישור בתפריט "לא עושה כלום"?', how:'כנראה ה-asp-page לא מצא את הדף, והשרת כתב <code>href=""</code>. בדקו: מתחיל ב-<code>/</code>, תיקייה ושם בדיוק כמו בקובץ, בלי <code>.cshtml</code> – למשל <code>asp-page="/Site/About"</code>. ודף שעוד לא יצרתם – עוד לא יעבוד.'},
+  {t:'ב-Ctrl+U עדיין רואים asp-page?', how:'סימן שה-Tag Helpers לא פעילים. בדקו שבקובץ <code>Pages/_ViewImports.cshtml</code> יש את השורה <code>@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers</code> כמו בתבנית.'},
+  T_BLUE, T_TILDE, T_URL, T_F12]});
+trouble('#trMove', {base:false, items:[T_SAVE, T_REFRESH,
+  {t:'שני תפריטים, או דף בתוך דף?', how:'הדבקתם יותר מדי. בדף Razor אין <code>&lt;html&gt;</code>, <code>&lt;head&gt;</code>, <code>&lt;body&gt;</code>, התפריט או ה-script – הם כבר בתבנית (<a href="#" data-go="move:1">מדביקים את כל הדף?</a>).'},
+  T_MENU, T_PAGE,
+  {t:'קישור בין דפים לא עובד?', how:'קישור לדף באתר: <code>asp-page="/Site/Register"</code> – לא <code>href="register.html"</code>. לדף הבית: <code>asp-page="/Index"</code>.'},
+  T_TILDE,
+  {t:'אחרי שליחת טופס – אין נתונים בכתובת?', how:'בשורת ה-form צריך להיות <code>method="get"</code>, ולכל שדה <code>name</code> (שיעור 4). עם post נעבוד בהמשך השנה, כשתכתבו קוד בקובץ cs.'},
+  T_AT, T_COPY, T_ERR, T_F12]});
+
+/* =====================================================================
+   10. 🎯 understanding checks
+   ===================================================================== */
+checkpoint('#cpRazor', [
+  {type:'text', q:'כתבו שורה אחת שקובעת שבלשונית יופיע <b>התפריט</b>.', placeholder:'@{ … }',
+   accept:[/^@\{\s*ViewData\[\s*"Title"\s*\]\s*=\s*"התפריט"\s*;\s*\}$/], answer:'@{ ViewData["Title"] = "התפריט"; }',
+   wrong:'בדקו: <code>@{</code> בהתחלה, אחריו <code>ViewData["Title"]</code> עם מירכאות ישרות, סימן =, הכותרת במירכאות, <code>;</code> ובסוף <code>}</code> שסוגר.',
+   explain:'הבלוק <code>@{ }</code> מריץ פקודת <bdi>C#</bdi>: שומר "התפריט" ב-ViewData, והתבנית שמה אותו בלשונית.', back:'razor:3'},
+  {type:'line', q:'הכותרת בלשונית לא השתנתה, ובדף הופיעה שורה מוזרה. באיזו שורה הטעות?', lang:'html',
+   code:'@page\n@model MyFirstWeb.Pages.Site.MenuModel\nViewData["Title"] = "התפריט";\n<h2>התפריט</h2>\n<p>מרגריטה – 45 שקל</p>', correct:3,
+   why:{1:'<code>@page</code> – "אני דף". תקינה.', 2:'מחברת את הדף למחלקה שלו. תקינה.', 4:'כותרת רגילה. תקינה.', 5:'פסקה רגילה. תקינה.'},
+   explain:'חסר <code>@{ }</code> מסביב. בלי בלוק <bdi>C#</bdi>, Razor חושב שזה טקסט רגיל: מציג אותו בדף – והכותרת לא משתנה.', back:'razor:3'},
+  {q:'בדף כתוב <code>&lt;p&gt;@DateTime.Now.Year&lt;/p&gt;</code> – מה מקבל הדפדפן?', opts:['<code>&lt;p&gt;2026&lt;/p&gt;</code> – השנה כבר מחושבת', '<code>&lt;p&gt;@DateTime.Now.Year&lt;/p&gt;</code> – והוא מחשב', 'את הקוד <b>וגם</b> את התוצאה, זה אחרי זה'], correct:0,
+   why:['השרת מריץ את ה-<bdi>C#</bdi> ושולח רק את התוצאה.', 'דפדפן לא מריץ <bdi>C#</bdi>. הוא מקבל HTML שהשרת כבר השלים.', 'הקוד נשאר בשרת. לדפדפן מגיעה רק התוצאה.'], back:'razor:2'},
+  {q:'איפה נמצאת המחלקה AboutModel – קוד ה-<bdi>C#</bdi> של השרת?', opts:['<code>About.cshtml.cs</code>', '<code>About.cshtml</code>', '<code>_Layout.cshtml</code>'], correct:0,
+   why:['הקובץ cs הצמוד לדף – שם המחלקה והפעולה OnGet.', 'ב-cshtml יש HTML עם קצת <bdi>C#</bdi>; המחלקה עצמה בקובץ הצמוד, עם הסיומת cs.', 'התבנית משותפת לכל הדפים – אין בה מחלקה של דף מסוים.'], back:'razor:1'}
+]);
+checkpoint('#cpLayout', [
+  {q:'מה עושה השורה <code>@RenderBody()</code> בתבנית?', opts:['במקומה נכתב התפריט של האתר', 'במקומה נכנס התוכן של הדף שפתחו', 'במקומה נטען הקובץ של Bootstrap'], correct:1,
+   why:['התפריט כתוב ב-<code>_Layout</code> כ-HTML רגיל, לא דרך RenderBody.', 'זה המקום של הדף בתוך התבנית.', 'את Bootstrap מחברת שורת link ב-head.'], back:'layout:1'},
+  {type:'line', q:'אחרי השינויים ב-<code>_Layout</code> התפריט וה-padding עדיין "בצד הלא נכון". איזו שורה עוד צריך לתקן?', lang:'html',
+   code:'<html lang="he" dir="rtl">\n<head>\n    <meta charset="utf-8" />\n    <title>@ViewData["Title"] - MyFirstWeb</title>\n    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />\n    <link rel="stylesheet" href="~/css/site-style.css" />\n</head>', correct:5,
+   why:{1:'עברית מימין לשמאל – תקינה.', 2:'פותחת את head – תקינה.', 3:'קידוד התווים (charset) – תקינה.', 4:'הכותרת מ-ViewData – תקינה.', 6:'העיצוב שלכם, אחרון – תקינה.', 7:'סוגרת את head – תקינה.'},
+   explain:'בעברית מקשרים ל-<code>bootstrap.rtl.min.css</code> – הקובץ שהופך את הצדדים (שיעור 5).', back:'layout:3'},
+  {q:'ב-<span class="nw">site-style.css</span> כתבתם <code>.nav-link { color: darkred; }</code> – אבל הקישורים בתפריט נשארו כחולים. מה גובר עליכם?', opts:['הכלל <code>a { color: #0077cc; }</code> בקובץ <code>_Layout.cshtml.css</code>', 'קובץ ה-Bootstrap, כי הוא נטען ראשון', 'הדפדפן, שצובע קישורים בכחול תמיד'], correct:0,
+   why:['הקובץ הזה חל רק על התבנית, והכלל שלו חזק מ-<code>.nav-link</code>. מחקו אותו – ואת הקובץ עצמו השאירו.', 'מי שנטען <b>ראשון</b> דווקא מפסיד כשהכוח שווה – הקובץ שלכם אחרון.', 'צבע ברירת המחדל של הדפדפן מפסיד לכל כלל שכתבתם.'], back:'layout:3'},
+  {q:'שאלה משיעור 5: ב-head של <code>_Layout</code> יש link ל-Bootstrap וגם ל-<span class="nw">site-style.css</span> שלכם. מה הסדר הנכון?', opts:['קודם Bootstrap, אחריו site-style.css', 'קודם site-style.css, אחריו Bootstrap', 'לא משנה – שניהם נטענים'], correct:0,
+   why:['כששני כללים שווים בכוח – האחרון מנצח. כך הכללים שלכם גוברים על Bootstrap.', 'אז Bootstrap נכתב אחרון – וידרוס חלק מהעיצוב שלכם. <a href="bootstrap.html#mine-1">שיעור 5: CSS משלכם מעל Bootstrap</a>', 'משנה: בין כללים שווים בכוח, מנצח זה שנכתב אחרון. <a href="bootstrap.html#mine-1">שיעור 5: CSS משלכם מעל Bootstrap</a>'], back:'layout:3'}
+]);
+checkpoint('#cpPaths', [
+  {type:'text', q:'מה הכתובת של הקובץ <code>Pages/Site/Menu.cshtml</code>? (בלי localhost)', placeholder:'/…',
+   accept:[/^\s*(https?:\/\/)?(localhost(:\d+)?)?\/site\/menu\/?\s*$/i], answer:'/Site/Menu',
+   wrong:'בלי Pages ובלי הסיומת: לוכסן, התיקייה, לוכסן, שם הדף.', explain:'מה שבתוך Pages, בלי הסיומת. (אותיות גדולות או קטנות – לא משנה.)', back:'paths:1'},
+  {q:'בתפריט כתוב <code>&lt;a asp-page="/Index"&gt;</code> – מה יופיע ב-Ctrl+U?', opts:['<code>&lt;a href="/"&gt;</code>', '<code>&lt;a asp-page="/Index"&gt;</code>', '<code>&lt;a href="/Index.cshtml"&gt;</code>'], correct:0,
+   why:['Index הוא דף הבית – הכתובת שלו היא <code>/</code> בלבד.', 'asp-page נקרא בשרת, ולא מגיע לדפדפן – במקומו מגיע href.', 'לכתובת של דף Razor אין סיומת.'], back:'paths:2'},
+  {type:'line', q:'בתפריט ב-<code>_Layout</code>, קישור אחד לא מגיע לשום מקום. איזה?', lang:'html',
+   code:'<ul class="navbar-nav">\n    <li class="nav-item"><a class="nav-link" asp-page="/Index">דף הבית</a></li>\n    <li class="nav-item"><a class="nav-link" asp-page="/Site/Menu">התפריט</a></li>\n    <li class="nav-item"><a class="nav-link" asp-page="/Site/About.cshtml">אודות</a></li>\n</ul>', correct:4,
+   why:{1:'פותחת את הרשימה – תקינה.', 2:'דף הבית – תקין.', 3:'תיקייה ושם, בלי סיומת – תקין.', 5:'סוגרת את הרשימה – תקינה.'},
+   explain:'ב-asp-page כותבים בלי סיומת: <code>asp-page="/Site/About"</code>. עם הסיומת השרת לא מוצא דף כזה, וכותב <code>href=""</code>.', back:'paths:2'},
+  {q:'בדף About כתוב <code>src="../Img/pic.jpg"</code>. בכתובת <code>/Site/About</code> התמונה מופיעה, וב-<code>/Site/About/</code> (עם לוכסן בסוף) – לא. למה?', opts:['הנתיב היחסי מחושב מהכתובת', 'השרת מחק את התמונה בינתיים', 'עם לוכסן בסוף הדף לא נמצא'], correct:0,
+   why:['מ-<code>/Site/About/</code> הדפדפן עולה רק ל-<code>/Site/</code> ומחפש ב-<code>/Site/Img</code>. לכן כותבים <code>~/</code> בתחילת הנתיב.', 'השרת לא נגע בתמונה – השתנתה רק הכתובת שממנה הדפדפן מחשב.', 'הדף נמצא והוצג – רק התמונה נעלמה.'], back:'paths:3'},
+  {type:'text', q:'כתבו src לתמונה <code>wwwroot/Img/logo.png</code> שיעבוד <b>מכל</b> דף Razor.', placeholder:'~/…',
+   accept:[/^\s*(src\s*=\s*)?["']?~\/Img\/logo\.png["']?\s*$/i], answer:'~/Img/logo.png',
+   wrong:'התחילו ב-<code>~/</code> – "מתחילת wwwroot" – ואז התיקייה ושם הקובץ.', explain:'השרת הופך את זה ל-<code>/Img/logo.png</code> – נתיב מהשורש שעובד מכל כתובת.', back:'paths:3'}
+]);
+checkpoint('#cpMove', [
+  {type:'line', q:'זה Login.cshtml אחרי ההעברה – ובדף מופיעים שני תפריטים. איזו שורה לא צריכה להיות כאן?', lang:'html',
+   code:'@page\n@model MyFirstWeb.Pages.Site.LoginModel\n@{ ViewData["Title"] = "כניסה"; }\n<nav class="navbar navbar-expand-md bg-warning">…</nav>\n<h1>כניסה לאתר</h1>\n<form id="loginForm" method="get">', correct:4,
+   why:{1:'"אני דף" – חייבת להישאר.', 2:'מחברת את הדף למחלקה שלו – נשארת.', 3:'כותרת ללשונית – תקינה.', 5:'התוכן של הדף – תקין.', 6:'הטופס – תקין.'},
+   explain:'התפריט כבר כתוב בתבנית, <code>_Layout</code>, ולכן כאן הוא מופיע פעם שנייה.', back:'move:1'},
+  {q:'טופס הכניסה, עם <code>method="get"</code>, עבר לדף Razor. מה יקרה בלחיצה על "כניסה"?', opts:['דף שגיאה – דפי Razor לא מקבלים טפסים', 'הנתונים יגיעו לאותו דף, ויופיעו בכתובת', 'הנתונים יישלחו לקובץ login.html הישן'], correct:1,
+   why:['דף Razor מקבל טפסים – עם get זה עובד מיד.', 'בלי action הנתונים נשלחים לאותו דף, ו-get כותב אותם בכתובת: <code>/Site/Login?userName=…</code> – כמו בשיעור 4.', 'בלי action הטופס נשלח לדף שבו הוא נמצא – הדף החדש.'], back:'move:2'},
+  {q:'לאן מעבירים את התוכן של index.html – דף הנחיתה?', opts:['לקובץ חדש, <code>wwwroot/Index.cshtml</code>', 'לתבנית, <code>Pages/Shared/_Layout.cshtml</code>', 'לדף הבית, <code>Pages/Index.cshtml</code>'], correct:2,
+   why:['ב-wwwroot דף cshtml לא רץ. דפי Razor – ב-Pages.', 'התבנית משותפת לכל הדפים – תוכן של דף אחד לא נכנס אליה.', 'Index הוא דף הבית – הוא נפתח בכתובת <code>/</code> כשמריצים את האתר.'], back:'practice:2'},
+  {q:'ב-login.html היה קישור <code>href="index.html"</code>, לדף הבית. מה כותבים ב-Login.cshtml?', opts:['<code>asp-page="/Index"</code>', '<code>asp-page="/Site/Index"</code>', 'משאירים <code>href="index.html"</code>'], correct:0,
+   why:['דף הבית הוא <code>Pages/Index.cshtml</code> – ישר בתוך Pages, בלי Site.', 'אין דף Index בתוך Site: דף הבית נמצא ישר ב-Pages.', 'index.html הוא הקובץ הישן ב-wwwroot/HTML – ומהכתובת <code>/Site/Login</code> הקישור הזה לא יגיע אליו בכלל.'], back:'move:2'}
+]);
+
+/* =====================================================================
+   11. easter eggs
+   ===================================================================== */
+const EGGS = [
+  {id:'console', icon:'🕵️', name:'הודעה סודית למפתחים', learn:'כלי המפתחים (F12) הם חלון אל מאחורי הקלעים של כל אתר – גם של אתרים שלא אתם בניתם.',
+   h1:'מפתחים אמיתיים מסתכלים גם מאחורי הקלעים של הדף. איפה הדפדפן כותב הודעות שמיועדות רק למפתחים?', h2:'לחצו F12 ועברו ללשונית <b>Console</b>.', code:'TEFZT1VU'},
+  {id:'server', icon:'🙈', name:'ההערה שהשרת מחק', learn:'הערת Razor – <code>@* *@</code> – נמחקת בשרת ולא מגיעה לדפדפן. הערת HTML – <code>&lt;!-- --&gt;</code> – מגיעה, וכל אחד יכול לקרוא אותה ב-Ctrl+U.',
+   h1:'בשלב על <code>@</code> יש שורה שנעלמת בדרך מהשרת לדפדפן.', h2:'השוו את About.cshtml לחלון "מה הדפדפן מקבל": איזו שורה חסרה שם? יש בה קוד.', code:'U0VSVkVS'},
+  {id:'title', icon:'🏷', name:'כותרת ביצה', learn:'הכותרת בלשונית מגיעה מ-<code>ViewData["Title"]</code> – הדף כותב, והתבנית קוראת.',
+   h1:'הכותרת של הלשונית בידיים שלכם. מה יקרה אם תקראו לדף "ביצה"?', h2:'בשלב על ViewData כתבו בתיבה: ביצה.'},
+  {id:'ext', icon:'🔗', name:'הסיומת המיותרת', learn:'לכתובת של דף Razor אין סיומת: <code>/Site/About</code>, לא <code>/Site/About.cshtml</code> עם הסיומת.',
+   h1:'במפת הכתובות: מה קורה אם מוסיפים לכתובת את סיומת הקובץ?', h2:'כתבו במפה <code>/Site/About.cshtml</code> וראו מה קורה.'},
+  {id:'everywhere', icon:'🧭', name:'עובד מכל מקום', learn:'<code>~/</code> עובד מכל דף, בכל עומק – השרת הופך אותו לנתיב מהשורש.',
+   h1:'במעבדת הנתיבים: יש נתיב אחד שמצליח מכל ארבע הכתובות?', h2:'בחרו <code>~/Img/pic.jpg</code>, ועברו על כל ארבע הכתובות בדפדפן.'}
+];
+
+Course.autoCode();
+Course.start({eggs: EGGS, console: ['🥚 מצאתם ביצה!', 'מפתחים אמיתיים מציצים מאחורי הקלעים 🕵️\nהקוד הסודי: LAYOUT\nהקלידו אותו במונה הביצים שבראש הדף.\nויש עוד 4 ביצים בדף 😉']});
+})();
+
+</script>
+</body>
+</html>

@@ -63,7 +63,7 @@
       <li>❓ לפני חלק מהתוצאות יש שאלת ניחוש. מותר לטעות – בשביל זה היא שם.</li>
       <li>💻 בסוף כל נושא – <b>"עכשיו אצלכם ב-Visual Studio"</b>: עושים את אותו הדבר בפרויקט שלכם, צעד אחרי צעד.</li>
       <li>🎯 ואחריו <b>בדיקת הבנה</b> קצרה, בלי ציון. טעיתם? היא תראה לכם לאיזה שלב לחזור.</li>
-      <li>💾 ההתקדמות נשמרת בדפדפן הזה. בערך שעה וחצי עד שעתיים בסך הכול, כולל העבודה ב-Visual Studio – אפשר (ורצוי) בכמה ישיבות.</li>
+      <li>💾 ההתקדמות נשמרת בדפדפן הזה. כמה זמן זה לוקח? פתחו את <b>⏱ כמה זמן זה לוקח?</b> למטה – ותכננו בעצמכם. אפשר (ורצוי) בכמה ישיבות.</li>
     </ul>
     <div class="eggnote">🥚 <b>ועוד משהו:</b> בדף מוחבאות <b>5 ביצי הפתעה</b>. כדי למצוא אותן צריך סקרנות – וכמה דברים שתלמדו היום. המונה למעלה; לחיצה עליו נותנת רמזים.</div>
   </article>
@@ -1026,7 +1026,7 @@ function runLab(){
   let msg = countMsg(l);
   if (same(l, [...refSets[cur]])) {
     msg += ' <b style="color:var(--ok)">✔ פתרתם את אתגר ' + (cur+1) + '!</b>';
-    if (!chalDone[cur]) { chalDone[cur] = true; state.chal = chalDone; save(); }
+    if (!chalDone[cur]) { chalDone[cur] = true; state.chal = chalDone; save(); Course.celebrate(chalUl.children[cur], CHAL.every((c,i) => chalDone[i]) ? 'big' : 'small'); }
     const nx = CHAL.findIndex((c,i) => !chalDone[i]);
     if (nx >= 0) { msg += ' עברו לאתגר הבא.'; cur = nx; } else msg += ' 🎉 סיימתם את כל האתגרים.';
   } else if (l.length) {

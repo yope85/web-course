@@ -42,7 +42,7 @@ td code{overflow-wrap:normal;white-space:normal}
 .nw{white-space:nowrap}
 </style>
 </head>
-<body data-lesson="l5" data-title="שיעור 5">
+<body data-lesson="l5" data-title="שיעור 5" data-next="razor.html" data-next-name="Razor Pages ותבנית Layout">
 <header class="topbar"><div class="in">
   <span class="brand">🛠 שיעור 5 · Bootstrap</span>
   <span class="now" id="now"></span>
@@ -87,7 +87,7 @@ td code{overflow-wrap:normal;white-space:normal}
       <li>❓ לפני חלק מהתוצאות יש שאלת ניחוש. מותר לטעות – בשביל זה היא שם.</li>
       <li>💻 בסוף כל נושא – <b>"עכשיו אצלכם ב-Visual Studio"</b>: מלבישים את הדפים של האתר שלכם ב-Bootstrap, צעד אחרי צעד.</li>
       <li>🎯 ואחריו <b>בדיקת הבנה</b> קצרה, בלי ציון. טעיתם? היא תראה לכם לאיזה שלב לחזור.</li>
-      <li>💾 ההתקדמות נשמרת בדפדפן הזה. בערך שעתיים בסך הכול, כולל העבודה ב-Visual Studio – אפשר (ורצוי) בכמה ישיבות.</li>
+      <li>💾 ההתקדמות נשמרת בדפדפן הזה. כמה זמן זה לוקח? פתחו את <b>⏱ כמה זמן זה לוקח?</b> למטה – ותכננו בעצמכם. אפשר (ורצוי) בכמה ישיבות.</li>
     </ul>
     <div class="eggnote">🥚 <b>ועוד משהו:</b> בדף מוחבאות <b>5 ביצי הפתעה</b>. כדי למצוא אותן צריך סקרנות, כלי המפתחים (F12) – וכמה דברים שתלמדו היום. אחת מהן מסתתרת כבר בדף שלמעלה. המונה בראש הדף; לחיצה עליו נותנת רמזים.</div>
   </article>
@@ -424,6 +424,7 @@ td code{overflow-wrap:normal;white-space:normal}
       <tr><td><code>card-body</code></td><td>הגוף – עם ריפוד מבפנים. בתוכו <code>card-title</code> ו-<code>card-text</code></td></tr>
       <tr><td><code>card-footer</code></td><td>שורה תחתונה – מחיר, תאריך וכו'</td></tr>
     </table>
+    <div class="tip">💡 בלי style בתוך התגית – הרוחב בא מהעמודה: הכרטיס יושב בתוך <code>row</code> ועמודה, <code>col-8 col-md-4</code> – שליש שורה מ-md ומעלה, כמו בנושא הגריד. ככה הוא גם מסתדר לבד בטלפון.</div>
   </article>
 
   <article class="spread">
@@ -490,6 +491,7 @@ td code{overflow-wrap:normal;white-space:normal}
       <tr><td><code>form-select</code></td><td><code>select</code></td><td>רשימה נפתחת מעוצבת</td></tr>
       <tr><td><code>mb-3</code></td><td>ה-div שעוטף כל שדה</td><td>רווח מתחת לכל שדה</td></tr>
     </table>
+    <p class="rulecap">גם כאן – בלי style בתוך התגית: הרוחב בא מהעמודה. הכרטיס של הטופס יושב ב-<code>col-md-6</code>: חצי שורה מ-md ומעלה, ושורה שלמה בטלפון.</p>
     <div class="what">ה-HTML לא השתנה באף אות – רק חיבור הקובץ. בלי Bootstrap ה-class-ים הם סתם שמות שאף כלל לא משתמש בהם (כמו class בלי CSS, בשיעור 3). עם Bootstrap – יש להם כללים, והטופס נראה מקצועי. ובמצגת: "טופס פשוט המעוצב בתוך כרטיס" – בדיוק זה.</div>
   </article>
   <article class="spread vsstep">
@@ -907,7 +909,7 @@ function drawWalk(){
   $('#pathbox').innerHTML = 'href=<span class="t-str">"' + esc(w.path) + '"</span>';
   $('#walkTxt').innerHTML = w.t; $('#walkNext').disabled = wi === WALK.length - 1;
 }
-$('#walkNext').addEventListener('click', () => { if (wi < WALK.length - 1) { wi++; drawWalk(); } });
+$('#walkNext').addEventListener('click', () => { if (wi < WALK.length - 1) { wi++; drawWalk(); if (wi === WALK.length - 1) Course.celebrate($('#pathbox'), 'small'); } });
 $('#walkReset').addEventListener('click', () => { wi = 0; drawWalk(); });
 drawWalk();
 
@@ -1020,7 +1022,17 @@ predict('#p34', {
 const LAB = ['col-4', 'col-md-4', 'col-12 col-md-6', 'col-sm-6 col-lg-4', 'col-lg-4'];
 let labCls = LAB[0];
 const s35 = new Dev($('#s35'), {start:1140, widths:[360, 640, 820, 1140], bp:true,
-  onWidth: (px, doc) => { $('#s35count').innerHTML = rowsText(px, perRow(doc, '.row > *')); }});
+  onWidth: (px, doc) => { labCheck(px, doc); $('#s35count').innerHTML = rowsText(px, perRow(doc, '.row > *')) + (state.labDone && labCls === LAB_GOAL ? LAB_WIN : ''); }});
+// the challenge: 1 per row on a phone, 2 on a landscape phone / tablet, 3 on a computer – celebrate once it was checked on all of them
+const labSeen = {}, LAB_GOAL = 'col-sm-6 col-lg-4', LAB_WIN = ' 🎯 <b>פתרתם את האתגר!</b> אחת בטלפון, שתיים בטאבלט, שלוש במחשב.';
+function labCheck(px, doc){
+  if (labCls !== LAB_GOAL || state.labDone) return;
+  const r = perRow(doc, '.row > *'); labSeen[px] = r.length ? r[0] : 0;
+  if (labSeen[360] === 1 && (labSeen[640] === 2 || labSeen[820] === 2) && labSeen[1140] === 3) {
+    state.labDone = true; save();
+    Course.celebrate($('#s35count'), 'big');
+  }
+}
 seg($('#s35cls'), LAB.map(c => ({label:c, mono:true, v:c})), o => {
   labCls = o.v; const code = ITEMS3(labCls).map(l => l.replace(/\. [^<]*</, '<'));
   codeLines($('#s35code'), L(code), 'html', {1:'new', 2:'new', 3:'new'});
@@ -1069,8 +1081,10 @@ const CARD_ST = [
 ];
 function cardLines(p, o){
   o = o || {};
-  const a = ['<div class="card" style="width: 260px;">'], m = o.n === 'body' ? {0:'new'} : {};
-  const add = (l, isNew) => { if (isNew) m[a.length] = 'new'; a.push(l); };
+  // no style inside the tag: the card's width comes from its grid column (col-8 in the narrow demo, a third from md up)
+  const a = ['<div class="row">', '    <div class="col-8 col-md-4">'], m = {}, I = '        ';
+  const add = (l, isNew) => { if (isNew) m[a.length] = 'new'; a.push(I + l); };
+  add('<div class="card">', o.n === 'body');
   if (p.head) add('    <div class="card-header">המנה של היום</div>', o.n === 'head');
   if (p.img) add('    <img src="../Img/margherita.jpg" class="card-img-top" alt="פיצה מרגריטה" />', o.n === 'img');
   add('    <div class="card-body">', o.n === 'body'); add('        <h5 class="card-title">מרגריטה</h5>', o.n === 'body'); add('        <p class="card-text">רוטב עגבניות ומוצרלה.</p>', o.n === 'body');
@@ -1078,6 +1092,7 @@ function cardLines(p, o){
   add('    </div>', o.n === 'body');
   if (p.foot) add('    <div class="card-footer">45 שקל</div>', o.n === 'foot');
   add('</div>', o.n === 'body');
+  a.push('    </div>', '</div>');
   return {code: L(a), m};
 }
 const s43 = bsplit($('#s43'), {min:60});
@@ -1095,7 +1110,7 @@ const s44f = [];
   const c = cardLines({img:1, btn:1}, {stretch:st}); codeLines(d.querySelector('pre'), c.code, 'html', st ? c.m : {});
   const note = d.querySelector('[data-n]'); note.textContent = 'לחצו על התמונה.';
   const f = frameBox(d.querySelector('.fh'), {min:60, onLink: () => { note.innerHTML = '✔ הקישור הופעל! (בהדגמה לא עוברים דף)'; setTimeout(() => note.textContent = 'לחצו שוב במקום אחר.', 2200); }});
-  f.show(showOpts(c.code.replace('width: 260px;', 'max-width: 260px;'))); s44f.push(f);
+  f.show(showOpts(c.code)); s44f.push(f);
 });
 
 /* ======================================================= 4.5 cards in grid */
@@ -1157,7 +1172,7 @@ seg($('#s47seg'), [{label:'בלי sticky-top', mono:true}, {label:'עם sticky-t
 }, 1);
 
 /* ======================================================= 4.8 form in card */
-const FORM = ['<div class="card" style="max-width: 400px;">', '    <div class="card-header">הזמנת פיצה</div>', '    <div class="card-body">', '        <form>', '            <div class="mb-3">', '                <label for="name" class="form-label">שם</label>', '                <input type="text" id="name" class="form-control" />', '            </div>', '            <div class="mb-3">', '                <label for="pizza" class="form-label">איזו פיצה?</label>', '                <select id="pizza" class="form-select">', '                    <option>מרגריטה</option>', '                    <option>פטריות</option>', '                    <option>זיתים</option>', '                </select>', '            </div>', '            <button type="submit" class="btn btn-success">שליחה</button>', '        </form>', '    </div>', '</div>'];
+const FORM = ['<div class="row">', '    <div class="col-md-6">', '        <div class="card">', '            <div class="card-header">הזמנת פיצה</div>', '            <div class="card-body">', '                <form>', '                    <div class="mb-3">', '                        <label for="name" class="form-label">שם</label>', '                        <input type="text" id="name" class="form-control" />', '                    </div>', '                    <div class="mb-3">', '                        <label for="pizza" class="form-label">איזו פיצה?</label>', '                        <select id="pizza" class="form-select">', '                            <option>מרגריטה</option>', '                            <option>פטריות</option>', '                            <option>זיתים</option>', '                        </select>', '                    </div>', '                    <button type="submit" class="btn btn-success">שליחה</button>', '                </form>', '            </div>', '        </div>', '    </div>', '</div>'];
 const s48 = bsplit($('#s48'), {min:60, onSubmit: (form, doc) => { s48.note.innerHTML = '✔ הטופס נשלח' + (doc.getElementById('name').value ? ' בשם ' + esc(doc.getElementById('name').value) : '') + '. (בהדגמה לא באמת שולחים.)'; }});
 seg($('#s48seg'), ['בלי Bootstrap', 'עם Bootstrap'], (o,i) => {
   const link = '<link rel="stylesheet" href="' + LOCAL_CSS + '" />';

@@ -61,8 +61,8 @@ const LESSONS = [
   {id:'css3', file:'css.html', n:'שיעור 3', title:'עיצוב עם CSS', desc:'כללים ובוררים, מודל הקופסה החי, קובץ CSS אחד לכל האתר, ומי מנצח.'},
   {id:'l4', file:'html-advanced.html', n:'שיעור 4', title:'טבלאות, רשימות וטפסים', desc:'טבלת התפריט, רשימות ותפריט ניווט, טופס הזמנה, ומה באמת נשלח ב-get וב-post.'},
   {id:'l5', file:'bootstrap.html', n:'שיעור 5', title:'Bootstrap ועיצוב רספונסיבי', desc:'הגריד ונקודות השבירה, כרטיסים, תפריט ניווט, ואתר שנראה טוב גם בטלפון.'},
-  {soon:true, n:'שיעור 6', title:'Razor Pages ותבנית Layout'},
-  {soon:true, n:'הגשה 1', title:'האתר המעוצב'}
+  {id:'l6', file:'razor.html', n:'שיעור 6', title:'Razor Pages ותבנית Layout', desc:'דף Razor ו-@, תבנית אחת עם תפריט משותף, כתובות ו-~/, והעברת האתר לדפי cshtml.'},
+  {id:'sub1', file:'submission1.html', n:'הגשה 1', title:'האתר המעוצב', desc:'רשימת הדרישות, מחוון לבדיקה עצמית, בודק הטפסים, ואיך מכינים zip – מלווה אתכם עד ההגשה.'}
 ];
 const get = k => { try { return JSON.parse(localStorage.getItem(k)); } catch(e){ return null; } };
 try { const th = localStorage.getItem('course-theme'); if (th) document.documentElement.dataset.theme = th; } catch(e){}

@@ -93,7 +93,7 @@
       <li>❓ לפני חלק מהתוצאות יש שאלת ניחוש. מותר לטעות – בשביל זה היא שם.</li>
       <li>💻 בסוף כל נושא – <b>"עכשיו אצלכם ב-Visual Studio"</b>: עושים את אותו הדבר בפרויקט שלכם, צעד אחרי צעד.</li>
       <li>🎯 ואחריו <b>בדיקת הבנה</b> קצרה, בלי ציון. טעיתם? היא תראה לכם לאיזה שלב לחזור.</li>
-      <li>💾 ההתקדמות נשמרת בדפדפן הזה. בערך שעתיים בסך הכול, כולל העבודה ב-Visual Studio וצעד הפרויקט – אפשר (ורצוי) בכמה ישיבות.</li>
+      <li>💾 ההתקדמות נשמרת בדפדפן הזה. כמה זמן זה לוקח? פתחו את <b>⏱ כמה זמן זה לוקח?</b> למטה – ותכננו בעצמכם. אפשר (ורצוי) בכמה ישיבות.</li>
     </ul>
     <div class="eggnote">🥚 <b>ועוד משהו:</b> בדף מוחבאות <b>5 ביצי הפתעה</b>. כדי למצוא אותן צריך סקרנות – וכמה דברים שתלמדו היום: קישורים, תמונות ומאפיינים. המונה למעלה; לחיצה עליו נותנת רמזים.</div>
   </article>
@@ -1109,7 +1109,7 @@ const STASKS = [
 const siteDone = state.site || {};
 $('#siteTasks').innerHTML = STASKS.map((t,i) => '<li data-t="' + t.id + '"><span class="st">' + (i+1) + '</span><span>' + t.t + '</span></li>').join('');
 function paintSite(){ STASKS.forEach((t,i) => { const li = $('#siteTasks [data-t="' + t.id + '"]'); li.classList.toggle('done', !!siteDone[t.id]); li.querySelector('.st').textContent = siteDone[t.id] ? '✔' : (i+1); }); }
-function siteTask(id){ if (!siteDone[id]) { siteDone[id] = true; state.site = siteDone; save(); paintSite(); } }
+function siteTask(id){ if (!siteDone[id]) { siteDone[id] = true; state.site = siteDone; save(); paintSite(); const li = document.querySelector(".site-tasks [data-id=\""+id+"\"]") || document.querySelector(".site-tasks"); if (li) Course.celebrate(li, "small"); } }
 const site = new Split($('#site'), {htmlTitle:'HTML/index.html'});
 const siteBr = chrome(resultPane(site), {editable:true});
 let siteCur = 'index.html';
