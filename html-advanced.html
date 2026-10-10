@@ -895,6 +895,7 @@ const g3 = orderFrame($('#g3frame'), 'post', list => {
 });
 $('#g3back').addEventListener('click', () => g3.home());
 predict('#pPost', {
+  veil: false, /* the demo above is the material for this question, not its answer */
   q: 'אז post שולח את הנתונים בצורה סודית ומוצפנת?',
   opts: ['כן – אי אפשר לראות אותם', 'לא – הם רק לא מוצגים בכתובת'], correct: 1,
   onCorrect: () => { $('#g3trap').hidden = false; },

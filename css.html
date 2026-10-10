@@ -7,6 +7,18 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="assets/course.css" />
+<style>
+/* lesson-local layout (engine styles stay in assets/course.css) */
+.split.s81{grid-template-columns:minmax(0,1fr) minmax(0,2fr)}
+@media (max-width:860px){.split.s81{grid-template-columns:1fr}}
+/* two demos whose code lines carry a badge: give the code pane a bit more room on wide screens */
+@media (min-width:861px){#s61.split,#sCv.split{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr)}}
+/* box lab: one real block div, exactly like the code beside it */
+#boxStage{display:block}
+#boxStage .cc{width:auto;min-height:0;text-align:start;padding:6px 10px}
+#boxStage:not(.plain) .bb{border-color:var(--b)}
+#boxStage.plain .bb{border-color:orange;background:#fff}
+</style>
 </head>
 <body data-lesson="css3" data-title="שיעור 3" data-next="html-advanced.html" data-next-name="HTML מתקדם">
 <header class="topbar"><div class="in">
@@ -49,7 +61,9 @@
       <li>🧭 <b>7 נושאים</b> (הלשוניות למעלה), ובכל אחד כמה שלבים קצרים. רואים <b>שלב אחד בכל פעם</b>.</li>
       <li>👆 כל דוגמה כאן <b>חיה</b>: לוחצים, משנים ורואים. אי אפשר לשבור כלום.</li>
       <li>❓ לפני חלק מהתוצאות יש שאלת ניחוש. מותר לטעות – בשביל זה היא שם.</li>
-      <li>💾 ההתקדמות נשמרת בדפדפן הזה. בערך 45 דקות בסך הכול – אפשר בכמה ישיבות.</li>
+      <li>💻 בסוף כל נושא – <b>"עכשיו אצלכם ב-Visual Studio"</b>: עושים את אותו הדבר בפרויקט שלכם, צעד אחרי צעד.</li>
+      <li>🎯 ואחריו <b>בדיקת הבנה</b> קצרה, בלי ציון. טעיתם? היא תראה לכם לאיזה שלב לחזור.</li>
+      <li>💾 ההתקדמות נשמרת בדפדפן הזה. בערך שעה וחצי עד שעתיים בסך הכול, כולל העבודה ב-Visual Studio – אפשר (ורצוי) בכמה ישיבות.</li>
     </ul>
     <div class="eggnote">🥚 <b>ועוד משהו:</b> בדף מוחבאות <b>5 ביצי הפתעה</b>. כדי למצוא אותן צריך סקרנות – וכמה דברים שתלמדו היום. המונה למעלה; לחיצה עליו נותנת רמזים.</div>
   </article>
@@ -65,19 +79,20 @@
 </section>
 <section class="topic" data-id="basics" data-icon="✏️" data-title="ההוראה הראשונה">
   <article class="spread">
-    <h3>מאפיין שאתם כבר מכירים</h3>
-    <p>בשיעור 2 הוספתם לתגיות <b>מאפיינים</b> (attributes): <code>href</code> לקישור, <code>src</code> לתמונה. לעיצוב יש מאפיין משלו: <code>style</code>. בתוכו כותבים הוראות עיצוב.</p>
+    <h3>מאפיין שאתם כבר מכירים: style</h3>
+    <p>בשיעור 2 הוספתם לתגיות <b>מאפיינים</b> (attributes): <code>href</code> לקישור, <code>src</code> לתמונה. לעיצוב יש מאפיין HTML משלו: <code>style</code>. בתוכו כותבים <b>הוראות עיצוב</b> בשפת CSS – למשל <code>&lt;h1 style="color: red;"&gt;</code> צובע את הכותרת באדום.</p>
     <p>כל הוראה בנויה מארבעה חלקים:</p>
     <div class="anat">
-      <div class="tok" style="--tc:#93c5fd"><code>color</code><span><b>מאפיין (property)</b>מה רוצים לשנות</span></div>
+      <div class="tok" style="--tc:#93c5fd"><code>color</code><span><b>תכונה (property)</b>מה רוצים לשנות</span></div>
       <div class="tok" style="--tc:#cbd5e1"><code>:</code><span><b>נקודתיים</b>מפרידות</span></div>
       <div class="tok" style="--tc:#86efac"><code>red</code><span><b>ערך (value)</b>למה לשנות</span></div>
       <div class="tok" style="--tc:#cbd5e1"><code>;</code><span><b>נקודה-פסיק</b>סוף ההוראה</span></div>
     </div>
+    <div class="tip">💡 <b>שתי מילים, שני עולמות.</b> ב-HTML כותבים <b>מאפיין</b> (attribute) בתוך התגית: <code>href</code>, <code>src</code>, <code>style</code>. ב-CSS כותבים <b>תכונה</b> (property) בתוך הוראת העיצוב: <code>color</code>, <code>font-size</code>. ככה נקרא להן לאורך כל השיעור.</div>
     <div class="bridge">ב-C# כתבתם <code>x = 5;</code> – "שימו 5 בתוך x". כאן זה אותו רעיון: <code>color: red;</code> – "שימו אדום בצבע". שני הבדלים בלבד: במקום <code>=</code> כותבים נקודתיים, ואת הערך לא שמים במירכאות. הנקודה-פסיק בסוף – בדיוק כמו ב-C#.</div>
     <details class="more"><summary>🐢 רוצים הסבר לאט יותר?</summary>
       <p>חשבו על טופס: יש בו שדות, ובכל שדה ממלאים ערך. "צבע עיניים: חום". "גובה: 1.70".</p>
-      <p>ב-CSS זה אותו דבר. <b>המאפיין</b> הוא שם השדה (color = צבע), ו<b>הערך</b> הוא מה שממלאים בו (red). הנקודתיים מפרידות בין השם לערך, והנקודה-פסיק אומרת "סיימתי את השדה הזה".</p>
+      <p>ב-CSS זה אותו דבר. <b>התכונה</b> היא שם השדה (color = צבע), ו<b>הערך</b> הוא מה שממלאים בו (red). הנקודתיים מפרידות בין השם לערך, והנקודה-פסיק אומרת "סיימתי את השדה הזה".</p>
       <p>לכן <code>color: red; font-size: 32px;</code> הם שני שדות מלאים: צבע = אדום, גודל = 32 פיקסלים.</p>
     </details>
   </article>
@@ -88,22 +103,22 @@
     <div class="ctrls"><span class="lbl ltr">font-size:</span><div class="seg" id="s22s"></div></div>
     <div id="s22"></div>
     <div class="predict" id="p22"></div>
-    <div class="ctrls"><button class="btn" id="s22break" type="button">🔨 תראו לי: מחקו את ה-; באמצע</button></div>
-    <div class="what" id="s22what" hidden>הדפדפן מפריד בין ההוראות לפי ה-<code>;</code>. בלי הנקודה-פסיק הוא לא יודע איפה הוראה אחת נגמרת, ולכן <b>זורק את שתיהן</b>. ושימו לב: <b>אין הודעת שגיאה</b>. ב-CSS טעות פשוט "לא עובדת" בשקט. זו הסיבה שצריך לבדוק כל שינוי בדפדפן.</div>
+    <div class="ctrls" id="s22brk" hidden><button class="btn" id="s22break" type="button">🔨 תראו לי: מחקו את ה-; באמצע</button></div>
+    <div class="what" id="s22what" hidden>הדפדפן מפריד בין ההוראות לפי ה-<code>;</code> שביניהן. בלי הנקודה-פסיק הוא לא יודע איפה הוראה אחת נגמרת, ולכן <b>זורק את שתיהן</b>: הכותרת חזרה גם לשחור וגם לגודל הרגיל של h1. ושימו לב: <b>אין הודעת שגיאה</b>. ב-CSS טעות פשוט "לא עובדת" בשקט – זו הסיבה שבודקים כל שינוי בדפדפן.</div>
   </article>
   <article class="spread">
-    <h3>שני סוגי תגיות: block ו-inline</h3>
-    <p>לפני שמעצבים, עוד עובדה אחת על HTML. יש תגיות שתופסות <b>שורה שלמה</b> – קוראים להן <b>block</b> (בלוק). ויש תגיות שיושבות <b>בתוך השורה, כמו מילה</b> – ולא תופסות את כל השורה כמו block. קוראים להן <b>inline</b> (בתוך השורה).</p>
+    <h3>זוכרים משיעור 2? block ו-inline</h3>
+    <p>בשיעור 2 ראיתם שיש תגיות שתופסות <b>שורה שלמה</b> – <b>block</b> (בלוק), ויש תגיות שיושבות <b>בתוך השורה, כמו מילה</b> – <b>inline</b> (בתוך השורה). עכשיו, כשמתחילים לעצב, זה חשוב שוב: הצבע, הרקע והמסגרת שתיתנו לתגית יתפסו בדיוק את המקום שלה. בדקו אם אתם זוכרים:</p>
     <div class="predict" id="pKinds"></div>
     <div class="ctrls"><div class="seg" id="sKindsSeg"></div></div>
     <div id="sKinds"></div>
-    <div class="kinds-legend"><span style="border-color:#2563eb">כחול = block</span><span style="border-color:#db2777">ורוד = inline</span></div>
-    <div class="what">הכחולים (h2, p) נמתחים <b>לכל רוחב הדף</b>, גם כשהטקסט בתוכם קצר – ולכן כל אחד מתחיל בשורה חדשה. הוורודים (b, a, img) תופסים <b>רק את המקום שלהם</b>, ויושבים זה ליד זה בתוך השורה.</div>
-    <table>
-      <tr><th>block – שורה שלמה</th><th>inline – בתוך השורה, כמו מילה (לא תופסת את כל השורה)</th></tr>
-      <tr><td><code>h1</code>–<code>h6</code>, <code>p</code>, <code>div</code>, <code>ul</code>, <code>ol</code>, <code>table</code>, <code>form</code></td><td><code>span</code>, <code>a</code>, <code>img</code>, <code>b</code>, <code>input</code>, <code>label</code></td></tr>
+    <div class="kinds-legend"><span class="k-block" style="border-color:#2563eb">כחול, קו רציף = block</span><span class="k-inline" style="border-color:#db2777">ורוד, קו מקווקו = inline</span></div>
+    <div class="what" id="kindsWhat">הכחולים (h2, p) נמתחים <b>לכל רוחב הדף</b>, גם כשהטקסט בתוכם קצר – ולכן כל אחד מתחיל בשורה חדשה. הוורודים (b, a, img) תופסים <b>רק את המקום שלהם</b>, ויושבים זה ליד זה בתוך השורה.</div>
+    <table id="kindsTable">
+      <tr><th>block – שורה שלמה</th><th>inline – בתוך השורה, כמו מילה</th></tr>
+      <tr><td><code>h1</code>–<code>h6</code>, <code>p</code>, <code>hr</code> · ובשלב הבא: <code>div</code></td><td><code>a</code>, <code>img</code>, <code>b</code>, <code>i</code>, <code>br</code> · ובשלב הבא: <code>span</code></td></tr>
     </table>
-    <div class="bridge">זה מסביר משהו שאולי ראיתם בשיעור 2: למה שתי תמונות עמדו אחת ליד השנייה, ושתי פסקאות – אחת מתחת לשנייה. ובהמשך השיעור תראו שעם CSS אפשר גם לשנות את זה (המאפיין <code>display</code>).</div>
+    <div class="bridge">בשיעור 2 הבטחנו: "בשיעור 3 תלמדו לשנות את ההתנהגות הזו עם CSS". זה יקרה כבר בנושא הבא – התכונה <code>display</code> יכולה להפוך תגית inline ל-block, ולהפך.</div>
   </article>
   <article class="spread">
     <h3>שתי תגיות בלי שום מראה משלהן</h3>
@@ -118,18 +133,43 @@
     <div id="s31"></div>
     <div class="what">ה-<code>div</code> הפך את הכותרת ושתי הפסקאות ל<b>יחידה אחת</b> – והרקע והמסגרת עוטפים את שלושתן יחד. ה-<code>span</code> צבע <b>רק את המילה</b> שבתוכו, והשורה נשארה שורה אחת. בלי עיצוב – שתיהן בלתי נראות לגמרי. בזה הן שונות מ-<code>h1</code> או <code>p</code>, שיש להן מראה משלהן.</div>
   </article>
+  <article class="spread vsstep">
+    <h3>💻 עכשיו אצלכם ב-Visual Studio</h3>
+    <p>נבנה בפרויקט שלכם <b>דף תרגול</b> של פיצה דני, ונעצב אותו עם style. לאורך השיעור נמשיך לשפר את אותו הדף – ככה הדפים של האתר שלכם נשארים נקיים עד צעד הפרויקט בסוף השיעור.</p>
+    <ol class="vsdo">
+      <li>ב-Solution Explorer: <b>קליק ימני</b> על התיקייה <b>HTML</b> (בתוך wwwroot) &rlm;←&rlm; <b>Add</b> &rlm;←&rlm; <b><bdi>New Item...</bdi></b> &rlm;←&rlm; <b>HTML Page</b>. השם המוצע הוא <b>htmlpage.html</b> – שנו אותו ל-<b>pizza.html</b> &rlm;←&rlm; <b>Add</b>. (אם החלון נפתח קטן, בלי רשימת תבניות – לחצו בו Show All Templates.)</li>
+      <li>בשורה של התגית html, בראש הקובץ, ודאו שכתוב <code>lang="he" dir="rtl"</code> (כמו בשיעור 2). ואז הדביקו <b>בתוך body</b>:
+        <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
+&lt;h1 style="color: red; font-size: 40px;"&gt;פיצה דני&lt;/h1&gt;
+&lt;p&gt;הפיצה הכי טעימה באשקלון&lt;/p&gt;
+&lt;div style="background-color: lightyellow; border: 2px solid orange;"&gt;
+    &lt;h2&gt;התפריט&lt;/h2&gt;
+    &lt;p&gt;מרגריטה – 45 שקל&lt;/p&gt;
+    &lt;p&gt;פטריות – 39 שקל &lt;span style="color: crimson;"&gt;במבצע&lt;/span&gt;&lt;/p&gt;
+&lt;/div&gt;
+</pre></div></li>
+      <li>שמרו (Ctrl+S). ואז <b>קליק ימני</b> על pizza.html &rlm;←&rlm; <b>View in Browser</b>. (או: ▶ הירוק, ובדפדפן הכתובת <code style="white-space:normal;overflow-wrap:anywhere">https://localhost:&lt;port&gt;/HTML/pizza.html</code> – עם מספר הפורט שלכם.)</li>
+      <li>🔨 <b>שברו בכוונה:</b> ב-h1 מחקו את ה-<code>;</code> שאחרי red, שמרו, ורעננו <b>בדפדפן</b> (Ctrl+F5). הכותרת חזרה לשחור ולגודל הרגיל? מצוין – ראיתם בעצמכם את <a href="#" data-go="basics:2">השלב על הנקודה-פסיק</a>. עכשיו החזירו את ה-<code>;</code> למקומו.</li>
+    </ol>
+    <div class="expect">בכתובת שמסתיימת ב-<code>/HTML/pizza.html</code> רואים: כותרת "פיצה דני" גדולה ואדומה; קופסה צהובה עם מסגרת כתומה סביב "התפריט" ושתי המנות; ובשורה של פטריות – רק המילה "במבצע" באדום, באותה שורה.</div>
+    <div class="trouble" id="trBasics"></div>
+  </article>
+  <article class="spread cpstep">
+    <h3>🎯 הבנתם את כל מה שלמדתם עד עכשיו?</h3>
+    <div id="cpBasics"></div>
+  </article>
 </section>
 <section class="topic" data-id="look" data-icon="🎨" data-title="מראה ורווחים">
   <article class="spread">
-    <h3>חוקרים מאפיין אחרי מאפיין</h3>
-    <p>בחרו מאפיין, ואז ערך. הקו המקווקו האפור מראה את גבולות התגית – ככה רואים גם שינויים ברוחב.</p>
+    <h3>חוקרים תכונה אחרי תכונה</h3>
+    <p>בחרו תכונה, ואז ערך. הקו המקווקו האפור מראה את גבולות התגית – ככה רואים גם שינויים ברוחב.</p>
     <div class="ctrls"><div class="seg" id="s41p"></div></div>
     <div class="ctrls"><span class="lbl">ערך:</span><div class="seg" id="s41v"></div></div>
     <div id="s41"></div>
     <div class="what" id="s41what"></div>
-    <details><summary>כל המאפיינים בטבלה אחת (לחזרה)</summary>
+    <details><summary>כל התכונות בטבלה אחת (לחזרה)</summary>
       <table>
-        <tr><th>מאפיין</th><th>מה הוא עושה</th><th>דוגמה</th></tr>
+        <tr><th>תכונה</th><th>מה היא עושה</th><th>דוגמה</th></tr>
         <tr><td><code>color</code></td><td>צבע הטקסט</td><td><code>red</code></td></tr>
         <tr><td><code>background-color</code></td><td>צבע הרקע</td><td><code>lightyellow</code></td></tr>
         <tr><td><code>font-size</code></td><td>גודל הטקסט</td><td><code>20px</code></td></tr>
@@ -141,16 +181,22 @@
         <tr><td><code>opacity</code></td><td>שקיפות, מ-0 (שקוף) עד 1 (מלא)</td><td><code>0.5</code></td></tr>
         <tr><td><code>display</code></td><td>איך התגית תופסת מקום, או הסתרה</td><td><code>block</code> · <code>none</code></td></tr>
       </table>
-      <p>⚠ במצגת כתוב <code>hight</code> – הנכון הוא <code>height</code>. טעות כתיב במאפיין לא מציגה שגיאה, היא פשוט לא עובדת.</p>
+      <p>⚠ במצגת כתוב <code>hight</code> – הנכון הוא <code>height</code>. טעות כתיב בשם של תכונה לא מציגה שגיאה – ההוראה פשוט לא עובדת.</p>
     </details>
     <div class="ghost" id="eggGhost" style="display: none;">👻 תפסתם אותי! הקוד הסודי: GHOST. הקלידו אותו במונה הביצים למעלה.</div>
   </article>
   <article class="spread">
     <h3>איך ממרכזים תמונה?</h3>
-    <p>תמונה מתנהגת כמו <b>מילה בתוך שורה</b> – היא יושבת בצד (אצלנו בימין, כי הדף בעברית). <code>text-align</code> לא עוזר כאן אם רוצים לשלוט בתמונה עצמה. יש שני מקרים:</p>
+    <p>תמונה היא inline – היא יושבת בתוך השורה <b>כמו מילה</b>, ולכן בדף בעברית היא מתחילה בצד ימין. ואת התכונה <code>text-align</code> כבר הכרתם בשלב הקודם: היא מיישרת טקסט.</p>
+    <div class="predict" id="p42"></div>
     <div class="ctrls"><div class="seg" id="s42seg"></div></div>
     <div id="s42"></div>
     <div class="what" id="s42what"></div>
+    <details class="more"><summary>🚀 להעמקה: כמה תמונות בשורה, עם רווח שווה ביניהן</summary>
+      <p>גם הדרך הראשונה ממרכזת כמה תמונות יחד – אבל הרווח ביניהן הוא רק רווח של מילה. מעצבים אתרים משתמשים לסידור כזה ב-<b>flex</b> (מלשון גמיש): כותבים על ה-div שעוטף את התמונות שלוש הוראות.</p>
+      <div id="s42flex"></div>
+      <p><code>display: flex</code> מסדר את מה שבתוך ה-div בשורה; <code>justify-content: center</code> שם את השורה באמצע; ו-<code>gap</code> קובע רווח מדויק בין הפריטים. זה עולם שלם – אפשר לקרוא עליו ב-<a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/CSS_layout/Flexbox" target="_blank" rel="noopener">MDN: Flexbox</a> (באנגלית).</p>
+    </details>
   </article>
   <article class="spread">
     <h3>כל תגית היא מלבן</h3>
@@ -162,9 +208,23 @@
   </article>
   <article class="spread">
     <h3>padding – ריפוד: רווח <u>בתוך</u> המסגרת</h3>
-    <p>אותה קופסה בדיוק, פעמיים. ההבדל היחיד: ה-<code>padding</code>.</p>
+    <p>אותה קופסה בדיוק, פעמיים. ההבדל היחיד: ה-<code>padding</code>. לקופסה יש רוחב קבוע: <code>width: 200px</code> (רוחב).</p>
+    <div class="predict" id="p52"></div>
     <div class="compare" id="s52"></div>
-    <div class="what">padding מרחיק את <b>התוכן מהמסגרת של עצמו</b>. המסגרת "התנפחה" החוצה, והקופסה גדלה. בלי padding הטקסט צמוד לקו – וזה נראה צפוף ולא מקצועי.</div>
+    <div class="what" id="s52what">padding מרחיק את <b>התוכן מהמסגרת של עצמו</b>. המסגרת "התנפחה" החוצה, והקופסה גדלה – למרות שכתוב <code>width: 200px</code>. למה? כי ה-width קובע רק את רוחב <b>התוכן</b>, וה-padding נוסף לו מכל צד. בלי padding הטקסט צמוד לקו – וזה נראה צפוף ולא מקצועי.</div>
+    <details class="more"><summary>🚀 להעמקה: ואם רוצים שהקופסה תישאר בדיוק 200px?</summary>
+      <p>יש תכונה שמשנה את החשבון: <code>box-sizing: border-box</code>. איתה, ה-width כולל גם את ה-padding וגם את המסגרת – והדפדפן מקטין את מקום התוכן כדי שהכול ייכנס ב-200px.</p>
+      <div class="codeblock"><pre data-code="css">
+.box {
+    width: 200px;
+    padding: 24px;
+    border: 3px solid orange;
+    /* total width stays 200px: */
+    box-sizing: border-box;
+}
+</pre></div>
+      <p>בלי השורה האחרונה הדפדפן מחבר <code>200 + 24 + 24 + 3 + 3 = 254px</code> לרוחב הכולל. איתה – בדיוק 200 פיקסלים. Bootstrap, שתכירו בהמשך הקורס, מפעיל את <code>box-sizing: border-box</code> על כל התגיות בדף – כי ככה הרבה יותר קל לתכנן מידות. להרחבה: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing" target="_blank" rel="noopener">MDN: box-sizing</a> (באנגלית).</p>
+    </details>
   </article>
   <article class="spread">
     <h3>margin – שוליים: רווח <u>מחוץ</u> למסגרת</h3>
@@ -174,7 +234,7 @@
   </article>
   <article class="spread">
     <h3>כל השכבות יחד – מעבדה</h3>
-    <p>מבפנים החוצה: <b>תוכן</b> &rlm;←&rlm; <b>padding</b> &rlm;←&rlm; <b>border</b> (המסגרת עצמה) &rlm;←&rlm; <b>margin</b>. הזיזו כל פס לבד, ושימו לב מה זז ומה לא.</p>
+    <p>מבפנים החוצה: <b>תוכן</b> &rlm;←&rlm; <b>padding</b> &rlm;←&rlm; <b>border</b> (המסגרת עצמה) &rlm;←&rlm; <b>margin</b>. לקופסה הזו אין width, ולכן היא תופסת את כל רוחב השורה – כמו כל div. הזיזו כל פס לבד, ושימו לב מה זז ומה לא.</p>
     <div class="ctrls"><div class="seg" id="s54view"></div></div>
     <div class="split" style="margin-top:0">
       <div class="pane">
@@ -215,8 +275,33 @@
     </div>
     <div class="tip">💡 נסו עכשיו, על הדף הזה עצמו: לחצו F12 ובחרו את הכותרת של השלב הזה. כל מה שאתם רואים כאן מעוצב ב-CSS. אפשר אפילו לשנות שם ערך ולראות מה קורה – זה זמני, ונעלם ברענון.</div>
   </article>
+  <article class="spread vsstep">
+    <h3>💻 עכשיו אצלכם ב-Visual Studio</h3>
+    <p>ממשיכים בדף התרגול pizza.html מהנושא הקודם: ממרכזים תמונה, נותנים לתפריט אוויר, ומסתכלים על הקופסה ב-F12 – באתר שלכם, לא רק כאן.</p>
+    <ol class="vsdo">
+      <li>ב-pizza.html, <b>אחרי</b> השורה <code>&lt;/div&gt;</code> של התפריט, הדביקו תמונה בתוך div שממרכז אותה. במקום pizza.jpg כתבו שם של תמונה <b>שיש לכם</b> בתיקייה Img (משיעור 2):
+        <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
+&lt;div style="text-align: center;"&gt;
+    &lt;img src="../Img/pizza.jpg" alt="פיצה" width="150" /&gt;
+&lt;/div&gt;
+</pre></div></li>
+      <li>תנו לתפריט אוויר מבפנים ומבחוץ: את השורה הפותחת של ה-div של התפריט החליפו בשתי השורות האלה. החדש בהן: <code>padding</code> ו-<code>margin</code> בסוף.
+        <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html" data-marks="2:new">
+&lt;div style="background-color: lightyellow; border: 2px solid orange;
+            padding: 20px; margin: 20px;"&gt;
+</pre></div></li>
+      <li>שמרו (Ctrl+S) ורעננו <b>בדפדפן</b> (Ctrl+F5).</li>
+      <li>בדפדפן לחצו <b>F12</b>, לחצו על סמל החץ ("בחירת אלמנט") ואז על הקופסה הצהובה. בלשונית <b>Styles</b> גללו למטה עד הריבועים הצבעוניים – מצאתם 20 ב-padding וגם ב-margin? (<a href="#" data-go="look:7">איך? השלב על F12</a>)</li>
+    </ol>
+    <div class="expect">בכתובת שמסתיימת ב-<code>/HTML/pizza.html</code> רואים: התמונה שלכם באמצע הרוחב; בתוך הקופסה הצהובה יש אוויר בין הטקסט למסגרת הכתומה (padding), ומסביב לקופסה – רווח עד הכותרת ועד התמונה (margin). ב-F12, בריבועים הצבעוניים, מופיע 20 גם בשכבת padding וגם בשכבת margin.</div>
+    <div class="trouble" id="trLook"></div>
+  </article>
+  <article class="spread cpstep">
+    <h3>🎯 הבנתם את כל מה שלמדתם עד עכשיו?</h3>
+    <div id="cpLook"></div>
+  </article>
 </section>
-<section class="topic" data-id="rules" data-icon="🎯" data-title="כללים ובוררים">
+<section class="topic" data-id="rules" data-icon="🏷️" data-title="כללים ובוררים">
   <article class="spread">
     <h3>הבעיה עם style בתוך התגית</h3>
     <p>בתפריט יש שתי מנות במבצע, ורוצים לצבוע את שתיהן באדום. עם מה שלמדנו עד עכשיו – כותבים אותו דבר פעמיים:</p>
@@ -247,13 +332,13 @@
     <h3>class – שם לקבוצה</h3>
     <p><code>class</code> הוא מאפיין שמוסיפים לתגית ב-HTML – בדיוק כמו href או style. הערך שלו הוא <b>שם שאתם ממציאים</b> (באנגלית, בלי רווחים). כל התגיות שמקבלות את אותו שם – הן קבוצה אחת.</p>
     <div class="bridge">דמיינו שיעור ספורט: "כל מי שלובש חולצה אדומה – לקבוצה הזו". ב-HTML, <code>class="sale"</code> הוא החולצה שמלבישים על תגית. ב-CSS, <code>.sale</code> פירושו "כל מי שלובש את החולצה sale". <b>הנקודה</b> לפני השם אומרת לדפדפן: "זה שם של class".</div>
-    <p><b>שלב א':</b> מלבישים את החולצה – מוסיפים class לשתי המנות במבצע. <b>שלב ב':</b> כותבים כלל שמשתמש בה.</p>
+    <p><b>שלב א׳:</b> מלבישים את החולצה – מוסיפים class לשתי המנות במבצע. <b>שלב ב׳:</b> כותבים כלל שמשתמש בה.</p>
     <div class="ctrls"><div class="seg" id="s72seg"></div></div>
     <div id="s72"></div>
     <div class="predict" id="p72"></div>
-    <div class="what" id="s72what" hidden>בשלב א' לא קרה כלום במראה – <b>class הוא רק שם</b>. רק כשכתבנו כלל עם <code>.sale</code>, הדפדפן חיפש את כל מי שקיבל את השם הזה – ומצא בדיוק שתיים. רוצים מנה שלישית במבצע? מוסיפים לה <code>class="sale"</code> וזהו – בלי לגעת ב-CSS.</div>
+    <div class="what" id="s72what" hidden>בשלב א׳ לא קרה כלום במראה – <b>class הוא רק שם</b>. רק כשכתבנו את הבורר <code>.sale</code> בכלל, הדפדפן חיפש את כל מי שקיבל את השם הזה – ומצא בדיוק שתיים. רוצים מנה שלישית במבצע? מוסיפים לה <code>class="sale"</code> וזהו – בלי לגעת ב-CSS.</div>
     <details class="more"><summary>🐢 רוצים הסבר לאט יותר?</summary>
-      <p>כך הדפדפן עובד, צעד אחר צעד, כשהוא פוגש את הכלל <code>.sale { color: crimson; }</code>:</p>
+      <p>כשהדפדפן פוגש את הכלל <code>.sale { color: crimson; }</code> הוא עובד כך, צעד אחר צעד:</p>
       <ol>
         <li>הוא רואה <b>נקודה</b>: "אה, מחפשים class".</li>
         <li>הוא קורא את השם: <b>sale</b>.</li>
@@ -263,11 +348,12 @@
       <p>לכן סוג התגית לא משנה: אם גם לכותרת h2 היה <code>class="sale"</code>, גם היא הייתה נצבעת.</p>
     </details>
     <div class="trap">שוכחים את הנקודה: <code>sale { … }</code> בלי נקודה מחפש <b>תגית</b> בשם sale – ואין כזו. לא נבחר כלום, ואין הודעת שגיאה. <button class="btn" id="s72nodot" type="button" style="margin-top:6px">🔨 תראו לי</button></div>
+    <div class="tip">💡 <b>זהירות, "חבר מזויף"</b> (false friend – מילה שנראית מוכרת, אבל אומרת משהו אחר): ב-C# המילה class מופיעה כבר בתוכנית הראשונה (<code>class Program</code>), ושם היא מגדירה מחלקה – חלק מהמבנה של הקוד. ב-HTML ו-CSS אין לה שום קשר לזה: <b>class הוא רק שם של קבוצה</b> שמדביקים על תגיות.</div>
   </article>
   <article class="spread">
     <h3>id – שם לתגית אחת בלבד</h3>
-    <p>גם <code>id</code> הוא מאפיין שמוסיפים ב-HTML. ההבדל: id הוא <b>מזהה ייחודי</b> – רק תגית אחת בכל הדף יכולה לקבל את השם הזה. ב-CSS כותבים <b>סולמית</b> לפני השם: <code>#logo</code>.</p>
-    <div class="bridge">class הוא כמו חולצת קבוצה – הרבה ילדים לובשים אותה. id הוא כמו מספר תעודת זהות – יש רק אדם אחד עם המספר הזה. ב-C# זה כמו ההבדל בין סוג (כמה משתנים מאותו סוג) לבין שם של משתנה (אחד ויחיד).</div>
+    <p>גם <code>id</code> הוא מאפיין שמוסיפים ב-HTML. ההבדל: id הוא <b>מזהה ייחודי</b> – רק תגית אחת בכל הדף יכולה לקבל את השם הזה. ב-CSS כותבים <b>סולמית</b> לפני השם, למשל <code>#logo</code> בשביל <code>id="logo"</code>.</p>
+    <div class="bridge">את id כבר פגשתם בשיעור 2: הקישור <code>href="#prices"</code> קפץ לתגית שיש לה <code>id="prices"</code>. אותה סולמית ואותו שם – ועכשיו משתמשים בהם גם כדי לעצב. וכמו שאמרנו שם: id הוא כמו שם של משתנה ב-C# – אסור שיהיו שניים באותו שם. class, לעומת זאת, הוא כמו חולצת קבוצה: הרבה תגיות "לובשות" אותה.</div>
     <div id="s73"></div>
     <table>
       <tr><th></th><th>כותבים ב-HTML</th><th>כותבים ב-CSS</th><th>לכמה תגיות?</th></tr>
@@ -302,22 +388,30 @@
     <p>עכשיו אפשר לבחור תגיות <b>לפי המקום שלהן</b> במשפחה:</p>
     <ul>
       <li><code>.menu p</code> (עם <b>רווח</b>) – כל p שנמצא איפשהו בתוך menu: ילדים <b>וגם</b> נכדים.</li>
-      <li><code>.menu > p</code> (עם <b>&gt;</b>) – רק p שהוא <b>ילד ישיר</b> של menu.</li>
+      <li><code>.menu > p</code> (עם הסימן <code>&gt;</code> – "גדול מ") – רק p שהוא <b>ילד ישיר</b> של menu.</li>
     </ul>
     <div class="predict" id="p76"></div>
     <div class="ctrls"><div class="seg" id="s76seg"></div></div>
     <div class="tree" id="s76tree"></div>
     <div id="s76"></div>
-    <div class="what" id="s76what" hidden>ההבדל היחיד הוא "גבינה". היא נמצאת בתוך extras, ו-extras נמצאת בתוך menu – כלומר היא <b>נכדה</b> של menu. הרווח תופס אותה (צאצא), וה-&gt; לא (לא ילדה ישירה).</div>
+    <div class="what" id="s76what" hidden>ההבדל היחיד הוא "גבינה". היא נמצאת בתוך extras, ו-extras נמצאת בתוך menu – כלומר היא <b>נכדה</b> של menu. הרווח תופס אותה (צאצא), והסימן <code>&gt;</code> לא תופס אותה (היא לא ילדה ישירה).</div>
     <div class="tip">💡 במצגת הסימן מופיע הפוך (<code>&lt;</code>). הנכון הוא <code>&gt;</code> – "גדול מ", כמו חץ שמצביע מההורה אל הילד.</div>
   </article>
   <article class="spread">
     <h3>מצבים: hover ועוד</h3>
-    <p>אפשר לעצב תגית <b>רק כשהיא במצב מסוים</b> – למשל כשהעכבר עליה. כותבים נקודתיים ואת שם המצב. לזה קוראים <b>pseudo-class</b>. העבירו את העכבר על הכפתור בתוצאה:</p>
+    <p>אפשר לעצב תגית <b>רק כשהיא במצב מסוים</b> – למשל כשהעכבר עליה. כותבים אחרי הבורר נקודתיים ואת שם המצב, בלי רווח – למשל <code>.order:hover</code> (hover = ריחוף, "העכבר מעל"). לזה קוראים <b>pseudo-class</b> (בערך: "class מדומה" – הדפדפן מדביק אותו לבד, לפי מה שקורה ברגע זה). העבירו את העכבר על הכפתור בתוצאה:</p>
     <div id="s77"></div>
     <div class="what">הכלל הראשון חל על הכפתור תמיד. הכלל השני – עם <code>:hover</code> – חל <b>רק</b> כשהעכבר מעליו. עוד מצבים שימושיים: <code>:focus</code> (שדה שלוחצים עליו כדי להקליד – יהיה חשוב בטפסים) ו-<code>:visited</code> (קישור שכבר ביקרתם בו).</div>
-    <details><summary>להרחבה: pseudo-element – לעצב רק חלק מתגית</summary>
-      <p>עם <b>שני</b> נקודתיים מעצבים חלק מתוך תגית. למשל <code>p::first-letter</code> מעצב רק את האות הראשונה של כל פסקה, ו-<code>p::first-line</code> רק את השורה הראשונה.</p>
+    <details class="more"><summary>🚀 להעמקה: pseudo-element – לעצב רק חלק מתגית</summary>
+      <p>עם <b>נקודתיים כפולות</b> (<code>::</code>) מעצבים חלק מתוך תגית – חלק שאין לו תגית משלו. למשל <code>p::first-letter</code> מעצב רק את האות הראשונה של כל פסקה, ו-<code>p::first-line</code> רק את השורה הראשונה:</p>
+      <div class="codeblock"><pre data-code="css">
+p::first-letter {
+    /* 2em = twice the text size */
+    font-size: 2em;
+    color: crimson;
+}
+</pre></div>
+      <p>הכלל לזכור: נקודתיים אחת = <b>מצב</b> של כל התגית (<code>:hover</code>). נקודתיים כפולות = <b>חלק</b> מהתגית (<code>::first-letter</code>). להרחבה: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements" target="_blank" rel="noopener">MDN: Pseudo-elements</a> (באנגלית).</p>
     </details>
   </article>
   <article class="spread">
@@ -327,6 +421,60 @@
     <div class="sel-input"><input id="selInput" aria-label="כתבו בורר CSS" spellcheck="false" autocomplete="off" placeholder="למשל: p" /></div>
     <div id="s78"></div>
   </article>
+  <article class="spread vsstep">
+    <h3>💻 עכשיו אצלכם ב-Visual Studio</h3>
+    <p>ב-pizza.html העיצוב עדיין מפוזר בתוך התגיות. עכשיו מעבירים אותו לתגית <code>&lt;style&gt;</code> אחת ב-head, עם id, class ובורר צאצאים – בדיוק כמו בנושא הזה.</p>
+    <ol class="vsdo">
+      <li>ב-pizza.html, בתוך ה-head, <b>לפני</b> השורה <code>&lt;/head&gt;</code> הדביקו:
+        <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
+&lt;style&gt;
+    #logo {
+        color: red;
+        font-size: 40px;
+    }
+    .menu {
+        background-color: lightyellow;
+        border: 2px solid orange;
+        padding: 20px;
+        margin: 20px;
+    }
+    .menu p {
+        font-size: 18px;
+    }
+    .sale {
+        color: crimson;
+    }
+    .center {
+        text-align: center;
+    }
+&lt;/style&gt;
+</pre></div></li>
+      <li>במקום כל ה-body, הדביקו את הגרסה הנקייה – בלי אף style בתוך תגית, רק שמות (id ו-class). שימו לב לשם התמונה – השאירו את השם של התמונה שלכם:
+        <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
+&lt;h1 id="logo"&gt;פיצה דני&lt;/h1&gt;
+&lt;p&gt;הפיצה הכי טעימה באשקלון&lt;/p&gt;
+&lt;div class="menu"&gt;
+    &lt;h2&gt;התפריט&lt;/h2&gt;
+    &lt;p&gt;מרגריטה – 45 שקל&lt;/p&gt;
+    &lt;p&gt;פטריות – 39 שקל &lt;span class="sale"&gt;במבצע&lt;/span&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="center"&gt;
+    &lt;img src="../Img/pizza.jpg" alt="פיצה" width="150" /&gt;
+&lt;/div&gt;
+</pre></div></li>
+      <li>שמרו (Ctrl+S) ורעננו <b>בדפדפן</b> (Ctrl+F5). הדף אמור להיראות <b>כמעט כמו קודם</b> – רק שהקוד מסודר הרבה יותר. (הבדל אחד קטן: הכלל <code>.menu p</code> מגדיל קצת את המנות שבתוך התפריט.)</li>
+      <li>עכשיו הכוח של class: בתוך ה-div של התפריט הוסיפו מנה שלישית במבצע – <b>בלי לגעת ב-style</b>:
+        <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
+&lt;p&gt;זיתים – 39 שקל &lt;span class="sale"&gt;במבצע&lt;/span&gt;&lt;/p&gt;
+</pre></div>שמרו ורעננו.</li>
+    </ol>
+    <div class="expect">בכתובת שמסתיימת ב-<code>/HTML/pizza.html</code> רואים: אותו עיצוב כמו בסוף הנושא הקודם (כותרת אדומה, קופסה צהובה עם אוויר, תמונה באמצע), ובתפריט שלוש מנות – וגם ב"זיתים" המילה "במבצע" אדומה, למרות שלא כתבתם לה שום עיצוב.</div>
+    <div class="trouble" id="trRules"></div>
+  </article>
+  <article class="spread cpstep">
+    <h3>🎯 הבנתם את כל מה שלמדתם עד עכשיו?</h3>
+    <div id="cpRules"></div>
+  </article>
 </section>
 <section class="topic" data-id="site" data-icon="🌐" data-title="קובץ לכל האתר">
   <article class="spread">
@@ -334,7 +482,7 @@
     <p>תגית style ב-head פותרת את החזרות <b>בתוך דף אחד</b>. אבל לאתר יש הרבה דפים. אם בכל דף יש style משלו – שוב צריך לתקן בכל דף. הפתרון: לכתוב את כל הכללים <b>בקובץ אחד</b> עם סיומת css, ולחבר אליו את כל הדפים.</p>
     <p>כאן יש שלושה דפים שמחוברים לאותו קובץ. שנו את הצבע בקובץ – ושימו לב מה קורה:</p>
     <div class="ctrls"><span class="lbl">צבע הכותרת h1 בקובץ style.css:</span><div class="seg" id="s81c"></div></div>
-    <div class="split" style="grid-template-columns:minmax(0,1fr) minmax(0,2fr)">
+    <div class="split s81">
       <div class="pane"><div class="pane-h"><span class="dot"></span>css/style.css</div><pre class="cv" id="s81code"></pre></div>
       <div class="pane"><div class="pane-h"><span class="dot"></span>שלושה דפים באתר</div><div class="minis" id="s81minis"></div></div>
     </div>
@@ -343,13 +491,13 @@
   <article class="spread">
     <h3>יוצרים את הקובץ ב-Visual Studio</h3>
     <ol>
-      <li>ב-Solution Explorer, בתוך <b>wwwroot</b>, כבר יש תיקייה בשם <b>css</b>.</li>
-      <li>קליק ימני עליה &rlm;←&rlm; Add &rlm;←&rlm; New Item.</li>
-      <li>מחפשים <b>Style Sheet</b>, נותנים שם (למשל style.css) &rlm;←&rlm; Add.</li>
+      <li>ב-Solution Explorer, בתוך <b>wwwroot</b>, כבר יש תיקייה בשם <b>css</b> – התבנית יצרה אותה בשבילכם. (יש בה כבר קובץ בשם site.css: הוא שייך לדפים של התבנית, לא לדפי ה-HTML שלכם – לא נוגעים בו.)</li>
+      <li><b>קליק ימני</b> על התיקייה css &rlm;←&rlm; <b>Add</b> &rlm;←&rlm; <b><bdi>New Item...</bdi></b> (אם החלון נפתח קטן – Show All Templates).</li>
+      <li>מחפשים <b>Style Sheet</b>, נותנים שם באנגלית בלי רווחים (כאן: style.css) &rlm;←&rlm; <b>Add</b>.</li>
     </ol>
     <p>בתוך הקובץ כותבים <b>רק כללים</b> – בלי תגית style ובלי שום HTML:</p>
     <div class="codeblock"><button class="copy" type="button">העתקה</button><pre class="cv" id="s82code"></pre></div>
-    <div class="trap">כותבים בתוך קובץ ה-css גם <code>&lt;style&gt;</code>. זה HTML, והוא לא שייך לקובץ CSS – הדפדפן יתבלבל ויתעלם מהכלל הראשון.</div>
+    <div class="trap">כותבים בתוך קובץ ה-css גם את התגית <code>&lt;style&gt;</code> – אבל זו תגית HTML, ואין לה מקום בקובץ CSS. הדפדפן חושב שהיא חלק מהבורר הראשון, ולכן מתעלם מהכלל הראשון כולו.</div>
   </article>
   <article class="spread">
     <h3>מחברים את הדף לקובץ: תגית link</h3>
@@ -364,13 +512,13 @@
         <div class="ctrls"><button class="btn primary" id="walkNext" type="button">הצעד הבא ←</button><button class="btn" id="walkReset" type="button">↺ מההתחלה</button></div>
       </div>
     </div>
-    <div class="bridge">זה אותו נתיב יחסי שהשתמשתם בו לתמונות בשיעור 2: <code>../Img/pic.jpg</code>. שתי נקודות = "עלו תיקייה אחת למעלה".</div>
+    <div class="bridge">זה אותו נתיב יחסי (relative path) שכתבתם לתמונות בשיעור 2, למשל <code>../Img/pizza.jpg</code> – שתי הנקודות אומרות "עלו תיקייה אחת למעלה", ואז נכנסים לתיקייה אחרת.</div>
     <details class="more"><summary>🐢 רוצים הסבר לאט יותר?</summary>
       <p>דמיינו שאתם בסייר הקבצים של Windows, בתוך התיקייה HTML, ורוצים להגיע לקובץ style.css:</p>
       <ol>
         <li>לוחצים על החץ "למעלה" – וחוזרים לתיקייה wwwroot. זה בדיוק מה ש-<code>../</code> אומר.</li>
-        <li>נכנסים לתיקייה css. זה ה-<code>css/</code>.</li>
-        <li>בוחרים את הקובץ. זה ה-<code>style.css</code>.</li>
+        <li>נכנסים לתיקייה css – זה החלק <code>css/</code> בנתיב.</li>
+        <li>בוחרים את הקובץ – זה החלק <code>style.css</code> בנתיב.</li>
       </ol>
       <p>הדפדפן הולך באותו מסלול בדיוק. אתם רק כותבים לו את המסלול במילים.</p>
     </details>
@@ -383,18 +531,25 @@
     <div class="what" id="sCvWhat"></div>
     <div class="tip">💡 לשינוי כזה – הקוד מסודר אחרת, אבל התוצאה זהה – קוראים <b>refactoring</b> (ארגון מחדש). מתכנתים עושים את זה כל הזמן, גם ב-C#.</div>
   </article>
-  <article class="spread">
-    <h3>⚠ כתבתי CSS והדף לא משתנה!</h3>
-    <p>זו התקלה הכי נפוצה בשיעור. בודקים לפי הסדר:</p>
-    <ol>
-      <li>תגית <code>link</code> נמצאת בתוך ה-head?</li>
-      <li>הנתיב נכון? מתחיל ב-<code>../</code> כי הדף בתיקייה HTML, ושם התיקייה css כתוב בדיוק כמו ב-Solution Explorer?</li>
-      <li>יש <code>rel="stylesheet"</code>?</li>
-      <li>הבורר נכון? נקודה ל-class, סולמית ל-id, והשם זהה לשם ב-HTML?</li>
-      <li>שם המאפיין כתוב נכון? (height ולא hight)</li>
-      <li>שמרתם (Ctrl+S) ורעננתם (Ctrl+F5 – רענון מלא)?</li>
+  <article class="spread vsstep">
+    <h3>💻 עכשיו אצלכם ב-Visual Studio</h3>
+    <p>עושים ל-pizza.html את <a href="#" data-go="site:4">תרגיל ההמרה</a> עד הסוף: הכללים עוברים מתגית style לקובץ חיצוני. ככה בדיוק תעבדו מעכשיו בפרויקט.</p>
+    <ol class="vsdo">
+      <li>צרו בתיקייה <b>css</b> קובץ Style Sheet בשם <b>style.css</b>, כמו <a href="#" data-go="site:2">בשלב 2</a>.</li>
+      <li>ב-pizza.html סמנו את כל <b>הכללים</b> שבין <code>&lt;style&gt;</code> ל-<code>&lt;/style&gt;</code> (בלי שתי התגיות עצמן), גזרו (Ctrl+X) והדביקו בתוך style.css. אם Visual Studio כבר כתב משהו בקובץ החדש – אפשר למחוק אותו.</li>
+      <li>ב-pizza.html מחקו את שתי התגיות שנשארו ריקות – <code>&lt;style&gt;</code> ו-<code>&lt;/style&gt;</code> – ובמקומן הדביקו שורה אחת:
+        <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
+&lt;link rel="stylesheet" href="../css/style.css" /&gt;
+</pre></div></li>
+      <li>שמרו את <b>שני</b> הקבצים (Ctrl+S בכל אחד – בדקו שאין כוכבית ליד השמות בלשוניות), ורעננו <b>בדפדפן</b> (Ctrl+F5).</li>
+      <li>בדיקה שהחיבור עובד: ב-style.css שנו את הצבע של <code>#logo</code> ל-teal, שמרו ורעננו. הכותרת השתנתה? הקובץ מחובר!</li>
     </ol>
-    <div class="tip">💡 F12 עוזר כאן: בלשונית Console תראו שגיאה אדומה אם הקובץ לא נמצא (404), ובלשונית Styles תראו אם הכלל שלכם בכלל הגיע לתגית.</div>
+    <div class="expect">בכתובת שמסתיימת ב-<code>/HTML/pizza.html</code> רואים: הדף נראה בדיוק כמו בסוף הנושא הקודם – רק שהכותרת עכשיו בצבע teal (כחול-ירקרק). ב-F12 &rlm;←&rlm; Elements רואים ב-head את שורת ה-link, ובלשונית Styles מופיע ליד כל כלל שם הקובץ style.css.</div>
+    <div class="trouble" id="trSite"></div>
+  </article>
+  <article class="spread cpstep">
+    <h3>🎯 הבנתם את כל מה שלמדתם עד עכשיו?</h3>
+    <div id="cpSite"></div>
   </article>
 </section>
 <section class="topic" data-id="wins" data-icon="⚖️" data-title="קדימויות והערות">
@@ -410,27 +565,38 @@
       <li><b>שם תגית</b> – בורר כמו p</li>
     </ol>
     <p>ואם שני כללים <b>שווים בכוח</b> (למשל שני כללי class)? מנצח <b>זה שנכתב אחרון</b>.</p>
-    <div class="bridge">ככל שהבורר <b>מדויק יותר</b>, הוא חזק יותר. "כל הפסקאות" (p) הוא כללי מאוד. "הקבוצה note" מדויק יותר. "התגית האחת msg" (id) – הכי מדויק. הגיוני: מי שכיוון בדיוק לתגית הזו כנראה התכוון אליה.</div>
+    <div class="bridge">ככל שהבורר <b>מדויק יותר</b>, הוא חזק יותר. הבורר <code>p</code> אומר "כל הפסקאות" – כללי מאוד. הבורר <code>.note</code> אומר "כל מי שבקבוצה note" – מדויק יותר. והבורר <code>#msg</code> אומר "רק התגית שה-id שלה הוא msg" – הכי מדויק. הגיוני: מי שכיוון בדיוק לתגית הזו כנראה התכוון אליה.</div>
     <details class="more"><summary>🐢 רוצים דוגמה מלאה, לאט?</summary>
       <p>לפסקה יש <code>id="msg"</code> וגם <code>class="note"</code>. כתובים שלושה כללים: <code>p</code> בכחול, <code>.note</code> בירוק, <code>#msg</code> באדום.</p>
       <p>הדפדפן שואל: "מי מהכללים כיוון <b>הכי בדיוק</b> לתגית הזו?"</p>
       <ul>
         <li><code>p</code> = "כל הפסקאות בדף" – כללי מאוד.</li>
         <li><code>.note</code> = "כל מי שבקבוצה note" – יותר מדויק.</li>
-        <li><code>#msg</code> = "התגית האחת והיחידה msg" – הכי מדויק. <b>אדום מנצח.</b></li>
+        <li><code>#msg</code> = "רק התגית האחת שה-id שלה הוא msg" – הכי מדויק. <b>אדום מנצח.</b></li>
       </ul>
       <p>ואם מוסיפים <code>style="color: purple"</code> בתוך התגית עצמה? אין דבר מדויק יותר מהוראה שכתובה צמוד לתגית. <b>סגול מנצח.</b></p>
     </details>
     <div class="predict" id="p91"></div>
     <p>עכשיו נסו בעצמכם: סמנו אילו כללים קיימים, וראו מי מנצח ולמה.</p>
-    <div class="split">
+    <div class="split" id="specLab">
       <div class="pane rules" id="rules"></div>
       <div class="pane"><div id="specHost"></div><p id="specWhy" class="res-note"></p></div>
     </div>
+    <details class="more"><summary>🚀 להעמקה: איך הדפדפן באמת סופר "כוח"?</summary>
+      <p>הסולם למעלה הוא קיצור. בפועל הדפדפן נותן לכל בורר <b>ציון בשלוש עמודות</b>, ומשווה עמודה אחרי עמודה – כמו שמשווים מספרים: קודם מי שיש לו יותר id; אם שווים – מי שיש לו יותר class (גם <code>:hover</code> נספר כאן); ורק אם גם זה שווה – מי שיש לו יותר שמות תגיות.</p>
+      <table>
+        <tr><th>בורר</th><th>id</th><th>class / מצב</th><th>שם תגית</th></tr>
+        <tr><td><code>p</code></td><td>0</td><td>0</td><td>1</td></tr>
+        <tr><td><code>.menu p</code></td><td>0</td><td>1</td><td>1</td></tr>
+        <tr><td><code>.menu .sale</code></td><td>0</td><td>2</td><td>0</td></tr>
+        <tr><td><code>#logo</code></td><td>1</td><td>0</td><td>0</td></tr>
+      </table>
+      <p>לכן <code>.menu p</code> מנצח את <code>p</code>, ו-<code>#logo</code> מנצח אפילו עשרה class ביחד. לזה קוראים <b>specificity</b> (ספציפיות – "כמה הבורר מדויק"). אפשר לקרוא עוד ב-<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity" target="_blank" rel="noopener">MDN: Specificity</a> (באנגלית).</p>
+    </details>
   </article>
   <article class="spread">
     <h3>ירושה: מה עובר מהורה לילדים</h3>
-    <p>חלק מהמאפיינים <b>עוברים בירושה</b> מההורה לכל הצאצאים שלו – כמו שילדים יורשים שם משפחה. לחצו והשוו:</p>
+    <p>חלק מהתכונות <b>עוברות בירושה</b> (inheritance) מההורה לכל הצאצאים שלו – כמו שילדים יורשים שם משפחה. לחצו והשוו:</p>
     <div class="ctrls"><div class="seg" id="s92seg"></div></div>
     <div id="s92"></div>
     <div class="what" id="s92what"></div>
@@ -439,29 +605,61 @@
   <article class="spread">
     <!-- 🥚 לחישה: הדפדפן מדלג על הערות – אבל אתם לא! הקוד הסודי: WHISPER. הקלידו אותו במונה הביצים למעלה. -->
     <h3>להסביר, ולכבות לרגע</h3>
-    <p>ב-CSS כותבים הערה בין <code>/*</code> ל-<code>*/</code>. הדפדפן מדלג עליה. משתמשים בזה לשני דברים: להסביר את הקוד, ו<b>לכבות הוראה לרגע</b> בלי למחוק אותה – כדי לבדוק מה היא עושה.</p>
+    <p>ב-CSS כותבים הערה (comment) בין <code>/*</code> לבין <code>*/</code> – והדפדפן מדלג עליה. משתמשים בזה לשני דברים: להסביר את הקוד, ו<b>לכבות הוראה לרגע</b> בלי למחוק אותה – כדי לבדוק מה היא עושה.</p>
     <div class="ctrls"><div class="seg" id="s101seg"></div></div>
     <div id="s101"></div>
-    <div class="bridge">ב-C# כתבתם הערות עם <code>//</code>. ב-CSS <b>אין</b> <code>//</code> – רק <code>/* */</code>. ב-HTML, כזכור משיעור 2: <code>&lt;!-- --&gt;</code>. ב-Visual Studio, Ctrl+K ואז Ctrl+C הופך שורה להערה בכל השפות.</div>
+    <div class="what" id="s101what" hidden>ברגע שההוראה <code>color: teal;</code> הפכה להערה, הדפדפן דילג עליה – והכותרת חזרה לשחור, צבע ברירת המחדל. אבל ההוראה <b>לא נמחקה</b>: מוחקים את סימני ההערה והיא חוזרת לפעול. ככה בודקים "מה השורה הזו עושה?" בלי לאבד אותה. ושימו לב לשורה 1: ההערה שם לא משנה כלום בדף – היא רק מסבירה למי שקורא את הקוד.</div>
+    <div class="bridge">ב-C# כתבתם הערות עם <code>//</code> – אבל ב-CSS <b>אין</b> <code>//</code> בכלל. יש רק <code>/* */</code> (שקיימת גם ב-C#). ב-HTML, כזכור משיעור 2, הערה נראית כך: <code>&lt;!-- --&gt;</code> – שלוש שפות, שלושה סימנים. ב-Visual Studio לא צריך לזכור: מסמנים שורה ולוחצים Ctrl+K ואז Ctrl+C, גם בקובץ CSS – והוא כבר יודע איזה סימן לשים.</div>
+  </article>
+  <article class="spread vsstep">
+    <h3>💻 עכשיו אצלכם ב-Visual Studio</h3>
+    <p>שלושה ניסויים קטנים בקובץ style.css של דף התרגול – כדי לראות ירושה, "מי מנצח" והערות עובדים אצלכם באמת.</p>
+    <ol class="vsdo">
+      <li><b>ירושה:</b> בראש style.css הוסיפו כלל אחד ל-body. שמרו ורעננו – <b>כל</b> הטקסט בדף מחליף גופן, כי גופן עובר בירושה:
+        <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="css">
+body {
+    font-family: Arial, sans-serif;
+}
+</pre></div></li>
+      <li><b>מי מנצח:</b> בסוף style.css הוסיפו את הכלל הזה, שמרו ורעננו. הכותרת נשארת בצבע של <code>#logo</code> – כי id חזק משם תגית, גם כשהכלל של התגית כתוב אחריו:
+        <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="css">
+h1 {
+    color: green;
+}
+</pre></div></li>
+      <li><b>לראות את זה ב-F12:</b> בדפדפן F12 &rlm;←&rlm; סמל החץ &rlm;←&rlm; לחצו על הכותרת. בלשונית Styles ההוראה <code>color: green</code> <b>מחוקה בקו</b> – ככה הדפדפן מראה הוראה שהפסידה לכלל חזק ממנה.</li>
+      <li><b>הערה:</b> ב-style.css סמנו את השורה <code>color: green;</code> ולחצו Ctrl+K ואז Ctrl+C. השורה הפכה להערה: נוספו לה <code>/*</code> בהתחלה ו-<code>*/</code> בסוף. בשורה הראשונה של הקובץ כתבו הערה משלכם – למשל <code>/* Danny's pizza – practice */</code> – ושמרו.</li>
+    </ol>
+    <div class="expect">בכתובת שמסתיימת ב-<code>/HTML/pizza.html</code> רואים: כל הטקסט בגופן Arial; הכותרת לא הפכה לירוקה (בצעד 3, ב-F12, ראיתם את ההוראה הירוקה מחוקה בקו). אחרי צעד 4 שום דבר בדף לא השתנה – הערות לא משפיעות על המראה.</div>
+    <div class="trouble" id="trWins"></div>
+  </article>
+  <article class="spread cpstep">
+    <h3>🎯 הבנתם את כל מה שלמדתם עד עכשיו?</h3>
+    <div id="cpWins"></div>
   </article>
 </section>
 <section class="topic" data-id="practice" data-icon="🛠" data-title="תרגול וסיכום">
   <article class="spread">
     <h3>🛠 נסו עכשיו: כותבים בעצמכם</h3>
-    <p>זה הדף של פיצה דני, עם קובץ CSS. בצעו את המשימות לפי הסדר – כשמשימה מצליחה, היא נצבעת בירוק ✔. אחר כך עשו את אותו דבר אצלכם ב-Visual Studio.</p>
+    <p>זה הדף של פיצה דני, עם קובץ CSS. כתבו בעורך ה-CSS ובצעו את המשימות לפי הסדר – כשמשימה מצליחה, היא נצבעת בירוק ✔. תקועים? בכל משימה יש רמזים, ובסוף גם פתרון.</p>
     <div id="pg"></div>
   </article>
   <article class="spread">
     <h3>🧩 צעד בפרויקט – לקראת הגשה 1</h3>
     <div class="stepbox">
-      <b>בונים את קובץ העיצוב של האתר שלכם:</b>
+      <b>בונים את קובץ העיצוב של האתר שלכם.</b> עד עכשיו עבדתם על דף התרגול pizza.html עם הקובץ style.css. לאתר שלכם יוצרים קובץ עיצוב <b>משלו</b>, בשם <b>site-style.css</b> – השם הזה ילווה אתכם עד סוף הקורס.
       <ol>
-        <li>בתיקייה css צרו קובץ חדש: קליק ימני &rlm;←&rlm; Add &rlm;←&rlm; New Item &rlm;←&rlm; Style Sheet, בשם site-style.css.</li>
-        <li>חברו אותו עם תגית link לדף הנחיתה ולדף התוכן הראשון שלכם.</li>
-        <li>כתבו בו: גופן וצבע רקע ל-body, צבע לכותרות h1 ו-h2, ו-class אחד בשם box לקופסת תוכן (עם padding, border ו-margin).</li>
+        <li>בתיקייה css (בתוך wwwroot): קליק ימני &rlm;←&rlm; Add &rlm;←&rlm; <bdi>New Item...</bdi> &rlm;←&rlm; Style Sheet, בשם <b>site-style.css</b> &rlm;←&rlm; Add.</li>
+        <li>בדף הנחיתה (index.html) ובדף התוכן הראשון שלכם, בתוך ה-head, הוסיפו את השורה הזו:
+          <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
+&lt;link rel="stylesheet" href="../css/site-style.css" /&gt;
+</pre></div></li>
+        <li>כתבו ב-site-style.css: גופן וצבע רקע ל-body, צבע לכותרות h1 ו-h2, ו-class אחד בשם box לקופסת תוכן (עם padding, border ו-margin).</li>
         <li>הוסיפו <code>class="box"</code> לפחות לשתי קופסאות תוכן, בשני דפים שונים.</li>
-        <li>מעכשיו – בלי style בתוך התגיות. כל העיצוב בקובץ אחד.</li>
+        <li>מעכשיו – בלי style בתוך התגיות. כל העיצוב של האתר בקובץ אחד.</li>
+        <li><b>בדיקה:</b> הריצו, עברו בין שני הדפים בקישורים – הם נראים <b>אחידים</b>? ב-F12 &rlm;←&rlm; Console אין שגיאה אדומה (404)?</li>
       </ol>
+      <div class="trap">בתיקייה css כבר יש קובץ בשם <b>site.css</b> (בלי המילה style). הוא חלק מהתבנית – הוא מעצב את הדפים של התבנית, לא את דפי ה-HTML שלכם. אל תכתבו בו ואל תמחקו אותו. הקובץ שלכם הוא <b>site-style.css</b>, ובשורת ה-link כתוב בדיוק השם הזה.</div>
       <label style="display:flex;gap:8px;align-items:center;margin-top:8px"><input type="checkbox" id="stepDone" /> עשיתי את הצעד בפרויקט שלי</label>
     </div>
   </article>
@@ -482,7 +680,7 @@
         <div class="codeblock"><pre class="cv" id="sumLink"></pre></div></div>
       <div class="card"><h4>מבנה של כלל</h4>
         <div class="codeblock"><pre class="cv" id="sumRule"></pre></div>
-        <p>בורר = <b>על מי</b>. בתוך הסוגריים = <b>מה לעשות</b>. כל הוראה: מאפיין, נקודתיים, ערך, נקודה-פסיק.</p></div>
+        <p>בורר = <b>על מי</b>. בתוך הסוגריים = <b>מה לעשות</b>. כל הוראה: תכונה (property), נקודתיים, ערך, נקודה-פסיק.</p></div>
       <div class="card"><h4>בוררים</h4>
         <table>
           <tr><td><code>p</code></td><td>כל תגיות p</td></tr>
@@ -497,9 +695,15 @@
         <ol><li><b>תוכן</b> – הטקסט או התמונה</li><li><b>padding</b> – אוויר <b>בתוך</b> המסגרת (פ׳ כמו פְּנים)</li><li><b>border</b> – המסגרת</li><li><b>margin</b> – אוויר <b>מחוץ</b> למסגרת (מ׳ כמו מִחוץ)</li></ol></div>
       <div class="card"><h4>מי מנצח?</h4>
         <ol><li>Inline</li><li>id</li><li>class</li><li>שם תגית</li></ol>
-        <p>שווים בכוח? מנצח האחרון שנכתב.</p></div>
+        <p>שווים בכוח? מנצח האחרון שנכתב.</p>
+        <h4 style="margin-top:10px">מה עובר בירושה?</h4>
+        <p style="margin:2px 0">✔ עובר לכל הצאצאים: <code>color</code>, <code>font-family</code>, <code>font-size</code></p>
+        <p style="margin:2px 0">✘ לא עובר: <code>border</code>, <code>padding</code>, <code>margin</code> ורקע (רקע רק <b>נראה</b> עובר – הילדים שקופים)</p>
+        <h4 style="margin-top:10px">הערות</h4>
+        <p style="margin:2px 0">ב-CSS כותבים הערה רק כך: <code>/* comment */</code> (בלי <code>//</code>). ב-Visual Studio מסמנים ולוחצים Ctrl+K ואז Ctrl+C.</p></div>
       <div class="card"><h4>הדף לא משתנה? בודקים:</h4>
-        <ul><li>link בתוך ה-head, עם <code>rel="stylesheet"</code></li><li>נתיב שמתחיל ב-<code>../</code></li><li>נקודה ל-class, סולמית ל-id</li><li>שם מאפיין בלי טעות כתיב</li><li>שמירה (Ctrl+S) ורענון (Ctrl+F5)</li></ul></div>
+        <ul><li>שמרתם (Ctrl+S) ורעננתם <b>בדפדפן</b> (Ctrl+F5)?</li><li>יש שורת link בכל דף, בתוך ה-head, עם <code>rel="stylesheet"</code>?</li><li>הנתיב מתחיל ב-<code>../</code> וכתוב בדיוק כמו בתיקיות?</li><li>נקודה ל-class, סולמית ל-id?</li><li>שם התכונה בלי טעות כתיב?</li></ul>
+        <p style="margin:4px 0 0">הרשימה המלאה: <a href="#" data-go="site:5">"עבד באתר ולא אצלי?"</a></p></div>
     </div>
   </article>
 </section>
@@ -511,7 +715,7 @@
 <script>
 (function(){
 "use strict";
-const {$, esc, store, state, save, Stage, Split, seg, predict, quiz, doneCheck, playground, codeLines, hlCssLine, PIZZA_IMG} = Course;
+const {$, esc, store, state, save, Stage, Split, seg, predict, quiz, doneCheck, playground, codeLines, hlCssLine, PIZZA_IMG, checkpoint, trouble} = Course;
 
 /* ---------- the running example: Danny's pizza ---------- */
 const P0 = [
@@ -532,23 +736,23 @@ seg($('#s11seg'), ['בלי CSS', 'עם CSS'], (o,i) => s11.setCss(i ? S11_CSS : 
 
 /* 2.2 inline playground */
 const s22 = new Split($('#s22'));
-let c22 = 'red', z22 = '32px', broken = false;
+let c22 = 'red', z22 = '48px', broken = false;
 function draw22(){
   const st = broken ? 'color: ' + c22 + ' font-size: ' + z22 : 'color: ' + c22 + '; font-size: ' + z22 + ';';
   s22.setHtml('<h1 style="' + st + '">פיצה דני</h1>\n<p>הפיצה הכי טעימה באשקלון</p>', {0: broken ? 'warn' : ''});
-  s22.say(broken ? '<span class="err">חסרה נקודה-פסיק – והדפדפן התעלם משתי ההוראות. הכותרת חזרה לשחור ולגודל הרגיל.</span>' : '');
+  s22.say(broken ? '<span class="err">חסרה נקודה-פסיק – והדפדפן התעלם משתי ההוראות. הכותרת חזרה לשחור <b>וגם</b> לגודל הרגיל של h1 (32 פיקסלים).</span>' : '');
   $('#s22break').textContent = broken ? '✔ החזירו את ה-;' : '🔨 תראו לי: מחקו את ה-; באמצע';
 }
 seg($('#s22c'), ['red','blue','green','darkorange'].map(c => ({label:c, mono:true, v:c})), o => { c22 = o.v; draw22(); });
-seg($('#s22s'), ['20px','32px','48px'].map(c => ({label:c, mono:true, v:c})), o => { z22 = o.v; draw22(); }, 1);
+seg($('#s22s'), ['20px','48px','60px'].map(c => ({label:c, mono:true, v:c})), o => { z22 = o.v; draw22(); }, 1);  /* never 32px: that is the default h1 size, so losing it would be invisible */
 $('#s22break').addEventListener('click', () => { broken = !broken; draw22(); $('#s22what').hidden = false; });
 predict($('#p22'), {
   veil: false,
   q: 'מה יקרה אם נמחק את ה-<code>;</code> שבין שתי ההוראות?',
   opts: ['רק הצבע יעבוד', 'רק הגודל יעבוד', 'אף אחת מהן לא תעבוד', 'תופיע הודעת שגיאה'],
   correct: 2,
-  onCorrect: () => { $('#s22what').hidden = false; },
-  why: ['הדפדפן לא יודע איפה ההוראה הראשונה נגמרת – הוא קורא "red font-size: 32px" כערך אחד של צבע.', 'גם הגודל נבלע בתוך ההוראה הראשונה.', 'בלי ה-; הדפדפן רואה הוראה אחת ארוכה ושבורה, וזורק את כולה. לחצו על הכפתור למטה כדי לראות.', 'ב-CSS אין הודעות שגיאה. מה ששבור פשוט לא עובד – בשקט.']
+  onCorrect: () => { $('#s22brk').hidden = false; },
+  why: ['הדפדפן לא יודע איפה ההוראה הראשונה נגמרת – הוא קורא את כל ההמשך, כולל font-size, כערך אחד ושבור של color.', 'הגודל נבלע בתוך ההוראה הראשונה, כחלק מהערך של color – ולכן גם הוא לא עובד.', 'בלי ה-<code>;</code> הדפדפן רואה הוראה אחת ארוכה ושבורה, וזורק את כולה. לחצו על הכפתור 🔨 שהופיע למטה – ותראו.', 'ב-CSS אין הודעות שגיאה. מה ששבור פשוט לא עובד – בשקט.']
 });
 
 
@@ -556,6 +760,7 @@ predict($('#p22'), {
 const sKinds = new Split($('#sKinds')).setHtml(['<h2>התפריט</h2>','<p>מרגריטה – <b>45</b> שקל</p>','<p>פטריות – <a href="#">להזמנה</a></p>','<img src="../Img/pizza.jpg" width="60" />','<img src="../Img/pizza.jpg" width="60" />'].join('\n'));
 seg($('#sKindsSeg'), ['הדף כרגיל', 'הראו לי block ו-inline'], (o,i) => sKinds.stage.page.classList.toggle('kinds', i === 1));
 predict('#pKinds', {
+  veil: '#sKinds, #kindsWhat, #kindsTable',
   q: 'בקוד למטה כתובות שתי תמונות, אחת אחרי השנייה. איפה הן יופיעו בדף?',
   opts: ['אחת מתחת לשנייה', 'אחת ליד השנייה'], correct: 1,
   why: ['ככה מתנהגות פסקאות (block). תמונה היא inline – כמו מילה.', 'תמונה היא inline: היא יושבת בתוך השורה, כמו מילה, ולא תופסת את כל השורה כמו block. לכן התמונה הבאה ממשיכה לידה.']
@@ -597,17 +802,24 @@ function draw41(){
 const pickV41 = () => seg($('#s41v'), p41.v.map(v => ({label:v, mono:true, v})), o => { v41 = o.v; draw41(); }, 0);
 seg($('#s41p'), PROPS.map(p => ({label:p.p, mono:true, v:p})), o => { p41 = o.v; pickV41(); });
 
-/* 4.2 centering */
+/* 4.2 centering: way 1 = text-align on the wrapping tag (simplest), way 2 = display:block + auto margins */
 const s42 = new Split($('#s42'));
+const IMG42 = '    <img src="../Img/pizza.jpg" width="100" />';
 const C42 = [
-  {html:'<h2>המנה של היום</h2>\n<img src="../Img/pizza.jpg" width="100" />', what:'התמונה יושבת בצד, כמו מילה בתחילת שורה.'},
-  {html:'<h2>המנה של היום</h2>\n<img src="../Img/pizza.jpg" width="100"\n     style="display: block; margin-left: auto; margin-right: auto;" />', m:{1:'new',2:'new'},
-   what:'שני צעדים: <code>display: block</code> הופך את התמונה ממילה-בשורה למלבן בשורה משלו. ואז <code>margin-left: auto</code> ו-<code>margin-right: auto</code> אומרים לדפדפן: "קח את כל המקום הפנוי וחלק אותו <b>שווה בשווה</b> – חצי מימין, חצי משמאל". (את margin נכיר לעומק בנושא הבא, "מודל הקופסה".)'},
-  {html:'<h2>המנות של היום</h2>\n<div>\n    <img src="../Img/pizza.jpg" width="100" />\n    <img src="../Img/pizza.jpg" width="100" />\n</div>', what:'שתי תמונות יושבות בצד אחת ליד השנייה.'},
-  {html:'<h2>המנות של היום</h2>\n<div style="display: flex; justify-content: center; gap: 10px;">\n    <img src="../Img/pizza.jpg" width="100" />\n    <img src="../Img/pizza.jpg" width="100" />\n</div>', m:{1:'new'},
-   what:'כאן לא מעצבים את התמונות – אלא את <b>ה-div שעוטף אותן</b>. <code>display: flex</code> מסדר את מה שבתוכו בשורה, <code>justify-content: center</code> שם את השורה באמצע, ו-<code>gap</code> מוסיף רווח בין התמונות.'}
+  {html:'<h2>המנה של היום</h2>\n<div>\n' + IMG42 + '\n</div>', what:'התמונה יושבת בצד ימין – כמו מילה בתחילת שורה.'},
+  {html:'<h2>המנה של היום</h2>\n<div style="text-align: center;">\n' + IMG42 + '\n</div>', m:{1:'new'},
+   what:'<code>text-align</code> מיישר את <b>מה שבתוך</b> התגית. התמונה יושבת בתוך ה-div כמו מילה בשורה – ולכן כשמיישרים את התוכן של ה-div לאמצע, גם היא זזה לאמצע. שימו לב: כותבים את זה על <b>התגית שעוטפת</b> את התמונה. על התמונה עצמה זה לא עושה כלום – בתוך img אין מה ליישר. זו הדרך הכי פשוטה, והיא ממרכזת גם כמה תמונות שיושבות באותה שורה.'},
+  {html:'<h2>המנה של היום</h2>\n<div>\n    <img src="../Img/pizza.jpg" width="100"\n         style="display: block; margin-left: auto; margin-right: auto;" />\n</div>', m:{3:'new'},
+   what:'כאן מעצבים את <b>התמונה עצמה</b>, בשני צעדים. <code>display: block</code> הופך אותה ממילה-בשורה למלבן בשורה משלו. ואז <code>margin-left: auto</code> ו-<code>margin-right: auto</code> אומרים לדפדפן: "קח את כל המקום הפנוי בשורה וחלק אותו <b>שווה בשווה</b> – חצי מימין, חצי משמאל". margin הוא רווח מחוץ לתגית – תכירו אותו לעומק <a href="#" data-go="look:5">בשלב 5</a>.'}
 ];
-seg($('#s42seg'), ['תמונה אחת: לפני','תמונה אחת: אחרי','שתי תמונות: לפני','שתי תמונות: אחרי'], (o,i) => { s42.setHtml(C42[i].html, C42[i].m); $('#s42what').innerHTML = C42[i].what; });
+seg($('#s42seg'), ['לפני', 'דרך 1: text-align על ה-div', 'דרך 2: התמונה עצמה'], (o,i) => { s42.setHtml(C42[i].html, C42[i].m); $('#s42what').innerHTML = C42[i].what; });
+predict('#p42', {
+  q: 'רוצים להעביר את התמונה לאמצע בעזרת <code>text-align: center</code> – על איזו תגית כותבים את זה?',
+  opts: ['על התמונה עצמה – בתוך התגית img', 'על ה-div שעוטף את התמונה'],
+  correct: 1,
+  why: ['text-align מיישר את מה שנמצא <b>בתוך</b> התגית. בתוך img אין כלום – התמונה עצמה היא "המילה". צריך ליישר אותה מבחוץ.', 'text-align מיישר את מה שבתוך התגית, והתמונה נמצאת בתוך ה-div – כמו מילה בשורה. בחרו "דרך 1" ובדקו.']
+});
+new Split($('#s42flex')).setHtml('<div style="display: flex; justify-content: center; gap: 24px;">\n    <img src="../Img/pizza.jpg" width="70" />\n    <img src="../Img/pizza.jpg" width="70" />\n    <img src="../Img/pizza.jpg" width="70" />\n</div>', {0:'new'});
 
 /* 5.1 show boxes */
 const s51 = new Split($('#s51')).setHtml(P0);
@@ -629,6 +841,13 @@ compareBox($('#s52'), [
   {html: box('0px', null, 'מרגריטה – 45 שקל'), m:{2:'diff'}, cap:'<b>padding: 0px</b>הטקסט נדבק לקו.'},
   {html: box('24px', null, 'מרגריטה – 45 שקל'), m:{2:'diff'}, cap:'<b>padding: 24px</b>יש אוויר בין הטקסט לקו – והמסגרת התרחבה החוצה.'}
 ]);
+predict('#p52', {
+  veil: '#s52 > div:nth-child(2) .host, #s52 > div:nth-child(2) .cap, #s52what',
+  q: 'בקופסה השנייה ה-padding גדל מ-0px ל-24px. מה יקרה למסגרת הכתומה?',
+  opts: ['היא תישאר באותו גודל, והטקסט יידחס פנימה', 'היא תגדל – הטקסט יתרחק מהקו, והמסגרת תתרחב החוצה', 'היא תזוז הצידה, באותו גודל בדיוק'],
+  correct: 1,
+  why: ['ככה זה היה אם ה-width היה כולל את ה-padding. אבל width קובע רק את רוחב <b>התוכן</b> – וה-padding נוסף לו מבחוץ.', 'padding הוא ריפוד בין התוכן למסגרת. התוכן נשאר ברוחב 200px, הריפוד נוסף מכל צד – ולכן המסגרת התרחבה.', 'זה מה ש-margin עושה – מזיז את הקופסה בלי לשנות אותה. padding הוא <b>בתוך</b> המסגרת.']
+});
 compareBox($('#s53'), [
   {html: box('10px', '0px', 'מרגריטה') + '\n' + box('10px', '0px', 'פטריות'), m:{3:'diff', 9:'diff'}, cap:'<b>margin: 0px</b>הקופסאות דבוקות – הקווים נוגעים.'},
   {html: box('10px', '24px', 'מרגריטה') + '\n' + box('10px', '24px', 'פטריות'), m:{3:'diff', 9:'diff'}, cap:'<b>margin: 24px</b>הקופסאות באותו גודל בדיוק – רק רחוקות זו מזו (ומקצה הדף).'}
@@ -636,7 +855,7 @@ compareBox($('#s53'), [
 
 /* 5.4 box lab */
 const rM = $('#rM'), rB = $('#rB'), rP = $('#rP'), boxStage = $('#boxStage');
-for (let i = 0; i < 2; i++) boxStage.insertAdjacentHTML('beforeend', '<div class="mm"><div class="bb"><div class="pp"><div class="cc">' + (i ? 'פטריות' : 'מרגריטה') + '</div></div></div></div>');
+boxStage.insertAdjacentHTML('beforeend', '<div class="mm"><div class="bb"><div class="pp"><div class="cc">מרגריטה</div></div></div></div>');
 let prev = {m:+rM.value, b:+rB.value, p:+rP.value};
 function drawBox(){
   const m = +rM.value, b = +rB.value, p = +rP.value;
@@ -644,11 +863,11 @@ function drawBox(){
   boxStage.querySelectorAll('.bb').forEach(e => e.style.borderWidth = b + 'px');
   boxStage.querySelectorAll('.pp').forEach(e => e.style.padding = p + 'px');
   $('#oM').value = m + 'px'; $('#oB').value = b + 'px'; $('#oP').value = p + 'px';
-  codeLines($('#boxCode'), '<div style="margin: ' + m + 'px;\n            border: ' + b + 'px solid;\n            padding: ' + p + 'px;">\n    מרגריטה\n</div>', 'html');
+  codeLines($('#boxCode'), '<div style="margin: ' + m + 'px;\n            border: ' + b + 'px solid orange;\n            padding: ' + p + 'px;">\n    מרגריטה\n</div>', 'html');
   let hint = null;
-  if (m !== prev.m) hint = 'שיניתם <b>margin</b> (הכתום): הקופסה עצמה לא גדלה – רק המרחק בינה לבין השכנה.';
-  else if (p !== prev.p) hint = 'שיניתם <b>padding</b> (הירוק): הקופסה גדלה מבפנים – התוכן מתרחק מהמסגרת.';
-  else if (b !== prev.b) hint = 'שיניתם <b>border</b> (הצהוב): המסגרת מתעבה. היא נמצאת בין ה-padding ל-margin.';
+  if (m !== prev.m) hint = 'שיניתם <b>margin</b> (השכבה הכתומה החיצונית): המסגרת עצמה לא גדלה – רק הרווח <b>מסביב</b> לה. בדף אמיתי זה המרחק מהשכנות ומקצה הדף.';
+  else if (p !== prev.p) hint = 'שיניתם <b>padding</b> (השכבה הירוקה): הקופסה גדלה מבפנים – התוכן מתרחק מהמסגרת.';
+  else if (b !== prev.b) hint = 'שיניתם <b>border</b> (השכבה הצהובה): המסגרת מתעבה. היא נמצאת בין ה-padding ל-margin.';
   if (hint) $('#boxHint').innerHTML = hint; prev = {m,b,p};
 }
 [rM,rB,rP].forEach(r => r.addEventListener('input', drawBox)); drawBox();
@@ -699,13 +918,13 @@ let s72step = 0;
 function draw72(i, nodot){
   s72step = i;
   s72.setHtml(P7({sale: i >= 1}), i >= 1 ? {5:'new', 6:'new'} : {});
-  if (i === 2) { const sel = nodot ? 'sale' : '.sale'; s72.setCss(ruleCss(sel, 'color: crimson;'), {0:'new'}); const l = s72.highlight(sel); s72.say(nodot ? '<span class="err">נבחרו 0 תגיות.</span> בלי הנקודה הדפדפן מחפש תגית &lt;sale&gt; – ואין כזו.' : countMsg(l)); }
+  if (i === 2) { const sel = nodot ? 'sale' : '.sale'; s72.setCss(ruleCss(sel, 'color: crimson;'), {0:'new'}); const l = s72.highlight(sel); s72.say(nodot ? '<span class="err">נבחרו 0 תגיות.</span> בלי הנקודה הדפדפן מחפש תגית בשם sale (כמו <code>&lt;sale&gt;</code>) – ואין כזו בדף.' : countMsg(l)); }
   else { s72.setCss(''); s72.highlight(null); s72.say(i === 1 ? 'הוספנו class – ו<b>שום דבר לא השתנה</b> במראה. עדיין אין כלל שמשתמש בו.' : 'המצב ההתחלתי: אין class לאף תגית.'); }
 }
 const pick72 = seg($('#s72seg'), ['לפני', 'שלב א׳: מוסיפים class ב-HTML', 'שלב ב׳: כותבים כלל ב-CSS'], (o,i) => draw72(i), 0);
 $('#s72nodot').addEventListener('click', () => { pick72(2); draw72(2, true); });
 predict($('#p72'), {
-  q: 'בשלב ב׳ הכלל הוא <code>.sale { color: crimson; }</code>. כמה שורות ייצבעו?',
+  q: 'בשלב ב׳ כותבים את הכלל <code>.sale { color: crimson; }</code> – כמה שורות ייצבעו?',
   opts: ['כל 6 הפסקאות', 'רק 2 – אלה עם <code>class="sale"</code>', 'אף אחת, צריך גם לכתוב p'],
   correct: 1,
   onCorrect: () => { $('#s72what').hidden = false; },
@@ -730,15 +949,16 @@ s74.setCss(ruleCss('h1, h2', 'color: teal;'), {0:'new'}); s74.say(countMsg(s74.h
 
 /* 7.5 family tree */
 const PF = P7({sale:true, id:true, fam:true});
+/* labels = the opening tags exactly as they appear in the HTML beside the tree */
 const TREE = [
-  ['div.menu', 0, 'הורה', 2],
-  ['h2', 1, 'ילד', 3], ['p', 1, 'ילד', 4], ['p.sale', 1, 'ילד', 5], ['p.sale', 1, 'ילד', 6],
-  ['div.extras', 1, 'ילד', 7],
-  ['h2', 2, 'נכד – צאצא, לא ילד', 8], ['p', 2, 'נכד – צאצא, לא ילד', 9]
+  ['<div class="menu">', 0, 'הורה', 2],
+  ['<h2>', 1, 'ילד', 3], ['<p>', 1, 'ילד', 4], ['<p class="sale">', 1, 'ילד', 5], ['<p class="sale">', 1, 'ילד', 6],
+  ['<div class="extras">', 1, 'ילד', 7],
+  ['<h2>', 2, 'נכד – צאצא, לא ילד', 8], ['<p>', 2, 'נכד – צאצא, לא ילד', 9]
 ];
 const treeHtml = () => TREE.map(([n, d, role, ln], i) => {
   const pre = d === 0 ? '' : d === 1 ? (i === 5 ? '└─ ' : '├─ ') : '   ' + (i === 7 ? '└─ ' : '├─ ');
-  return '<div><span class="g">' + pre + '</span><span class="node" data-ln="' + ln + '">' + n + '</span><span class="role">' + role + '</span></div>';
+  return '<div><span class="g">' + pre + '</span><span class="node" data-ln="' + ln + '">' + esc(n) + '</span><span class="role">' + role + '</span></div>';
 }).join('');
 $('#s75tree').innerHTML = treeHtml(); $('#s76tree').innerHTML = treeHtml();
 
@@ -751,7 +971,7 @@ function draw76(sel){
 }
 seg($('#s76seg'), [{label:'.menu p', mono:true, v:'.menu p'}, {label:'.menu > p', mono:true, v:'.menu > p'}], o => draw76(o.v), 0);
 predict($('#p76'), {
-  q: 'כמה פסקאות ייבחרו ב-<code>.menu > p</code>? (היעזרו בעץ המשפחה מהשלב הקודם)',
+  q: 'כמה פסקאות יבחר הבורר <code>.menu > p</code> בדף הזה? (היעזרו בעץ המשפחה מהשלב הקודם)',
   opts: ['4', '3', '1'],
   correct: 1,
   onCorrect: () => { $('#s76what').hidden = false; },
@@ -853,8 +1073,8 @@ drawWalk();
 /* 9.1 specificity */
 codeLines($('#s91code'), '<p id="msg" class="note">הטקסט שלי</p>', 'html');
 predict($('#p91'), {
-  veil: '#specHost',
-  q: 'יש כלל <code>#msg</code> שצובע באדום, וכלל <code>.note</code> שצובע בירוק. הכלל של <code>.note</code> כתוב <b>אחרי</b> הכלל של <code>#msg</code>. איזה צבע יהיה?',
+  veil: '#specLab',
+  q: 'יש כלל <code>#msg</code> שצובע באדום, וכלל <code>.note</code> שצובע בירוק. הכלל של <code>.note</code> כתוב <b>אחרי</b> הכלל של <code>#msg</code> בקוד. איזה צבע יהיה?',
   opts: ['ירוק – כי הוא נכתב אחרון', 'אדום – כי id חזק יותר'],
   correct: 1,
   why: ['"האחרון מנצח" עובד רק בין כללים <b>שווים בכוח</b>. כאן id חזק מ-class, אז הסדר לא משנה.', 'id נמצא מעל class בסולם – הוא מנצח, לא משנה מי נכתב קודם.']
@@ -889,9 +1109,11 @@ const s92 = new Split($('#s92'));
 s92.setHtml('<div>\n    <h2>התפריט</h2>\n    <p>מרגריטה – 45 שקל</p>\n</div>');
 const I92 = [
   {css:'div {\n    color: crimson;\n}', what:'כתבנו צבע רק ל-<b>div</b> – וגם h2 וגם p שבתוכו נצבעו. <b>צבע עובר בירושה</b> לכל הצאצאים. כך גם גופן וגודל טקסט. לכן מספיק לכתוב <code>font-family</code> פעם אחת ל-body, וכל האתר מקבל אותו.'},
-  {css:'div {\n    border: 2px solid crimson;\n}', what:'כתבנו מסגרת ל-<b>div</b> – ורק ה-div קיבל מסגרת. ה-h2 וה-p שבתוכו <b>לא</b> קיבלו מסגרת משלהם. <b>מסגרת לא עוברת בירושה</b> – וגם לא padding, margin ורקע. (תארו לעצמכם שכל תגית בדף הייתה מקבלת מסגרת משלה...)'}
+  {css:'div {\n    border: 2px solid crimson;\n}', what:'כתבנו מסגרת ל-<b>div</b> – ורק ה-div קיבל מסגרת. ה-h2 וה-p שבתוכו <b>לא</b> קיבלו מסגרת משלהם. <b>מסגרת לא עוברת בירושה</b> – וגם לא padding, margin ורקע. (תארו לעצמכם שכל תגית בדף הייתה מקבלת מסגרת משלה...)'},
+  {css:'div {\n    background-color: lightyellow;\n}', what:'כתבנו רקע צהוב רק ל-<b>div</b> – ונראה שגם h2 ו-p "קיבלו" צהוב. זו אשליה: <b>רקע לא עובר בירושה.</b> לתגיות שבפנים אין רקע משלהן – הרקע שלהן <b>שקוף</b> (transparent), ולכן רואים דרכן את הצהוב של ה-div שמאחוריהן, כמו דרך חלון. רוצים הוכחה? לחצו על הכפתור האחרון.'},
+  {css:'div {\n    background-color: lightyellow;\n}\np {\n    background-color: white;\n}', m:{3:'new', 4:'new', 5:'new'}, what:'נתנו ל-p רקע לבן משלו – והוא <b>מכסה</b> את הצהוב של ה-div. אילו הצהוב היה עובר בירושה, ה-p היה צהוב בעצמו. בפועל ה-p היה פשוט שקוף עד עכשיו.'}
 ];
-seg($('#s92seg'), ['color ל-div', 'border ל-div'], (o,i) => { s92.setCss(I92[i].css); $('#s92what').innerHTML = I92[i].what; });
+seg($('#s92seg'), ['color ל-div', 'border ל-div', 'background ל-div', '🔨 הוכחה: רקע לבן ל-p'], (o,i) => { s92.setCss(I92[i].css, I92[i].m); $('#s92what').innerHTML = I92[i].what; });
 
 /* 10 comments */
 const s101 = new Split($('#s101')).setHtml('<h1>פיצה דני</h1>\n<p class="sale">פטריות – 39 שקל במבצע</p>');
@@ -899,37 +1121,80 @@ const C101 = [
   ['/* colors of the menu */','h1 {','    color: teal;','}','.sale {','    color: crimson;','}'].join('\n'),
   ['/* colors of the menu */','h1 {','    /* color: teal; */','}','.sale {','    color: crimson;','}'].join('\n')
 ];
-seg($('#s101seg'), ['ההוראה פעילה', 'הפכו את ההוראה להערה'], (o,i) => s101.setCss(C101[i], i ? {2:'new'} : {}));
+seg($('#s101seg'), ['ההוראה פעילה', 'הפכו את ההוראה להערה'], (o,i) => { s101.setCss(C101[i], i ? {2:'new'} : {}); if (i) $('#s101what').hidden = false; });
 
 /* ---------- playground with auto-checked tasks ---------- */
 const START_HTML = ['<h1 id="logo">פיצה דני</h1>','<div class="menu">','    <h2>התפריט</h2>','    <p>מרגריטה – 45 שקל</p>','    <p class="sale">פטריות – 39 שקל במבצע</p>','    <p class="sale">זיתים – 39 שקל במבצע</p>','</div>','<button class="order">להזמנה</button>'].join('\n');
 const START_CSS = ['body {','    font-family: Arial, sans-serif;','    background-color: #fff8ee;','}','','.menu {','    background-color: white;','    border: 2px solid orange;','}'].join('\n');
+/* strict checks: a task passes only for the right reason (constitution §5) */
+const sheetRules = d => { const out = []; [...d.styleSheets].forEach(sh => { try { [...sh.cssRules].forEach(r => { if (r.selectorText) out.push(r); }); } catch(e){} }); return out; };
+const toRgb = (d, v) => { const x = d.createElement('i'); x.style.color = v; d.body.appendChild(x); const c = d.defaultView.getComputedStyle(x).color; x.remove(); return c; };
+const usesSel = (r, re) => r.selectorText.split(',').some(sel => re.test(sel.trim()));
+const CRIMSON = 'rgb(220, 20, 60)';
 const TASKS = [
-  {id:'t1', text:'צבעו את <b>המנות במבצע</b> בצבע <code>crimson</code>. (רמז: כבר יש להן class – כתבו לו כלל.)',
-   test: d => [...d.querySelectorAll('.sale')].every(e => d.defaultView.getComputedStyle(e).color === 'rgb(220, 20, 60)') && d.querySelectorAll('.sale').length === 2},
-  {id:'t2', text:'הגדילו את <b>הכותרת הראשית</b> ל-<code>40px</code>, בעזרת ה-id שלה.',
-   test: d => { const h = d.querySelector('h1'); return h && d.defaultView.getComputedStyle(h).fontSize === '40px' && !h.hasAttribute('style'); }},
-  {id:'t3', text:'תנו לתפריט אוויר מבפנים: <code>padding: 20px</code> לכלל של <code>.menu</code>.',
-   test: d => { const m = d.querySelector('.menu'); return m && d.defaultView.getComputedStyle(m).paddingTop === '20px'; }},
-  {id:'t4', text:'הרחיקו את התפריט מהשכנים שלו: <code>margin: 30px</code>.',
-   test: d => { const m = d.querySelector('.menu'); return m && d.defaultView.getComputedStyle(m).marginTop === '30px'; }},
-  {id:'t5', text:'אתגר: כשהעכבר על הכפתור "להזמנה", הרקע שלו נהיה <code>orange</code>. (רמז: <code>:hover</code> – <a href="#" data-go="rules:9">השלב על מצבים</a>.) בדקו עם העכבר וסמנו בעצמכם.', manual:true}
+  {id:'t1', text:'צבעו <b>רק</b> את <b>המנות במבצע</b> בצבע <code>crimson</code> – מרגריטה והכותרות נשארות כמו שהן.',
+   test: d => { const w = d.defaultView, col = e => w.getComputedStyle(e).color;
+     const sale = [...d.querySelectorAll('p.sale')], others = [...d.querySelectorAll('h1, h2, p:not(.sale), button')];
+     return sale.length === 2 && sale.every(e => col(e) === CRIMSON && !e.hasAttribute('style')) && others.every(e => col(e) !== CRIMSON); },
+   hints: ['לשתי המנות במבצע כבר יש <code>class="sale"</code> ב-HTML. צריך לכתוב בעורך ה-CSS <b>כלל</b> שבוחר את ה-class הזה – ורק אותו.',
+           'בשורה חדשה בעורך ה-CSS: נקודה, מיד אחריה השם sale, ואז סוגריים מסולסלים. בתוך הסוגריים: <code>color: crimson;</code>'],
+   solution: {code: '.sale {\n    color: crimson;\n}', lang: 'css',
+     explain: 'הנקודה אומרת "class". הכלל תופס רק תגיות שיש להן <code>class="sale"</code> – שתי המנות – ולכן מרגריטה נשארת שחורה.',
+     alt: 'אפשר גם לכתוב <code>p.sale</code> – "תגית p שיש לה class בשם sale" (שם תגית ו-class צמודים, בלי רווח). זה תופס בדיוק את אותן שתיים. אבל <code>p</code> לבד היה צובע גם את מרגריטה – ולכן הבדיקה לא מקבלת אותו.'},
+   back: 'rules:4'},
+  {id:'t2', text:'הגדילו את <b>הכותרת הראשית</b> ל-<code>40px</code> – בעזרת <b>ה-id שלה</b>.',
+   test: d => { const h = d.querySelector('h1#logo'); return !!h && !h.hasAttribute('style') && d.defaultView.getComputedStyle(h).fontSize === '40px' &&
+     sheetRules(d).some(r => usesSel(r, /#logo(?![\w-])/) && r.style.fontSize === '40px'); },
+   hints: ['לכותרת הראשית יש <code>id="logo"</code>. איזה סימן כותבים ב-CSS לפני שם של id? (לא נקודה – נקודה היא ל-class.)',
+           'כתבו כלל חדש: סולמית, מיד אחריה logo, ובתוך הסוגריים <code>font-size: 40px;</code>'],
+   solution: {code: '#logo {\n    font-size: 40px;\n}', lang: 'css',
+     explain: 'הסולמית אומרת "id". יש בדף רק תגית אחת עם <code>id="logo"</code> – הכותרת הראשית – ולכן רק היא גדלה.',
+     alt: 'גם <code>h1 { font-size: 40px; }</code> היה מגדיל אותה – אבל אז כל h1 שיתווסף לדף בעתיד יגדל גם הוא. המשימה ביקשה דווקא את ה-id, כדי לכוון לתגית האחת הזו. לכן הבדיקה בודקת שהבורר <code>#logo</code> כתוב בקוד.'},
+   back: 'rules:5'},
+  {id:'t3', text:'תנו לתפריט אוויר מבפנים: <code>padding: 20px</code> בכלל של <code>.menu</code> שכבר כתוב בעורך.',
+   test: d => { const m = d.querySelector('.menu'), cs = m && d.defaultView.getComputedStyle(m);
+     return !!m && !m.hasAttribute('style') && ['Top','Right','Bottom','Left'].every(k => cs['padding' + k] === '20px') &&
+       sheetRules(d).some(r => usesSel(r, /\.menu(?![\w-])/) && r.style.paddingTop === '20px'); },
+   hints: ['padding הוא אוויר <b>בתוך</b> המסגרת. לא צריך כלל חדש – כבר יש בעורך כלל <code>.menu</code> עם רקע ומסגרת. מוסיפים לתוכו.',
+           'בתוך הסוגריים של הכלל <code>.menu</code> – לפני ה-<code>}</code> שסוגר אותו – הוסיפו שורה: <code>padding: 20px;</code>'],
+   solution: {code: '.menu {\n    background-color: white;\n    border: 2px solid orange;\n    padding: 20px;\n}', lang: 'css',
+     explain: 'padding מרחיק את התוכן מהמסגרת – מכל ארבעת הצדדים. המסגרת "התנפחה" החוצה, והטקסט כבר לא צמוד לקו.'},
+   back: 'look:4'},
+  {id:'t4', text:'הרחיקו את התפריט מהשכנים שלו: <code>margin: 30px</code>, באותו כלל <code>.menu</code> שבעורך.',
+   test: d => { const m = d.querySelector('.menu'), cs = m && d.defaultView.getComputedStyle(m);
+     return !!m && !m.hasAttribute('style') && ['Top','Right','Bottom','Left'].every(k => cs['margin' + k] === '30px') &&
+       sheetRules(d).some(r => usesSel(r, /\.menu(?![\w-])/) && r.style.marginTop === '30px'); },
+   hints: ['margin הוא אוויר <b>מחוץ</b> למסגרת – בין התפריט לשכנים שלו. מוסיפים אותו לאותו כלל של התפריט.',
+           'בכלל <code>.menu</code> הוסיפו עוד שורה לפני ה-<code>}</code> שסוגר אותו: <code>margin: 30px;</code>'],
+   solution: {code: '.menu {\n    background-color: white;\n    border: 2px solid orange;\n    padding: 20px;\n    margin: 30px;\n}', lang: 'css',
+     explain: 'margin לא מגדיל את הקופסה – הוא מרחיק אותה מהשכנים: מהכותרת, מהכפתור ומקצה הדף.'},
+   back: 'look:5'},
+  {id:'t5', text:'אתגר: כשהעכבר על הכפתור "להזמנה", הרקע שלו נהיה <code>orange</code> – ורק אז. בדקו בעצמכם עם העכבר בתצוגה.',
+   test: d => { const btn = d.querySelector('button.order'); if (!btn) return false; const want = toRgb(d, 'orange');
+     return sheetRules(d).some(r => r.style.backgroundColor && toRgb(d, r.style.backgroundColor) === want &&
+       r.selectorText.split(',').some(sel => { sel = sel.trim(); if (!/:hover$/.test(sel)) return false; try { return btn.matches(sel.replace(/:hover$/, '')); } catch(e){ return false; } })); },
+   hints: ['מצב "העכבר מעל" כותבים בבורר עם נקודתיים – <code>:hover</code> – וזה כלל <b>חדש</b>, שחל רק ברגע שהעכבר על הכפתור.',
+           'הבורר: ה-class של הכפתור, ומיד אחריו, בלי רווח, <code>:hover</code> – ובתוך הסוגריים: <code>background-color: orange;</code>'],
+   solution: {code: '.order:hover {\n    background-color: orange;\n}', lang: 'css',
+     explain: 'הכלל חל רק כשהעכבר מעל תגית עם <code>class="order"</code>. כשהעכבר זז – הכלל מפסיק לחול, והכפתור חוזר למראה הרגיל.',
+     alt: 'גם <code>button:hover</code> עובד כאן – יש בדף רק כפתור אחד. ועוד שדרוג קטן: הוסיפו כלל <code>.order</code> (בלי hover) עם <code>cursor: pointer;</code> – וסמן העכבר יהפוך ליד, כמו מעל קישור.'},
+   back: 'rules:9'}
 ];
 playground('#pg', {html: START_HTML, css: START_CSS, tasks: TASKS, htmlLabel: 'HTML – menu.html', url: 'localhost:7123/HTML/menu.html'});
 doneCheck('#stepDone', 'step');
 
 /* ---------- quiz ---------- */
 const QUIZ = [
-  {q:'יש לכם 10 דפים באתר. למה עדיף קובץ CSS חיצוני אחד על פני תגית style בכל דף?', opts:['כי הוא נטען מהר יותר','כי משנים במקום אחד וכל הדפים מתעדכנים יחד','כי ב-style אי אפשר לכתוב class'], correct:1,
-   why:['זה לא העיקר.', 'בדיוק. וגם כל הדפים נראים אחידים – מה שהמחוון בודק.', 'אפשר גם אפשר – הבעיה היא החזרה על אותו עיצוב בכל דף.']},
-  {q:'הגדלתם <code>padding</code> של קופסה. מה קרה?', opts:['הקופסה התרחקה מהשכנות, בלי לגדול','הקופסה גדלה – התוכן התרחק מהמסגרת','הטקסט נהיה גדול יותר'], correct:1,
-   why:['זה margin – רווח מחוץ למסגרת.', 'padding הוא ריפוד בתוך המסגרת.', 'גודל טקסט קובעים ב-font-size.']},
-  {q:'ב-HTML כתוב <code>class="vegan"</code>. איך כותבים את הבורר ב-CSS?', opts:['<code>vegan</code>','<code>#vegan</code>','<code>.vegan</code>'], correct:2,
-   why:['בלי סימן – הדפדפן מחפש תגית בשם vegan.', 'סולמית היא ל-id.', 'נקודה = class.']},
-  {q:'מה ההבדל בין <code>.menu p</code> לבין <code>.menu > p</code>?', opts:['אין הבדל','הראשון: כל p בתוך menu בכל עומק. השני: רק ילדים ישירים','הראשון: רק ילדים ישירים. השני: כל p בכל עומק'], correct:1,
-   why:['יש – <a href="#" data-go="rules:8">נסו כאן</a>.', 'רווח = צאצאים בכל עומק, > = רק ילדים ישירים.', 'הפוך.']},
-  {q:'כתבתם קובץ CSS, חיברתם אותו, והדף לא משתנה בכלל. מה הדבר הראשון לבדוק?', opts:['להתקין מחדש את Visual Studio','את הנתיב בתגית link (וש-link בתוך ה-head)','להחליף דפדפן'], correct:1,
-   why:['ממש לא 🙂', 'רוב הפעמים הנתיב שגוי – למשל חסר <code>../</code>. ראו <a href="#" data-go="site:5">את רשימת הבדיקה</a>.', 'זה כמעט אף פעם לא הדפדפן.']}
+  {q:'יש לכם 10 דפים באתר. למה עדיף קובץ CSS חיצוני אחד על פני תגית style בכל דף?', opts:['כי הוא נטען מהר יותר','כי משנים במקום אחד – וכל הדפים מתעדכנים יחד','כי בתגית style אי אפשר לכתוב class'], correct:1,
+   why:['זה לא העיקר. היתרון הגדול הוא בתחזוקה.', 'בדיוק. וגם כל הדפים נראים אחידים – מה שהמחוון בודק.', 'אפשר גם אפשר – הבעיה היא החזרה על אותו עיצוב בכל דף. <a href="#" data-go="site:1">חזרו לשלב "למה קובץ נפרד?"</a>']},
+  {q:'ב-HTML כתוב <code>&lt;p class="vegan"&gt;</code> וגם <code>&lt;h1 id="logo"&gt;</code> בדף. איזה זוג בוררים תופס אותם?', opts:['<code>#vegan</code> ו-<code>.logo</code>', '<code>vegan</code> ו-<code>logo</code>', '<code>.vegan</code> ו-<code>#logo</code>'], correct:2,
+   why:['הפוך: סולמית היא ל-id, ונקודה ל-class. <a href="#" data-go="rules:5">חזרו לטבלה בשלב על id</a>', 'בלי סימן הדפדפן מחפש <b>תגיות</b> בשם vegan ו-logo – ואין כאלה. <a href="#" data-go="rules:4">חזרו לשלב על class</a>', 'נקודה ל-class, סולמית ל-id.']},
+  {q:'לפסקה <code>&lt;p class="sale"&gt;</code> יש שני כללים: קודם <code>.sale { color: crimson; }</code> ואחריו <code>p { color: blue; }</code>. באיזה צבע היא תהיה?', opts:['כחול – הכלל של p נכתב אחרון','אדום (crimson) – class חזק משם תגית'], correct:1,
+   why:['"האחרון מנצח" רק כששני הכללים <b>שווים בכוח</b>. כאן class חזק משם תגית, אז הסדר לא משנה. <a href="#" data-go="wins:1">חזרו לסולם הכוח</a>', 'בדיוק: class חזק משם תגית, ולכן הוא מנצח גם כשהוא כתוב קודם.']},
+  {q:'כתבתם ל-div שתי הוראות: <code>color: teal;</code> וגם <code>border: 2px solid teal;</code>. מה יקבל ה-p שבתוכו?', opts:['גם את הצבע וגם מסגרת משלו','רק את צבע הטקסט – המסגרת לא עוברת בירושה','כלום – הכלל חל רק על ה-div עצמו'], correct:1,
+   why:['מסגרת לא עוברת בירושה – אחרת כל תגית בדף הייתה מקבלת מסגרת משלה. <a href="#" data-go="wins:2">חזרו לשלב על ירושה</a>', 'צבע טקסט (וגם גופן וגודל) עובר בירושה לצאצאים; מסגרת, ריפוד ורקע – לא.', 'צבע עובר בירושה – ה-p יקבל את ה-teal. <a href="#" data-go="wins:2">חזרו לשלב על ירושה</a>']},
+  {q:'שתי קופסאות עומדות צמוד זו לזו. רוצים להרחיק אותן <b>בלי לשנות את הגודל שלהן</b>. מה מוסיפים?', opts:['padding','margin','border'], correct:1,
+   why:['padding מוסיף אוויר <b>בתוך</b> המסגרת – והקופסה גדלה. <a href="#" data-go="look:4">חזרו לשלב על padding</a>', 'margin הוא אוויר <b>מחוץ</b> למסגרת: הקופסה נשארת באותו גודל, ורק מתרחקת מהשכנות.', 'border מעבה את המסגרת – הקופסה גדלה, והן עדיין נוגעות. <a href="#" data-go="look:5">חזרו לשלב על margin</a>']}
 ];
 quiz('#quiz', QUIZ);
 
@@ -962,18 +1227,129 @@ codeLines($('#sumRule'), 'selector {\n    property: value;\n}', 'css');
 codeLines($('#sumLink'), '<link rel="stylesheet" href="../css/style.css" />', 'html');
 
 /* ---------- easter eggs ---------- */
+/* the "paint" egg: remember the course's own accent colour in BOTH themes, so changing the theme (or the engine palette) never counts as "found" */
+const accentNow = () => getComputedStyle(document.documentElement).getPropertyValue('--accent').trim().toLowerCase();
+const ACCENTS = (() => { const de = document.documentElement, had = de.hasAttribute('data-theme'), was = de.dataset.theme, list = [accentNow()];
+  ['light', 'dark'].forEach(t => { de.dataset.theme = t; list.push(accentNow()); });
+  if (had) de.dataset.theme = was; else de.removeAttribute('data-theme'); return list; })();
 const EGGS = [
   {id:'console', icon:'🕵️', name:'הודעה סודית למפתחים', learn:'כלי המפתחים (F12) הם חלון אל מאחורי הקלעים של כל אתר – גם של אתרים שלא אתם בניתם.',
    h1:'מפתחים אמיתיים מסתכלים גם מאחורי הקלעים של הדף. איפה הדפדפן כותב הודעות שמיועדות רק למפתחים?', h2:'לחצו F12 ועברו ללשונית <b>Console</b>.', code:'REVWVE9PTFM='},
   {id:'ghost', icon:'👻', name:'הרוח הנסתרת', learn:'<code>display: none</code> מעלים תגית מהמסך – אבל היא עדיין שם, בקוד.',
-   h1:'באחד השלבים של "מראה ורווחים" מסתתר משפט שאי אפשר לראות. איזה מאפיין גורם לתגית להיעלם?', h2:'F12 &rlm;←&rlm; לשונית Elements &rlm;←&rlm; Ctrl+F וחפשו ghost. מצאתם? בטלו לו את ה-<code>display: none</code> (לחיצה על תיבת הסימון ליד ההוראה).', code:'R0hPU1Q=', poll: () => { const g = $('#eggGhost'); return g && getComputedStyle(g).display !== 'none'; }},
+   h1:'באחד השלבים של "מראה ורווחים" מסתתר משפט שאי אפשר לראות. איזו תכונת CSS גורמת לתגית להיעלם?', h2:'F12 &rlm;←&rlm; לשונית Elements &rlm;←&rlm; Ctrl+F וחפשו ghost. מצאתם? בטלו לו את ה-<code>display: none</code> (לחיצה על תיבת הסימון ליד ההוראה).', code:'R0hPU1Q=', poll: () => { const g = $('#eggGhost'); return g && getComputedStyle(g).display !== 'none'; }},
   {id:'whisper', icon:'💬', name:'הלחישה', learn:'הערות לא מוצגות בדף, אבל כל אחד יכול לקרוא אותן בקוד המקור. אל תכתבו בהן סודות אמיתיים!',
    h1:'למדתם שהדפדפן מדלג על הערות. אבל הן עדיין כתובות בקוד של הדף...', h2:'Ctrl+U פותח את קוד המקור של הדף. שם, Ctrl+F וחפשו את המילה "לחישה".', code:'V0hJU1BFUg=='},
   {id:'star', icon:'⭐', name:'הכוכב שבוחר הכול', learn:'הבורר <code>*</code> (כוכבית) בוחר את כל התגיות. לא לימדנו אותו – גיליתם לבד!',
    h1:'במעבדת הבוררים: אפשר לבחור את כל 11 התגיות בבת אחת?', h2:'יש בורר של תו אחד בלבד שעושה את זה. הוא נראה כמו כוכב.'},
   {id:'paint', icon:'🎨', name:'צובעים את המדריך', learn:'משתני CSS (כמו <code>--accent</code>) מאפשרים לשנות צבע בכל האתר ממקום אחד – אותו רעיון כמו קובץ חיצוני.',
-   h1:'גם הדף הזה בנוי מ-CSS. מה יקרה אם תשנו לו את הצבע הראשי?', h2:'F12 &rlm;←&rlm; Elements &rlm;←&rlm; בחרו את השורה הראשונה, &lt;html&gt; &rlm;←&rlm; בחלון Styles חפשו <code>--accent</code> ושנו את הערך לצבע אחר.', poll: () => { const acc = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim().toLowerCase(); return acc && acc !== '#2f6fec' && acc !== '#7aa2ff'; }}
+   h1:'גם הדף הזה בנוי מ-CSS. מה יקרה אם תשנו לו את הצבע הראשי?', h2:'F12 &rlm;←&rlm; Elements &rlm;←&rlm; בחרו את השורה הראשונה, <code>&lt;html&gt;</code> &rlm;←&rlm; בחלון Styles חפשו <code>--accent</code> ושנו את הערך לצבע אחר.', poll: () => { const acc = accentNow(); return !!acc && !ACCENTS.includes(acc); }}
 ];
+/* ---------- 💻 "works on the site but not for me?" – the shared list + what is special in each topic ---------- */
+const TR_PROP = {t:'שם התכונה כתוב נכון?', how:'<code>height</code> ולא <code>hight</code>, <code>font-size</code> עם מקף, <code>color</code> ולא <code>colour</code>. טעות כתיב לא מציגה שגיאה – ההוראה פשוט לא עובדת.'};
+const TR_SEL = {t:'הבורר נכון?', how:'נקודה לפני שם של class (כמו <code>.sale</code>), סולמית לפני id (כמו <code>#logo</code>), והשם זהה בדיוק לשם שכתוב ב-HTML – כולל אותיות גדולות וקטנות.'};
+trouble('#trBasics', {omit:['path', 'f12'], add:[
+  {t:'ההוראות בתוך המירכאות של style, עם <code>;</code> ביניהן?', how:'כך: <code>style="color: red; font-size: 40px;"</code> – הכול בתוך זוג מירכאות אחד, ובין הוראה להוראה נקודה-פסיק. בלי ה-<code>;</code> הדפדפן זורק את שתי ההוראות (<a href="#" data-go="basics:2">ראיתם בשלב 2</a>).'},
+  TR_PROP]});
+trouble('#trLook', {add:[
+  {t:'התמונה לא זזה לאמצע?', how:'את <code>text-align: center</code> כותבים על <b>התגית שעוטפת</b> את התמונה (ה-div), לא על התמונה עצמה. בדרך השנייה צריך את שתי ההוראות על התמונה: <code>display: block</code> וגם <code>margin-left: auto;</code> <code>margin-right: auto;</code> (<a href="#" data-go="look:2">השלב על מרכוז</a>).'},
+  TR_PROP]});
+trouble('#trRules', {add:[
+  {t:'הכללים בתוך תגית <code>&lt;style&gt;</code> שנמצאת ב-head?', how:'תגית style נפתחת ונסגרת בתוך ה-head. כלל שנכתב מחוץ לה מופיע בדף כטקסט רגיל – ולא כעיצוב.'},
+  {t:'לכל סוגר פותח <code>{</code> יש סוגר <code>}</code> משלו?', how:'עברו כלל אחרי כלל: כל כלל נפתח ב-<code>{</code> ונסגר ב-<code>}</code> משלו. סוגר שנשכח "בולע" את הכלל שאחריו – וגם הוא לא עובד.'},
+  TR_SEL, TR_PROP]});
+trouble('#trSite', {add:[
+  {t:'יש שורת link בדף הזה, עם <code>rel="stylesheet"</code>?', how:'כל דף צריך שורת link <b>משלו</b>, בתוך ה-head. בלי <code>rel="stylesheet"</code> הדפדפן לא מתייחס לקובץ כקובץ עיצוב.'},
+  {t:'שם התיקייה בנתיב כתוב בדיוק כמו ב-Solution Explorer?', how:'התיקייה נקראת <code>css</code>, באותיות קטנות. ב-Windows גם נתיב עם <code>CSS</code> יעבוד – אבל כשהאתר יעלה לשרת אמיתי (שם בדרך כלל אותיות גדולות וקטנות כן משנות), העיצוב ייעלם.'},
+  {t:'אתם עורכים את הקובץ הנכון?', how:'בתיקייה css יש גם קובץ של התבנית בשם <code>site.css</code>. הוא לא מחובר לדפי ה-HTML שלכם – כללים שתכתבו בו לא ישפיעו עליהם. בדקו את שם הקובץ בלשונית של Visual Studio.'},
+  TR_SEL,
+  {t:'שם התכונה כתוב נכון? הכלל הגיע לתגית?', how:'<code>height</code> ולא <code>hight</code>, ו-<code>;</code> בסוף כל הוראה. בדיקה מדויקת: F12 &rlm;←&rlm; סמל החץ &rlm;←&rlm; לחצו על התגית &rlm;←&rlm; לשונית Styles. הכלל שלכם לא מופיע? הבורר לא תפס את התגית. מופיע, אבל מחוק בקו? כלל אחר חזק ממנו (על זה בנושא הבא), או שיש בו טעות כתיב.'}]});
+trouble('#trWins', {add:[
+  {t:'הכלל שלכם "מפסיד" לכלל אחר?', how:'F12 &rlm;←&rlm; סמל החץ &rlm;←&rlm; לחצו על התגית &rlm;←&rlm; Styles. הוראה מחוקה בקו = כלל חזק ממנה ניצח. זכרו את הסולם: id חזק מ-class, ו-class חזק משם תגית (<a href="#" data-go="wins:1">השלב על קדימויות</a>).'},
+  {t:'יש הערה שלא נסגרה?', how:'<code>/*</code> בלי <code>*/</code> אחריו הופך את <b>כל</b> מה שבא אחריו בקובץ להערה – וכל הכללים שם "נעלמים". ב-Visual Studio קוד שהפך להערה נצבע בצבע אחר משאר הקוד – כך רואים איפה ההערה נגמרת.'}]});
+
+/* ---------- 🎯 understanding checks – one at the end of every topic ---------- */
+const MENU_HTML = ['<h1 id="logo">פיצה דני</h1>','<div class="menu">','    <h2>התפריט</h2>','    <p>מרגריטה – 45 שקל</p>','    <p class="sale">פטריות – במבצע</p>','    <p class="sale">זיתים – במבצע</p>','    <div class="extras">','        <p>גבינה – 5 שקל</p>','    </div>','</div>'].join('\n');
+checkpoint('#cpBasics', [
+  {q:'איזו שורה כתובה נכון?', opts:['<code>&lt;p style="color = red;"&gt;</code>', '<code>&lt;p color: red;&gt;</code>', '<code>&lt;p style="color: red;"&gt;</code>', '<code>&lt;p style="color: "red";"&gt;</code>'], correct:2,
+   why:['ב-CSS אין סימן שווה. בין התכונה לערך כותבים נקודתיים.', 'הוראת CSS לא נכתבת ישר בתוך התגית. היא צריכה בית: המאפיין style.', 'תכונה, נקודתיים, ערך ונקודה-פסיק – והכול בתוך המאפיין style.', 'את הערך red לא שמים במירכאות משלו – המירכאות של style כבר עוטפות את כל ההוראות. מירכאות נוספות שוברות את המאפיין.'], back:'basics:1'},
+  {type:'line', q:'אחת השורות לא תעבוד בכלל – גם הצבע וגם הגודל שבה ייעלמו. איזו?', lang:'html',
+   code:'<h1 style="color: teal;">פיצה דני</h1>\n<p style="font-size: 20px;">הפיצה הכי טעימה</p>\n<p style="color: green font-size: 18px;">מרגריטה – 45 שקל</p>\n<p style="color: crimson;">פטריות – במבצע</p>',
+   correct:3, why:{1:'הוראה אחת, עם נקודתיים ונקודה-פסיק – תקינה.', 2:'הוראה אחת, כתובה נכון.', 4:'תקינה: תכונה, נקודתיים, ערך, נקודה-פסיק.'},
+   explain:'חסרה <code>;</code> אחרי green. הדפדפן קורא את <code>green font-size: 18px</code> כערך אחד ושבור של color – וזורק את שתי ההוראות.', back:'basics:2'},
+  {q:'רוצים לצבוע רק את המילה "במבצע" בתוך פסקה, בלי שהשורה תישבר. באיזו תגית עוטפים את המילה?', opts:['div', 'span', 'p'], correct:1,
+   why:['div הוא block – הוא יוריד את "במבצע" לשורה משלו.', 'span הוא inline: הוא עוטף חלק משורה ולא יורד שורה.', 'p הוא פסקה שלמה – גם הוא block, ויתחיל שורה חדשה.'], back:'basics:4'},
+  {q:'עוטפים כותרת ושתי פסקאות ב-div, ונותנים ל-div רקע צהוב. מה יקרה?', opts:['רק הכותרת תקבל רקע', 'לא יקרה כלום – ל-div אי אפשר לתת עיצוב', 'הרקע יעטוף את שלושתן יחד, כמו קופסה אחת'], correct:2,
+   why:['ה-div עוטף את שלוש התגיות, לא רק את הראשונה.', 'בלי עיצוב div אכן בלתי נראה – אבל ברגע שנותנים לו עיצוב, רואים אותו.', 'div הוא קופסה שעוטפת את כל מה שבתוכו – והעיצוב שלו חל על כל הקופסה.'], back:'basics:4'},
+  {q:'שאלה משיעור 2: איזו מהתגיות האלה תתחיל תמיד שורה חדשה (block)?', opts:['a', 'img', 'p', 'b'], correct:2,
+   why:['קישור הוא inline – הוא יושב בתוך השורה, כמו מילה.', 'תמונה היא inline – לכן שתי תמונות עומדות זו ליד זו.', 'פסקה היא block – היא תופסת שורה שלמה.', 'טקסט מודגש הוא inline – הוא חלק מהמשפט.'], back:'basics:3'}
+]);
+checkpoint('#cpLook', [
+  {q:'רוצים אוויר בין הטקסט של קופסה לבין המסגרת שלה. איזו תכונה?', opts:['margin', 'padding', 'border', 'width'], correct:1,
+   why:['margin הוא אוויר <b>מחוץ</b> למסגרת – בין הקופסה לשכנות שלה.', 'padding = ריפוד <b>בתוך</b> המסגרת (פ׳ כמו פְּנים).', 'border היא המסגרת עצמה – היא לא מוסיפה אוויר.', 'width משנה את רוחב הקופסה, אבל הטקסט עדיין צמוד לקו.'], back:'look:4'},
+  {q:'שתי קופסאות דבוקות זו לזו. איך מרחיקים אותן <b>בלי לשנות את הגודל שלהן</b>?', opts:['padding', 'font-size', 'margin'], correct:2,
+   why:['padding מגדיל את הקופסה מבפנים – והן עדיין יגעו זו בזו.', 'font-size משנה את גודל הטקסט, לא את הרווח בין קופסאות.', 'margin מרחיק את הקופסה מהשכנות – והיא נשארת באותו גודל.'], back:'look:5'},
+  {q:'תמונה יושבת בתוך div. מה הדרך הכי פשוטה להעביר אותה לאמצע השורה?', opts:['<code>text-align: center</code> על התמונה', '<code>text-align: center</code> על ה-div', '<code>margin: auto</code> על התמונה, בלי שום דבר נוסף'], correct:1,
+   why:['בתוך img אין מה ליישר. מיישרים מהתגית שעוטפת אותה.', 'text-align מיישר את מה שבתוך ה-div – והתמונה יושבת בו כמו מילה בשורה.', 'margin אוטומטי עובד רק אחרי שהופכים את התמונה ל-block (<code>display: block</code>). לבד הוא לא יזיז אותה.'], back:'look:2'},
+  {type:'line', q:'הקופסה לא מקבלת את הגובה שכתבנו. באיזו שורה הטעות?', lang:'html',
+   code:'<div style="width: 200px;\n            hight: 100px;\n            border: 2px solid orange;">\n    מרגריטה\n</div>',
+   correct:2, why:{1:'width כתוב נכון.', 3:'border עם עובי, סוג קו וצבע – תקין.', 4:'זה התוכן של הקופסה.', 5:'סוגרת את ה-div – תקינה.'},
+   explain:'כתוב <code>hight</code> – והנכון הוא <code>height</code>. טעות כתיב בשם של תכונה לא מציגה שגיאה; ההוראה פשוט לא עובדת.', back:'look:1'},
+  {q:'נותנים <code>background-color</code> לכותרת h2 קצרה. איפה יופיע הצבע?', opts:['רק מאחורי המילים','על כל רוחב השורה – כי הכותרת היא מלבן ברוחב השורה','מחוץ למסגרת של הכותרת'], correct:1,
+   why:['הצבע ממלא את כל המלבן של התגית – והמלבן של h2 רחב יותר מהמילים.', 'h2 היא block: המלבן שלה נמתח לכל רוחב השורה, והרקע ממלא את כל המלבן.', 'מחוץ למסגרת נמצא ה-margin – ושם אין רקע של התגית.'], back:'look:3'}
+]);
+checkpoint('#cpRules', [
+  {type:'selector', q:'כתבו בורר שבוחר <b>רק</b> את שתי המנות במבצע.', html: MENU_HTML, expect:'.sale', answer:'.sale',
+   must: sel => /\.sale(?![\w-])/.test(sel) ? null : 'לשתי המנות יש class משותף בשם sale – השתמשו בו. מה כותבים לפני שם של class?',
+   hint:'יש להן class משותף. ראו בקוד מה הוא.', explain:'הנקודה אומרת "class", ו-sale הוא השם. רק לשתי המנות יש <code>class="sale"</code>.', back:'rules:4'},
+  {type:'selector', q:'כתבו בורר שבוחר את הכותרת הראשית – <b>בעזרת ה-id שלה</b>.', html: MENU_HTML, expect:'#logo', answer:'#logo',
+   must: sel => /#logo(?![\w-])/.test(sel) ? null : 'המשימה היא לבחור בעזרת ה-id של הכותרת (logo). איזה סימן כותבים לפני שם של id?',
+   explain:'הסולמית אומרת "id". רק לתגית אחת בדף יש <code>id="logo"</code>.', back:'rules:5'},
+  {type:'selector', q:'כתבו בורר שבוחר רק את הפסקאות שהן <b>ילדים ישירים</b> של menu (בלי "גבינה").', html: MENU_HTML, expect:'.menu > p', answer:'.menu > p',
+   must: sel => />/.test(sel) ? null : 'השתמשו בסימן שאומר "ילד ישיר", בין menu לבין p.',
+   hint:'רווח בין שני בוררים תופס צאצאים בכל עומק – גם את "גבינה".', explain:'הסימן <code>&gt;</code> תופס רק ילדים ישירים. "גבינה" נמצאת בתוך extras – היא נכדה של menu, ולכן לא נבחרה.', back:'rules:8'},
+  {q:'מה עושה הבורר <code>h1, h2</code>?', opts:['בוחר רק h2 שנמצא בתוך h1', 'בוחר כל h1 וגם כל h2', 'בוחר רק את התגית הראשונה שהוא מוצא'], correct:1,
+   why:['זה מה שרווח היה עושה (צאצא). פסיק פירושו "וגם".', 'הפסיק פירושו "וגם" – הכלל חל על שני הסוגים.', 'בורר אף פעם לא עוצר אחרי התגית הראשונה – הוא תופס את כל מי שמתאים.'], back:'rules:6'},
+  {q:'בקובץ כתוב הכלל <code>.order:hover { background-color: orange; }</code> – מתי הוא חל?', opts:['תמיד – hover הוא רק שם', 'אחרי שלוחצים על הכפתור, לתמיד', 'רק כשהעכבר נמצא מעל תגית עם <code>class="order"</code>'], correct:2,
+   why:['hover הוא לא שם של class שכתבנו. הנקודתיים אומרות "מצב" – והכלל חל רק במצב הזה.', 'הוא לא נשאר לתמיד: ברגע שהעכבר זז, הכלל מפסיק לחול.', ':hover הוא מצב – הכלל חל רק כל עוד העכבר מעל התגית.'], back:'rules:9'}
+]);
+checkpoint('#cpSite', [
+  {type:'text', q:'הדף נמצא ב-<code>wwwroot/HTML</code>, וקובץ העיצוב הוא <code>wwwroot/css/style.css</code>. מה כותבים ב-href של תגית link?', placeholder:'כתבו את הנתיב',
+   accept:[/^\s*(href\s*=\s*)?["']?\.\.\/css\/style\.css["']?\s*$/], answer:'../css/style.css',
+   wrong:'בדקו: מתחילים ב-<code>../</code> (עולים מ-HTML ל-wwwroot), נכנסים ל-css, ואז שם הקובץ – הכול באותיות קטנות, בדיוק כמו בתיקיות.',
+   explain:'<code>../</code> = עולים תיקייה אחת (מ-HTML ל-wwwroot). <code>css/</code> = נכנסים לתיקייה css. ואז שם הקובץ.', back:'site:3'},
+  {type:'line', q:'זה התוכן של הקובץ style.css. איזו שורה לא שייכת לשם?', lang:'css',
+   code:'<style>\nh1 {\n    color: crimson;\n}\n.sale {\n    color: green;\n}',
+   correct:1, why:{2:'בורר של שם תגית – תקין.', 3:'הוראה תקינה.', 4:'סוגר את הכלל – תקין.', 5:'בורר של class – תקין.', 6:'הוראה תקינה.', 7:'סוגר את הכלל – תקין.'},
+   explain:'<code>&lt;style&gt;</code> היא תגית HTML. בקובץ css כותבים רק כללים – הדפדפן חושב שהתגית היא חלק מהבורר הראשון, ומתעלם מכל הכלל של h1.', back:'site:2'},
+  {type:'line', q:'הדף לא מקבל את העיצוב מהקובץ. איזו שורה צריך לתקן?', lang:'html',
+   code:'<head>\n    <meta charset="utf-8" />\n    <title>פיצה דני</title>\n    <link href="../css/style.css" />\n</head>',
+   correct:4, why:{1:'פתיחת head – תקינה.', 2:'קידוד התווים – תקין.', 3:'הכותרת של הלשונית – תקינה.', 5:'סגירת head – תקינה.'},
+   explain:'חסר <code>rel="stylesheet"</code>. בלעדיו הדפדפן לא יודע שזה קובץ עיצוב.', back:'site:3'},
+  {q:'שלושה דפים מחוברים לאותו style.css. שיניתם בקובץ את הצבע של h1. מה יקרה?', opts:['רק בדף האחרון שפתחתם', 'הכותרות בכל שלושת הדפים ישתנו', 'בשום דף – צריך לשנות גם בכל דף'], correct:1,
+   why:['הקובץ לא "שייך" לדף אחד. כל דף שמחובר אליו מקבל את אותם כללים.', 'זה כל הרעיון: מקום אחד – כל הדפים מתעדכנים יחד.', 'הדפים לא מעתיקים את הכללים – הם קוראים אותם מהקובץ בכל טעינה.'], back:'site:1'},
+  {q:'העברתם את כל העיצוב של דף מ-style בתוך התגיות לקובץ חיצוני. מה אמור לקרות למראה של הדף?', opts:['הוא ישתנה, כי קובץ חיצוני חזק יותר', 'העיצוב ייעלם עד שיעלו את האתר לאינטרנט', 'כלום – הוא נשאר בדיוק אותו דבר'], correct:2,
+   why:['מיקום הכלל לא הופך אותו לחזק יותר. אם כתבתם אותם כללים – מקבלים אותו מראה.', 'הקובץ עובד גם במחשב שלכם, ברגע שהוא מחובר בשורת link.', 'נכון: רק הקוד התארגן מחדש (refactoring) – התוצאה זהה.'], back:'site:4'}
+]);
+checkpoint('#cpWins', [
+  {q:'לפסקה יש <code>id="msg"</code> וגם <code>class="note"</code>. הכללים, לפי הסדר: קודם <code>#msg { color: red; }</code> אחריו <code>.note { color: green; }</code> ובסוף <code>p { color: blue; }</code> – באיזה צבע היא תהיה?', opts:['ירוק', 'אדום', 'כחול'], correct:1,
+   why:['class חזק משם תגית, אבל id חזק ממנו.', 'id חזק מ-class ומשם תגית – הוא מנצח, לא משנה מי נכתב אחרון.', '"האחרון מנצח" רק בין כללים שווים בכוח. p הוא החלש מכולם.'], back:'wins:1'},
+  {q:'שני כללים: <code>p { color: blue; }</code> ואחריו <code>p { color: orange; }</code>. באיזה צבע תהיה פסקה?', opts:['כחול', 'שחור – הם מבטלים זה את זה', 'כתום'], correct:2,
+   why:['כשהכוח שווה, מנצח <b>האחרון</b> – לא הראשון.', 'כללים לא מבטלים זה את זה. תמיד יש מנצח.', 'שני הכללים שווים בכוח (שניהם שם תגית) – ולכן מנצח זה שנכתב אחרון.'], back:'wins:1'},
+  {q:'כתבתם <code>body { font-family: Arial; }</code>. מה יקבל את הגופן?', opts:['רק טקסט שכתוב ישר בתוך body, לא בתוך תגיות', 'כל הטקסט בדף – גם בתוך h1 ו-p', 'שום דבר – צריך לכתוב גופן לכל תגית'], correct:1,
+   why:['בזכות הירושה גם התגיות שבתוך body מקבלות אותו.', 'גופן עובר בירושה לכל הצאצאים של body – כלומר לכל הדף.', 'בדיוק בשביל זה יש ירושה: כותבים פעם אחת ל-body.'], back:'wins:2'},
+  {q:'נתתם ל-div רקע צהוב, וה-p שבתוכו נראה צהוב גם הוא. למה?', opts:['רקע עובר בירושה, כמו צבע טקסט', 'זו טעות בדפדפן', 'ל-p אין רקע משלו – הוא שקוף, ורואים דרכו את הצהוב של ה-div'], correct:2,
+   why:['רקע <b>לא</b> עובר בירושה. זו רק אשליה – ראו את ה"הוכחה" בשלב על ירושה.', 'זו לא טעות – כך זה אמור להיראות. השאלה רק למה.', 'בדיוק: הרקע של p שקוף (transparent), כמו חלון. תנו לו רקע משלו – והצהוב ייעלם מאחוריו.'], back:'wins:2'},
+  {type:'line', q:'מישהו ניסה "לכבות" שורה בקובץ CSS. איפה הטעות?', lang:'css',
+   code:'/* colors */\nh1 {\n    // color: teal;\n    font-size: 32px;\n}',
+   correct:3, why:{1:'הערה תקינה של CSS.', 2:'בורר תקין.', 4:'הוראה תקינה.', 5:'סוגר את הכלל – תקין.'},
+   explain:'ב-CSS אין <code>//</code> – זו הערה של C#. כאן זה "במקרה" נראה כאילו עבד, כי הדפדפן זרק את השורה השבורה. אבל לפני בורר, <code>//</code> שובר כלל שלם. כותבים <code>/* … */</code> או לוחצים Ctrl+K ואז Ctrl+C.', back:'wins:3'}
+]);
+
+/* copy-able blocks that contain a <style> block: colour the CSS lines inside it as CSS */
+Course.autoCode();
+document.querySelectorAll('pre[data-code="html"]').forEach(pre => { let inside = false;
+  pre.querySelectorAll('.ln').forEach(ln => { const t = ln.textContent; if (/<\/style>/.test(t)) inside = false; if (inside) ln.innerHTML = hlCssLine(t); if (/<style>/.test(t)) inside = true; }); });
+
 Course.start({eggs: EGGS, console: ['🥚 מצאתם ביצה!', 'מפתחים אמיתיים מציצים מאחורי הקלעים 🕵️\nהקוד הסודי: DEVTOOLS\nהקלידו אותו במונה הביצים שבראש הדף.\nשמתם לב? גם ההודעה הזו מעוצבת ב-CSS. ויש עוד 4 ביצים בדף 😉']});
 })();
 </script>

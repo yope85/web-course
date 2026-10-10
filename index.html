@@ -22,7 +22,7 @@ a.lcard:hover{transform:translateY(-3px);border-color:var(--accent)}
 .lcard p{margin:0;color:var(--muted);font-size:15px}
 .lcard .meter{height:8px;background:var(--surface2);border-radius:99px;overflow:hidden;margin-top:4px}
 .lcard .meter i{display:block;height:100%;width:0;background:var(--ok)}
-.lcard .stats{display:flex;justify-content:space-between;font-size:13px;color:var(--muted)}
+.lcard .stats{display:flex;flex-wrap:wrap;gap:4px 10px;justify-content:space-between;font-size:13px;color:var(--muted)}
 .lcard.soon{opacity:.55;box-shadow:none}
 .badge{display:inline-block;background:var(--accent-soft);color:var(--accent);border-radius:99px;padding:1px 10px;font-size:12px;align-self:flex-start}
 .howto{margin-top:26px}
@@ -73,6 +73,9 @@ document.getElementById('themeBtn').addEventListener('click', () => {
   try { localStorage.setItem('course-theme', next); } catch(e){}
 });
 let eggs = 0, eggTotal = 0, last = null, firstNew = null, anyDone = false;
+/* 🎯 understanding checks: how many passed on the first try, and a gentle "worth reviewing" signal */
+const cpTxt = st => { const t = st.cpTotal || 0; if (!t) return ''; const r = Object.values(st.cp || {}); const ok = r.filter(x => x.ok === x.n).length, more = r.filter(x => x.ok < x.n).length;
+  return '<span title="בדיקות הבנה שעברתם בניסיון הראשון">🎯 ' + ok + '/' + t + (more ? ' · כדאי לחזור על ' + more : '') + '</span>'; };
 const box = document.getElementById('lessons');
 box.innerHTML = LESSONS.map(l => {
   if (l.soon) return '<div class="lcard soon"><span class="n">' + l.n + '</span><h2>' + l.title + '</h2><span class="badge">בקרוב</span></div>';
@@ -86,7 +89,7 @@ box.innerHTML = LESSONS.map(l => {
   const pct = total ? Math.round(100 * seen / total) : 0;
   return '<a class="lcard" href="' + l.file + '"><span class="n">' + l.n + '</span><h2>' + l.title + '</h2><p>' + l.desc + '</p>' +
     '<div class="meter"><i style="width:' + pct + '%"></i></div>' +
-    '<div class="stats"><span>' + (total ? (seen === total ? '✔ סיימתם' : seen + ' מתוך ' + total + ' שלבים') : 'עוד לא התחלתם') + '</span><span>🥚 ' + e + '/' + et + '</span></div></a>';
+    '<div class="stats"><span>' + (total ? (seen === total ? '✔ סיימתם' : seen + ' מתוך ' + total + ' שלבים') : 'עוד לא התחלתם') + '</span><span>🥚 ' + e + '/' + et + '</span>' + cpTxt(st) + '</div></a>';
 }).join('');
 document.getElementById('totals').innerHTML = '<span class="pill">🥚 ביצים שמצאתם בכל הקורס: <b>' + eggs + '/' + eggTotal + '</b></span>';
 last = last || firstNew;

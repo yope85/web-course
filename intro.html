@@ -1236,7 +1236,7 @@ function VsSim(el, phase){
     } else if (!v) wrong('השם ריק. כתבו index.html.');
     else if (/[\u0590-\u05FF]/.test(v)) wrong('שם של קובץ – רק באנגלית.');
     else if (/\s/.test(v)) wrong('בלי רווחים בשם של קובץ. כתבו index.html.');
-    else if (v === 'HTMLPage1.html') wrong('זה השם שהמחשב הציע. שנו אותו ל-<b>index.html</b>.');
+    else if (v.toLowerCase() === 'htmlpage.html') wrong('זה השם שהמחשב הציע. שנו אותו ל-<b>index.html</b>.');
     else if (v.toLowerCase().replace(/\.html$/, '') === 'index') wrong('כמעט! כתבו index באותיות קטנות: <b>index.html</b>.');
     else wrong('השם תקין, אבל לדף הראשון קוראים <b>index.html</b> – ככה הכתובת שלו תהיה <code>/HTML/index.html</code>.');
     render();
@@ -1251,7 +1251,7 @@ function VsSim(el, phase){
   }
   function tplClick(id){
     tplPick = id;
-    if (id === 'html') { fileName = 'HTMLPage1.html'; if (k === 4) k = 5; good('✔ HTML Page. עכשיו שנו את השם (Name) ל-<b>index.html</b> ולחצו <b>Add</b>.'); }
+    if (id === 'html') { fileName = 'htmlpage.html'; if (k === 4) k = 5; good('✔ HTML Page. עכשיו שנו את השם (Name) ל-<b>index.html</b> ולחצו <b>Add</b>.'); }
     else wrong(VTPL_WHY[id] || '');
     render();
   }

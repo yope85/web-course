@@ -396,7 +396,7 @@
     <div id="kindsDemo" hidden>
       <div class="ctrls"><div class="seg" id="kindsSeg"></div></div>
       <div id="kinds"></div>
-      <div class="kinds-legend"><span style="border-color:#2563eb">כחול = block</span><span style="border-color:#db2777">ורוד = inline</span></div>
+      <div class="kinds-legend"><span class="k-block" style="border-color:#2563eb">כחול, קו רציף = block</span><span class="k-inline" style="border-color:#db2777">ורוד, קו מקווקו = inline</span></div>
       <div class="what">הכחולים (h2, p, hr) נמתחים <b>לכל רוחב הדף</b>, גם כשהטקסט בתוכם קצר – ולכן כל אחד מתחיל בשורה חדשה. הוורודים (img, b, a) תופסים <b>רק את המקום שלהם</b>, ויושבים זה ליד זה בתוך השורה. לכן שתי התמונות עמדו אחת ליד השנייה.</div>
     </div>
     <table>
@@ -674,6 +674,7 @@ function drawNest(i){
 const NEST_LBL = ['סדר נכון', 'סדר הפוך', 'שכחנו לסגור את b'];
 let nestPick = seg($('#nestSeg'), NEST_LBL.slice(0, 2), (o,i) => drawNest(i), 0);
 predict('#pNest', {
+  veil: false, /* the demo above is the material for this question, not its answer */
   q: 'ומה יקרה אם <b>נשכח</b> לכתוב את <code>&lt;/b&gt;</code> אחרי המילה "במבצע!"?',
   opts: ['רק "במבצע!" יהיה מודגש', 'גם כל השורות שאחריה יהיו מודגשות', 'תופיע הודעת שגיאה בדף'],
   correct: 1,
@@ -886,6 +887,7 @@ $('#walkNext').addEventListener('click', () => { if (wi < WALK.length - 1) { wi+
 $('#walkReset').addEventListener('click', () => { wi = 0; drawWalk(); });
 drawWalk();
 predict('#pPath', {
+  veil: false, /* the demo above is the material for this question, not its answer */
   q: 'ואם הדף היה נמצא <b>ישר בתוך wwwroot</b> (לא בתוך HTML)? מה הנתיב לתמונה?',
   opts: ['<code>../Img/pizza.jpg</code>', '<code>Img/pizza.jpg</code>', '<code>../../Img/pizza.jpg</code>'],
   correct: 1,
