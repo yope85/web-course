@@ -106,6 +106,10 @@
 .fld{display:grid;grid-template-columns:120px minmax(0,1fr);gap:6px 10px;align-items:center;padding:10px 12px}
 @media (max-width:500px){.fld{grid-template-columns:minmax(0,1fr)}}
 .fld .k{font-size:12.5px;color:#374151}
+.fld .chk{grid-column:1/-1;display:flex;gap:8px;align-items:flex-start;direction:ltr;text-align:left;font-size:12.5px;color:#111;cursor:pointer}
+.fld .chk input{width:16px;height:16px;margin:1px 0 0;flex:none;accent-color:#7c3aed}
+.fld .pwhere{grid-column:1/-1;direction:ltr;text-align:left;font-size:12px;color:#4b5563;overflow-wrap:anywhere}
+.fld .ro.off{opacity:.45}
 .fld .ro{font-family:Consolas,monospace;font-size:12.5px;background:#f3f4f6;border:1px solid #d1d5db;border-radius:4px;padding:4px 8px;overflow-wrap:anywhere}
 /* Visual Studio (dark) */
 .vsx{background:#1e1e1e;color:#dcdcdc;border-color:#3f3f46}
@@ -247,6 +251,7 @@
       <li>❓ לפני חלק מהתוצאות יש שאלת ניחוש. מותר לטעות – בשביל זה היא שם.</li>
       <li>💻 בסוף כל נושא – <b>"עכשיו אצלכם"</b>: עושים את אותו הדבר באמת, על המחשב שלכם – קודם בפנקס רשימות, ואחר כך בפרויקט שלכם ב-Visual Studio – צעד אחרי צעד.</li>
       <li>🎯 ואחריו <b>בדיקת הבנה</b> קצרה, בלי ציון. טעיתם? היא תראה לכם לאיזה שלב לחזור.</li>
+      <li>📌 ומה מגישים? <span data-asg="1"></span> – את הדף הראשון שתבנו כאן. בסוף השיעור יש שלב שמסביר בדיוק מה ואיך (<a href="#" data-go="practice:2">מטלה 1</a>).</li>
       <li>💾 ההתקדמות נשמרת בדפדפן הזה. כמה זמן זה לוקח? פתחו את <b>⏱ כמה זמן זה לוקח?</b> למטה – ותכננו בעצמכם. אפשר (ורצוי) בכמה ישיבות.</li>
       <li>🆘 נתקעתם? בכל "עכשיו אצלכם" יש 🔧 <b>רשימת בדיקה</b> לפי הסדר, ו-🆘 <b>"ככה שואלים"</b> – את המנטור (כשהקוד לא עובד) או את המחברת בקלאסרום (כשלא הבנתם משהו בחומר).</li>
       <li>🖥 הכי נוח: הדף הזה בחצי מסך, ו-Visual Studio בחצי השני.</li>
@@ -264,7 +269,7 @@
       <p>כי ככה תכננו את הרשת מההתחלה. את ה-World Wide Web המציא <b>טים ברנרס-לי</b> (Tim Berners-Lee), במעבדת המחקר CERN שליד ז׳נבה – ההצעה הראשונה שלו נכתבה ב-1989. הרעיון: דף הוא <b>טקסט פשוט</b>, שכל אחד יכול לכתוב בכל עורך – וכל מחשב יכול לקרוא.</p>
       <p>ב-30 באפריל 1993 שחררה CERN את התוכנה של הרשת לנחלת הכלל (public domain): בחינם, לכל אחד, בלי רישיון. זו אחת הסיבות הגדולות לכך שהרשת התפשטה בכל העולם.</p>
       <p>ועוד דבר: כל אחד יכול לראות את ה-HTML של כל דף – Ctrl+U, כמו בטיפ למעלה. דור שלם של מפתחים למד בדיוק ככה: פתחו דף שאהבו, קראו את הקוד, העתיקו, שינו וניסו. (🥚 רמז: גם בקוד של הדף הזה מחכה לכם משהו.)</p>
-      <p><b>ומה זה אומר עליכם?</b> ככה לומדים כל טכנולוגיה חדשה: מסתכלים איך אחרים עשו, מנסים לבד, שוברים – ומתקנים. עוד על הסיפור: <a href="https://home.cern/science/computing/birth-web" target="_blank" rel="noopener">CERN: The birth of the Web</a> (באנגלית).</p>
+      <p><b>ומה זה אומר עליכם?</b> ככה לומדים כל טכנולוגיה חדשה: מסתכלים איך אחרים עשו, מנסים לבד, שוברים – ומתקנים. עוד על הסיפור: <a href="https://home.cern/science/computing/the-birth-of-the-web/" target="_blank" rel="noopener">CERN: The birth of the Web</a> (באנגלית).</p>
     </details>
   </article>
   <article class="spread">
@@ -273,7 +278,7 @@
     <div class="predict" id="p13"></div>
     <div id="s13more" hidden>
       <p>המילה החשובה בשם היא <b>Markup</b> – <b>סימון</b>. ב-HTML <b>מסמנים</b> חלקים בטקסט: "זו כותרת", "זו פסקה", "זו תמונה". וזהו.</p>
-      <div class="bridge">ב-<bdi>C#</bdi> כתבתם <code>Console.WriteLine("שלום");</code> – זו <b>פקודה</b>: המחשב מבצע פעולה. ב-HTML כותבים <code>&lt;h1&gt;שלום&lt;/h1&gt;</code> – זה <b>תיאור</b>: "כאן יש כותרת ראשית, ובה המילה שלום". ב-<bdi>C#</bdi> יש משתנים, if ולולאות. ב-HTML אין אף אחד מהם. ועוד הבדל: תוכנית <bdi>C#</bdi> רצה בעצמה. דף HTML לא "רץ" – צריך דפדפן שיפתח אותו.</div>
+      <div class="bridge">ב-<bdi>C#</bdi> כתבתם <code>Console.WriteLine("שלום");</code> – זו <b>פקודה</b>: המחשב מבצע פעולה. ב-HTML כותבים <code>&lt;h1&gt;שלום&lt;/h1&gt;</code> – זה <b>תיאור</b>, לא פקודה. התגית <code>&lt;h1&gt;</code> אומרת "כאן <b>מתחילה</b> כותרת ראשית", והתגית <code>&lt;/h1&gt;</code> (עם לוכסן) אומרת "כאן היא <b>נגמרת</b>". מה שביניהן – המילה שלום – הוא התוכן של הכותרת. (על התגיות נלמד לעומק בנושא הבא.) ב-<bdi>C#</bdi> יש משתנים, if ולולאות. ב-HTML אין אף אחד מהם. ועוד הבדל: תוכנית <bdi>C#</bdi> רצה בעצמה. דף HTML לא "רץ" – צריך דפדפן שיפתח אותו.</div>
       <p>באתר שלנו יעבדו יחד שלוש שפות. כל אחת עם תפקיד משלה:</p>
       <table>
         <tr><th>שפה</th><th>מה היא קובעת</th><th>מתי לומדים</th></tr>
@@ -418,7 +423,7 @@
     <ol start="4">
       <li>פותחים את הקובץ ב-Chrome, באחת משלוש דרכים:<ul><li><b>גוררים</b> את הקובץ לחלון של Chrome;</li><li>או: בתוך Chrome לוחצים <b>Ctrl+O</b> ובוחרים את הקובץ;</li><li>או: <b>קליק ימני</b> על הקובץ &rlm;←&rlm; Open with (פתח באמצעות) &rlm;←&rlm; Chrome.</li></ul></li>
     </ol>
-    <div class="trap">מי שכותב בשם רק <b>hello</b>, בלי html, ולא בוחר All files – מקבל קובץ טקסט: hello.txt. במחשבים מסוימים ייתכן גם השם <code>hello.html.txt</code> <span class="unverified">לא אומת</span>. ו-Windows מסתיר סיומות של קבצים – לכן בתיקייה זה עלול להיראות כאילו הכול תקין. איך מזהים? הסמל של הקובץ הוא של פנקס רשימות ולא של הדפדפן, והוא נפתח כטקסט.</div>
+    <div class="trap">מי שכותב בשם רק <b>hello</b>, בלי html, ולא בוחר All files – מקבל קובץ טקסט: hello.txt. ו-Windows מסתיר סיומות של קבצים – לכן בתיקייה זה עלול להיראות כאילו הכול תקין. איך מזהים? הסמל של הקובץ הוא של פנקס רשימות ולא של הדפדפן, והוא נפתח כטקסט.</div>
   </article>
   <article class="spread">
     <h3>עורך ודפדפן, זה ליד זה</h3>
@@ -432,7 +437,8 @@
           <div class="mb"><span>File</span><span>Edit</span><span>View</span></div>
           <textarea class="npta" id="npText" wrap="off" spellcheck="false" aria-label="פנקס רשימות – עורך הקובץ"></textarea>
         </div>
-        <div class="ctrls"><button class="btn primary" type="button" id="npSave">💾 שמירה (Ctrl+S)</button><label class="fname">שם הקובץ: <input id="npFile" value="hello.html" spellcheck="false" autocomplete="off" /></label></div>
+        <div class="ctrls"><button class="btn primary" type="button" id="npSave">💾 שמירה (Ctrl+S)</button></div>
+        <div class="ctrls"><label class="fname">שם: <input id="npFile" value="hello.html" spellcheck="false" autocomplete="off" /></label><button class="btn" type="button" id="npSaveAs">💾 שמירה בשם (Save as)</button><button class="btn" type="button" id="npRename">✏️ שינוי שם (Rename)</button></div>
       </div>
       <div>
         <div id="npBr"></div>
@@ -440,6 +446,7 @@
       </div>
     </div>
     <div class="simfb" id="npMsg">נסו: שנו בפנקס הרשימות את המשפט "הפיצה הכי טעימה באשקלון" למשפט אחר – ובדקו מה קורה בדפדפן.</div>
+    <div class="tip" id="npNames" hidden>💡 שתי דרכים לשם חדש – ושתי תוצאות שונות. <b>💾 שמירה בשם (Save as)</b> יוצרת קובץ <b>נוסף</b> בשם החדש, והקובץ הישן נשאר כמו שהיה. <b>✏️ שינוי שם (Rename)</b> – כמו קליק ימני על הקובץ בתיקייה &rlm;←&rlm; Rename: הקובץ עצמו מקבל שם חדש, וקובץ בשם הישן כבר לא קיים. נסו את שתיהן, ורעננו אחרי כל אחת.</div>
     <div class="what" id="npWhat" hidden>הדפדפן <b>לא מסתכל על הקובץ כל הזמן</b>. הוא קורא אותו רק ברגע שפותחים אותו או מרעננים. לכן: שינוי שלא נשמר – עוד לא קיים בקובץ. שינוי שנשמר – קיים, אבל הדפדפן יראה אותו רק אחרי רענון. ככה זה גם כשנעבוד עם Visual Studio: שומרים (Ctrl+S) – ומרעננים את הדפדפן (F5). איך יודעים שיש שינוי שעוד לא נשמר? <b>כוכבית (*)</b> ליד שם הקובץ בפנקס הרשימות (ב-Windows 11: נקודה בלשונית של הקובץ).</div>
     <div class="tip">💡 נסו לשנות גם את הטקסט שבתוך title – ותראו מה משתנה בדפדפן.</div>
   </article>
@@ -530,6 +537,8 @@
         <span class="k">Project name</span><input id="pName" value="WebApplication1" spellcheck="false" autocomplete="off" aria-label="שם הפרויקט" />
         <span class="k">Location</span><span class="ro">C:\Users\student\source\repos</span>
         <span class="k">Solution name</span><span class="ro" id="pSol">WebApplication1</span>
+        <label class="chk"><input type="checkbox" id="pSame" /> <span>Place solution and project in the same directory</span></label>
+        <div class="pwhere" id="pWhere"></div>
       </div>
       <div class="ifoot"><button class="xbtn pri" type="button" id="pNext" disabled>Next</button></div>
     </div>
@@ -537,6 +546,7 @@
     <ul>
       <li><b>שם:</b> באנגלית בלבד, ובלי רווחים. למשל MyFirstWeb.</li>
       <li><b>מיקום</b> (Location): אפשר להשאיר את מה שמוצע, או לבחור תיקייה קבועה משלכם. <b>לא</b> בתיקיית ההורדות (Downloads) – וזכרו איפה שמרתם.</li>
+      <li><b>תיבת הסימון</b> Place solution and project in the same directory – <b>בלי סימון</b>. ככה Visual Studio יוצר תיקייה של ה-Solution (פתרון – "מעטפת" שמחזיקה פרויקט אחד או יותר), ובתוכה תיקייה של הפרויקט עצמו. זה המבנה שנשתמש בו כל השנה – גם כשנכין את קובץ ההגשה. מסומן אצלכם? הורידו את הסימון. נסו בסימולטור ותראו מה משתנה בשורה התחתונה.</li>
       <li>לוחצים <b>Next</b>. במסך הבא, Additional information, <b>משאירים הכול כמו שהוא</b> ולוחצים <b>Create</b>.</li>
     </ul>
     <div class="tip">💡 בפעם הבאה שתרצו לפתוח את הפרויקט: פותחים את Visual Studio ובוחרים אותו ברשימת הפרויקטים האחרונים – או פותחים את הקובץ עם הסיומת sln שבתיקייה של הפרויקט (קובץ ה-Solution – "המעטפת" של הפרויקט; נכיר אותה בשלב הבא).</div>
@@ -571,7 +581,7 @@
       <li>הורידו את תוכנת ההתקנה מהקישור <a href="https://aka.ms/vs/17/release/vs_community.exe" target="_blank" rel="noopener">הורדת Visual Studio Community 2022</a> והפעילו אותה. זו גרסה <b>2022</b>, החינמית (Community) – ולא Visual Studio Code (הסמל הכחול). גם אם באתר של מיקרוסופט מוצעת גרסה 2026 – כרגע מתקינים 2022; לעדכן אפשר בהמשך.</li>
       <li>במסך <b>Workloads</b> סמנו בדיוק שלוש תוספות: <b><bdi>ASP.NET and web development</bdi></b>, <b><bdi>.NET desktop development</bdi></b> ו-<b><bdi>Data storage and processing</bdi></b>. אחר כך לחצו <b>Install</b>. ההתקנה ארוכה – אפשר להמשיך ללמוד בינתיים. (<a href="#" data-go="vs:1">הסימולטור של ההתקנה</a>)</li>
       <li>פתחו את Visual Studio 2022 &rlm;←&rlm; <b>Create a new project</b> &rlm;←&rlm; בחיפוש הקלידו <b>Razor</b> &rlm;←&rlm; בחרו <b><bdi>ASP.NET Core Web App (Razor Pages)</bdi></b> &rlm;←&rlm; <b>Next</b>. (<a href="#" data-go="vs:2">הסימולטור של התבניות</a>)</li>
-      <li>ב-Project name כתבו שם באנגלית בלי רווחים, למשל <b>MyFirstWeb</b>. ב-Location בחרו מקום קבוע – לא Downloads – ו<b>רשמו לעצמכם איפה</b>. &rlm;←&rlm; <b>Next</b> &rlm;←&rlm; במסך Additional information לא משנים כלום &rlm;←&rlm; <b>Create</b>. (<a href="#" data-go="vs:3">השלב על השם והמיקום</a>)</li>
+      <li>ב-Project name כתבו שם באנגלית בלי רווחים, למשל <b>MyFirstWeb</b>. ב-Location בחרו מקום קבוע – לא Downloads – ו<b>רשמו לעצמכם איפה</b>. את התיבה Place solution and project in the same directory משאירים <b>בלי סימון</b>. &rlm;←&rlm; <b>Next</b> &rlm;←&rlm; במסך Additional information לא משנים כלום &rlm;←&rlm; <b>Create</b>. (<a href="#" data-go="vs:3">השלב על השם והמיקום</a>)</li>
       <li>כשהפרויקט נפתח: ב-Solution Explorer לחצו על החץ ▸ שליד <b>wwwroot</b>, ובדקו מה יש בתוכה.</li>
     </ol>
     <div class="expect">ב-Solution Explorer: למעלה <span class="ltr">Solution 'MyFirstWeb'</span>, ומתחתיו הפרויקט, ובו בין השאר התיקייה Pages, הקובץ Program.cs והתיקייה wwwroot. בתוך wwwroot: התיקיות css,&rlm; js ו-lib, והקובץ favicon.ico. <b>אין</b> תיקייה בשם HTML – וזה בדיוק כמו שצריך: אותה תיצרו בעצמכם בנושא "הדף הראשון בפרויקט".</div>
@@ -767,7 +777,7 @@ dotnet dev-certs https --trust
   </article>
   <article class="spread vsstep">
     <h3>💻 עכשיו אצלכם ב-Visual Studio</h3>
-    <p>עכשיו באמת: הדף הראשון בפרויקט שלכם, עם כל הלחיצות שתרגלתם בסימולטורים. בסוף הצעדים האלה עשיתם כמעט את כל <a href="#" data-go="practice:2">צעד הפרויקט של השיעור</a>.</p>
+    <p>עכשיו באמת: הדף הראשון בפרויקט שלכם, עם כל הלחיצות שתרגלתם בסימולטורים. בסוף הצעדים האלה עשיתם כמעט את כל <a href="#" data-go="practice:2">מטלה 1 בקלאסרום</a>.</p>
     <ol class="vsdo">
       <li>ב-Solution Explorer: <b>קליק ימני</b> על <b>wwwroot</b> &rlm;←&rlm; <b>Add</b> &rlm;←&rlm; <b>New Folder</b> &rlm;←&rlm; כתבו <b>HTML</b> &rlm;←&rlm; Enter. (בפרויקט חדש התיקייה הזו עוד לא קיימת – לכן יוצרים אותה. <a href="#" data-go="page:2">הסימולטור</a>)</li>
       <li><b>קליק ימני</b> על התיקייה <b>HTML</b> &rlm;←&rlm; <b>Add</b> &rlm;←&rlm; <b><bdi>New Item...</bdi></b> &rlm;←&rlm; <b>HTML Page</b>. (אם החלון נפתח קטן, בלי רשימת תבניות – לחצו בו Show All Templates.) השם המוצע הוא <b>htmlpage.html</b> – שנו אותו ל-<b>index.html</b> &rlm;←&rlm; <b>Add</b>. (<a href="#" data-go="page:3">הסימולטור</a>)</li>
@@ -796,7 +806,7 @@ dotnet dev-certs https --trust
       <li>שמרו (<b>Ctrl+S</b>). הכוכבית שליד <b>index.html</b> בלשונית נעלמת.</li>
       <li>הריצו ▶. בדפדפן, בשורת הכתובת, הוסיפו אחרי מספר הפורט את <code>/HTML/index.html</code> ולחצו Enter. (או בדרך הקצרה: קליק ימני על index.html &rlm;←&rlm; <b>View in Browser</b>, או בקיצור Ctrl+Shift+W.)</li>
       <li>🔨 <b>שברו בכוונה:</b> הוסיפו לכתובת את המילה wwwroot – כך שתהיה <code class="wrap">https://localhost:&lt;port&gt;/wwwroot/HTML/index.html</code> – ולחצו Enter. קיבלתם 404? בדיוק כמו ב<a href="#" data-go="page:5">בונה הכתובות</a>. מחקו את wwwroot מהכתובת – והדף שלכם חוזר.</li>
-      <li>שנו משהו בפסקה, שמרו (Ctrl+S), ורעננו <b>בדפדפן</b> (F5) – השינוי מופיע. עכשיו צלמו מסך של הדף (Win+Shift+S), בשביל <a href="#" data-go="practice:2">צעד הפרויקט</a>.</li>
+      <li>שנו משהו בפסקה, שמרו (Ctrl+S), ורעננו <b>בדפדפן</b> (F5) – השינוי מופיע. עכשיו הדף מוכן ל<a href="#" data-go="practice:2">מטלה 1 בקלאסרום</a>: שם מצלמים אותו ומגישים.</li>
     </ol>
     <div class="expect">בכתובת <code class="wrap">https://localhost:&lt;port&gt;/HTML/index.html</code> (עם מספר הפורט שלכם) רואים: בלשונית – השם שכתבתם ב-title. בדף – כותרת גדולה ומודגשת עם השם שלכם, ומתחתיה הפסקה, מיושרות לימין. וב-<bdi>Solution Explorer</bdi>:&rlm; wwwroot &rlm;←&rlm; HTML &rlm;←&rlm; index.html.</div>
     <div class="trouble" id="trPage"></div>
@@ -815,20 +825,9 @@ dotnet dev-certs https --trust
     <div id="pg"></div>
   </article>
   <article class="spread">
-    <h3>🧩 צעד בפרויקט – לקראת הגשה 1</h3>
-    <div class="stepbox">
-      <b>שיעורי בית, שהם גם הצעד הראשון בפרויקט:</b>
-      <ol>
-        <li>התקינו את Visual Studio Community 2022 במחשב בבית – תוכנת ההתקנה: <a href="https://aka.ms/vs/17/release/vs_community.exe" target="_blank" rel="noopener">הורדת Visual Studio Community 2022</a> – עם שלוש התוספות (לפי <a href="#" data-go="vs:1">שלב ההכנה</a> והסרטון בקלאסרום).</li>
-        <li>צרו את הפרויקט שאותו תגישו: התבנית <bdi>ASP.NET Core Web App (Razor Pages)</bdi>, שם באנגלית (למשל MyFirstWeb), במקום קבוע – לא בתיקיית ההורדות. (צעד אחרי צעד: <a href="#" data-go="vs:5">"עכשיו אצלכם" בנושא Visual Studio</a>)</li>
-        <li>הריצו פעם אחת ▶, ואשרו את תעודת האבטחה (Yes, Yes). (<a href="#" data-go="run:4">"עכשיו אצלכם" בנושא ההרצה</a>)</li>
-        <li>ב-wwwroot צרו את התיקייה HTML, ובתוכה דף HTML Page בשם index.html. (<a href="#" data-go="page:8">"עכשיו אצלכם" בנושא הדף הראשון</a>)</li>
-        <li>כתבו בדף: title עם השם שלכם, כותרת h1 עם השם שלכם, ופסקה אחת – על מה יהיה האתר שאתם רוצים לבנות.</li>
-        <li>הציגו את הדף בדפדפן, צלמו מסך (Win+Shift+S) והעלו את צילום המסך למשימה בקלאסרום.</li>
-      </ol>
-      <p style="margin:8px 0 0">הדף הזה הוא ההתחלה של <b>דף הנחיתה</b> – הדף הראשי של הגשה 1. בשיעור הבא תבנו בו את השלד.</p>
-      <label style="display:flex;gap:8px;align-items:center;margin-top:8px"><input type="checkbox" id="stepDone" /> עשיתי את הצעד בפרויקט שלי</label>
-    </div>
+    <h3>📌 מטלה 1: מגישים בקלאסרום</h3>
+    <p>את רוב מטלה 1 כבר עשיתם – בשלבי "💻 עכשיו אצלכם" של השיעור הזה. כאן בודקים שהכול מוכן, ומגישים.</p>
+    <div id="asg1"></div>
   </article>
   <article class="spread" id="quiz">
     <h3>✅ בדקו את עצמכם</h3>
@@ -897,6 +896,7 @@ const ERR = {
   '404': u => ({ico:'📄', h:'This localhost page can’t be found', p:'No webpage was found for the web address: <b>' + esc(u) + '</b>', c:'HTTP ERROR 404', t:u.replace(/^https:\/\//, '')}),
   refused: () => ({ico:'😕', h:'This site can’t be reached', p:'<b>localhost</b> refused to connect.', c:'ERR_CONNECTION_REFUSED', t:'localhost'}),
   dns: h => ({ico:'😕', h:'This site can’t be reached', p:'Check if there is a typo in <b>' + esc(h) + '</b>.', c:'DNS_PROBE_FINISHED_NXDOMAIN', t:h}),
+  nofile: n => ({ico:'📄', h:'Your file couldn’t be accessed', p:'It may have been moved, edited, or deleted.', c:'ERR_FILE_NOT_FOUND', t:n}),
   cert: () => ({ico:'⚠️', h:'Your connection is not private', p:'Attackers might be trying to steal your information from <b>localhost</b>.', c:'NET::ERR_CERT_AUTHORITY_INVALID', t:'Privacy error', bad:true})
 };
 class Browser {
@@ -1059,7 +1059,7 @@ predict('#p25', {
   opts:['המשפט החדש – מיד', 'הגרסה הישנה – עד שירעננו', 'דף ריק'],
   correct:1,
   why:['הדפדפן לא "מרגיש" שהקובץ השתנה. הוא קרא אותו פעם אחת – כשפתחתם אותו.', 'בדיוק. הדפדפן קורא את הקובץ רק כשפותחים אותו או מרעננים. נסו בסימולטור.', 'הדף לא נעלם – הדפדפן ממשיך להציג את מה שקרא קודם.'],
-  onCorrect: () => { $('#npFlow').hidden = false; }
+  onCorrect: () => { $('#npFlow').hidden = false; $('#npNames').hidden = false; }
 });
 const disk = {'hello.html': HELLO};
 let npCur = 'hello.html', npShown = 'hello.html', npShownSrc = HELLO;
@@ -1073,6 +1073,7 @@ function npSay(html, kind){ npMsg.innerHTML = html; npMsg.className = 'simfb' + 
 function npRender(name){
   npShown = name; npShownSrc = disk[name];
   npBr.url('file:' + DESK + name);
+  if (!(name in disk)) { npBr.error('nofile', name); return; }
   if (isTxt(name)) {
     npBr.title(name).show('<pre class="rawtxt">' + esc(npShownSrc) + '</pre>');
     findEgg('txt');
@@ -1085,19 +1086,36 @@ function npRender(name){
 }
 npRender('hello.html');
 npText.addEventListener('input', () => { npPaint(); if (npDirty()) npSay('יש שינוי <b>שלא נשמר</b> – רואים כוכבית (*) ליד שם הקובץ (ב-Windows 11: נקודה בלשונית של הקובץ). הדפדפן עדיין מציג את הגרסה הקודמת.'); });
+function npName(){
+  const name = npFile.value.trim();
+  if (!name) { npSay('כתבו שם לקובץ בתיבה "שם".', 'bad'); return null; }
+  if (!isHtml(name) && !isTxt(name)) { npSay('בסימולטור אפשר לתת לקובץ שם עם הסיומת html או txt. בדקו את השם.', 'bad'); return null; }
+  return name;
+}
 function npSave(){
-  let name = npFile.value.trim();
-  if (!name) { name = npCur; npFile.value = name; }
-  if (!isHtml(name) && !isTxt(name)) { npSay('בסימולטור אפשר לשמור קובץ עם הסיומת html או txt. בדקו את שם הקובץ.', 'bad'); return; }
-  const isNew = name !== npCur;
+  disk[npCur] = npText.value; npPaint();
+  if (npCur === npShown && disk[npCur] !== npShownSrc) npSay('נשמר ✔ – הכוכבית נעלמה. אבל בדפדפן עוד אין שינוי: הוא לא יודע שהקובץ השתנה. עכשיו – <b>רענון</b>.');
+  else npSay('נשמר ✔ בקובץ <span class="ltr">' + esc(npCur) + '</span>.');
+}
+function npRename(){
+  const name = npName(); if (!name) return;
+  if (name === npCur) { npSay('זה כבר השם של הקובץ. כתבו בתיבה שם אחר.', 'bad'); return; }
+  if (name in disk) { npSay('כבר יש קובץ בשם <span class="ltr">' + esc(name) + '</span>. בחרו שם אחר.', 'bad'); return; }
+  const old = npCur;
+  disk[name] = disk[old]; delete disk[old]; npCur = name; npPaint();
+  npSay('שיניתם את השם של הקובץ עצמו: <span class="ltr">' + esc(old) + '</span> &rlm;←&rlm; <span class="ltr">' + esc(name) + '</span>. עכשיו אין יותר קובץ בשם <span class="ltr">' + esc(old) + '</span>' + (npShown === old ? ' – אבל הדפדפן עדיין פתוח עליו. מה יקרה ברענון? נסו.' : '.'));
+}
+function npSaveAs(){
+  const name = npName(); if (!name) return;
+  if (name === npCur) { npSave(); return; }
+  const old = npCur;
   disk[name] = npText.value; npCur = name; npPaint();
-  if (isNew) npSay('שמרתם בשם חדש = <b>קובץ חדש</b>: <span class="ltr">' + esc(name) + '</span>. הקובץ <span class="ltr">' + esc(npShown) + '</span> לא השתנה – והדפדפן עדיין פתוח עליו. כדי לראות את הקובץ החדש: 📂 פתיחת קובץ (Ctrl+O).');
-  else if (name === npShown && disk[name] !== npShownSrc) npSay('נשמר ✔ – הכוכבית נעלמה. אבל בדפדפן עוד אין שינוי: הוא לא יודע שהקובץ השתנה. עכשיו – <b>רענון</b>.');
-  else npSay('נשמר ✔.');
+  npSay('שמרתם בשם חדש = <b>קובץ נוסף</b>: <span class="ltr">' + esc(name) + '</span>. הקובץ <span class="ltr">' + esc(old) + '</span> עדיין קיים, ולא השתנה' + (npShown === old ? ' – והדפדפן עדיין פתוח עליו. לכן רענון יראה את הישן. כדי לראות את הקובץ החדש: 📂 פתיחת קובץ (Ctrl+O).' : '.'));
 }
 function npRefresh(){
   const before = npShownSrc;
   npRender(npShown);
+  if (!(npShown in disk)) { npSay('✘ הדפדפן ניסה לקרוא שוב את <span class="ltr">' + esc(npShown) + '</span> – אבל קובץ בשם הזה כבר לא קיים, כי שיניתם לו את השם. ככה נראית השגיאה: Your file couldn’t be accessed. כדי לראות את הקובץ בשם החדש: 📂 פתיחת קובץ (Ctrl+O).', 'bad'); return; }
   if (disk[npShown] !== before) { npSay('✔ הדפדפן קרא את הקובץ מחדש – ועכשיו רואים את השינוי.', 'ok'); $('#npWhat').hidden = false; }
   else if (npShown === npCur && npDirty()) npSay('רעננתם – אבל השינוי <b>עוד לא נשמר</b> בקובץ, אז הדפדפן קרא שוב את אותה גרסה. קודם שומרים (Ctrl+S), ואז מרעננים.', 'bad');
   else if (npShown !== npCur && disk[npCur] !== disk[npShown]) npSay('רעננתם את <span class="ltr">' + esc(npShown) + '</span> – הקובץ שהדפדפן פתוח עליו. אבל את השינוי שמרתם בקובץ <b>אחר</b>, <span class="ltr">' + esc(npCur) + '</span>: שמרתם בשם חדש = קובץ חדש. רענון קורא שוב רק את הקובץ שכבר פתוח. כדי לראות את החדש: 📂 פתיחת קובץ (Ctrl+O).', 'bad');
@@ -1109,6 +1127,8 @@ function npOpen(){
   npSay(isTxt(npCur) ? 'הסיומת היא txt – אז הדפדפן מציג את הקובץ <b>כטקסט</b>, אות באות, בלי לצייר דף. החזירו את השם ל-hello.html.' : 'פתחתם בדפדפן את הקובץ <span class="ltr">' + esc(npCur) + '</span> – שימו לב: גם הכתובת בשורת הכתובת השתנתה.', isTxt(npCur) ? 'bad' : '');
 }
 $('#npSave').addEventListener('click', npSave);
+$('#npSaveAs').addEventListener('click', () => npSaveAs());
+$('#npRename').addEventListener('click', npRename);
 $('#npRefresh').addEventListener('click', npRefresh);
 $('#npOpen').addEventListener('click', npOpen);
 $('#np').addEventListener('keydown', e => {
@@ -1198,7 +1218,9 @@ tplDraw();
 
 /* project name */
 function checkName(){
-  const v = $('#pName').value.trim(); $('#pSol').textContent = v || ' ';
+  const v = $('#pName').value.trim(), same = $('#pSame').checked;
+  $('#pSol').textContent = v || ' '; $('#pSol').classList.toggle('off', same);
+  $('#pWhere').textContent = 'Project will be created in "C:\\Users\\student\\source\\repos\\' + (v ? v + '\\' + (same ? '' : v + '\\') : '') + '"';
   const m = $('#pMsg'); let ok = false, t;
   if (!v) t = 'צריך לתת שם לפרויקט.';
   else if (/[\u0590-\u05FF]/.test(v)) t = '✘ יש אותיות בעברית. שם של פרויקט – באנגלית בלבד.';
@@ -1206,10 +1228,11 @@ function checkName(){
   else if (!/^[A-Za-z0-9_.]+$/.test(v)) t = '✘ יש בשם סימן שלא מתאים. השתמשו רק באותיות באנגלית ובמספרים.';
   else if (/^[0-9]/.test(v)) t = '⚠ עדיף שהשם יתחיל באות, לא במספר.';
   else if (v === 'WebApplication1') t = 'זה השם שהמחשב הציע. עדיף לתת שם משלכם – למשל MyFirstWeb.';
-  else { ok = true; t = '✔ שם מצוין. הפרויקט יישמר בתיקייה <span class="ltr">C:\\Users\\student\\source\\repos\\' + esc(v) + '</span>. עכשיו Next.'; }
+  else if (same) t = '⚠ השם מצוין – אבל תיבת הסימון מסומנת: ה-Solution והפרויקט יהיו באותה תיקייה. אנחנו עובדים בלי הסימון (תיקייה של Solution, ובתוכה תיקייה של הפרויקט). הורידו את הסימון.';
+  else { ok = true; t = '✔ שם מצוין. ייווצרו שתי תיקיות, אחת בתוך השנייה: <span class="ltr">repos\\' + esc(v) + '</span> – של ה-Solution, ובתוכה <span class="ltr">' + esc(v) + '</span> – של הפרויקט (ראו בשורה התחתונה). עכשיו Next.'; }
   m.className = 'simfb ' + (ok ? 'ok' : (t.startsWith('✘') ? 'bad' : '')); m.innerHTML = t; $('#pNext').disabled = !ok;
 }
-$('#pName').addEventListener('input', checkName); checkName();
+$('#pName').addEventListener('input', checkName); $('#pSame').addEventListener('change', checkName); checkName();
 $('#pNext').addEventListener('click', () => { $('#pMsg').innerHTML = '✔ במסך Additional information משאירים הכול כמו שהוא ולוחצים <b>Create</b>. Visual Studio יוצר את הפרויקט – וזה המסך שתראו (השלב הבא).'; });
 
 /* the Visual Studio screen: click to learn */
@@ -1285,6 +1308,7 @@ let flowBusy = false;
 function flowPowerUi(on){ $('#flowPower').textContent = on ? '🛑 כבו את השרת' : '▶ הפעילו את השרת'; $('#fnS').classList.toggle('dead', !on); if (!on) $('#flowCap').innerHTML = 'השרת כבוי – בחלון השחור כתוב Application is shutting down. עכשיו שלחו בקשה וראו מה קורה.'; }
 function flowClear(){ document.querySelectorAll('#flow .on,#flow .fail').forEach(x => x.classList.remove('on','fail')); document.querySelectorAll('#flowTree .here').forEach(x => x.classList.remove('here')); }
 const both = (id, cls) => { [$('#' + id), $('#' + id + 'v')].forEach(x => x.classList.add(cls)); };
+const flowSeq = Course.sequence(document.querySelector('#flowGo').parentNode, {delay:2200});
 $('#flowGo').addEventListener('click', () => {
   if (flowBusy) return; flowBusy = true; flowClear();
   const cap = $('#flowCap'), alive = flowTerm.running;
@@ -1298,8 +1322,7 @@ $('#flowGo').addEventListener('click', () => {
     () => { $('#fnS').classList.remove('on'); both('fa2', 'on'); $('#fnW').classList.add('on'); document.querySelectorAll('#flowTree [data-f="idx"]').forEach(x => x.classList.add('here')); cap.innerHTML = '<b>3.</b> הקובץ נמצא: <span class="ltr">wwwroot/HTML/index.html</span>.'; },
     () => { $('#fnW').classList.remove('on'); both('fa2r', 'on'); both('fa1r', 'on'); $('#fnB').classList.add('on'); flowBr.page(PIZZA_BODY).title('פיצה דני'); cap.innerHTML = '<b>4.</b> השרת שולח את הקובץ בחזרה – זו <b>התשובה</b> (response). הדפדפן מצייר את הדף. ✔'; }
   ];
-  let i = 0;
-  (function next(){ const r = steps[i++](); if (r === 'stop' || i >= steps.length) { flowBusy = false; return; } setTimeout(next, 1100); })();
+  flowSeq.run(steps, () => { flowBusy = false; });
 });
 $('#flowPower').addEventListener('click', () => { if (flowTerm.running) flowTerm.stop(); else { flowTerm.boot(true); flowPowerUi(true); $('#flowCap').innerHTML = 'השרת רץ שוב. שלחו בקשה.'; } });
 
@@ -1546,7 +1569,7 @@ seg($('#s54seg'), ['התבנית ש-Visual Studio יצר', 'אחרי שמילא�
   s54br.url(PAGE_URL);
   if (i) s54br.title('פיצה דני').page(PIZZA_BODY); else s54br.title('localhost:' + PORT + '/HTML/index.html').page('');
   $('#s54what').innerHTML = i ? 'שינינו ארבעה דברים (מסומנים "חדש"): <code>lang="he" dir="rtl"</code> – כי הדף בעברית, הטקסט בתוך <b>title</b>, כותרת <b>h1</b> ופסקה <b>p</b>. ו<b>לא לשכוח לשמור</b> – Ctrl+S.'
-    : 'התבנית כמעט ריקה: ה-title ריק, וגם ה-body. הדף לבן לגמרי – ובלשונית מופיעה הכתובת, כי אין title. שימו לב: <code>meta charset</code> כבר נמצאת בתבנית. (התבנית אצלכם עשויה להיות קצת שונה – למשל, בשורה של html כתוב אולי גם <code>xmlns="…"</code>. אפשר להשאיר אותו. <span class="unverified">לא אומת</span>)';
+    : 'התבנית כמעט ריקה: ה-title ריק, וגם ה-body. הדף לבן לגמרי – ובלשונית מופיעה הכתובת, כי אין title. שימו לב: <code>meta charset</code> כבר נמצאת בתבנית. (אם בשורה של html כתוב אצלכם עוד משהו – אפשר להשאיר אותו.)';
 }, 0);
 const DIRC = (rtl) => [rtl ? '<html lang="he" dir="rtl">' : '<html lang="en">', '<body>', '    <h1>פיצה דני</h1>', '    <p>הפיצה הכי טעימה באשקלון</p>', '</body>', '</html>'].join('\n');
 compareBox($('#s54cmp'), [
@@ -1651,7 +1674,17 @@ const TASKS = [
 pgApi = playground('#pg', {html:START, tasks:TASKS, htmlLabel:'HTML – wwwroot/HTML/index.html', url:'localhost:' + PORT + '/HTML/index.html', height:300,
   onRender: d => { const t = $('#pg .pgtab'); if (t) t.textContent = '📄 ' + (d.title.trim() || 'localhost:' + PORT + '/HTML/index.html'); }});
 (function(){ const bar = $('#pg .urlbar'), url = bar.querySelector('.url'); const tab = document.createElement('span'); tab.className = 'pgtab'; tab.textContent = '📄 ניסוי'; bar.insertBefore(tab, url); pgApi.render(); })();
-doneCheck('#stepDone', 'step');
+Course.assignment('#asg1', {n:1,
+  items:[
+    'התקנתם את Visual Studio Community 2022 – עם התוספות מ<a href="#" data-go="vs:1">שלב ההכנה</a>. החשובה מכולן: <b><bdi>ASP.NET and web development</bdi></b> – בלעדיה אי אפשר ליצור את הפרויקט. (תוכנת ההתקנה: <a href="https://aka.ms/vs/17/release/vs_community.exe" target="_blank" rel="noopener">הורדת Visual Studio Community 2022</a>)',
+    'יצרתם פרויקט חדש מהתבנית <bdi>ASP.NET Core Web App (Razor Pages)</bdi>, עם שם באנגלית, והרצתם אותו פעם אחת. (<a href="#" data-go="vs:5">"עכשיו אצלכם" בנושא Visual Studio</a>, <a href="#" data-go="run:4">ובנושא ההרצה</a>)',
+    'יצרתם את הדף הראשון – index.html בתיקייה HTML שבתוך wwwroot – ו<b>כתוב בו השם שלכם</b>: בכותרת h1 וגם ב-title. (<a href="#" data-go="page:8">"עכשיו אצלכם" בנושא הדף הראשון</a>)',
+    'הדף פתוח בדפדפן, ו<b>צילמתם מסך</b>: לוחצים <b>Win+PrtScn</b> (המקש עם הסמל של Windows, יחד עם Print Screen). צילום של כל המסך נשמר לבד בתיקייה <b>תמונות &rlm;←&rlm; צילומי מסך</b> (Pictures &rlm;←&rlm; Screenshots).',
+    'העליתם את צילום המסך למטלה 1 בקלאסרום, ולחצתם <b>הגשה</b>.'
+  ],
+  how:'בקלאסרום &rlm;←&rlm; <b>סביבת הלמידה</b> &rlm;←&rlm; הנושא <b><bdi>HTML &amp; CSS</bdi></b> &rlm;←&rlm; "מטלה 1 – התקנת סביבת העבודה" &rlm;←&rlm; <b>הוספה או יצירה</b> &rlm;←&rlm; <b>קובץ</b> &rlm;←&rlm; מעלים את צילום המסך &rlm;←&rlm; <b>הגשה</b>. נתקעתם? פועלים לפי <b>חוק 3 השלבים</b> מהמדריך שבשיעור 0, ואם עדיין לא הולך – כותבים למורה תגובה פרטית במטלה.',
+  after:'💡 הדף הזה הוא גם ההתחלה של <b>דף הנחיתה</b> – הדף הראשי של הגשה 1. בשיעור הבא תבנו בו את השלד.'
+});
 
 const QUIZ = [
   {q:'מה התפקיד של HTML?', opts:['להריץ את האתר על השרת', 'לתאר מה יש בדף: כותרות, פסקאות, תמונות', 'לקבוע צבעים וגדלים'], correct:1,
@@ -1686,7 +1719,7 @@ const EGGS = [
   {id:'stop', icon:'🛑', name:'עצרתם את השרת', learn:'Ctrl+C בחלון של תוכנית קונסול עוצר אותה – גם את השרת, וגם תוכנית <bdi>C#</bdi> שלכם שנתקעה בלולאה אינסופית. בלי שרת – הדפדפן לא מקבל דפים.',
    h1:'השרת כותב בחלון השחור שלו הודעה – ויש בה הצעה. קראו אותה עד הסוף.', h2:'בשלב "מה זה שרת?" לחצו על החלון השחור, ואז Ctrl+C במקלדת.'},
   {id:'txt', icon:'📄', name:'הדפדפן שלא מצייר', learn:'הסיומת של הקובץ אומרת לדפדפן איך לקרוא אותו: html – לצייר דף. txt – להציג את הטקסט כמו שהוא. לכן בשמירה בוחרים All files – כדי שהקובץ לא יישמר בטעות כ-txt.',
-   h1:'בסימולטור של פנקס הרשימות: מה יקרה אם תשמרו את הקובץ עם סיומת אחרת?', h2:'שנו את שם הקובץ ל-hello.txt, לחצו שמירה, ואז "פתיחת קובץ".'}
+   h1:'בסימולטור של פנקס הרשימות: מה יקרה אם תשמרו את הקובץ עם סיומת אחרת?', h2:'כתבו בתיבה "שם" את hello.txt, לחצו "שמירה בשם", ואז "פתיחת קובץ".'}
 ];
 /* egg 1: this page's own tab title changes on the anatomy step */
 const ORIG_TITLE = document.title;
@@ -1729,7 +1762,7 @@ trouble('#trRun', {base:false, items:[
   {t:'ליד ▶ כתוב https?', how:'אם כתוב שם משהו אחר (למשל IIS Express) – לחצו על החץ ▾ שלידו ובחרו https. רק כך נפתח גם החלון השחור של השרת, כמו בשיעור.'},
   {t:'הדפדפן כותב Your connection is not private?', how:'לחצתם No בהודעה על תעודת האבטחה. ב-Visual Studio פתחו View &rlm;←&rlm; Terminal, והריצו את שתי הפקודות מ<a href="#" data-go="run:3">השלב על תעודת האבטחה</a> – עם שני מקפים רגילים לפני clean ולפני trust. בכל חלון שקופץ – Yes. אחר כך סגרו את הדפדפן והריצו שוב ▶.'},
   {t:'הדפדפן כותב This site can’t be reached?', how:'השרת לא רץ: החלון השחור נסגר, או שעצרתם את ההרצה. לחצו ▶ שוב – ואל תסגרו את החלון השחור בזמן העבודה.'},
-  {t:'הדפדפן נפתח, אבל הדף עוד לא נטען?', how:'בהרצה הראשונה Visual Studio קודם בונה (Build) את הפרויקט, וזה יכול לקחת כמה שניות. חכו רגע, ואז רעננו <b>בדפדפן</b> (F5). <span class="unverified">לא אומת</span>'},
+  {t:'הדפדפן נפתח, אבל הדף עוד לא נטען?', how:'לפני כל הרצה Visual Studio בונה (Build) את הפרויקט, והשרת צריך כמה שניות כדי לעלות. חכו רגע, ואז רעננו <b>בדפדפן</b> (F5).'},
   {t:'לא רואים את החלון השחור?', how:'הוא כנראה מאחורי חלונות אחרים. חפשו אותו בשורת המשימות (taskbar) של Windows, למטה.'},
   {t:'אין ▶ בסרגל הכלים?', how:'בדקו שהפרויקט פתוח: ב-Solution Explorer רואים את MyFirstWeb (או את השם שבחרתם). אם לא – פתחו אותו מהרשימה Open recent במסך הפתיחה של Visual Studio.'}
 ]});

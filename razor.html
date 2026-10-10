@@ -108,6 +108,7 @@ table.nwcode td code{white-space:normal;overflow-wrap:normal;word-break:keep-all
             <li>🖥 הדפדפן לא מריץ <bdi>C#</bdi>, ולכן <b>המדריך מדמה את השרת</b>.</li>
       <li>❓ לפני חלק מהתוצאות יש שאלת ניחוש. מותר לטעות.</li>
       <li>💻 בסוף כל נושא – <b>"עכשיו אצלכם ב-Visual Studio"</b>, ואחריו 🎯 בדיקה קצרה, בלי ציון.</li>
+      <li>📌 ומה מגישים? <span data-asg="5"></span> – האתר כולו, בדפי Razor. הפרטים – בשלב "צעד בפרויקט" בסוף השיעור, וב<a href="submission1.html">דף הליווי של הגשה 1</a>.</li>
       <li>💾 ההתקדמות נשמרת בדפדפן הזה. כמה זמן זה לוקח? פתחו את <b>⏱ כמה זמן זה לוקח?</b> למטה – ותכננו בעצמכם. אפשר (ורצוי) בכמה ישיבות.</li>
     </ul>
     <div class="eggnote">🥚 בדף מוחבאות <b>5 ביצי הפתעה</b> – מוצאים אותן עם מה שתלמדו היום. רמזים: במונה למעלה.</div>
@@ -200,7 +201,7 @@ namespace MyFirstWeb.Pages.Site
     <p>יוצרים בפרויקט שלכם את דף ה-Razor הראשון – "אודות" – בתיקייה חדשה, Site. בתיקייה הזו יהיו כל הדפים של האתר.</p>
     <ol class="vsdo">
       <li>ב-Solution Explorer: <b>קליק ימני</b> על התיקייה <b>Pages</b> &rlm;←&rlm; <b>Add</b> &rlm;←&rlm; <b>New Folder</b>. קראו לה <b>Site</b> ולחצו Enter.</li>
-      <li><b>קליק ימני</b> על <b>Site</b> &rlm;←&rlm; <b>Add</b> &rlm;←&rlm; <b><bdi>Razor Page...</bdi></b> &rlm;←&rlm; בחרו <b>Razor Page - Empty</b> &rlm;←&rlm; <b>Add</b>. בשדה השם מופיע Index.cshtml – מחקו וכתבו <b>About</b> (את הסיומת Visual Studio מוסיף לבד) &rlm;←&rlm; <b>Add</b>. נוצרו שני קבצים: About.cshtml, ומתחתיו (חץ קטן לידו) About.cshtml.cs. (לא מוצאים <bdi>Razor Page...</bdi>? Add &rlm;←&rlm; <bdi>New Item...</bdi> &rlm;←&rlm; Razor Page - Empty. <span class="unverified">לא אומת</span>)</li>
+      <li><b>קליק ימני</b> על <b>Site</b> &rlm;←&rlm; <b>Add</b> &rlm;←&rlm; <b><bdi>New Item...</bdi></b> &rlm;←&rlm; בחרו <b>Razor Page - Empty</b> &rlm;←&rlm; בשדה Name כתבו <b>About.cshtml</b> &rlm;←&rlm; <b>Add</b>. נוצרו שני קבצים: About.cshtml, ומתחתיו (חץ קטן לידו) About.cshtml.cs.</li>
       <li>ב-About.cshtml השאירו את שתי השורות הראשונות (<code>@page</code> ו-<code>@model</code>). את כל מה שמתחתיהן מחקו, והדביקו במקומו. ב-src כתבו שם של תמונה <b>שיש לכם</b> בתיקייה Img:
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-rz="rz">
 @{
@@ -434,6 +435,7 @@ namespace MyFirstWeb.Pages.Site
       </ol>
       <label style="display:flex;gap:8px;align-items:center;margin-top:8px"><input type="checkbox" id="stepDone" /> עשיתי את הצעד בפרויקט שלי</label>
     </div>
+    <div id="asg5"></div>
   </article>
 
   <article class="spread" id="quiz">
@@ -1239,6 +1241,16 @@ const EGGS = [
 ];
 
 Course.autoCode();
+Course.assignment('#asg5', {n:5,
+  lead:'אחרי השיעור הזה האתר שלכם מוכן להגשה 1 – ההגשה הראשונה עם ציון. כל מה שצריך לבדוק, צעד אחר צעד – ב<a href="submission1.html">דף הליווי של הגשה 1</a>: רשימת הדרישות, המחוון, בודק הטפסים, ה-zip ובדיקה אחרונה.',
+  items:[
+    'דף ראשי (דף נחיתה), ו-<b>10 דפי תוכן לפחות</b>, באותו סגנון.',
+    'דפי <b>כניסה</b> (Login), <b>הרשמה</b> (Register) ו<b>שחזור סיסמה</b> (Recover Password).',
+    'כל הדפים הם דפי cshtml שמבוססים על Layout, בכל דף יש תפריט ראשי, והעיצוב בקובץ CSS חיצוני.',
+    'עברתי על <a href="submission1.html">דף הליווי של הגשה 1</a> עד הסוף.'
+  ],
+  how:'בקלאסרום &rlm;←&rlm; <b>סביבת הלמידה</b> &rlm;←&rlm; הנושא <b><bdi>HTML &amp; CSS</bdi></b> &rlm;←&rlm; "מטלה 5 – הגשה 1: האתר המעוצב" &rlm;←&rlm; <b>הוספה או יצירה</b> &rlm;←&rlm; <b>קובץ</b> &rlm;←&rlm; מעלים את קובץ ה-zip &rlm;←&rlm; <b>הגשה</b>. כל הפרטים – בקובץ "הגשה 1 – האתר המעוצב" שמצורף למטלה.'
+});
 Course.start({eggs: EGGS, console: ['🥚 מצאתם ביצה!', 'מפתחים אמיתיים מציצים מאחורי הקלעים 🕵️\nהקוד הסודי: LAYOUT\nהקלידו אותו במונה הביצים שבראש הדף.\nויש עוד 4 ביצים בדף 😉']});
 })();
 

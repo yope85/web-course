@@ -26,6 +26,8 @@ a.lcard:hover{transform:translateY(-3px);border-color:var(--accent)}
 .lcard.soon{opacity:.55;box-shadow:none}
 .badge{display:inline-block;background:var(--accent-soft);color:var(--accent);border-radius:99px;padding:1px 10px;font-size:12px;align-self:flex-start}
 .howto{margin-top:26px}
+.asgs{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 4px}
+.asgl{font-size:13px;font-weight:600;background:var(--accent-soft,#e3ecff);border:1px solid var(--accent,#2a5bd7);border-radius:99px;padding:1px 9px}
 </style>
 </head>
 <body>
@@ -64,6 +66,11 @@ const LESSONS = [
   {id:'l6', file:'razor.html', n:'שיעור 6', title:'Razor Pages ותבנית Layout', desc:'דף Razor ו-@, תבנית אחת עם תפריט משותף, כתובות ו-~/, והעברת האתר לדפי cshtml.'},
   {id:'sub1', file:'submission1.html', n:'הגשה 1', title:'האתר המעוצב', desc:'רשימת הדרישות, מחוון לבדיקה עצמית, בודק הטפסים, ואיך מכינים zip – מלווה אתכם עד ההגשה.'}
 ];
+/* 📌 Classroom assignments (same numbers and dates as ASSIGN in assets/course.js) */
+const ASG = {1:['התקנת סביבת העבודה','2026-10-22'], 2:['האתר הראשון שלי','2026-10-29'], 3:['בחירת נושא הפרויקט','2026-11-05'], 4:['דפי הפרויקט המעוצבים','2026-11-19'], 5:['הגשה 1: האתר המעוצב','2026-12-24']};
+const L_ASG = {l1:[1], l2:[2,3], l4:[4], l6:[5], sub1:[5]};
+const asgTxt = id => (L_ASG[id] || []).map(n => { const [t, d] = ASG[n], [y, m, dd] = d.split('-').map(Number);
+  return '<span class="asgl">📌 מטלה ' + n + ' בקלאסרום · עד ' + dd + '/' + m + '</span>'; }).join('');
 const get = k => { try { return JSON.parse(localStorage.getItem(k)); } catch(e){ return null; } };
 try { const th = localStorage.getItem('course-theme'); if (th) document.documentElement.dataset.theme = th; } catch(e){}
 document.getElementById('themeBtn').addEventListener('click', () => {
@@ -89,7 +96,7 @@ box.innerHTML = LESSONS.map(l => {
   const pct = total ? Math.round(100 * seen / total) : 0;
   return '<a class="lcard" href="' + l.file + '"><span class="n">' + l.n + '</span><h2>' + l.title + '</h2><p>' + l.desc + '</p>' +
     '<div class="meter"><i style="width:' + pct + '%"></i></div>' +
-    '<div class="stats"><span>' + (total ? (seen === total ? '✔ סיימתם' : seen + ' מתוך ' + total + ' שלבים') : 'עוד לא התחלתם') + '</span><span>🥚 ' + e + '/' + et + '</span>' + cpTxt(st) + '</div></a>';
+    (asgTxt(l.id) ? '<div class="asgs">' + asgTxt(l.id) + '</div>' : '') + '<div class="stats"><span>' + (total ? (seen === total ? '✔ סיימתם' : seen + ' מתוך ' + total + ' שלבים') : 'עוד לא התחלתם') + '</span><span>🥚 ' + e + '/' + et + '</span>' + cpTxt(st) + '</div></a>';
 }).join('');
 document.getElementById('totals').innerHTML = '<span class="pill">🥚 ביצים שמצאתם בכל הקורס: <b>' + eggs + '/' + eggTotal + '</b></span>';
 last = last || firstNew;
