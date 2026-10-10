@@ -15,7 +15,7 @@ const store = {
   set(k,v){ try { localStorage.setItem(LESSON + '-' + k, JSON.stringify(v)); } catch(e){} }
 };
 const state = store.get('state') || {};
-const saveHooks = [];
+const saveHooks = [], startHooks = [];
 let T = [];
 function save(){ if (T.length) paintProgress(); saveHooks.forEach(f => { try { f(); } catch(e){} }); store.set('state', state); }
 
@@ -51,7 +51,8 @@ function hlHtmlLine(line){
   return out;
 }
 function hlCssLine(line){
-  if (/\/\*/.test(line)) return '<span class="t-cm">' + esc(line) + '</span>';
+  const ci = line.indexOf('/*');
+  if (ci >= 0) { if (!line.slice(0, ci).trim()) return '<span class="t-cm">' + esc(line) + '</span>'; return hlCssLine(line.slice(0, ci)) + '<span class="t-cm">' + esc(line.slice(ci)) + '</span>'; }
   if (line.includes('{')) { const i = line.indexOf('{'); return '<span class="t-sel">' + esc(line.slice(0,i)) + '</span>' + esc(line.slice(i)); }
   const m = line.match(/^(\s*)([a-zA-Z-]+)(\s*:\s*)([^;]*)(;?)(.*)$/);
   if (m) return m[1] + '<span class="t-prop">' + m[2] + '</span>' + esc(m[3]) + '<span class="t-val">' + esc(m[4]) + '</span>' + m[5] + esc(m[6]);
@@ -92,7 +93,7 @@ function resolveImgs(src){ return src.replace(/(src=")(?:\.\.\/)?(?:Img|img)\/([
 const BASE_CSS = ':host{display:block}:host([hidden]){display:none}x-page{display:block;background:#fff;color:#111;padding:12px 16px;font-family:Rubik,Arial,sans-serif;font-size:16px;line-height:1.5;direction:rtl;min-height:40px}' +
   '.hit{outline:3px solid #f43f5e!important;outline-offset:2px}.peek{outline:2px dashed #2f6fec;outline-offset:2px}' +
   'x-page.boxes *{outline:2px dashed #f97316;outline-offset:-2px;background-color:rgba(249,115,22,.07)}x-page.boxes *::before{content:attr(data-tag);font:11px monospace;color:#c2410c;background:#fff7ed;padding:0 4px;margin-inline-end:6px;border-radius:3px}x-page.boxes div{outline:3px solid #7c3aed;outline-offset:3px;background-color:rgba(124,58,237,.10)}x-page.boxes div::before{display:block;width:max-content;color:#fff;background:#7c3aed;font-weight:bold;margin-bottom:4px}' +
-  'x-page.kinds [data-kind="block"]{outline:2px dashed #2563eb;outline-offset:-2px;background-color:rgba(37,99,235,.06)}x-page.kinds [data-kind="inline"]{outline:2px dashed #db2777;outline-offset:0;background-color:rgba(219,39,119,.10)}';
+  'x-page.kinds [data-kind="block"]{outline:2px solid #2563eb;outline-offset:-2px;background-color:rgba(37,99,235,.06)}x-page.kinds [data-kind="inline"]{outline:2px dashed #db2777;outline-offset:0;background-color:rgba(219,39,119,.10)}';
 const INLINE_TAGS = /^(a|span|b|strong|i|em|img|br|label|input|button|select|textarea|code|small|u|sup|sub)$/;
 function mapCss(css){ return css.replace(/(^|[\s,}])body(?=[\s,{:.])/g, '$1x-page'); }
 class Stage {
@@ -201,21 +202,38 @@ function predict(el, o){
   el.innerHTML = '<div class="q">' + o.q + '</div><div class="opts"></div><div class="fb" hidden></div>';
   const opts = el.querySelector('.opts'), fb = el.querySelector('.fb');
   const bs = o.opts.map((t,i) => { const b = document.createElement('button'); b.type = 'button'; b.innerHTML = t; b.addEventListener('click', () => answer(i)); opts.appendChild(b); return b; });
-  /* veil: hide the live result(s) of this step until the right answer, so the guess is a real guess */
-  let veiled = [];
+  /* veil: hide the live result(s) of this step until the right answer, so the guess is a real guess.
+     Results get an opaque cover; controls that would reveal the answer (buttons, checkboxes, labs) are locked;
+     "what happened" boxes that come AFTER the question are covered too. o.veil:false = off, o.veil:'#sel' = only these; o.lock:false = no locks */
+  let veiled = [], locked = [];
   if (o.veil !== false && !state[el.id]) {
     const scope = el.closest('.spread') || document;
+    const outside = t => !el.contains(t) && !t.contains(el);
     let targets = typeof o.veil === 'string' ? [...document.querySelectorAll(o.veil)]
-      : [...scope.querySelectorAll('.host, .framewrap, .boxstage, .devices')].map(h => h.closest('.split > .pane') || h);
-    targets = targets.filter((t, k, a) => a.indexOf(t) === k && !el.contains(t) && !t.contains(el) && !a.some(x => x !== t && x.contains(t)));
-    veiled = targets;
+      : [...scope.querySelectorAll('.host, .framewrap, .boxstage, .devices, .minis')].map(h => h.closest('.split > .pane') || h);
+    if (typeof o.veil !== 'string') scope.querySelectorAll('.what').forEach(w => { if (!w.hidden && (el.compareDocumentPosition(w) & Node.DOCUMENT_POSITION_FOLLOWING)) targets.push(w); });
+    targets = targets.filter((t, k, a) => a.indexOf(t) === k && outside(t) && !a.some(x => x !== t && x.contains(t)));
     targets.forEach(t => {
-      t.classList.add('veiled');
-      const n = document.createElement('div'); n.className = 'veil-note'; n.innerHTML = '🙈 קודם ענו על שאלת הניחוש – התוצאה תיפתח אחרי תשובה נכונה';
-      t.parentNode.insertBefore(n, t); t._veilNote = n;
+      const v = {t};
+      if (t.shadowRoot) { v.wrap = document.createElement('div'); v.wrap.className = 'veil-wrap veiling'; t.parentNode.insertBefore(v.wrap, t); v.wrap.appendChild(t); }
+      else { t.classList.add('veil-wrap', 'veiling'); v.wrap = t; }
+      v.cover = document.createElement('div'); v.cover.className = 'veil-cover'; v.cover.innerHTML = '<span>🙈 התוצאה מוסתרת – קודם ענו על שאלת הניחוש</span>';
+      v.wrap.appendChild(v.cover);
+      t.inert = true; t.setAttribute('aria-hidden', 'true');
+      veiled.push(v);
     });
+    if (o.lock !== false && typeof o.veil !== 'string') {
+      [...scope.querySelectorAll('.ctrls, .rules, .sel-input, .chal, [data-lock]')]
+        .filter((c, k, a) => outside(c) && !targets.some(t => t.contains(c)) && !a.some(x => x !== c && x.contains(c)))
+        .forEach(c => { c.classList.add('locked'); c.inert = true; const n = document.createElement('div'); n.className = 'lock-note'; n.textContent = '🔒 נפתח אחרי הניחוש'; c.parentNode.insertBefore(n, c); locked.push({c, n}); });
+    }
   }
-  function unveil(){ veiled.forEach(t => { t.classList.remove('veiled'); if (t._veilNote) t._veilNote.remove(); }); veiled = []; }
+  function unveil(){
+    veiled.forEach(v => { v.cover.remove(); v.t.inert = false; v.t.removeAttribute('aria-hidden');
+      if (v.wrap !== v.t) { v.wrap.parentNode.insertBefore(v.t, v.wrap); v.wrap.remove(); } else v.t.classList.remove('veil-wrap', 'veiling'); });
+    locked.forEach(x => { x.c.classList.remove('locked'); x.c.inert = false; x.n.remove(); });
+    veiled = []; locked = [];
+  }
   function answer(i, silent){
     const ok = i === o.correct;
     bs[i].classList.add(ok ? 'right' : 'wrong');
@@ -235,45 +253,322 @@ function doneCheck(el, key){
   el.checked = !!state[key]; el.addEventListener('change', () => { state[key] = el.checked; save(); });
 }
 
-/* ---------- playground: editors + live preview + auto-checked tasks ---------- */
+/* ---------- playground: editors + live preview + auto-checked tasks ----------
+   task: {id, text, test(doc, win) | manual:true, hints:['direction', 'where exactly'], solution:{code, lang:'css'|'html', explain, alt}, back:'topic:N'}
+   Stuck mechanism (constitution §5): hint 1 -> hint 2 -> "show me the solution" (+ why, + "now try alone"),
+   a gentle nudge back to the right step after ~3 unsuccessful tries, reset with confirm, and "how to ask" (askBox). */
 function playground(container, o){
   if (typeof container === 'string') container = $(container);
   const id = o.id || 'pg';
   container.innerHTML = '<div class="pg"><div class="editor">' +
-    '<span class="lbl">' + (o.htmlLabel || 'HTML') + '</span><textarea class="edH" spellcheck="false" aria-label="עורך HTML"></textarea>' +
-    (o.css !== undefined ? '<span class="lbl">' + (o.cssLabel || 'CSS – style.css') + '</span><textarea class="edC" spellcheck="false" aria-label="עורך CSS"></textarea>' : '') +
+    '<span class="lbl">' + (o.htmlLabel || 'HTML') + '</span><textarea class="edH" spellcheck="false" aria-label="עורך HTML" aria-describedby="' + id + '-edhint"></textarea>' +
+    (o.css !== undefined ? '<span class="lbl">' + (o.cssLabel || 'CSS – style.css') + '</span><textarea class="edC" spellcheck="false" aria-label="עורך CSS" aria-describedby="' + id + '-edhint"></textarea>' : '') +
+    '<span class="edhint" id="' + id + '-edhint">⌨ Tab מוסיף רווחים. כדי לצאת מהעורך עם המקלדת: Esc ואז Tab.</span>' +
     '<div><button class="btn reset" type="button">↺ התחלה מחדש</button></div></div>' +
-    '<div><div class="pg-frame"></div></div></div><ul class="tasks"></ul>';
+    '<div><div class="pg-frame"></div></div></div><ul class="tasks"></ul><div class="pg-ask"></div>';
   const edH = container.querySelector('.edH'), edC = container.querySelector('.edC');
   const frame = new Frame(container.querySelector('.pg-frame'), {url: o.url || 'localhost:7123/HTML/test.html', height: o.height || 440});
   const tasksBox = container.querySelector('.tasks');
   const done = (state.tasks = state.tasks || {});
+  const help = (state.help = state.help || {});
   const key = t => id + ':' + t.id;
-  (o.tasks || []).forEach((t,i) => {
+  const TS = o.tasks || [];
+  const tries = {}, nudged = {}; let lastTry = 0, lastCode = null;
+  TS.forEach((t,i) => {
     const li = document.createElement('li'); li.dataset.k = key(t);
-    li.innerHTML = '<span class="st">' + (i+1) + '</span><div>' + t.text + (t.manual ? ' <label style="margin-inline-start:6px;white-space:nowrap"><input type="checkbox" data-manual="1" /> עובד אצלי</label>' : '') + '</div>';
+    li.innerHTML = '<span class="st">' + (i+1) + '</span><div><div class="tt">' + t.text + (t.manual ? ' <label style="margin-inline-start:6px;white-space:nowrap"><input type="checkbox" data-manual="1" /> עובד אצלי</label>' : '') + '</div><div class="tk-x"></div></div>';
     const cb = li.querySelector('[data-manual]');
-    if (cb) { cb.checked = !!done[key(t)]; cb.addEventListener('change', () => { done[key(t)] = cb.checked; save(); }); }
+    if (cb) { cb.checked = !!done[key(t)]; cb.addEventListener('change', () => { done[key(t)] = cb.checked; save(); paintHelp(i); }); }
+    li.querySelector('.tk-x').addEventListener('click', e => {
+      const b = e.target.closest('button[data-a]'); if (!b) return;
+      const h = help[key(t)] = help[key(t)] || {h:0};
+      if (b.dataset.a === 'hint') h.h = Math.min((t.hints || []).length, (h.h || 0) + 1);
+      if (b.dataset.a === 'sol') h.open = !h.open;
+      if (b.dataset.a === 'alone') { h.open = false; h.seen = true; (edC || edH).focus(); }
+      save(); paintHelp(i, b.dataset.a);
+    });
     tasksBox.appendChild(li);
   });
-  function paint(){ (o.tasks || []).forEach((t,i) => { const li = tasksBox.children[i]; const ok = !!done[key(t)]; li.classList.toggle('done', ok); li.querySelector('.st').textContent = ok ? '✔' : (i+1); }); }
+  function paintHelp(i, focusAfter){
+    const t = TS[i], li = tasksBox.children[i], x = li.querySelector('.tk-x'), k = key(t), h = help[k] || {h:0};
+    const hints = t.hints || [], isDone = !!done[k];
+    let html = '';
+    hints.slice(0, h.h || 0).forEach((tx, n) => { html += '<div class="tk-hint">💡 <b>רמז ' + (n+1) + ':</b> ' + tx + (n === hints.length - 1 && t.back ? ' <a href="#" data-go="' + t.back + '">↩ השלב שמסביר את זה' + (stepName(t.back) ? ': ' + esc(stepName(t.back)) : '') + '</a>' : '') + '</div>'; });
+    if (nudged[k] && !isDone) html += '<div class="tk-nudge">🤔 המשימה הזו מאתגרת? זה בסדר גמור – ככה לומדים. אפשר לפתוח רמז' + (t.back ? ', או לחזור רגע <a href="#" data-go="' + t.back + '">לשלב: ' + esc(stepName(t.back) || 'ההסבר') + '</a>' : '') + '.</div>';
+    if (h.open && t.solution) {
+      const so = t.solution;
+      html += '<div class="tk-sol" role="region" aria-label="הפתרון"><b>🔓 הפתרון</b><div class="codeblock"><pre class="cv" data-sol="1"></pre></div>' + (so.explain ? '<p style="margin:4px 0"><b>למה זה עובד?</b> ' + so.explain + '</p>' : '') +
+        (so.alt ? '<details class="more"><summary>🚀 דרך נוספת לפתור</summary>' + so.alt + '</details>' : '') +
+        '<button class="btn primary" type="button" data-a="alone">הבנתי – עכשיו נסו לבד (הפתרון ייסגר)</button></div>';
+    }
+    const btns = [];
+    if (!isDone && h.h < hints.length) btns.push('<button type="button" data-a="hint">💡 ' + (h.h ? 'רמז נוסף' : 'רמז') + '</button>');
+    if (!isDone && t.solution && (h.h || 0) >= hints.length) btns.push('<button type="button" data-a="sol" aria-expanded="' + !!h.open + '">' + (h.open ? 'הסתירו את הפתרון' : '🔓 הראו לי את הפתרון') + '</button>');
+    if (btns.length) html += '<div class="tk-help">' + btns.join('') + '</div>';
+    if (isDone && h.seen) html += '<span class="tk-seen">👀 נעזרתם בפתרון – נסו בפעם הבאה עם רמז אחד פחות</span>';
+    x.innerHTML = html;
+    const pre = x.querySelector('pre[data-sol]'); if (pre) codeLines(pre, t.solution.code, t.solution.lang || (edC ? 'css' : 'html'));
+    if (focusAfter) { const f = x.querySelector('[data-a="' + (focusAfter === 'hint' ? 'hint' : 'sol') + '"]') || x.querySelector('button,a'); if (f && focusAfter !== 'alone') f.focus(); }
+  }
+  function paint(){ TS.forEach((t,i) => { const li = tasksBox.children[i]; const ok = !!done[key(t)]; const was = li.classList.contains('done'); li.classList.toggle('done', ok); li.querySelector('.st').textContent = ok ? '✔' : (i+1); li.querySelector('.st').setAttribute('aria-label', ok ? 'הושלמה' : 'משימה ' + (i+1)); if (was !== ok) paintHelp(i); }); }
   saveHooks.push(paint);
+  startHooks.push(() => TS.forEach((t,i) => paintHelp(i)));
   function render(){ frame.show({html: edH.value, css: edC ? edC.value.replace(/<\/style/gi,'') : '', links: o.links || []}); }
   frame.onLoad = d => {
-    (o.tasks || []).forEach(t => { if (!t.manual) { let ok = false; try { ok = !!t.test(d, d.defaultView); } catch(e){} if (ok && !done[key(t)]) { done[key(t)] = true; if (o.onTask) o.onTask(t); } } });
+    TS.forEach(t => { if (!t.manual) { let ok = false; try { ok = !!t.test(d, d.defaultView); } catch(e){} if (ok && !done[key(t)]) { done[key(t)] = true; if (o.onTask) o.onTask(t); } } });
     if (o.onRender) try { o.onRender(d, edH.value, edC && edC.value); } catch(e){}
+    /* count a "try" on the first unfinished task: the code changed and some time passed since the last counted try */
+    const code = edH.value + '\n' + (edC ? edC.value : ''); const ci = TS.findIndex(t => !t.manual && !done[key(t)]);
+    if (lastCode !== null && code !== lastCode && ci >= 0 && Date.now() - lastTry > 15000) {
+      lastTry = Date.now(); const k = key(TS[ci]); tries[k] = (tries[k] || 0) + 1;
+      if (tries[k] >= 3 && !nudged[k]) { nudged[k] = true; paintHelp(ci); }
+    }
+    lastCode = code;
     save();
   };
   let timer; const sched = () => { clearTimeout(timer); timer = setTimeout(() => { store.set('code-' + id, {h:edH.value, c:edC ? edC.value : ''}); render(); }, 350); };
   [edH, edC].filter(Boolean).forEach(t => {
+    let free = false; /* after Esc, Tab leaves the editor (no keyboard trap) */
     t.addEventListener('input', sched);
-    t.addEventListener('keydown', e => { if (e.key === 'Tab') { e.preventDefault(); t.setRangeText('    ', t.selectionStart, t.selectionEnd, 'end'); sched(); } });
+    t.addEventListener('focus', () => { free = false; });
+    t.addEventListener('keydown', e => {
+      if (e.key === 'Escape') { free = true; return; }
+      if (e.key === 'Tab' && !free && !e.shiftKey && !e.ctrlKey && !e.altKey && !e.metaKey) { e.preventDefault(); t.setRangeText('    ', t.selectionStart, t.selectionEnd, 'end'); sched(); }
+    });
   });
   const saved = store.get('code-' + id);
   edH.value = saved ? saved.h : o.html; if (edC) edC.value = saved ? saved.c : o.css;
-  container.querySelector('.reset').addEventListener('click', () => { edH.value = o.html; if (edC) edC.value = o.css; store.set('code-' + id, null); render(); });
+  const rb = container.querySelector('.reset'); let rbT;
+  rb.addEventListener('click', () => {
+    if (!rb.classList.contains('confirm')) { rb.classList.add('confirm'); rb.textContent = 'בטוחים? הקוד שכתבתם יימחק – לחצו שוב'; clearTimeout(rbT); rbT = setTimeout(() => { rb.classList.remove('confirm'); rb.textContent = '↺ התחלה מחדש'; }, 4000); return; }
+    clearTimeout(rbT); rb.classList.remove('confirm'); rb.textContent = '↺ התחלה מחדש';
+    edH.value = o.html; if (edC) edC.value = o.css; store.set('code-' + id, null); render(); toast('↺ הקוד חזר להתחלה. המשימות שכבר הצלחתם נשארות מסומנות.');
+  });
+  askBox(container.querySelector('.pg-ask'), {
+    task: () => { const t = TS.find(t => !done[key(t)]); return t ? plain(t.text) : ''; },
+    code: () => (edC ? '/* CSS */\n' + edC.value + '\n\n<!-- HTML -->\n' : '') + edH.value
+  });
   render(); paint();
   return {edH, edC, frame, render};
+}
+const plain = h => { const d = document.createElement('div'); d.innerHTML = h; d.querySelectorAll('a').forEach(a => a.remove()); return d.textContent.replace(/\s+/g, ' ').replace(/\(\s*\)/g, '').trim(); };
+
+/* ---------- step names for "go back to step X" links ('topic:N' -> "topic title · step title") ---------- */
+function stepName(go){
+  const [tid, n] = String(go).split(':'); const t = T.find(x => x.id === tid); if (!t) return '';
+  const st = t.steps[(+n || 1) - 1]; return st ? t.title + ' · ' + stepTitle(st) : t.title;
+}
+function copyText(btn, text){
+  const done = ok => { const o = btn.dataset.label || btn.textContent; btn.dataset.label = o; btn.textContent = ok ? 'הועתק ✔' : 'סמנו והעתיקו ידנית'; setTimeout(() => btn.textContent = o, 1600); };
+  try { navigator.clipboard.writeText(text).then(() => done(true), () => done(false)); } catch(e){ done(false); }
+}
+
+/* ---------- 🆘 "stuck? this is how you ask" – WHO to ask and HOW (constitution §5, §3.14)
+   📒 the topic's Gemini notebook = answers only from the course materials -> for "I didn't understand X"
+   🧑‍🏫 the course mentor (Gem) = guides with questions & hints, no ready solution -> for "my code doesn't work" ---------- */
+function askBox(host, o){
+  if (typeof host === 'string') host = $(host);
+  o = o || {};
+  const d = document.createElement('details'); d.className = 'ask';
+  d.innerHTML = '<summary>' + (o.summary || '🆘 תקועים? ככה שואלים') + '</summary>' +
+    '<p class="who">על מה נתקעתם?</p><div class="route"><button type="button" data-r="nb" aria-pressed="false">📒 לא הבנתי משהו מהשיעור</button><button type="button" data-r="mentor" aria-pressed="false">🧑‍🏫 הקוד שלי לא עובד</button></div><div class="ask-body" aria-live="polite"></div>';
+  host.appendChild(d);
+  const body = d.querySelector('.ask-body');
+  const where = () => {
+    const lesson = (($('.lesson-head h1') || {}).textContent || document.body.dataset.title || '').trim();
+    const t = T[pos.ti], st = t && t.steps[pos.si];
+    return {lesson, topic: t ? t.title : '', step: st ? stepTitle(st) : ''};
+  };
+  function fill(r){
+    d.querySelectorAll('.route button').forEach(b => b.setAttribute('aria-pressed', b.dataset.r === r));
+    const w = where();
+    let lines, code = '';
+    if (r === 'nb') {
+      lines = ['בשיעור "' + w.lesson + '", בנושא "' + w.topic + '", בשלב "' + w.step + '":', 'לא הבנתי ___', 'אפשר הסבר במילים פשוטות, עם דוגמה קטנה?'];
+      body.innerHTML = '<p class="who">פנו ל<b>📒 מחברת Gemini של הנושא</b> (בקלאסרום, בנושא HTML & CSS). היא עונה <b>רק מתוך חומרי הקורס</b> – לכן ההסברים שלה מתאימים בדיוק למה שלמדנו כאן.</p>' +
+        '<p class="muted">💡 שאלה טובה אומרת <b>מה בדיוק</b> לא הבנתם. "לא הבנתי כלום" לא עוזר לה לעזור לכם. השלימו את ה-___ אחרי ההדבקה.</p>';
+    } else {
+      const task = o.task ? o.task() : ''; code = o.code ? o.code() : '';
+      lines = ['אני בשיעור "' + w.lesson + '", בשלב "' + w.step + '".', 'המשימה: ' + (task || '___'), 'מה ניסיתי: ___', 'מה ציפיתי שיקרה: ___', 'מה קרה בפועל: ___', 'הקוד שלי:'];
+      body.innerHTML = '<p class="who">פנו ל<b>🧑‍🏫 מנטור הקורס</b> (ה-Gem בקלאסרום). הוא <b>לא ייתן לכם פתרון מוכן</b> – הוא ישאל שאלות וייתן רמזים, עד שתמצאו את הטעות בעצמכם. ככה לומדים באמת.</p>' +
+        '<p class="muted">לפני ששואלים: ניסיתם את הרמזים? עברתם על "עבד באתר ולא אצלי?"' + (code ? '' : ' הדביקו את הקוד שלכם במקום שמסומן.') + ' השלימו את ה-___ אחרי ההדבקה.</p>';
+    }
+    const tail = r === 'nb' ? '' : 'בבקשה רמז אחד – לא פתרון מלא.';
+    const text = lines.join('\n') + (r === 'nb' ? '' : '\n' + (code || '(הדביקו כאן את הקוד)') + '\n' + tail);
+    const tpl = document.createElement('div'); tpl.className = 'tpl';
+    tpl.innerHTML = lines.map(l => esc(l).replace(/___/g, '<span class="blank">___</span>')).join('\n') +
+      (r === 'nb' ? '' : '\n<pre class="cv" style="margin:6px 0;max-height:150px"></pre>' + esc(tail));
+    body.appendChild(tpl);
+    const pre = tpl.querySelector('pre'); if (pre) codeLines(pre, code || '(paste your code here)', 'html');
+    const cb = document.createElement('button'); cb.type = 'button'; cb.className = 'btn primary'; cb.textContent = '📋 העתקת השאלה';
+    cb.addEventListener('click', () => copyText(cb, text)); body.appendChild(cb);
+  }
+  d.querySelector('.route').addEventListener('click', e => { const b = e.target.closest('[data-r]'); if (b) fill(b.dataset.r); });
+  if (o.route) d.addEventListener('toggle', () => { if (d.open && !body.innerHTML) fill(o.route); });
+  return d;
+}
+
+/* ---------- 🔧 "works on the site but not for me? check in this order" (constitution §6) ----------
+   Course.trouble(el, {add:[{t, how, first:true}], omit:['f12'], base:false, items:[...]}) */
+const TROUBLE = [
+  {id:'save', t:'שמרתם את הקובץ? (Ctrl+S)', how:'ב-Visual Studio, כוכבית <b>*</b> ליד שם הקובץ בלשונית = יש שינויים שלא נשמרו.'},
+  {id:'refresh', t:'רעננתם את הדפדפן?', how:'לחצו <b>בתוך הדפדפן</b> Ctrl+F5 – רענון מלא, בלי גרסה ישנה שנשמרה בזיכרון (cache). (ב-Visual Studio עצמו אותו צירוף מריץ את הפרויקט – לכן לוחצים כשהדפדפן מולכם.)'},
+  {id:'folder', t:'הקובץ בתיקייה הנכונה?', how:'דפים ב-<code>wwwroot/HTML</code>, תמונות ב-<code>wwwroot/Img</code>, עיצוב ב-<code>wwwroot/css</code>. בפרויקט חדש התיקיות HTML ו-Img <b>עוד לא קיימות</b> – יוצרים אותן (<a href="intro.html#page-2">איך? שיעור 1</a>).'},
+  {id:'name', t:'השם והסיומת נכונים?', how:'בדיוק כמו בקוד, כולל אותיות גדולות וקטנות: <code>index.html</code> – ולא <code>Index.html</code> או <code>index.html.txt</code>.'},
+  {id:'path', t:'הנתיב נכון?', how:'מדף שבתיקייה HTML קודם עולים תיקייה אחת: <code>../Img/pizza.jpg</code> או <code>../css/style.css</code>.'},
+  {id:'f12', t:'יש שגיאה אדומה ב-F12?', how:'בדפדפן לוחצים F12 (כלי המפתחים) ‏←‏ לשונית Console. <b>404</b> = הקובץ לא נמצא – כמעט תמיד נתיב או שם שגוי.'}
+];
+function trouble(el, o){
+  if (typeof el === 'string') el = $(el);
+  if (!el || el.dataset.ready) return; el.dataset.ready = '1';
+  o = o || {};
+  let items = o.items || (o.base === false ? [] : TROUBLE.filter(x => !(o.omit || []).includes(x.id)));
+  (o.add || []).forEach(a => a.first ? items.unshift(a) : items.push(a));
+  el.classList.add('trouble');
+  /* collapsed by default: whoever succeeded moves on; whoever is stuck opens one list, checks in order */
+  el.innerHTML = '<details class="tr-d"><summary><b>🔧 עבד באתר ולא אצלי? בודקים לפי הסדר</b> <span class="muted">(' + items.length + ' בדיקות)</span></summary><p class="muted">סמנו כל בדיקה שעשיתם. כמעט תמיד התקלה מסתתרת באחת מהן.</p><ol>' +
+    items.map(x => '<li><label><input type="checkbox" /><span class="tt"><b>' + x.t + '</b><span>' + x.how + '</span></span></label></li>').join('') + '</ol>' +
+    '<div class="tr-foot"><button class="btn" type="button">↺ ניקוי הסימונים</button></div></details>';
+  const dd = el.querySelector('details');
+  dd.querySelector('.tr-foot button').addEventListener('click', () => el.querySelectorAll('input').forEach(i => i.checked = false));
+  askBox(dd, {summary: '🆘 עברתם על הכול ועדיין לא עובד? ככה שואלים את המנטור', route: 'mentor'});
+}
+
+/* ---------- 💻 "now in your Visual Studio": <ol class="vsdo"> steps get remembered checkboxes ---------- */
+function initVsdo(){
+  state.vs = state.vs || {};
+  document.querySelectorAll('ol.vsdo').forEach((ol, n) => {
+    if (ol.dataset.ready) return; ol.dataset.ready = '1';
+    const sec = ol.closest('section.topic'), base = 'vs:' + (sec ? sec.dataset.id : 'x') + ':' + n;
+    const prog = document.createElement('p'); prog.className = 'vsprog'; prog.setAttribute('aria-live', 'polite'); ol.parentNode.insertBefore(prog, ol);
+    const lis = [...ol.children];
+    lis.forEach((li, i) => {
+      const k = base + ':' + i, body = document.createElement('div'); body.className = 'vsbody';
+      while (li.firstChild) body.appendChild(li.firstChild);
+      const lab = document.createElement('label'); lab.className = 'vsck';
+      lab.innerHTML = '<input type="checkbox" aria-label="סימנתי שעשיתי את צעד ' + (i+1) + '" />';
+      li.append(lab, body);
+      const cb = lab.querySelector('input'); cb.checked = !!state.vs[k]; li.classList.toggle('done', cb.checked);
+      cb.addEventListener('change', () => { state.vs[k] = cb.checked; li.classList.toggle('done', cb.checked); paint(); save(); });
+    });
+    function paint(){ const k = lis.filter(li => li.classList.contains('done')).length;
+      prog.innerHTML = k === lis.length ? '✔ <b>עשיתם את כל הצעדים אצלכם!</b> אם משהו לא עבד – הרשימה "עבד באתר ולא אצלי?" למטה.' : 'עשיתם צעד? סמנו אותו. <b>' + k + '/' + lis.length + '</b>'; }
+    paint();
+  });
+}
+
+/* ---------- 🎯 understanding check at the end of a topic (constitution §3.6, §3.11, §4) ----------
+   Course.checkpoint('#cpRules', [
+     {q, opts:[...], correct, why:[...], back:'rules:4'},                         // multiple choice (why per option)
+     {type:'selector', q, html, expect:'.sale', must:sel => msg|null, answer, explain, back},  // write a selector, live highlight
+     {type:'line', q, code, lang:'css'|'html', correct:3 (1-based), why:{2:'…'}, explain, back},  // find the wrong line
+     {type:'text', q, accept:[/regex/, 'exact'], placeholder, answer, explain, back}             // short answer
+   ]) – first try counts; every mistake points back to the step to review. */
+const CPS = [];
+function checkpoint(el, items, o){
+  if (typeof el === 'string') el = $(el);
+  o = o || {};
+  const id = el.id || ('cp' + (CPS.length + 1));
+  const sec = el.closest('section.topic'), tid = sec ? sec.dataset.id : '', ttitle = sec ? sec.dataset.title : '';
+  CPS.push({id, tid}); state.cp = state.cp || {}; state.cpTotal = CPS.length;
+  el.classList.add('cp');
+  const nQ = n => n === 1 ? 'שאלה אחת' : n + ' שאלות';
+  let results = [];
+  const backsOf = it => [].concat(it.back || []);
+  function summary(r){
+    if (r.ok === r.n) return '<div class="cp-sum ok"><h4>✔ מוכנים להמשיך!</h4><p style="margin:0">עניתם נכון על ' + (r.n === 1 ? 'השאלה' : 'כל ' + r.n + ' השאלות') + ' כבר בניסיון הראשון. הבנתם את הנושא "' + esc(ttitle) + '".</p></div>';
+    return '<div class="cp-sum more"><h4>' + r.ok + ' מתוך ' + r.n + ' נכון בניסיון הראשון – כדאי לחזור על:</h4><ul>' +
+      (r.back || []).map(g => '<li><a href="#" data-go="' + g + '">' + esc(stepName(g) || g) + '</a></li>').join('') + '</ul>' +
+      '<p class="muted" style="margin:0">אחרי החזרה – נסו שוב את הבדיקה. טעות היא חלק מהלמידה, לא סימן שאתם "לא מבינים".</p></div>';
+  }
+  function intro(){
+    const prev = state.cp[id];
+    el.innerHTML = (prev ? summary(prev) : '<div class="cp-intro"><p style="margin:0">בדיקה קצרה – <b>לא חובה ובלי ציון</b>: ' + nQ(items.length) + ' על הדברים החשובים בנושא "' + esc(ttitle) + '". טעיתם? תקבלו הסבר וקישור לשלב שכדאי לחזור אליו.</p></div>') +
+      '<div class="cp-nav" style="justify-content:flex-start"><button class="btn primary" type="button" data-cp="start">' + (prev ? '↺ עשו את הבדיקה שוב' : 'התחילו את הבדיקה ▶') + '</button>' +
+      (prev ? '' : '<span class="muted" style="align-self:center">לא עכשיו? אפשר להמשיך לשלב הבא.</span>') + '</div>';
+  }
+  function dots(i){ return '<ol class="cp-dots" aria-label="התקדמות בבדיקה">' + items.map((x,k) => { const r = results[k];
+    return '<li class="' + (k === i ? 'cur' : r || '') + '" aria-label="שאלה ' + (k+1) + (r === 'ok' ? ' – נכון בניסיון הראשון' : r === 'miss' ? ' – כדאי לחזור' : '') + '">' + (r === 'ok' ? '✔' : r === 'miss' ? '↺' : k+1) + '</li>'; }).join('') + '</ol>'; }
+  function ask(i){
+    const it = items[i], type = it.type || 'mc'; let wrongs = 0, solved = false;
+    el.innerHTML = dots(i) + '<div class="cp-q"><div class="qn">שאלה ' + (i+1) + ' מתוך ' + items.length + '</div><div class="qt" tabindex="-1">' + it.q + '</div><div class="cp-body"></div><div class="cp-fb" hidden aria-live="polite"></div><div class="cp-nav"></div></div>';
+    const body = el.querySelector('.cp-body'), fb = el.querySelector('.cp-fb'), nav = el.querySelector('.cp-nav');
+    const backLinks = () => backsOf(it).map(g => '<a class="back" href="#" data-go="' + g + '">↩ חזרו לשלב: ' + esc(stepName(g) || g) + '</a>').join('<br>');
+    function wrong(msg){
+      wrongs++; if (results[i] === undefined) results[i] = 'miss';
+      fb.hidden = false; fb.className = 'cp-fb wrong';
+      fb.innerHTML = '✘ ' + (msg || 'לא בדיוק.') + ' נסו שוב.' + (backsOf(it).length ? '<br>' + backLinks() : '');
+      if (type !== 'mc' && type !== 'line' && wrongs >= 2 && it.answer && !nav.querySelector('[data-cp="show"]')) nav.insertAdjacentHTML('afterbegin', '<button class="btn" type="button" data-cp="show">🔓 הראו לי את התשובה</button>');
+    }
+    function right(msg){
+      if (solved) return; solved = true; if (results[i] === undefined) results[i] = 'ok';
+      fb.hidden = false; fb.className = 'cp-fb right';
+      fb.innerHTML = '✔ ' + (results[i] === 'ok' ? 'נכון! ' : 'עכשיו נכון. ') + (msg || '');
+      body.querySelectorAll('button,input').forEach(b => { if (!b.closest('.split')) b.disabled = true; });
+      nav.innerHTML = '<button class="btn primary" type="button" data-cp="next">' + (i < items.length - 1 ? 'לשאלה הבאה ←' : 'לסיכום הבדיקה ←') + '</button>';
+      nav.querySelector('button').focus();
+    }
+    if (type === 'mc') {
+      body.innerHTML = '<div class="opts">' + it.opts.map((t,k) => '<button type="button" data-k="' + k + '">' + t + '</button>').join('') + '</div>';
+      body.querySelector('.opts').addEventListener('click', e => { const b = e.target.closest('[data-k]'); if (!b || b.disabled) return; const k = +b.dataset.k;
+        if (k === it.correct) { b.classList.add('right'); right((it.why || [])[k]); } else { b.classList.add('wrong'); b.disabled = true; wrong((it.why || [])[k]); } });
+    }
+    if (type === 'line') {
+      const ls = it.code.split('\n'), f = it.lang === 'css' ? hlCssLine : hlHtmlLine;
+      body.innerHTML = '<p class="muted" style="margin:0">לחצו על השורה שבה הטעות:</p><ol class="cp-lines">' + ls.map((l,k) => '<li><button type="button" data-k="' + (k+1) + '" aria-label="שורה ' + (k+1) + ': ' + escA(l.trim() || 'ריקה') + '"><span class="n">' + (k+1) + '</span><span>' + (f(l) || ' ') + '</span></button></li>').join('') + '</ol>';
+      body.querySelector('.cp-lines').addEventListener('click', e => { const b = e.target.closest('[data-k]'); if (!b || b.disabled) return; const k = +b.dataset.k;
+        if (k === it.correct) { b.classList.add('right'); right(it.explain); } else { b.classList.add('wrong'); b.disabled = true; wrong((it.why || {})[k] || 'השורה הזו תקינה.'); } });
+    }
+    if (type === 'selector' || type === 'text') {
+      if (type === 'selector') body.innerHTML = '<div class="cp-split"></div>';
+      body.insertAdjacentHTML('beforeend', '<form class="cp-in"><input spellcheck="false" autocomplete="off" aria-label="' + (type === 'selector' ? 'כתבו בורר CSS' : 'כתבו את התשובה') + '" placeholder="' + escA(it.placeholder || (type === 'selector' ? 'כתבו כאן בורר' : '')) + '"' + (it.ltr === false ? ' style="direction:rtl;text-align:right;font-family:inherit"' : '') + ' /><button class="btn primary" type="submit">בדיקה</button></form>');
+      const inp = body.querySelector('input'); let sp;
+      if (type === 'selector') {
+        sp = new Split(body.querySelector('.cp-split'), {resultTitle: 'מה הבורר שלכם בוחר (באדום)'}); sp.setHtml(it.html); if (it.css) sp.setCss(it.css);
+        inp.addEventListener('input', () => { const v = inp.value.trim(); const r = v ? sp.highlight(v) : sp.highlight(''); sp.say(v ? (r === null ? '<span class="err">זה עוד לא בורר תקין</span>' : 'נבחרו <span class="count">' + r.length + '</span> תגיות') : ''); });
+      }
+      body.querySelector('form').addEventListener('submit', e => {
+        e.preventDefault(); if (solved) return; const v = inp.value.trim(); if (!v) return;
+        if (type === 'text') {
+          const norm = x => x.replace(/\s+/g, ' ').trim().toLowerCase();
+          const ok = (it.accept || []).some(a => a instanceof RegExp ? a.test(v) : norm(a) === norm(v));
+          return ok ? right(it.explain) : wrong(it.wrong || '');
+        }
+        const got = sp.highlight(v); if (got === null) return wrong('זה לא בורר תקין – בדקו נקודה, סולמית ורווחים.');
+        const exp = [...sp.stage.page.querySelectorAll(it.expect)];
+        const same = got.length === exp.length && got.every(x => exp.includes(x));
+        if (!same) return wrong('הבורר שלכם בחר ' + got.length + ' תגיות (מסומנות באדום), וצריך לבחור בדיוק ' + exp.length + '.' + (it.hint ? ' ' + it.hint : ''));
+        const extra = it.must ? it.must(v) : null;
+        extra ? wrong(extra) : right(it.explain);
+      });
+    }
+    nav.addEventListener('click', e => { const b = e.target.closest('[data-cp]'); if (!b) return;
+      if (b.dataset.cp === 'show') { if (type === 'selector' || type === 'text') { const inp = body.querySelector('input'); inp.value = it.answer; inp.dispatchEvent(new Event('input')); } right('התשובה: <code>' + esc(it.answer) + '</code>. ' + (it.explain || '')); }
+      if (b.dataset.cp === 'next') i < items.length - 1 ? ask(i + 1) : finish(); });
+    el.querySelector('.qt').focus({preventScroll: true});
+  }
+  function finish(){
+    const ok = results.filter(r => r === 'ok').length;
+    const back = []; items.forEach((it,k) => { if (results[k] !== 'ok') backsOf(it).forEach(g => { if (!back.includes(g)) back.push(g); }); });
+    state.cp[id] = {n: items.length, ok, back, t: tid}; save();
+    if (T.length) show(pos.ti, pos.si, false);
+    el.innerHTML = dots(-1) + summary(state.cp[id]) + '<div class="cp-nav" style="justify-content:flex-start"><button class="btn" type="button" data-cp="start">↺ עשו את הבדיקה שוב</button></div>';
+    if (ok === items.length) toast('🎯 מוכנים להמשיך! הבנתם את "' + esc(ttitle) + '"');
+    const h = el.querySelector('h4'); if (h) { h.tabIndex = -1; h.focus({preventScroll: true}); }
+  }
+  el.addEventListener('click', e => { const b = e.target.closest('[data-cp="start"]'); if (b) { results = []; ask(0); } });
+  startHooks.push(intro);
+}
+
+/* ---------- ↩ back-chip: after a "go back to step X" link, one click returns you to where you were ---------- */
+let returnTo = null;
+function paintBackChip(){
+  let c = $('#backChip');
+  if (!c) { c = document.createElement('button'); c.id = 'backChip'; c.type = 'button'; c.className = 'backchip'; c.hidden = true; document.body.appendChild(c);
+    c.addEventListener('click', () => { const r = returnTo; returnTo = null; if (r) show(r.ti, r.si, true); paintBackChip(); }); }
+  const on = returnTo && !(returnTo.ti === pos.ti && returnTo.si === pos.si);
+  if (returnTo && !on) returnTo = null;
+  c.hidden = !on; if (on) c.innerHTML = '↩ חזרה ל: <bdi>' + esc(stepTitle(T[returnTo.ti].steps[returnTo.si])) + '</bdi>';
 }
 
 /* ---------- toast + celebration ---------- */
@@ -332,7 +627,7 @@ function show(ti, si, scroll){
   pos = {ti, si};
   T.forEach((t,a) => { t.el.hidden = a !== ti; t.steps.forEach((st,b) => st.hidden = !(a === ti && b === si)); });
   state.seen[T[ti].id + ':' + si] = true; state.pos = pos; save();
-  $('#topics').innerHTML = T.map((t,a) => '<button type="button" data-t="' + a + '"' + (a === ti ? ' aria-current="true"' : '') + (t.steps.every((x,b) => state.seen[t.id + ':' + b]) ? ' class="done"' : '') + '><span class="ic">' + t.icon + '</span><bdi>' + t.title + '</bdi></button>').join('');
+  $('#topics').innerHTML = T.map((t,a) => '<button type="button" data-t="' + a + '"' + (a === ti ? ' aria-current="true"' : '') + (t.steps.every((x,b) => state.seen[t.id + ':' + b]) ? ' class="done"' : '') + '><span class="ic">' + t.icon + '</span><bdi>' + t.title + '</bdi>' + cpBadge(t) + '</button>').join('');
   $('#steps').innerHTML = T[ti].steps.map((st,b) => '<button type="button" data-s="' + b + '"' + (b === si ? ' aria-current="true"' : '') + (state.seen[T[ti].id + ':' + b] ? ' class="seen"' : '') + ' title="' + escA(stepTitle(st)) + '"><span class="k">' + (b+1) + '</span><bdi>' + esc(stepTitle(st)) + '</bdi></button>').join('');
   const prev = si > 0 ? [ti, si-1] : ti > 0 ? [ti-1, T[ti-1].steps.length - 1] : null;
   const next = si < T[ti].steps.length - 1 ? [ti, si+1] : ti < T.length - 1 ? [ti+1, 0] : null;
@@ -355,6 +650,11 @@ function show(ti, si, scroll){
   ['#topics', '#steps'].forEach(q => { const ac = $(q + ' [aria-current="true"]'); if (ac && ac.scrollIntoView) ac.scrollIntoView({block:'nearest', inline:'center'}); });
   if (scroll) { const y = $('#topics').getBoundingClientRect().top + scrollY - 64; window.scrollTo({top: Math.max(0, y), behavior: 'smooth'}); }
   T[ti].steps[si].dispatchEvent(new CustomEvent('stepshow', {bubbles:true}));
+  paintBackChip();
+}
+function cpBadge(t){
+  const r = Object.values(state.cp || {}).find(x => x.t === t.id); if (!r) return '';
+  return r.ok === r.n ? ' <span class="cpb" title="בדיקת ההבנה: מוכנים להמשיך">🎯✔</span><span class="sr">בדיקת ההבנה עברה</span>' : ' <span class="cpb" title="בדיקת ההבנה: כדאי לחזור על כמה שלבים">🎯↺</span><span class="sr">כדאי לחזור על כמה שלבים</span>';
 }
 function paintProgress(){
   const total = T.reduce((n,t) => n + t.steps.length, 0); if (!total) return;
@@ -368,7 +668,9 @@ function initPlayer(){
   T.forEach(t => t.steps.forEach((st,si) => { const h = st.querySelector('h3'); if (h) { const b = document.createElement('span'); b.className = 'sn'; b.textContent = 'שלב ' + (si+1) + ' מתוך ' + t.steps.length; h.prepend(b); } }));
   $('#topics').addEventListener('click', e => { const b = e.target.closest('[data-t]'); if (!b) return; const t = +b.dataset.t; const u = T[t].steps.findIndex((x,i) => !state.seen[T[t].id + ':' + i]); show(t, u < 0 ? 0 : u, true); });
   $('#steps').addEventListener('click', e => { const b = e.target.closest('[data-s]'); if (b) show(pos.ti, +b.dataset.s, false); });
-  document.addEventListener('click', e => { const a = e.target.closest('[data-go]'); if (!a) return; e.preventDefault(); const [id, n] = a.dataset.go.split(':'); const t = T.findIndex(x => x.id === id); if (t >= 0) { try { $('#eggDlg').close(); } catch(err){} show(t, (+n || 1) - 1, true); } });
+  document.addEventListener('click', e => { const a = e.target.closest('[data-go]'); if (!a) return; e.preventDefault(); const [id, n] = a.dataset.go.split(':'); const t = T.findIndex(x => x.id === id);
+    if (t >= 0) { try { $('#eggDlg').close(); } catch(err){} const from = a.closest('.spread'); if (from && !from.hidden) returnTo = {ti: pos.ti, si: pos.si}; show(t, (+n || 1) - 1, true); } });
+  window.addEventListener('hashchange', () => { const m = location.hash.match(/^#([a-z0-9]+)-(\d+)$/); if (!m) return; const t = T.findIndex(x => x.id === m[1]); if (t >= 0 && !(t === pos.ti && +m[2] - 1 === pos.si)) show(t, +m[2] - 1, true); });
   document.addEventListener('keydown', e => {
     const src = (e.composedPath && e.composedPath()[0]) || e.target;
     if ((src.closest && src.closest('input,textarea,select,dialog,[contenteditable]')) || e.target.closest('input,textarea,select,dialog') || e.altKey || e.ctrlKey || e.metaKey) return;
@@ -388,10 +690,15 @@ function start(o){
   autoCode(); wireCopy();
   const pb = $('#printBtn'); if (pb) pb.addEventListener('click', () => window.print());
   initEggs(o.eggs, o.console);
+  initVsdo();
+  document.querySelectorAll('.trouble:not([data-ready])').forEach(el => trouble(el));
   initPlayer();
+  startHooks.forEach(f => { try { f(); } catch(e){ console.error(e); } });
+  save();
 }
 
 window.Course = { $, esc, store, state, save, onSave: f => saveHooks.push(f), hlHtmlLine, hlCssLine, codeLines, autoCode, wireCopy,
   PIZZA_IMG, IMAGES, fakeImg, mapCss, Stage, Split, Frame, frameDoc, seg, predict, quiz, doneCheck, playground, toast, party, findEgg, start,
+  checkpoint, trouble, askBox, stepName,
   go: (id, n) => { const t = T.findIndex(x => x.id === id); if (t >= 0) show(t, (n || 1) - 1, true); } };
 })();
