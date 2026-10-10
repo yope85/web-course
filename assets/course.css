@@ -362,6 +362,8 @@ details.ask>summary{color:var(--text)}
 .tk-hint+.tk-hint{margin-top:4px}
 .tk-sol{margin-top:8px;border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:var(--surface)}
 .tk-sol .codeblock{margin:6px 0}
+.tk-lint{margin-top:6px;font-size:15px;background:var(--warn-soft);border:1px solid var(--warn);border-inline-start-width:4px;border-radius:10px;padding:6px 10px}
+.tk-lint code{white-space:nowrap}
 .tk-nudge{margin-top:6px;font-size:15px;background:var(--accent-soft);border-radius:10px;padding:6px 10px}
 .tk-seen{font-size:12.5px;color:var(--muted);margin-inline-start:6px;white-space:nowrap}
 .btn.reset.confirm{background:var(--bad-soft);border-color:var(--bad);color:var(--bad)}
@@ -458,3 +460,48 @@ html,body{overflow-x:clip}
 .videobox{background:var(--accent-soft);border:1px solid var(--accent);border-radius:12px;padding:10px 14px;margin:10px 0;font-size:15.5px}
 .steps button.skim{opacity:.62;border-style:dashed}
 .steps button.skim::after{content:"📖";font-size:11px;margin-inline-start:4px}
+
+/* sound toggle + first-visit note */
+.sndbtn{border:1px solid transparent;background:transparent;color:var(--text);border-radius:99px;padding:3px 7px;cursor:pointer;font:inherit;font-size:15px;line-height:1;opacity:.55;transition:opacity .2s}
+.sndbtn:hover,.sndbtn:focus-visible,.sndbtn[aria-pressed="true"]{opacity:1;border-color:var(--line)}
+.sndnote{max-width:1088px;width:calc(100% - 32px);box-sizing:border-box;margin:10px auto 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px 12px;background:var(--accent-soft);color:var(--text);border:1px solid var(--accent);border-radius:12px;padding:8px 12px;font-size:14.5px}
+.sndnote .sn-b{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;margin-inline-start:auto}
+@media (max-width:640px){.sndbtn{padding:3px 5px}}
+@media (max-width:640px){
+  .topbar .in{flex-wrap:nowrap;gap:8px;padding:6px 12px}
+  .topbar .brand{min-width:0;flex:1 1 auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:14.5px}
+  .topbar .progress{flex:none;gap:5px;font-size:13px}
+  .topbar .eggbtn{flex:none;padding:3px 7px}
+  .topbar .themebtn,.topbar .sndbtn{flex:none}
+}
+
+/* step-by-step / auto sequence controls */
+.seqbox{display:inline-flex;gap:8px;align-items:center;flex-wrap:wrap}
+.seqmode{display:inline-flex;border:1px solid var(--line);border-radius:99px;overflow:hidden}
+.seqmode button{border:0;background:var(--surface);color:var(--text);font:inherit;font-size:13.5px;padding:5px 11px;cursor:pointer}
+.seqmode button.on{background:var(--accent);color:var(--on-accent);font-weight:600}
+.seqmode button:focus-visible{outline:3px solid var(--focus);outline-offset:-3px}
+
+/* 📌 assignment in Classroom */
+.asg{border:2px solid var(--accent);border-radius:14px;padding:12px 14px;margin:12px 0;background:var(--surface)}
+.asg-h{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline;font-size:17px}
+.asg-tag{background:var(--accent);color:var(--on-accent);border-radius:99px;padding:2px 10px;font-size:14px;font-weight:700}
+.asg-meta{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:14px;color:var(--muted);margin:6px 0}
+.asg-left{font-weight:700;color:var(--text)}
+.asg-left.soon{color:var(--warn)}
+.asg-left.late{color:var(--bad)}
+.asg-list{list-style:none;padding:0;margin:6px 0;display:grid;gap:6px}
+.asg-list>li{display:flex;gap:10px;align-items:flex-start;background:var(--surface2);border-radius:10px;padding:8px 10px}
+.asg-list>li.done{opacity:.75}
+.asg-list>li.done .vsbody{text-decoration:line-through;text-decoration-thickness:1px}
+.asg-prog{margin:4px 0;font-size:14px;color:var(--muted)}
+.asg-how{background:var(--accent-soft);border-radius:10px;padding:8px 10px;margin-top:8px;font-size:15px}
+.asg-after{margin:8px 0 0}
+.asgchip{display:inline-block;background:var(--accent-soft);border:1px solid var(--accent);border-radius:99px;padding:1px 10px;font-size:14px;font-weight:600}
+.tr-rule{background:var(--surface2);border-radius:10px;padding:8px 10px;margin:8px 0;font-size:14.5px;line-height:1.7}
+.asg-list{counter-reset:asg}
+.asg-list>li>.vsck{flex:none;display:flex;align-items:center;gap:6px;font-weight:700;color:var(--accent);cursor:pointer;line-height:1.75}
+.asg-list>li>.vsck::after{counter-increment:asg;content:counter(asg) "."}
+.asg-list>li>.vsck input{width:20px;height:20px;accent-color:var(--accent);margin:0;cursor:pointer}
+.asg-list>li>.vsbody{flex:1;min-width:0}
+@media (max-width:640px){.asg{padding:10px} .asg-list>li{padding:6px 8px;gap:8px}}
