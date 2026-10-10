@@ -499,38 +499,38 @@ function checkpoint(el, items, o){
   const id = el.id || ('cp' + (CPS.length + 1));
   const sec = el.closest('section.topic'), tid = sec ? sec.dataset.id : '', ttitle = sec ? sec.dataset.title : '';
   CPS.push({id, tid}); CPS_N[id] = items.length; state.cp = state.cp || {}; state.cpTotal = CPS.length;
-  el.classList.add('cp');
+  el.classList.add('gcp');
   const nQ = n => n === 1 ? 'שאלה אחת' : n + ' שאלות';
   let results = [];
   const backsOf = it => [].concat(it.back || []);
   function summary(r){
-    if (r.ok === r.n) return '<div class="cp-sum ok"><h4>✔ מוכנים להמשיך!</h4><p style="margin:0">עניתם נכון על ' + (r.n === 1 ? 'השאלה' : 'כל ' + r.n + ' השאלות') + ' כבר בניסיון הראשון. הבנתם את הנושא "' + esc(ttitle) + '".</p></div>';
-    return '<div class="cp-sum more"><h4>' + r.ok + ' מתוך ' + r.n + ' נכון בניסיון הראשון – כדאי לחזור על:</h4><ul>' +
+    if (r.ok === r.n) return '<div class="gcp-sum ok"><h4>✔ מוכנים להמשיך!</h4><p style="margin:0">עניתם נכון על ' + (r.n === 1 ? 'השאלה' : 'כל ' + r.n + ' השאלות') + ' כבר בניסיון הראשון. הבנתם את הנושא "' + esc(ttitle) + '".</p></div>';
+    return '<div class="gcp-sum more"><h4>' + r.ok + ' מתוך ' + r.n + ' נכון בניסיון הראשון – כדאי לחזור על:</h4><ul>' +
       (r.back || []).map(g => '<li><a href="#" data-go="' + g + '">' + stepHtml(g) + '</a></li>').join('') + '</ul>' +
       '<p class="muted" style="margin:0">אחרי החזרה – נסו שוב את הבדיקה. טעות היא חלק מהלמידה, לא סימן שאתם "לא מבינים".</p></div>';
   }
   function intro(){
     const prev = state.cp[id];
-    el.innerHTML = (prev ? summary(prev) : '<div class="cp-intro"><p style="margin:0">בדיקה קצרה – <b>לא חובה ובלי ציון</b>: ' + nQ(items.length) + ' על הדברים החשובים בנושא "' + esc(ttitle) + '". טעיתם? תקבלו הסבר וקישור לשלב שכדאי לחזור אליו.</p></div>') +
-      '<div class="cp-nav" style="justify-content:flex-start"><button class="btn primary" type="button" data-cp="start">' + (prev ? '↺ עשו את הבדיקה שוב' : 'התחילו את הבדיקה ▶') + '</button>' +
+    el.innerHTML = (prev ? summary(prev) : '<div class="gcp-intro"><p style="margin:0">בדיקה קצרה – <b>לא חובה ובלי ציון</b>: ' + nQ(items.length) + ' על הדברים החשובים בנושא "' + esc(ttitle) + '". טעיתם? תקבלו הסבר וקישור לשלב שכדאי לחזור אליו.</p></div>') +
+      '<div class="gcp-nav" style="justify-content:flex-start"><button class="btn primary" type="button" data-cp="start">' + (prev ? '↺ עשו את הבדיקה שוב' : 'התחילו את הבדיקה ▶') + '</button>' +
       (prev ? '' : '<span class="muted" style="align-self:center">לא עכשיו? אפשר להמשיך לשלב הבא.</span>') + '</div>';
   }
-  function dots(i){ return '<ol class="cp-dots" aria-label="התקדמות בבדיקה">' + items.map((x,k) => { const r = results[k];
+  function dots(i){ return '<ol class="gcp-dots" aria-label="התקדמות בבדיקה">' + items.map((x,k) => { const r = results[k];
     return '<li class="' + (k === i ? 'cur' : r || '') + '" aria-label="שאלה ' + (k+1) + (r === 'ok' ? ' – נכון בניסיון הראשון' : r === 'miss' ? ' – כדאי לחזור' : '') + '">' + (r === 'ok' ? '✔' : r === 'miss' ? '↺' : k+1) + '</li>'; }).join('') + '</ol>'; }
   function ask(i){
     const type = items[i].type || 'mc', it = type === 'mc' ? shuffled(items[i], LESSON + ':' + id + ':' + i + ':' + items[i].q) : items[i]; let wrongs = 0, solved = false;
-    el.innerHTML = dots(i) + '<div class="cp-q"><div class="qn">שאלה ' + (i+1) + ' מתוך ' + items.length + '</div><div class="qt" tabindex="-1">' + it.q + '</div><div class="cp-body"></div><div class="cp-fb" hidden aria-live="polite"></div><div class="cp-nav"></div></div>';
-    const body = el.querySelector('.cp-body'), fb = el.querySelector('.cp-fb'), nav = el.querySelector('.cp-nav');
+    el.innerHTML = dots(i) + '<div class="gcp-q"><div class="qn">שאלה ' + (i+1) + ' מתוך ' + items.length + '</div><div class="qt" tabindex="-1">' + it.q + '</div><div class="gcp-body"></div><div class="gcp-fb" hidden aria-live="polite"></div><div class="gcp-nav"></div></div>';
+    const body = el.querySelector('.gcp-body'), fb = el.querySelector('.gcp-fb'), nav = el.querySelector('.gcp-nav');
     const backLinks = () => backsOf(it).map(g => '<a class="back" href="#" data-go="' + g + '">↩ חזרו לשלב: ' + stepHtml(g) + '</a>').join('<br>');
     function wrong(msg){
       wrongs++; if (results[i] === undefined) results[i] = 'miss';
-      fb.hidden = false; fb.className = 'cp-fb wrong';
+      fb.hidden = false; fb.className = 'gcp-fb wrong';
       fb.innerHTML = '✘ ' + (msg || 'לא בדיוק.') + ' נסו שוב.' + (backsOf(it).length ? '<br>' + backLinks() : '');
       if (type !== 'mc' && type !== 'line' && wrongs >= 2 && it.answer && !nav.querySelector('[data-cp="show"]')) nav.insertAdjacentHTML('afterbegin', '<button class="btn" type="button" data-cp="show">🔓 הראו לי את התשובה</button>');
     }
     function right(msg){
       if (solved) return; solved = true; if (results[i] === undefined) results[i] = 'ok';
-      fb.hidden = false; fb.className = 'cp-fb right';
+      fb.hidden = false; fb.className = 'gcp-fb right';
       fb.innerHTML = '✔ ' + (results[i] === 'ok' ? 'נכון! ' : 'עכשיו נכון. ') + (msg || '');
       if (results[i] === 'ok') celebrate(fb, 'small');
       body.querySelectorAll('button,input').forEach(b => { if (!b.closest('.split')) b.disabled = true; });
@@ -544,16 +544,16 @@ function checkpoint(el, items, o){
     }
     if (type === 'line') {
       const ls = it.code.split('\n'), f = it.lang === 'css' ? hlCssLine : hlHtmlLine;
-      body.innerHTML = '<p class="muted" style="margin:0">לחצו על השורה שבה הטעות:</p><ol class="cp-lines">' + ls.map((l,k) => '<li><button type="button" data-k="' + (k+1) + '" aria-label="שורה ' + (k+1) + ': ' + escA(l.trim() || 'ריקה') + '"><span class="n">' + (k+1) + '</span><span>' + (f(l) || ' ') + '</span></button></li>').join('') + '</ol>';
-      body.querySelector('.cp-lines').addEventListener('click', e => { const b = e.target.closest('[data-k]'); if (!b || b.disabled) return; const k = +b.dataset.k;
+      body.innerHTML = '<p class="muted" style="margin:0">לחצו על השורה שבה הטעות:</p><ol class="gcp-lines">' + ls.map((l,k) => '<li><button type="button" data-k="' + (k+1) + '" aria-label="שורה ' + (k+1) + ': ' + escA(l.trim() || 'ריקה') + '"><span class="n">' + (k+1) + '</span><span>' + (f(l) || ' ') + '</span></button></li>').join('') + '</ol>';
+      body.querySelector('.gcp-lines').addEventListener('click', e => { const b = e.target.closest('[data-k]'); if (!b || b.disabled) return; const k = +b.dataset.k;
         if (k === it.correct) { b.classList.add('right'); right(it.explain); } else { b.classList.add('wrong'); b.disabled = true; wrong((it.why || {})[k] || 'השורה הזו תקינה.'); } });
     }
     if (type === 'selector' || type === 'text') {
-      if (type === 'selector') body.innerHTML = '<div class="cp-split"></div>';
-      body.insertAdjacentHTML('beforeend', '<form class="cp-in"><input spellcheck="false" autocomplete="off" aria-label="' + (type === 'selector' ? 'כתבו בורר CSS' : 'כתבו את התשובה') + '" placeholder="' + escA(it.placeholder || (type === 'selector' ? 'כתבו כאן בורר' : '')) + '"' + (it.ltr === false ? ' style="direction:rtl;text-align:right;font-family:inherit"' : '') + ' /><button class="btn primary" type="submit">בדיקה</button></form>');
+      if (type === 'selector') body.innerHTML = '<div class="gcp-split"></div>';
+      body.insertAdjacentHTML('beforeend', '<form class="gcp-in"><input spellcheck="false" autocomplete="off" aria-label="' + (type === 'selector' ? 'כתבו בורר CSS' : 'כתבו את התשובה') + '" placeholder="' + escA(it.placeholder || (type === 'selector' ? 'כתבו כאן בורר' : '')) + '"' + (it.ltr === false ? ' style="direction:rtl;text-align:right;font-family:inherit"' : '') + ' /><button class="btn primary" type="submit">בדיקה</button></form>');
       const inp = body.querySelector('input'); let sp;
       if (type === 'selector') {
-        sp = new Split(body.querySelector('.cp-split'), {resultTitle: 'מה הבורר שלכם בוחר (באדום)'}); sp.setHtml(it.html); if (it.css) sp.setCss(it.css);
+        sp = new Split(body.querySelector('.gcp-split'), {resultTitle: 'מה הבורר שלכם בוחר (באדום)'}); sp.setHtml(it.html); if (it.css) sp.setCss(it.css);
         inp.addEventListener('input', () => { const v = inp.value.trim(); const r = v ? sp.highlight(v) : sp.highlight(''); sp.say(v ? (r === null ? '<span class="err">זה עוד לא בורר תקין</span>' : 'נבחרו <span class="count">' + r.length + '</span> תגיות') : ''); });
       }
       body.querySelector('form').addEventListener('submit', e => {
@@ -581,7 +581,7 @@ function checkpoint(el, items, o){
     const back = []; items.forEach((it,k) => { if (results[k] !== 'ok') backsOf(it).forEach(g => { if (!back.includes(g)) back.push(g); }); });
     state.cp[id] = {n: items.length, ok, back, t: tid}; save();
     if (T.length) show(pos.ti, pos.si, false);
-    el.innerHTML = dots(-1) + summary(state.cp[id]) + '<div class="cp-nav" style="justify-content:flex-start"><button class="btn" type="button" data-cp="start">↺ עשו את הבדיקה שוב</button></div>';
+    el.innerHTML = dots(-1) + summary(state.cp[id]) + '<div class="gcp-nav" style="justify-content:flex-start"><button class="btn" type="button" data-cp="start">↺ עשו את הבדיקה שוב</button></div>';
     if (ok === items.length) { toast('🎯 מוכנים להמשיך! הבנתם את "' + esc(ttitle) + '"'); celebrate(el, 'big'); }
     const h = el.querySelector('h4'); if (h) { h.tabIndex = -1; h.focus({preventScroll: true}); }
   }
@@ -597,7 +597,7 @@ function measureTopic(t){
   let words = 0, opt = 0, pred = 0, ctrls = 0, code = 0, vs = 0, cpq = 0, pg = 0;
   t.steps.forEach(sp => {
     if (sp.classList.contains('vsstep')) { vs += sp.querySelectorAll('ol.vsdo > li').length; return; }
-    if (sp.classList.contains('cpstep')) { const id = (sp.querySelector('.cp') || {}).id; cpq += (CPS_N[id] || 4); return; }
+    if (sp.classList.contains('cpstep')) { const id = (sp.querySelector('.gcp') || {}).id; cpq += (CPS_N[id] || 4); return; }
     const c = sp.cloneNode(true);
     c.querySelectorAll('details.more').forEach(d => { opt += wc(d.textContent); d.remove(); });
     code += c.querySelectorAll('pre .ln').length;
@@ -632,7 +632,7 @@ let returnTo = null;
 function paintBackChip(){
   let c = $('#backChip');
   if (!c) { c = document.createElement('button'); c.id = 'backChip'; c.type = 'button'; c.className = 'backchip'; c.hidden = true; document.body.appendChild(c);
-    c.addEventListener('click', () => { const r = returnTo; returnTo = null; if (r) { show(r.ti, r.si, true); const q = T[r.ti].steps[r.si].querySelector('.cp .qt, .tasks'); if (q && q.focus) { if (!q.hasAttribute('tabindex')) q.tabIndex = -1; q.focus({preventScroll: true}); } } paintBackChip(); }); }
+    c.addEventListener('click', () => { const r = returnTo; returnTo = null; if (r) { show(r.ti, r.si, true); const q = T[r.ti].steps[r.si].querySelector('.gcp .qt, .tasks'); if (q && q.focus) { if (!q.hasAttribute('tabindex')) q.tabIndex = -1; q.focus({preventScroll: true}); } } paintBackChip(); }); }
   const on = returnTo && !(returnTo.ti === pos.ti && returnTo.si === pos.si);
   if (returnTo && !on) returnTo = null;
   c.hidden = !on; if (on) c.innerHTML = '↩ חזרה ל: <bdi>' + stepTitleHtml(T[returnTo.ti].steps[returnTo.si]) + '</bdi>';

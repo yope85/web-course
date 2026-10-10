@@ -368,42 +368,42 @@ details.ask>summary{color:var(--text)}
 
 /* ---------- 🎯 understanding check ---------- */
 .spread.cpstep{border-top:5px solid var(--what)}
-.cp-intro{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:8px 0}
-.cp-dots{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 10px;padding:0;list-style:none}
-.cp-dots li{min-width:30px;height:30px;padding:0 6px;border-radius:99px;display:grid;place-items:center;font-size:13px;font-weight:700;border:1.5px solid var(--line);background:var(--surface)}
-.cp-dots li.cur{border:2px solid var(--accent);color:var(--accent)}
-.cp-dots li.ok{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
-.cp-dots li.miss{background:var(--warn-soft);border-color:var(--warn);color:var(--warn)}
-.cp-q{border:2px solid var(--line);border-radius:12px;padding:12px 16px;background:var(--surface)}
-.cp-q .qn{font-size:13.5px;color:var(--muted)}
-.cp-q .qt{font-weight:600;margin:2px 0 8px}
-.cp-q .opts{display:flex;flex-direction:column;gap:8px;align-items:stretch}
-.cp-q .opts button{font:inherit;font-size:15.5px;border:1px solid var(--line);background:var(--surface2);color:var(--text);padding:8px 14px;border-radius:10px;cursor:pointer;text-align:right}
-.cp-q .opts button.right{background:var(--ok-soft);border-color:var(--ok)}
-.cp-q .opts button.right::before{content:"✔ ";color:var(--ok);font-weight:700}
-.cp-q .opts button.wrong{background:var(--bad-soft);border-color:var(--bad);text-decoration:line-through;text-decoration-thickness:1px}
-.cp-q .opts button.wrong::before{content:"✘ ";color:var(--bad);font-weight:700}
-.cp-q .opts button:disabled{cursor:default}
-.cp-lines{list-style:none;margin:6px 0;padding:6px 0;background:var(--code-bg);border-radius:12px;direction:ltr;text-align:left}
-.cp-lines button{display:flex;gap:10px;width:100%;font:inherit;font-family:"JetBrains Mono",Consolas,monospace;font-size:14px;line-height:1.6;text-align:left;direction:ltr;color:var(--code-text);background:transparent;border:0;border-left:4px solid transparent;padding:2px 12px;cursor:pointer;white-space:pre-wrap;overflow-wrap:anywhere}
-.cp-lines button:hover{background:rgba(96,165,250,.15)}
-.cp-lines button .n{flex:0 0 1.6em;color:#7c8aa0;text-align:right;user-select:none}
-.cp-lines button.right{background:rgba(34,197,94,.18);border-left-color:#22c55e}
-.cp-lines button.right::after{content:"✔ כאן הטעות";font-family:Rubik,Arial,sans-serif;font-size:12px;background:#22c55e;color:#04210f;border-radius:99px;padding:0 8px;margin-left:auto;direction:rtl;white-space:nowrap;align-self:center}
-.cp-lines button.wrong{background:rgba(248,113,113,.16);border-left-color:#f87171}
-.cp-lines button.wrong::after{content:"✘ השורה הזו תקינה";font-family:Rubik,Arial,sans-serif;font-size:12px;background:#fca5a5;color:#3b0a0a;border-radius:99px;padding:0 8px;margin-left:auto;direction:rtl;white-space:nowrap;align-self:center}
-.cp-in{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0}
-.cp-in input{flex:1;min-width:160px;direction:ltr;text-align:left;font-family:"JetBrains Mono",monospace;font-size:16px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--text)}
-.cp-fb{margin-top:10px;border-radius:10px;padding:8px 12px}
-.cp-fb.right{background:var(--ok-soft)}
-.cp-fb.wrong{background:var(--bad-soft)}
-.cp-fb .back{display:inline-block;margin-top:4px;font-weight:600}
-.cp-nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end;margin-top:10px}
-.cp-sum{border-radius:12px;padding:12px 16px;margin-top:6px}
-.cp-sum.ok{background:var(--ok-soft);border:1px solid var(--ok)}
-.cp-sum.more{background:var(--warn-soft);border:1px solid var(--warn)}
-.cp-sum h4{margin:0 0 4px;font-size:18px}
-.cp-sum ul{margin:6px 0;padding-inline-start:22px}
+.gcp-intro{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:8px 0}
+.gcp-dots{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 10px;padding:0;list-style:none}
+.gcp-dots li{min-width:30px;height:30px;padding:0 6px;border-radius:99px;display:grid;place-items:center;font-size:13px;font-weight:700;border:1.5px solid var(--line);background:var(--surface)}
+.gcp-dots li.cur{border:2px solid var(--accent);color:var(--accent)}
+.gcp-dots li.ok{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.gcp-dots li.miss{background:var(--warn-soft);border-color:var(--warn);color:var(--warn)}
+.gcp-q{border:2px solid var(--line);border-radius:12px;padding:12px 16px;background:var(--surface)}
+.gcp-q .qn{font-size:13.5px;color:var(--muted)}
+.gcp-q .qt{font-weight:600;margin:2px 0 8px}
+.gcp-q .opts{display:flex;flex-direction:column;gap:8px;align-items:stretch}
+.gcp-q .opts button{font:inherit;font-size:15.5px;border:1px solid var(--line);background:var(--surface2);color:var(--text);padding:8px 14px;border-radius:10px;cursor:pointer;text-align:right}
+.gcp-q .opts button.right{background:var(--ok-soft);border-color:var(--ok)}
+.gcp-q .opts button.right::before{content:"✔ ";color:var(--ok);font-weight:700}
+.gcp-q .opts button.wrong{background:var(--bad-soft);border-color:var(--bad);text-decoration:line-through;text-decoration-thickness:1px}
+.gcp-q .opts button.wrong::before{content:"✘ ";color:var(--bad);font-weight:700}
+.gcp-q .opts button:disabled{cursor:default}
+.gcp-lines{list-style:none;margin:6px 0;padding:6px 0;background:var(--code-bg);border-radius:12px;direction:ltr;text-align:left}
+.gcp-lines button{display:flex;gap:10px;width:100%;font:inherit;font-family:"JetBrains Mono",Consolas,monospace;font-size:14px;line-height:1.6;text-align:left;direction:ltr;color:var(--code-text);background:transparent;border:0;border-left:4px solid transparent;padding:2px 12px;cursor:pointer;white-space:pre-wrap;overflow-wrap:anywhere}
+.gcp-lines button:hover{background:rgba(96,165,250,.15)}
+.gcp-lines button .n{flex:0 0 1.6em;color:#7c8aa0;text-align:right;user-select:none}
+.gcp-lines button.right{background:rgba(34,197,94,.18);border-left-color:#22c55e}
+.gcp-lines button.right::after{content:"✔ כאן הטעות";font-family:Rubik,Arial,sans-serif;font-size:12px;background:#22c55e;color:#04210f;border-radius:99px;padding:0 8px;margin-left:auto;direction:rtl;white-space:nowrap;align-self:center}
+.gcp-lines button.wrong{background:rgba(248,113,113,.16);border-left-color:#f87171}
+.gcp-lines button.wrong::after{content:"✘ השורה הזו תקינה";font-family:Rubik,Arial,sans-serif;font-size:12px;background:#fca5a5;color:#3b0a0a;border-radius:99px;padding:0 8px;margin-left:auto;direction:rtl;white-space:nowrap;align-self:center}
+.gcp-in{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0}
+.gcp-in input{flex:1;min-width:160px;direction:ltr;text-align:left;font-family:"JetBrains Mono",monospace;font-size:16px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--text)}
+.gcp-fb{margin-top:10px;border-radius:10px;padding:8px 12px}
+.gcp-fb.right{background:var(--ok-soft)}
+.gcp-fb.wrong{background:var(--bad-soft)}
+.gcp-fb .back{display:inline-block;margin-top:4px;font-weight:600}
+.gcp-nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end;margin-top:10px}
+.gcp-sum{border-radius:12px;padding:12px 16px;margin-top:6px}
+.gcp-sum.ok{background:var(--ok-soft);border:1px solid var(--ok)}
+.gcp-sum.more{background:var(--warn-soft);border:1px solid var(--warn)}
+.gcp-sum h4{margin:0 0 4px;font-size:18px}
+.gcp-sum ul{margin:6px 0;padding-inline-start:22px}
 .topics button .cpb{font-size:12px;font-weight:700;border-radius:99px;padding:0 6px;border:1px solid currentColor;white-space:nowrap}
 
 /* ---------- ↩ back to where you were ---------- */
@@ -419,7 +419,7 @@ details.ask>summary{color:var(--text)}
 .trouble>details.tr-d[open]>summary{margin-bottom:6px}
 /* engine fixes from the lesson writers */
 .topics button{position:relative}
-.cp-q .opts code,.expect code,.vsbody p code,.tk-hint code,.tk-sol code,.cp-fb code{white-space:normal;overflow-wrap:anywhere}
+.gcp-q .opts code,.expect code,.vsbody p code,.tk-hint code,.tk-sol code,.gcp-fb code{white-space:normal;overflow-wrap:anywhere}
 .lock-cover>.veil-cover{border-style:dotted}
 
 /* ---------- 🎉 celebrate ---------- */
