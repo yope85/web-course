@@ -99,23 +99,33 @@
   </article>
   <article class="spread">
     <h3>תזכורת: מה כבר יודעים משיעור 1</h3>
-    <p>בשיעור 1 יצרתם פרויקט ב-Visual Studio, ובתוך התיקייה <b>wwwroot</b> פתחתם תיקייה בשם <b>HTML</b>. בתוכה יצרתם דף ראשון:</p>
+    <p>בשיעור 1 יצרתם פרויקט ב-Visual Studio, ובתוך התיקייה <b>wwwroot</b> פתחתם תיקייה בשם <b>HTML</b>. בתוכה יצרתם את הדף index.html – עם השלד המלא:</p>
     <div class="walk">
       <div class="ftree" id="recapTree"></div>
       <div>
-        <div class="pane-h"><span class="dot"></span>מה כתבתם בתוך הדף</div>
+        <div class="pane-h"><span class="dot"></span>מה כתבתם בדף (index.html)</div>
         <div class="codeblock"><pre data-code="html">
-&lt;h1&gt;פיצה דני&lt;/h1&gt;
-&lt;p&gt;הפיצה הכי טעימה באשקלון&lt;/p&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang="he" dir="rtl"&gt;
+&lt;head&gt;
+    &lt;meta charset="utf-8" /&gt;
+    &lt;title&gt;השם שלי&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;השם שלי&lt;/h1&gt;
+    &lt;p&gt;האתר שלי יהיה על...&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
 </pre></div>
       </div>
     </div>
+    <p>כבר הכרתם: תגית פותחת וסוגרת, השלד (head להגדרות, body למה שרואים), title על הלשונית, meta charset לעברית תקינה, ו-<code>dir="rtl"</code> לכיוון מימין לשמאל.</p>
     <p>(בתוך wwwroot יש גם את js, lib ו-favicon.ico – התבנית יצרה אותם, ולא נוגעים בהם. תיקייה בשם Img עוד אין – ניצור אותה היום, בנושא התמונות.)</p>
     <p>הרצתם עם ה-▶ הירוק, והדף נפתח בדפדפן בכתובת <code style="white-space:normal;overflow-wrap:anywhere">https://localhost:&lt;port&gt;/HTML/index.html</code> (port הוא מספר שמשתנה מפרויקט לפרויקט).</p>
-    <p><b>היום נוסיף ארבעה דברים:</b></p>
+    <p><b>מה בשיעור היום?</b></p>
     <ol>
-      <li>מה עוד כתוב בקובץ, <b>מסביב</b> ל-h1 ול-p (השלד של הדף).</li>
-      <li>איך בנויה כל תגית – ותגיות חדשות.</li>
+      <li>איך בנויה תגית לעומק – מאפיינים, קינון והערות – ותגיות חדשות.</li>
+      <li>חזרה מהירה על השלד, עם העמקה: מה בדיוק כל חלק עושה, ומה קורה כשהוא חסר.</li>
       <li>קישורים: מדף לדף, לאתר אחר, ולמקום בתוך הדף.</li>
       <li>תמונות – בתיקייה חדשה בשם <b>Img</b>.</li>
     </ol>
@@ -137,7 +147,7 @@
       <p>כל מאפיין הוא זוג: <b>שם</b> – מה רוצים לקבוע, ו<b>ערך</b> – למה. <code>href="menu.html"</code> פירושו "היעד הוא menu.html".</p>
       <p>ולמה צריך תגית סוגרת? כי הדפדפן צריך לדעת איפה התוכן נגמר. כל מה שבין הפותחת לסוגרת – שייך לתגית. בקישור: כל זה לחיץ.</p>
     </details>
-    <div class="bridge">מאפיין עובד כמו השמה ב-C#: <code>string page = "menu.html";</code> – שם, סימן <code>=</code>, וערך. ב-HTML: <code>href="menu.html"</code>. הבדל אחד: ב-HTML הערך <b>תמיד</b> בתוך מירכאות, גם כשהוא מספר (<code>width="150"</code>).</div>
+    <div class="bridge">מאפיין עובד כמו השמה ב-C#: <code>string page = "menu.html";</code> – שם, סימן <code>=</code>, וערך. ב-HTML: <code>href="menu.html"</code>. הבדל אחד: בקורס כותבים את הערך <b>תמיד</b> בתוך מירכאות, גם כשהוא מספר (<code>width="150"</code>).</div>
     <div class="tip">💡 HTML לא מבדילה בין אותיות גדולות לקטנות: <code>&lt;H1&gt;</code> ו-<code>&lt;h1&gt;</code> עובדות אותו דבר. אבל המוסכמה היא לכתוב תמיד <b>באותיות קטנות</b> – וכך נכתוב בקורס.</div>
     <div class="trap">מירכאות "חכמות" (<code>“</code> ו-<code>”</code>) – כאלה שמגיעות בהעתקה מ-Word או ממצגת – שוברות את המאפיין, והדפדפן לא מבין אותו. בקוד כותבים רק את המירכאות הישרות של המקלדת: <code>"</code>.</div>
     <details class="more"><summary>🚀 להעמקה: חייבים מירכאות?</summary>
@@ -200,7 +210,8 @@
 <section class="topic" data-id="page" data-icon="📄" data-title="מבנה הדף">
   <article class="spread">
     <h3>השלד של כל דף HTML</h3>
-    <p>בשיעור 1 כתבתם רק h1 ו-p. אבל בקובץ היו עוד שורות, מסביב. אלה <b>השלד</b> – והוא זהה כמעט בכל דף. לחצו על כל חלק ותראו מה הוא עושה:</p>
+    <p>את <b>השלד</b> כבר כתבתם בשיעור 1 – הוא זהה כמעט בכל דף. הנושא הזה הוא <b>חזרה מהירה עם העמקה</b>: מה בדיוק כל חלק עושה, ומה קורה כשהוא חסר. לחצו על כל חלק:</p>
+    <div class="tip">💡 זוכרים הכול מצוין? אפשר לעבור מהר על השלבים, או לקפוץ ישר ל<a href="#" data-go="page:6">בדיקת ההבנה של הנושא</a> – ואם תצליחו, להמשיך הלאה.</div>
     <div class="ctrls"><div class="seg" id="skelSeg"></div></div>
     <div class="split">
       <div class="pane"><div class="pane-h"><span class="dot"></span>index.html</div><pre class="cv" id="skelCode"></pre></div>
@@ -211,16 +222,16 @@
     <div class="tip">💡 כש-Visual Studio יוצר דף HTML חדש, השלד כבר כתוב. רק שנו את השורה של html: במקום <code>lang="en"</code> (ואולי עוד מאפיין בשם xmlns – אפשר למחוק אותו) כתבו <code>&lt;html lang="he" dir="rtl"&gt;</code>. עוד שני שלבים ותבינו למה.</div>
   </article>
   <article class="spread">
-    <h3>head: הכותרת של הלשונית</h3>
-    <p>מה שכתוב ב-head <b>לא מופיע בתוך הדף</b>. אבל יש שם תגית אחת שרואים בכל זאת: <code>&lt;title&gt;</code>.</p>
+    <h3>head ו-title</h3>
+    <p>מה שכתוב ב-head <b>לא מופיע בתוך הדף</b>. בשיעור 1 כתבתם ב-title את השם שלכם – וראיתם אותו על הלשונית. אבל כש-Visual Studio יוצר דף חדש, התגית title <b>ריקה</b>: <code>&lt;title&gt;&lt;/title&gt;</code> – כך בדיוק נראה עכשיו practice.html שלכם.</p>
     <div class="predict" id="pTitle"></div>
     <div id="titleDemo" hidden>
-      <div class="lblrow"><label for="titleIn">כתבו כותרת לדף:</label><input id="titleIn" value="פיצה דני – הפיצה של אשקלון" maxlength="60" /></div>
+      <div class="lblrow"><label for="titleIn">כתבו כותרת לדף:</label><input id="titleIn" value="" placeholder="למשל: פיצה דני – הפיצה של אשקלון" maxlength="60" /></div>
       <div class="split">
         <div class="pane"><div class="pane-h"><span class="dot"></span>index.html</div><pre class="cv" id="titleCode"></pre></div>
         <div class="pane"><div class="pane-h"><span class="dot"></span>מה רואים בדפדפן</div><div id="titleHost"><div class="host"></div></div></div>
       </div>
-      <div class="what">הטקסט של title מופיע <b>על הלשונית</b> של הדפדפן – לא בתוך הדף. הוא מופיע גם כששומרים את הדף במועדפים, וגם בתוצאות החיפוש של גוגל. לכן כותבים בו שם ברור. את הכותרת שבתוך הדף כותבים ב-h1 – אלה שני דברים נפרדים.</div>
+      <div class="what">כש-title ריק, אין לדפדפן שם להציג – אז הוא מציג על הלשונית את <b>הכתובת</b> של הדף (כך בכרום ובאדג׳). כתבו שם בתיבה – והוא יופיע על הלשונית. title מופיע גם כששומרים את הדף במועדפים, וגם בתוצאות החיפוש של גוגל – לכן כותבים בו שם ברור. ושימו לב: הדפדפן <b>לא</b> לקח את השם מה-h1. את הכותרת שבתוך הדף כותבים ב-h1, ואת השם של הדף – ב-title. שני דברים נפרדים.</div>
     </div>
   </article>
   <article class="spread">
@@ -234,7 +245,7 @@
     <h3>lang ו-dir: דף שמדבר עברית</h3>
     <p>שני מאפיינים בתגית html. <code>dir="rtl"</code> (direction – כיוון) אומר: הדף נקרא <b>מימין לשמאל</b> (right to left). <code>lang="he"</code> (language – שפה) אומר: הדף <b>בעברית</b>. אותו תוכן בדיוק, פעמיים:</p>
     <div class="compare" id="cmpDir"></div>
-    <div class="what">בלי <code>dir="rtl"</code> הדפדפן חושב שזה דף באנגלית: הטקסט נצמד לשמאל, וסימן הקריאה <b>קפץ לתחילת המשפט</b> (הסתכלו בצד ימין של השורה). עם <code>dir="rtl"</code> הכול במקום.</div>
+    <div class="what">בלי <code>dir="rtl"</code> הדפדפן חושב שזה דף באנגלית: הטקסט נצמד לשמאל, וסימן הקריאה <b>קפץ לתחילת המשפט</b> (הסתכלו מימין למילה הראשונה). עם <code>dir="rtl"</code> הכול במקום.</div>
     <div class="tip">💡 ו-<code>lang="he"</code>? לא רואים אותו, אבל הוא עוזר לגוגל להבין באיזו שפה הדף, עוזר לתוכנות שמקריאות דפים לעיוורים לבחור קול בעברית, ועוזר לדפדפן לא להציע "לתרגם" את הדף בלי צורך.</div>
   </article>
   <article class="spread vsstep">
@@ -243,7 +254,7 @@
     <ol class="vsdo">
       <li>הסתכלו על הקוד של practice.html ומצאו את כל חלקי השלד <a href="#" data-go="page:1">משלב 1</a>: השורה DOCTYPE, התגית html, ה-head עם meta charset ו-title, וה-body עם התוכן שכתבתם.</li>
       <li>בתוך התגית title כתבו: <b>פיצה דני – דף תרגול</b>. שמרו (Ctrl+S) ורעננו <b>בדפדפן</b> (Ctrl+F5) – והסתכלו על הלשונית.</li>
-      <li>🔨 <b>נסו בלי כיוון:</b> בשורה של התגית html מחקו רק את <code>dir="rtl"</code>. שמרו ורעננו: הטקסט נצמד לשמאל, וסימני הקריאה קפצו לתחילת המשפט (בצד ימין של השורה). עכשיו החזירו את <code>dir="rtl"</code>, שמרו ורעננו.</li>
+      <li>🔨 <b>נסו בלי כיוון:</b> בשורה של התגית html מחקו רק את המאפיין <code>dir="rtl"</code> ואת הרווח שלפניו, ושמרו ורעננו: הטקסט נצמד לשמאל, וסימני הקריאה קפצו לתחילת המשפט – מימין למילה הראשונה. עכשיו החזירו את המאפיין למקומו, שמרו ורעננו.</li>
       <li>ודאו שהשורה <code>&lt;meta charset="utf-8" /&gt;</code> נמצאת בתוך head (Visual Studio כותב אותה לבד) – ואל תמחקו אותה. גם אם אצלכם העברית נראית תקינה בלעדיה, בדפדפן או במחשב אחר הניחוש יכול להיות שגוי (<a href="#" data-go="page:3">למה?</a>).</li>
     </ol>
     <div class="expect">בכתובת שמסתיימת ב-<code>/HTML/practice.html</code>: על הלשונית כתוב "פיצה דני – דף תרגול", וכל הטקסט מיושר לימין. בצעד 3, בלי dir, הטקסט נצמד לשמאל – ואחרי שהחזרתם אותו, הכול חזר למקום.</div>
@@ -263,10 +274,10 @@
     <div id="heads"></div>
     <div class="what">הדפדפן מציג כל רמה קצת יותר קטנה, וכולן מודגשות. הפסקה p היא טקסט רגיל. שימו לב: כל כותרת וכל פסקה מתחילה <b>בשורה חדשה</b>.</div>
     <div class="bridge">כמו בספר: h1 הוא שם הספר, h2 – שם של פרק, h3 – תת-פרק בתוך הפרק. באתר של פיצה דני: h1 = "פיצה דני", h2 = "התפריט", h3 = "פיצות".</div>
-    <div class="tip">💡 בכל דף יש <b>h1 אחד בלבד</b> – הכותרת הראשית. ובוחרים רמה לפי החשיבות, לא לפי הגודל: את הגודל נקבע בעצמנו עם CSS בשיעור 3.</div>
+    <div class="tip">💡 מקובל שבכל דף יש <b>h1 אחד בלבד</b> – הכותרת הראשית. ובוחרים רמה לפי החשיבות, לא לפי הגודל: את הגודל נקבע בעצמנו עם CSS בשיעור 3.</div>
   </article>
   <article class="spread">
-    <h3>ירידת שורה: br</h3>
+    <h3>Enter בקוד = שורה חדשה בדף?</h3>
     <p>רוצים לכתוב בדף את הכתובת של הפיצרייה, בשלוש שורות. כתבנו בקוד שלוש שורות, עם Enter אחרי כל אחת.</p>
     <div class="predict" id="pBr"></div>
     <div id="brDemo" hidden>
@@ -353,7 +364,7 @@
     <div class="walk">
       <div class="ftree" id="l3tree"></div>
       <div>
-        <p style="margin-top:0"><b>ב-Visual Studio יש קיצור דרך:</b> גוררים את הקובץ menu.html מ-Solution Explorer אל תוך הקוד, ו-Visual Studio כותב את תגית הקישור עם הנתיב הנכון. נשאר רק לשנות את הטקסט שבין התגיות.</p>
+        <p style="margin-top:0"><b>ב-Visual Studio יש קיצור דרך:</b> גוררים את הקובץ menu.html מ-Solution Explorer אל תוך הקוד, ו-Visual Studio כותב לבד את תגית הקישור <span class="unverified">לא אומת</span>. בדקו מה הוא כתב ב-href: צריך להיות שם הקובץ בלבד – menu.html. אם כתוב שם משהו אחר (למשל עם לוכסן או שם של תיקייה), תקנו לשם הקובץ, ושנו את הטקסט שבין התגיות.</p>
       </div>
     </div>
     <p>זה אתר חי של שני דפים. לחצו על הקישורים ועברו בין הדפים. שימו לב איך משתנים <b>הכתובת</b> למעלה ו<b>הקוד</b> משמאל:</p>
@@ -361,25 +372,31 @@
     <div class="trap">שוכחים את הסיומת: <code>href="menu"</code> מחפש קובץ בשם menu בלי סיומת – ואין כזה. מקבלים דף שגיאה 404 ("לא נמצא"). השם צריך להיות <b>בדיוק</b> כמו ב-Solution Explorer, כולל <code>.html</code>.</div>
   </article>
   <article class="spread">
-    <h3>קפיצה למקום בתוך הדף: # ו-id</h3>
-    <p>בדף ארוך נוח לתת קישור שקופץ ישר לחלק מסוים – למשל למחירון. עושים את זה בשני צעדים:</p>
-    <ol>
-      <li>נותנים לתגית היעד <b>שם ייחודי</b> עם המאפיין <code>id</code>: <code>&lt;h2 id="prices"&gt;</code>.</li>
-      <li>בקישור כותבים סולמית ואת השם: <code>href="#prices"</code>.</li>
-    </ol>
+    <h3># ו-id</h3>
+    <p>בקוד שלמטה יש שני דברים חדשים: לכותרת "מחירון" יש מאפיין חדש בשם <code>id</code>, ולקישור הראשון יש href שמתחיל בסולמית (<code>#</code>) – במקום שם של קובץ.</p>
+    <details class="more"><summary>🐢 רוצים הסבר לאט יותר?</summary>
+      <p><b>id</b> (מהמילה identifier – מזהה) הוא <b>שם ייחודי</b> שנותנים לתגית אחת בדף – כמו שלט עם שם על דלת. ב-<code>&lt;h2 id="prices"&gt;</code> קראנו לכותרת "מחירון" בשם prices.</p>
+      <p>עד עכשיו כתבנו ב-href שם של קובץ, כמו menu.html. כאן אין שם קובץ – רק סולמית ואחריה השם prices. מה הדפדפן יעשה עם זה? נסו לנחש.</p>
+    </details>
     <div class="predict" id="pJump"></div>
     <div id="l4"></div>
-    <div class="what" id="l4what" hidden>הסולמית <code>#</code> אומרת לדפדפן: "אל תחפש דף אחר – חפש <b>בדף הזה</b> תגית עם ה-id הזה". והדפדפן גולל אליה. הקישור "חזרה למעלה" עובד בדיוק אותו דבר, עם <code>id="top"</code> על הכותרת הראשית.</div>
-    <details class="more" data-lock><summary>🐢 רוצים הסבר לאט יותר?</summary>
-      <p>כך הדפדפן עובד, צעד אחר צעד, כשלוחצים על <code>href="#prices"</code>:</p>
+    <div id="l4what" hidden>
+      <div class="what">הסולמית <code>#</code> אומרת לדפדפן: "אל תחפש דף אחר – חפש <b>בדף הזה</b> תגית עם ה-id הזה". והדפדפן גולל אליה. הקישור "חזרה למעלה" עובד בדיוק אותו דבר, עם <code>id="top"</code> על הכותרת הראשית.</div>
+      <p><b>אז עושים את זה בשני צעדים:</b></p>
       <ol>
-        <li>הוא רואה <b>סולמית</b>: "לא מחפשים דף אחר – מחפשים מקום <b>בדף הזה</b>".</li>
-        <li>הוא קורא את השם: <b>prices</b>, ועובר על הדף עד שהוא מוצא תגית עם <code>id="prices"</code>.</li>
-        <li>מצא? הוא גולל עד שהתגית בראש החלון. לא מצא? לא קורה כלום – וגם אין הודעת שגיאה.</li>
+        <li>נותנים לתגית היעד <b>שם ייחודי</b> עם המאפיין id – למשל <code>&lt;h2 id="prices"&gt;</code> לכותרת של המחירון.</li>
+        <li>בקישור כותבים סולמית ואת אותו השם – <code>href="#prices"</code> – בלי רווח ביניהם.</li>
       </ol>
-      <p>שימו לב: ב-id כותבים את השם <b>בלי</b> סולמית. את הסולמית כותבים רק בקישור.</p>
-    </details>
-    <div class="bridge">id הוא כמו שם של משתנה ב-C#: אסור שיהיו שני משתנים באותו שם באותו מקום. גם id חייב להיות <b>ייחודי</b> בדף – אם יהיו שניים, הקישור יקפוץ תמיד רק לראשון. את הסימן # תפגשו שוב בשיעור 3, ב-CSS.</div>
+      <details class="more"><summary>🐢 צעד אחר צעד: מה הדפדפן עושה כשלוחצים?</summary>
+        <ol>
+          <li>הוא רואה <b>סולמית</b>: "לא מחפשים דף אחר – מחפשים מקום <b>בדף הזה</b>".</li>
+          <li>הוא קורא את השם – <b>prices</b> – ועובר על הדף עד שהוא מוצא תגית עם <code>id="prices"</code> בתוכה.</li>
+          <li>מצא? הוא גולל עד שהתגית בראש החלון. לא מצא? לא קורה כלום – וגם אין הודעת שגיאה.</li>
+        </ol>
+        <p>שימו לב: ב-id כותבים את השם <b>בלי</b> סולמית. את הסולמית כותבים רק בקישור.</p>
+      </details>
+      <div class="bridge">id הוא כמו שם של משתנה ב-C#: אסור שיהיו שני משתנים באותו שם באותו מקום. גם id חייב להיות <b>ייחודי</b> בדף – אם יהיו שניים, הקישור יקפוץ תמיד רק לראשון. את הסימן # תפגשו שוב בשיעור 3, ב-CSS.</div>
+    </div>
   </article>
   <article class="spread">
     <h3>שלושה סוגי קישורים: מתי כותבים מה?</h3>
@@ -403,30 +420,43 @@
     <h3>💻 עכשיו אצלכם ב-Visual Studio</h3>
     <p>מוסיפים לפרויקט <b>דף שני</b> – התפריט של דני – ומחברים בין הדפים בשלושת סוגי הקישורים: לדף אחר באתר, לאתר אחר, ולמקום בתוך הדף.</p>
     <ol class="vsdo">
-      <li>צרו בתיקייה HTML דף חדש בשם <b>menu.html</b> – בדיוק כמו שיצרתם את practice.html (<a href="#" data-go="anatomy:4">צעד 1 שם</a>). בשורה של התגית html כתבו <code>lang="he" dir="rtl"</code>, ובתוך title כתבו: <b>התפריט – פיצה דני</b>.</li>
-      <li>הדביקו בתוך ה-body של menu.html:
+      <li>צרו בתיקייה HTML דף חדש בשם <b>menu.html</b> – בדיוק כמו שיצרתם את practice.html (<a href="#" data-go="anatomy:4">צעד 1 שם</a>). את השורה של התגית html החליפו בשורה הזו (אם היה בה xmlns – הוא נמחק איתה):
+        <div class="codeblock"><pre data-code="html">&lt;html lang="he" dir="rtl"&gt;</pre></div>
+        ובתוך התגית title כתבו: <b>התפריט – פיצה דני</b>.</li>
+      <li>הדביקו בתוך ה-body של menu.html. הדף ארוך בכוונה – כדי שתהיה לקישור "למחירון" סיבה לקפוץ:
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
 &lt;h1 id="top"&gt;התפריט&lt;/h1&gt;
 &lt;p&gt;&lt;a href="#prices"&gt;למחירון ↓&lt;/a&gt;&lt;/p&gt;
-&lt;h2&gt;על הפיצות שלנו&lt;/h2&gt;
-&lt;p&gt;בצק שתופח 24 שעות.&lt;/p&gt;
-&lt;p&gt;רוטב עגבניות ביתי.&lt;/p&gt;
-&lt;p&gt;תנור אבן חם במיוחד.&lt;/p&gt;
+&lt;h2&gt;כל הפיצות שלנו&lt;/h2&gt;
+&lt;p&gt;מרגריטה – עגבניות, מוצרלה ובזיליקום&lt;/p&gt;
+&lt;p&gt;פטריות – פטריות שמפיניון טריות&lt;/p&gt;
+&lt;p&gt;זיתים – זיתים שחורים וזיתי קלמטה&lt;/p&gt;
+&lt;p&gt;בצל – בצל סגול קלוי בתנור&lt;/p&gt;
+&lt;p&gt;תירס – תירס מתוק וגבינה צהובה&lt;/p&gt;
+&lt;p&gt;פלפלים – פלפל אדום, צהוב וירוק&lt;/p&gt;
+&lt;p&gt;חריפה – פלפל חריף ושום&lt;/p&gt;
+&lt;p&gt;טונה – טונה, בצל ותירס&lt;/p&gt;
+&lt;p&gt;בולגרית – גבינה בולגרית וזעתר&lt;/p&gt;
+&lt;p&gt;ארבע גבינות – מוצרלה, צהובה, בולגרית ופרמזן&lt;/p&gt;
+&lt;p&gt;ירקות – כל הירקות של היום&lt;/p&gt;
+&lt;p&gt;פסטו – רוטב פסטו ועגבניות שרי&lt;/p&gt;
+&lt;p&gt;חצילים – חציל קלוי וטחינה&lt;/p&gt;
+&lt;p&gt;הבית – המתכון הסודי של דני&lt;/p&gt;
 &lt;hr /&gt;
 &lt;h2 id="prices"&gt;מחירון&lt;/h2&gt;
-&lt;p&gt;מרגריטה – 45 שקל&lt;/p&gt;
-&lt;p&gt;פטריות – 39 שקל&lt;/p&gt;
+&lt;p&gt;פיצה רגילה – 39 שקל&lt;/p&gt;
+&lt;p&gt;פיצה עם שתי תוספות – 45 שקל&lt;/p&gt;
 &lt;p&gt;&lt;a href="#top"&gt;חזרה למעלה ↑&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="practice.html"&gt;חזרה לדף הבית&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="practice.html"&gt;חזרה לדף התרגול&lt;/a&gt;&lt;/p&gt;
 </pre></div></li>
-      <li>עברו ל-practice.html, ומתחת לכותרת h1 הוסיפו קישור לתפריט. (קיצור: גררו את menu.html מ-Solution Explorer אל תוך הקוד, ושנו את הטקסט – <a href="#" data-go="links:3">כמו בשלב 3</a>.)
+      <li>עברו ל-practice.html, ומתחת לכותרת h1 הוסיפו קישור לתפריט. (קיצור: גררו את menu.html מ-Solution Explorer אל תוך הקוד <span class="unverified">לא אומת</span> – <a href="#" data-go="links:3">כמו בשלב 3</a> – ובדקו שב-href כתוב רק menu.html.)
         <div class="codeblock"><pre data-code="html">&lt;p&gt;&lt;a href="menu.html"&gt;לתפריט שלנו&lt;/a&gt;&lt;/p&gt;</pre></div></li>
       <li>ב-practice.html, בסוף ה-body (אחרי הכתובת), הוסיפו קישור למפה – שנפתח בלשונית חדשה:
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">&lt;p&gt;&lt;a href="https://maps.google.com" target="_blank"&gt;איך מגיעים? (מפה)&lt;/a&gt;&lt;/p&gt;</pre></div></li>
-      <li>שמרו את <b>שני</b> הקבצים (בדקו שאין כוכבית ליד השמות בלשוניות), ופתחו את practice.html בדפדפן (View in Browser). עכשיו לחצו לפי הסדר: "לתפריט שלנו" &rlm;←&rlm; "למחירון ↓" &rlm;←&rlm; "חזרה למעלה ↑" &rlm;←&rlm; "חזרה לדף הבית" &rlm;←&rlm; ולבסוף המפה.</li>
-      <li>🔨 <b>שברו בכוונה:</b> ב-practice.html מחקו מהקישור לתפריט את הסיומת, כך שיהיה כתוב <code>href="menu"</code>. שמרו, רעננו ולחצו עליו – מקבלים דף שגיאה עם המספר 404 ("לא נמצא"). החזירו את הסיומת <code>.html</code> ושמרו.</li>
+      <li>שמרו את <b>שני</b> הקבצים (בדקו שאין כוכבית ליד השמות בלשוניות), ופתחו את practice.html בדפדפן (View in Browser). עכשיו לחצו לפי הסדר: "לתפריט שלנו" &rlm;←&rlm; "למחירון ↓" &rlm;←&rlm; "חזרה למעלה ↑" &rlm;←&rlm; "חזרה לדף התרגול" &rlm;←&rlm; ולבסוף המפה.</li>
+      <li>🔨 <b>שברו בכוונה:</b> ב-practice.html, בקישור לתפריט, מחקו את הסיומת <code>.html</code> מתוך ה-href – כך שיישאר רק menu. שמרו, רעננו ולחצו עליו: מקבלים דף שגיאה עם המספר 404 ("לא נמצא"). החזירו את הסיומת ושמרו.</li>
     </ol>
-    <div class="expect">מהדף שמסתיים ב-<code>/HTML/practice.html</code> הקישור מעביר לכתובת שמסתיימת ב-<code>/HTML/menu.html</code>, ועל הלשונית כתוב "התפריט – פיצה דני". "למחירון ↓" מוסיף לסוף הכתובת <code>#prices</code> וגולל אל המחירון (אם כל הדף נכנס בחלון, אין לאן לגלול – הקטינו את החלון ונסו שוב). המפה נפתחת <b>בלשונית חדשה</b>, ו-practice.html נשאר פתוח בלשונית שלו.</div>
+    <div class="expect">מהדף שמסתיים ב-<code>/HTML/practice.html</code> הקישור מעביר לכתובת שמסתיימת ב-<code>/HTML/menu.html</code>, ועל הלשונית כתוב "התפריט – פיצה דני". "למחירון ↓" מוסיף לסוף הכתובת <code>#prices</code> – והדף גולל מטה, אל המחירון שאחרי רשימת הפיצות. (המסך שלכם גבוה מאוד, וכל הדף נכנס בו? הקטינו את החלון – ואז תראו את הקפיצה.) "חזרה למעלה ↑" מחזיר לראש הדף. המפה נפתחת <b>בלשונית חדשה</b>, ו-practice.html נשאר פתוח בלשונית שלו.</div>
     <div class="trouble" id="trLinks"></div>
   </article>
   <article class="spread cpstep">
@@ -445,7 +475,7 @@
     <ol>
       <li>ב-Solution Explorer: קליק ימני על wwwroot &rlm;←&rlm; Add &rlm;←&rlm; New Folder, ותנו לה את השם <b>Img</b>. בפרויקט חדש אין תיקייה כזו – יוצרים אותה פעם אחת, וכל התמונות של האתר יגורו בה.</li>
       <li>גררו את קובץ התמונה מסייר הקבצים של Windows אל התיקייה Img ב-Solution Explorer.</li>
-      <li>גררו את התמונה מ-Solution Explorer אל תוך הקוד – ו-Visual Studio כותב את תגית img עם הנתיב.</li>
+      <li>כתבו בקוד את תגית img, כמו בדוגמה למעלה. קיצור: גוררים את התמונה מ-Solution Explorer אל תוך הקוד, ו-Visual Studio כותב לבד תגית img <span class="unverified">לא אומת</span> – אבל בדקו שהנתיב ב-src הוא <code>../Img/</code> ואחריו שם הקובץ, והוסיפו alt.</li>
     </ol>
     <div class="tip">💡 תנו לקבצים שמות <b>באנגלית, בלי רווחים</b>: <code>pizza.jpg</code> ולא "פיצה חדשה 1.jpg". רווחים ועברית בשמות קבצים גורמים לבעיות בכתובות.</div>
   </article>
@@ -487,12 +517,12 @@
     </details>
   </article>
   <article class="spread">
-    <h3>alt: מה רואים כשהתמונה לא נטענת</h3>
+    <h3>המאפיין alt</h3>
     <p>המאפיין <code>alt</code> (alternative – חלופה) הוא <b>תיאור במילים</b> של התמונה. כדי להבין למה הוא חשוב – נשבור תמונה בכוונה: נכתוב את שם הקובץ עם טעות.</p>
     <div class="predict" id="pAlt"></div>
     <div id="altDemo" hidden>
       <div class="compare" id="altCmp"></div>
-      <div class="what">כשהדפדפן לא מוצא את הקובץ, הוא מציג סמל של תמונה שבורה, ו<b>במקומה את הטקסט של alt</b>. ככה הגולש לפחות יודע מה היה אמור להיות שם. ויש עוד שתי סיבות לכתוב alt: <b>תוכנות הקראה</b> מקריאות אותו לגולשים עיוורים, ו<b>גוגל</b> משתמש בו כדי להבין מה בתמונה.</div>
+      <div class="what">כשהדפדפן לא מוצא את הקובץ, הוא מציג סמל של תמונה שבורה, ו<b>במקומה את הטקסט של alt</b> (כך בכרום ובאדג׳). ככה הגולש לפחות יודע מה היה אמור להיות שם. ויש עוד שתי סיבות לכתוב alt: <b>תוכנות הקראה</b> מקריאות אותו לגולשים עיוורים, ו<b>גוגל</b> משתמש בו כדי להבין מה בתמונה.</div>
       <div class="tip">💡 בדוגמאות שבמצגת אין alt – אבל אצלנו כותבים alt <b>בכל</b> תמונה. ואל תתבלבלו עם מאפיין אחר, <code>title</code>: הוא מציג "בועה" קטנה (tooltip) כשמחזיקים את העכבר מעל התגית. הוא עובד על כל תגית, לא רק על תמונות.</div>
     </div>
   </article>
@@ -547,19 +577,19 @@
       <li>שמרו במחשב 2–3 תמונות של פיצה (או של כל דבר אחר), ותנו להן שמות באנגלית, בלי רווחים – למשל pizza.jpg ו-margherita.jpg. גררו אותן מסייר הקבצים של Windows אל התיקייה Img ב-Solution Explorer. שימו לב: ב-Solution Explorer רואים את השם <b>המלא</b>, עם הסיומת. כתוב שם png או jpeg? כתבו בקוד בדיוק את מה שכתוב שם.</li>
       <li>ב-practice.html, מיד אחרי הכותרת h1, הוסיפו תמונה – עם השם של התמונה שלכם:
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">&lt;img src="../Img/pizza.jpg" alt="פיצה חמה" width="150" /&gt;</pre></div></li>
-      <li>הפכו את התמונה לקישור לתפריט: עטפו אותה בתגית a (<a href="#" data-go="images:6">כמו בשלב 6</a>). שימו לב שגם ה-alt אומר עכשיו לאן הקישור מוביל:
+      <li>הפכו את התמונה לקישור לתפריט (<a href="#" data-go="images:6">כמו בשלב 6</a>): החליפו את שורת ה-img מצעד 3 בשלוש השורות האלה – ושוב עם השם של התמונה שלכם. שימו לב שגם ה-alt אומר עכשיו לאן הקישור מוביל:
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html" data-marks="1:new,3:new">
 &lt;a href="menu.html"&gt;
     &lt;img src="../Img/pizza.jpg" alt="פיצה חמה – לתפריט" width="150" /&gt;
 &lt;/a&gt;
 </pre></div></li>
-      <li>ב-menu.html, מיד אחרי הכותרת h1, הוסיפו שתי תמונות – כל אחת בשורה משלה בקוד. (יש לכם רק תמונה אחת? כתבו אותה פעמיים.)
+      <li>ב-menu.html, מיד אחרי הכותרת h1, הוסיפו שתי תמונות – כל אחת בשורה משלה בקוד, עם השמות של התמונות שלכם. (יש לכם רק תמונה אחת? כתבו אותה פעמיים.)
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
 &lt;img src="../Img/pizza.jpg" alt="פיצה" width="90" /&gt;
 &lt;img src="../Img/margherita.jpg" alt="פיצה מרגריטה" width="90" /&gt;
 </pre></div>
         שמרו את שני הקבצים, ורעננו <b>בדפדפן</b>. ב-practice.html לחצו על התמונה – היא מעבירה לתפריט.</li>
-      <li>🔨 <b>שברו בכוונה:</b> ב-practice.html, בתוך src, שנו את שם הקובץ כך שתהיה בו טעות (למשל piza במקום pizza). שמרו ורעננו: במקום התמונה – סמל שבור, והטקסט של alt. עכשיו לחצו בדפדפן <b>F12</b> &rlm;←&rlm; לשונית <b>Console</b>: יש שם שגיאה אדומה עם 404 ועם שם הקובץ שלא נמצא (<a href="#" data-go="images:5">השלב על F12</a>). תקנו בחזרה, שמרו ורעננו.</li>
+      <li>🔨 <b>שברו בכוונה:</b> ב-practice.html, בתוך src, שנו את שם הקובץ כך שתהיה בו טעות (למשל piza במקום pizza). שמרו ורעננו: במקום התמונה – סמל שבור, והטקסט של alt (כך בכרום ובאדג׳). עכשיו לחצו בדפדפן <b>F12</b> &rlm;←&rlm; לשונית <b>Console</b>: יש שם שגיאה אדומה עם 404 ועם שם הקובץ שלא נמצא (<a href="#" data-go="images:5">השלב על F12</a>). תקנו בחזרה, שמרו ורעננו.</li>
     </ol>
     <div class="expect">בכתובת שמסתיימת ב-<code>/HTML/practice.html</code> – מתחת לכותרת, התמונה שלכם ברוחב 150 פיקסלים. לחיצה עליה מעבירה לכתובת שמסתיימת ב-<code>/HTML/menu.html</code>, ושם שתי התמונות עומדות <b>זו ליד זו</b>, באותה שורה – כי img היא inline. בצעד 6, עם הטעות: סמל שבור עם הטקסט "פיצה חמה – לתפריט", וב-F12 בלשונית Console – שגיאה אדומה עם 404.</div>
     <div class="trouble" id="trImages"></div>
@@ -579,7 +609,7 @@
     <div class="tip">💡 את כל מה שבמשימות כבר עשיתם גם ב-Visual Studio, בדפי התרגול practice.html ו-menu.html (בשלבי 💻 שבסוף כל נושא). בשלב הבא – אותו הדבר, באתר <b>שלכם</b>.</div>
   </article>
   <article class="spread">
-    <h3>🧩 צעד בפרויקט – לקראת הגשה 1</h3>
+    <h3>🧩 צעד בפרויקט – לקראת הגשה&nbsp;1</h3>
     <div class="stepbox">
       <b>בונים את השלד של האתר שלכם: דף נחיתה ודף תוכן, מחוברים זה לזה.</b> עד עכשיו תרגלתם בדפי התרגול של פיצה דני. עכשיו עושים את אותם הדברים בדפים של האתר שלכם – עם התוכן שלכם.
       <ol>
@@ -588,7 +618,7 @@
         <li>בשורה הראשונה של body הוסיפו הערה עם השם שלכם והכיתה.</li>
         <li>בתוך body: כותרת h1 עם שם האתר, שתי פסקאות שמסבירות על מה האתר, ותמונה מהתיקייה Img – עם alt ועם width.</li>
         <li>צרו באותה תיקייה <b>דף תוכן ראשון</b> – למשל page1.html (קליק ימני על HTML &rlm;←&rlm; Add &rlm;←&rlm; <bdi>New Item...</bdi> &rlm;←&rlm; HTML Page, כמו שיצרתם את menu.html). גם בו: lang ו-dir, title, כותרת h1 ופסקה.</li>
-        <li>חברו את הדפים: קישור מ-index.html ל-page1.html, וקישור חזרה מ-page1.html ל-index.html. (קיצור: גררו את הקובץ מ-Solution Explorer.)</li>
+        <li>חברו את הדפים: קישור מ-index.html ל-page1.html, וקישור חזרה מ-page1.html ל-index.html. (קיצור: גררו את הקובץ מ-Solution Explorer <span class="unverified">לא אומת</span> – ובדקו שב-href כתוב רק שם הקובץ.)</li>
         <li><b>בדיקה:</b> פתחו את index.html בדפדפן (View in Browser), לחצו על הקישורים לשני הכיוונים, ובדקו שהתמונה מופיעה ושהשם בלשונית נכון בשני הדפים.</li>
       </ol>
       <div class="tip">💡 practice.html ו-menu.html הם דפי תרגול – לא חלק מהאתר שלכם. אל תקשרו אליהם מ-index.html. אפשר להשאיר אותם בפרויקט – הם לא מפריעים.</div>
@@ -846,14 +876,14 @@ function drawTitle(){
   const t = $('#titleIn').value;
   const src = ['<head>', '    <meta charset="utf-8" />', '    <title>' + t + '</title>', '</head>', '<body>', '    <h1>פיצה דני</h1>', '    <p>הפיצה הכי טעימה באשקלון</p>', '</body>'];
   codeLines($('#titleCode'), src.join('\n'), 'html', {2:'new'});
-  titleBr.title(t);
+  titleBr.title(t.trim() ? t : URL0 + 'index.html', t.trim() ? '🍕' : '🌐');
 }
 $('#titleIn').addEventListener('input', drawTitle); drawTitle();
 predict('#pTitle', {
-  q: 'בתוך title כתוב "פיצה דני – הפיצה של אשקלון". <b>איפה</b> הטקסט הזה יופיע?',
-  opts: ['בראש הדף, בגדול – כמו h1', 'על הלשונית של הדפדפן', 'בשום מקום – head לא מוצג'],
+  q: 'ב-title לא כתוב כלום, וב-body יש <code>&lt;h1&gt;פיצה דני&lt;/h1&gt;</code> – מה יופיע על הלשונית?',
+  opts: ['"פיצה דני" – הדפדפן ייקח את השם מה-h1', 'הכתובת של הדף – כי אין לו שם אחר להציג', 'כלום – הלשונית תישאר ריקה לגמרי'],
   correct: 1,
-  why: ['את הכותרת שבתוך הדף כותבים ב-h1. title זה משהו אחר.', 'title הוא השם של הדף – והדפדפן מציג אותו על הלשונית. נסו לשנות אותו למטה.', 'נכון ש-head לא מוצג בתוך הדף – אבל את title הדפדפן כן מציג, במקום אחר.'],
+  why: ['הדפדפן לא לוקח את השם מה-h1. h1 היא כותרת בתוך הדף, ו-title הוא השם של הדף – שני דברים נפרדים.', 'בלי title, אין לדפדפן שם להציג – אז הוא מציג את הכתובת. לכן כותבים title בכל דף. נסו למטה.', 'הדפדפן לא משאיר לשונית ריקה – הוא מציג משהו שעוזר לזהות את הדף.'],
   onCorrect: () => { $('#titleDemo').hidden = false; }
 });
 
@@ -980,9 +1010,9 @@ l4.stage.onLink = a => {
 };
 predict('#pJump', {
   q: 'בקוד למטה יש קישור <code>href="#prices"</code>. מה יקרה כשתלחצו עליו?',
-  opts: ['ייפתח דף חדש בשם prices', 'הדף יגלול אל התגית שיש לה <code>id="prices"</code>', 'הדף תמיד יגלול לסוף'],
+  opts: ['ייפתח דף חדש בשם prices', 'הדף יגלול אל הכותרת "מחירון"', 'הדף יגלול עד הסוף שלו'],
   correct: 1,
-  why: ['בלי סולמית זה היה מחפש קובץ. הסולמית אומרת: "בתוך הדף הזה".', 'בדיוק. לחצו עליו בתוצאה ובדקו.', 'הוא לא הולך לסוף – הוא הולך בדיוק לתגית עם ה-id הזה, איפה שהיא לא תהיה.'],
+  why: ['בלי הסולמית, באמת היה מחפש קובץ בשם prices. אבל הסולמית אומרת: "בתוך הדף הזה".', 'בדיוק: הדפדפן מחפש בדף את התגית עם <code>id="prices"</code> – הכותרת "מחירון" – וגולל אליה. לחצו בתוצאה ובדקו.', 'הוא לא הולך לסוף – הוא הולך בדיוק לתגית עם ה-id הזה, איפה שהיא לא תהיה.'],
   onCorrect: () => { $('#l4what').hidden = false; }
 });
 
@@ -1036,9 +1066,9 @@ compareBox($('#i3cmp'), [
 /* ---------- images: alt ---------- */
 predict('#pAlt', {
   q: 'כתבנו <code>src="../Img/piza.jpg"</code> – עם טעות בשם הקובץ. מה יופיע בדף?',
-  opts: ['כלום – רק מקום ריק', 'סמל של תמונה שבורה, ולידו הטקסט של alt', 'הודעת שגיאה אדומה בדף', 'הפיצה תופיע בכל זאת'],
+  opts: ['מקום ריק בגודל התמונה, בלי שום סימן', 'סמל של תמונה שבורה, והטקסט של alt', 'הודעת שגיאה אדומה עם שם הקובץ', 'הפיצה – הדפדפן ימצא את הקובץ הקרוב'],
   correct: 1,
-  why: ['כמעט – הדפדפן כן מראה משהו, כדי שתדעו שהייתה כאן תמונה.', 'בדיוק. בגלל זה כותבים alt: הוא מה שנשאר כשהתמונה נשברת.', 'אין הודעות שגיאה בתוך הדף. את השגיאה רואים רק בכלי המפתחים של הדפדפן (F12) – תכירו אותם בשלב הבא.', 'הדפדפן מחפש בדיוק את השם שכתבתם. קובץ בשם piza.jpg לא קיים.'],
+  why: ['כמעט – הדפדפן כן מראה משהו, כדי שתדעו שהייתה כאן תמונה.', 'בדיוק (כך בכרום ובאדג׳). בגלל זה כותבים alt: הוא מה שנשאר כשהתמונה נשברת.', 'אין הודעות שגיאה בתוך הדף. את השגיאה רואים רק בכלי המפתחים של הדפדפן (F12) – תכירו אותם בשלב הבא.', 'הדפדפן לא מנחש ולא מתקן: הוא מחפש בדיוק את השם שכתבתם – וקובץ בשם piza.jpg לא קיים.'],
   onCorrect: () => { $('#altDemo').hidden = false; }
 });
 compareBox($('#altCmp'), [
@@ -1127,28 +1157,28 @@ const START_HTML = ['<h1>פיצה דני</h1>', '<p>הפיצה הכי טעימה
 let PG = null;
 /* the code as the student wrote it (before the engine swaps ../Img/x.jpg for a drawing); comments removed, so code inside a comment never counts */
 const src = () => (PG ? PG.edH.value : ((Course.store.get('code-pg') || {}).h || START_HTML)).replace(/<!--[\s\S]*?-->/g, '');
-const imgTags = () => src().match(/<img\b[^>]*>/gi) || [];
+/* the student's code parsed by the browser: any valid way of writing an attribute counts (single quotes, SRC=, width=150) */
+const parsedImgs = () => [...new DOMParser().parseFromString(src(), 'text/html').images];
 const FOLLOWS = 4; /* Node.DOCUMENT_POSITION_FOLLOWING */
 /* strict checks: a task passes only for the right reason (constitution §5) */
 const TASKS = [
   {id:'link', text:'הוסיפו קישור לדף התפריט: <code>menu.html</code>, עם טקסט שאומר לאן הוא מוביל.',
    test: d => [...d.querySelectorAll('a')].some(a => a.getAttribute('href') === 'menu.html' && a.textContent.trim().length > 1),
    hints: ['קישור כותבים עם התגית a. לאן הוא מוביל – כותבים במאפיין href. מה שהגולשים רואים ולוחצים עליו – כותבים בין התגית הפותחת לתגית הסוגרת.',
-           'בשורה חדשה כתבו פסקה, ובתוכה: <code>&lt;a href="menu.html"&gt;</code>, אחריו טקסט כמו "לתפריט שלנו", ובסוף התגית הסוגרת של a.'],
+           'המקום: שורה חדשה, למשל מתחת לפסקה "הפיצה הכי טעימה באשקלון". שם פותחים פסקה, ובתוכה תגית a. בתגית הפותחת – המאפיין href, ובמירכאות שם הקובץ של התפריט. בין הפותחת לסוגרת – מילים שאומרות לגולש לאן יגיע.'],
    solution: {code: '<p><a href="menu.html">לתפריט שלנו</a></p>', lang: 'html',
      explain: 'href אומר לאן הקישור מוביל, והטקסט שבין התגיות הוא מה שלוחצים עליו. menu.html נמצא באותה תיקייה כמו הדף, ולכן מספיק שם הקובץ – נתיב יחסי.',
      alt: 'אפשר גם בלי התגית p – אבל אז הקישור יישב באותה שורה עם מה שלפניו, כי a היא inline.'},
    back: 'links:3'},
   {id:'img', text:'הוסיפו תמונה של פיצה מהתיקייה Img (<code>../Img/pizza.jpg</code>) – <b>עם alt</b>.',
-   test: d => imgTags().some(t => /\bsrc\s*=\s*"\.\.\/Img\/pizza\.jpg"/.test(t) && /\balt\s*=\s*"[^"]*\S[^"]*"/.test(t)) &&
-     [...d.images].some(i => (i.getAttribute('alt') || '').trim() && i.src.startsWith('data:')),
+   test: d => parsedImgs().some(i => i.getAttribute('src') === '../Img/pizza.jpg' && (i.getAttribute('alt') || '').trim()),
    hints: ['תמונה מוסיפים עם התגית img – תגית ריקה, בלי סוגרת. איפה הקובץ? במאפיין src. ותיאור במילים? במאפיין alt.',
            'הדף נמצא בתיקייה HTML והתמונה בתיקייה Img, אז הנתיב הוא <code>../Img/pizza.jpg</code> – בדיוק כך, עם I גדולה. ואל תשכחו את alt, עם תיאור קצר של התמונה.'],
    solution: {code: '<img src="../Img/pizza.jpg" alt="פיצה חמה" />', lang: 'html',
      explain: 'שתי הנקודות והלוכסן עולים מ-HTML ל-wwwroot, החלק <code>Img/</code> נכנס לתיקיית התמונות, ו-pizza.jpg הוא הקובץ. alt מתאר את התמונה במילים – למקרה שהיא לא נטענת, ובשביל תוכנות הקראה.'},
    back: 'images:2'},
   {id:'width', text:'קבעו לתמונה רוחב של 150 פיקסלים.',
-   test: d => imgTags().some(t => /\bsrc\s*=\s*"\.\.\/Img\//.test(t) && /\bwidth\s*=\s*"150"/.test(t)) && [...d.images].some(i => i.getAttribute('width') === '150'),
+   test: d => parsedImgs().some(i => /^\.\.\/Img\/./.test(i.getAttribute('src') || '') && (i.getAttribute('width') || '').trim() === '150'),
    hints: ['גודל של תמונה קובעים במאפיין width (רוחב) – בתוך התגית img עצמה.',
            'בתוך התגית img, לפני הלוכסן שבסוף, הוסיפו <code>width="150"</code> – רק המספר, בלי px.'],
    solution: {code: '<img src="../Img/pizza.jpg" alt="פיצה חמה" width="150" />', lang: 'html',
@@ -1168,7 +1198,7 @@ const TASKS = [
   {id:'ext', text:'הוסיפו קישור לאתר אחר (כתובת מלאה, שמתחילה ב-<code>https://</code>) שנפתח <b>בלשונית חדשה</b>.',
    test: d => [...d.querySelectorAll('a')].some(a => /^https:\/\/[^\s\/]+\.[^\s\/]+/.test(a.getAttribute('href') || '') && a.getAttribute('target') === '_blank' && a.textContent.trim()),
    hints: ['צריך שני מאפיינים: href עם כתובת מלאה (נתיב מוחלט), ועוד מאפיין שאומר לדפדפן לפתוח לשונית חדשה.',
-           'למשל <code>&lt;a href="https://maps.google.com" target="_blank"&gt;</code>, אחריו טקסט, ובסוף התגית הסוגרת. שימו לב לקו התחתון לפני המילה blank.'],
+           'ב-href: כתובת מלאה של אתר אמיתי, שמתחילה ב-<code>https://</code> – למשל של Google Maps. ב-target: הערך שמתחיל בקו תחתון, והמילה שאחריו היא "ריק" באנגלית.'],
    solution: {code: '<p><a href="https://maps.google.com" target="_blank">איך מגיעים? (מפה)</a></p>', lang: 'html',
      explain: 'כתובת שמתחילה ב-<code>https://</code> היא נתיב מוחלט – אתר אחר. <code>target="_blank"</code> פותח אותו בלשונית חדשה, והאתר של פיצה דני נשאר פתוח.'},
    back: 'links:2'},
@@ -1177,14 +1207,14 @@ const TASKS = [
      const last = [...d.querySelectorAll('p')].find(p => /מחכים לכם/.test(p.textContent));
      return [...d.querySelectorAll('a')].some(a => a.getAttribute('href') === '#top' && (h.compareDocumentPosition(a) & FOLLOWS) && (!last || (last.compareDocumentPosition(a) & FOLLOWS))); },
    hints: ['שני חלקים: נותנים לכותרת שם ייחודי עם המאפיין id, ובקישור כותבים סולמית ואת אותו השם.',
-           'בתגית הפותחת של h1 הוסיפו <code>id="top"</code>. ובסוף הדף, אחרי "מחכים לכם!", הוסיפו פסקה עם קישור: <code>&lt;a href="#top"&gt;חזרה למעלה&lt;/a&gt;</code> – ב-id בלי סולמית, בקישור עם.'],
+           'שני מקומות. (1) השורה הראשונה: בתוך התגית הפותחת של h1, לפני הסוגר המשולש, מאפיין id עם השם top. (2) שורה חדשה אחרי "מחכים לכם!": פסקה עם קישור, שב-href שלו סולמית ומיד אחריה אותו השם. ב-id – בלי סולמית; בקישור – עם.'],
    solution: {code: '<h1 id="top">פיצה דני</h1>\n…\n<p>מחכים לכם!</p>\n<p><a href="#top">חזרה למעלה</a></p>', lang: 'html',
      explain: 'הסולמית אומרת לדפדפן "חפש בדף הזה", ו-top הוא ה-id של הכותרת. כאן הדף קצר ואין הרבה לאן לגלול – בדף ארוך רואים את הקפיצה.'},
    back: 'links:4'},
   {id:'imglink', text:'אתגר: הפכו את התמונה לקישור לדף menu.html.',
    test: d => [...d.querySelectorAll('a[href="menu.html"] img')].some(i => (i.getAttribute('alt') || '').trim()),
    hints: ['קינון: את כל התגית img שמים <b>בתוך</b> תגית a – במקום טקסט.',
-           'כתבו <code>&lt;a href="menu.html"&gt;</code> לפני ה-img, ואת התגית הסוגרת של a – אחריו. התמונה עצמה לא משתנה.'],
+           'מצאו את השורה של img. בשורה שמעליה פותחים תגית a עם href לדף התפריט, ובשורה שמתחתיה סוגרים את a. את שורת ה-img עצמה לא משנים.'],
    solution: {code: '<a href="menu.html">\n    <img src="../Img/pizza.jpg" alt="פיצה חמה – לתפריט" width="150" />\n</a>', lang: 'html',
      explain: 'התגית a עוטפת את התמונה, ולכן כל התמונה לחיצה. כדאי לכתוב ב-alt גם לאן הקישור מוביל: בשביל תוכנת הקראה, ה-alt הוא הטקסט של הקישור.'},
    back: 'images:6'}
@@ -1208,9 +1238,9 @@ quiz('#quiz', [
    why:['זה מחפש תיקייה Img <b>בתוך</b> HTML – ואין שם כזו. צריך קודם לעלות.', 'עולים מ-HTML ל-wwwroot (<code>../</code>), ונכנסים ל-Img.', 'זה נתיב במחשב שלכם בלבד. באתר אמיתי אף גולש לא יראה את התמונה. ראו <a href="#" data-go="images:2">את הדרך אל התמונה</a>.']},
   {q:'איזה קישור ייפתח <b>בלשונית חדשה</b>?', opts:['<code>target="_target"</code>', '<code>target="_blank"</code>', '<code>target="new"</code>'], correct:1,
    why:['זה מה שכתוב במצגת – אבל זו טעות. הערך הנכון הוא _blank.', 'blank = ריק: "פתח לשונית חדשה וריקה".', 'זה לא ערך מוכר של target.']},
-  {q:'מה לא תקין בקוד <code>&lt;b&gt;&lt;i&gt;במבצע&lt;/b&gt;&lt;/i&gt;</code>?', opts:['אסור לשים תגית בתוך תגית', 'סדר הסגירה: i נפתחה אחרונה, אז היא צריכה להיסגר ראשונה', 'חסרה תגית br'], correct:1,
-   why:['מותר גם מותר – זה קינון.', 'נכון: <code>&lt;b&gt;&lt;i&gt;במבצע&lt;/i&gt;&lt;/b&gt;</code>. מה שנפתח אחרון – נסגר ראשון.', 'br היא ירידת שורה, אין קשר. <a href="#" data-go="anatomy:2">חזרה לקינון</a>.']},
-  {q:'בדף יש <code>&lt;h2 id="prices"&gt;מחירון&lt;/h2&gt;</code>. איך כותבים קישור שקופץ אליו?', opts:['<code>href="prices"</code>', '<code>href="#prices"</code>', '<code>id="#prices"</code>'], correct:1,
+  {q:'בקוד <code>&lt;b&gt;&lt;i&gt;במבצע&lt;/b&gt;&lt;/i&gt;</code> יש טעות. מה היא?', opts:['אסור לשים תגית בתוך תגית אחרת', 'i נפתחה אחרונה, אבל לא נסגרה ראשונה', 'חסר רווח בין התגיות'], correct:1,
+   why:['מותר גם מותר – זה קינון.', 'נכון: <code>&lt;b&gt;&lt;i&gt;במבצע&lt;/i&gt;&lt;/b&gt;</code>. מה שנפתח אחרון – נסגר ראשון.', 'רווחים בין תגיות לא משנים כלום. הבעיה היא סדר הסגירה – <a href="#" data-go="anatomy:2">חזרה לקינון</a>.']},
+  {q:'בדף יש כותרת <code>&lt;h2 id="prices"&gt;מחירון&lt;/h2&gt;</code> – איך כותבים קישור שקופץ אליה?', opts:['<code>href="prices"</code>', '<code>href="#prices"</code>', '<code>id="#prices"</code>'], correct:1,
    why:['בלי סולמית הדפדפן מחפש קובץ בשם prices.', 'הסולמית אומרת "בתוך הדף הזה", ואחריה ה-id.', 'את הסולמית כותבים בקישור (href), לא ב-id עצמו.']},
   {q:'העברית בדף נראית כמו <span class="mojibake">×¤×™×¦×”</span>. מה כנראה חסר?', opts:['<code>dir="rtl"</code>', '<code>&lt;meta charset="utf-8" /&gt;</code>', '<code>lang="he"</code>'], correct:1,
    why:['dir קובע כיוון, לא איך קוראים את האותיות.', 'בלי charset הדפדפן מנחש את הקידוד – וכאן ניחש לא נכון.', 'lang אומר באיזו שפה הדף, אבל לא איך לקרוא את האותיות מהקובץ.']}
@@ -1262,34 +1292,34 @@ checkpoint('#cpAnatomy', [
    code:'<p>מרגריטה – 45 שקל</p>\n<p>פטריות – <b><i>במבצע!</i></b></p>\n<p>זיתים – <i><b>במבצע!</i></b></p>\n<p>הזמנות בטלפון בלבד</p>',
    correct:3, why:{1:'תגית אחת, שנפתחת ונסגרת – תקינה.', 2:'b נפתחה ראשונה ו-i אחריה, ולכן i נסגרת ראשונה – בדיוק לפי הכלל.', 4:'תגית אחת – תקינה.'},
    explain:'כאן i נפתחה ראשונה ו-b אחריה – אז b צריכה להיסגר ראשונה: <code>&lt;i&gt;&lt;b&gt;במבצע!&lt;/b&gt;&lt;/i&gt;</code>. מה שנפתח אחרון – נסגר ראשון.', back:'anatomy:2'},
-  {type:'line', q:'הקוד הועתק ממצגת, וקישור אחד לא עובד. באיזו שורה?', lang:'html',
-   code:'<h1>פיצה דני</h1>\n<p><a href=“menu.html”>לתפריט</a></p>\n<p><a href="index.html">לדף הבית</a></p>',
-   correct:2, why:{1:'כותרת רגילה – תקינה.', 3:'מירכאות ישרות, כמו שצריך – תקין.'},
-   explain:'המירכאות כאן "חכמות" (<code>“ ”</code>) – כאלה שמגיעות מ-Word או ממצגת. הדפדפן לא מזהה אותן כמירכאות, וה-href נשבר. בקוד משתמשים רק במירכאות הישרות שבמקלדת.', back:'anatomy:1'},
+  {type:'line', q:'אחד הקישורים לא מוביל לשום מקום. באיזו שורה?', lang:'html',
+   code:'<h1>פיצה דני</h1>\n<p><a>לתפריט</a href="menu.html"></p>\n<p><a href="index.html">לדף הבית</a></p>',
+   correct:2, why:{1:'כותרת רגילה – תקינה.', 3:'המאפיין href בתגית הפותחת – בדיוק כמו שצריך.'},
+   explain:'המאפיין href נכתב בתגית <b>הסוגרת</b>. מאפיינים כותבים רק בתגית הפותחת – בתגית הסוגרת הדפדפן מתעלם מהם, ולכן לקישור אין יעד. התיקון: להעביר את href אל התגית הפותחת של a.', back:'anatomy:1'},
   {q:'רוצים להסתיר זמנית את שורת המבצע – בלי למחוק אותה. מה כותבים?', opts:['<code>// &lt;p&gt;מבצע: משלוח חינם&lt;/p&gt;</code>', '<code>&lt;!-- &lt;p&gt;מבצע: משלוח חינם&lt;/p&gt; --&gt;</code>', '<code>/* &lt;p&gt;מבצע: משלוח חינם&lt;/p&gt; */</code>'], correct:1,
    why:['שני לוכסנים הם הערה של C#. ב-HTML הם סתם טקסט: הם יופיעו בדף – והפסקה תופיע גם היא.', 'הסימן <code>&lt;!--</code> פותח הערה, והסימן <code>--&gt;</code> סוגר אותה. הדפדפן מדלג על כל מה שביניהם.', 'גם הסימנים האלה לא עובדים ב-HTML: הם יופיעו בדף כטקסט, והפסקה – גם.'], back:'anatomy:3'},
-  {q:'מה נכון לגבי טקסט שכתוב בתוך הערה ב-HTML?', opts:['הוא לא מופיע בדף, ואף אחד לא יכול לראות אותו', 'הוא לא מופיע בדף – אבל כל גולש יכול לקרוא אותו בקוד המקור (Ctrl+U)', 'הוא מופיע בדף באפור, כדי שידעו שזו הערה'], correct:1,
-   why:['בדף הוא לא מופיע – אבל כל הקובץ נשלח לדפדפן. ב-Ctrl+U כל אחד רואה את קוד המקור, כולל ההערות.', 'בדיוק. לכן לא כותבים בהערות סיסמאות או סודות.', 'הדפדפן מדלג על הערות לגמרי – הן לא מופיעות בדף בשום צורה.'], back:'anatomy:3'}
+  {q:'מה נכון לגבי טקסט שכתוב בתוך הערה ב-HTML?', opts:['לא מופיע בדף, ואי אפשר לראות אותו בשום מקום', 'לא מופיע בדף – אבל רואים אותו בקוד המקור (Ctrl+U)', 'מופיע בדף באותיות קטנות ואפורות'], correct:1,
+   why:['בדף הוא לא מופיע – אבל כל הקובץ נשלח לדפדפן. ב-Ctrl+U כל אחד רואה את קוד המקור, כולל ההערות.', 'בדיוק – וכל גולש יכול לעשות את זה. לכן לא כותבים בהערות סיסמאות או סודות.', 'הדפדפן מדלג על הערות לגמרי – הן לא מופיעות בדף בשום צורה.'], back:'anatomy:3'}
 ]);
 checkpoint('#cpPage', [
   {q:'מה מהבאים יופיע <b>בתוך החלון</b> של הדף?', opts:['הטקסט שבתוך title', 'השורה meta charset', 'הכותרת h1 שבתוך body'], correct:2,
    why:['title מופיע <b>על הלשונית</b> – לא בתוך הדף.', 'meta charset היא הגדרה בשביל הדפדפן. היא בתוך head, ולא מופיעה בכלל.', 'כל מה שבתוך body הוא מה שרואים בחלון.'], back:'page:1'},
-  {q:'רוצים שהשם "פיצה דני" יופיע <b>גם</b> בגדול בראש הדף, <b>וגם</b> על הלשונית. מה כותבים?', opts:['רק title', 'רק h1', 'title בתוך head, וגם h1 בתוך body'], correct:2,
-   why:['title מופיע רק על הלשונית – בתוך הדף לא יהיה כלום.', 'h1 מופיע בדף – אבל הלשונית לא לוקחת ממנו את השם.', 'שני מקומות, שני תפקידים: title ללשונית (ולגוגל), h1 לכותרת בתוך הדף.'], back:'page:2'},
+  {q:'רוצים שהשם "פיצה דני" יופיע <b>גם</b> בגדול בראש הדף, <b>וגם</b> על הלשונית. מה כותבים?', opts:['title בלבד – הדפדפן יציג אותו גם בדף', 'h1 בלבד – הלשונית תיקח ממנו את השם', 'title בתוך head, וגם h1 בתוך body'], correct:2,
+   why:['title מופיע רק על הלשונית – בתוך הדף לא יהיה כלום.', 'h1 מופיע בדף – אבל הלשונית לא לוקחת ממנו את השם. בלי title היא תציג את הכתובת.', 'שני מקומות, שני תפקידים: title ללשונית (ולגוגל), h1 לכותרת בתוך הדף.'], back:'page:2'},
   {type:'line', q:'הדף מוצג משמאל לימין, למרות שכתבו בו כיוון. באיזו שורה הטעות?', lang:'html',
    code:'<!DOCTYPE html>\n<html lang="rtl" dir="he">\n<head>\n    <meta charset="utf-8" />\n    <title>פיצה דני</title>\n</head>',
    correct:2, why:{1:'השורה הראשונה של כל דף – תקינה.', 3:'פתיחת head – תקינה.', 4:'הקידוד – תקין.', 5:'השם ללשונית – תקין.', 6:'סגירת head – תקינה.'},
    explain:'הערכים התחלפו: dir (כיוון) צריך לקבל rtl, ו-lang (שפה) צריך לקבל he. ערך שהדפדפן לא מכיר – הוא פשוט מתעלם ממנו, ולכן הדף נשאר משמאל לימין. הנכון הוא <code>&lt;html lang="he" dir="rtl"&gt;</code> – שפה עברית, כיוון מימין לשמאל.', back:'page:4'},
-  {q:'השורה <code>&lt;meta charset="utf-8" /&gt;</code> – מה התפקיד שלה?', opts:['קובעת שהדף ייקרא מימין לשמאל', 'אומרת לדפדפן באיזה קידוד (encoding) הקובץ כתוב – כדי שיקרא נכון את האותיות', 'קובעת את השם שעל הלשונית'], correct:1,
-   why:['את הכיוון קובע המאפיין dir בתגית html.', 'בלי השורה הזו הדפדפן מנחש את הקידוד – ולפעמים העברית הופכת לג׳יבריש.', 'את השם על הלשונית קובעת התגית title.'], back:'page:3'},
-  {q:'את <code>lang="he"</code> לא רואים בדף. אז בשביל מה הוא?', opts:['בשביל כלום – אפשר למחוק אותו', 'הוא מודיע לגוגל, לתוכנות הקראה ולדפדפן שהדף בעברית', 'הוא מיישר את הטקסט לימין'], correct:1,
-   why:['הוא לא משנה את המראה – אבל הוא עובד בשקט בשביל אחרים.', 'גוגל מבין באיזו שפה הדף, תוכנת ההקראה בוחרת קול בעברית, והדפדפן לא מציע "לתרגם" בלי צורך.', 'את הכיוון והיישור קובע dir, לא lang.'], back:'page:4'}
+  {q:'השורה <code>&lt;meta charset="utf-8" /&gt;</code> – מה התפקיד שלה?', opts:['קובעת שהדף ייקרא מימין לשמאל', 'אומרת לדפדפן איך לקרוא את האותיות שבקובץ', 'קובעת באיזה גופן תוצג העברית'], correct:1,
+   why:['את הכיוון קובע המאפיין dir בתגית html.', 'היא אומרת באיזה קידוד (encoding) הקובץ כתוב. בלעדיה הדפדפן מנחש – ולפעמים העברית הופכת לג׳יבריש.', 'את הגופן קובעים עם CSS (בשיעור 3). meta charset אומרת רק איך לתרגם את המספרים שבקובץ לאותיות.'], back:'page:3'},
+  {q:'את <code>lang="he"</code> לא רואים בדף. אז בשביל מה הוא?', opts:['הוא מחליף לגולש את המקלדת לעברית', 'הוא מודיע לגוגל ולתוכנות הקראה שהדף בעברית', 'הוא מיישר את הטקסט לימין'], correct:1,
+   why:['הוא לא משנה שום דבר במחשב של הגולש – לא מקלדת ולא הגדרות. הוא רק מודיע באיזו שפה הדף.', 'גוגל מבין באיזו שפה הדף, תוכנת ההקראה בוחרת קול בעברית, והדפדפן לא מציע "לתרגם" בלי צורך.', 'את הכיוון והיישור קובע dir, לא lang.'], back:'page:4'}
 ]);
 checkpoint('#cpTags', [
   {q:'בדף של פיצה דני יש כותרת "התפריט", ובתוך החלק הזה תת-כותרת "פיצות". אילו תגיות מתאימות להן?', opts:['h1 ל"התפריט", h2 ל"פיצות"', 'h2 ל"התפריט", h3 ל"פיצות"', 'h3 ל"התפריט", h2 ל"פיצות"'], correct:1,
-   why:['h1 כבר תפוס: "פיצה דני" היא הכותרת הראשית, ובכל דף יש h1 אחד בלבד.', '"התפריט" הוא פרק (h2), ו"פיצות" הוא תת-פרק בתוכו (h3) – כמו בספר.', 'הפוך: תת-כותרת לא יכולה להיות חשובה יותר מהכותרת שמעליה.'], back:'tags:1'},
-  {q:'כותרת h2 נראית לכם גדולה מדי. מה עושים?', opts:['מחליפים אותה ב-h5, כי h5 קטנה יותר', 'משאירים h2 – בוחרים רמה לפי החשיבות. את הגודל משנים עם CSS, בשיעור 3'], correct:1,
-   why:['הגודל אכן ישתנה – אבל גוגל ותוכנות ההקראה יחשבו שזו כותרת פחות חשובה. בוחרים רמה לפי החשיבות, לא לפי הגודל.', 'התגית אומרת <b>מה</b> זה (כותרת ברמה 2), ו-CSS יקבע <b>איך</b> זה נראה.'], back:'tags:1'},
+   why:['h1 כבר תפוס: "פיצה דני" היא הכותרת הראשית, ומקובל שבכל דף יש h1 אחד בלבד.', '"התפריט" הוא פרק (h2), ו"פיצות" הוא תת-פרק בתוכו (h3) – כמו בספר.', 'הפוך: תת-כותרת לא יכולה להיות חשובה יותר מהכותרת שמעליה.'], back:'tags:1'},
+  {q:'כותרת h2 נראית לכם גדולה מדי. מה עושים?', opts:['מחליפים אותה ב-h5, כי h5 קטנה יותר', 'משאירים h2, ואת הגודל משנים אחר כך עם CSS', 'מחליפים אותה בפסקה p עם טקסט מודגש (b)'], correct:1,
+   why:['הגודל אכן ישתנה – אבל גוגל ותוכנות ההקראה יחשבו שזו כותרת פחות חשובה. בוחרים רמה לפי החשיבות, לא לפי הגודל.', 'התגית אומרת <b>מה</b> זה (כותרת ברמה 2), ו-CSS (בשיעור 3) יקבע <b>איך</b> זה נראה.', 'אז זו כבר לא כותרת בכלל: גוגל ותוכנות ההקראה לא יזהו אותה ככותרת – רק כטקסט מודגש.'], back:'tags:1'},
   {type:'text', q:'מה כותבים בקוד כדי לרדת שורה באמצע פסקה?', placeholder:'כתבו את התגית', accept:[/^<br\s*\/?>$/i], answer:'<br />',
    wrong:'Enter בקוד לא מוריד שורה בדף. יש לזה תגית ריקה קצרה, מהמילה break. כתבו אותה עם הסוגריים המשולשים.',
    explain:'זו תגית ריקה – אין לה תוכן, ולכן אין לה תגית סוגרת. הלוכסן בסוף לא חובה, אבל ככה כותב Visual Studio.', back:'tags:2'},
@@ -1297,8 +1327,8 @@ checkpoint('#cpTags', [
    why:['ככה זה בקוד – אבל הדפדפן מצמצם כמה רווחים רצופים לרווח אחד.', 'רוצים כמה רווחים? כותבים <code>&amp;nbsp;</code> לכל רווח.', 'רווח אחד נשאר, כך שהמילים לא נדבקות.'], back:'tags:3'},
   {q:'מה מהבאים הוא <b>לא</b> תגית?', opts:['<code>&lt;br /&gt;</code>', '<code>&lt;hr /&gt;</code>', '<code>&amp;nbsp;</code>', '<code>&lt;h6&gt;</code>'], correct:2,
    why:['br היא תגית ריקה: ירידת שורה.', 'hr היא תגית ריקה: קו מפריד.', 'זו <b>ישות</b> (entity) – קוד של תו מיוחד, בלי סוגריים משולשים. היא מתחילה בסימן <code>&amp;</code> ונגמרת בנקודה-פסיק.', 'h6 היא כותרת – הרמה הכי פחות חשובה.'], back:'tags:3'},
-  {q:'למה ל-br ול-hr אין תגית סוגרת?', opts:['כי שוכחים אותה, וזה בסדר', 'כי אין להן תוכן – אז אין מה לסגור', 'כי הן תגיות ישנות'], correct:1,
-   why:['זו לא שכחה: כך הן בנויות. תגית סוגרת אומרת איפה התוכן נגמר – ולהן אין תוכן.', 'בדיוק: הן "תגיות ריקות" (void). גם img כזו.', 'הן לא ישנות – משתמשים בהן כל הזמן. פשוט אין בהן תוכן.'], back:'tags:2'}
+  {q:'למה ל-br ול-hr אין תגית סוגרת?', opts:['כי הדפדפן סוגר אותן לבד בסוף השורה', 'כי אין להן תוכן – אז אין מה לסגור', 'כי הלוכסן שבסוף כבר סוגר אותן'], correct:1,
+   why:['אין כאן "סגירה אוטומטית": תגית סוגרת אומרת איפה התוכן נגמר – ולהן אין תוכן בכלל.', 'בדיוק: הן "תגיות ריקות" (void). גם img כזו.', 'הלוכסן לא חובה – גם <code>&lt;br&gt;</code> בלי לוכסן תקין לגמרי. אין להן סוגרת פשוט כי אין להן תוכן.'], back:'tags:2'}
 ]);
 checkpoint('#cpLinks', [
   {q:'רוצים שהקישור למפה ייפתח <b>בלשונית חדשה</b>. מה מוסיפים לתגית a?', opts:['<code>href="_blank"</code>', '<code>target="_blank"</code>', '<code>target="_self"</code>'], correct:1,
@@ -1311,10 +1341,10 @@ checkpoint('#cpLinks', [
    accept:[/^\s*(href\s*=\s*)?["']?(\.\/)?menu\.html["']?\s*$/], answer:'menu.html',
    wrong:'דף באותה תיקייה = רק שם הקובץ, כולל הסיומת. בלי <code>https://</code> ובלי שם של תיקייה.',
    explain:'נתיב יחסי: הקובץ נמצא ליד הדף, באותה תיקייה – אז מספיק השם שלו.', back:'links:3'},
-  {q:'למה לקשר לדף שלכם עם <code>menu.html</code>, ולא עם הכתובת המלאה <code>https://localhost:7123/HTML/menu.html</code>?', opts:['כי כתובת מלאה לא עובדת ב-localhost', 'כי הכתובת של האתר עוד תשתנה (פורט אחר, שרת אמיתי) – ונתיב יחסי ממשיך לעבוד בכל מקום', 'כי נתיב יחסי נטען מהר יותר'], correct:1,
-   why:['היא כן תעבוד – אבל רק היום, ורק במחשב הזה.', 'הפורט שונה מפרויקט לפרויקט, וכשהאתר יעלה לשרת אמיתי תהיה לו כתובת חדשה לגמרי.', 'המהירות כמעט זהה. הבעיה: הכתובת המלאה תישבר ברגע שהאתר יזוז.'], back:'links:5'},
-  {q:'איזה טקסט עדיף לקישור לתפריט?', opts:['"לחצו כאן"', '"לתפריט שלנו"'], correct:1,
-   why:['גולש שסורק את הדף בעיניים – או תוכנת הקראה שמקריאה רק את הקישורים – לא יודע לאן "כאן" מוביל.', 'הטקסט אומר לאן הקישור מוביל, גם בלי לקרוא את כל המשפט.'], back:'links:1'},
+  {q:'למה לקשר לדף שלכם עם <code>menu.html</code>, ולא עם הכתובת המלאה <code>https://localhost:7123/HTML/menu.html</code>?', opts:['כי כתובת מלאה לא עובדת ב-localhost', 'כי הכתובת של האתר עוד תשתנה, והקישור יישבר', 'כי נתיב יחסי נטען מהר יותר'], correct:1,
+   why:['היא כן תעבוד – אבל רק היום, ורק במחשב הזה.', 'הפורט שונה מפרויקט לפרויקט, וכשהאתר יעלה לשרת אמיתי תהיה לו כתובת חדשה לגמרי. נתיב יחסי ממשיך לעבוד בכל מקום.', 'המהירות כמעט זהה. הבעיה: הכתובת המלאה תישבר ברגע שהאתר יזוז.'], back:'links:5'},
+  {q:'איזה טקסט עדיף לקישור לתפריט?', opts:['"לחצו כאן"', '"לתפריט שלנו"', '"menu.html"'], correct:1,
+   why:['גולש שסורק את הדף בעיניים – או תוכנת הקראה שמקריאה רק את הקישורים – לא יודע לאן "כאן" מוביל.', 'הטקסט אומר לאן הקישור מוביל, גם בלי לקרוא את כל המשפט.', 'גולשים לא מכירים שמות של קבצים. הטקסט צריך להיות במילים שלהם: לאן מגיעים.'], back:'links:1'},
   {type:'text', q:'שאלה משיעור 1: הקובץ menu.html נמצא ב-<code>wwwroot/HTML</code>, והפורט של הפרויקט הוא 7123. איזו כתובת כותבים בדפדפן כדי לפתוח אותו?', placeholder:'https://...',
    accept:[/^\s*(https:\/\/)?localhost:7123\/HTML\/menu\.html\s*$/], answer:'https://localhost:7123/HTML/menu.html',
    wrong:'הכתובת מתחילה ב-<code>https://localhost:7123</code>, ואחריה הנתיב <b>בתוך</b> wwwroot. המילה wwwroot עצמה לא נכתבת בכתובת.',
@@ -1327,10 +1357,10 @@ checkpoint('#cpImages', [
    explain:'שתי הנקודות והלוכסן = עולים תיקייה אחת, <code>Img/</code> = נכנסים לתיקיית התמונות, ו-olives.jpg הוא הקובץ.', back:'images:2'},
   {q:'תמונה מקורית בגודל 1000 על 1000 פיקסלים. כתבתם לה <code>width="200" height="100"</code> – מה יקרה?', opts:['היא תהיה 200 על 200 – הדפדפן יתקן', 'היא תימעך: רחבה ונמוכה', 'היא תישאר 1000 על 1000'], correct:1,
    why:['הדפדפן מחשב לבד רק כשקובעים <b>אחד</b> מהשניים. כשכתבתם את שניהם – הוא מציית בדיוק.', '200 ברוחב ו-100 בגובה זה לא אותו יחס כמו במקור – והתמונה נמתחת. מספיק לכתוב רק width.', 'width ו-height קובעים את הגודל שמוצג בדף – לא משנה כמה גדול הקובץ.'], back:'images:3'},
-  {q:'מתי רואים בדף את הטקסט שכתוב ב-alt?', opts:['תמיד – מתחת לתמונה', 'כשהתמונה לא נטענת – למשל כשהנתיב שגוי', 'כשמחזיקים את העכבר מעל התמונה'], correct:1,
-   why:['כשהתמונה נטענת, ה-alt מחכה בשקט – לא רואים אותו.', 'בדיוק. וחוץ מזה, תוכנות הקראה מקריאות אותו לגולשים עיוורים.', 'את זה עושה מאפיין אחר: title, שמציג "בועה" (tooltip).'], back:'images:4'},
-  {q:'בדף מופיע סמל של תמונה שבורה, ולידו הטקסט של ה-alt. מה הדבר הראשון לבדוק?', opts:['להתקין מחדש את Visual Studio', 'את השם והנתיב שב-src – אות אחרי אות, מול השם שמופיע ב-Solution Explorer', 'לקשר במקום זה לתמונה מאתר אחר, עם כתובת מלאה'], correct:1,
-   why:['ממש לא 🙂 הדף עצמו עובד – רק קובץ התמונה לא נמצא.', 'כמעט תמיד זו אות אחת, סיומת אחרת (png במקום jpg) או שתי נקודות שנשכחו. ב-F12, בלשונית Console, רואים בדיוק איזה נתיב הדפדפן חיפש.', 'תמונה מאתר אחר יכולה להשתנות או להימחק בכל רגע. שומרים אותה בתיקייה Img, ומתקנים את הנתיב.'], back:'images:5'},
+  {q:'מתי רואים בדף את הטקסט שכתוב ב-alt?', opts:['תמיד, מתחת לתמונה, כמו כיתוב', 'רק כשהתמונה לא נטענת', 'כשמחזיקים את העכבר מעל התמונה'], correct:1,
+   why:['כשהתמונה נטענת, ה-alt מחכה בשקט – לא רואים אותו.', 'בדיוק – למשל כשהנתיב שגוי. וחוץ מזה, תוכנות הקראה מקריאות אותו לגולשים עיוורים.', 'את זה עושה מאפיין אחר: title, שמציג "בועה" (tooltip).'], back:'images:4'},
+  {q:'בדף מופיע סמל של תמונה שבורה, ולידו הטקסט של ה-alt. מה הדבר הראשון לבדוק?', opts:['את width – אולי התמונה קטנה מכדי להיראות', 'את השם והנתיב ב-src, מול Solution Explorer', 'את ה-alt – אולי הוא זה ששבר את התמונה'], correct:1,
+   why:['גם תמונה קטנה מאוד מופיעה. סמל שבור אומר שהקובץ <b>לא נמצא</b> בכלל.', 'כמעט תמיד זו אות אחת, סיומת אחרת (png במקום jpg) או שתי נקודות שנשכחו. ב-F12, בלשונית Console, רואים בדיוק איזה נתיב הדפדפן חיפש.', 'alt לא שובר תמונה – הוא רק הטקסט שמוצג <b>אחרי</b> שהיא נשברה. הבעיה היא בקובץ שהדפדפן לא מצא.'], back:'images:5'},
   {q:'איך הופכים תמונה לקישור לדף menu.html?', opts:['<code>&lt;img href="menu.html" src="../Img/pizza.jpg" alt="תפריט" /&gt;</code>', '<code>&lt;a href="menu.html"&gt;&lt;img src="../Img/pizza.jpg" alt="תפריט" /&gt;&lt;/a&gt;</code>', '<code>&lt;a src="menu.html"&gt;&lt;img href="../Img/pizza.jpg" alt="תפריט" /&gt;&lt;/a&gt;</code>'], correct:1,
    why:['לתגית img אין מאפיין href. רק a יודעת להיות קישור.', 'התגית a עוטפת את img – קינון. כל התמונה לחיצה.', 'המאפיינים התחלפו: לקישור יש href, ולתמונה יש src.'], back:'images:6'},
   {q:'בקוד יש כותרת h2, ואחריה שלוש תמונות – כל אחת בשורה נפרדת בקוד. מה יופיע בדף?', opts:['הכותרת, ומתחתיה שלוש תמונות – כל אחת בשורה משלה', 'הכותרת, ומתחתיה שלוש התמונות אחת ליד השנייה', 'הכותרת ושלוש התמונות, כולן באותה שורה'], correct:1,

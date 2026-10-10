@@ -31,8 +31,13 @@
 .btn:disabled{opacity:.55;cursor:not-allowed}
 .spread>table td code,.predict .q code{white-space:nowrap}
 .ctl{padding-inline-start:20px}.ctl li{margin:6px 0}
-/* long code inside playground hints / VS steps must wrap on phones (no horizontal scroll) */
-
+.predict .opts code.url{overflow-wrap:normal;word-break:normal}
+.predict .q .codeblock{font-weight:400;margin:8px 0 2px}
+.urlline{margin:6px 0 2px}.urlline pre{white-space:pre-wrap;overflow-wrap:anywhere}
+.urlcheck{border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin:12px 0;background:var(--surface)}
+.urlcheck>b{display:block;margin-bottom:4px}.urlcheck label{display:block;margin-bottom:6px}.urlcheck input{width:100%;box-sizing:border-box;font:15px "JetBrains Mono",Consolas,monospace;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface2);color:var(--text);direction:ltr;text-align:left}
+.uc-out ul{list-style:none;padding:0;margin:8px 0 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:4px 12px}
+.uc-out li{font-size:15px}.uc-out .y{color:var(--ok)}.uc-out .n{color:var(--bad)}.uc-out .l{color:var(--muted)}.uc-out .w{color:var(--warn)}.uc-sum{font-weight:700;margin-top:6px}
 </style>
 </head>
 <body data-lesson="l4" data-title="שיעור 4" data-next="bootstrap.html" data-next-name="Bootstrap">
@@ -88,7 +93,7 @@
     <h3>שלושה כלים, שלוש משימות</h3>
     <p>כל אחד מהכלים של היום פותר בעיה אחרת. הנה שלושתם, בגרסה קטנה:</p>
     <div class="trio" id="trio"></div>
-    <div class="tip">🧩 בהגשה 1 תבנו שלושה טפסים: <b>כניסה</b>, <b>הרשמה</b> ו<b>שחזור סיסמה</b>. בסוף השיעור יהיו לכם כל הכלים לזה – ובצעד בפרויקט תתחילו לבנות אותם.</div>
+    <div class="tip">🧩 בהגשה 1 תבנו שלושה טפסים: <b>כניסה</b>, <b>הרשמה</b> ו<b>שחזור סיסמה</b>. ואתם תבנו אותם כבר במהלך השיעור: בסוף הנושאים "טפסים", "עוד סוגי שדות" ו"שליחה לשרת", בשלבי "💻 עכשיו אצלכם" – טופס אחרי טופס.</div>
   </article>
 </section>
 
@@ -232,7 +237,7 @@ tbody tr:hover {
     <div class="predict" id="pList"></div>
     <div class="ctrls"><div class="seg" id="l1seg"></div></div>
     <div id="l1"></div>
-    <div class="what" id="l1what" hidden>רק שתי שורות השתנו: הפתיחה והסגירה של העוטפת. ה-<code>li</code> נשארו בדיוק אותו דבר. את המספרים או הנקודות הדפדפן מוסיף <b>בעצמו</b> – לא כותבים אותם. הוספתם שלב באמצע? המספור מתעדכן לבד.</div>
+    <div class="what" id="l1what" hidden>בכפתור השלישי הוספנו שלב באמצע – והמספור <b>התעדכן לבד</b>: 1 עד 5. את המספרים (וב-ul את הנקודות) הדפדפן מוסיף <b>בעצמו</b>, ולכן לא כותבים אותם בטקסט. ובכפתור השני, ul: השתנו רק שתי שורות – הפתיחה והסגירה של העוטפת. ה-<code>li</code> נשארו בדיוק אותו דבר.</div>
     <div class="bridge">גם כאן יש עץ משפחה, כמו בשיעור 3: <code>li</code> הוא <b>ילד</b> של <code>ol</code> או של <code>ul</code>, ומותר לשים אותו רק בתוך אחת מהן. ובתוך <code>li</code> מותר כמעט הכול – גם קישור. וזה בדיוק מה שנעשה בשלב הבא.</div>
     <details class="more"><summary>🚀 להעמקה: רשימה בתוך רשימה, ומספור אחר</summary>
       <p>בתוך <code>li</code> מותר לשים <b>רשימה שלמה</b> – כך בונים תת-תפריט, או שלב במתכון שיש לו תתי-שלבים. הדפדפן מזיח את הרשימה הפנימית לבד:</p>
@@ -331,7 +336,7 @@ nav a:hover {
     <div class="trap">ל-<code>input</code> <b>אין תגית סוגרת</b> – כמו <code>img</code> משיעור 2. כותבים <code>&lt;input … /&gt;</code>, ולא <code>&lt;/input&gt;</code>.</div>
   </article>
   <article class="spread">
-    <h3>label ו-for: לחיצה על המילה</h3>
+    <h3>label ו-for: מה החיבור עושה?</h3>
     <p>ל-<code>label</code> יש כוח נסתר – אבל הוא עובד רק אם <b>מחברים</b> אותה לשדה. מחברים בשני חלקים: לשדה נותנים <code>id</code>, ול-label נותנים <code>for</code> עם <b>אותו שם בדיוק</b>.</p>
     <div class="predict" id="pLabel"></div>
     <div class="compare" id="f3"></div>
@@ -386,9 +391,19 @@ nav a:hover {
     <p>מכאן עוברים לאתר <b>שלכם</b>: יוצרים את שלושת הדפים של הגשה 1. דף הכניסה נבנה עד הסוף, ובדף ההרשמה ובדף השחזור – כל מה שכבר אפשר עם מה שלמדתם. בנושא הבא תשלימו אותם.</p>
     <ol class="vsdo">
       <li><b>יוצרים את login.html:</b> קליק ימני על התיקייה <b>HTML</b> (בתוך wwwroot) &rlm;←&rlm; <b>Add</b> &rlm;←&rlm; <b><bdi>New Item...</bdi></b> &rlm;←&rlm; <b>HTML Page</b>. את השם המוצע (htmlpage.html) שנו ל-<b>login.html</b> &rlm;←&rlm; <b>Add</b>. (אם החלון נפתח קטן, בלי רשימת תבניות – לחצו בו Show All Templates.)</li>
-      <li><b>ה-head:</b> ודאו שבשורה של התגית html כתוב <code>lang="he" dir="rtl"</code>, כתבו ב-title את המילה <b>כניסה</b>, ולפני <code>&lt;/head&gt;</code> חברו את קובץ העיצוב של האתר שלכם (משיעור 3):
+      <li><b>השלד:</b> Visual Studio כתב בקובץ שלד באנגלית – <code>lang="en"</code>, בלי dir, ואולי גם xmlns. סמנו את כל מה שכתוב בקובץ (Ctrl+A), ובמקומו הדביקו את השלד הזה: בעברית, מימין לשמאל, עם title, ומחובר לקובץ העיצוב של האתר שלכם (site-style.css, משיעור 3):
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
-&lt;link rel="stylesheet" href="../css/site-style.css" /&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang="he" dir="rtl"&gt;
+&lt;head&gt;
+    &lt;meta charset="utf-8" /&gt;
+    &lt;title&gt;כניסה&lt;/title&gt;
+    &lt;link rel="stylesheet" href="../css/site-style.css" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
 </pre></div></li>
       <li><b>ה-body:</b> הדביקו בתוך body את טופס הכניסה – עם label ו-for, id ו-name לכל שדה, וקישורים לשני הדפים האחרים:
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
@@ -406,7 +421,7 @@ nav a:hover {
 &lt;br /&gt;
 &lt;a href="recover.html"&gt;שכחתי סיסמה&lt;/a&gt;
 </pre></div></li>
-      <li><b>register.html – הרשמה:</b> צרו דף חדש באותה דרך (צעדים 1–2, וב-title: <b>הרשמה</b>), והדביקו בתוך body:
+      <li><b>register.html – הרשמה:</b> צרו דף חדש באותה דרך (צעדים 1 ו-2 – אותו שלד, רק ב-title כתבו <b>הרשמה</b>), והדביקו בתוך body:
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
 &lt;h1&gt;הרשמה&lt;/h1&gt;
 &lt;form&gt;
@@ -434,7 +449,7 @@ nav a:hover {
           <tr><td>מייל</td><td><code>text</code> (לא email!)</td><td><code>email</code></td></tr>
         </table>
         (מייל עם <code>type="text"</code> – זו החלטה של הקורס: את הבדיקה שהמייל תקין תכתבו בעצמכם, בשיעורי JavaScript.)</li>
-      <li><b>recover.html – שחזור סיסמה:</b> צרו דף שלישי באותה דרך (ב-title: <b>שחזור סיסמה</b>), והדביקו בתוך body. את שאלות השחזור תוסיפו בנושא הבא:
+      <li><b>recover.html – שחזור סיסמה:</b> צרו דף שלישי באותה דרך (אותו שלד, וב-title: <b>שחזור סיסמה</b>), והדביקו בתוך body. את שאלות השחזור תוסיפו בנושא הבא:
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
 &lt;h1&gt;שחזור סיסמה&lt;/h1&gt;
 &lt;form&gt;
@@ -447,9 +462,10 @@ nav a:hover {
 &lt;/form&gt;
 &lt;a href="login.html"&gt;חזרה לכניסה&lt;/a&gt;
 </pre></div></li>
-      <li><b>בודקים:</b> שמרו את שלושת הקבצים (Ctrl+S בכל אחד – בלי כוכבית בלשוניות), קליק ימני על login.html &rlm;←&rlm; <b>View in Browser</b>. לחצו על המילה "שם משתמש" – הסמן קפץ לתיבה? הקלידו שם וסיסמה, לחצו "כניסה" והסתכלו בשורת הכתובת. אחר כך לחצו "להרשמה", מלאו כמה שדות ולחצו "ניקוי".</li>
+      <li><b>בודקים:</b> שמרו את שלושת הקבצים (Ctrl+S בכל אחד – בלי כוכבית בלשוניות), קליק ימני על login.html &rlm;←&rlm; <b>View in Browser</b>. לחצו על המילה "שם משתמש" – הסמן קפץ לתיבה? הקלידו שם וסיסמה, לחצו "כניסה" והסתכלו בשורת הכתובת. אחר כך לחצו "להרשמה", מלאו כמה שדות ולחצו "ניקוי". רוצים לוודא שכל השמות נכונים? העתיקו את הכתובת שקיבלתם אחרי השליחה לבדיקה המהירה שמתחת לצעדים.</li>
     </ol>
-    <div class="expect">בכתובת שמסתיימת ב-<code>/HTML/login.html</code> רואים: הכותרת "כניסה לאתר", שתי תיבות עם תוויות, כפתור "כניסה" ושני קישורים – בעיצוב של site-style.css. אחרי "כניסה" הכתובת נראית בערך כך: <code style="white-space:normal;overflow-wrap:anywhere">login.html?userName=dana&amp;password=1234</code> – כן, הסיסמה גלויה בכתובת! למה? את זה תגלו בנושא "שליחה לשרת". בדף ההרשמה יש 8 תיבות, ו"ניקוי" מרוקן את כולן.</div>
+    <div class="expect">בכתובת שמסתיימת ב-<code>/HTML/login.html</code> רואים: הכותרת "כניסה לאתר", שתי תיבות עם תוויות, כפתור "כניסה" ושני קישורים – בעיצוב של site-style.css. אחרי "כניסה" הכתובת מסתיימת בערך כך:<div class="codeblock urlline"><pre data-code="text">login.html?userName=dana&amp;password=1234</pre></div>כן, הסיסמה גלויה בכתובת! למה? את זה תגלו בנושא "שליחה לשרת". בדף ההרשמה יש 8 תיבות, ו"ניקוי" מרוקן את כולן.</div>
+    <div class="urlcheck" id="ucForms"></div>
     <div class="trouble" id="trForms"></div>
   </article>
   <article class="spread cpstep">
@@ -499,8 +515,8 @@ nav a:hover {
     <div class="tip">💡 בהגשה 1, השאלות לשחזור סיסמה ("שם חיית המחמד הראשונה?") הן בדיוק select כזה.</div>
   </article>
   <article class="spread">
-    <h3>datalist: רשימת הצעות</h3>
-    <p><code>datalist</code> מחברים לתיבת טקסט רגילה, והיא <b>מציעה</b> ערכים בזמן שמקלידים. החיבור דומה ל-label: ה-<code>list</code> של התיבה שווה ל-<code>id</code> של ה-datalist.</p>
+    <h3>datalist: עוד סוג של רשימה</h3>
+    <p><code>datalist</code> היא רשימה של ערכים שמחברים לתיבת טקסט רגילה – והדפדפן מציג אותה בזמן שמקלידים. החיבור דומה ל-label: ה-<code>list</code> של התיבה שווה ל-<code>id</code> של ה-datalist.</p>
     <div class="predict" id="pDl"></div>
     <div class="compare" id="k5"></div>
     <div class="what" id="k5what" hidden>ב-select אין איפה להקליד – בוחרים רק מה שיש. ב-datalist ההצעות עוזרות, אבל הגולש יכול להקליד <b>כל ערך</b> – גם אננס. אז מה לבחור? הערך <b>חייב</b> להיות מתוך הרשימה – select. רוצים לעזור בהקלדה ולהשאיר חופש – datalist.</div>
@@ -537,7 +553,7 @@ nav a:hover {
     &lt;option value="תל אביב"&gt;&lt;/option&gt;
 &lt;/datalist&gt;
 </pre></div></li>
-      <li><b>שתי שאלות לשחזור – select:</b> ב-register.html, אחרי כפתורי המין ולפני כפתור "הרשמה", הדביקו. בשאלה 2 יש אפשרויות <b>אחרות</b> מבשאלה 1 – כך אי אפשר לבחור את אותה שאלה פעמיים:
+      <li><b>שתי שאלות לשחזור – select:</b> ב-register.html, אחרי כפתורי המין ולפני כפתור "הרשמה", הדביקו. בשאלה 2 יש אפשרויות <b>שונות</b> מאלה שבשאלה 1 – כך אי אפשר לבחור את אותה שאלה פעמיים:
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
 &lt;label for="question1"&gt;שאלה לשחזור סיסמה 1&lt;/label&gt;
 &lt;select id="question1" name="question1"&gt;
@@ -561,9 +577,10 @@ nav a:hover {
 &lt;br /&gt;
 </pre></div></li>
       <li><b>recover.html:</b> בדף השחזור, במקום ההערה <code style="white-space:normal;overflow-wrap:anywhere">&lt;!-- recovery questions: next topic --&gt;</code>, הדביקו <b>את אותו קוד בדיוק</b> מצעד 3 – עם אותם name. כך, כשתכתבו בהמשך השנה את הקוד בשרת, הוא יוכל להשוות בין מה שנשמר בהרשמה לבין מה שהוקלד בשחזור.</li>
-      <li><b>בודקים:</b> שמרו את שני הקבצים ופתחו את register.html בדפדפן (View in Browser). נסו לסמן גם "זכר" וגם "נקבה"; לחצו בתיבת העיר והקלידו את האות א; בחרו שאלות, מלאו הכול ולחצו "הרשמה". אחר כך פתחו את recover.html.</li>
+      <li><b>בודקים:</b> שמרו את שני הקבצים ופתחו את register.html בדפדפן (View in Browser). נסו לסמן גם "זכר" וגם "נקבה"; לחצו בתיבת העיר והקלידו את האות א; בחרו שאלות, מלאו הכול ולחצו "הרשמה" – והעתיקו את הכתובת שקיבלתם לבדיקה המהירה שמתחת לצעדים. אחר כך פתחו את recover.html.</li>
     </ol>
     <div class="expect">בכתובת שמסתיימת ב-<code>/HTML/register.html</code> רואים את כל השדות של ההרשמה. אפשר לסמן רק אחד מכפתורי המין. בתיבת העיר מופיעות הצעות (אשקלון, אשדוד…) – ואפשר גם להקליד עיר אחרת. אחרי "הרשמה" הכתובת ארוכה, ויש בה למשל <code>gender=female</code> ו-<code>question1=pet</code> – ה-value, לא הטקסט שעל המסך. ב-recover.html: שם משתמש, שתי רשימות נפתחות ושתי תיבות לתשובות.</div>
+    <div class="urlcheck" id="ucFields"></div>
     <div class="trouble" id="trFields"></div>
   </article>
   <article class="spread cpstep">
@@ -624,7 +641,7 @@ nav a:hover {
       </ol>
       <p>רווח בתוך ערך נהפך ל-<code>+</code>. ואותיות בעברית? בכתובת האמיתית הן מקודדות לסימנים כמו <code>%D7%93</code>, אבל הדפדפן מציג לכם אותן כרגיל.</p>
     </details>
-    <div class="tip">💡 שמתם לב ל-<code>discount=0</code> בכתובת? בקוד יש שדה עם <code>type="hidden"</code> (נסתר): לא רואים אותו בדף, אבל הוא נשלח כמו כל שדה. אתרים משתמשים בו כדי לשלוח מידע שהגולש לא צריך למלא.</div>
+    <div class="tip">💡 מצאתם את <code>discount=0</code> בכתובת? זה השדה הנסתר. אתרים משתמשים ב-<code>type="hidden"</code> כדי לשלוח מידע שהגולש לא צריך למלא – למשל מספר הזמנה או קוד הנחה.</div>
     </div>
   </article>
   <article class="spread">
@@ -693,7 +710,7 @@ name=dana&amp;size=L</pre></div>
 &lt;form id="registerForm" method="get"&gt;
 &lt;form id="recoverForm" method="get"&gt;
 </pre></div>
-        השורה הראשונה – ל-login.html, השנייה – ל-register.html, והשלישית – ל-recover.html. <b>action לא כותבים</b> – בלעדיו הנתונים נשלחים לאותו דף. את הדף שבאמת יקבל אותם תכתבו בהמשך השנה, ב-C#. ולמה דווקא get? <a href="#" data-go="send:3">בשלב על post</a> ראיתם: דף html רגיל בפרויקט לא יודע לקבל post.</li>
+        השורה הראשונה – ל-login.html, השנייה – ל-register.html, והשלישית – ל-recover.html.<br />את <code>action</code> <b>לא כותבים</b>: בלעדיו הנתונים נשלחים לאותו דף. את הדף שבאמת יקבל אותם תכתבו בהמשך השנה, ב-C#. ולמה דווקא get? <a href="#" data-go="send:3">בשלב על post</a> ראיתם: דף html רגיל בפרויקט לא יודע לקבל post.</li>
       <li><b>עיצוב:</b> בסוף <b>site-style.css</b> הדביקו – ואז שנו את הצבעים לצבעים של האתר שלכם:
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="css">
 form {
@@ -708,9 +725,10 @@ form {
 </pre></div>
         הכלל <code>form</code> חל על שלושת הטפסים, והכלל <code>#loginForm</code> רק על טופס הכניסה – הוא קצר, אז הקופסה שלו צרה יותר.</li>
       <li><b>מה נשלח?</b> שמרו את כל הקבצים, פתחו את login.html בדפדפן, מלאו ולחצו "כניסה" – והסתכלו בשורת הכתובת. עשו אותו דבר ב-register.html: מלאו את <b>כל</b> השדות, סמנו מין, ולחצו "הרשמה".</li>
-      <li><b>בכלי המפתחים:</b> ב-login.html לחצו F12 &rlm;←&rlm; לשונית <b>Network</b>. <b>רק עכשיו</b> מלאו ולחצו "כניסה" (Network רושם רק מה שקורה כשהוא פתוח). ברשימה לחצו על השורה הראשונה – זו שמתחילה ב-<code>login.html?userName=</code> – ואז על הלשונית <b>Payload</b>. ככה תבדקו בהמשך גם טפסים ששולחים ב-post.</li>
+      <li><b>בכלי המפתחים:</b> ב-login.html לחצו F12 &rlm;←&rlm; לשונית <b>Network</b>. <b>רק עכשיו</b> מלאו ולחצו "כניסה" (Network רושם רק מה שקורה כשהוא פתוח). ברשימה לחצו על השורה הראשונה – זו שמתחילה ב-<code>login.html?userName=</code> – ואז על הלשונית <b>Payload</b>. ב-get הזוגות מופיעים שם תחת הכותרת <b>Query String Parameters</b>. (בטופס שנשלח ב-post הם יופיעו באותה לשונית, תחת <b>Form Data</b> – ככה תבדקו אותם בהמשך.)</li>
     </ol>
-    <div class="expect">טופס הכניסה בתוך קופסה צרה עם מסגרת; טפסי ההרשמה והשחזור בקופסה באותו סגנון. אחרי "כניסה" הכתובת מסתיימת למשל ב-<code style="white-space:normal;overflow-wrap:anywhere">login.html?userName=dana&amp;password=1234</code>. אחרי "הרשמה" יש בכתובת <b>13 זוגות</b> name=ערך, מ-userName ועד answer2 – הכפתורים לא נשלחים, כי אין להם name. ב-F12, בלשונית Payload, מופיעים אותם זוגות ברשימה מסודרת.</div>
+    <div class="expect">טופס הכניסה בתוך קופסה צרה עם מסגרת; טפסי ההרשמה והשחזור בקופסה באותו סגנון. אחרי "כניסה" הכתובת מסתיימת למשל כך:<div class="codeblock urlline"><pre data-code="text">login.html?userName=dana&amp;password=1234</pre></div>אחרי "הרשמה" יש בכתובת <b>13 זוגות</b> name=ערך, מ-userName ועד answer2 – הכפתורים לא נשלחים, כי אין להם name. ב-F12, בלשונית Payload, תחת Query String Parameters, מופיעים אותם זוגות ברשימה מסודרת.</div>
+    <div class="urlcheck" id="ucSend"></div>
     <div class="trouble" id="trSend"></div>
   </article>
   <article class="spread cpstep">
@@ -760,7 +778,7 @@ form {
   </article>
   <article class="spread" id="quiz">
     <h3>✅ בדקו את עצמכם</h3>
-    <p>5 שאלות. טעיתם? ההסבר יגיד למה – ונסו שוב.</p>
+    <p>5 שאלות שמחברות את כל השיעור – במצבים שעוד לא ראיתם. טעיתם? ההסבר יגיד למה – ונסו שוב.</p>
   </article>
   <article class="spread" id="summary">
     <h3>📄 דף סיכום: כל השיעור במסך אחד</h3>
@@ -951,15 +969,17 @@ seg($('#t5seg'), ['1. בלי עיצוב', '2. מסגרות לתאים', '3. bord
 /* ---------- lists ---------- */
 const l1 = new Split($('#l1'));
 const RECIPE = ['<h3>איך מכינים פיצה</h3>', '<ol>', '    <li>מרדדים את הבצק</li>', '    <li>מורחים רוטב</li>', '    <li>מפזרים גבינה</li>', '    <li>אופים 10 דקות</li>', '</ol>'];
-seg($('#l1seg'), [{label:'ol', mono:true}, {label:'ul', mono:true}], (o,i) => {
+const RECIPE_NEW = RECIPE.slice(0, 4).concat(['    <li>מוסיפים פטריות</li>'], RECIPE.slice(4));
+seg($('#l1seg'), [{label:'ol', mono:true}, {label:'ul', mono:true}, {label:'ol + שלב חדש באמצע'}], (o,i) => {
+  if (i === 2) return l1.setHtml(RECIPE_NEW.join('\n'), {4:'new'});
   const src = RECIPE.join('\n').replace(/<(\/?)ol>/g, '<$1' + (i ? 'ul' : 'ol') + '>');
   l1.setHtml(src, i ? {1:'diff', 6:'diff'} : {});
 });
 predict('#pList', {
-  q: 'בקוד למטה יש רשימה <code>ol</code>. מה ישתנה אם נחליף אותה ב-<code>ul</code>?',
-  opts: ['המספרים יוחלפו בנקודות', 'הרשימה תעמוד בשורה אחת', 'שום דבר'], correct: 0,
+  q: 'בקוד למטה, בתוך <code>ol</code>, לא כתבנו אף מספר. מוסיפים <b>שלב חדש</b> בין "מורחים רוטב" לבין "מפזרים גבינה". מה יקרה למספרים?',
+  opts: ['הדפדפן ימספר מחדש את כל השלבים', 'השלב החדש יקבל 0 עד שנתקן ידנית', 'שני שלבים יקבלו את אותו המספר'], correct: 0,
   onCorrect: () => { $('#l1what').hidden = false; },
-  why: ['ul = רשימה בלי סדר, ולכן במקום מספרים יש תבליטים. נסו בכפתורים.', 'כל li תמיד יורד שורה. כדי לסדר רשימה בשורה אחת צריך CSS – בשלב הבא.', 'יש הבדל במראה – נסו בכפתורים.']
+  why: ['את המספרים ב-ol הדפדפן כותב בעצמו – בכל פעם מחדש, לפי הסדר. לחצו על הכפתור השלישי וראו.', 'אין מספר שמחכה לתיקון – בקוד בכלל אין מספרים. הדפדפן מוסיף אותם לבד.', 'הדפדפן סופר את ה-li לפי הסדר, ולכן אף מספר לא חוזר פעמיים.']
 });
 
 const l2 = new Split($('#l2'));
@@ -1156,10 +1176,10 @@ g2url.addEventListener('keydown', e => {
   g2url.blur();
 });
 predict('#pGet', {
-  q: 'ממלאים שם ולוחצים "להזמנה" בטופס עם <code>method="get"</code>. איפה יופיעו הנתונים?',
-  opts: ['בשורת הכתובת של הדפדפן', 'בשום מקום – הם נשלחים בסתר', 'בחלון הודעה שקופץ'], correct: 0,
-  onCorrect: () => { $('#g2more').hidden = false; }, /* the slow explanation + the hidden-field tip name the answer */
-  why: ['get מוסיף את הנתונים לסוף הכתובת. מלאו ושלחו – ותראו.', 'זה בערך מה ש-post עושה (וגם הוא לא באמת "בסתר" – בשלב הבא).', 'הדפדפן לא מקפיץ הודעה – הוא עובר לדף שכתוב ב-action.']
+  q: 'בשורה 21 בקוד יש שדה עם <code>type="hidden"</code> (נסתר) – בדף לא רואים אותו בכלל. מה יקרה לו כשתשלחו את הטופס?',
+  opts: ['הוא יישלח כמו כל שדה, עם ה-name וה-value שלו', 'הוא לא יישלח – מה שלא רואים, לא נשלח', 'הדפדפן יבקש למלא אותו לפני השליחה'], correct: 0,
+  onCorrect: () => { $('#g2more').hidden = false; }, /* the hidden-field tip names the answer */
+  why: ['"נסתר" זה רק על המסך. בשליחה הוא זוג name=ערך כמו כל השאר – מלאו, שלחו, וחפשו אותו.', 'הדפדפן שולח כל פקד שיש לו name – גם כזה שלא רואים. מלאו ושלחו – ובדקו מה הגיע.', 'אין מה למלא: ה-value שלו כבר כתוב בקוד, והגולש בכלל לא רואה אותו.']
 });
 /* POST */
 const g3 = orderFrame($('#g3frame'), 'post', list => {
@@ -1173,7 +1193,7 @@ predict('#pPost', {
   q: 'אז post שולח את הנתונים בצורה סודית ומוצפנת?',
   opts: ['כן – אי אפשר לראות אותם', 'לא – הם רק לא מוצגים בכתובת'], correct: 1,
   onCorrect: () => { $('#g3trap').hidden = false; },
-  why: ['אפשר גם אפשר: הלוח השחור הוא בדיוק מה שכל אחד רואה ב-F12. (שלחו את הטופס למעלה כדי לראות אותו.)', 'post רק מוציא את הנתונים מהכתובת. כל אחד רואה אותם ב-F12 ← Network, ובלי https הם עוברים ברשת כטקסט רגיל.']
+  why: ['כן, אפשר לראות אותם: הלוח השחור הוא בדיוק מה שכל אחד רואה ב-F12. (שלחו את הטופס למעלה כדי לראות אותו.)', 'post רק מוציא את הנתונים מהכתובת. כל אחד רואה אותם ב-F12 ← Network, ובלי https הם עוברים ברשת כטקסט רגיל.']
 });
 predict('#pWhich', {
   veil: '#whichTbl', /* the summary table holds the answer – it opens after the guess */
@@ -1195,7 +1215,8 @@ const isColor = c => c && c !== 'transparent' && c !== 'rgba(0, 0, 0, 0)';
 /* strict checks: a task passes only for the right reason (constitution §5) */
 const pgSrc = () => (pg && pg.edH.value) || '';
 const uniqueId = (d, el) => !!el.id && [...d.querySelectorAll('[id]')].filter(x => x.id === el.id).length === 1;
-const labeled = (d, el) => uniqueId(d, el) && [...d.querySelectorAll('label[for]')].some(l => l.htmlFor === el.id);
+/* a label is connected with for + id (the course way), or by wrapping the field (the 🚀 way in forms:3) */
+const labeled = (d, el) => !!el.closest('label') || (uniqueId(d, el) && [...d.querySelectorAll('label[for]')].some(l => l.htmlFor === el.id));
 const PG_TASKS = [
   {id:'t1', text:'בנו טבלת מנות: שורת כותרות בתוך <code>thead</code> עם לפחות 2 תאי <code>th</code> (למשל מנה ומחיר), ולפחות <b>3 שורות</b> של מנות בתוך <code>tbody</code> – בכל שורה <b>אותו מספר תאים</b> כמו בשורת הכותרות.',
    test: d => { const t = d.querySelector('table'), src = pgSrc(); if (!t || !/<thead[\s>]/i.test(src) || !/<tbody[\s>]/i.test(src)) return false;
@@ -1219,7 +1240,7 @@ const PG_TASKS = [
      explain: 'הבורר <code>th</code> תופס רק את תאי הכותרת. הפסיק ב-<code>th, td</code> פירושו "וגם" – המסגרת חלה על כל התאים.',
      alt: 'הקווים יצאו כפולים? הוסיפו <code>table { border-collapse: collapse; }</code> – ותקבלו קו אחד בין תאים. ו-<code>padding</code> לכלל של <code>th, td</code> ייתן לטקסט אוויר.'},
    back: 'tables:5'},
-  {id:'t3', text:'בטופס: תיבת טקסט לשם (<code>type="text"</code>) עם <code>name</code>, ו-label שמחוברת אליה עם <code>for</code> ו-<code>id</code>.',
+  {id:'t3', text:'בטופס: תיבת טקסט לשם (<code>type="text"</code>) עם <code>name</code>, ו-label שמחוברת אליה – עם <code>for</code> ו-<code>id</code> (או, בדרך של ה-🚀: התיבה בתוך ה-label).',
    test: d => [...d.querySelectorAll('form input[type=text][name]')].some(i => i.name.trim() && labeled(d, i)),
    hints: ['שלושה דברים: תווית (<code>label</code>), תיבה (<code>input</code> עם <code>type="text"</code>), ושם לשליחה (<code>name</code>). החיבור: ה-for של התווית שווה ל-id של התיבה.',
            'בתוך הטופס, במקום ההערה, כתבו <code>&lt;label for="name"&gt;שם&lt;/label&gt;</code> ומתחת: <code>&lt;input type="text" id="name" name="name" /&gt;</code>'],
@@ -1242,17 +1263,18 @@ const PG_TASKS = [
      explain: 'אותו name = קבוצה אחת, ולכן אפשר לבחור רק כפתור אחד. ה-value הוא מה שיישלח (למשל <code>size=L</code>), וה-id שונה כדי שכל label תמצא את הכפתור שלה.',
      alt: 'רוצים שהגודל הרגיל יהיה מסומן כבר כשהדף נפתח? הוסיפו לכפתור הראשון את המאפיין <code>checked</code>.'},
    back: 'fields:2'},
-  {id:'t6', text:'כפתור שליחה (<code>type="submit"</code>) בתוך הטופס.',
-   test: d => !!d.querySelector('form input[type=submit], form button[type=submit]'),
+  {id:'t6', text:'כפתור שליחה בתוך הטופס – <code>input</code> עם <code>type="submit"</code>, או תגית <code>button</code>.',
+   test: d => !!d.querySelector('form input[type=submit]') || [...d.querySelectorAll('form button')].some(b => b.type === 'submit'),
    hints: ['כפתור שליחה הוא עוד <code>input</code> – עם type אחר. את הטקסט שעליו קובע המאפיין <code>value</code>.',
            'לפני <code>&lt;/form&gt;</code> כתבו: <code>&lt;input type="submit" value="להזמנה" /&gt;</code>'],
    solution: {code: '<input type="submit" value="להזמנה" />', lang: 'html',
-     explain: 'submit שולח את הטופס. בלי value הדפדפן כותב על הכפתור טקסט משלו.'},
+     explain: 'submit שולח את הטופס. בלי value הדפדפן כותב על הכפתור טקסט משלו.',
+     alt: 'גם <code>&lt;button&gt;להזמנה&lt;/button&gt;</code> בתוך טופס שולח אותו – ל-button בתוך form הסוג submit הוא ברירת המחדל. (תפגשו אותו ב-Bootstrap.)'},
    back: 'forms:5'},
   {id:'t7', text:'שלחו את הטופס: מלאו את <b>כל</b> התיבות בדפדפן הקטן, בחרו גודל ולחצו על כפתור השליחה. בדקו בשורת הכתובת שכל השדות הגיעו (שדה חסר? חסר לו name).',
    test: () => false, /* checked when the form is sent – see onRender */
    hints: ['השליחה קורית בדפדפן הקטן שליד העורך, לא בקוד: מלאו כל תיבה, סמנו גודל ולחצו על כפתור השליחה. אחר כך הסתכלו בשורת הכתובת שמעליו.',
-           'בכתובת צריך להופיע זוג name=ערך לכל שדה – למשל <code>?name=dana&amp;pass=1234&amp;size=L</code>. שדה לא מופיע? בדקו שיש לו name ושמילאתם אותו. וב-form כתוב <code>method="get"</code>?'],
+           'בכתובת צריך להופיע זוג name=ערך לכל שדה – למשל <code style="white-space:nowrap">?name=dana&amp;pass=1234&amp;size=L</code>. שדה לא מופיע? בדקו שיש לו name ושמילאתם אותו. וב-form כתוב <code>method="get"</code>?'],
    solution: {code: '<form method="get">\n    <label for="name">שם</label>\n    <input type="text" id="name" name="name" />\n    <br />\n    <label for="pass">סיסמה</label>\n    <input type="password" id="pass" name="pass" />\n    <br />\n    <input type="radio" id="m" name="size" value="M" />\n    <label for="m">רגילה</label>\n    <input type="radio" id="l" name="size" value="L" />\n    <label for="l">משפחתית</label>\n    <br />\n    <input type="submit" value="להזמנה" />\n</form>', lang: 'html',
      explain: 'כך נראה הטופס המלא. ממלאים אותו בדפדפן הקטן ולוחצים "להזמנה": ב-get כל פקד שיש לו name הופך לזוג name=ערך בכתובת, ומקבוצת ה-radio נשלח רק הכפתור שנבחר. וכן – גם הסיסמה גלויה בכתובת. לכן באתר אמיתי טופס כניסה נשלח ב-post.'},
    back: 'send:2'}
@@ -1281,17 +1303,41 @@ pg = playground('#pg', {html: PG_HTML, css: PG_CSS, tasks: PG_TASKS, htmlLabel: 
 doneCheck('#stepDone', 'step');
 
 /* ---------- quiz ---------- */
+/* the final quiz mixes the whole lesson into new situations – not the checkpoint questions again */
+/* an address in an answer button: it may break only before an & – never right after the ? */
+const U = url => '<code class="url">' + esc(url).replace(/&amp;/g, '<wbr>&amp;') + '</code>';
+const qCode = src => '<div class="codeblock"><pre data-code="html">' + esc(src) + '</pre></div>';
 quiz('#quiz', [
-  {q:'כתבתם טבלה, והמילה "מבצע" מופיעה <b>מעל</b> הטבלה במקום בתוכה. מה הסיבה הכי סבירה?', opts:['חסר thead','המילה כתובה בתוך tr, אבל לא בתוך td','הטבלה צריכה CSS'], correct:1,
-   why:['טבלה עובדת גם בלי thead.', 'תוכן חייב להיות בתוך td או th. מה שלא – הדפדפן זורק אל מחוץ לטבלה. <a href="#" data-go="tables:4">ראו כאן</a>.', 'CSS משנה מראה, לא את מקום התוכן.']},
-  {q:'בטופס ההרשמה אפשר לסמן גם "זכר" וגם "נקבה". מה מתקנים?', opts:['נותנים לשני הכפתורים אותו name','נותנים לשני הכפתורים אותו id','מחליפים ל-checkbox'], correct:0,
-   why:['אותו name = קבוצה אחת = בחירה אחת.', 'id חייב להיות שונה לכל תגית. את הקבוצה קובע ה-name.', 'checkbox דווקא מאפשר לסמן כמה – ההפך ממה שרוצים.']},
-  {q:'רוצים שהגולש יבחר שאלה לשחזור סיסמה <b>רק</b> מתוך רשימה קבועה. מה מתאים?', opts:['datalist','select','<code>input type="text"</code>'], correct:1,
-   why:['datalist רק מציעה – אפשר להקליד בה כל דבר.', 'select היא רשימה סגורה.', 'בתיבת טקסט אפשר לכתוב כל דבר.']},
-  {q:'שלחתם טופס ב-get, ובכתובת אין את הטלפון: <code>?user=dana&amp;city=ashkelon</code>. מה כנראה חסר בשדה הטלפון?', opts:['id','name','label'], correct:1,
-   why:['id משמש את ה-label ואת ה-CSS, לא את השליחה.', 'בלי name אין שם לשלוח איתו את הערך – והשדה לא נשלח. <a href="#" data-go="forms:4">ראו כאן</a>.', 'label רק מסבירה – היא לא קשורה למה שנשלח.']},
-  {q:'חבר אומר: "שלחתי את הסיסמה ב-post, אז היא מוצפנת ובטוחה". מה נכון?', opts:['הוא צודק','post רק מוציא את הנתונים מהכתובת. מה שמצפין הוא https','post מצפין רק סיסמאות'], correct:1,
-   why:['ב-F12 ← Network רואים הכול. <a href="#" data-go="send:3">ראו כאן</a>.', 'בדיוק.', 'post לא מצפין שום דבר.']}
+  {q:'קטע מטופס הרשמה. כמה דברים צריך לתקן בו, לפי הכללים של הקורס?' + qCode('<label for="mail">מייל</label>\n<input type="email" id="email" name="email" />\n<input type="radio" id="male" name="gender" value="male" />\n<label for="male">זכר</label>\n<input type="radio" id="female" name="female" value="female" />\n<label for="female">נקבה</label>'),
+   opts:['שלושה', 'שניים', 'אחד', 'אף אחד – הכול תקין'], correct:0,
+   why:['נכון: ה-for של המייל (mail) לא שווה ל-id שלו (email); מייל בפרויקט נכתב עם <code>type="text"</code>; ולכפתור "נקבה" יש name אחר משל "זכר" – אז אפשר לסמן את שניהם.',
+        'יש יותר. בדקו שלושה דברים: כל for מול ה-id שלו, ה-type של המייל, וה-name של שני כפתורי ה-radio.',
+        'יש יותר מאחד. בדקו כל for מול ה-id שלו, את ה-type של המייל, ואת ה-name של כפתורי ה-radio (<a href="#" data-go="fields:2">השלב על radio</a>).',
+        'יש כמה טעויות. רמז: השוו כל for ל-id שלו, ואת ה-name של שני כפתורי ה-radio זה לזה.']},
+  {q:'הקלידו dana בתיבה user, הקלידו 050 בתיבה phone, סימנו את הכפתור ולחצו "שליחה". איזו כתובת תופיע?' + qCode('<form action="welcome.html" method="get">\n    <input type="text" name="user" />\n    <input type="text" id="phone" />\n    <input type="radio" name="gender" value="female" />\n    <input type="submit" value="שליחה" />\n</form>'),
+   opts:[U('welcome.html?user=dana&gender=female'), U('welcome.html?user=dana&phone=050&gender=female'), U('welcome.html?user=dana&gender=on'), U('welcome.html')], correct:0,
+   why:['נכון: לתיבת הטלפון יש רק id, בלי name – ולכן היא לא נשלחת. ומהכפתור נשלח ה-value שלו: female.',
+        'לתיבה phone יש רק id. בלי name – לא נשלח, בלי שום הודעה (<a href="#" data-go="forms:4">השלב על name</a>).',
+        'המילה on נשלחת רק כשלכפתור אין value. כאן כתוב <code>value="female"</code> – וזה מה שנשלח.',
+        'ככה נראית הכתובת ב-post. כאן כתוב <code>method="get"</code> – והנתונים נכתבים בכתובת (<a href="#" data-go="send:2">השלב על get</a>).']},
+  {q:'בטבלת המחירים רוצים שרק <b>שורות המנות</b> ייצבעו כשהעכבר עליהן – לא שורת הכותרות. איזה בורר?',
+   opts:['<code>tbody tr:hover</code>', '<code>tr:hover</code>', '<code>table:hover</code>', '<code>th:hover</code>'], correct:0,
+   why:['נכון: רק tr שנמצא בתוך tbody – שורות המנות. שורת הכותרות נמצאת ב-thead.',
+        'זה יצבע גם את שורת הכותרות – גם היא tr (<a href="#" data-go="tables:5">השלב על עיצוב טבלה</a>).',
+        'זה יצבע את כל הטבלה בבת אחת, ברגע שהעכבר נמצא עליה.',
+        'זה יצבע רק תא כותרת אחד – בדיוק ההפך ממה שרוצים.']},
+  {q:'בתפריט כתבתם את הכלל הזה – אבל הקישורים עדיין כחולים, עם קו מתחת. מה מתקנים?<div class="codeblock"><pre data-code="css">nav li {\n    color: white;\n    text-decoration: none;\n}</pre></div>',
+   opts:['כותבים את ההוראות בכלל של <code>nav a</code>', 'מוסיפים לכלל <code>display: inline;</code>', 'מחליפים את <code>ul</code> ב-<code>ol</code>', 'מעבירים את הכלל לתגית style ב-head'], correct:0,
+   why:['נכון: לקישור יש צבע וקו משלו מהדפדפן, ולכן מה שנותנים ל-li לא מגיע אליו. כותבים ישר על הקישורים.',
+        'display משנה את הסידור בשורה – לא את הצבע ואת הקו (<a href="#" data-go="lists:2">השלב על nav</a>).',
+        'ol רק מוסיפה מספרים. הצבע והקו של הקישורים לא ישתנו.',
+        'המקום של הכלל לא משנה כאן – הבעיה היא על מי הוא חל.']},
+  {q:'אתר עם https 🔒 שולח את טופס הכניסה ב-post. מי יכול לראות את הסיסמה?',
+   opts:['מי שיושב מול המחשב, בכלי המפתחים', 'אף אחד – גם לא בכלי המפתחים', 'כל מי שרואה את שורת הכתובת', 'כל מי שמחובר לאותה רשת Wi-Fi'], correct:0,
+   why:['נכון: ב-F12 רואים את הבקשה לפני שהיא יוצאת מהמחשב. בדרך עצמה https מצפין הכול – ולכן מי שברשת לא יכול לקרוא אותה.',
+        'בכלי המפתחים של המחשב ששולח רואים את הבקשה – גם ב-post, וגם עם https (<a href="#" data-go="send:3">השלב על post</a>).',
+        'ב-post הנתונים לא בכתובת – הם בגוף הבקשה.',
+        'בלי https זה היה נכון. עם https ההודעה מוצפנת בדרך – זה בדיוק התפקיד שלו.']}
 ]);
 
 /* ---------- summary ---------- */
@@ -1315,6 +1361,40 @@ const EGGS = [
    h1:'באקסל אפשר למזג כמה תאים לתא אחד רחב. גם בטבלאות HTML! נסו בזירת התרגול.',
    h2:'בזירת התרגול, הוסיפו לטבלה שורה עם תא אחד בלבד, ותנו לו את המאפיין <code>colspan="2"</code>. למשל: "כל המחירים כוללים מע״מ".'}
 ];
+/* ---------- 🔎 "what reached the server?" – paste the address you got after sending one of YOUR forms ---------- */
+const UC_NAMES = {login:['userName','password'], register:['userName','password','password2','firstName','lastName','city','phone','email','gender','question1','answer1','question2','answer2'], recover:['userName','question1','answer1','question2','answer2']};
+const UC_LATER = ['gender','question1','answer1','question2','answer2']; /* added in the topic "עוד סוגי שדות" */
+function urlCheck(host, early){
+  host.innerHTML = '<b>🔎 בדיקה מהירה: מה הגיע לשרת?</b><label class="muted" for="' + host.id + 'In">אחרי השליחה, העתיקו את הכתובת מהדפדפן שלכם (login, register או recover) והדביקו כאן:</label>' +
+    '<input id="' + host.id + 'In" spellcheck="false" autocomplete="off" placeholder="https://localhost:7123/HTML/register.html?userName=…" /><div class="uc-out" aria-live="polite"></div>';
+  const inp = host.querySelector('input'), out = host.querySelector('.uc-out');
+  inp.addEventListener('input', () => {
+    const v = inp.value.trim(); if (!v) { out.innerHTML = ''; return; }
+    const m = v.match(/(login|register|recover)\.html/i);
+    if (!m) { out.innerHTML = '<p class="n">לא מצאתי בכתובת את login.html, register.html או recover.html. העתקתם את כל הכתובת?</p>'; return; }
+    const page = m[1].toLowerCase(), q = v.indexOf('?');
+    if (q < 0) { out.innerHTML = '<p class="n">אין בכתובת סימן שאלה – כלומר אין בה נתונים. לחצתם על כפתור השליחה? ובשורת ה-form כתוב get (ולא post)?</p>'; return; }
+    let pairs = []; try { pairs = [...new URLSearchParams(v.slice(q + 1).split('#')[0])]; } catch(e){}
+    const got = {}; pairs.forEach(([k, val]) => { (got[k] = got[k] || []).push(val); });
+    const want = UC_NAMES[page], rows = []; let ok = 0, need = 0;
+    want.forEach(n => {
+      const later = early && page === 'register' && UC_LATER.includes(n);
+      if (got[n]) { ok++; need++; rows.push('<li class="y">✔ ' + n + (got[n].every(x => !x.trim()) ? ' <span class="l">(ריק – לא מילאתם)</span>' : '') + '</li>'); return; }
+      const near = Object.keys(got).find(k => k.toLowerCase() === n.toLowerCase());
+      if (later && !near) { rows.push('<li class="l">⏳ ' + n + ' – תוסיפו בנושא הבא</li>'); return; }
+      need++;
+      if (near) rows.push('<li class="n">✘ ' + n + ' – אצלכם כתוב <bdi dir="ltr">' + esc(near) + '</bdi>. אותיות גדולות וקטנות חשובות!</li>');
+      else if (n === 'gender') rows.push('<li class="n">✘ gender – לא הגיע. סימנתם מין? (ואם כן – ל-radio חסר name)</li>');
+      else rows.push('<li class="n">✘ ' + n + ' – לא הגיע: לשדה חסר name, או שה-name כתוב אחרת</li>');
+    });
+    Object.keys(got).filter(k => !want.includes(k) && !want.some(n => n.toLowerCase() === k.toLowerCase())).forEach(k => rows.push('<li class="w">❓ <bdi dir="ltr">' + esc(k) + '</bdi> – השם הזה לא ברשימה. טעות כתיב?</li>'));
+    out.innerHTML = '<ul>' + rows.join('') + '</ul><p class="uc-sum">הגיעו ' + ok + ' מתוך ' + need + ' השמות של ' + page + '.html' + (ok === need ? '. ✔ מצוין!' : '.') + '</p>';
+  });
+}
+urlCheck($('#ucForms'), true);
+urlCheck($('#ucFields'), false);
+urlCheck($('#ucSend'), false);
+
 /* ---------- 💻 "works on the site but not for me?" – the shared list + what is special in each topic ---------- */
 const TR_NAME = {t:'שדה חסר בכתובת אחרי השליחה?', how:'לשדה הזה חסר <code>name</code> – ופקד בלי name לא נשלח, בלי שום הודעת שגיאה (<a href="#" data-go="forms:4">השלב על name</a>).'};
 trouble('#trTables', {add:[
@@ -1325,18 +1405,21 @@ trouble('#trLists', {add:[
   {t:'הקישורים עדיין אחד מתחת לשני?', how:'את <code>display: inline;</code> כותבים בכלל של הפריטים – <code>nav li</code> – ולא של nav או של ul. ובדקו שלא נשארה הערה (<code>/*</code>) מהניסוי.'},
   {t:'הקישורים עדיין כחולים, עם קו מתחת?', how:'לקישור יש צבע משלו מהדפדפן, ולכן צבע שנותנים ל-nav או ל-li לא מגיע אליו. את <code>color</code> ואת <code>text-decoration: none;</code> כותבים בכלל של <code>nav a</code> – עם רווח בין nav ל-a.'},
   {t:'התבליטים לא נעלמו?', how:'<code>list-style: none;</code> כתוב בכלל של <code>nav ul</code>? בדקו גם כתיב: list-style עם מקף.'}]});
+const TR_EMPTY = {t:'אחרי השליחה התיבות התרוקנו?', how:'זה תקין. לטופס אין <code>action</code>, ולכן הוא נשלח לאותו דף – והדף נטען מחדש, ריק. הנתונים מחכים בשורת הכתובת, אחרי סימן השאלה.'};
 trouble('#trForms', {add:[
   {t:'לחיצה על המילה לא מכניסה את הסמן לתיבה?', how:'ה-<code>for</code> של התווית וה-<code>id</code> של התיבה חייבים להיות <b>זהים בדיוק</b> – כולל אותיות גדולות וקטנות: <code>userName</code> ו-<code>username</code> הם שני שמות שונים.'},
   TR_NAME,
-  {t:'"להרשמה" או "שכחתי סיסמה" פותחים דף שגיאה (404)?', how:'הדף עוד לא קיים, או שהשם שלו שונה מה-href. בתיקייה HTML צריכים להיות בדיוק <b>register.html</b> ו-<b>recover.html</b>.'}]});
+  {t:'"להרשמה" או "שכחתי סיסמה" פותחים דף שגיאה (404)?', how:'הדף עוד לא קיים, או שהשם שלו שונה מה-href. בתיקייה HTML צריכים להיות בדיוק <b>register.html</b> ו-<b>recover.html</b>.'},
+  TR_EMPTY]});
 trouble('#trFields', {add:[
   {t:'אפשר לסמן גם "זכר" וגם "נקבה"?', how:'לשני הכפתורים צריך <b>אותו</b> <code>name</code> (gender), ו-<code>id</code> שונה לכל אחד (<a href="#" data-go="fields:2">השלב על radio</a>).'},
   {t:'ההצעות לעיר לא מופיעות?', how:'ה-<code>list</code> של תיבת העיר חייב להיות זהה ל-<code>id</code> של ה-datalist (cities). ההצעות מופיעות כשמתחילים להקליד, ונראות קצת אחרת בכל דפדפן.'},
   {t:'שאלה לא מופיעה ברשימה הנפתחת?', how:'כל שאלה כתובה בתוך <code>option</code> משלה, וכל ה-option נמצאים בין <code>&lt;select&gt;</code> ל-<code>&lt;/select&gt;</code>.'},
-  {t:'בכתובת כתוב <code>question1=pet</code> ולא השאלה עצמה?', how:'זה בדיוק מה שצריך! נשלח ה-<code>value</code> של האפשרות שנבחרה, לא הטקסט שעל המסך (<a href="#" data-go="fields:4">השלב על select</a>).'}]});
+  {t:'בכתובת כתוב <code>question1=pet</code> ולא השאלה עצמה?', how:'זה בדיוק מה שצריך! נשלח ה-<code>value</code> של האפשרות שנבחרה, לא הטקסט שעל המסך (<a href="#" data-go="fields:4">השלב על select</a>).'},
+  TR_EMPTY]});
 trouble('#trSend', {add:[
-  {first:true, t:'קיבלתם דף שגיאה אחרי השליחה?', how:'בדקו את שורת ה-form: כתוב בה <code>method="post"</code>? דף html רגיל בפרויקט לא יודע לקבל post, והשרת מחזיר דף שגיאה (עם מספר כמו 405 או 400 <span class="unverified">לא אומת</span>) במקום הדף שלכם. בינתיים כתבו <code>method="get"</code> – עם post נעבוד בדפי Razor, בהמשך השנה.'},
-  {t:'אחרי השליחה התיבות התרוקנו?', how:'זה תקין. בלי <code>action</code> הטופס נשלח לאותו דף, והדף נטען מחדש – ריק. הנתונים מחכים בשורת הכתובת, אחרי סימן השאלה.'},
+  {first:true, t:'קיבלתם דף שגיאה אחרי השליחה?', how:'בדקו את שורת ה-form: כתוב בה <code>method="post"</code>? דף html רגיל בפרויקט לא יודע לקבל post, והשרת מחזיר דף שגיאה (עם מספר כמו 405 או 404 <span class="unverified">לא אומת</span>) במקום הדף שלכם. בינתיים כתבו <code>method="get"</code> – עם post נעבוד בדפי Razor, בהמשך השנה.'},
+  TR_EMPTY,
   TR_NAME,
   {t:'הכלל של <code>#loginForm</code> לא עובד?', how:'ה-id בשורת ה-form והשם שאחרי הסולמית זהים בדיוק? ושמרתם גם את site-style.css?'},
   {t:'ב-Network לא מופיעה הבקשה?', how:'הלשונית Network רושמת רק מה שקורה <b>אחרי</b> שהיא פתוחה. פתחו F12 &rlm;←&rlm; Network, ורק אז לחצו על כפתור השליחה.'}]});
@@ -1347,10 +1430,10 @@ checkpoint('#cpTables', [
    code:'<table>\n    <tr>\n        <td>מרגריטה</td>\n        מבצע!\n        <td>45 שקל</td>\n    </tr>\n</table>',
    correct:4, why:{1:'פתיחת הטבלה – תקינה.', 2:'פתיחת שורה – תקינה.', 3:'תא עם תוכן – תקין.', 5:'תא עם תוכן – תקין.', 6:'סגירת השורה – תקינה.', 7:'סגירת הטבלה – תקינה.'},
    explain:'המילה כתובה ישר בתוך <code>tr</code>, לא בתוך תא. הדפדפן לא יודע באיזה תא לשים אותה – ולכן זורק אותה אל מחוץ לטבלה. התיקון: <code>&lt;td&gt;מבצע!&lt;/td&gt;</code>.', back:'tables:4'},
-  {q:'בשורה הראשונה של טבלה יש 3 תאים, ובשורה השנייה רק 2. מה יקרה?', opts:['בסוף השורה השנייה יהיה "חור" – אין בה תא לעמודה השלישית', 'הדפדפן ימתח את שני התאים כך שימלאו את כל השורה', 'הטבלה לא תוצג בכלל'], correct:0,
+  {q:'בשורה הראשונה של טבלה יש 3 תאים, ובשורה השנייה רק 2. מה יקרה?', opts:['בסוף השורה השנייה יישאר מקום ריק', 'הדפדפן ימתח את שני התאים לכל השורה', 'הטבלה לא תוצג בכלל'], correct:0,
    why:['העמודות נבנות לפי הסדר: התא הראשון לעמודה הראשונה, השני לשנייה – ולעמודה השלישית לא נשאר תא.', 'הדפדפן לא מותח תאים לבד – הוא משאיר מקום ריק.', 'הטבלה תוצג – רק עם חור. טעות כזו לא מעלימה את הטבלה.'], back:'tables:2'},
   {q:'כתבתם <code>th { background-color: orange; }</code>, אבל שורת הכותרות לא נצבעה. מה הסיבה הכי סבירה?', opts:['בשורת הכותרות כתובים <code>td</code> ולא <code>th</code>', 'חסר <code>tbody</code>', 'צבע רקע לא עובד בטבלאות'], correct:0,
-   why:['הבורר th מחפש תגיות th. אם הכותרות כתובות ב-td – אין לו את מי לצבוע.', 'tbody עוטף את שורות המידע. הוא לא משפיע על הכלל של th.', 'עובד גם עובד – ראיתם את זה בשלב על thead ו-th.'], back:'tables:3'},
+   why:['הבורר th מחפש תגיות th. אם הכותרות כתובות ב-td – אין לו את מי לצבוע.', 'tbody עוטף את שורות המידע. הוא לא משפיע על הכלל של th.', 'כן, זה עובד בטבלאות – ראיתם את זה בשלב על thead ו-th.'], back:'tables:3'},
   {type:'selector', q:'כתבו בורר שבוחר רק את <b>שורות המנות</b> – בלי שורת הכותרות.',
    html:'<table>\n    <thead>\n        <tr><th>מנה</th><th>מחיר</th></tr>\n    </thead>\n    <tbody>\n        <tr><td>מרגריטה</td><td>45 שקל</td></tr>\n        <tr><td>פטריות</td><td>39 שקל</td></tr>\n    </tbody>\n</table>',
    expect:'tbody tr', answer:'tbody tr',
@@ -1368,13 +1451,13 @@ checkpoint('#cpLists', [
    code:'<ol>\n    <li>מרדדים את הבצק</li>\n    <li>2. מורחים רוטב</li>\n    <li>אופים 10 דקות</li>\n</ol>',
    correct:3, why:{1:'פתיחת רשימה ממוספרת – תקינה.', 2:'פריט תקין. את המספר הדפדפן מוסיף לבד.', 4:'פריט תקין.', 5:'סגירת הרשימה – תקינה.'},
    explain:'את המספרים ב-ol הדפדפן כותב בעצמו. מי שכותב "2." גם בטקסט מקבל את המספר פעמיים. כותבים רק את התוכן.', back:'lists:1'},
-  {type:'selector', q:'כתבו בורר שבוחר רק את <b>הקישורים של התפריט</b> – בלי הקישור שבפסקה.',
+  {type:'selector', q:'כתבו בורר <b>שמשתמש בתגית nav</b> ובוחר רק את <b>הקישורים של התפריט</b> – בלי הקישור שבפסקה.',
    html:'<nav>\n    <ul>\n        <li><a href="index.html">דף הבית</a></li>\n        <li><a href="menu.html">תפריט</a></li>\n    </ul>\n</nav>\n<p>שאלות? <a href="contact.html">צרו קשר</a></p>',
    expect:'nav a', answer:'nav a',
-   must: sel => /nav/.test(sel) ? null : 'השתמשו בתגית שעוטפת את התפריט – כדי לתפוס רק את הקישורים שבתוכה.',
+   must: sel => /(^|[\s>,])nav(?![\w-])/.test(sel) ? null : 'הבורר שלכם בחר נכון – אבל השאלה ביקשה להשתמש ב-nav: בדף אמיתי יש עוד רשימות וקישורים, ורק nav מסמן את התפריט.',
    hint:'הקישורים של התפריט נמצאים בתוך nav.', explain:'<code>nav a</code> = כל a שנמצא בתוך nav. הקישור "צרו קשר" נמצא בתוך p – ולכן לא נבחר. זה עוד יתרון של nav: יש שם לתפוס בו.', back:'lists:2'},
-  {q:'עטפתם את רשימת הקישורים ב-nav, והמראה לא השתנה בכלל. אז למה בכל זאת כותבים nav?', opts:['כדי שהקישורים יעבדו', 'כדי לסמן "כאן התפריט" – לקוראי מסך, למנועי חיפוש, ולבוררים ב-CSS', 'כי בלי nav התבליטים לא נעלמים'], correct:1,
-   why:['קישורים עובדים גם בלי nav.', 'nav לא משנה מראה – הוא נותן לחלק הזה שם ומשמעות.', 'את התבליטים מורידה התכונה <code>list-style</code> ב-CSS – לא nav.'], back:'lists:2'},
+  {q:'עטפתם את רשימת הקישורים ב-nav, והמראה לא השתנה בכלל. אז למה בכל זאת כותבים nav?', opts:['כדי שהקישורים יעבדו גם בלי שרת', 'כדי לסמן לדפדפן: "כאן התפריט"', 'כי בלי nav התבליטים לא נעלמים'], correct:1,
+   why:['קישורים עובדים גם בלי nav – nav לא נוגע בהם.', 'nav לא משנה מראה – הוא נותן לחלק הזה שם ומשמעות: קוראי מסך ומנועי חיפוש יודעים שזה התפריט, ול-CSS יש בורר לתפוס בו.', 'את התבליטים מורידה התכונה <code>list-style</code> ב-CSS – לא nav.'], back:'lists:2'},
   {q:'בתפריט שלכם הקישורים עדיין <b>אחד מתחת לשני</b>. איזו הוראה חסרה?', opts:['<code>display: inline;</code> בכלל של <code>nav li</code>', '<code>list-style: none;</code> בכלל של <code>nav ul</code>', '<code>text-decoration: none;</code> בכלל של <code>nav a</code>'], correct:0,
    why:['כל li תופס שורה משלו. <code>display: inline</code> מעמיד את הפריטים בשורה אחת.', 'זה מוריד את התבליטים – אבל הפריטים נשארים אחד מתחת לשני.', 'זה מוריד את הקו שמתחת לקישורים – הסידור לא משתנה.'], back:'lists:2'}
 ]);
@@ -1388,8 +1471,8 @@ checkpoint('#cpForms', [
    wrong:'הזוג בנוי מה-name של התיבה (בדיוק, כולל אות גדולה), סימן שוויון, ומה שהוקלד. ה-id לא נשלח – הוא לשימוש בתוך הדף.',
    explain:'נשלח ה-<code>name</code> (userName), סימן שוויון, והערך שהוקלד. ה-id לא נשלח בכלל.', back:'forms:4'},
   {q:'מה <code>type="password"</code> עושה <b>באמת</b>?', opts:['מסתיר את התווים על המסך – ותו לא', 'מצפין את הסיסמה לפני שהיא נשלחת', 'מונע מהגולש להעתיק את הסיסמה'], correct:0,
-   why:['נכון: רואים נקודות במקום אותיות. הסיסמה עצמה נשלחת כמו כל טקסט – ראיתם אותה בכתובת אצלכם, אחרי "כניסה".', 'שום דבר בטופס לא מצפין. את זה עושה https – תראו בנושא "שליחה לשרת".', 'זה לא התפקיד שלו – הוא רק מציג נקודות במקום אותיות.'], back:'forms:2'},
-  {q:'למה לתיבה צריך גם <code>id</code> וגם <code>name</code>?', opts:['id – כדי שה-label וה-CSS ימצאו אותה בתוך הדף; name – השם שאיתו הערך נשלח', 'זה אותו דבר – מספיק אחד מהם', 'id – השם שאיתו הערך נשלח; name – בשביל ה-label'], correct:0,
+   why:['נכון: רואים נקודות במקום אותיות. הסיסמה עצמה נשלחת כמו כל טקסט – ראיתם אותה בכתובת אצלכם, אחרי "כניסה".', 'הטופס לא מצפין כלום. מה כן שומר על הסיסמה בדרך? את זה תגלו בנושא "שליחה לשרת".', 'זה לא התפקיד שלו – הוא רק מציג נקודות במקום אותיות.'], back:'forms:2'},
+  {q:'למה לתיבה צריך גם <code>id</code> וגם <code>name</code>?', opts:['id – לחיבור עם label ול-CSS; name – לשליחה', 'אלה שני שמות לאותו דבר – מספיק אחד', 'id – לשליחה; name – לחיבור עם label ול-CSS'], correct:0,
    why:['בדיוק: id לשימוש בתוך הדף, name לשליחה. בדרך כלל נותנים לשניהם אותו שם.', 'לא: בלי name הערך לא נשלח, ובלי id ה-label לא מוצאת את התיבה.', 'הפוך: ה-label מחפשת id, והשליחה משתמשת ב-name.'], back:'forms:4'},
   {q:'בטופס ההרשמה, איזה כפתור מחזיר את כל השדות למצב ההתחלתי?', opts:['<code>type="submit"</code>', '<code>type="reset"</code>', '<code>type="button"</code>'], correct:1,
    why:['submit שולח את הטופס.', 'reset מנקה את כל השדות בטופס – כמו כפתור "ניקוי" בדף ההרשמה שלכם.', 'button לא עושה כלום לבד – בהמשך הקורס מחברים אליו JavaScript.'], back:'forms:5'}
@@ -1401,7 +1484,7 @@ checkpoint('#cpFields', [
    explain:'לכפתור "נקבה" יש <code>name="sex"</code> – כלומר הוא בקבוצה אחרת. הדפדפן מקבץ כפתורי radio לפי name, ולכן בשניהם צריך <code>name="gender"</code>.', back:'fields:2'},
   {q:'בחירת תוספות לפיצה: מותר לבחור כמה – או אף אחת. איזה פקד מתאים?', opts:['<code>radio</code>', '<code>checkbox</code>', '<code>select</code>'], correct:1,
    why:['radio מאפשר רק בחירה אחת מהקבוצה.', 'כל checkbox מסומן או לא, בלי קשר לאחרים.', 'ב-select רגיל בוחרים רק אפשרות אחת.'], back:'fields:3'},
-  {q:'בשדה העיר רוצים <b>להציע</b> ערים – אבל לאפשר גם להקליד עיר שלא ברשימה. מה מתאים?', opts:['<code>select</code>', '<code>datalist</code> שמחוברת לתיבת טקסט', 'כפתור <code>radio</code> לכל עיר'], correct:1,
+  {q:'בשדה העיר רוצים <b>להציע</b> ערים – אבל לאפשר גם להקליד עיר שלא ברשימה. מה מתאים?', opts:['<code>select</code> עם כל הערים', 'תיבת טקסט עם <code>datalist</code>', 'כפתור <code>radio</code> לכל עיר'], correct:1,
    why:['ב-select אי אפשר להקליד – בוחרים רק מה שיש ברשימה.', 'datalist רק מציעה – אפשר לבחור הצעה או להקליד כל דבר.', 'radio מתאים לכמה אפשרויות קבועות, לא לעשרות ערים – ואי אפשר להקליד בו.'], back:'fields:5'},
   {type:'text', q:'ברשימה <code>&lt;select name="question1"&gt;</code> בחרו את האפשרות <code>&lt;option value="pet"&gt;שם חיית המחמד הראשונה&lt;/option&gt;</code>. איזה זוג יישלח?', placeholder:'name=ערך',
    accept:[/^\s*question1\s*=\s*pet\s*$/], answer:'question1=pet',
@@ -1415,12 +1498,12 @@ checkpoint('#cpSend', [
    why:['סימן השאלה פותח את הנתונים, והסימן <code>&amp;</code> מפריד בין הזוגות.', 'הסימנים הפוכים: קודם סימן שאלה, ובין הזוגות <code>&amp;</code>.', 'ככה נראית הכתובת ב-post. ב-get הנתונים נכתבים בכתובת.'], back:'send:2'},
   {q:'לא כתבתם action בטופס. לאן יישלחו הנתונים?', opts:['לאותו דף שבו נמצא הטופס', 'לדף הבית, index.html', 'לשום מקום – בלי action הטופס לא נשלח'], correct:0,
    why:['כן – לכן בפרויקט שלכם, אחרי השליחה, אותו דף נטען מחדש והנתונים בכתובת.', 'הדפדפן לא מנחש דף. בלי action – אותו דף.', 'הטופס נשלח – לאותו דף.'], back:'send:1'},
-  {q:'שלחתם טופס ב-post. איפה <b>כל אחד</b> יכול לראות את הנתונים?', opts:['בשום מקום – post מסתיר אותם', 'ב-F12 &rlm;←&rlm; Network &rlm;←&rlm; הבקשה &rlm;←&rlm; Payload', 'רק בשרת'], correct:1,
-   why:['post רק מוציא אותם מהכתובת. הם עדיין שם – בגוף הבקשה.', 'בדיוק. post לא סודי – רק לא בכתובת. מה שמצפין בדרך: https.', 'גם בדפדפן של מי ששלח – בכלי המפתחים.'], back:'send:3'},
+  {q:'שלחתם טופס ב-post. איפה <b>כל אחד</b> יכול לראות את הנתונים?', opts:['בשום מקום – post מסתיר אותם', 'בכלי המפתחים, בלשונית Network', 'רק בשרת שמקבל אותם'], correct:1,
+   why:['post רק מוציא אותם מהכתובת. הם עדיין שם – בגוף הבקשה.', 'בדיוק: F12 &rlm;←&rlm; Network &rlm;←&rlm; הבקשה &rlm;←&rlm; Payload. post לא סודי – רק לא בכתובת. מה שמצפין בדרך: https.', 'גם בדפדפן של מי ששלח – בכלי המפתחים.'], back:'send:3'},
   {q:'דף חיפוש מתכונים. רוצים שגולשים יוכלו לשלוח לחבר קישור לתוצאות. איזו שיטה?', opts:['get', 'post'], correct:0,
    why:['ב-get החיפוש נשמר בכתובת – ואפשר להעתיק אותה ולשלוח.', 'ב-post החיפוש לא בכתובת – וקישור לא יביא את התוצאות.'], back:'send:4'},
-  {q:'בפרויקט שלכם, בדף html רגיל, כתבתם <code>method="post"</code> ולחצתם על שליחה. מה צפוי?', opts:['דף שגיאה מהשרת – לכן בינתיים כותבים get', 'אותו דבר כמו get, רק בלי נתונים בכתובת', 'Visual Studio יהפוך את זה ל-get לבד'], correct:0,
-   why:['דף html רגיל בפרויקט לא יודע לקבל post. עם post נעבוד בדפי Razor, בהמשך השנה.', 'בדמו שבאתר הזה זה נראה ככה – אבל בפרויקט השרת לא מקבל post לדף html, ומחזיר שגיאה.', 'Visual Studio לא משנה לכם את הקוד – השרת פשוט יחזיר שגיאה.'], back:'send:3'},
+  {q:'בפרויקט שלכם, בדף html רגיל, כתבתם <code>method="post"</code> ולחצתם על שליחה. מה צפוי?', opts:['השרת יחזיר דף שגיאה', 'יעבוד כמו get, רק בלי נתונים בכתובת', 'Visual Studio יתקן את זה ל-get לבד'], correct:0,
+   why:['דף html רגיל בפרויקט לא יודע לקבל post – לכן בינתיים כותבים get. עם post נעבוד בדפי Razor, בהמשך השנה.', 'בדמו שבאתר הזה זה נראה ככה – אבל בפרויקט השרת לא מקבל post לדף html, ומחזיר שגיאה.', 'Visual Studio לא משנה לכם את הקוד – השרת פשוט יחזיר שגיאה.'], back:'send:3'},
   {type:'selector', q:'בדף יש שני טפסים. כתבו בורר שבוחר את כל ה-input של <b>טופס הכניסה בלבד</b>.',
    html:'<form id="loginForm">\n    <input type="text" name="userName" />\n    <input type="password" name="password" />\n    <input type="submit" value="כניסה" />\n</form>\n<form id="searchForm">\n    <input type="text" name="q" />\n</form>',
    expect:'#loginForm input', answer:'#loginForm input',
