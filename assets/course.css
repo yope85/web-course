@@ -417,3 +417,7 @@ details.ask>summary{color:var(--text)}
 .trouble>details.tr-d{background:transparent;padding:0;margin:0}
 .trouble>details.tr-d>summary{font-size:16.5px;padding:2px 0}
 .trouble>details.tr-d[open]>summary{margin-bottom:6px}
+/* engine fixes from the lesson writers */
+.topics button{position:relative}
+.cp-q .opts code,.expect code,.vsbody p code,.tk-hint code,.tk-sol code,.cp-fb code{white-space:normal;overflow-wrap:anywhere}
+.lock-cover>.veil-cover{border-style:dotted}

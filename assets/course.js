@@ -212,25 +212,31 @@ function predict(el, o){
     let targets = typeof o.veil === 'string' ? [...document.querySelectorAll(o.veil)]
       : [...scope.querySelectorAll('.host, .framewrap, .boxstage, .devices, .minis')].map(h => h.closest('.split > .pane') || h);
     if (typeof o.veil !== 'string') scope.querySelectorAll('.what').forEach(w => { if (!w.hidden && (el.compareDocumentPosition(w) & Node.DOCUMENT_POSITION_FOLLOWING)) targets.push(w); });
-    targets = targets.filter((t, k, a) => a.indexOf(t) === k && outside(t) && !a.some(x => x !== t && x.contains(t)));
+    /* [data-lock] = spoiler text/demos: covered (not just faded), so they cannot be read before the guess */
+    const covers = (o.lock === false ? [] : [...scope.querySelectorAll('[data-lock]')].concat(typeof o.lock === 'string' ? [...document.querySelectorAll(o.lock)] : []));
+    covers.forEach(c => { c._lockCover = true; targets.push(c); });
+    /* skip elements that are hidden inside the step anyway (e.g. a mock browser not shown yet) */
+    const hiddenInside = t => { const h = t.parentElement && t.parentElement.closest('[hidden]'); return !!h && scope !== document && scope.contains(h) && h !== scope; };
+    targets = targets.filter((t, k, a) => a.indexOf(t) === k && outside(t) && !t.hidden && !hiddenInside(t) && !a.some(x => x !== t && x.contains(t)));
     targets.forEach(t => {
       const v = {t};
-      if (t.shadowRoot) { v.wrap = document.createElement('div'); v.wrap.className = 'veil-wrap veiling'; t.parentNode.insertBefore(v.wrap, t); v.wrap.appendChild(t); }
+      if (t.shadowRoot || /^(DETAILS|TABLE|IMG|IFRAME)$/.test(t.tagName)) { v.wrap = document.createElement('div'); v.wrap.className = 'veil-wrap veiling'; t.parentNode.insertBefore(v.wrap, t); v.wrap.appendChild(t); }
       else { t.classList.add('veil-wrap', 'veiling'); v.wrap = t; }
-      v.cover = document.createElement('div'); v.cover.className = 'veil-cover'; v.cover.innerHTML = '<span>🙈 התוצאה מוסתרת – קודם ענו על שאלת הניחוש</span>';
+      v.cover = document.createElement('div'); v.cover.className = 'veil-cover'; v.cover.innerHTML = t._lockCover ? '<span>🔒 נפתח אחרי הניחוש</span>' : '<span>🙈 התוצאה מוסתרת – קודם ענו על שאלת הניחוש</span>';
+      if (t._lockCover) v.wrap.classList.add('lock-cover');
       v.wrap.appendChild(v.cover);
       t.inert = true; t.setAttribute('aria-hidden', 'true');
       veiled.push(v);
     });
     if (o.lock !== false && typeof o.veil !== 'string') {
-      [...scope.querySelectorAll('.ctrls, .rules, .sel-input, .chal, [data-lock]')]
+      [...scope.querySelectorAll('.ctrls, .rules, .sel-input, .chal')]
         .filter((c, k, a) => outside(c) && !targets.some(t => t.contains(c)) && !a.some(x => x !== c && x.contains(c)))
         .forEach(c => { c.classList.add('locked'); c.inert = true; const n = document.createElement('div'); n.className = 'lock-note'; n.textContent = '🔒 נפתח אחרי הניחוש'; c.parentNode.insertBefore(n, c); locked.push({c, n}); });
     }
   }
   function unveil(){
     veiled.forEach(v => { v.cover.remove(); v.t.inert = false; v.t.removeAttribute('aria-hidden');
-      if (v.wrap !== v.t) { v.wrap.parentNode.insertBefore(v.t, v.wrap); v.wrap.remove(); } else v.t.classList.remove('veil-wrap', 'veiling'); });
+      if (v.wrap !== v.t) { v.wrap.parentNode.insertBefore(v.t, v.wrap); v.wrap.remove(); } else v.t.classList.remove('veil-wrap', 'veiling', 'lock-cover'); });
     locked.forEach(x => { x.c.classList.remove('locked'); x.c.inert = false; x.n.remove(); });
     veiled = []; locked = [];
   }
