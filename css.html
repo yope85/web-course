@@ -93,14 +93,14 @@
   </article>
   <article class="spread">
     <h3>שני סוגי תגיות: block ו-inline</h3>
-    <p>לפני שמעצבים, עוד עובדה אחת על HTML. יש תגיות שתופסות <b>שורה שלמה</b> – קוראים להן <b>block</b> (בלוק). ויש תגיות שיושבות <b>בתוך השורה</b>, כמו מילה במשפט – קוראים להן <b>inline</b> (בתוך השורה).</p>
+    <p>לפני שמעצבים, עוד עובדה אחת על HTML. יש תגיות שתופסות <b>שורה שלמה</b> – קוראים להן <b>block</b> (בלוק). ויש תגיות שיושבות <b>בתוך השורה, כמו מילה</b> – ולא תופסות את כל השורה כמו block. קוראים להן <b>inline</b> (בתוך השורה).</p>
     <div class="predict" id="pKinds"></div>
     <div class="ctrls"><div class="seg" id="sKindsSeg"></div></div>
     <div id="sKinds"></div>
     <div class="kinds-legend"><span style="border-color:#2563eb">כחול = block</span><span style="border-color:#db2777">ורוד = inline</span></div>
     <div class="what">הכחולים (h2, p) נמתחים <b>לכל רוחב הדף</b>, גם כשהטקסט בתוכם קצר – ולכן כל אחד מתחיל בשורה חדשה. הוורודים (b, a, img) תופסים <b>רק את המקום שלהם</b>, ויושבים זה ליד זה בתוך השורה.</div>
     <table>
-      <tr><th>block – שורה שלמה</th><th>inline – בתוך השורה</th></tr>
+      <tr><th>block – שורה שלמה</th><th>inline – בתוך השורה, כמו מילה (לא תופסת את כל השורה)</th></tr>
       <tr><td><code>h1</code>–<code>h6</code>, <code>p</code>, <code>div</code>, <code>ul</code>, <code>ol</code>, <code>table</code>, <code>form</code></td><td><code>span</code>, <code>a</code>, <code>img</code>, <code>b</code>, <code>input</code>, <code>label</code></td></tr>
     </table>
     <div class="bridge">זה מסביר משהו שאולי ראיתם בשיעור 2: למה שתי תמונות עמדו אחת ליד השנייה, ושתי פסקאות – אחת מתחת לשנייה. ובהמשך השיעור תראו שעם CSS אפשר גם לשנות את זה (המאפיין <code>display</code>).</div>
@@ -543,6 +543,7 @@ seg($('#s22c'), ['red','blue','green','darkorange'].map(c => ({label:c, mono:tru
 seg($('#s22s'), ['20px','32px','48px'].map(c => ({label:c, mono:true, v:c})), o => { z22 = o.v; draw22(); }, 1);
 $('#s22break').addEventListener('click', () => { broken = !broken; draw22(); $('#s22what').hidden = false; });
 predict($('#p22'), {
+  veil: false,
   q: 'מה יקרה אם נמחק את ה-<code>;</code> שבין שתי ההוראות?',
   opts: ['רק הצבע יעבוד', 'רק הגודל יעבוד', 'אף אחת מהן לא תעבוד', 'תופיע הודעת שגיאה'],
   correct: 2,
@@ -557,7 +558,7 @@ seg($('#sKindsSeg'), ['הדף כרגיל', 'הראו לי block ו-inline'], (o,
 predict('#pKinds', {
   q: 'בקוד למטה כתובות שתי תמונות, אחת אחרי השנייה. איפה הן יופיעו בדף?',
   opts: ['אחת מתחת לשנייה', 'אחת ליד השנייה'], correct: 1,
-  why: ['ככה מתנהגות פסקאות (block). תמונה היא inline – כמו מילה.', 'תמונה היא inline: היא יושבת בתוך השורה כמו מילה, ולכן התמונה הבאה ממשיכה לידה.']
+  why: ['ככה מתנהגות פסקאות (block). תמונה היא inline – כמו מילה.', 'תמונה היא inline: היא יושבת בתוך השורה, כמו מילה, ולא תופסת את כל השורה כמו block. לכן התמונה הבאה ממשיכה לידה.']
 });
 /* 3.1 div & span */
 const s31 = new Split($('#s31'));
@@ -716,6 +717,7 @@ const s73 = new Split($('#s73')).setHtml(P7({sale:true, id:true}), {0:'new'});
 s73.setCss(ruleCss('#logo', 'color: darkorange;\n    font-size: 40px;'), {0:'new'});
 s73.say(countMsg(s73.highlight('#logo')));
 predict($('#p73'), {
+  veil: false,
   q: 'רוצים לסמן את כל המנות הצמחוניות בתפריט, כדי לצבוע אותן בירוק. מה מתאים?',
   opts: ['class – כי יש כמה כאלה', 'id – כי זה מזהה'],
   correct: 0,
@@ -851,6 +853,7 @@ drawWalk();
 /* 9.1 specificity */
 codeLines($('#s91code'), '<p id="msg" class="note">הטקסט שלי</p>', 'html');
 predict($('#p91'), {
+  veil: '#specHost',
   q: 'יש כלל <code>#msg</code> שצובע באדום, וכלל <code>.note</code> שצובע בירוק. הכלל של <code>.note</code> כתוב <b>אחרי</b> הכלל של <code>#msg</code>. איזה צבע יהיה?',
   opts: ['ירוק – כי הוא נכתב אחרון', 'אדום – כי id חזק יותר'],
   correct: 1,
