@@ -201,12 +201,27 @@ function predict(el, o){
   el.innerHTML = '<div class="q">' + o.q + '</div><div class="opts"></div><div class="fb" hidden></div>';
   const opts = el.querySelector('.opts'), fb = el.querySelector('.fb');
   const bs = o.opts.map((t,i) => { const b = document.createElement('button'); b.type = 'button'; b.innerHTML = t; b.addEventListener('click', () => answer(i)); opts.appendChild(b); return b; });
+  /* veil: hide the live result(s) of this step until the right answer, so the guess is a real guess */
+  let veiled = [];
+  if (o.veil !== false && !state[el.id]) {
+    const scope = el.closest('.spread') || document;
+    let targets = typeof o.veil === 'string' ? [...document.querySelectorAll(o.veil)]
+      : [...scope.querySelectorAll('.host, .framewrap, .boxstage, .devices')].map(h => h.closest('.split > .pane') || h);
+    targets = targets.filter((t, k, a) => a.indexOf(t) === k && !el.contains(t) && !t.contains(el) && !a.some(x => x !== t && x.contains(t)));
+    veiled = targets;
+    targets.forEach(t => {
+      t.classList.add('veiled');
+      const n = document.createElement('div'); n.className = 'veil-note'; n.innerHTML = '🙈 קודם ענו על שאלת הניחוש – התוצאה תיפתח אחרי תשובה נכונה';
+      t.parentNode.insertBefore(n, t); t._veilNote = n;
+    });
+  }
+  function unveil(){ veiled.forEach(t => { t.classList.remove('veiled'); if (t._veilNote) t._veilNote.remove(); }); veiled = []; }
   function answer(i, silent){
     const ok = i === o.correct;
     bs[i].classList.add(ok ? 'right' : 'wrong');
     fb.hidden = false; fb.className = 'fb ' + (ok ? 'right' : 'wrong');
     fb.innerHTML = (ok ? '✔ נכון! ' : '✘ לא בדיוק. ') + (o.why[i] || '') + (ok ? '' : ' נסו שוב.');
-    if (ok) { el.classList.add('solved'); bs.forEach(b => b.disabled = true); if (!silent) { state[el.id] = true; save(); } if (o.onCorrect) o.onCorrect(); }
+    if (ok) { el.classList.add('solved'); bs.forEach(b => b.disabled = true); unveil(); if (!silent) { state[el.id] = true; save(); } if (o.onCorrect) o.onCorrect(); }
   }
   if (state[el.id]) answer(o.correct, true);
 }

@@ -285,3 +285,7 @@ iframe.mini{display:block;width:100%;height:320px;border:0;background:#fff;margi
 .kinds-legend span{border:2px dashed;border-radius:6px;padding:0 8px}
 
 .ladder li>span,.ladder li>div{min-width:0}
+
+/* guess first: results stay hidden until the right answer */
+.veiled{filter:blur(8px) grayscale(.7);opacity:.45;pointer-events:none;user-select:none;transition:filter .4s,opacity .4s}
+.veil-note{font-size:14px;font-weight:600;color:var(--accent);background:var(--accent-soft);border-radius:10px;padding:6px 12px;margin:6px 0;text-align:center}
