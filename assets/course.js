@@ -89,7 +89,7 @@ function wireCopy(root){
 const PIZZA_IMG = "data:image/svg+xml;utf8," + encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='47' fill='#e9a23b'/><circle cx='50' cy='50' r='40' fill='#d9472b'/><circle cx='50' cy='50' r='37' fill='#f6d365'/><circle cx='35' cy='38' r='6' fill='#c0392b'/><circle cx='63' cy='35' r='6' fill='#c0392b'/><circle cx='59' cy='63' r='6' fill='#c0392b'/><circle cx='36' cy='64' r='5' fill='#c0392b'/><circle cx='48' cy='50' r='3' fill='#2d6a2d'/><circle cx='71' cy='51' r='3' fill='#2d6a2d'/></svg>");
 const IMAGES = { 'pizza.jpg': PIZZA_IMG };
 function fakeImg(label, bg, fg){ return "data:image/svg+xml;utf8," + encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 110'><rect width='160' height='110' rx='10' fill='" + (bg || '#bfdbfe') + "'/><text x='80' y='64' font-family='Arial' font-size='22' text-anchor='middle' fill='" + (fg || '#1e3a8a') + "'>" + label + "</text></svg>"); }
-function resolveImgs(src){ return src.replace(/(src=")(?:\.\.\/)?(?:Img|img)\/([A-Za-z0-9_.-]+)"/g, (x, a, f) => a + (IMAGES[f] || fakeImg(f.replace(/\.[a-z]+$/,''))) + '"'); }
+function resolveImgs(src){ return src.replace(/(src\s*=\s*)(["']?)(?:\.\.\/)?(?:Img|img)\/([A-Za-z0-9_.-]+)\2(?=[\s>\/]|$)/gi, (x, a, q, f) => a + '"' + (IMAGES[f] || fakeImg(f.replace(/\.[a-z]+$/i,''))) + '"'); }
 const BASE_CSS = ':host{display:block}:host([hidden]){display:none}x-page{display:block;background:#fff;color:#111;padding:12px 16px;font-family:Rubik,Arial,sans-serif;font-size:16px;line-height:1.5;direction:rtl;min-height:40px}' +
   '.hit{outline:3px solid #f43f5e!important;outline-offset:2px}.peek{outline:2px dashed #2f6fec;outline-offset:2px}' +
   'x-page.boxes *{outline:2px dashed #f97316;outline-offset:-2px;background-color:rgba(249,115,22,.07)}x-page.boxes *::before{content:attr(data-tag);font:11px monospace;color:#c2410c;background:#fff7ed;padding:0 4px;margin-inline-end:6px;border-radius:3px}x-page.boxes div{outline:3px solid #7c3aed;outline-offset:3px;background-color:rgba(124,58,237,.10)}x-page.boxes div::before{display:block;width:max-content;color:#fff;background:#7c3aed;font-weight:bold;margin-bottom:4px}' +
@@ -194,9 +194,23 @@ function seg(el, options, onPick, start){
   function pick(i){ btns.forEach((b,j) => b.setAttribute('aria-pressed', i === j)); onPick(options[i], i); }
   pick(start || 0); return pick;
 }
+/* stable shuffle of answer options: the right answer must not always sit in the same place (students learn "pick the 2nd").
+   Seeded by lesson + question, so every student and every reload sees the same order. keepOrder:true, or options that all
+   start with a number (1 / 4 / 6), keep the author's order. 'why' moves with its option. */
+function hashStr(str){ let h = 2166136261; for (const ch of String(str)) { h ^= ch.codePointAt(0); h = Math.imul(h, 16777619); } return h >>> 0; }
+function shuffled(o, key){
+  if (!o || o.keepOrder || !Array.isArray(o.opts) || o.opts.length < 2 || typeof o.correct !== 'number') return o;
+  const plainO = o.opts.map(x => String(x).replace(/<[^>]+>/g, '').trim());
+  if (plainO.every(x => /^\d/.test(x))) return o;
+  let seed = hashStr(key) || 1; const rnd = () => { seed ^= seed << 13; seed >>>= 0; seed ^= seed >>> 17; seed ^= seed << 5; seed >>>= 0; return seed / 4294967296; };
+  const idx = o.opts.map((x, i) => i);
+  for (let i = idx.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [idx[i], idx[j]] = [idx[j], idx[i]]; }
+  return Object.assign({}, o, {opts: idx.map(i => o.opts[i]), why: Array.isArray(o.why) ? idx.map(i => o.why[i]) : o.why, correct: idx.indexOf(o.correct)});
+}
 const predicts = [];
 function predict(el, o){
   if (typeof el === 'string') el = $(el);
+  o = shuffled(o, LESSON + ':' + el.id + ':' + o.q);
   predicts.push(el.id);
   if (o.quiz) el.classList.add('quiz');
   el.innerHTML = '<div class="q">' + o.q + '</div><div class="opts"></div><div class="fb" hidden></div>';
@@ -218,7 +232,7 @@ function predict(el, o){
     /* skip elements that are hidden inside the step anyway (e.g. a mock browser not shown yet) */
     const hiddenInside = t => { const h = t.parentElement && t.parentElement.closest('[hidden]'); return !!h && scope !== document && scope.contains(h) && h !== scope; };
     targets = targets.filter((t, k, a) => a.indexOf(t) === k && outside(t) && !t.hidden && !hiddenInside(t) && !a.some(x => x !== t && x.contains(t)));
-    targets.forEach(t => {
+    function coverIt(t){
       const v = {t};
       if (t.shadowRoot || /^(DETAILS|TABLE|IMG|IFRAME)$/.test(t.tagName)) { v.wrap = document.createElement('div'); v.wrap.className = 'veil-wrap veiling'; t.parentNode.insertBefore(v.wrap, t); v.wrap.appendChild(t); }
       else { t.classList.add('veil-wrap', 'veiling'); v.wrap = t; }
@@ -227,17 +241,18 @@ function predict(el, o){
       v.wrap.appendChild(v.cover);
       t.inert = true; t.setAttribute('aria-hidden', 'true');
       veiled.push(v);
-    });
+    }
+    targets.forEach(coverIt);
     if (o.lock !== false && typeof o.veil !== 'string') {
       [...scope.querySelectorAll('.ctrls, .rules, .sel-input, .chal')]
-        .filter((c, k, a) => outside(c) && !targets.some(t => t.contains(c)) && !a.some(x => x !== c && x.contains(c)))
-        .forEach(c => { c.classList.add('locked'); c.inert = true; const n = document.createElement('div'); n.className = 'lock-note'; n.textContent = '🔒 נפתח אחרי הניחוש'; c.parentNode.insertBefore(n, c); locked.push({c, n}); });
+        .filter((c, k, a) => outside(c) && !c.hidden && !hiddenInside(c) && !targets.some(t => t.contains(c)) && !a.some(x => x !== c && x.contains(c)))
+        .forEach(c => { c._lockCover = true; c.classList.add('locked'); coverIt(c); });
     }
   }
   function unveil(){
     veiled.forEach(v => { v.cover.remove(); v.t.inert = false; v.t.removeAttribute('aria-hidden');
       if (v.wrap !== v.t) { v.wrap.parentNode.insertBefore(v.t, v.wrap); v.wrap.remove(); } else v.t.classList.remove('veil-wrap', 'veiling', 'lock-cover'); });
-    locked.forEach(x => { x.c.classList.remove('locked'); x.c.inert = false; x.n.remove(); });
+    document.querySelectorAll('.locked').forEach(x => { if (!x.closest('.veil-wrap')) x.classList.remove('locked'); });
     veiled = []; locked = [];
   }
   function answer(i, silent){
@@ -299,8 +314,8 @@ function playground(container, o){
     const t = TS[i], li = tasksBox.children[i], x = li.querySelector('.tk-x'), k = key(t), h = help[k] || {h:0};
     const hints = t.hints || [], isDone = !!done[k];
     let html = '';
-    hints.slice(0, h.h || 0).forEach((tx, n) => { html += '<div class="tk-hint">💡 <b>רמז ' + (n+1) + ':</b> ' + tx + (n === hints.length - 1 && t.back ? ' <a href="#" data-go="' + t.back + '">↩ השלב שמסביר את זה' + (stepName(t.back) ? ': ' + esc(stepName(t.back)) : '') + '</a>' : '') + '</div>'; });
-    if (nudged[k] && !isDone) html += '<div class="tk-nudge">🤔 המשימה הזו מאתגרת? זה בסדר גמור – ככה לומדים. אפשר לפתוח רמז' + (t.back ? ', או לחזור רגע <a href="#" data-go="' + t.back + '">לשלב: ' + esc(stepName(t.back) || 'ההסבר') + '</a>' : '') + '.</div>';
+    hints.slice(0, h.h || 0).forEach((tx, n) => { html += '<div class="tk-hint">💡 <b>רמז ' + (n+1) + ':</b> ' + tx + (n === hints.length - 1 && t.back ? ' <a href="#" data-go="' + t.back + '">↩ השלב שמסביר את זה' + (stepName(t.back) ? ': ' + stepHtml(t.back) : '') + '</a>' : '') + '</div>'; });
+    if (nudged[k] && !isDone) html += '<div class="tk-nudge">🤔 המשימה הזו מאתגרת? זה בסדר גמור – ככה לומדים. אפשר לפתוח רמז' + (t.back ? ', או לחזור רגע <a href="#" data-go="' + t.back + '">לשלב: ' + (stepName(t.back) ? stepHtml(t.back) : 'ההסבר') + '</a>' : '') + '.</div>';
     if (h.open && t.solution) {
       const so = t.solution;
       html += '<div class="tk-sol" role="region" aria-label="הפתרון"><b>🔓 הפתרון</b><div class="codeblock"><pre class="cv" data-sol="1"></pre></div>' + (so.explain ? '<p style="margin:4px 0"><b>למה זה עובד?</b> ' + so.explain + '</p>' : '') +
@@ -360,6 +375,13 @@ function playground(container, o){
 const plain = h => { const d = document.createElement('div'); d.innerHTML = h; d.querySelectorAll('a').forEach(a => a.remove()); return d.textContent.replace(/\s+/g, ' ').replace(/\(\s*\)/g, '').trim(); };
 
 /* ---------- step names for "go back to step X" links ('topic:N' -> "topic title · step title") ---------- */
+/* HTML version of a step title: keeps <code>/<bdi> so tokens like ../Img/a.jpg don't get scrambled in RTL */
+function stepTitleHtml(st){ const h = st && st.querySelector('h3'); if (!h) return ''; const c = h.cloneNode(true); c.querySelectorAll('.sn').forEach(x => x.remove());
+  c.querySelectorAll('*').forEach(x => { if (!/^(CODE|BDI|B|U|I)$/.test(x.tagName)) x.replaceWith(...x.childNodes); else [...x.attributes].forEach(a => x.removeAttribute(a.name)); }); return c.innerHTML.trim(); }
+function stepHtml(go){
+  const [tid, n] = String(go).split(':'); const t = T.find(x => x.id === tid); if (!t) return esc(go);
+  const st = t.steps[(+n || 1) - 1]; return '<bdi>' + esc(t.title) + '</bdi> · <bdi>' + (st ? stepTitleHtml(st) : '') + '</bdi>';
+}
 function stepName(go){
   const [tid, n] = String(go).split(':'); const t = T.find(x => x.id === tid); if (!t) return '';
   const st = t.steps[(+n || 1) - 1]; return st ? t.title + ' · ' + stepTitle(st) : t.title;
@@ -484,7 +506,7 @@ function checkpoint(el, items, o){
   function summary(r){
     if (r.ok === r.n) return '<div class="cp-sum ok"><h4>✔ מוכנים להמשיך!</h4><p style="margin:0">עניתם נכון על ' + (r.n === 1 ? 'השאלה' : 'כל ' + r.n + ' השאלות') + ' כבר בניסיון הראשון. הבנתם את הנושא "' + esc(ttitle) + '".</p></div>';
     return '<div class="cp-sum more"><h4>' + r.ok + ' מתוך ' + r.n + ' נכון בניסיון הראשון – כדאי לחזור על:</h4><ul>' +
-      (r.back || []).map(g => '<li><a href="#" data-go="' + g + '">' + esc(stepName(g) || g) + '</a></li>').join('') + '</ul>' +
+      (r.back || []).map(g => '<li><a href="#" data-go="' + g + '">' + stepHtml(g) + '</a></li>').join('') + '</ul>' +
       '<p class="muted" style="margin:0">אחרי החזרה – נסו שוב את הבדיקה. טעות היא חלק מהלמידה, לא סימן שאתם "לא מבינים".</p></div>';
   }
   function intro(){
@@ -496,10 +518,10 @@ function checkpoint(el, items, o){
   function dots(i){ return '<ol class="cp-dots" aria-label="התקדמות בבדיקה">' + items.map((x,k) => { const r = results[k];
     return '<li class="' + (k === i ? 'cur' : r || '') + '" aria-label="שאלה ' + (k+1) + (r === 'ok' ? ' – נכון בניסיון הראשון' : r === 'miss' ? ' – כדאי לחזור' : '') + '">' + (r === 'ok' ? '✔' : r === 'miss' ? '↺' : k+1) + '</li>'; }).join('') + '</ol>'; }
   function ask(i){
-    const it = items[i], type = it.type || 'mc'; let wrongs = 0, solved = false;
+    const type = items[i].type || 'mc', it = type === 'mc' ? shuffled(items[i], LESSON + ':' + id + ':' + i + ':' + items[i].q) : items[i]; let wrongs = 0, solved = false;
     el.innerHTML = dots(i) + '<div class="cp-q"><div class="qn">שאלה ' + (i+1) + ' מתוך ' + items.length + '</div><div class="qt" tabindex="-1">' + it.q + '</div><div class="cp-body"></div><div class="cp-fb" hidden aria-live="polite"></div><div class="cp-nav"></div></div>';
     const body = el.querySelector('.cp-body'), fb = el.querySelector('.cp-fb'), nav = el.querySelector('.cp-nav');
-    const backLinks = () => backsOf(it).map(g => '<a class="back" href="#" data-go="' + g + '">↩ חזרו לשלב: ' + esc(stepName(g) || g) + '</a>').join('<br>');
+    const backLinks = () => backsOf(it).map(g => '<a class="back" href="#" data-go="' + g + '">↩ חזרו לשלב: ' + stepHtml(g) + '</a>').join('<br>');
     function wrong(msg){
       wrongs++; if (results[i] === undefined) results[i] = 'miss';
       fb.hidden = false; fb.className = 'cp-fb wrong';
@@ -571,10 +593,10 @@ let returnTo = null;
 function paintBackChip(){
   let c = $('#backChip');
   if (!c) { c = document.createElement('button'); c.id = 'backChip'; c.type = 'button'; c.className = 'backchip'; c.hidden = true; document.body.appendChild(c);
-    c.addEventListener('click', () => { const r = returnTo; returnTo = null; if (r) show(r.ti, r.si, true); paintBackChip(); }); }
+    c.addEventListener('click', () => { const r = returnTo; returnTo = null; if (r) { show(r.ti, r.si, true); const q = T[r.ti].steps[r.si].querySelector('.cp .qt, .tasks'); if (q && q.focus) { if (!q.hasAttribute('tabindex')) q.tabIndex = -1; q.focus({preventScroll: true}); } } paintBackChip(); }); }
   const on = returnTo && !(returnTo.ti === pos.ti && returnTo.si === pos.si);
   if (returnTo && !on) returnTo = null;
-  c.hidden = !on; if (on) c.innerHTML = '↩ חזרה ל: <bdi>' + esc(stepTitle(T[returnTo.ti].steps[returnTo.si])) + '</bdi>';
+  c.hidden = !on; if (on) c.innerHTML = '↩ חזרה ל: <bdi>' + stepTitleHtml(T[returnTo.ti].steps[returnTo.si]) + '</bdi>';
 }
 
 /* ---------- toast + celebration ---------- */
