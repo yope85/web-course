@@ -1245,7 +1245,7 @@ quiz('#quiz', [
    why:['מותר גם מותר – זה קינון.', 'נכון: <code>&lt;b&gt;&lt;i&gt;במבצע&lt;/i&gt;&lt;/b&gt;</code>. מה שנפתח אחרון – נסגר ראשון.', 'רווחים בין תגיות לא משנים כלום. הבעיה היא סדר הסגירה – <a href="#" data-go="anatomy:2">חזרה לקינון</a>.']},
   {q:'בדף יש כותרת <code>&lt;h2 id="prices"&gt;מחירון&lt;/h2&gt;</code> – איך כותבים קישור שקופץ אליה?', opts:['<code>href="prices"</code>', '<code>href="#prices"</code>', '<code>id="#prices"</code>'], correct:1,
    why:['בלי סולמית הדפדפן מחפש קובץ בשם prices.', 'הסולמית אומרת "בתוך הדף הזה", ואחריה ה-id.', 'את הסולמית כותבים בקישור (href), לא ב-id עצמו.']},
-  {q:'העברית בדף נראית כמו <span class="mojibake">×¤×™×¦×”</span>. מה כנראה חסר?', opts:['<code>dir="rtl"</code>', '<code>&lt;meta charset="utf-8" /&gt;</code>', '<code>lang="he"</code>'], correct:1,
+  {q:'העברית בדף נראית כמו <span class="mojibake">×¤×™×¦×”</span> (או <span class="mojibake">׳₪׳™׳¦׳”</span>). מה כנראה חסר?', opts:['<code>dir="rtl"</code>', '<code>&lt;meta charset="utf-8" /&gt;</code>', '<code>lang="he"</code>'], correct:1,
    why:['dir קובע כיוון, לא איך קוראים את האותיות.', 'בלי charset הדפדפן מנחש את הקידוד – וכאן ניחש לא נכון.', 'lang אומר באיזו שפה הדף, אבל לא איך לקרוא את האותיות מהקובץ.']}
 ]);
 
