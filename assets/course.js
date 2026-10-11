@@ -198,19 +198,33 @@ function seg(el, options, onPick, start){
    Seeded by lesson + question, so every student and every reload sees the same order. keepOrder:true, or options that all
    start with a number (1 / 4 / 6), keep the author's order. 'why' moves with its option. */
 function hashStr(str){ let h = 2166136261; for (const ch of String(str)) { h ^= ch.codePointAt(0); h = Math.imul(h, 16777619); } return h >>> 0; }
-function shuffled(o, key){
+/* balanced placement (constitution §3.4 / §11): shuffling every question on its own made streaks ("5 of 6 first").
+   A block (a page's predicts, a quiz, a 🎯 checkpoint) spreads the right answers evenly over the positions,
+   never 3 in a row in the same place. Seeded, so the order is stable across reloads. */
+function ansBlock(seed){ return {counts:[], hist:[], seed: hashStr(seed) || 1}; }
+function pickTarget(b, k){
+  const rnd = () => { let x = b.seed; x ^= x << 13; x >>>= 0; x ^= x >>> 17; x ^= x << 5; x >>>= 0; b.seed = x || 1; return x / 4294967296; };
+  const h = b.hist, ban = h.length >= 2 && h[h.length-1] === h[h.length-2] ? h[h.length-1] : -1;
+  let c = [...Array(k).keys()].filter(p => p !== ban); const min = Math.min(...c.map(p => b.counts[p] || 0));
+  c = c.filter(p => (b.counts[p] || 0) === min); const t = c[Math.floor(rnd() * c.length)];
+  b.counts[t] = (b.counts[t] || 0) + 1; h.push(t); return t;
+}
+function shuffled(o, key, block){
   if (!o || o.keepOrder || !Array.isArray(o.opts) || o.opts.length < 2 || typeof o.correct !== 'number') return o;
   const plainO = o.opts.map(x => String(x).replace(/<[^>]+>/g, '').trim());
   if (plainO.every(x => /^\d/.test(x))) return o;
   let seed = hashStr(key) || 1; const rnd = () => { seed ^= seed << 13; seed >>>= 0; seed ^= seed >>> 17; seed ^= seed << 5; seed >>>= 0; return seed / 4294967296; };
   const idx = o.opts.map((x, i) => i);
   for (let i = idx.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [idx[i], idx[j]] = [idx[j], idx[i]]; }
+  if (block) { const t = pickTarget(block, idx.length), cur = idx.indexOf(o.correct); [idx[t], idx[cur]] = [idx[cur], idx[t]]; }
+  if (window.__ansLog) window.__ansLog.push([key, idx.indexOf(o.correct) + 1, idx.length]); /* QA hook: answer positions */
   return Object.assign({}, o, {opts: idx.map(i => o.opts[i]), why: Array.isArray(o.why) ? idx.map(i => o.why[i]) : o.why, correct: idx.indexOf(o.correct)});
 }
+let predBlock = null;
 const predicts = [];
 function predict(el, o){
   if (typeof el === 'string') el = $(el);
-  o = shuffled(o, LESSON + ':' + el.id + ':' + o.q);
+  o = shuffled(o, LESSON + ':' + el.id + ':' + o.q, o._block || (predBlock = predBlock || ansBlock(LESSON + ':predicts')));
   predicts.push(el.id);
   if (o.quiz) el.classList.add('quiz');
   el.innerHTML = '<div class="q">' + o.q + '</div><div class="opts"></div><div class="fb" hidden></div>';
@@ -267,7 +281,8 @@ function predict(el, o){
 }
 function quiz(container, list){
   if (typeof container === 'string') container = $(container);
-  list.forEach((qq,i) => { const d = document.createElement('div'); d.className = 'predict'; d.id = 'q' + (i+1); container.appendChild(d); predict(d, Object.assign({quiz:true}, qq, {q:(i+1) + '. ' + qq.q})); });
+  const blk = ansBlock(LESSON + ':quiz:' + (container.id || ''));
+  list.forEach((qq,i) => { const d = document.createElement('div'); d.className = 'predict'; d.id = 'q' + (i+1); container.appendChild(d); predict(d, Object.assign({quiz:true}, qq, {q:(i+1) + '. ' + qq.q, _block: blk})); });
 }
 /* "I did it" checkbox that is remembered */
 function doneCheck(el, key){
@@ -486,7 +501,7 @@ const TROUBLE = [
   {id:'save', t:'שמרתם את הקובץ? (Ctrl+S)', how:'ב-Visual Studio, כוכבית <b>*</b> ליד שם הקובץ בלשונית = יש שינויים שלא נשמרו.'},
   {id:'refresh', t:'רעננתם את הדפדפן?', how:'לחצו <b>בתוך הדפדפן</b> Ctrl+F5 – רענון מלא, בלי גרסה ישנה שנשמרה בזיכרון (cache). (ב-Visual Studio עצמו אותו צירוף מריץ את הפרויקט – לכן לוחצים כשהדפדפן מולכם.)'},
   {id:'folder', t:'הקובץ בתיקייה הנכונה?', how:'דפים ב-<code>wwwroot/HTML</code>, תמונות ב-<code>wwwroot/Img</code>, עיצוב ב-<code>wwwroot/css</code>. בפרויקט חדש התיקיות HTML ו-Img <b>עוד לא קיימות</b> – יוצרים אותן (<a href="intro.html#page-2">איך? שיעור 1</a>).'},
-  {id:'name', t:'השם והסיומת נכונים?', how:'בדיוק כמו בקוד, כולל אותיות גדולות וקטנות: <code>index.html</code> – ולא <code>Index.html</code> או <code>index.html.txt</code>.'},
+  {id:'name', t:'השם והסיומת נכונים?', how:'השם בקוד (או בכתובת) זהה לשם הקובץ, אות באות: <code>index.html</code> – ולא <code>index.html.txt</code> או <code>idnex.html</code>. (ב-Windows אותיות גדולות וקטנות לא משנות – אבל בשרתים באינטרנט כן. לכן מתרגלים לכתוב בדיוק.)'},
   {id:'path', t:'הנתיב נכון?', how:'מדף שבתיקייה HTML קודם עולים תיקייה אחת: <code>../Img/pizza.jpg</code> או <code>../css/style.css</code>.'},
   {id:'f12', t:'יש שגיאה אדומה ב-F12?', how:'בדפדפן לוחצים F12 (כלי המפתחים) ‏←‏ לשונית Console. <b>404</b> = הקובץ לא נמצא – כמעט תמיד נתיב או שם שגוי.'}
 ];
@@ -519,6 +534,8 @@ const ASSIGN = {
   4: {title:'בניית דפי הפרויקט המעוצבים', due:'2026-11-19', est:'כ-6 שעות'},
   5: {title:'הגשה 1: האתר המעוצב', due:'2026-12-24', est:'כ-12 שעות', graded:true}
 };
+/* the dates come from assets/cohort.js (the one file to edit for a new cohort); the dates above are only a fallback */
+try { const C = window.COHORT && window.COHORT.due; if (C) Object.keys(C).forEach(n => { if (ASSIGN[n] && /^\d{4}-\d{2}-\d{2}$/.test(C[n])) ASSIGN[n].due = C[n]; }); } catch(e){}
 const HE_DAYS = ['ראשון','שני','שלישי','רביעי','חמישי','שישי','שבת'];
 function asgDate(n){
   const a = ASSIGN[n]; if (!a) return null;
@@ -543,7 +560,7 @@ function assignment(el, o){
       (a.graded ? '🎯 הגשה עם ציון' : '📝 מטלת תרגול: בלי ציון, עם משוב – וההגשה חובה') + '</span></div>' +
     (o.lead ? '<p class="asg-lead">' + o.lead + '</p>' : '') +
     (items.length ? '<p class="asg-prog" aria-live="polite"></p><ol class="asg-list">' + items.map((h, i) => '<li><label class="vsck"><input type="checkbox" aria-label="סימנתי: ' + (i+1) + '" /></label><div class="vsbody">' + h + '</div></li>').join('') + '</ol>' : '') +
-    '<div class="asg-how">📤 <b>איך מגישים:</b> ' + (o.how || 'בקלאסרום &rlm;←&rlm; <b>סביבת הלמידה</b> &rlm;←&rlm; הנושא <b><bdi>HTML &amp; CSS</bdi></b> &rlm;←&rlm; "מטלה ' + o.n + ' – ' + esc(a.title) + '" &rlm;←&rlm; <b>הוספה או יצירה</b> &rlm;←&rlm; <b>קובץ</b> &rlm;←&rlm; מעלים את הקובץ &rlm;←&rlm; <b>הגשה</b>. ההוראות המלאות – במטלה עצמה, בקלאסרום.') + '</div>' +
+    '<div class="asg-how">📤 <b>איך מגישים:</b> ' + (o.how ? o.how.replace(/\{name\}/g, '"מטלה ' + o.n + ' – ' + esc(a.title) + '"') : 'בקלאסרום &rlm;←&rlm; <b>סביבת הלמידה</b> &rlm;←&rlm; הנושא <b><bdi>HTML &amp; CSS</bdi></b> &rlm;←&rlm; "מטלה ' + o.n + ' – ' + esc(a.title) + '" &rlm;←&rlm; <b>הוספה או יצירה</b> &rlm;←&rlm; <b>קובץ</b> &rlm;←&rlm; מעלים את הקובץ &rlm;←&rlm; <b>הגשה</b>. ההוראות המלאות – במטלה עצמה, בקלאסרום.') + '</div>' +
     (o.after ? '<p class="asg-after">' + o.after + '</p>' : '');
   const lis = [...el.querySelectorAll('.asg-list > li')], prog = el.querySelector('.asg-prog');
   function paint(){ const n = lis.filter((li, i) => st[i]).length; lis.forEach((li, i) => { li.classList.toggle('done', !!st[i]); li.querySelector('input').checked = !!st[i]; });
@@ -553,6 +570,46 @@ function assignment(el, o){
 }
 
 /* ---------- 💻 "now in your Visual Studio": <ol class="vsdo"> steps get remembered checkboxes ---------- */
+/* ---------- 🧭 guided tour: <ol class="ctour" aria-label="title"><li data-t="🧭 card title">…</li>…</ol>
+   One card at a time, in a logical order (constitution §2 + attention difficulties): less on the screen, a clear "next",
+   progress dots, and "show all" for whoever wants the overview. Without JS it stays a plain list. ---------- */
+function initTour(){
+  document.querySelectorAll('ol.ctour:not([data-ready])').forEach((ol, n) => {
+    ol.dataset.ready = '1';
+    const cards = [...ol.children], N = cards.length, key = 'tour' + n;
+    let i = Math.min(+state[key] || 0, N - 1), all = false;
+    const box = document.createElement('div'); box.className = 'ctour-box';
+    ol.parentNode.insertBefore(box, ol);
+    box.innerHTML = '<div class="ctour-top"><b>' + esc(ol.getAttribute('aria-label') || '') + '</b><span class="ctour-n" aria-live="polite"></span>' +
+      '<button type="button" class="btn ctour-all"></button></div><div class="ctour-dots" role="group" aria-label="כרטיסים"></div>';
+    box.appendChild(ol);
+    const nav = document.createElement('div'); nav.className = 'ctour-nav';
+    nav.innerHTML = '<button type="button" class="btn ctour-prev">→ הקודם</button><button type="button" class="btn primary ctour-next"></button>';
+    box.appendChild(nav);
+    cards.forEach((li, k) => { const t = li.dataset.t; if (t) li.insertAdjacentHTML('afterbegin', '<h5 class="ctour-t">' + t + '</h5>'); });
+    const dots = box.querySelector('.ctour-dots');
+    dots.innerHTML = cards.map((li, k) => '<button type="button" data-k="' + k + '" aria-label="כרטיס ' + (k+1) + ': ' + esc((li.dataset.t || '').replace(/<[^>]+>/g, '')) + '"></button>').join('');
+    const prev = nav.querySelector('.ctour-prev'), next = nav.querySelector('.ctour-next'), allB = box.querySelector('.ctour-all'), cnt = box.querySelector('.ctour-n');
+    function paint(focus){
+      box.classList.toggle('ctour-open', all);
+      cards.forEach((li, k) => { li.hidden = !all && k !== i; });
+      dots.hidden = all; nav.hidden = all;
+      dots.querySelectorAll('button').forEach((b, k) => { b.classList.toggle('on', k === i); b.classList.toggle('seen', k < i); b.setAttribute('aria-current', k === i ? 'step' : 'false'); });
+      cnt.textContent = all ? N + ' כרטיסים' : (i + 1) + ' מתוך ' + N;
+      allB.textContent = all ? '👣 כרטיס אחד בכל פעם' : '📋 הצגת הכול';
+      prev.disabled = i === 0;
+      next.textContent = i === N - 1 ? '↺ שוב מההתחלה' : 'הבא ←';
+      if (focus) { const h = cards[i].querySelector('.ctour-t'); if (h) { h.tabIndex = -1; h.focus({preventScroll:true}); } }
+      state[key] = i; save();
+    }
+    prev.addEventListener('click', () => { if (i > 0) { i--; paint(true); } });
+    next.addEventListener('click', () => { i = i === N - 1 ? 0 : i + 1; paint(true); });
+    dots.addEventListener('click', e => { const b = e.target.closest('[data-k]'); if (b) { i = +b.dataset.k; paint(true); } });
+    allB.addEventListener('click', () => { all = !all; paint(false); });
+    paint(false);
+  });
+}
+
 function initVsdo(){
   state.vs = state.vs || {};
   document.querySelectorAll('ol.vsdo').forEach((ol, n) => {
@@ -590,6 +647,7 @@ function checkpoint(el, items, o){
   const sec = el.closest('section.topic'), tid = sec ? sec.dataset.id : '', ttitle = sec ? sec.dataset.title : '';
   CPS.push({id, tid}); CPS_N[id] = items.length; state.cp = state.cp || {}; state.cpTotal = CPS.length;
   el.classList.add('gcp');
+  const cpBlk = ansBlock(LESSON + ':cp:' + id), SHUF = items.map((it, i) => (it.type || 'mc') === 'mc' ? shuffled(it, LESSON + ':' + id + ':' + i + ':' + it.q, cpBlk) : it);
   const nQ = n => n === 1 ? 'שאלה אחת' : n + ' שאלות';
   let results = [];
   const backsOf = it => [].concat(it.back || []);
@@ -608,7 +666,7 @@ function checkpoint(el, items, o){
   function dots(i){ return '<ol class="gcp-dots" aria-label="התקדמות בבדיקה">' + items.map((x,k) => { const r = results[k];
     return '<li class="' + (k === i ? 'cur' : r || '') + '" aria-label="שאלה ' + (k+1) + (r === 'ok' ? ' – נכון בניסיון הראשון' : r === 'miss' ? ' – כדאי לחזור' : '') + '">' + (r === 'ok' ? '✔' : r === 'miss' ? '↺' : k+1) + '</li>'; }).join('') + '</ol>'; }
   function ask(i){
-    const type = items[i].type || 'mc', it = type === 'mc' ? shuffled(items[i], LESSON + ':' + id + ':' + i + ':' + items[i].q) : items[i]; let wrongs = 0, solved = false;
+    const type = items[i].type || 'mc', it = SHUF[i]; let wrongs = 0, solved = false;
     el.innerHTML = dots(i) + '<div class="gcp-q"><div class="qn">שאלה ' + (i+1) + ' מתוך ' + items.length + '</div><div class="qt" tabindex="-1">' + it.q + '</div><div class="gcp-body"></div><div class="gcp-fb" hidden aria-live="polite"></div><div class="gcp-nav"></div></div>';
     const body = el.querySelector('.gcp-body'), fb = el.querySelector('.gcp-fb'), nav = el.querySelector('.gcp-nav');
     const backLinks = () => backsOf(it).map(g => '<a class="back" href="#" data-go="' + g + '">↩ חזרו לשלב: ' + stepHtml(g) + '</a>').join('<br>');
@@ -928,7 +986,7 @@ let pos = {ti:0, si:0};
 /* 🎬 "after the video" mode (course-wide): whoever already watched the video skips the reading steps and does only the
    ACTIVE ones – guesses, 🎯 checks, 💻 steps, labs, practice. The chips mark reading steps, "next" jumps over them. */
 function videoMode(){ try { return localStorage.getItem('course-video') === '1'; } catch(e){ return false; } }
-function isActive(st){ return st.classList.contains('welcome') || st.classList.contains('vsstep') || st.classList.contains('cpstep') ||
+function isActive(st){ return st.classList.contains('welcome') || st.classList.contains('act') || !!st.querySelector('.asg') || st.classList.contains('vsstep') || st.classList.contains('cpstep') ||
   !!st.querySelector('.predict:not(.quiz), .tasks, .chal, .stepbox, .pg, .predict.quiz, #summary, .sel-input') || st.id === 'quiz' || st.id === 'summary'; }
 function nextActive(ti, si, dir){
   let a = ti, b = si;
@@ -943,7 +1001,7 @@ function paintVideoBox(){
     box.addEventListener('click', e => { if (!e.target.closest('button')) return; try { localStorage.setItem('course-video', videoMode() ? '0' : '1'); } catch(err){} paintVideoBox(); show(pos.ti, pos.si, false); }); }
   const on = videoMode();
   box.innerHTML = '<b>🎬 כבר צפיתם בסרטון? מומלץ מאוד לעבור גם כאן.</b> הסרטון מסביר – כאן <b>עושים</b>: מנחשים, טועים, מתקנים ובונים בפרויקט שלכם. ' +
-    'כדי לא לקרוא פעמיים, הפעילו <b>מצב אחרי-סרטון</b>: הכפתור "הבא" ידלג על שלבי הקריאה, ויישארו רק החלקים הפעילים – ניחושים ❓, בדיקות 🎯, שלבי 💻 והתרגול. ' +
+    'כדי לא לקרוא פעמיים, הפעילו <b>מצב אחרי-סרטון</b>: הכפתור "הבא" ידלג על שלבי הקריאה, ויישארו רק החלקים הפעילים – ניחושים ❓, סימולטורים ותרגול, בדיקות 🎯, שלבי 💻 והמטלה 📌. ' +
     '<div style="margin-top:8px"><button class="btn' + (on ? '' : ' primary') + '" type="button" aria-pressed="' + on + '">' + (on ? '✔ מצב אחרי-סרטון פועל – לחצו לכיבוי' : '🎬 צפיתי בסרטון – הפעילו מצב אחרי-סרטון') + '</button></div>';
 }
 function show(ti, si, scroll){
@@ -1028,6 +1086,7 @@ function start(o){
   const pb = $('#printBtn'); if (pb) pb.addEventListener('click', () => window.print());
   initEggs(o.eggs, o.console);
   initVsdo();
+  try { initTour(); } catch(e){ console.error(e); }
   document.querySelectorAll('.trouble:not([data-ready])').forEach(el => trouble(el));
   initPlayer();
   try { SFX.init(); } catch(e){}

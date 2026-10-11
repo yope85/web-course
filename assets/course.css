@@ -505,3 +505,20 @@ html,body{overflow-x:clip}
 .asg-list>li>.vsck input{width:20px;height:20px;accent-color:var(--accent);margin:0;cursor:pointer}
 .asg-list>li>.vsbody{flex:1;min-width:0}
 @media (max-width:640px){.asg{padding:10px} .asg-list>li{padding:6px 8px;gap:8px}}
+
+/* 🧭 guided tour (engine: initTour) – one card at a time */
+.ctour-box{border:1px solid var(--line);border-radius:14px;background:var(--surface2);padding:12px 14px;margin:10px 0 14px}
+.ctour-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.ctour-top b{font-size:16px}
+.ctour-n{color:var(--muted);font-size:14px}
+.ctour-all{margin-inline-start:auto}
+.ctour-dots{display:flex;gap:8px;margin:8px 0 4px}
+.ctour-dots button{width:26px;height:8px;border-radius:99px;border:0;padding:0;background:var(--line);cursor:pointer}
+.ctour-dots button.seen{background:var(--accent-soft);box-shadow:inset 0 0 0 1px var(--accent)}
+.ctour-dots button.on{background:var(--accent)}
+ol.ctour{list-style:none;margin:6px 0 0;padding:0}
+ol.ctour>li{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 16px;min-height:120px}
+.ctour-open ol.ctour>li{min-height:0;margin-bottom:8px}
+.ctour-t{margin:0 0 4px;font-size:17px}
+ol.ctour>li p{margin:4px 0}
+.ctour-nav{display:flex;justify-content:space-between;gap:10px;margin-top:10px}
