@@ -92,7 +92,8 @@ function fakeImg(label, bg, fg){ return "data:image/svg+xml;utf8," + encodeURICo
 function resolveImgs(src){ return src.replace(/(src\s*=\s*)(["']?)(?:\.\.\/)?(?:Img|img)\/([A-Za-z0-9_.-]+)\2(?=[\s>\/]|$)/gi, (x, a, q, f) => a + '"' + (IMAGES[f] || fakeImg(f.replace(/\.[a-z]+$/i,''))) + '"'); }
 const BASE_CSS = ':host{display:block}:host([hidden]){display:none}x-page{display:block;background:#fff;color:#111;padding:12px 16px;font-family:Rubik,Arial,sans-serif;font-size:16px;line-height:1.5;direction:rtl;min-height:40px}' +
   '.hit{outline:3px solid #f43f5e!important;outline-offset:2px}.peek{outline:2px dashed #2f6fec;outline-offset:2px}' +
-  'x-page.boxes *{outline:2px dashed #f97316;outline-offset:-2px;background-color:rgba(249,115,22,.07)}x-page.boxes *::before{content:attr(data-tag);font:11px monospace;color:#c2410c;background:#fff7ed;padding:0 4px;margin-inline-end:6px;border-radius:3px}x-page.boxes div{outline:3px solid #7c3aed;outline-offset:3px;background-color:rgba(124,58,237,.10)}x-page.boxes div::before{display:block;width:max-content;color:#fff;background:#7c3aed;font-weight:bold;margin-bottom:4px}' +
+  'x-page.boxes *{outline:2px solid #2563eb;outline-offset:-2px;background-color:rgba(37,99,235,.06)}x-page.boxes *::before{content:attr(data-tag);font:11px monospace;color:#1d4ed8;background:#eff6ff;padding:0 4px;margin-inline-end:6px;border-radius:3px}' +
+  'x-page.boxes :is(a,span,b,strong,i,em,img,label,input,button,select,textarea,code,small,u,sup,sub){outline:2px dashed #db2777;outline-offset:0;background-color:rgba(219,39,119,.10)}x-page.boxes :is(a,span,b,strong,i,em,label,code,small,u,sup,sub)::before{color:#be185d;background:#fdf2f8}x-page.boxes div{outline:3px solid #7c3aed;outline-offset:3px;background-color:rgba(124,58,237,.10)}x-page.boxes div::before{display:block;width:max-content;color:#fff;background:#7c3aed;font-weight:bold;margin-bottom:4px}' +
   'x-page.kinds [data-kind="block"]{outline:2px solid #2563eb;outline-offset:-2px;background-color:rgba(37,99,235,.06)}x-page.kinds [data-kind="inline"]{outline:2px dashed #db2777;outline-offset:0;background-color:rgba(219,39,119,.10)}';
 const INLINE_TAGS = /^(a|span|b|strong|i|em|img|br|label|input|button|select|textarea|code|small|u|sup|sub)$/;
 function mapCss(css){ return css.replace(/(^|[\s,}])body(?=[\s,{:.])/g, '$1x-page'); }
@@ -262,6 +263,10 @@ function predict(el, o){
         .filter((c, k, a) => outside(c) && !c.hidden && !hiddenInside(c) && !targets.some(t => t.contains(c)) && !a.some(x => x !== c && x.contains(c)))
         .forEach(c => { c._lockCover = true; c.classList.add('locked'); coverIt(c); });
     }
+    /* one sentence is enough: only the first cover of each kind (in reading order) says it in words – the rest show just the icon */
+    const seenKind = [0, 0];
+    veiled.slice().sort((a, b) => a.wrap.compareDocumentPosition(b.wrap) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1)
+      .forEach(v => { const lk = v.wrap.classList.contains('lock-cover'); if (seenKind[lk ? 1 : 0]++) { v.cover.classList.add('veil-mini'); v.cover.title = lk ? 'נפתח אחרי הניחוש' : 'מוסתר עד שעונים על שאלת הניחוש'; v.cover.innerHTML = '<span aria-label="' + v.cover.title + '">' + (lk ? '🔒' : '🙈') + '</span>'; } });
   }
   function unveil(){
     veiled.forEach(v => { v.cover.remove(); v.t.inert = false; v.t.removeAttribute('aria-hidden');
@@ -284,7 +289,7 @@ function quiz(container, list){
   const blk = ansBlock(LESSON + ':quiz:' + (container.id || ''));
   /* the end of the quiz: a summary line that stays, and ONE finale instead of the answer tone of the last question.
      First try counts (like the 🎯 checks): state.qz[id] = {miss:{3:1}} ; legacy = answers from before this was recorded (no claim of "perfect"). */
-  const cid = container.id || 'quiz', N = list.length, qid = i => 'q' + (i + 1);
+  const cid = container.id || 'quiz', N = list.length, qid = i => list[i].id || ('q' + (i + 1));
   state.qz = state.qz || {};
   const rec = state.qz[cid] = state.qz[cid] || {miss: {}, legacy: list.some((q, i) => state[qid(i)]) ? 1 : 0};
   const allDone = () => list.every((q, i) => state[qid(i)]);
@@ -318,9 +323,10 @@ function doneCheck(el, key){
   el.checked = !!state[key]; paint();
   /* ticking it is a real milestone (the step was done in the student's own project): a "stamp" sound + a small cheer. Unticking is silent. */
   el.addEventListener('change', () => { state[key] = el.checked; save(); paint();
-    if (el.checked) celebrate(lab || el, 'small', {sound: 'check', up: 16, cheer: lastCheer = pickNot(CHEERS_D, lastCheer)}); });
+    if (el.checked) celebrate(lab || el, 'small', {sound: 'check', up: 16, cheer: lastCheer = fromBag('d', CHEERS_D)}); });
 }
-const CHEERS_D = ['נרשם! 💪', 'עוד צעד באתר שלכם ✔', 'מתקדמים! 👣', 'בפרויקט שלכם – הכי חשוב!', 'יפה, עשיתם את זה!'];
+const CHEERS_D = ['נרשם! 💪', 'עוד צעד באתר שלכם ✔', 'מתקדמים! 👣', 'בפרויקט שלכם – הכי חשוב!', 'יפה, עשיתם את זה!', 'האתר שלכם גדל 🌱', 'עוד לבנה בפרויקט 🧱',
+  'זה כבר שלכם ✔', 'עבודה אמיתית 💻', 'צעד קדימה! 👣', 'הפרויקט מתקדם 🚀', 'ככה בונים אתר!'];
 
 /* ---------- playground: editors + live preview + auto-checked tasks ----------
    task: {id, text, test(doc, win) | manual:true, hints:['direction', 'where exactly'], solution:{code, lang:'css'|'html', explain, alt}, back:'topic:N'}
@@ -486,7 +492,7 @@ function stepTitleHtml(st){ const h = st && st.querySelector('h3'); if (!h) retu
   c.querySelectorAll('*').forEach(x => { if (!/^(CODE|BDI|B|U|I)$/.test(x.tagName)) x.replaceWith(...x.childNodes); else [...x.attributes].forEach(a => x.removeAttribute(a.name)); }); return c.innerHTML.trim(); }
 function stepHtml(go){
   const [tid, n] = String(go).split(':'); const t = T.find(x => x.id === tid); if (!t) return esc(go);
-  const st = t.steps[(+n || 1) - 1]; return '<bdi>' + esc(t.title) + '</bdi> · <bdi>' + (st ? stepTitleHtml(st) : '') + '</bdi>';
+  const st = t.steps[(+n || 1) - 1]; return '<bdi dir="rtl">' + esc(t.title) + '</bdi> · <bdi dir="rtl">' + (st ? stepTitleHtml(st) : '') + '</bdi>';
 }
 function stepName(go){
   const [tid, n] = String(go).split(':'); const t = T.find(x => x.id === tid); if (!t) return '';
@@ -519,7 +525,7 @@ function askBox(host, o){
     let lines, code = '';
     if (r === 'nb') {
       lines = ['בשיעור "' + w.lesson + '", בנושא "' + w.topic + '", בשלב "' + w.step + '":', 'לא הבנתי ___', 'אפשר הסבר במילים פשוטות, עם דוגמה קטנה?'];
-      body.innerHTML = '<p class="who">פנו ל<b>📒 מחברת Gemini של הנושא</b> (בקלאסרום, בנושא HTML & CSS). היא עונה <b>רק מתוך חומרי הקורס</b> – לכן ההסברים שלה מתאימים בדיוק למה שלמדנו כאן.</p>' +
+      body.innerHTML = '<p class="who">פנו ל<b>📒 מחברת הנושא</b> (בקלאסרום, בנושא HTML & CSS). היא עונה <b>רק מתוך חומרי הקורס</b> – לכן ההסברים שלה מתאימים בדיוק למה שלמדנו כאן.</p>' +
         '<p class="muted">💡 שאלה טובה אומרת <b>מה בדיוק</b> לא הבנתם. "לא הבנתי כלום" לא עוזר לה לעזור לכם. השלימו את ה-___ אחרי ההדבקה.</p>';
     } else {
       const task = o.task ? o.task() : ''; code = o.code ? o.code() : '';
@@ -547,9 +553,9 @@ function askBox(host, o){
 const TROUBLE = [
   {id:'save', t:'שמרתם את הקובץ? (Ctrl+S)', how:'ב-Visual Studio, כוכבית <b>*</b> ליד שם הקובץ בלשונית = יש שינויים שלא נשמרו.'},
   {id:'refresh', t:'רעננתם את הדפדפן?', how:'לחצו <b>בתוך הדפדפן</b> Ctrl+F5 – רענון מלא, בלי גרסה ישנה שנשמרה בזיכרון (cache). (ב-Visual Studio עצמו אותו צירוף מריץ את הפרויקט – לכן לוחצים כשהדפדפן מולכם.)'},
-  {id:'folder', t:'הקובץ בתיקייה הנכונה?', how:'דפים ב-<code>wwwroot/HTML</code>, תמונות ב-<code>wwwroot/Img</code>, עיצוב ב-<code>wwwroot/css</code>. בפרויקט חדש התיקיות HTML ו-Img <b>עוד לא קיימות</b> – יוצרים אותן (<a href="intro.html#page-2">איך? שיעור 1</a>).'},
+  {id:'folder', t:'הקובץ בתיקייה הנכונה?', how:'דפים ב-<code>wwwroot/HTML</code>, תמונות ב-<code>wwwroot/Img</code>, עיצוב ב-<code>wwwroot/css</code>. בפרויקט חדש התיקיות HTML ו-Img <b>עוד לא קיימות</b> – יוצרים אותן (HTML – <a href="intro.html#page-2">שיעור 1</a> · Img – <a href="html-basics.html#images-9">שיעור 2</a>).'},
   {id:'name', t:'השם והסיומת נכונים?', how:'השם בקוד (או בכתובת) זהה לשם הקובץ, אות באות: <code>index.html</code> – ולא <code>index.html.txt</code> או <code>idnex.html</code>. (ב-Windows אותיות גדולות וקטנות לא משנות – אבל בשרתים באינטרנט כן. לכן מתרגלים לכתוב בדיוק.)'},
-  {id:'path', t:'הנתיב נכון?', how:'מדף שבתיקייה HTML קודם עולים תיקייה אחת: <code>../Img/pizza.jpg</code> או <code>../css/style.css</code>.'},
+  {id:'path', t:'הנתיב נכון?', how:'מדף שבתיקייה HTML קודם עולים תיקייה אחת: <code>../Img/pizza.jpg</code>, או <code>../css/</code> ואחריו שם קובץ העיצוב.'},
   {id:'f12', t:'יש שגיאה אדומה ב-F12?', how:'בדפדפן לוחצים F12 (כלי המפתחים) ‏←‏ לשונית Console. <b>404</b> = הקובץ לא נמצא – כמעט תמיד נתיב או שם שגוי.'}
 ];
 function trouble(el, o){
@@ -586,8 +592,8 @@ const ASSIGN = {
 /* 🏠 topic home: every lesson returns to the home page of ITS topic (html-css.html, later javascript.html...). <body data-home="x.html" data-home-name="..."> overrides. */
 const TOPIC_HOME = [(document.body && document.body.dataset.home) || 'html-css.html', (document.body && document.body.dataset.homeName) || 'HTML & CSS'];
 (function(){ const add = () => { const b = document.querySelector('.topbar .brand'); if (!b || document.querySelector('.topbar .homelnk')) return;
-  const a = document.createElement('a'); a.className = 'homelnk'; a.href = TOPIC_HOME[0]; a.title = 'חזרה לדף הבית – ' + TOPIC_HOME[1]; a.setAttribute('aria-label', a.title);
-  a.innerHTML = '🏠 <span>דף הבית</span>'; b.parentNode.insertBefore(a, b); };
+  const a = document.createElement('a'); a.className = 'homelnk'; a.href = TOPIC_HOME[0]; a.title = 'כל השיעורים – ' + TOPIC_HOME[1]; a.setAttribute('aria-label', a.title);
+  a.innerHTML = '🏠 <span>כל השיעורים</span>'; b.parentNode.insertBefore(a, b); };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', add); else add(); })();
 const asgName = n => (ASSIGN[n] && ASSIGN[n].label) || ('מטלה ' + n);
 /* the dates come from assets/cohort.js (the one file to edit for a new cohort); the dates above are only a fallback */
@@ -626,7 +632,7 @@ function assignment(el, o){
 }
 /* a ticked-off checklist gets its finale once per visit: ticking, unticking and ticking again must not turn into a confetti button */
 const finOnce = {};
-function listFinale(key, el, o){ if (finOnce[key]) return; finOnce[key] = 1; finale(el, Object.assign({key}, o)); }
+function listFinale(key, el, o){ if (finOnce[key] || (state.fin && state.fin[key])) return; finOnce[key] = 1; finale(el, Object.assign({key}, o)); }
 
 /* ---------- 💻 "now in your Visual Studio": <ol class="vsdo"> steps get remembered checkboxes ---------- */
 /* ---------- 🧭 guided tour: <ol class="ctour" aria-label="title"><li data-t="🧭 card title">…</li>…</ol>
@@ -643,7 +649,7 @@ function initTour(){
       '<button type="button" class="btn ctour-all"></button></div><div class="ctour-dots" role="group" aria-label="כרטיסים"></div>';
     box.appendChild(ol);
     const nav = document.createElement('div'); nav.className = 'ctour-nav';
-    nav.innerHTML = '<button type="button" class="btn ctour-prev">→ הקודם</button><button type="button" class="btn primary ctour-next"></button>';
+    nav.innerHTML = '<button type="button" class="btn ctour-prev">→ לכרטיס הקודם</button><button type="button" class="btn primary ctour-next"></button>';
     box.appendChild(nav);
     cards.forEach((li, k) => { const t = li.dataset.t; if (t) li.insertAdjacentHTML('afterbegin', '<h5 class="ctour-t">' + t + '</h5>'); });
     const dots = box.querySelector('.ctour-dots');
@@ -657,7 +663,7 @@ function initTour(){
       cnt.textContent = all ? N + ' כרטיסים' : (i + 1) + ' מתוך ' + N;
       allB.textContent = all ? '👣 כרטיס אחד בכל פעם' : '📋 הצגת הכול';
       prev.disabled = i === 0;
-      next.textContent = i === N - 1 ? '↺ שוב מההתחלה' : 'הבא ←';
+      next.textContent = i === N - 1 ? '↺ שוב מההתחלה' : 'לכרטיס הבא ←';
       if (focus) { const h = cards[i].querySelector('.ctour-t'); if (h) { h.tabIndex = -1; h.focus({preventScroll:true}); } }
       state[key] = i; save();
     }
@@ -686,7 +692,8 @@ function initVsdo(){
       cb.addEventListener('change', () => { state.vs[k] = cb.checked; li.classList.toggle('done', cb.checked); paint(); save(); if (cb.checked && lis.every(x => x.classList.contains('done'))) listFinale(base, prog, {icon: '💻', title: 'עשיתם את זה אצלכם!', sub: 'כל ' + lis.length + ' הצעדים מסומנים', near: li}); });
     });
     function paint(){ const k = lis.filter(li => li.classList.contains('done')).length;
-      prog.innerHTML = k === lis.length ? '✔ <b>עשיתם את כל הצעדים אצלכם!</b> אם משהו לא עבד – הרשימה "עבד באתר ולא אצלי?" למטה.' : 'עשיתם צעד? סמנו אותו. <b>' + k + '/' + lis.length + '</b>'; }
+      const hasTr = !!(ol.closest('.spread') && ol.closest('.spread').querySelector('.trouble'));
+      prog.innerHTML = k === lis.length ? '✔ <b>עשיתם את כל הצעדים אצלכם!</b>' + (hasTr ? ' אם משהו לא עבד – הרשימה "עבד באתר ולא אצלי?" למטה.' : '') : 'עשיתם צעד? סמנו אותו. <b>' + k + '/' + lis.length + '</b>'; }
     paint();
   });
 }
@@ -803,11 +810,13 @@ function checkpoint(el, items, o){
    VS time   = 💻 steps (2 min per action)   ·   optional = 🎯 checks + 🚀/🐢 boxes */
 function measureTopic(t){
   const wc = s => (s.match(/[֐-׿A-Za-z]+/g) || []).length;
-  let words = 0, opt = 0, pred = 0, ctrls = 0, code = 0, vs = 0, cpq = 0, pg = 0;
+  let words = 0, opt = 0, pred = 0, ctrls = 0, code = 0, vs = 0, cpq = 0, pg = 0; const proj = [0, 0];
   t.steps.forEach(sp => {
     if (sp.classList.contains('vsstep')) { vs += sp.querySelectorAll('ol.vsdo > li').length; return; }
     if (sp.classList.contains('cpstep')) { const id = (sp.querySelector('.gcp') || {}).id; cpq += (CPS_N[id] || 4); return; }
-    const c = sp.cloneNode(true);
+    /* 🧩 a project step is work in Visual Studio, not reading: data-vs="60-120" = its own estimate (minutes), else 2 min per line */
+    sp.querySelectorAll('.stepbox').forEach(b => { const m = /^(\d+)(?:-(\d+))?$/.exec(b.dataset.vs || ''); if (m) { proj[0] += +m[1]; proj[1] += +(m[2] || m[1]); } else vs += b.querySelectorAll('ol > li').length; });
+    const c = sp.cloneNode(true); c.querySelectorAll('.stepbox').forEach(x => x.remove());
     c.querySelectorAll('details.more').forEach(d => { opt += wc(d.textContent); d.remove(); });
     code += c.querySelectorAll('pre .ln').length;
     c.querySelectorAll('details, .trouble, .predict, pre, .cv, script, style, .tasks, [hidden], .sn, .veil-cover, .lock-note, .pg-fin, .qz-sum').forEach(x => x.remove());
@@ -818,7 +827,7 @@ function measureTopic(t){
   });
   const fast = words / 160 + pred * 0.5 + ctrls * 0.4 + code * 0.04 + pg * 2.5;
   const slow = words / 100 + pred * 1 + ctrls * 0.75 + code * 0.08 + pg * 4;
-  return {fast, slow, vs: vs * 2, opt: cpq * 1 + opt / 100};
+  return {fast, slow, vs: vs * 2, opt: cpq * 1 + opt / 100, proj};
 }
 const CPS_N = {};
 const r5 = m => Math.max(1, Math.round(m));
@@ -826,13 +835,16 @@ const rng = (a, b) => { a = r5(a); b = r5(b); return a === b ? a + '' : a + '–
 function paintTimePlan(){
   const rows = T.map(t => Object.assign({t}, measureTopic(t)));
   T.forEach((t, i) => { t.time = rows[i]; });
-  const tot = rows.reduce((s, r) => ({fast: s.fast + r.fast, slow: s.slow + r.slow, vs: s.vs + r.vs, opt: s.opt + r.opt}), {fast: 0, slow: 0, vs: 0, opt: 0});
+  /* the header is the sum of the ROUNDED rows, so the student's own addition always matches */
+  const rd = (v, min) => v >= min ? r5(v) : 0;
+  const tot = rows.reduce((s, r) => ({fast: s.fast + r5(r.fast), slow: s.slow + r5(r.slow), vs: s.vs + rd(r.vs, 0.5), opt: s.opt + rd(r.opt, 0.5), p0: s.p0 + r.proj[0], p1: s.p1 + r.proj[1]}), {fast: 0, slow: 0, vs: 0, opt: 0, p0: 0, p1: 0});
+  const projTx = tot.p1 ? ' · 🧩 צעד בפרויקט: <b>' + (tot.p0 === tot.p1 ? tot.p0 : tot.p0 + '–' + tot.p1) + ' דק׳</b>' : '';
   const host = document.querySelector('.spread.welcome'); if (!host || host.querySelector('.timeplan')) return;
   const box = document.createElement('details'); box.className = 'timeplan';
-  box.innerHTML = '<summary><b>⏱ כמה זמן זה לוקח?</b> בדף: <b>' + rng(tot.fast, tot.slow) + ' דק׳</b> · ב-Visual Studio: <b>' + r5(tot.vs) + ' דק׳</b> <span class="muted">(פירוט לפי נושא – לתכנון)</span></summary>' +
-    '<p class="muted" style="margin:6px 0">"בדף" = קריאה, ניחושים, דוגמאות ותרגול כאן. הטווח: מי שקורא מהר … מי שקורא לאט – שניהם בסדר גמור. "ב-Visual Studio" = שלבי 💻 בפרויקט שלכם. בנוסף, ברשות: בדיקות 🎯 ותיבות 🚀/🐢 (בערך ' + r5(tot.opt) + ' דק׳). אפשר בכמה ישיבות – ההתקדמות נשמרת.</p>' +
-    '<table><tr><th>נושא</th><th>בדף</th><th>ב-VS</th><th>רשות</th></tr>' +
-    rows.map(r => '<tr><td>' + r.t.icon + ' <bdi>' + esc(r.t.title) + '</bdi></td><td>' + rng(r.fast, r.slow) + '′</td><td>' + (r.vs ? r5(r.vs) + '′' : '–') + '</td><td>' + (r.opt >= 0.5 ? r5(r.opt) + '′' : '–') + '</td></tr>').join('') + '</table>';
+  box.innerHTML = '<summary><b>⏱ כמה זמן זה לוקח?</b> בדף: <b>' + (tot.fast === tot.slow ? tot.fast : tot.fast + '–' + tot.slow) + ' דק׳</b> · ב-<bdi>Visual Studio</bdi>: <b>' + tot.vs + ' דק׳</b>' + projTx + ' <span class="muted">(פירוט לפי נושא – לתכנון)</span></summary>' +
+    '<p class="muted" style="margin:6px 0">"בדף" = קריאה, ניחושים, דוגמאות ותרגול כאן. הטווח: מי שקורא מהר … מי שקורא לאט – שניהם בסדר גמור. "ב-<bdi>Visual Studio</bdi>" = שלבי 💻 בפרויקט שלכם' + (tot.p1 ? '; "🧩 צעד בפרויקט" = הצעד הגדול שבסוף השיעור (הערכה – אצל כל אחד זה שונה)' : '') + '. בנוסף, ברשות: בדיקות 🎯 ותיבות 🚀/🐢 (בערך ' + tot.opt + ' דק׳). אפשר בכמה ישיבות – ההתקדמות נשמרת.</p>' +
+    '<table><tr><th>נושא</th><th>בדף</th><th>ב-<bdi>VS</bdi></th><th>רשות</th></tr>' +
+    rows.map(r => '<tr><td>' + r.t.icon + ' <bdi dir="rtl">' + esc(r.t.title) + '</bdi></td><td>' + rng(r.fast, r.slow) + '′</td><td>' + (r.vs ? r5(r.vs) + '′' : '–') + '</td><td>' + (r.opt >= 0.5 ? r5(r.opt) + '′' : '–') + '</td></tr>').join('') + '</table>';
   const egg = host.querySelector('.eggnote'); egg ? host.insertBefore(box, egg) : host.appendChild(box);
 }
 
@@ -844,13 +856,45 @@ function paintBackChip(){
     c.addEventListener('click', () => { const r = returnTo; returnTo = null; if (r) { show(r.ti, r.si, true); const q = T[r.ti].steps[r.si].querySelector('.gcp .qt, .tasks'); if (q && q.focus) { if (!q.hasAttribute('tabindex')) q.tabIndex = -1; q.focus({preventScroll: true}); } } paintBackChip(); }); }
   const on = returnTo && !(returnTo.ti === pos.ti && returnTo.si === pos.si);
   if (returnTo && !on) returnTo = null;
-  c.hidden = !on; if (on) c.innerHTML = '↩ חזרה ל: <bdi>' + stepTitleHtml(T[returnTo.ti].steps[returnTo.si]) + '</bdi>';
+  c.hidden = !on; if (on) c.innerHTML = '↩ חזרה ל: <bdi dir="rtl">' + stepTitleHtml(T[returnTo.ti].steps[returnTo.si]) + '</bdi>';
 }
 
 /* ---------- 🎉 celebrate: a short, VARIED success effect – students never know which one comes next ----------
    Course.celebrate(el, 'small' | 'big'). Never blocks, never repeats the last effect, respects reduced motion. */
-const CHEERS_S = ['נכון!', 'יש!', 'בול!', 'יפה!', 'מדויק!', 'ככה!', 'מצוין!'];
-const CHEERS_B = ['מעולה!', 'אלופים!', 'וואו!', 'ככה עושים את זה!', 'קוד נקי!', 'מקצוענים!', 'בוערים! 🔥', 'עוד אחד בכיס!', 'פיצה דני גאה בכם 🍕', 'מתכנתים אמיתיים!'];
+const CHEERS_S = ['נכון!', 'יש!', 'בול!', 'יפה!', 'מדויק!', 'ככה!', 'מצוין!', 'בדיוק!', 'קלעתם!', 'פגיעה!', 'זה זה!', 'נכון מאוד!', 'בדיוק ככה!', 'יפה מאוד!', 'חד!', 'מעולה!',
+  'צדקתם!', 'סחתיין!', 'טוב מאוד!', 'פיצחתם!', 'הבנתם!', 'ניחוש מדויק!', 'חזק!', 'איזה יופי!', 'לגמרי!', 'קלעתם בול!', 'ראש גדול!', 'שאפו!', 'עין חדה!',
+  'יופי של תשובה!', 'תפסתם את זה!', 'בדיוק לשם!', 'ככה חושבים!', 'הבנה אמיתית!', 'וואו, נכון!', '👌 בול'];
+/* rare surprises (about 1 in 12 right answers): nobody knows when the next one comes */
+const CHEERS_R = ['קוד 200 – הכול תקין ✔', 'שומרים את ההצלחה: Ctrl+S 💾', 'הדפדפן מוחא כפיים 👏', 'פיצה דני מזמין משולש 🍕', 'שגיאות? אפס 😎', 'ה-CSS מחייך אליכם 🎨',
+  'המנטור היה גאה 🧑‍🏫', 'עוד רגע אתם מלמדים אותנו 😉', 'זה נכנס לזיכרון 🧠', 'פיקסל-פרפקט ✨', 'נקי כמו קוד מסודר 🧹', 'גם ה-Console אומר: נכון ✔'];
+const CHEERS_B = ['מעולה!', 'וואו!', 'ככה עושים את זה!', 'קוד נקי!', 'אליפות!', 'עוד אחד בכיס!', 'פיצה דני גאה בכם 🍕', 'ככה מתכנתים!', 'בוער! 🔥', 'סיימתם – ובגדול!',
+  'עבודה יפה!', 'עוד שלב מאחוריכם!', 'איזו התקדמות!', 'משימה הושלמה ✔', 'מרשים!', 'יש לכם קצב!', 'מקצועי!', 'ברמה גבוהה!', 'נקי ומדויק!', 'מתקדמים בטיל 🚀', 'עוד לבנה באתר 🧱', 'זה כבר נראה אמיתי!'];
+/* a "bag" (shuffle bag), remembered for the WHOLE course in this browser: every phrase / effect comes out once before any of them repeats */
+const BAGMEM = {};
+function bagPick(name, n){
+  const K = 'course-bag-' + name; let b = null;
+  try { b = JSON.parse(localStorage.getItem(K) || 'null'); } catch(e){ b = BAGMEM[K] || null; }
+  if (!b || b.n !== n || !Array.isArray(b.q) || !b.q.length) {
+    const last = b && b.last, q = [...Array(n).keys()];
+    for (let i = n - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [q[i], q[j]] = [q[j], q[i]]; }
+    if (n > 1 && q[n - 1] === last) [q[0], q[n - 1]] = [q[n - 1], q[0]];
+    b = {n, q};
+  }
+  const i = b.q.pop(); b.last = i; BAGMEM[K] = b;
+  try { localStorage.setItem(K, JSON.stringify(b)); } catch(e){}
+  return i;
+}
+const fromBag = (name, arr) => arr[bagPick(name, arr.length)];
+/* every lesson brings effects of its own – a new lesson = something you have not seen yet */
+const THEME = ({l1: ['📄', '🏷️', '✨'], l2: ['🔗', '🖼️', '✨'], css3: ['🎨', '🖌️', '🌈'], l4: ['📋', '📝', '✅'], l5: ['🧱', '📱', '💻'], l6: ['⚙️', '🧩', '✨'], sub1: ['📦', '🏁', '🚀']})[LESSON] || ['✨', '⭐'];
+/* a checkbox celebrates only the FIRST time it is ticked (remembered): untick + tick again = a quiet tick – no cheer, no finale.
+   So a checklist is never a button for watching all the effects. */
+let quietUntil = 0;
+const quiet = () => Date.now() < quietUntil;
+function cbKey(cb){ const sp = cb.closest && cb.closest('.spread'); if (!sp) return ''; return stepRef(cb) + '#' + [...sp.querySelectorAll('input[type="checkbox"]')].indexOf(cb); }
+function markCb(cb){ const k = cbKey(cb); if (!k) return false; state.cel = state.cel || {}; if (state.cel[k]) return true; state.cel[k] = 1; return false; }
+document.addEventListener('change', e => { const cb = e.target; if (!cb || cb.type !== 'checkbox' || !cb.checked) return;
+  if (markCb(cb)) quietUntil = Date.now() + 900; else save(); }, true);
 let lastFx = -1, lastCheer = '';
 const pickNot = (arr, not) => { let x; do { x = arr[Math.floor(Math.random() * arr.length)]; } while (arr.length > 1 && x === not); return x; };
 /* Levels:  'small' = one right answer (tone climbs with the streak)   ·   'done' = warm "you finished" (a block completed with mistakes on the way)
@@ -860,6 +904,7 @@ let finAt = 0;
 function celebrate(el, level, o){
   if (level === 'big') return finale(el, o);
   o = o || {};
+  if (quiet()) { SFX.play('tick'); return; }
   SFX.play(o.sound || (level === 'done' ? 'done' : 'ok'));
   if (Date.now() - finAt < 450) return;   /* a finale has just started: it is the one effect on the screen */
   if (level === 'done') try { document.querySelectorAll('.cel-layer').forEach(x => x.remove()); } catch(e){}
@@ -876,28 +921,44 @@ function celebrateNow(el, level, o){
     const big = level === 'big' || level === 'done';
     const layer = document.createElement('div'); layer.className = 'cel-layer'; layer.setAttribute('aria-hidden', 'true');
     layer.style.left = x + 'px'; layer.style.top = y + 'px'; document.body.appendChild(layer);
-    const st = SFX.streak(); const cheer = o.cheer || ((!big && st >= 3) ? (st === 5 ? '🔥 5 ברצף – בוערים!' : st === 10 ? '🔥🔥 10 ברצף – אלופים!' : '🔥 ' + st + ' ברצף!') : pickNot(big ? CHEERS_B : CHEERS_S, lastCheer)); lastCheer = cheer;
+    const st = SFX.streak(); const cheer = o.cheer || ((!big && st >= 3) ? (st === 5 ? '🔥 5 ברצף – בוער!' : st === 10 ? '🔥🔥 10 ברצף – אליפות!' : '🔥 ' + st + ' ברצף!') : big ? fromBag('b', CHEERS_B) : Math.random() < 0.08 ? fromBag('r', CHEERS_R) : fromBag('s', CHEERS_S)); lastCheer = cheer;
     const bubble = document.createElement('div'); bubble.className = 'cel-cheer' + (big ? ' big' : ''); bubble.textContent = cheer; layer.appendChild(bubble);
+    { const bw = bubble.offsetWidth, vw = document.documentElement.clientWidth || innerWidth; layer.style.left = Math.min(scrollX + vw - bw / 2 - 8, Math.max(scrollX + bw / 2 + 8, x)) + 'px'; }
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (!reduce && o.fx !== false) {
       const FX = [
         () => burst(['#f43f5e', '#f59e0b', '#22c55e', '#3b82f6', '#a855f7', '#14b8a6'], big ? 34 : 16, 'sq'),
         () => burst(['⭐', '✨', '🌟'], big ? 14 : 8, 'em'),
         () => burst(['🍕'], big ? 10 : 5, 'em', true),
-        () => { const s = document.createElement('div'); s.className = 'cel-stamp'; s.textContent = '✔'; layer.appendChild(s); },
+        () => stamp('✔'),
         () => { for (let k = 0; k < (big ? 3 : 1); k++) setTimeout(() => ring(k), k * 180); },
         () => burst(['🎉', '🥳', '💪', '🚀'], big ? 10 : 6, 'em'),
-        () => { const s = document.createElement('div'); s.className = 'cel-rocket'; s.textContent = '🚀'; layer.appendChild(s); burst(['✨'], 6, 'em'); }
+        () => { const s = document.createElement('div'); s.className = 'cel-rocket'; s.textContent = '🚀'; layer.appendChild(s); burst(['✨'], 6, 'em'); },
+        () => burst(['💚', '💙', '💜', '🧡'], big ? 12 : 7, 'em', false, 'up'),
+        () => burst(['#22c55e', '#3b82f6', '#f59e0b', '#ef4444'], big ? 28 : 18, 'sq', false, 'spiral'),
+        () => burst(['👍', '👏', '🙌'], big ? 9 : 5, 'em', false, 'up'),
+        () => stamp('💯'),
+        () => wave(['✨', '⭐', '✨', '⭐', '✨']),
+        () => burst(['#a855f7', '#ec4899', '#14b8a6', '#fde047'], big ? 30 : 18, 'sq', false, 'rain'),
+        () => burst(THEME, big ? 12 : 7, 'em', false, 'up'),
+        () => { pop(THEME[0]); burst(['✨'], 6, 'em'); }
       ];
-      let i; do { i = Math.floor(Math.random() * FX.length); } while (i === lastFx); lastFx = i; FX[i]();
+      FX[bagPick('fx', FX.length)]();
       if (el && el.classList) { el.classList.remove('cel-glow'); void el.offsetWidth; el.classList.add('cel-glow'); setTimeout(() => el.classList.remove('cel-glow'), 1300); }
     }
     setTimeout(() => layer.remove(), 1600);
-    function burst(items, n, kind, spin){
+    function stamp(t){ const s = document.createElement('div'); s.className = 'cel-stamp'; s.textContent = t; layer.appendChild(s); }
+    function pop(t){ const s = document.createElement('div'); s.className = 'cel-pop'; s.textContent = t; layer.appendChild(s); }
+    function wave(items){ items.forEach((it, k) => { const p = document.createElement('span'); p.className = 'cel-p em';
+      p.style.setProperty('--dx', (k - (items.length - 1) / 2) * 30 + 'px'); p.style.setProperty('--dy', '-110px'); p.style.setProperty('--rot', '0deg');
+      p.style.animationDelay = (k * 0.07) + 's'; p.textContent = it; layer.appendChild(p); }); }
+    function burst(items, n, kind, spin, mode){
       for (let k = 0; k < n; k++) {
         const p = document.createElement('span'); p.className = 'cel-p ' + kind;
-        const a = Math.random() * Math.PI * 2, d = (big ? 90 : 55) + Math.random() * (big ? 110 : 60);
-        p.style.setProperty('--dx', Math.cos(a) * d + 'px'); p.style.setProperty('--dy', (Math.sin(a) * d - 30) + 'px');
+        const a = mode === 'up' ? -Math.PI * (0.15 + 0.7 * Math.random()) : mode === 'spiral' ? (k / n) * Math.PI * 2 : Math.random() * Math.PI * 2;
+        const d = (big ? 90 : 55) + (mode === 'spiral' ? (k / n) * (big ? 110 : 60) : Math.random() * (big ? 110 : 60));
+        if (mode === 'rain') { p.style.setProperty('--dx', (Math.random() - 0.5) * (big ? 260 : 160) + 'px'); p.style.setProperty('--dy', (20 + Math.random() * 60) + 'px'); p.style.top = '-' + (60 + Math.random() * 50) + 'px'; }
+        else { p.style.setProperty('--dx', Math.cos(a) * d + 'px'); p.style.setProperty('--dy', (Math.sin(a) * d - 30) + 'px'); }
         p.style.setProperty('--rot', (spin ? 720 : (Math.random() * 540 - 270)) + 'deg');
         p.style.animationDelay = (Math.random() * 0.12) + 's';
         const it = items[k % items.length]; if (kind === 'sq') p.style.background = it; else p.textContent = it;
@@ -915,7 +976,7 @@ function celebrateNow(el, level, o){
    One sound, one effect: the answer tone of the last question is replaced by the finale (see SFX), a second finale within a second is ignored.
    The effect lives in a fixed, click-through layer over the viewport (never blocks a button, never makes the page scroll); it is gone after ~2.5 s.
    prefers-reduced-motion: no confetti – only the card. */
-const FIN_P = ['מושלם!', 'בלי אף טעות!', 'עבודה מושלמת!', 'מאה אחוז!', 'פיצה דני מצדיע 🍕'];
+const FIN_P = ['מושלם!', 'בלי אף טעות!', 'עבודה מושלמת!', 'מאה אחוז!', 'פיצה דני מצדיע 🍕', 'אפס טעויות!', 'ציון מלא!', 'בדיוק מושלם!', 'כמו שעון!', 'נקי לגמרי!', 'כל התשובות בול!', 'שלמות ✨'];
 const FIN_THEMES = [
   {em: ['🍕'], col: ['#e9a23b', '#d9472b', '#f6d365', '#2d6a2d', '#c0392b']},          /* Danny's pizza: crust, sauce, cheese, basil, pepperoni */
   {em: ['⭐', '✨'], col: ['#fbbf24', '#f59e0b', '#60a5fa', '#a78bfa', '#fde68a']},
@@ -946,6 +1007,7 @@ function paintAced(){
 function finale(el, o){
   o = o || {}; if (typeof el === 'string') el = $(el);
   if (o.key) { try { finMark(o.key, !!o.perfect, el); } catch(e){} }
+  if (quiet()) { SFX.play('tick'); return; }
   if (Date.now() - finAt < 900) return;
   finAt = Date.now();
   SFX.play('finale', {perfect: !!o.perfect});
@@ -961,7 +1023,7 @@ function finaleNow(el, o){
     const cx = vis ? Math.min(vw - 24, Math.max(24, r.left + r.width / 2)) : vw / 2;
     const cy = vis ? Math.min(vh - 60, Math.max(110, r.top + Math.min(r.height, 80) / 2)) : vh * 0.42;
     const ov = document.createElement('div'); ov.className = 'cel-fin' + (perfect ? ' perfect' : ''); ov.setAttribute('aria-hidden', 'true');
-    const title = o.title || pickNot(perfect ? FIN_P : CHEERS_B, lastCheer); lastCheer = title;
+    const title = o.title || (perfect ? fromBag('p', FIN_P) : fromBag('b', CHEERS_B)); lastCheer = title;
     const card = document.createElement('div'); card.className = 'cel-fin-card';
     card.innerHTML = '<span class="cel-fin-ic">' + (o.icon || (perfect ? '🏆' : '🎉')) + '</span><span class="cel-fin-tx"><b>' + esc(title) + '</b>' + (o.sub ? '<small>' + esc(o.sub) + '</small>' : '') + '</span>';
     ov.appendChild(card); document.body.appendChild(ov);
@@ -980,8 +1042,8 @@ function confetti(ov, cx, cy, perfect){
   if (!W || !H) return;
   cv.className = 'cel-fin-cv'; cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); ov.insertBefore(cv, ov.firstChild);
   const g = cv.getContext('2d'); if (!g) return; g.scale(dpr, dpr);
-  let ti; do { ti = Math.floor(Math.random() * FIN_THEMES.length); } while (ti === lastFin); lastFin = ti;
-  const th = FIN_THEMES[ti], P = [], scale = Math.min(1, 0.5 + W / 1800), rnd = (a, b) => a + Math.random() * (b - a);
+  const TH = FIN_THEMES.concat([{em: THEME, col: ['#f59e0b', '#3b82f6', '#22c55e', '#ec4899', '#a855f7']}]);   /* + the lesson's own theme */
+  const th = TH[bagPick('fin', TH.length)], P = [], scale = Math.min(1, 0.5 + W / 1800), rnd = (a, b) => a + Math.random() * (b - a);
   function shoot(x, y, n, dir, spread, v0, v1, delay){
     for (let k = 0; k < n; k++) { const a = dir + rnd(-spread, spread), v = rnd(v0, v1);
       P.push({x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, rot: rnd(0, 6.3), vr: rnd(-9, 9), s: rnd(6, 11), t0: delay + rnd(0, 0.1),
@@ -1053,7 +1115,7 @@ function sequence(ctrls, o){
    a NEW success message plays the success tone (with the cheer bubble and the streak), a new error plays the soft "try again" tone.
    Only right after a real click / key press – never on page load. */
 function simSounds(){
-  let lastUser = 0, lastT = 0; const seen = new WeakMap();
+  let lastUser = 0, lastT = 0; const seen = new WeakMap(), okSeen = new WeakMap();
   ['pointerdown', 'keydown', 'input', 'change'].forEach(ev => document.addEventListener(ev, () => { lastUser = Date.now(); }, true));
   new MutationObserver(ms => { for (const m of ms) {
     let el = m.target.nodeType === 1 ? m.target : m.target.parentElement; el = el && el.closest ? el.closest('.simfb') : null; if (!el) continue;
@@ -1062,7 +1124,7 @@ function simSounds(){
     const now = Date.now(), fresh = prev.kind !== kind || now - (prev.t || 0) > 1500;   /* typing in a field: one tone, not one per letter */
     seen.set(el, {key, kind, t: fresh ? now : prev.t});
     if (!kind || !fresh || now - lastUser > 1500 || now - lastT < 300) continue; lastT = now;
-    if (kind === 'ok') celebrate(el, 'small'); else SFX.play('bad');
+    if (kind === 'ok') { const set = okSeen.get(el) || new Set(); okSeen.set(el, set); if (set.has(el.textContent)) continue; set.add(el.textContent); celebrate(el, 'small'); } else SFX.play('bad');
   } }).observe(document.body, {subtree: true, childList: true, characterData: true, attributes: true, attributeFilter: ['class']});
 }
 /* every ticked line of a checklist (💻 steps, 📌 assignment lists – anything built with label.vsck) gets a light "pip" that climbs
@@ -1255,8 +1317,8 @@ function paintVideoBox(){
   if (!box) { box = document.createElement('div'); box.className = 'videobox'; const ways = host.querySelector('.ways'); ways ? ways.after(box) : host.appendChild(box);
     box.addEventListener('click', e => { if (!e.target.closest('button')) return; try { localStorage.setItem('course-video', videoMode() ? '0' : '1'); } catch(err){} paintVideoBox(); show(pos.ti, pos.si, false); }); }
   const on = videoMode();
-  box.innerHTML = '<b>🎬 כבר צפיתם בסרטון? מומלץ מאוד לעבור גם כאן.</b> הסרטון מסביר – כאן <b>עושים</b>: מנחשים, טועים, מתקנים ובונים בפרויקט שלכם. ' +
-    'כדי לא לקרוא פעמיים, הפעילו <b>מצב אחרי-סרטון</b>: הכפתור "הבא" ידלג על שלבי הקריאה, ויישארו רק החלקים הפעילים – ניחושים ❓, סימולטורים ותרגול, בדיקות 🎯, שלבי 💻 והמטלה 📌. ' +
+  box.innerHTML = '<b>🎬 צפיתם בסרטון? מומלץ מאוד לעבור גם כאן</b> – הסרטון מסביר, כאן <b>עושים</b>. ' +
+    '<b>מצב אחרי-סרטון</b> מדלג על שלבי הקריאה ומשאיר את הפעילים: ❓, סימולטורים ותרגול, 🎯, 💻 ו-📌. ' +
     '<div style="margin-top:8px"><button class="btn' + (on ? '' : ' primary') + '" type="button" aria-pressed="' + on + '">' + (on ? '✔ מצב אחרי-סרטון פועל – לחצו לכיבוי' : '🎬 צפיתי בסרטון – הפעילו מצב אחרי-סרטון') + '</button></div>';
 }
 function show(ti, si, scroll){
@@ -1264,29 +1326,29 @@ function show(ti, si, scroll){
   pos = {ti, si};
   T.forEach((t,a) => { t.el.hidden = a !== ti; t.steps.forEach((st,b) => st.hidden = !(a === ti && b === si)); });
   state.seen[T[ti].id + ':' + si] = true; state.pos = pos; save();
-  $('#topics').innerHTML = T.map((t,a) => '<button type="button" data-t="' + a + '"' + (a === ti ? ' aria-current="true"' : '') + (t.steps.every((x,b) => state.seen[t.id + ':' + b]) ? ' class="done"' : '') + '><span class="ic">' + t.icon + '</span><bdi>' + t.title + '</bdi>' + cpBadge(t) + '</button>').join('');
+  $('#topics').innerHTML = T.map((t,a) => '<button type="button" data-t="' + a + '"' + (a === ti ? ' aria-current="true"' : '') + (t.steps.every((x,b) => state.seen[t.id + ':' + b]) ? ' class="done"' : '') + '><span class="ic">' + t.icon + '</span><bdi dir="rtl">' + t.title + '</bdi>' + cpBadge(t) + '</button>').join('');
   const vm = videoMode();
-  $('#steps').innerHTML = T[ti].steps.map((st,b) => '<button type="button" data-s="' + b + '"' + (b === si ? ' aria-current="true"' : '') + ' class="' + (state.seen[T[ti].id + ':' + b] ? 'seen' : '') + (vm && !isActive(st) ? ' skim' : '') + '"' + ' title="' + escA(stepTitle(st)) + (vm && !isActive(st) ? ' (שלב קריאה – במצב אחרי-סרטון אפשר לדלג)' : '') + '"><span class="k">' + (b+1) + '</span><bdi>' + esc(stepTitle(st)) + '</bdi></button>').join('');
+  $('#steps').innerHTML = T[ti].steps.map((st,b) => '<button type="button" data-s="' + b + '"' + (b === si ? ' aria-current="true"' : '') + ' class="' + (state.seen[T[ti].id + ':' + b] ? 'seen' : '') + (vm && !isActive(st) ? ' skim' : '') + '"' + ' title="' + escA(stepTitle(st)) + (vm && !isActive(st) ? ' (שלב קריאה – במצב אחרי-סרטון אפשר לדלג)' : '') + '"><span class="k">' + (b+1) + '</span><bdi dir="rtl">' + stepTitleHtml(st) + '</bdi></button>').join('');
   paintAced();
   const prev = nextActive(ti, si, -1);
   const next = nextActive(ti, si, 1);
   const label = (p, isNext) => {
     const st = T[p[0]].steps[p[1]], other = p[0] !== ti;
     const top = isNext ? (ti === 0 && si === 0 ? 'בואו נתחיל ←' : other ? 'לנושא הבא: ' + T[p[0]].title + ' ←' : 'הבא ←') : (other ? '→ לנושא הקודם' : '→ הקודם');
-    return '<small>' + top + '</small><bdi>' + esc(stepTitle(st)) + '</bdi>';
+    return '<small>' + top + '</small><bdi dir="rtl">' + stepTitleHtml(st) + '</bdi>';
   };
   const nextLesson = document.body.dataset.next, nextName = document.body.dataset.nextName;
   $('#stepnav').innerHTML = (prev ? '<button type="button" class="prev">' + label(prev, false) + '</button>' : '<span></span>') +
     (next ? '<button type="button" class="next">' + label(next, true) + '</button>' :
       '<div class="what finish" style="margin:0">🎉 סיימתם את ' + esc(document.body.dataset.title || 'השיעור') + '! ' +
       (EGGS.length && !EGGS.every(e => found[e.id]) ? 'עוד לא מצאתם את כל הביצים? <a href="#" id="openEggs">רמזים כאן</a>. ' : '') +
-      (nextLesson ? '<a class="btn primary" href="' + nextLesson + '">לשיעור הבא: ' + esc(nextName || '') + ' ←</a>' : '<a href="' + TOPIC_HOME[0] + '">🏠 חזרה לדף הבית – ' + TOPIC_HOME[1] + '</a>') + '</div>');
+      (nextLesson ? '<a class="btn primary" href="' + nextLesson + '">לשיעור הבא: ' + esc(nextName || '') + ' ←</a>' : '<a href="' + TOPIC_HOME[0] + '">🏠 לכל השיעורים – ' + TOPIC_HOME[1] + '</a>') + '</div>');
   if (prev) $('#stepnav .prev').onclick = () => show(prev[0], prev[1], true);
   if (next) $('#stepnav .next').onclick = () => show(next[0], next[1], true);
   const oe = $('#openEggs'); if (oe) oe.onclick = e => { e.preventDefault(); $('#eggBtn').click(); };
-  $('#now').innerHTML = '· ' + T[ti].icon + ' <bdi>' + T[ti].title + '</bdi>';
+  $('#now').innerHTML = '· ' + T[ti].icon + ' <bdi dir="rtl">' + T[ti].title + '</bdi>';
   const tm = T[ti].time, tl = $('#topicTime');
-  if (tl) tl.innerHTML = tm && ti > 0 ? '⏱ הנושא הזה: בדף ' + rng(tm.fast, tm.slow) + ' דק׳' + (tm.vs ? ' · ב-VS ' + r5(tm.vs) + ' דק׳' : '') : '';
+  if (tl) tl.innerHTML = tm && ti > 0 ? '⏱ הנושא הזה: בדף ' + rng(tm.fast, tm.slow) + ' דק׳' + (tm.vs ? ' · ב-<bdi>VS</bdi> ' + r5(tm.vs) + ' דק׳' : '') : '';
   try { history.replaceState(null, '', '#' + T[ti].id + '-' + (si+1)); } catch(e){}
   ['#topics', '#steps'].forEach(q => { const ac = $(q + ' [aria-current="true"]'); if (ac && ac.scrollIntoView) ac.scrollIntoView({block:'nearest', inline:'center'}); });
   if (scroll) { const y = $('#topics').getBoundingClientRect().top + scrollY - 64; window.scrollTo({top: Math.max(0, y), behavior: 'smooth'}); }
@@ -1330,10 +1392,11 @@ function initPlayer(){
 
 /* ---------- start: called by each lesson after its own demos are ready ---------- */
 /* bidi: Latin tokens that end/start with a symbol (C#, .NET) flip in Hebrew text – isolate them everywhere, once */
+const BIDI_SKIP = new Set(['CODE','PRE','SCRIPT','STYLE','BDI','TEXTAREA','INPUT','KBD']);
 function fixBidiTokens(root){
-  const RX = /(C#|(?:ASP)?\.NET(?: Core)?)/g, skip = 'CODE,PRE,SCRIPT,STYLE,BDI,TEXTAREA,INPUT,KBD';
+  const RX = /(C#|(?:ASP)?\.NET(?: Core)?)/g, skip = BIDI_SKIP;
   const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {acceptNode: n => {
-    for (let p = n.parentElement; p && p !== root; p = p.parentElement) if (skip.includes(p.tagName) || p.classList.contains('cv') || p.dir === 'ltr') return NodeFilter.FILTER_REJECT;
+    for (let p = n.parentElement; p; p = p.parentElement) if (skip.has(p.tagName) || p.classList.contains('cv') || p.dir === 'ltr' || p.tagName === 'X-PAGE') return NodeFilter.FILTER_REJECT;
     RX.lastIndex = 0; return RX.test(n.nodeValue) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP; }});
   const list = []; while (w.nextNode()) list.push(w.currentNode);
   list.forEach(n => { const f = document.createDocumentFragment(); n.nodeValue.split(RX).forEach((part, i) => { if (i % 2) { const b = document.createElement('bdi'); b.dir = 'ltr'; b.textContent = part; f.appendChild(b); } else if (part) f.appendChild(document.createTextNode(part)); }); n.replaceWith(f); });
@@ -1341,6 +1404,10 @@ function fixBidiTokens(root){
 function start(o){
   o = o || {};
   try { fixBidiTokens(document.querySelector('main') || document.body); } catch(e){}
+  /* explanations, quiz questions and checks are written into the page later – isolate C# / .NET there too */
+  try { const mo = new MutationObserver(ms => { const roots = new Set(); ms.forEach(m => m.addedNodes.forEach(n => { const r = n.nodeType === 1 ? n : n.parentElement; if (r && r.isConnected) roots.add(r); }));
+    roots.forEach(r => { try { fixBidiTokens(r); } catch(e){} }); });
+    mo.observe(document.querySelector('main') || document.body, {childList: true, subtree: true}); } catch(e){}
   autoCode(); wireCopy();
   const pb = $('#printBtn'); if (pb) pb.addEventListener('click', () => window.print());
   initEggs(o.eggs, o.console);
@@ -1353,6 +1420,8 @@ function start(o){
   try { tickSounds(); } catch(e){}
   try { paintAsgChips(); } catch(e){}
   startHooks.forEach(f => { try { f(); } catch(e){ console.error(e); } });
+  /* boxes that were ticked before this version count as "already celebrated" */
+  setTimeout(() => { try { document.querySelectorAll('main input[type="checkbox"]:checked').forEach(cb => markCb(cb)); save(); } catch(e){} }, 0);
   try { paintVideoBox(); paintTimePlan(); const st = $('#steps'); if (st && !$('#topicTime')) { const d = document.createElement('div'); d.id = 'topicTime'; d.className = 'topictime'; st.parentNode.insertBefore(d, st.nextSibling); } show(pos.ti, pos.si, false); } catch(e){ console.error(e); }
   save();
 }
