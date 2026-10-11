@@ -878,6 +878,23 @@ function sequence(ctrls, o){
    'big' = a short rising arpeggio (topic / all tasks done),
    'bad' = a soft, low two-note "hmm" – quiet and never harsh (feedback on the task, not a punishment).
    On by default; one small 🔊 button in the top bar mutes it on every lesson (localStorage 'course-sound'). ---------- */
+/* ---------- every success gets a sound ----------
+   Simulators and labs report their result in a ".simfb" box (".simfb ok" / ".simfb bad"). The engine listens to those boxes:
+   a NEW success message plays the success tone (with the cheer bubble and the streak), a new error plays the soft "try again" tone.
+   Only right after a real click / key press – never on page load. */
+function simSounds(){
+  let lastUser = 0, lastT = 0; const seen = new WeakMap();
+  ['pointerdown', 'keydown', 'input', 'change'].forEach(ev => document.addEventListener(ev, () => { lastUser = Date.now(); }, true));
+  new MutationObserver(ms => { for (const m of ms) {
+    let el = m.target.nodeType === 1 ? m.target : m.target.parentElement; el = el && el.closest ? el.closest('.simfb') : null; if (!el) continue;
+    const kind = el.classList.contains('ok') ? 'ok' : el.classList.contains('bad') ? 'bad' : '';
+    const prev = seen.get(el) || {}, key = kind + '|' + el.textContent; if (prev.key === key) continue;
+    const now = Date.now(), fresh = prev.kind !== kind || now - (prev.t || 0) > 1500;   /* typing in a field: one tone, not one per letter */
+    seen.set(el, {key, kind, t: fresh ? now : prev.t});
+    if (!kind || !fresh || now - lastUser > 1500 || now - lastT < 300) continue; lastT = now;
+    if (kind === 'ok') celebrate(el, 'small'); else SFX.play('bad');
+  } }).observe(document.body, {subtree: true, childList: true, characterData: true, attributes: true, attributeFilter: ['class']});
+}
 const SFX = (() => {
   let ctx = null, combo = 0;
   const STEPS = [0, 2, 4, 7, 9, 12, 14, 16];   /* pentatonic climb: each step is clearly higher */
@@ -1105,6 +1122,7 @@ function start(o){
   document.querySelectorAll('.trouble:not([data-ready])').forEach(el => trouble(el));
   initPlayer();
   try { SFX.init(); } catch(e){}
+  try { simSounds(); } catch(e){}
   try { paintAsgChips(); } catch(e){}
   startHooks.forEach(f => { try { f(); } catch(e){ console.error(e); } });
   try { paintVideoBox(); paintTimePlan(); const st = $('#steps'); if (st && !$('#topicTime')) { const d = document.createElement('div'); d.id = 'topicTime'; d.className = 'topictime'; st.parentNode.insertBefore(d, st.nextSibling); } show(pos.ti, pos.si, false); } catch(e){ console.error(e); }
