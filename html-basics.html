@@ -84,7 +84,7 @@
     <div class="ways">
       <div class="way main"><b>📖 כאן, בדף הזה</b>הדף מכסה את כל מה שיש בסרטון ובמצגת, ומוסיף דוגמאות חיות לשחק בהן. מתאים למי שאוהב לקרוא ולנסות.</div>
       <div class="way"><b>🎬 מעדיפים סרטון?</b>הסרטון של השיעור נמצא בקלאסרום. אחריו – חזרו לכאן (הסבר בתיבה למטה).</div>
-      <div class="way"><b>📒 מחברת הנושא</b>חומר משלים, לא חובה. בקלאסרום מחכים פודקסט, מפות חשיבה, סרטונים קצרים, בחנים, כרטיסיות ועוד – לחזרה ולהעמקה. ללמוד לתכנת – כאן ובסרטונים.</div>
+      <div class="way"><b>📒 מחברת הנושא</b>חומר משלים, לא חובה. בקלאסרום מחכים פודקאסט, מפות חשיבה, סרטונים קצרים, בחנים, כרטיסיות ועוד – לחזרה ולהעמקה. ללמוד לתכנת – כאן ובסרטונים.</div>
     </div>
     <ol class="ctour" aria-label="🧭 סיור קצר: איך השיעור הזה עובד">
       <li data-t="👣 שלב אחד בכל פעם"><p>בשיעור <b>7 נושאים</b> – הלשוניות למעלה. בכל נושא יש כמה שלבים קצרים, ורואים <b>שלב אחד בכל פעם</b>. עוברים לשלב הבא בכפתור "הבא ←" שבתחתית.</p><p>💾 ההתקדמות נשמרת בדפדפן הזה – אפשר לעצור ולהמשיך מחר בדיוק מאותו מקום.</p></li>
@@ -169,7 +169,7 @@
   </article>
   <article class="spread">
     <h3>הערות: טקסט שרק המתכנתים רואים</h3>
-    <p><b>הערה</b> (comment) היא טקסט שהדפדפן מדלג עליו. כותבים אותה בין <code>&lt;!--</code> ל-<code>--&gt;</code>. משתמשים בה לשני דברים: להסביר את הקוד, ו<b>"לכבות" שורה לרגע</b> בלי למחוק אותה – למשל מבצע שנגמר.</p>
+    <p><b>הערה</b> (comment) היא טקסט שהדפדפן מדלג עליו. כותבים אותה כך: <code>&lt;!-- comment --&gt;</code>. פותחים ב-<code>&lt;!--</code> (סוגר משולש, סימן קריאה ושני מקפים רגילים), וסוגרים ב-<code>--&gt;</code> (שני מקפים וסוגר משולש). משתמשים בה לשני דברים: להסביר את הקוד, ו<b>"לכבות" שורה לרגע</b> בלי למחוק אותה – למשל מבצע שנגמר.</p>
     <div class="ctrls"><div class="seg" id="cmSeg"></div></div>
     <div id="cm"></div>
     <div class="what">ההערה בשורה 2 לא מופיעה בדף אף פעם – היא בשבילכם. וכשהפכנו את שורת המבצע להערה, היא נעלמה מהדף, אבל נשארה בקוד. כשהמבצע יחזור – רק מוחקים את סימני ההערה.</div>
@@ -844,8 +844,8 @@ $('#ana').addEventListener('click', e => {
   document.querySelectorAll('#ana .atok').forEach(x => x.classList.toggle('sel', x === b));
   $('#anaInfo').innerHTML = '<b>' + a.name + '</b> – ' + a.d;
   if (aq < AQ.length) {
-    if (AQ[aq].ok === i) { aq++; state.anaQ = aq; save(); paintAQ('<span style="color:var(--ok)">✔ נכון!</span>'); }
-    else paintAQ('<span class="err">✘ זה ' + a.name + '. נסו שוב.</span>');
+    if (AQ[aq].ok === i) { aq++; state.anaQ = aq; save(); paintAQ('<span style="color:var(--ok)">✔ נכון!</span>'); Course.celebrate($('#anaQ'), aq === AQ.length ? 'big' : 'small'); }
+    else { paintAQ('<span class="err">✘ זה ' + a.name + '. נסו שוב.</span>'); Course.SFX.play('bad'); }
   }
 });
 paintAQ();
@@ -916,8 +916,8 @@ seg($('#skelSeg'), SK.map(s => ({label: esc(s.label), mono: true, v: s})), (o, i
   skelBr.flash(!!s.tab); $('#skelHost .host').classList.toggle('hl', !!s.body);
   $('#skelWhat').innerHTML = s.t;
   if (skReady && skq < SKQ.length) {
-    if (SKQ[skq].ok === i) { skq++; state.skelQ = skq; save(); paintSKQ('<span style="color:var(--ok)">✔ נכון!</span>'); }
-    else paintSKQ('<span class="err">✘ זה ' + esc(s.label) + ' – ההסבר שלו מופיע מתחת לקוד. נסו שוב.</span>');
+    if (SKQ[skq].ok === i) { skq++; state.skelQ = skq; save(); paintSKQ('<span style="color:var(--ok)">✔ נכון!</span>'); Course.celebrate($('#skelQ'), skq === SKQ.length ? 'big' : 'small'); }
+    else { paintSKQ('<span class="err">✘ זה ' + esc(s.label) + ' – ההסבר שלו מופיע מתחת לקוד. נסו שוב.</span>'); Course.SFX.play('bad'); }
   }
 }, 0);
 skReady = true; paintSKQ();
@@ -1178,7 +1178,7 @@ const STASKS = [
 const siteDone = state.site || {};
 $('#siteTasks').innerHTML = STASKS.map((t,i) => '<li data-t="' + t.id + '"><span class="st">' + (i+1) + '</span><span>' + t.t + '</span></li>').join('');
 function paintSite(){ STASKS.forEach((t,i) => { const li = $('#siteTasks [data-t="' + t.id + '"]'); li.classList.toggle('done', !!siteDone[t.id]); li.querySelector('.st').textContent = siteDone[t.id] ? '✔' : (i+1); }); }
-function siteTask(id){ if (!siteDone[id]) { siteDone[id] = true; state.site = siteDone; save(); paintSite(); const li = document.querySelector(".site-tasks [data-id=\""+id+"\"]") || document.querySelector(".site-tasks"); if (li) Course.celebrate(li, "small"); } }
+function siteTask(id){ if (!siteDone[id]) { siteDone[id] = true; state.site = siteDone; save(); paintSite(); const li = document.querySelector('#siteTasks [data-t="' + id + '"]') || $('#siteTasks'); if (li) Course.celebrate(li, "small"); } }
 const site = new Split($('#site'), {htmlTitle:'HTML/index.html'});
 const siteBr = chrome(resultPane(site), {editable:true});
 let siteCur = 'index.html';
@@ -1314,7 +1314,7 @@ quiz('#quiz', [
   {q:'העברית בדף נראית כמו <span class="mojibake">×¤×™×¦×”</span> (או <span class="mojibake">׳₪׳™׳¦׳”</span>). מה כנראה חסר?', opts:['<code>dir="rtl"</code>', '<code>&lt;meta charset="utf-8" /&gt;</code>', '<code>lang="he"</code>'], correct:1,
    why:['dir קובע כיוון, לא איך קוראים את האותיות. <a href="#" data-go="page:3">חזרה לשלב "מה קורה כשחלק מהשלד חסר?"</a>', 'בלי charset הדפדפן מנחש את הקידוד – וכאן ניחש לא נכון.', 'lang אומר באיזו שפה הדף, אבל לא איך לקרוא את האותיות מהקובץ. <a href="#" data-go="page:3">חזרה לשלב "מה קורה כשחלק מהשלד חסר?"</a>']},
   {q:'בקוד של דף התפריט כתוב: <code>&lt;!-- &lt;h2&gt;מבצעי החורף&lt;/h2&gt; --&gt;</code> – מה יראו הגולשים בדף?', opts:['כותרת: "מבצעי החורף"', 'כלום – אבל השורה נשארת בקוד המקור', 'את כל השורה, כולל הסימנים'], correct:1,
-   why:['הכותרת נמצאת בתוך הערה – והדפדפן מדלג על כל מה שבין <code>&lt;!--</code> ל-<code>--&gt;</code>, גם אם זו תגית. <a href="#" data-go="anatomy:3">חזרה להערות</a>', 'ככה "מכבים" שורה בלי למחוק אותה. בחורף הבא רק מוחקים את סימני ההערה – והכותרת חוזרת. (ומי שילחץ Ctrl+U יראה אותה בקוד המקור.)', 'סימני ההערה אומרים לדפדפן לדלג – הוא לא מציג אותם, ולא את מה שביניהם. <a href="#" data-go="anatomy:3">חזרה להערות</a>']},
+   why:['הכותרת נמצאת בתוך הערה – והדפדפן מדלג על כל מה שבתוך ההערה (<code>&lt;!-- … --&gt;</code>), גם אם זו תגית. <a href="#" data-go="anatomy:3">חזרה להערות</a>', 'ככה "מכבים" שורה בלי למחוק אותה. בחורף הבא רק מוחקים את סימני ההערה – והכותרת חוזרת. (ומי שילחץ Ctrl+U יראה אותה בקוד המקור.)', 'סימני ההערה אומרים לדפדפן לדלג – הוא לא מציג אותם, ולא את מה שביניהם. <a href="#" data-go="anatomy:3">חזרה להערות</a>']},
   {q:'בדף התפריט של דני יש כותרת ראשית "התפריט", ומתחתיה שני חלקים: "פיצות" ו"שתייה". אילו תגיות מתאימות לשני החלקים?', opts:['h1 לכל אחד – שיהיו גדולים וברורים', 'h2 לכל אחד – שניהם באותה רמה', 'h2 ל"פיצות" ו-h3 ל"שתייה"'], correct:1,
    why:['מקובל שיש בדף h1 אחד – הכותרת הראשית, "התפריט". ורמה בוחרים לפי החשיבות, לא לפי הגודל. <a href="#" data-go="tags:1">חזרה לכותרות</a>', 'שניהם פרקים באותה רמה, מתחת לכותרת הראשית – כמו שני פרקים באותו ספר.', 'h3 היא תת-כותרת <b>בתוך</b> פרק של h2. שתייה היא לא חלק מהפיצות – היא פרק באותה רמה. <a href="#" data-go="tags:1">חזרה לכותרות</a>']},
   {q:'איזה alt הכי טוב לתמונה של פיצת פטריות בדף התפריט?', opts:['<code>alt="תמונה"</code>', '<code>alt="פיצה עם פטריות טריות"</code>', '<code>alt="mushrooms.jpg"</code>'], correct:1,
