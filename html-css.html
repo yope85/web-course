@@ -14,6 +14,8 @@
 .totals{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 6px}
 .totals .pill{background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:5px 14px;font-size:15px}
 .resume{display:none;margin:12px 0}
+.nextasg{display:none;margin:4px 0 0;font-size:15px}
+.nextasg .soon{color:var(--warn);font-weight:600}
 .lessons{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px;margin-top:18px}
 .lcard{display:flex;flex-direction:column;gap:6px;text-decoration:none;color:inherit;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--shadow);transition:transform .15s,border-color .15s}
 a.lcard:hover{transform:translateY(-3px);border-color:var(--accent)}
@@ -41,13 +43,14 @@ a.lcard:hover{transform:translateY(-3px);border-color:var(--accent)}
   <h1>🛠 המדריך המעשי – HTML ו-CSS</h1>
   <p class="lead">כל שיעור כאן הוא מסלול לימוד שלם: קוראים, מנסים דוגמאות חיות, עונים על שאלות ניחוש, ובונים צעד אמיתי בפרויקט. אפשר ללמוד מכאן במקום מהסרטון – או בנוסף אליו.</p>
   <div class="totals" id="totals"></div>
-  <a class="btn primary resume" id="resume" href="#">▶ המשיכו מאיפה שעצרתם</a>
+  <a class="btn primary resume" id="resume" href="#">המשיכו מאיפה שעצרתם ←</a>
+  <p class="nextasg" id="nextAsg"></p>
   <div class="lessons" id="lessons"></div>
   <div class="spread howto">
     <h3>💡 איך לומדים הכי טוב עם המדריך?</h3>
     <ul class="how">
-      <li>🖥 חצי מסך למדריך, חצי מסך ל-Visual Studio. כל מה שרואים כאן – עושים גם אצלכם.</li>
-      <li>🐢 משהו לא ברור? חפשו את "רוצים הסבר לאט יותר?" – ואם עדיין לא ברור, שאלו את מחברת ה-Gemini של הנושא בקלאסרום.</li>
+      <li>🖥 בשלבי 💻 (עכשיו אצלכם): חצי מסך למדריך וחצי ל-Visual Studio – ועושים אצלכם בדיוק את מה שכתוב בשלב. בשאר השלבים – המדריך לבד.</li>
+      <li>🐢 משהו לא ברור? חפשו את "רוצים הסבר לאט יותר?" – ואם עדיין לא ברור, שאלו את 📒 מחברת הנושא בקלאסרום.</li>
       <li>🥚 בכל שיעור מוחבאות ביצי הפתעה. מוצאים אותן עם מה שלומדים – וזה בדיוק העניין.</li>
       <li>💾 ההתקדמות נשמרת בדפדפן הזה, במחשב הזה. במחשב אחר מתחילים את הסימון מחדש (החומר עצמו זהה).</li>
     </ul>
@@ -59,13 +62,13 @@ a.lcard:hover{transform:translateY(-3px);border-color:var(--accent)}
 (function(){
 "use strict";
 const LESSONS = [
-  {id:'l1', file:'intro.html', n:'שיעור 1', title:'מבוא ל-HTML ודף ראשון', desc:'מה זה HTML, פרויקט ראשון ב-Visual Studio, שרת ודפדפן, והדף הראשון של פיצה דני.'},
-  {id:'l2', file:'html-basics.html', n:'שיעור 2', title:'תגיות בסיסיות, קישורים ותמונות', desc:'מבנה הדף, תגיות ומאפיינים, קישורים בין דפים, תמונות ונתיבים, block ו-inline.'},
-  {id:'css3', file:'css.html', n:'שיעור 3', title:'עיצוב עם CSS', desc:'כללים ובוררים, מודל הקופסה החי, קובץ CSS אחד לכל האתר, ומי מנצח.'},
-  {id:'l4', file:'html-advanced.html', n:'שיעור 4', title:'טבלאות, רשימות וטפסים', desc:'טבלת התפריט, רשימות ותפריט ניווט, טופס הזמנה, ומה באמת נשלח ב-get וב-post.'},
-  {id:'l5', file:'bootstrap.html', n:'שיעור 5', title:'Bootstrap ועיצוב רספונסיבי', desc:'הגריד ונקודות השבירה, כרטיסים, תפריט ניווט, ואתר שנראה טוב גם בטלפון.'},
-  {id:'l6', file:'razor.html', n:'שיעור 6', title:'Razor Pages ותבנית Layout', desc:'דף Razor ו-@, תבנית אחת עם תפריט משותף, כתובות ו-~/, והעברת האתר לדפי cshtml.'},
-  {id:'sub1', file:'submission1.html', n:'הגשה 1', title:'האתר המעוצב', desc:'רשימת הדרישות, מחוון לבדיקה עצמית, בודק הטפסים, ואיך מכינים zip – מלווה אתכם עד ההגשה.'}
+  {id:'l1', eggs:5, file:'intro.html', n:'שיעור 1', title:'מבוא ל-HTML ודף ראשון', desc:'מה זה HTML, פרויקט ראשון ב-Visual Studio, שרת ודפדפן, והדף הראשון של פיצה דני.'},
+  {id:'l2', eggs:5, file:'html-basics.html', n:'שיעור 2', title:'תגיות בסיסיות, קישורים ותמונות', desc:'מבנה הדף, תגיות ומאפיינים, קישורים בין דפים, תמונות ונתיבים, block ו-inline.'},
+  {id:'css3', eggs:5, file:'css.html', n:'שיעור 3', title:'עיצוב עם CSS', desc:'כללים ובוררים, מודל הקופסה החי, קובץ CSS אחד לכל האתר, ומי מנצח.'},
+  {id:'l4', eggs:5, file:'html-advanced.html', n:'שיעור 4', title:'טבלאות, רשימות וטפסים', desc:'טבלת התפריט, רשימות ותפריט ניווט, טופס הזמנה, ומה באמת נשלח ב-get וב-post.'},
+  {id:'l5', eggs:5, file:'bootstrap.html', n:'שיעור 5', title:'Bootstrap ועיצוב רספונסיבי', desc:'הגריד ונקודות השבירה, כרטיסים, תפריט ניווט, ואתר שנראה טוב גם בטלפון.'},
+  {id:'l6', eggs:5, file:'razor.html', n:'שיעור 6', title:'Razor Pages ותבנית Layout', desc:'דף Razor ו-@, תבנית אחת עם תפריט משותף, כתובות ו-~/, והעברת האתר לדפי cshtml.'},
+  {id:'sub1', eggs:3, file:'submission1.html', n:'הגשה 1', title:'האתר המעוצב', desc:'רשימת הדרישות, מחוון לבדיקה עצמית, בודק הטפסים, ואיך מכינים zip – מלווה אתכם עד ההגשה.'}
 ];
 /* 📌 Classroom assignments – titles here; the DATES come from assets/cohort.js (one place for every cohort) */
 const ASG = {0:['משימת הפתיחה',''], 1:['התקנת סביבת העבודה',''], 2:['האתר הראשון שלי',''], 3:['בחירת נושא הפרויקט',''], 4:['דפי הפרויקט המעוצבים',''], 5:['הגשה 1: האתר המעוצב','']};
@@ -90,7 +93,7 @@ box.innerHTML = LESSONS.map(l => {
   if (l.soon) return '<div class="lcard soon"><span class="n">' + l.n + '</span><h2>' + l.title + '</h2><span class="badge">בקרוב</span></div>';
   const st = get(l.id + '-state') || {};
   const seen = st.stepsSeen || 0, total = st.stepsTotal || 0;
-  const e = Object.keys(st.eggs || {}).length, et = st.eggTotal || 5;
+  const e = Object.keys(st.eggs || {}).length, et = st.eggTotal || l.eggs || 5;
   eggs += e; eggTotal += et;
   if (!last && seen && seen < total) last = l;
   if (total && seen === total) anyDone = true;
@@ -102,7 +105,19 @@ box.innerHTML = LESSONS.map(l => {
 }).join('');
 document.getElementById('totals').innerHTML = '<span class="pill">🥚 ביצים שמצאתם בנושא הזה: <b>' + eggs + '/' + eggTotal + '</b></span>';
 last = last || firstNew;
-if (last) { const r = document.getElementById('resume'); r.href = last.file; r.textContent = '▶ המשיכו מאיפה שעצרתם: ' + last.n + ' – ' + last.title; r.style.display = 'inline-block'; }
+/* first visit (nothing seen yet): a clear "start here" – the same button */
+const fresh = !last && LESSONS.every(l => !((get(l.id + '-state') || {}).stepsSeen));
+const goTo = last || (fresh ? LESSONS[0] : null);
+if (goTo) { const r = document.getElementById('resume'); r.href = goTo.file; r.textContent = (last ? 'המשיכו מאיפה שעצרתם: ' : 'התחילו כאן: ') + goTo.n + ' – ' + goTo.title + ' ←'; r.style.display = 'inline-block'; }
+/* 📌 the nearest assignment that is still ahead – one line, so it never gets lost among the cards */
+try {
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const up = Object.keys(ASG).filter(n => ASG[n][1]).map(n => { const [y, m, d] = ASG[n][1].split('-').map(Number); return {n, t: ASG[n][0], d, m, days: Math.round((new Date(y, m - 1, d) - today) / 864e5)}; })
+    .filter(x => x.days >= 0).sort((a, b) => a.days - b.days);
+  if (up.length) { const x = up[0], na = document.getElementById('nextAsg'), same = up.filter(y => y.days === x.days);
+    na.innerHTML = '📌 ' + (same.length > 1 ? 'המטלות הקרובות: ' : 'המטלה הקרובה: ') + same.map(y => '<b>' + (y.n == 0 ? y.t : 'מטלה ' + y.n + ' – ' + y.t) + '</b>').join(' ו') + ' · עד ' + x.d + '/' + x.m + ' <span class="' + (x.days <= 3 ? 'soon' : '') + '">(' + (x.days === 0 ? 'היום!' : x.days === 1 ? 'מחר' : 'עוד ' + x.days + ' ימים') + ')</span>';
+    na.style.display = 'block'; }
+} catch(e){}
 })();
 </script>
 </body>
