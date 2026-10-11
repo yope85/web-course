@@ -511,6 +511,7 @@
       <p>הלוכסן <code>/</code> מפריד בין הצעדים. הדפדפן הולך באותו מסלול בדיוק – אתם רק כותבים לו אותו במילים.</p>
     </details>
     <div class="predict" id="pPath"></div>
+    <div class="tip">💡 <b>קיצור דרך של Visual Studio:</b> אחרי שהבנתם איך הנתיב בנוי, לא חייבים להקליד אותו. גוררים את קובץ התמונה <b>מ-Solution Explorer אל המקום בקוד</b> שבו רוצים את התמונה – ו-Visual Studio כותב לבד את התגית img, עם הנתיב הנכון. נשאר רק לבדוק שיש בה alt עם תיאור של התמונה.</div>
     <div class="tip">💡 כתבו את שם התיקייה בדיוק כמו ב-Solution Explorer: <code>Img</code>. ב-Windows גם <code>img</code> יעבוד, אבל כשהאתר יעלה לשרת אמיתי (שם בדרך כלל אותיות גדולות וקטנות כן משנות) – התמונה תישבר.</div>
   </article>
   <article class="spread">
@@ -543,7 +544,7 @@
     <ol>
       <li>הקובץ באמת נמצא בתיקייה Img? (בדקו ב-Solution Explorer)</li>
       <li>השם <b>והסיומת</b> זהים בדיוק? <code>pizza.jpg</code> ולא <code>pizza.png</code>, ולא <code>piza.jpg</code>.</li>
-      <li>הנתיב מתחיל ב-<code>../</code>? הדף בתיקייה HTML, אז קודם עולים תיקייה.</li>
+      <li>הנתיב מתחיל ב-<code>../</code>? הדף בתיקייה HTML, אז קודם עולים תיקייה. (לא בטוחים בנתיב? מחקו את התגית, וגררו את התמונה מ-Solution Explorer אל הקוד – Visual Studio יכתוב אותו נכון.)</li>
       <li>שם התיקייה כתוב בדיוק: <code>Img</code>?</li>
       <li>שמרתם (Ctrl+S) ורעננתם את הדפדפן?</li>
     </ol>
@@ -586,7 +587,7 @@
     <ol class="vsdo">
       <li>ב-Solution Explorer: <b>קליק ימני</b> על <b>wwwroot</b> &rlm;←&rlm; <b>Add</b> &rlm;←&rlm; <b>New Folder</b> &rlm;←&rlm; כתבו <b>Img</b> (עם I גדולה) &rlm;←&rlm; Enter. בפרויקט חדש אין תיקייה כזו – בתבנית יש רק css, js ו-lib – ולכן יוצרים אותה.</li>
       <li>שמרו במחשב 2–3 תמונות של פיצה (או של כל דבר אחר). איך? באתר כלשהו: קליק ימני על תמונה &rlm;←&rlm; <bdi>Save image as</bdi> (שמירת התמונה בשם). תנו להן שמות באנגלית, בלי רווחים – למשל pizza.jpg ו-margherita.jpg. גררו אותן מסייר הקבצים של Windows אל התיקייה Img ב-Solution Explorer. שימו לב: ב-Solution Explorer רואים את השם <b>המלא</b>, עם הסיומת. כתוב שם png או jpeg? כתבו בקוד בדיוק את מה שכתוב שם.</li>
-      <li>ב-practice.html, מיד אחרי הכותרת h1, הוסיפו תמונה – עם השם של התמונה שלכם:
+      <li>ב-practice.html, מיד אחרי הכותרת h1, הוסיפו תמונה – עם השם של התמונה שלכם. (אפשר להקליד, ואפשר לגרור את התמונה מ-Solution Explorer אל השורה בקוד – Visual Studio כותב את התגית עם הנתיב הנכון, ואתם משלימים alt ו-width.)
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">&lt;img src="../Img/pizza.jpg" alt="פיצה חמה" width="150" /&gt;</pre></div></li>
       <li>הפכו את התמונה לקישור לתפריט (<a href="#" data-go="images:6">כמו בשלב 6</a>): החליפו את שורת ה-img מצעד 3 בשלוש השורות האלה – ושוב עם השם של התמונה שלכם. שימו לב שגם ה-alt אומר עכשיו לאן הקישור מוביל:
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html" data-marks="1:new,3:new">
@@ -700,7 +701,7 @@
 &lt;img src="../Img/pizza.jpg" alt="פיצה"
      width="150" /&gt;
 </pre></div>
-        <ul><li><code>../</code> = עלו תיקייה אחת (מ-HTML ל-wwwroot)</li><li>alt בכל תמונה. גודל: מספיק width או height</li><li>תמונה כקישור: img בתוך a</li><li>block (h, p, hr) = שורה שלמה · inline (a, img, b) = בתוך השורה, כמו מילה</li></ul></div>
+        <ul><li><code>../</code> = עלו תיקייה אחת (מ-HTML ל-wwwroot)</li><li>ב-Visual Studio: גוררים תמונה מ-Solution Explorer לקוד – והתגית נכתבת לבד</li><li>alt בכל תמונה. גודל: מספיק width או height</li><li>תמונה כקישור: img בתוך a</li><li>block (h, p, hr) = שורה שלמה · inline (a, img, b) = בתוך השורה, כמו מילה</li></ul></div>
       <div class="card"><h4>התמונה לא מופיעה? בודקים:</h4>
         <ul><li>הקובץ באמת בתיקייה Img</li><li>שם וסיומת זהים בדיוק</li><li>הנתיב מתחיל ב-<code>../</code></li><li>שם התיקייה בדיוק <code>Img</code></li><li>שמירה (Ctrl+S) ורענון</li></ul></div>
     </div>
