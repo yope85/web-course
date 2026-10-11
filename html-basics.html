@@ -84,7 +84,7 @@
     <div class="ways">
       <div class="way main"><b>📖 כאן, בדף הזה</b>הדף מכסה את כל מה שיש בסרטון ובמצגת, ומוסיף דוגמאות חיות לשחק בהן. מתאים למי שאוהב לקרוא ולנסות.</div>
       <div class="way"><b>🎬 מעדיפים סרטון?</b>הסרטון של השיעור נמצא בקלאסרום. אחריו – חזרו לכאן והפעילו את <b>מצב אחרי-סרטון</b> (למטה): עושים רק את החלקים הפעילים.</div>
-      <div class="way"><b>🎧 פודקסט</b>תוספת, לא חובה: לשמוע את הרעיונות הגדולים בדרך הביתה.</div>
+      <div class="way"><b>📒 מחברת הנושא</b>חומר משלים, לא חובה. בקלאסרום מחכים פודקסט, מפות חשיבה, סרטונים קצרים, בחנים, כרטיסיות ועוד – לחזרה ולהעמקה. ללמוד לתכנת – כאן ובסרטונים.</div>
     </div>
     <h4>איך הדף עובד?</h4>
     <ul class="how">
@@ -183,7 +183,7 @@
     <p>יוצרים בפרויקט שלכם <b>דף תרגול</b> של פיצה דני: practice.html. בו תנסו בעצמכם כל מה שלומדים בשיעור – ודף הנחיתה שלכם (index.html) יחכה נקי לצעד בפרויקט, בסוף השיעור.</p>
     <ol class="vsdo">
       <li>ב-Solution Explorer: <b>קליק ימני</b> על התיקייה <b>HTML</b> (בתוך wwwroot) &rlm;←&rlm; <b>Add</b> &rlm;←&rlm; <b><bdi>New Item...</bdi></b> &rlm;←&rlm; <b>HTML Page</b>. השם המוצע הוא <b>htmlpage.html</b> – שנו אותו ל-<b>practice.html</b> &rlm;←&rlm; <b>Add</b>. (אם החלון נפתח קטן, בלי רשימת תבניות – לחצו בו Show All Templates.)</li>
-      <li>בשורה השנייה של הקובץ, השורה של התגית html, כתבו <code>&lt;html lang="he" dir="rtl"&gt;</code> – כמו בשיעור 1. אם יש בה גם xmlns, מחקו אותו. (מה בדיוק עושה כל חלק בשלד – בנושא הבא.)</li>
+      <li>בשורה השנייה של הקובץ, השורה של התגית html, במקום <code>&lt;html&gt;</code> כתבו <code>&lt;html lang="he" dir="rtl"&gt;</code> – כמו בשיעור 1. (מה בדיוק עושה כל חלק בשלד – בנושא הבא.)</li>
       <li>הדביקו <b>בתוך body</b>:
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
 &lt;!-- practice page: Danny's pizza --&gt;
@@ -220,7 +220,7 @@
     </div>
     <div class="what" id="skelWhat"></div>
     <div class="bridge">זה כמו התבנית שמקבלים בכל תוכנית C# חדשה: יש <code>class</code> ובתוכו <code>Main</code>, ואת הקוד שלכם כותבים בתוך Main. כאן – את התוכן כותבים בתוך body, וכל השאר הוא מסגרת קבועה.</div>
-    <div class="tip">💡 כש-Visual Studio יוצר דף HTML חדש, השלד כבר כתוב. רק שנו את השורה של html: במקום <code>lang="en"</code> (ואולי עוד מאפיין בשם xmlns – אפשר למחוק אותו) כתבו <code>&lt;html lang="he" dir="rtl"&gt;</code>. עוד שני שלבים ותבינו למה.</div>
+    <div class="tip">💡 כש-Visual Studio יוצר דף HTML חדש, השלד כבר כתוב. רק שנו את השורה של html: במקום <code>&lt;html&gt;</code> כתבו <code>&lt;html lang="he" dir="rtl"&gt;</code>. עוד שני שלבים ותבינו למה.</div>
   </article>
   <article class="spread">
     <h3>head ו-title</h3>
@@ -421,7 +421,7 @@
     <h3>💻 עכשיו אצלכם ב-Visual Studio</h3>
     <p>מוסיפים לפרויקט <b>דף שני</b> – התפריט של דני – ומחברים בין הדפים בשלושת סוגי הקישורים: לדף אחר באתר, לאתר אחר, ולמקום בתוך הדף.</p>
     <ol class="vsdo">
-      <li>צרו בתיקייה HTML דף חדש בשם <b>menu.html</b> – בדיוק כמו שיצרתם את practice.html (<a href="#" data-go="anatomy:4">צעד 1 שם</a>). את השורה של התגית html החליפו בשורה הזו (אם היה בה xmlns – הוא נמחק איתה):
+      <li>צרו בתיקייה HTML דף חדש בשם <b>menu.html</b> – בדיוק כמו שיצרתם את practice.html (<a href="#" data-go="anatomy:4">צעד 1 שם</a>). את השורה של התגית html החליפו בשורה הזו:
         <div class="codeblock"><pre data-code="html">&lt;html lang="he" dir="rtl"&gt;</pre></div>
         ובתוך התגית title כתבו: <b>התפריט – פיצה דני</b>.</li>
       <li>הדביקו בתוך ה-body של menu.html. הדף ארוך בכוונה – כדי שתהיה לקישור "למחירון" סיבה לקפוץ:
@@ -684,6 +684,7 @@
 </main>
 <footer>בניית אתרים · המדריך המעשי · שיעור 2 – תגיות, קישורים ותמונות · יוחאי פרץ<span id="oven"></span></footer>
 
+<script src="assets/cohort.js"></script>
 <script src="assets/course.js"></script>
 <script>
 (function(){

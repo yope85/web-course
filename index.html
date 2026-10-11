@@ -54,6 +54,7 @@ a.lcard:hover{transform:translateY(-3px);border-color:var(--accent)}
   </div>
 </main>
 <footer>בניית אתרים · המדריך המעשי · יוחאי פרץ</footer>
+<script src="assets/cohort.js"></script>
 <script>
 (function(){
 "use strict";
@@ -66,10 +67,11 @@ const LESSONS = [
   {id:'l6', file:'razor.html', n:'שיעור 6', title:'Razor Pages ותבנית Layout', desc:'דף Razor ו-@, תבנית אחת עם תפריט משותף, כתובות ו-~/, והעברת האתר לדפי cshtml.'},
   {id:'sub1', file:'submission1.html', n:'הגשה 1', title:'האתר המעוצב', desc:'רשימת הדרישות, מחוון לבדיקה עצמית, בודק הטפסים, ואיך מכינים zip – מלווה אתכם עד ההגשה.'}
 ];
-/* 📌 Classroom assignments (same numbers and dates as ASSIGN in assets/course.js) */
-const ASG = {1:['התקנת סביבת העבודה','2026-10-22'], 2:['האתר הראשון שלי','2026-10-29'], 3:['בחירת נושא הפרויקט','2026-11-05'], 4:['דפי הפרויקט המעוצבים','2026-11-19'], 5:['הגשה 1: האתר המעוצב','2026-12-24']};
+/* 📌 Classroom assignments – titles here; the DATES come from assets/cohort.js (one place for every cohort) */
+const ASG = {1:['התקנת סביבת העבודה',''], 2:['האתר הראשון שלי',''], 3:['בחירת נושא הפרויקט',''], 4:['דפי הפרויקט המעוצבים',''], 5:['הגשה 1: האתר המעוצב','']};
+try { const C = window.COHORT && window.COHORT.due; if (C) Object.keys(ASG).forEach(n => { if (C[n]) ASG[n][1] = C[n]; }); } catch(e){}
 const L_ASG = {l1:[1], l2:[2,3], l4:[4], l6:[5], sub1:[5]};
-const asgTxt = id => (L_ASG[id] || []).map(n => { const [t, d] = ASG[n], [y, m, dd] = d.split('-').map(Number);
+const asgTxt = id => (L_ASG[id] || []).filter(n => ASG[n] && ASG[n][1]).map(n => { const [t, d] = ASG[n], [y, m, dd] = d.split('-').map(Number);
   return '<span class="asgl">📌 מטלה ' + n + ' בקלאסרום · עד ' + dd + '/' + m + '</span>'; }).join('');
 const get = k => { try { return JSON.parse(localStorage.getItem(k)); } catch(e){ return null; } };
 try { const th = localStorage.getItem('course-theme'); if (th) document.documentElement.dataset.theme = th; } catch(e){}
