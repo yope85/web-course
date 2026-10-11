@@ -442,6 +442,49 @@ details.ask>summary{color:var(--text)}
 .cel-glow{animation:celGlow 1.2s ease-out}
 @keyframes celGlow{0%{box-shadow:0 0 0 0 rgba(34,197,94,.55)}100%{box-shadow:0 0 0 14px rgba(34,197,94,0)}}
 @media (prefers-reduced-motion:reduce){.cel-cheer{animation:none;transform:translate(-50%,-110%)}}
+
+/* ---------- 🏆 finale: a whole block is finished (engine: Course.finale) ----------
+   A fixed, click-through layer over the viewport: confetti canvas + one card above the finished block. Gone after ~2.5 s. */
+.cel-fin{position:fixed;inset:0;z-index:90;pointer-events:none;overflow:hidden}
+.cel-fin-cv{position:absolute;inset:0;width:100%;height:100%}
+.cel-fin-card{position:absolute;left:12px;top:64px;display:flex;align-items:center;gap:12px;max-width:calc(100% - 24px);background:var(--surface);color:var(--text);border:2px solid var(--ok);border-radius:18px;padding:10px 20px 10px 18px;box-shadow:0 14px 40px rgba(0,0,0,.3);transform-origin:50% 100%;animation:celFin 2.55s cubic-bezier(.2,.9,.3,1) forwards}
+.cel-fin-ic{font-size:36px;line-height:1;flex:none;animation:celFinIc .9s .12s ease-out both}
+.cel-fin-tx{min-width:0}
+.cel-fin-tx b{display:block;font-size:21px;font-weight:700;line-height:1.3;color:var(--ok)}
+.cel-fin-tx small{display:block;font-size:14.5px;line-height:1.4;color:var(--muted)}
+.cel-fin.perfect .cel-fin-card{border-color:var(--warn);background:linear-gradient(135deg,var(--warn-soft),var(--surface) 62%)}
+.cel-fin.perfect .cel-fin-tx b{color:var(--warn)}
+.cel-fin.perfect .cel-fin-tx small{color:var(--text)}
+@keyframes celFin{0%{opacity:0;transform:translateY(18px) scale(.6)}8%{opacity:1;transform:translateY(-5px) scale(1.07)}14%{transform:translateY(0) scale(1)}84%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-20px) scale(.97)}}
+@keyframes celFinIc{0%{transform:scale(.3) rotate(-25deg)}45%{transform:scale(1.35) rotate(10deg)}70%{transform:scale(.95) rotate(-4deg)}100%{transform:scale(1) rotate(0)}}
+.cel-gold{animation:celGold 1.4s ease-out}
+@keyframes celGold{0%{box-shadow:0 0 0 0 rgba(245,158,11,.5)}100%{box-shadow:0 0 0 10px rgba(245,158,11,0)}}
+@media (prefers-reduced-motion:reduce){.cel-fin-card,.cel-fin-ic{animation:none}}
+@media (max-width:480px){.cel-fin-card{padding:8px 14px 8px 12px;gap:9px}.cel-fin-ic{font-size:30px}.cel-fin-tx b{font-size:18.5px}.cel-fin-tx small{font-size:13.5px}}
+/* what stays after the party: "perfect" chips, the quiz / practice status lines, the ★ on a step that was aced */
+.fin-badge{display:inline-block;font-size:13.5px;font-weight:700;line-height:1.5;border-radius:99px;padding:0 10px;border:1.5px solid var(--warn);background:var(--warn-soft);color:var(--text);vertical-align:middle}
+.gcp-sum h4 .fin-badge{margin-inline-start:6px}
+.qz-sum{border-radius:12px;padding:10px 14px;margin-top:12px;background:var(--surface2);border:1px solid var(--line)}
+.qz-sum.ok{background:var(--ok-soft);border-color:var(--ok)}
+.pg-fin{display:flex;align-items:center;flex-wrap:wrap;gap:6px 10px;margin:12px 0 0;font-size:14.5px;color:var(--muted)}
+.pg-fin.all{color:var(--text)}
+.pg-fin[hidden]{display:none}
+.pg-bar{flex:0 0 96px;height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+.pg-bar i{display:block;height:100%;width:0;background:var(--ok);border-radius:99px;transition:width .5s}
+.pg-fin+.tasks{margin-top:8px}
+.steps button.aced::after{content:"★";color:var(--warn);font-size:12.5px;margin-inline-start:5px}
+/* a ticked line bounces once; "I did it in my project" stays marked */
+.vsck.tk-pop input{animation:tkPop .36s ease-out}
+@keyframes tkPop{0%{transform:scale(1)}45%{transform:scale(1.4)}100%{transform:scale(1)}}
+label.dck{cursor:pointer;border-radius:10px;width:fit-content;max-width:100%;padding:2px 8px;margin-inline-start:-8px}
+label.dck input{width:20px;height:20px;accent-color:var(--ok);flex:none;cursor:pointer}
+label.dck.dck-on{color:var(--ok);font-weight:600}
+label.dck.dck-on::after{content:"✔";font-weight:700}
+.progress.prog-pop .bar{animation:progPop .7s ease-out}
+.progress.prog-pop #progTxt{animation:progTxt .7s ease-out}
+@keyframes progPop{0%{box-shadow:0 0 0 0 rgba(34,197,94,.7)}100%{box-shadow:0 0 0 7px rgba(34,197,94,0)}}
+@keyframes progTxt{0%{color:var(--ok);transform:scale(1.18)}100%{transform:scale(1)}}
+#progTxt{display:inline-block}
 /* engine fixes */
 #stepnav .what.finish::before{content:none}
 .spread>h3{display:block}

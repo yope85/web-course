@@ -273,22 +273,54 @@ function predict(el, o){
     const ok = i === o.correct;
     bs[i].classList.add(ok ? 'right' : 'wrong');
     fb.hidden = false; fb.className = 'fb ' + (ok ? 'right' : 'wrong');
-    fb.innerHTML = (ok ? '✔ נכון! ' : '✘ לא בדיוק. ') + (o.why[i] || '') + (ok ? '' : ' נסו שוב.');
-    if (ok) { el.classList.add('solved'); bs.forEach(b => b.disabled = true); unveil(); if (!silent) { state[el.id] = true; save(); celebrate(bs[i], 'small'); } if (o.onCorrect) o.onCorrect(); }
-    else if (!silent) SFX.play('bad');
+    fb.innerHTML = (ok ? '✔ נכון! ' + noDup(o.why[i]) : '✘ לא בדיוק. ' + (o.why[i] || '') + ' נסו שוב.');
+    if (ok) { el.classList.add('solved'); bs.forEach(b => b.disabled = true); unveil(); if (!silent) { state[el.id] = true; save(); if (!(o._done && o._done(bs[i]))) celebrate(bs[i], 'small'); } if (o.onCorrect) o.onCorrect(); }
+    else if (!silent) { if (o._miss) o._miss(); SFX.play('bad'); }
   }
   if (state[el.id]) answer(o.correct, true);
 }
 function quiz(container, list){
   if (typeof container === 'string') container = $(container);
   const blk = ansBlock(LESSON + ':quiz:' + (container.id || ''));
-  list.forEach((qq,i) => { const d = document.createElement('div'); d.className = 'predict'; d.id = 'q' + (i+1); container.appendChild(d); predict(d, Object.assign({quiz:true}, qq, {q:(i+1) + '. ' + qq.q, _block: blk})); });
+  /* the end of the quiz: a summary line that stays, and ONE finale instead of the answer tone of the last question.
+     First try counts (like the 🎯 checks): state.qz[id] = {miss:{3:1}} ; legacy = answers from before this was recorded (no claim of "perfect"). */
+  const cid = container.id || 'quiz', N = list.length, qid = i => 'q' + (i + 1);
+  state.qz = state.qz || {};
+  const rec = state.qz[cid] = state.qz[cid] || {miss: {}, legacy: list.some((q, i) => state[qid(i)]) ? 1 : 0};
+  const allDone = () => list.every((q, i) => state[qid(i)]);
+  const sum = document.createElement('div'); sum.className = 'qz-sum'; sum.hidden = true; sum.setAttribute('role', 'status');
+  function paintSum(){
+    if (!allDone()) { sum.hidden = true; return null; }
+    const miss = Object.keys(rec.miss || {}).length, ok = N - miss, perfect = !miss && !rec.legacy;
+    sum.hidden = false; sum.classList.toggle('ok', perfect);
+    sum.innerHTML = perfect ? '<b>🏆 בוחן מושלם!</b> עניתם נכון על כל ' + N + ' השאלות כבר בניסיון הראשון.' + ' <span class="fin-badge">🏆 ' + N + '/' + N + '</span>'
+      : rec.legacy ? '<b>✔ סיימתם את הבוחן.</b> עניתם על כל ' + N + ' השאלות.'
+      : '<b>✔ סיימתם את הבוחן.</b> ' + ok + ' מתוך ' + N + ' בניסיון הראשון. בשאלות שטעיתם בהן קיבלתם הסבר – וככה בדיוק לומדים.';
+    return {perfect, ok};
+  }
+  list.forEach((qq,i) => { const d = document.createElement('div'); d.className = 'predict'; d.id = qid(i); container.appendChild(d);
+    predict(d, Object.assign({quiz:true}, qq, {q:(i+1) + '. ' + qq.q, _block: blk,
+      _miss: () => { rec.miss = rec.miss || {}; rec.miss[i + 1] = 1; save(); },
+      _done: btn => { const r = paintSum(); if (!r) return false;
+        if (r.perfect) finale(btn, {perfect: true, key: 'quiz:' + cid, title: 'בוחן מושלם!', sub: N + ' מתוך ' + N + ' בניסיון הראשון'});
+        else { finMark('quiz:' + cid, false, container); celebrate(btn, 'done', {cheer: 'סיימתם את הבוחן 👏', fx: false}); }
+        return true; }})); });
+  container.appendChild(sum); paintSum();
 }
+/* the engine already writes "נכון!" – drop a second one at the start of the explanation */
+const noDup = t => String(t || '').replace(/^\s*נכון\s*[:!.,–-]\s*/, '');
 /* "I did it" checkbox that is remembered */
 function doneCheck(el, key){
   if (typeof el === 'string') el = $(el);
-  el.checked = !!state[key]; el.addEventListener('change', () => { state[key] = el.checked; save(); });
+  if (!el) return;
+  const lab = el.closest('label'); if (lab) lab.classList.add('dck');
+  const paint = () => { if (lab) lab.classList.toggle('dck-on', el.checked); };
+  el.checked = !!state[key]; paint();
+  /* ticking it is a real milestone (the step was done in the student's own project): a "stamp" sound + a small cheer. Unticking is silent. */
+  el.addEventListener('change', () => { state[key] = el.checked; save(); paint();
+    if (el.checked) celebrate(lab || el, 'small', {sound: 'check', up: 16, cheer: lastCheer = pickNot(CHEERS_D, lastCheer)}); });
 }
+const CHEERS_D = ['נרשם! 💪', 'עוד צעד באתר שלכם ✔', 'מתקדמים! 👣', 'בפרויקט שלכם – הכי חשוב!', 'יפה, עשיתם את זה!'];
 
 /* ---------- playground: editors + live preview + auto-checked tasks ----------
    task: {id, text, test(doc, win) | manual:true, hints:['direction', 'where exactly'], solution:{code, lang:'css'|'html', explain, alt}, back:'topic:N'}
@@ -335,7 +367,7 @@ function playground(container, o){
     (o.css !== undefined ? '<span class="lbl">' + (o.cssLabel || 'CSS – style.css') + '</span><textarea class="edC" spellcheck="false" aria-label="עורך CSS" aria-describedby="' + id + '-edhint"></textarea>' : '') +
     '<span class="edhint" id="' + id + '-edhint">⌨ Tab מוסיף רווחים. כדי לצאת מהעורך עם המקלדת: Esc ואז Tab.</span>' +
     '<div><button class="btn reset" type="button">↺ התחלה מחדש</button></div></div>' +
-    '<div><div class="pg-frame"></div></div></div><ul class="tasks"></ul><div class="pg-ask"></div>';
+    '<div><div class="pg-frame"></div></div></div><p class="pg-fin" role="status"></p><ul class="tasks"></ul><div class="pg-ask"></div>';
   const edH = container.querySelector('.edH'), edC = container.querySelector('.edC');
   const frame = new Frame(container.querySelector('.pg-frame'), {url: o.url || 'localhost:7123/HTML/test.html', height: o.height || 440});
   const tasksBox = container.querySelector('.tasks');
@@ -353,7 +385,7 @@ function playground(container, o){
       const b = e.target.closest('button[data-a]'); if (!b) return;
       const h = help[key(t)] = help[key(t)] || {h:0};
       if (b.dataset.a === 'hint') h.h = Math.min((t.hints || []).length, (h.h || 0) + 1);
-      if (b.dataset.a === 'sol') h.open = !h.open;
+      if (b.dataset.a === 'sol') { h.open = !h.open; h.sol = true; }
       if (b.dataset.a === 'alone') { h.open = false; h.seen = true; (edC || edH).focus(); }
       save(); paintHelp(i, b.dataset.a);
     });
@@ -380,7 +412,18 @@ function playground(container, o){
     const pre = x.querySelector('pre[data-sol]'); if (pre) codeLines(pre, t.solution.code, t.solution.lang || (edC ? 'css' : 'html'));
     if (focusAfter) { const f = x.querySelector('[data-a="' + (focusAfter === 'hint' ? 'hint' : 'sol') + '"]') || x.querySelector('button,a'); if (f && focusAfter !== 'alone') f.focus(); }
   }
-  function paint(){ TS.forEach((t,i) => { const li = tasksBox.children[i]; const ok = !!done[key(t)]; const was = li.classList.contains('done'); li.classList.toggle('done', ok); li.querySelector('.st').textContent = ok ? '✔' : (i+1); li.querySelector('.st').setAttribute('aria-label', ok ? 'הושלמה' : 'משימה ' + (i+1)); if (was !== ok) paintHelp(i); }); }
+  /* the finale belongs to the tasks that are checked automatically; "perfect" = finished without opening a solution (hints are fine) */
+  const AUTO = TS.filter(t => !t.manual), finBox = container.querySelector('.pg-fin');
+  const autoDone = () => AUTO.length > 0 && AUTO.every(t => done[key(t)]);
+  const noSol = () => !TS.some(t => { const h = help[key(t)]; return h && (h.sol || h.seen || h.open); });
+  function paintFin(){
+    if (!finBox) return; const n = TS.filter(t => done[key(t)]).length, N = TS.length; if (!N) { finBox.hidden = true; return; }
+    const all = autoDone(), txt = all ? '<b>🏆 ' + (n === N ? 'כל ' + N + ' המשימות הושלמו!' : 'הושלמו ' + n + ' מתוך ' + N + ' משימות') + '</b>' + (noSol() ? ' <span class="fin-badge">⭐ לבד – בלי לפתוח פתרון</span>' : '')
+      : 'הושלמו <b>' + n + ' מתוך ' + N + '</b> משימות';
+    const html = '<span class="pg-bar"><i style="width:' + (100 * n / N) + '%"></i></span><span>' + txt + '</span>';
+    if (finBox.dataset.h !== html) { finBox.dataset.h = html; finBox.innerHTML = html; finBox.classList.toggle('all', all); }
+  }
+  function paint(){ TS.forEach((t,i) => { const li = tasksBox.children[i]; const ok = !!done[key(t)]; const was = li.classList.contains('done'); li.classList.toggle('done', ok); li.querySelector('.st').textContent = ok ? '✔' : (i+1); li.querySelector('.st').setAttribute('aria-label', ok ? 'הושלמה' : 'משימה ' + (i+1)); if (was !== ok) paintHelp(i); }); paintFin(); }
   saveHooks.push(paint);
   startHooks.push(() => TS.forEach((t,i) => paintHelp(i)));
   function render(){ frame.show({html: edH.value, css: edC ? edC.value.replace(/<\/style/gi,'') : '', links: o.links || []}); }
@@ -388,6 +431,7 @@ function playground(container, o){
     /* strict tags: a task is not done while the student's code has an unclosed / stray tag that wasn't in the starting code */
     const issues = o.strictTags === false ? [] : newTagIssues(edH.value, o.html);
     TS.forEach((t, i) => { const lb = tasksBox.children[i] && tasksBox.children[i].querySelector('.tk-lint'); if (lb) { lb.hidden = true; lb.innerHTML = ''; } });
+    const fresh = [];
     TS.forEach(t => { if (!t.manual) { let ok = false; try { ok = !!t.test(d, d.defaultView); } catch(e){}
       if (ok && !done[key(t)] && issues.length && t.strictTags !== false) {
         const lb = tasksBox.children[TS.indexOf(t)].querySelector('.tk-lint'); ok = false;
@@ -395,7 +439,10 @@ function playground(container, o){
         lb.innerHTML = '✋ <b>כמעט!</b> בתצוגה זה כבר נראה נכון – כי הדפדפן משלים לבד תגיות שחסרות. אבל בקוד ' + tagIssueText(issues[0]) + ' – תקנו, והמשימה תסומן.';
         lb.hidden = false;
       }
-      if (ok && !done[key(t)]) { done[key(t)] = true; const li = tasksBox.children[TS.indexOf(t)]; if (li) setTimeout(() => celebrate(li, TS.every(x => x.manual || done[key(x)]) ? 'big' : 'small'), 60); if (o.onTask) o.onTask(t); } } });
+      if (ok && !done[key(t)]) { done[key(t)] = true; fresh.push(t); if (o.onTask) o.onTask(t); } } });
+    /* ONE celebration per render, even when several tasks turn green together: the last task that was solved, or the finale when all are done */
+    if (fresh.length) { const li = tasksBox.children[TS.indexOf(fresh[fresh.length - 1])], all = autoDone(), pf = all && noSol();
+      setTimeout(() => all ? finale(finBox || li, {near: li, perfect: pf, key: 'pg:' + id, title: pf ? 'לבד, עד הסוף!' : 'כל המשימות הושלמו!', sub: AUTO.length + ' מתוך ' + AUTO.length + ' משימות' + (pf ? ' – בלי לפתוח פתרון' : '')}) : celebrate(li, 'small'), 60); }
     if (o.onRender) try { o.onRender(d, edH.value, edC && edC.value); } catch(e){}
     /* count a "try" on the first unfinished task: the code changed and some time passed since the last counted try */
     const code = edH.value + '\n' + (edC ? edC.value : ''); const ci = TS.findIndex(t => !t.manual && !done[key(t)]);
@@ -538,7 +585,7 @@ const ASSIGN = {
 };
 const asgName = n => (ASSIGN[n] && ASSIGN[n].label) || ('מטלה ' + n);
 /* the dates come from assets/cohort.js (the one file to edit for a new cohort); the dates above are only a fallback */
-try { const C = window.COHORT && window.COHORT.due; if (C) Object.keys(C).forEach(n => { if (/^\d{4}-\d{2}-\d{2}$/.test(C[n] || '')) (ASSIGN[n] = ASSIGN[n] || {title:'', est:''}).due = C[n]; }); } catch(e){}
+try { const C = window.COHORT && window.COHORT.due; if (C) Object.keys(C).forEach(n => { const ok = /^\d{4}-\d{2}-\d{2}$/.test(C[n] || ''); if (ok || ASSIGN[n]) (ASSIGN[n] = ASSIGN[n] || {title:'', est:''}).due = ok ? C[n] : ''; }); } catch(e){}
 const HE_DAYS = ['ראשון','שני','שלישי','רביעי','חמישי','שישי','שבת'];
 function asgDate(n){
   const a = ASSIGN[n]; if (!a || !a.due) return null;
@@ -568,9 +615,12 @@ function assignment(el, o){
   const lis = [...el.querySelectorAll('.asg-list > li')], prog = el.querySelector('.asg-prog');
   function paint(){ const n = lis.filter((li, i) => st[i]).length; lis.forEach((li, i) => { li.classList.toggle('done', !!st[i]); li.querySelector('input').checked = !!st[i]; });
     if (prog) prog.textContent = n === lis.length ? '✔ הכול מוכן – נשאר רק להגיש בקלאסרום.' : 'סימנתם ' + n + ' מתוך ' + lis.length; }
-  lis.forEach((li, i) => li.querySelector('input').addEventListener('change', e => { st[i] = e.target.checked; save(); paint(); if (e.target.checked && lis.every((x, k) => st[k])) celebrate(el, 'big'); }));
+  lis.forEach((li, i) => li.querySelector('input').addEventListener('change', e => { st[i] = e.target.checked; save(); paint(); if (e.target.checked && lis.every((x, k) => st[k])) listFinale('asg:' + o.n, prog || el, {icon: '📌', title: 'הכול מוכן להגשה!', sub: 'נשאר רק להגיש בקלאסרום', near: li}); }));
   paint();
 }
+/* a ticked-off checklist gets its finale once per visit: ticking, unticking and ticking again must not turn into a confetti button */
+const finOnce = {};
+function listFinale(key, el, o){ if (finOnce[key]) return; finOnce[key] = 1; finale(el, Object.assign({key}, o)); }
 
 /* ---------- 💻 "now in your Visual Studio": <ol class="vsdo"> steps get remembered checkboxes ---------- */
 /* ---------- 🧭 guided tour: <ol class="ctour" aria-label="title"><li data-t="🧭 card title">…</li>…</ol>
@@ -627,7 +677,7 @@ function initVsdo(){
       lab.innerHTML = '<input type="checkbox" aria-label="סימנתי שעשיתי את צעד ' + (i+1) + '" />';
       li.append(lab, body);
       const cb = lab.querySelector('input'); cb.checked = !!state.vs[k]; li.classList.toggle('done', cb.checked);
-      cb.addEventListener('change', () => { state.vs[k] = cb.checked; li.classList.toggle('done', cb.checked); paint(); save(); if (cb.checked && lis.every(x => x.classList.contains('done'))) celebrate(prog, 'big'); });
+      cb.addEventListener('change', () => { state.vs[k] = cb.checked; li.classList.toggle('done', cb.checked); paint(); save(); if (cb.checked && lis.every(x => x.classList.contains('done'))) listFinale(base, prog, {icon: '💻', title: 'עשיתם את זה אצלכם!', sub: 'כל ' + lis.length + ' הצעדים מסומנים', near: li}); });
     });
     function paint(){ const k = lis.filter(li => li.classList.contains('done')).length;
       prog.innerHTML = k === lis.length ? '✔ <b>עשיתם את כל הצעדים אצלכם!</b> אם משהו לא עבד – הרשימה "עבד באתר ולא אצלי?" למטה.' : 'עשיתם צעד? סמנו אותו. <b>' + k + '/' + lis.length + '</b>'; }
@@ -655,7 +705,7 @@ function checkpoint(el, items, o){
   let results = [];
   const backsOf = it => [].concat(it.back || []);
   function summary(r){
-    if (r.ok === r.n) return '<div class="gcp-sum ok"><h4>✔ מוכנים להמשיך!</h4><p style="margin:0">עניתם נכון על ' + (r.n === 1 ? 'השאלה' : 'כל ' + r.n + ' השאלות') + ' כבר בניסיון הראשון. הבנתם את הנושא "' + esc(ttitle) + '".</p></div>';
+    if (r.ok === r.n) return '<div class="gcp-sum ok"><h4>✔ מוכנים להמשיך! <span class="fin-badge">🏆 ' + r.n + '/' + r.n + '</span></h4><p style="margin:0">עניתם נכון על ' + (r.n === 1 ? 'השאלה' : 'כל ' + r.n + ' השאלות') + ' כבר בניסיון הראשון. הבנתם את הנושא "' + esc(ttitle) + '".</p></div>';
     return '<div class="gcp-sum more"><h4>' + r.ok + ' מתוך ' + r.n + ' נכון בניסיון הראשון – כדאי לחזור על:</h4><ul>' +
       (r.back || []).map(g => '<li><a href="#" data-go="' + g + '">' + stepHtml(g) + '</a></li>').join('') + '</ul>' +
       '<p class="muted" style="margin:0">אחרי החזרה – נסו שוב את הבדיקה. טעות היא חלק מהלמידה, לא סימן שאתם "לא מבינים".</p></div>';
@@ -682,7 +732,7 @@ function checkpoint(el, items, o){
     function right(msg){
       if (solved) return; solved = true; if (results[i] === undefined) results[i] = 'ok';
       fb.hidden = false; fb.className = 'gcp-fb right';
-      fb.innerHTML = '✔ ' + (results[i] === 'ok' ? 'נכון! ' : 'עכשיו נכון. ') + (msg || '');
+      fb.innerHTML = '✔ ' + (results[i] === 'ok' ? 'נכון! ' : 'עכשיו נכון. ') + noDup(msg);
       if (results[i] === 'ok') celebrate(fb, 'small'); else SFX.play('ok');
       body.querySelectorAll('button,input').forEach(b => { if (!b.closest('.split')) b.disabled = true; });
       nav.innerHTML = '<button class="btn primary" type="button" data-cp="next">' + (i < items.length - 1 ? 'לשאלה הבאה ←' : 'לסיכום הבדיקה ←') + '</button>';
@@ -733,7 +783,9 @@ function checkpoint(el, items, o){
     state.cp[id] = {n: items.length, ok, back, t: tid}; save();
     if (T.length) show(pos.ti, pos.si, false);
     el.innerHTML = dots(-1) + summary(state.cp[id]) + '<div class="gcp-nav" style="justify-content:flex-start"><button class="btn" type="button" data-cp="start">↺ עשו את הבדיקה שוב</button></div>';
-    if (ok === items.length) { toast('🎯 מוכנים להמשיך! הבנתם את "' + esc(ttitle) + '"'); celebrate(el, 'big'); }
+    const sm = el.querySelector('.gcp-sum') || el;
+    if (ok === items.length) { toast('🎯 מוכנים להמשיך! הבנתם את "' + esc(ttitle) + '"'); finale(sm, {perfect: true, key: 'cp:' + id, sub: (items.length === 1 ? 'נכון' : items.length + ' מתוך ' + items.length) + ' בניסיון הראשון'}); }
+    else celebrate(sm, 'done', {cheer: 'סיימתם את הבדיקה 👏', fx: false});   /* finished with mistakes: a warm "done", never silence – and never a punishment */
     const h = el.querySelector('h4'); if (h) { h.tabIndex = -1; h.focus({preventScroll: true}); }
   }
   el.addEventListener('click', e => { const b = e.target.closest('[data-cp="start"]'); if (b) { results = []; ask(0); } });
@@ -752,7 +804,7 @@ function measureTopic(t){
     const c = sp.cloneNode(true);
     c.querySelectorAll('details.more').forEach(d => { opt += wc(d.textContent); d.remove(); });
     code += c.querySelectorAll('pre .ln').length;
-    c.querySelectorAll('details, .trouble, .predict, pre, .cv, script, style, .tasks, [hidden], .sn, .veil-cover, .lock-note').forEach(x => x.remove());
+    c.querySelectorAll('details, .trouble, .predict, pre, .cv, script, style, .tasks, [hidden], .sn, .veil-cover, .lock-note, .pg-fin, .qz-sum').forEach(x => x.remove());
     words += wc(c.textContent);
     pred += sp.querySelectorAll('.predict').length;
     ctrls += sp.querySelectorAll('.ctrls .seg, .ctrls > .btn').length;
@@ -795,20 +847,33 @@ const CHEERS_S = ['נכון!', 'יש!', 'בול!', 'יפה!', 'מדויק!', 'כ
 const CHEERS_B = ['מעולה!', 'אלופים!', 'וואו!', 'ככה עושים את זה!', 'קוד נקי!', 'מקצוענים!', 'בוערים! 🔥', 'עוד אחד בכיס!', 'פיצה דני גאה בכם 🍕', 'מתכנתים אמיתיים!'];
 let lastFx = -1, lastCheer = '';
 const pickNot = (arr, not) => { let x; do { x = arr[Math.floor(Math.random() * arr.length)]; } while (arr.length > 1 && x === not); return x; };
-function celebrate(el, level){ SFX.play(level === 'big' ? 'big' : 'ok'); setTimeout(() => celebrateNow(el, level), 60); }
-function celebrateNow(el, level){
+/* Levels:  'small' = one right answer (tone climbs with the streak)   ·   'done' = warm "you finished" (a block completed with mistakes on the way)
+            'big'   = a whole block is finished -> the FINALE (so every lab that already called celebrate(el,'big') gets it).
+   o.cheer = the text of the bubble, o.sound = another SFX kind, o.fx:false = bubble only. */
+let finAt = 0;
+function celebrate(el, level, o){
+  if (level === 'big') return finale(el, o);
+  o = o || {};
+  SFX.play(o.sound || (level === 'done' ? 'done' : 'ok'));
+  if (Date.now() - finAt < 450) return;   /* a finale has just started: it is the one effect on the screen */
+  if (level === 'done') try { document.querySelectorAll('.cel-layer').forEach(x => x.remove()); } catch(e){}
+  setTimeout(() => celebrateNow(el, level, o), 60);
+}
+function celebrateNow(el, level, o){
   try {
+    o = o || {};
+    if (Date.now() - finAt < 450) return;
     if (typeof el === 'string') el = $(el);
     const r = el && el.getBoundingClientRect ? el.getBoundingClientRect() : {left: innerWidth / 2, top: innerHeight / 2, width: 0, height: 0};
     /* anchored to the page (not the viewport), so it stays on the element even if the page scrolls */
-    const x = Math.min(innerWidth - 40, Math.max(40, r.left + r.width / 2)) + scrollX, y = Math.max(70, r.top + Math.min(r.height, 60) / 2) + scrollY;
-    const big = level === 'big';
+    const x = Math.min(innerWidth - 40, Math.max(40, r.left + r.width / 2)) + scrollX, y = Math.max(70, r.top + Math.min(r.height, 60) / 2 - (o.up || 0)) + scrollY;
+    const big = level === 'big' || level === 'done';
     const layer = document.createElement('div'); layer.className = 'cel-layer'; layer.setAttribute('aria-hidden', 'true');
     layer.style.left = x + 'px'; layer.style.top = y + 'px'; document.body.appendChild(layer);
-    const st = SFX.streak(); const cheer = (!big && st >= 3) ? '🔥 ' + st + ' ברצף!' : pickNot(big ? CHEERS_B : CHEERS_S, lastCheer); lastCheer = cheer;
+    const st = SFX.streak(); const cheer = o.cheer || ((!big && st >= 3) ? (st === 5 ? '🔥 5 ברצף – בוערים!' : st === 10 ? '🔥🔥 10 ברצף – אלופים!' : '🔥 ' + st + ' ברצף!') : pickNot(big ? CHEERS_B : CHEERS_S, lastCheer)); lastCheer = cheer;
     const bubble = document.createElement('div'); bubble.className = 'cel-cheer' + (big ? ' big' : ''); bubble.textContent = cheer; layer.appendChild(bubble);
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (!reduce) {
+    if (!reduce && o.fx !== false) {
       const FX = [
         () => burst(['#f43f5e', '#f59e0b', '#22c55e', '#3b82f6', '#a855f7', '#14b8a6'], big ? 34 : 16, 'sq'),
         () => burst(['⭐', '✨', '🌟'], big ? 14 : 8, 'em'),
@@ -835,6 +900,105 @@ function celebrateNow(el, level){
     }
     function ring(k){ const c = document.createElement('span'); c.className = 'cel-ring'; c.style.setProperty('--h', (k * 70 + 200) + 'deg'); layer.appendChild(c); }
   } catch(e){}
+}
+
+/* ---------- 🏆 finale: a WHOLE block is finished (all the tasks of a lab / playground, a 🎯 check, a quiz, a 💻 or 📌 checklist) ----------
+   Course.finale(el, {perfect, key, title, sub, icon, near})
+     perfect:true  = finished without a single mistake -> trophy card, gold, extra sparkle in the sound, and a ★ on the step chip (remembered).
+     key:'myLab'   = remember it in state.fin[key] = {p: 0|1, s: 'topic:step'}  ->  Course.finBadge('myLab') gives the "🏆 מושלם" chip to print in the lab.
+   One sound, one effect: the answer tone of the last question is replaced by the finale (see SFX), a second finale within a second is ignored.
+   The effect lives in a fixed, click-through layer over the viewport (never blocks a button, never makes the page scroll); it is gone after ~2.5 s.
+   prefers-reduced-motion: no confetti – only the card. */
+const FIN_P = ['מושלם!', 'בלי אף טעות!', 'עבודה מושלמת!', 'מאה אחוז!', 'פיצה דני מצדיע 🍕'];
+const FIN_THEMES = [
+  {em: ['🍕'], col: ['#e9a23b', '#d9472b', '#f6d365', '#2d6a2d', '#c0392b']},          /* Danny's pizza: crust, sauce, cheese, basil, pepperoni */
+  {em: ['⭐', '✨'], col: ['#fbbf24', '#f59e0b', '#60a5fa', '#a78bfa', '#fde68a']},
+  {em: ['🎉', '🎈'], col: ['#f43f5e', '#f59e0b', '#22c55e', '#3b82f6', '#a855f7', '#14b8a6']}
+];
+let lastFin = -1;
+function stepRef(el){ const sp = el && el.closest ? el.closest('.spread') : null; if (!sp) return ''; for (const t of T) { const i = t.steps.indexOf(sp); if (i >= 0) return t.id + ':' + i; } return ''; }
+function finMark(key, perfect, el){
+  state.fin = state.fin || {}; const old = state.fin[key] || {};
+  state.fin[key] = {p: perfect || old.p ? 1 : 0, s: stepRef(el) || old.s || ''}; save(); paintAced();
+}
+/* "🏆 מושלם" chip for a block that was finished without mistakes (remembered). Returns '' when it was not. */
+function finBadge(key, text){ const r = (state.fin || {})[key]; return r && r.p ? ' <span class="fin-badge">' + (text || '🏆 מושלם') + '</span>' : ''; }
+/* ★ on the chips of the steps whose block was finished perfectly – so students see what they aced */
+function acedSteps(){
+  const set = {};
+  Object.values(state.fin || {}).forEach(r => { if (r && r.p && r.s) set[r.s] = 1; });
+  Object.keys(state.cp || {}).forEach(id => { const r = state.cp[id]; if (r && r.ok === r.n) { const s = stepRef(document.getElementById(id)); if (s) set[s] = 1; } });
+  return set;
+}
+function paintAced(){
+  try {
+    if (!T.length) return; const set = acedSteps(), t = T[pos.ti];
+    document.querySelectorAll('#steps button[data-s]').forEach(b => { const on = !!set[t.id + ':' + b.dataset.s]; if (on === b.classList.contains('aced')) return;
+      b.classList.toggle('aced', on); if (on) b.title = (b.title ? b.title + ' · ' : '') + '★ הושלם בלי טעויות'; });
+  } catch(e){}
+}
+function finale(el, o){
+  o = o || {}; if (typeof el === 'string') el = $(el);
+  if (o.key) { try { finMark(o.key, !!o.perfect, el); } catch(e){} }
+  if (Date.now() - finAt < 900) return;
+  finAt = Date.now();
+  SFX.play('finale', {perfect: !!o.perfect});
+  try { document.querySelectorAll('.cel-layer, .cel-fin').forEach(x => x.remove()); } catch(e){}
+  setTimeout(() => finaleNow(el, o), 60);
+}
+function finaleNow(el, o){
+  try {
+    const perfect = !!o.perfect, reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const vw = document.documentElement.clientWidth || innerWidth, vh = innerHeight;
+    const seen = x => { const q = x && x.getBoundingClientRect ? x.getBoundingClientRect() : null; return q && (q.width + q.height) > 0 && q.bottom > 70 && q.top < vh - 20 ? q : null; };
+    const r = seen(el) || seen(o.near), vis = !!r;   /* o.near = where to show it when the block's own status line is scrolled out of view */
+    const cx = vis ? Math.min(vw - 24, Math.max(24, r.left + r.width / 2)) : vw / 2;
+    const cy = vis ? Math.min(vh - 60, Math.max(110, r.top + Math.min(r.height, 80) / 2)) : vh * 0.42;
+    const ov = document.createElement('div'); ov.className = 'cel-fin' + (perfect ? ' perfect' : ''); ov.setAttribute('aria-hidden', 'true');
+    const title = o.title || pickNot(perfect ? FIN_P : CHEERS_B, lastCheer); lastCheer = title;
+    const card = document.createElement('div'); card.className = 'cel-fin-card';
+    card.innerHTML = '<span class="cel-fin-ic">' + (o.icon || (perfect ? '🏆' : '🎉')) + '</span><span class="cel-fin-tx"><b>' + esc(title) + '</b>' + (o.sub ? '<small>' + esc(o.sub) + '</small>' : '') + '</span>';
+    ov.appendChild(card); document.body.appendChild(ov);
+    /* the card sits just above the finished block, always fully inside the viewport */
+    const cw = card.offsetWidth, ch = card.offsetHeight;
+    card.style.left = Math.max(12, Math.min(vw - cw - 12, cx - cw / 2)) + 'px';
+    card.style.top = Math.max(64, Math.min(vh - ch - 12, cy - ch - 22)) + 'px';
+    if (!reduce) confetti(ov, cx, cy, perfect);
+    if (el && el.classList) { const g = perfect ? 'cel-gold' : 'cel-glow'; el.classList.remove('cel-glow', 'cel-gold'); void el.offsetWidth; el.classList.add(g); setTimeout(() => el.classList.remove(g), 1500); }
+    setTimeout(() => ov.remove(), 2600);
+  } catch(e){}
+}
+/* confetti on one canvas (cheap: no DOM nodes per piece): a fan that shoots up from the finished block and falls; perfect = two more side bursts */
+function confetti(ov, cx, cy, perfect){
+  const cv = document.createElement('canvas'), W = ov.clientWidth, H = ov.clientHeight, dpr = Math.min(2, window.devicePixelRatio || 1);
+  if (!W || !H) return;
+  cv.className = 'cel-fin-cv'; cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); ov.insertBefore(cv, ov.firstChild);
+  const g = cv.getContext('2d'); if (!g) return; g.scale(dpr, dpr);
+  let ti; do { ti = Math.floor(Math.random() * FIN_THEMES.length); } while (ti === lastFin); lastFin = ti;
+  const th = FIN_THEMES[ti], P = [], scale = Math.min(1, 0.5 + W / 1800), rnd = (a, b) => a + Math.random() * (b - a);
+  function shoot(x, y, n, dir, spread, v0, v1, delay){
+    for (let k = 0; k < n; k++) { const a = dir + rnd(-spread, spread), v = rnd(v0, v1);
+      P.push({x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, rot: rnd(0, 6.3), vr: rnd(-9, 9), s: rnd(6, 11), t0: delay + rnd(0, 0.1),
+        em: k % 7 === 3 ? th.em[k % th.em.length] : '', c: perfect && k % 4 === 0 ? '#fbbf24' : th.col[k % th.col.length], round: k % 5 === 1}); }
+  }
+  shoot(cx, cy, Math.round((perfect ? 80 : 64) * scale), -Math.PI / 2, 1.2, 380, 900, 0);
+  if (perfect) { shoot(W * 0.08, H, Math.round(30 * scale), -1.15, 0.4, 700, 1250, 0.28); shoot(W * 0.92, H, Math.round(30 * scale), -1.99, 0.4, 700, 1250, 0.28); }
+  const T0 = performance.now(), LIFE = 2.3; let last = T0;
+  g.textAlign = 'center'; g.textBaseline = 'middle'; g.font = '22px "Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji",sans-serif';
+  (function frame(nowMs){
+    if (!cv.isConnected) return;
+    const t = (nowMs - T0) / 1000, dt = Math.min(0.05, Math.max(0, (nowMs - last) / 1000)); last = nowMs;
+    g.clearRect(0, 0, W, H);
+    if (t > LIFE) return;
+    g.globalAlpha = t > LIFE - 0.6 ? Math.max(0, (LIFE - t) / 0.6) : 1;
+    for (const p of P) { if (t < p.t0) continue;
+      p.vy += 1500 * dt; p.vx *= 1 - 1.6 * dt; p.vy *= 1 - 0.9 * dt; p.x += p.vx * dt; p.y += p.vy * dt; p.rot += p.vr * dt;
+      g.save(); g.translate(p.x, p.y); g.rotate(p.rot);
+      if (p.em) g.fillText(p.em, 0, 0);
+      else { g.fillStyle = p.c; if (p.round) { g.beginPath(); g.arc(0, 0, p.s / 2, 0, 6.3); g.fill(); } else g.fillRect(-p.s / 2, -p.s / 3, p.s, p.s * 0.66 * Math.abs(Math.cos(p.rot * 1.7)) + 1.5); }
+      g.restore(); }
+    requestAnimationFrame(frame);
+  })(T0);
 }
 
 /* ---------- sequence: an animation made of steps, played automatically or "step by step"
@@ -895,9 +1059,29 @@ function simSounds(){
     if (kind === 'ok') celebrate(el, 'small'); else SFX.play('bad');
   } }).observe(document.body, {subtree: true, childList: true, characterData: true, attributes: true, attributeFilter: ['class']});
 }
+/* every ticked line of a checklist (💻 steps, 📌 assignment lists – anything built with label.vsck) gets a light "pip" that climbs
+   with the number of ticked lines, and a small bounce. Unticking is silent. The line that completes the list gets the finale instead. */
+function tickSounds(){
+  document.addEventListener('change', e => {
+    const cb = e.target; if (!cb || cb.type !== 'checkbox' || !cb.checked || !cb.closest) return;
+    const lab = cb.closest('label.vsck'); if (!lab) return;
+    lab.classList.remove('tk-pop'); void lab.offsetWidth; lab.classList.add('tk-pop');
+    if (Date.now() - finAt < 300) return;
+    const list = cb.closest('ol, ul'), all = list ? [...list.querySelectorAll('label.vsck input[type="checkbox"]')] : [cb], k = all.filter(x => x.checked).length;
+    SFX.play('tick', {step: all.length > 1 ? Math.round(7 * (k - 1) / (all.length - 1)) : 0});
+  });
+}
 const SFX = (() => {
-  let ctx = null, combo = 0;
+  let ctx = null, combo = 0, out = null, cur = null;
   const STEPS = [0, 2, 4, 7, 9, 12, 14, 16];   /* pentatonic climb: each step is clearly higher */
+  /* ONE sound at a time. Every sound plays through its own volume knob ("group"). A new sound fades the previous one out (50 ms)
+     instead of piling on top of it; while a strong sound is in its first moments (HOLD), a weaker one is simply not played.
+     So "last answer + whole block finished" is heard as one clean finale, never as two sounds fighting.
+     The vocabulary, from light to festive:  tick < check < ok (climbs with the streak) < done < big < finale (+ sparkle when perfect). */
+  const PRIO = {tick:1, bad:2, ok:2, on:2, check:2, egg:3, done:3, big:3, finale:4};
+  const HOLD = {egg:0.3, done:0.35, big:0.4, finale:0.8};   /* seconds; every other sound: 0.12 (so a tick fired right after an answer tone never cuts it) */
+  const LEN = {tick:0.12, bad:0.4, ok:0.6, on:0.3, check:0.5, egg:0.75, done:0.85, big:1, finale:1.25};
+  const qa = (kind, what) => { if (window.__sfxLog) window.__sfxLog.push([kind, what, Date.now()]); };   /* QA hook, like __ansLog */
   const isOn = () => { try { return localStorage.getItem('course-sound') !== 'off'; } catch(e){ return true; } };
   function ac(){
     if (!ctx) { const C = window.AudioContext || window.webkitAudioContext; if (!C) return null; try { ctx = new C({latencyHint:'interactive'}); } catch(e){ try { ctx = new C(); } catch(e2){ return null; } } }
@@ -920,16 +1104,48 @@ const SFX = (() => {
     const o = c.createOscillator(), g = c.createGain();
     o.type = type || 'sine'; o.frequency.setValueAtTime(f, t0); if (f2) o.frequency.exponentialRampToValueAtTime(f2, t0 + dur);
     g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(vol, t0 + 0.012); g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
-    o.connect(g); g.connect(c.destination); o.start(t0); o.stop(t0 + dur + 0.03);
+    o.connect(g); g.connect(out || c.destination); o.start(t0); o.stop(t0 + dur + 0.03);
   }
   const ST = n => Math.pow(2, n / 12);
-  function play(kind){
+  function play(kind, opt){
     /* the streak counts even when muted (the cheer bubble shows it) */
-    if (kind === 'bad') combo = 0; else if (kind === 'ok' || kind === 'big') combo++;
-    if (!isOn()) return;
-    const c = ac(); if (!c) return; const t = c.currentTime + 0.01;
+    if (kind === 'bad') combo = 0; else if (kind === 'ok' || kind === 'big' || kind === 'done' || kind === 'finale') combo++;
+    if (!isOn()) return qa(kind, 'muted');
+    const c = ac(); if (!c) return; const now = c.currentTime, t = now + 0.01, pr = PRIO[kind] || 2;
+    if (cur && now < cur.hold && pr < cur.prio) return qa(kind, 'skipped');
     try {
-      if (kind === 'ok') {
+      if (cur && now < cur.end) { const gp = cur.g.gain; gp.cancelScheduledValues(now); gp.setValueAtTime(1, now); gp.linearRampToValueAtTime(0.0001, now + 0.05); }
+      out = c.createGain(); out.gain.value = 1; out.connect(c.destination);
+      cur = {g: out, prio: pr, hold: now + (HOLD[kind] || 0.12), end: now + (LEN[kind] || 0.6)};
+    } catch(e){ out = null; cur = null; }
+    qa(kind, 'played');
+    try {
+      if (kind === 'tick') {
+        /* a light "pip" for one ticked line; opt.step (0-7) lifts it up the same pentatonic ladder, so a checklist climbs towards its finale */
+        const k = ST(STEPS[Math.max(0, Math.min(STEPS.length - 1, (opt && opt.step) | 0))]);
+        tone(c, 880 * k, t, 0.09, 0.075, 'sine', 880 * k * 1.12); tone(c, 440 * k, t, 0.05, 0.05, 'triangle');
+      } else if (kind === 'check') {
+        /* "I did it in my project": a soft stamp + two notes together (a chord, not a melody – so it is not mistaken for a right answer) */
+        tone(c, 196, t, 0.1, 0.09, 'sine', 110);
+        tone(c, 783.99, t + 0.03, 0.42, 0.07, 'triangle'); tone(c, 987.77, t + 0.03, 0.42, 0.07, 'triangle'); tone(c, 1567.98, t + 0.03, 0.2, 0.02, 'sine');
+      } else if (kind === 'done') {
+        /* warm "you finished" (a block completed, with some mistakes on the way): three calm notes, lower and slower than 'ok' */
+        tone(c, 392, t, 0.2, 0.1, 'triangle'); tone(c, 523.25, t + 0.12, 0.2, 0.1, 'triangle');
+        tone(c, 659.25, t + 0.24, 0.55, 0.1, 'triangle'); tone(c, 261.63, t + 0.24, 0.5, 0.05, 'sine');
+      } else if (kind === 'egg') {
+        /* a hidden egg: a quick "magic" run (augmented chord – the one sound in the page that says "surprise") */
+        [987.77, 1244.51, 1567.98, 1975.53].forEach((f, i) => tone(c, f, t + i * 0.07, i === 3 ? 0.45 : 0.16, 0.07, 'sine'));
+        tone(c, 493.88, t, 0.12, 0.04, 'triangle');
+      } else if (kind === 'finale') {
+        /* a whole block finished: three quick rising notes land on a full, held chord with a soft low drum under it
+           (the only sound with harmony and bass – clearly bigger than any single answer). Perfect = three extra sparkles on top. About 1–1.2 s. */
+        [523.25, 659.25, 783.99].forEach((f, i) => { tone(c, f, t + i * 0.075, 0.15, 0.1, 'triangle'); tone(c, f * 2, t + i * 0.075, 0.09, 0.02, 'sine'); });
+        const h = t + 0.235;
+        tone(c, 130.81, h, 0.16, 0.085, 'sine', 65.41);
+        [[261.63, 'sine', 0.055], [392, 'triangle', 0.035], [523.25, 'triangle', 0.05], [659.25, 'triangle', 0.05], [783.99, 'triangle', 0.045], [1046.5, 'triangle', 0.058]].forEach(v => tone(c, v[0], h, 0.78, v[2], v[1]));
+        tone(c, 2093, h + 0.16, 0.42, 0.03, 'sine', 3135.96);
+        if (opt && opt.perfect) { tone(c, 2637.02, h + 0.42, 0.16, 0.035, 'sine'); tone(c, 3135.96, h + 0.54, 0.16, 0.035, 'sine'); tone(c, 4186.01, h + 0.66, 0.3, 0.03, 'sine'); }
+      } else if (kind === 'ok') {
         const k = ST(STEPS[Math.min(combo - 1, STEPS.length - 1)]);
         tone(c, 659.25 * k, t, 0.16, 0.13, 'triangle'); tone(c, 1318.5 * k, t, 0.10, 0.03, 'sine');
         tone(c, 987.77 * k, t + 0.085, 0.30, 0.13, 'triangle'); tone(c, 1975.5 * k, t + 0.085, 0.18, 0.03, 'sine');
@@ -961,7 +1177,7 @@ const SFX = (() => {
       if (x.dataset.s === 'off') set(false); else set(true);
       n.remove(); b.focus(); });
   }
-  return {play, init, isOn, streak: () => combo};
+  return {play, init, isOn, streak: () => combo};   /* play(kind[, {step, perfect}]) */
 })();
 
 /* ---------- toast + celebration ---------- */
@@ -989,7 +1205,8 @@ function findEgg(id){
   const e = EGGS.find(x => x.id === id), n = EGGS.filter(x => found[x.id]).length;
   toast(e.icon + ' מצאתם ביצה: <b>' + e.name + '</b> (' + n + '/' + EGGS.length + ')' + (n === EGGS.length ? ' – כולן! 🏆' : ''));
   const b = $('#eggBtn'); b.classList.remove('bump'); void b.offsetWidth; b.classList.add('bump');
-  if (n === EGGS.length) party();
+  /* a surprise deserves its own sound; the last egg gets the finale (with the pizza rain) */
+  if (n === EGGS.length) { party(); finAt = Date.now(); SFX.play('finale', {perfect: true}); } else SFX.play('egg');
 }
 function initEggs(eggs, consoleLines){
   EGGS = eggs || []; state.eggTotal = EGGS.length;
@@ -1044,6 +1261,7 @@ function show(ti, si, scroll){
   $('#topics').innerHTML = T.map((t,a) => '<button type="button" data-t="' + a + '"' + (a === ti ? ' aria-current="true"' : '') + (t.steps.every((x,b) => state.seen[t.id + ':' + b]) ? ' class="done"' : '') + '><span class="ic">' + t.icon + '</span><bdi>' + t.title + '</bdi>' + cpBadge(t) + '</button>').join('');
   const vm = videoMode();
   $('#steps').innerHTML = T[ti].steps.map((st,b) => '<button type="button" data-s="' + b + '"' + (b === si ? ' aria-current="true"' : '') + ' class="' + (state.seen[T[ti].id + ':' + b] ? 'seen' : '') + (vm && !isActive(st) ? ' skim' : '') + '"' + ' title="' + escA(stepTitle(st)) + (vm && !isActive(st) ? ' (שלב קריאה – במצב אחרי-סרטון אפשר לדלג)' : '') + '"><span class="k">' + (b+1) + '</span><bdi>' + esc(stepTitle(st)) + '</bdi></button>').join('');
+  paintAced();
   const prev = nextActive(ti, si, -1);
   const next = nextActive(ti, si, 1);
   const label = (p, isNext) => {
@@ -1078,6 +1296,9 @@ function paintProgress(){
   const n = T.reduce((k,t) => k + t.steps.filter((x,b) => state.seen[t.id + ':' + b]).length, 0);
   state.stepsTotal = total; state.stepsSeen = n;
   $('#progBar').style.width = (100 * n / total) + '%'; $('#progTxt').textContent = n + '/' + total;
+  /* one more step: the progress bar answers with a short pulse (visual only – nothing plays while reading) */
+  if (paintProgress.n !== undefined && n > paintProgress.n) { const pr = $('#progBar').closest('.progress'); if (pr) { pr.classList.remove('prog-pop'); void pr.offsetWidth; pr.classList.add('prog-pop'); } }
+  paintProgress.n = n;
 }
 function initPlayer(){
   T = [...document.querySelectorAll('section.topic')].map(el => ({el, id:el.dataset.id, title:el.dataset.title, icon:el.dataset.icon, steps:[...el.querySelectorAll(':scope > .spread')]}));
@@ -1123,6 +1344,7 @@ function start(o){
   initPlayer();
   try { SFX.init(); } catch(e){}
   try { simSounds(); } catch(e){}
+  try { tickSounds(); } catch(e){}
   try { paintAsgChips(); } catch(e){}
   startHooks.forEach(f => { try { f(); } catch(e){ console.error(e); } });
   try { paintVideoBox(); paintTimePlan(); const st = $('#steps'); if (st && !$('#topicTime')) { const d = document.createElement('div'); d.id = 'topicTime'; d.className = 'topictime'; st.parentNode.insertBefore(d, st.nextSibling); } show(pos.ti, pos.si, false); } catch(e){ console.error(e); }
@@ -1131,6 +1353,6 @@ function start(o){
 
 window.Course = { $, esc, store, state, save, onSave: f => saveHooks.push(f), hlHtmlLine, hlCssLine, codeLines, autoCode, wireCopy,
   PIZZA_IMG, IMAGES, fakeImg, mapCss, Stage, Split, Frame, frameDoc, seg, predict, quiz, doneCheck, playground, tagIssues, newTagIssues, SFX, sequence, assignment, ASSIGN, toast, party, findEgg, start,
-  checkpoint, trouble, askBox, stepName, celebrate,
+  checkpoint, trouble, askBox, stepName, celebrate, finale, finBadge,
   go: (id, n) => { const t = T.findIndex(x => x.id === id); if (t >= 0) show(t, (n || 1) - 1, true); } };
 })();
