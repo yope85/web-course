@@ -528,17 +528,20 @@ function trouble(el, o){
    Course.assignment(el, {n, lead, items:['html', …], how, after}) renders the box (remembered checklist, days left, where to submit).
    <span data-asg="N"></span> anywhere in a page becomes a short "📌 מטלה N · עד יום ה׳ 22/10" chip. */
 const ASSIGN = {
+  0: {label:'משימת הפתיחה', title:'מתרגלים ללמוד נכון עם AI', due:'', est:''},
   1: {title:'התקנת סביבת העבודה Visual Studio 2022', due:'2026-10-22', est:'כשעה וחצי'},
   2: {title:'האתר הראשון שלי (המשפחה שלי או נושא לבחירה)', due:'2026-10-29', est:'כ-3.5 שעות'},
   3: {title:'בחירת נושא הפרויקט והשראה', due:'2026-11-05', est:'כשעה'},
   4: {title:'בניית דפי הפרויקט המעוצבים', due:'2026-11-19', est:'כ-6 שעות'},
-  5: {title:'הגשה 1: האתר המעוצב', due:'2026-12-24', est:'כ-12 שעות', graded:true}
+  5: {title:'הגשה 1: האתר המעוצב', due:'2026-12-24', est:'כ-12 שעות', graded:true},
+  final: {label:'ההגשה הסופית', title:'הפרויקט ותיק הפרויקט', due:'', est:'', graded:true}
 };
+const asgName = n => (ASSIGN[n] && ASSIGN[n].label) || ('מטלה ' + n);
 /* the dates come from assets/cohort.js (the one file to edit for a new cohort); the dates above are only a fallback */
-try { const C = window.COHORT && window.COHORT.due; if (C) Object.keys(C).forEach(n => { if (ASSIGN[n] && /^\d{4}-\d{2}-\d{2}$/.test(C[n])) ASSIGN[n].due = C[n]; }); } catch(e){}
+try { const C = window.COHORT && window.COHORT.due; if (C) Object.keys(C).forEach(n => { if (/^\d{4}-\d{2}-\d{2}$/.test(C[n] || '')) (ASSIGN[n] = ASSIGN[n] || {title:'', est:''}).due = C[n]; }); } catch(e){}
 const HE_DAYS = ['ראשון','שני','שלישי','רביעי','חמישי','שישי','שבת'];
 function asgDate(n){
-  const a = ASSIGN[n]; if (!a) return null;
+  const a = ASSIGN[n]; if (!a || !a.due) return null;
   const [y, m, d] = a.due.split('-').map(Number), due = new Date(y, m - 1, d, 23, 59);
   const today = new Date(); today.setHours(0, 0, 0, 0);
   const days = Math.round((new Date(y, m - 1, d) - today) / 864e5);
@@ -547,7 +550,7 @@ function asgDate(n){
 function asgLeft(days){ return days > 1 ? 'נשארו ' + days + ' ימים' : days === 1 ? 'נשאר יום אחד' : days === 0 ? 'היום!' : 'תאריך היעד עבר – הגישו כמה שיותר מהר'; }
 function paintAsgChips(){
   document.querySelectorAll('[data-asg]').forEach(x => { const r = asgDate(x.dataset.asg); if (!r) return;
-    x.className = 'asgchip'; x.innerHTML = '📌 מטלה ' + esc(x.dataset.asg) + ' בקלאסרום · עד ' + r.text; });
+    x.className = 'asgchip'; x.innerHTML = '📌 ' + esc(asgName(x.dataset.asg)) + ' בקלאסרום · עד ' + r.text; });
 }
 function assignment(el, o){
   if (typeof el === 'string') el = $(el); if (!el) return;
@@ -555,12 +558,12 @@ function assignment(el, o){
   state.asg = state.asg || {}; const st = state.asg[o.n] = state.asg[o.n] || {};
   const items = o.items || [];
   el.classList.add('asg');
-  el.innerHTML = '<div class="asg-h"><span class="asg-tag">📌 מטלה ' + o.n + ' בקלאסרום</span> <b>' + esc(a.title) + '</b></div>' +
+  el.innerHTML = '<div class="asg-h"><span class="asg-tag">📌 ' + esc(asgName(o.n)) + ' בקלאסרום</span> <b>' + esc(a.title) + '</b></div>' +
     '<div class="asg-meta"><span>📅 עד ' + r.text + ', בשעה 23:59</span><span class="asg-left' + (r.days < 0 ? ' late' : r.days <= 3 ? ' soon' : '') + '">' + asgLeft(r.days) + '</span><span>⏱ ' + esc(a.est) + '</span><span>' +
       (a.graded ? '🎯 הגשה עם ציון' : '📝 מטלת תרגול: בלי ציון, עם משוב – וההגשה חובה') + '</span></div>' +
     (o.lead ? '<p class="asg-lead">' + o.lead + '</p>' : '') +
     (items.length ? '<p class="asg-prog" aria-live="polite"></p><ol class="asg-list">' + items.map((h, i) => '<li><label class="vsck"><input type="checkbox" aria-label="סימנתי: ' + (i+1) + '" /></label><div class="vsbody">' + h + '</div></li>').join('') + '</ol>' : '') +
-    '<div class="asg-how">📤 <b>איך מגישים:</b> ' + (o.how ? o.how.replace(/\{name\}/g, '"מטלה ' + o.n + ' – ' + esc(a.title) + '"') : 'בקלאסרום &rlm;←&rlm; <b>סביבת הלמידה</b> &rlm;←&rlm; הנושא <b><bdi>HTML &amp; CSS</bdi></b> &rlm;←&rlm; "מטלה ' + o.n + ' – ' + esc(a.title) + '" &rlm;←&rlm; <b>הוספה או יצירה</b> &rlm;←&rlm; <b>קובץ</b> &rlm;←&rlm; מעלים את הקובץ &rlm;←&rlm; <b>הגשה</b>. ההוראות המלאות – במטלה עצמה, בקלאסרום.') + '</div>' +
+    '<div class="asg-how">📤 <b>איך מגישים:</b> ' + (o.how ? o.how.replace(/\{name\}/g, '"' + esc(asgName(o.n)) + ' – ' + esc(a.title) + '"') : 'בקלאסרום &rlm;←&rlm; <b>סביבת הלמידה</b> &rlm;←&rlm; הנושא <b><bdi>HTML &amp; CSS</bdi></b> &rlm;←&rlm; "מטלה ' + o.n + ' – ' + esc(a.title) + '" &rlm;←&rlm; <b>הוספה או יצירה</b> &rlm;←&rlm; <b>קובץ</b> &rlm;←&rlm; מעלים את הקובץ &rlm;←&rlm; <b>הגשה</b>. ההוראות המלאות – במטלה עצמה, בקלאסרום.') + '</div>' +
     (o.after ? '<p class="asg-after">' + o.after + '</p>' : '');
   const lis = [...el.querySelectorAll('.asg-list > li')], prog = el.querySelector('.asg-prog');
   function paint(){ const n = lis.filter((li, i) => st[i]).length; lis.forEach((li, i) => { li.classList.toggle('done', !!st[i]); li.querySelector('input').checked = !!st[i]; });
