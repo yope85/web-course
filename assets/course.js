@@ -572,7 +572,7 @@ function trouble(el, o){
   const dd = el.querySelector('details');
   dd.querySelector('.tr-foot button').addEventListener('click', () => el.querySelectorAll('input').forEach(i => i.checked = false));
   const rule = document.createElement('div'); rule.className = 'tr-rule';
-  rule.innerHTML = '📏 <b>חוק 3 השלבים</b> (כלל הזהב משיעור 0): <b>1.</b> מנסים לבד 10–15 דקות – למשל עם הרשימה הזו. <b>2.</b> חוזרים להסבר – לשלב המתאים כאן, לסרטון או למצגת. <b>3.</b> עדיין תקועים? שואלים את המנטור – ומבקשים רמז, לא פתרון.<br>✍️ התקלה לקחה יותר מ-10 דקות? רשמו שורה ב<b>יומן התקלות</b> (המסמך האישי במטלה "הגשה סופית"): מה קרה, ואיך פתרתם.';
+  rule.innerHTML = '📏 <b>כלל הזהב</b> (משיעור 0): <b>1.</b> מנסים לבד 10–15 דקות – למשל עם הרשימה הזו. <b>2.</b> חוזרים להסבר – לשלב המתאים כאן, לסרטון או למצגת. <b>3.</b> עדיין תקועים? שואלים את המנטור – ומבקשים רמז, לא פתרון.<br>✍️ התקלה לקחה יותר מ-10 דקות? רשמו שורה ב<b>יומן התקלות</b> (המסמך האישי במטלה "הגשה סופית"): מה קרה, ואיך פתרתם.';
   dd.appendChild(rule);
   askBox(dd, {summary: '🆘 עברתם על הכול ועדיין לא עובד? ככה שואלים את המנטור', route: 'mentor'});
 }
@@ -582,11 +582,11 @@ function trouble(el, o){
    <span data-asg="N"></span> anywhere in a page becomes a short "📌 מטלה N · עד יום ה׳ 22/10" chip. */
 const ASSIGN = {
   0: {label:'משימת הפתיחה', title:'מתרגלים ללמוד נכון עם AI', due:'', est:''},
-  1: {title:'התקנת סביבת העבודה Visual Studio 2022', due:'2026-10-22', est:'כשעה וחצי'},
-  2: {title:'האתר הראשון שלי (המשפחה שלי או נושא לבחירה)', due:'2026-10-29', est:'כ-3.5 שעות'},
-  3: {title:'בחירת נושא הפרויקט והשראה', due:'2026-11-05', est:'כשעה'},
-  4: {title:'בניית דפי הפרויקט המעוצבים', due:'2026-11-19', est:'כ-6 שעות'},
-  5: {title:'הגשה 1: האתר המעוצב', due:'2026-12-24', est:'כ-12 שעות', graded:true},
+  1: {title:'התקנת סביבת העבודה Visual Studio 2022', due:'', est:'כשעה וחצי'},
+  2: {title:'האתר הראשון שלי (המשפחה שלי או נושא לבחירה)', due:'', est:'כ-3.5 שעות'},
+  3: {title:'בחירת נושא הפרויקט והשראה', due:'', est:'כשעה'},
+  4: {title:'בניית דפי הפרויקט המעוצבים', due:'', est:'כ-6 שעות'},
+  5: {title:'הגשה 1: האתר המעוצב', due:'', est:'כ-12 שעות', graded:true},
   final: {label:'ההגשה הסופית', title:'הפרויקט ותיק הפרויקט', due:'', est:'', graded:true}
 };
 /* 🏠 topic home: every lesson returns to the home page of ITS topic (html-css.html, later javascript.html...). <body data-home="x.html" data-home-name="..."> overrides. */
@@ -596,7 +596,7 @@ const TOPIC_HOME = [(document.body && document.body.dataset.home) || 'html-css.h
   a.innerHTML = '🏠 <span>כל השיעורים</span>'; b.parentNode.insertBefore(a, b); };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', add); else add(); })();
 const asgName = n => (ASSIGN[n] && ASSIGN[n].label) || ('מטלה ' + n);
-/* the dates come from assets/cohort.js (the one file to edit for a new cohort); the dates above are only a fallback */
+/* the dates come ONLY from assets/cohort.js (the one file to edit for a new cohort) */
 try { const C = window.COHORT && window.COHORT.due; if (C) Object.keys(C).forEach(n => { const ok = /^\d{4}-\d{2}-\d{2}$/.test(C[n] || ''); if (ok || ASSIGN[n]) (ASSIGN[n] = ASSIGN[n] || {title:'', est:''}).due = ok ? C[n] : ''; }); } catch(e){}
 const HE_DAYS = ['ראשון','שני','שלישי','רביעי','חמישי','שישי','שבת'];
 function asgDate(n){
