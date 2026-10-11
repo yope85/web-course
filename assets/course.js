@@ -572,7 +572,7 @@ function trouble(el, o){
   const dd = el.querySelector('details');
   dd.querySelector('.tr-foot button').addEventListener('click', () => el.querySelectorAll('input').forEach(i => i.checked = false));
   const rule = document.createElement('div'); rule.className = 'tr-rule';
-  rule.innerHTML = '📏 <b>כלל הזהב</b> (משיעור 0): <b>1.</b> מנסים לבד 10–15 דקות – למשל עם הרשימה הזו. <b>2.</b> חוזרים להסבר – לשלב המתאים כאן, לסרטון או למצגת. <b>3.</b> עדיין תקועים? שואלים את המנטור – ומבקשים רמז, לא פתרון.<br>✍️ התקלה לקחה יותר מ-10 דקות? רשמו שורה ב<b>יומן התקלות</b> (המסמך האישי במטלה "הגשה סופית"): מה קרה, ואיך פתרתם.';
+  rule.innerHTML = '📏 <b>חוק 3 השלבים</b> (מהמדריך ללומד העצמאי, בשיעור 0):<br><b>1. בדיקה עצמית</b> – חוזרים להסבר (לשלב המתאים כאן או לסרטון) ובודקים אות-אות – למשל עם הרשימה הזו. רוב התקלות הן טעויות הקלדה פשוטות!<br><b>2. המנטור או המחברת</b> – מדביקים את הודעת השגיאה למנטור של הקורס, או שואלים את מחברת הנושא בצ׳אט.<br><b>3. חבר/ת למידה</b> – מתייעצים עם תלמיד/ה שכבר פתר/ה בעיה דומה.<br>🧑‍🏫 פונים למורה רק אחרי 3 השלבים, ומצרפים: צילום מסך של השגיאה, ושורה אחת על מה כבר ניסיתם.<br>✍️ התקלה לקחה יותר מ-10 דקות? רשמו שורה ב<b>יומן התקלות</b> (המסמך האישי במטלה "הגשה סופית"): הודעת השגיאה והפתרון.';
   dd.appendChild(rule);
   askBox(dd, {summary: '🆘 עברתם על הכול ועדיין לא עובד? ככה שואלים את המנטור', route: 'mentor'});
 }
@@ -582,11 +582,11 @@ function trouble(el, o){
    <span data-asg="N"></span> anywhere in a page becomes a short "📌 מטלה N · עד יום ה׳ 22/10" chip. */
 const ASSIGN = {
   0: {label:'משימת הפתיחה', title:'מתרגלים ללמוד נכון עם AI', due:'', est:''},
-  1: {title:'התקנת סביבת העבודה Visual Studio 2022', due:'', est:'כשעה וחצי'},
-  2: {title:'האתר הראשון שלי (המשפחה שלי או נושא לבחירה)', due:'', est:'כ-3.5 שעות'},
-  3: {title:'בחירת נושא הפרויקט והשראה', due:'', est:'כשעה'},
-  4: {title:'בניית דפי הפרויקט המעוצבים', due:'', est:'כ-6 שעות'},
-  5: {title:'הגשה 1: האתר המעוצב', due:'', est:'כ-12 שעות', graded:true},
+  1: {title:'התקנת סביבת העבודה Visual Studio 2022', due:'2026-10-22', est:'כשעה וחצי'},
+  2: {title:'האתר הראשון שלי (המשפחה שלי או נושא לבחירה)', due:'2026-10-29', est:'כ-3.5 שעות'},
+  3: {title:'בחירת נושא הפרויקט והשראה', due:'2026-11-05', est:'כשעה'},
+  4: {title:'בניית דפי הפרויקט המעוצבים', due:'2026-11-19', est:'כ-6 שעות'},
+  5: {title:'הגשה 1: האתר המעוצב', due:'2026-12-24', est:'כ-12 שעות', graded:true},
   final: {label:'ההגשה הסופית', title:'הפרויקט ותיק הפרויקט', due:'', est:'', graded:true}
 };
 /* 🏠 topic home: every lesson returns to the home page of ITS topic (html-css.html, later javascript.html...). <body data-home="x.html" data-home-name="..."> overrides. */
@@ -596,7 +596,7 @@ const TOPIC_HOME = [(document.body && document.body.dataset.home) || 'html-css.h
   a.innerHTML = '🏠 <span>כל השיעורים</span>'; b.parentNode.insertBefore(a, b); };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', add); else add(); })();
 const asgName = n => (ASSIGN[n] && ASSIGN[n].label) || ('מטלה ' + n);
-/* the dates come ONLY from assets/cohort.js (the one file to edit for a new cohort) */
+/* the dates come from assets/cohort.js (the one file to edit for a new cohort); the dates above are only a fallback */
 try { const C = window.COHORT && window.COHORT.due; if (C) Object.keys(C).forEach(n => { const ok = /^\d{4}-\d{2}-\d{2}$/.test(C[n] || ''); if (ok || ASSIGN[n]) (ASSIGN[n] = ASSIGN[n] || {title:'', est:''}).due = ok ? C[n] : ''; }); } catch(e){}
 const HE_DAYS = ['ראשון','שני','שלישי','רביעי','חמישי','שישי','שבת'];
 function asgDate(n){
@@ -921,7 +921,7 @@ function celebrateNow(el, level, o){
     const big = level === 'big' || level === 'done';
     const layer = document.createElement('div'); layer.className = 'cel-layer'; layer.setAttribute('aria-hidden', 'true');
     layer.style.left = x + 'px'; layer.style.top = y + 'px'; document.body.appendChild(layer);
-    const st = SFX.streak(); const cheer = o.cheer || ((!big && st >= 3) ? (st === 5 ? '🔥 5 ברצף – בוער!' : st === 10 ? '🔥🔥 10 ברצף – אליפות!' : '🔥 ' + st + ' ברצף!') : big ? fromBag('b', CHEERS_B) : Math.random() < 0.08 ? fromBag('r', CHEERS_R) : fromBag('s', CHEERS_S)); lastCheer = cheer;
+    const st = SFX.streak(); const cheer = o.cheer || ((!big && st >= 3) ? (st === 5 ? '🔥 5 ברצף – בוער!' : st === 10 ? '🔥🔥 10 ברצף – אליפות!' : st % 5 === 0 ? '🏆 ' + st + ' ברצף – בלתי עציר!' : '🔥 ' + st + ' ברצף!') : big ? fromBag('b', CHEERS_B) : Math.random() < 0.08 ? fromBag('r', CHEERS_R) : fromBag('s', CHEERS_S)); lastCheer = cheer;
     const bubble = document.createElement('div'); bubble.className = 'cel-cheer' + (big ? ' big' : ''); bubble.textContent = cheer; layer.appendChild(bubble);
     { const bw = bubble.offsetWidth, vw = document.documentElement.clientWidth || innerWidth; layer.style.left = Math.min(scrollX + vw - bw / 2 - 8, Math.max(scrollX + bw / 2 + 8, x)) + 'px'; }
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1105,8 +1105,8 @@ function sequence(ctrls, o){
 }
 
 /* ---------- sounds: short synthesized feedback (Web Audio – no files, nothing to download).
-   'ok'  = a bright two-note "ding" that climbs a clear step (pentatonic) with every correct answer in a row (streak);
-           from 3 in a row a third sparkle note is added and the cheer bubble says "🔥 N ברצף!",
+   'ok'  = a bright two-note "ding" that climbs a step with every correct answer in a row (streak) – endlessly (Shepard tone, see SFX);
+           from 3 in a row a third sparkle note is added and the cheer bubble says "🔥 N ברצף!"; every 5 in a row a bell run + a milestone cheer,
    'big' = a short rising arpeggio (topic / all tasks done),
    'bad' = a soft, low two-note "hmm" – quiet and never harsh (feedback on the task, not a punishment).
    On by default; one small 🔊 button in the top bar mutes it on every lesson (localStorage 'course-sound'). ---------- */
@@ -1141,14 +1141,27 @@ function tickSounds(){
 }
 const SFX = (() => {
   let ctx = null, combo = 0, out = null, cur = null;
-  const STEPS = [0, 2, 4, 7, 9, 12, 14, 16];   /* pentatonic climb: each step is clearly higher */
+  const STEPS = [0, 2, 4, 7, 9, 12, 14, 16];   /* pentatonic climb for a checklist ('tick'): each step is clearly higher */
+  /* The streak of right answers ('ok') climbs FOREVER, using the Shepard tone – the "endless staircase" of sound (Roger Shepard, 1964).
+     Every note is one pitch played in several octaves at once, under a FIXED bell-shaped loudness curve. When the note climbs,
+     its top copy gets quieter and a new bottom copy fades in – so each answer sounds higher than the one before, at 5 in a row and
+     at 50 in a row, and the sound never becomes shrill. The ladder is pentatonic (0 2 4 7 9: five steps per octave); after five
+     steps the notes are the same as at the start, but the ear still hears "up". Every 5 in a row (= the cheer bubble's milestone)
+     a short bell run is added on top. */
+  const PENTA = [0, 2, 4, 7, 9], ladder = n => PENTA[n % 5] + 12 * Math.floor(n / 5);
+  function shep(c, semi, t0, dur, vol, type, glide, centre){
+    const pc = ((semi % 12) + 12) % 12, f0 = 659.25 * Math.pow(2, pc / 12), mid = Math.log2(centre || 880), parts = [];
+    for (let j = -3; j <= 3; j++) { const f = f0 * Math.pow(2, j), d = (Math.log2(f) - mid) / 0.8; parts.push([f, Math.exp(-d * d / 2)]); }
+    const sum = parts.reduce((a, x) => a + x[1], 0);
+    parts.forEach(x => { if (x[1] / sum > 0.01 && x[0] < 9000) tone(c, x[0], t0, dur, vol * x[1] / sum, type, glide ? x[0] * glide : 0); });
+  }
   /* ONE sound at a time. Every sound plays through its own volume knob ("group"). A new sound fades the previous one out (50 ms)
      instead of piling on top of it; while a strong sound is in its first moments (HOLD), a weaker one is simply not played.
      So "last answer + whole block finished" is heard as one clean finale, never as two sounds fighting.
      The vocabulary, from light to festive:  tick < check < ok (climbs with the streak) < done < big < finale (+ sparkle when perfect). */
   const PRIO = {tick:1, bad:2, ok:2, on:2, check:2, egg:3, done:3, big:3, finale:4};
   const HOLD = {egg:0.3, done:0.35, big:0.4, finale:0.8};   /* seconds; every other sound: 0.12 (so a tick fired right after an answer tone never cuts it) */
-  const LEN = {tick:0.12, bad:0.4, ok:0.6, on:0.3, check:0.5, egg:0.75, done:0.85, big:1, finale:1.25};
+  const LEN = {tick:0.12, bad:0.4, ok:0.75, on:0.3, check:0.5, egg:0.75, done:0.85, big:1, finale:1.25};
   const qa = (kind, what) => { if (window.__sfxLog) window.__sfxLog.push([kind, what, Date.now()]); };   /* QA hook, like __ansLog */
   const isOn = () => { try { return localStorage.getItem('course-sound') !== 'off'; } catch(e){ return true; } };
   function ac(){
@@ -1214,10 +1227,12 @@ const SFX = (() => {
         tone(c, 2093, h + 0.16, 0.42, 0.03, 'sine', 3135.96);
         if (opt && opt.perfect) { tone(c, 2637.02, h + 0.42, 0.16, 0.035, 'sine'); tone(c, 3135.96, h + 0.54, 0.16, 0.035, 'sine'); tone(c, 4186.01, h + 0.66, 0.3, 0.03, 'sine'); }
       } else if (kind === 'ok') {
-        const k = ST(STEPS[Math.min(combo - 1, STEPS.length - 1)]);
-        tone(c, 659.25 * k, t, 0.16, 0.13, 'triangle'); tone(c, 1318.5 * k, t, 0.10, 0.03, 'sine');
-        tone(c, 987.77 * k, t + 0.085, 0.30, 0.13, 'triangle'); tone(c, 1975.5 * k, t + 0.085, 0.18, 0.03, 'sine');
-        if (combo >= 3) tone(c, 1318.5 * k, t + 0.17, 0.35, 0.07, 'sine', 1318.5 * k * 1.5);
+        /* two notes a fifth apart, one step higher on the endless staircase for every answer in the streak (see shep above) */
+        /* during the first 10 answers the bell itself also moves up a little (brighter = more exciting), then it stays – the staircase goes on */
+        const s = ladder(Math.max(0, combo - 1)), mid = 740 * Math.pow(2, 0.6 * Math.min(Math.max(0, combo - 1), 9) / 9);
+        shep(c, s, t, 0.16, 0.17, 'triangle', 0, mid); shep(c, s + 7, t + 0.085, 0.30, 0.17, 'triangle', 0, mid);
+        if (combo >= 3) shep(c, s + 12, t + 0.17, 0.35, 0.075, 'sine', 1.5, 1900);
+        if (combo >= 5 && combo % 5 === 0) [s + 7, s + 12, s + 19].forEach((n, i) => shep(c, n, t + 0.27 + i * 0.07, i === 2 ? 0.4 : 0.15, 0.06, 'sine', 0, 2300));
       } else if (kind === 'big') {
         [523.25, 659.25, 783.99, 1046.5, 1318.5].forEach((f, i) => { tone(c, f, t + i * 0.075, i === 4 ? 0.55 : 0.2, 0.12, 'triangle'); tone(c, f * 2, t + i * 0.075, 0.12, 0.025, 'sine'); });
         tone(c, 2093, t + 0.4, 0.5, 0.035, 'sine', 2637);
@@ -1278,6 +1293,9 @@ function findEgg(id){
 }
 function initEggs(eggs, consoleLines){
   EGGS = eggs || []; state.eggTotal = EGGS.length;
+  /* an egg that was removed from the lesson no longer counts (found / hints of unknown ids are dropped) */
+  Object.keys(found).forEach(id => { if (!EGGS.some(x => x.id === id)) { delete found[id]; delete hints[id]; } });
+  document.querySelectorAll('.eggn').forEach(x => x.textContent = EGGS.length);
   window.__egg = findEgg;
   $('#eggBtn').addEventListener('click', () => { paintEggs(); $('#codeMsg').textContent = ''; try { $('#eggDlg').showModal(); } catch(e){ $('#eggDlg').setAttribute('open',''); } });
   $('#eggClose').addEventListener('click', () => $('#eggDlg').close());
@@ -1285,7 +1303,7 @@ function initEggs(eggs, consoleLines){
   $('#eggList').addEventListener('click', e => { const b = e.target.closest('[data-hint]'); if (b) { hints[b.dataset.hint] = true; state.hints = hints; save(); paintEggs(); } });
   $('#codeForm').addEventListener('submit', e => {
     e.preventDefault();
-    let v = ''; try { v = btoa($('#codeIn').value.trim().toUpperCase()); } catch(err){}
+    let v = ''; try { v = btoa($('#codeIn').value.trim().toUpperCase().replace(/\.(JPG|JPEG|PNG)$/, '')); } catch(err){}
     const egg = EGGS.find(x => x.code && x.code === v);
     if (egg) { const was = found[egg.id]; findEgg(egg.id); $('#codeMsg').innerHTML = was ? 'את הביצה הזו כבר מצאתם 🙂' : '✔ נכון!'; $('#codeIn').value = ''; }
     else $('#codeMsg').innerHTML = '<span class="err">הקוד לא נכון. בדקו שוב 🙂</span>';
