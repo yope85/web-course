@@ -815,7 +815,7 @@ dotnet dev-certs https --trust
     <p>עשיתם את הצעדים בפרויקט שלכם, והדף לא נפתח? זה קורה לכולם, במיוחד בהתחלה. בחרו <b>מה אתם רואים</b> – ותקבלו רשימת בדיקה, לפי הסדר:</p>
     <div class="ctrls"><div class="seg" id="docSeg"></div></div>
     <div class="docout" id="docOut"></div>
-    <div class="tip">💡 אחרי כל תיקון – שומרים (Ctrl+S) ומרעננים בדפדפן (Ctrl+F5). עדיין תקועים? <b>חוק 3 השלבים</b>: <b>1.</b> מנסים לבד 10–15 דקות – עם הרשימה הזו. <b>2.</b> חוזרים להסבר – לשלב המתאים כאן, לסרטון או למצגת. <b>3.</b> שואלים את המנטור – ומבקשים רמז, לא פתרון.</div>
+    <div class="tip">💡 אחרי כל תיקון – שומרים (Ctrl+S) ומרעננים בדפדפן (Ctrl+F5). עדיין תקועים? <b>כלל הזהב</b> (משיעור 0): <b>1.</b> מנסים לבד 10–15 דקות – עם הרשימה הזו. <b>2.</b> חוזרים להסבר – לשלב המתאים כאן, לסרטון או למצגת. <b>3.</b> שואלים את המנטור – ומבקשים רמז, לא פתרון.</div>
   </article>
   <article class="spread cpstep">
     <h3>🎯 הבנתם את כל מה שלמדתם עד עכשיו?</h3>
@@ -936,7 +936,7 @@ class Browser {
   blank(msg){ return this.show('<div class="blankpg">' + msg + '</div>'); }
 }
 /* the ready-made template site (what you see after ▶) */
-const TPL_SITE = '<div class="nb"><b>MyFirstWeb</b><a href="#">Home</a><a href="#">Privacy</a></div>\n<div class="ct"><h1>Welcome</h1><p>Learn about <a href="#">building Web apps with ASP.NET Core</a>.</p></div>\n<div class="ft">© 2026 - MyFirstWeb - <a href="#">Privacy</a></div>';
+const TPL_SITE = '<div class="nb"><b>MyFirstWeb</b><a href="#">Home</a><a href="#">Privacy</a></div>\n<div class="ct"><h1>Welcome</h1><p>Learn about <a href="#">building Web apps with ASP.NET Core</a>.</p></div>\n<div class="ft">© ' + new Date().getFullYear() + ' - MyFirstWeb - <a href="#">Privacy</a></div>';
 const TPL_CSS = 'body{direction:ltr;text-align:left;font-family:Arial,sans-serif;padding:0;font-size:14px}.nb{display:flex;gap:14px;align-items:center;padding:8px 12px;border-bottom:1px solid #ddd;box-shadow:0 2px 4px rgba(0,0,0,.05)}.nb b{font-weight:500;font-size:16px}.nb a{color:#333;text-decoration:none}.ct{text-align:center;padding:16px 12px 24px}.ct h1{font-weight:300;font-size:32px;margin:0 0 8px}.ct a,.ft a{color:#1b6ec2}.ft{border-top:1px solid #ddd;color:#6c757d;font-size:12px;padding:8px 12px}';
 
 /* ---------- a drawn console window (the server). Ctrl+C stops it, like a real console app ---------- */
