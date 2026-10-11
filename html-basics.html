@@ -119,7 +119,7 @@
       </div>
     </div>
     <p>כבר הכרתם: תגית פותחת וסוגרת, השלד (head להגדרות, body למה שרואים), title על הלשונית, meta charset לעברית תקינה, ו-<code>dir="rtl"</code> לכיוון מימין לשמאל.</p>
-    <p>(בתוך wwwroot יש גם את css, js, lib ו-favicon.ico – התבנית יצרה אותם, ולא נוגעים בהם. תיקייה בשם Img עוד אין – ניצור אותה היום, בנושא התמונות.)</p>
+    <p>(בתוך wwwroot יש גם את css, js, lib ו-favicon.ico – Visual Studio יצר אותם עם הפרויקט, ולא נוגעים בהם. תיקייה בשם Img עוד אין – ניצור אותה היום, בנושא התמונות.)</p>
     <p>הרצתם עם ה-▶ הירוק, והדף נפתח בדפדפן בכתובת <code style="white-space:normal;overflow-wrap:anywhere">https://localhost:&lt;port&gt;/HTML/index.html</code> (port הוא מספר שמשתנה מפרויקט לפרויקט).</p>
     <p><b>מה בשיעור היום?</b></p>
     <ol>
@@ -137,7 +137,7 @@
 <section class="topic" data-id="anatomy" data-icon="🔬" data-title="איך בנויה תגית">
   <article class="spread act">
     <h3>מה יש בתוך תגית?</h3>
-    <p>HTML בנויה מ<b>תגיות</b> (tags). לרוב התגיות יש <b>תגית פותחת</b>, <b>תוכן</b>, ו<b>תגית סוגרת</b>. בתגית הפותחת אפשר להוסיף <b>מאפיינים</b> (attributes) – מידע נוסף על התגית.</p>
+    <p>HTML בנויה מ<b>תגיות</b> (tags). לרוב התגיות יש <b>תגית פותחת</b>, <b>תוכן</b>, ו<b>תגית סוגרת</b>. בתגית הפותחת אפשר להוסיף <b>מאפיינים</b> (attributes) – מידע נוסף על התגית. כבר כתבתם שניים בשיעור 1: <code>lang="he"</code> ו-<code>dir="rtl"</code>, בתגית html.</p>
     <p>הנה קישור אמיתי, מפורק לחלקים (את הקישורים עצמם נלמד בהמשך – כרגע רק מסתכלים על החלקים). <b>לחצו על כל חלק</b> כדי לראות איך קוראים לו:</p>
     <div class="tagline" id="ana"></div>
     <div class="anainfo" id="anaInfo">👆 לחצו על חלק כלשהו בשורה.</div>
@@ -147,8 +147,9 @@
       <p>כל מאפיין הוא זוג: <b>שם</b> – מה רוצים לקבוע, ו<b>ערך</b> – למה. <code>href="menu.html"</code> פירושו "היעד הוא menu.html".</p>
       <p>ולמה צריך תגית סוגרת? כי הדפדפן צריך לדעת איפה התוכן נגמר. כל מה שבין הפותחת לסוגרת – שייך לתגית. בקישור: כל זה לחיץ.</p>
     </details>
-    <div class="bridge">מאפיין עובד כמו השמה ב-C#: <code>string page = "menu.html";</code> – שם, סימן <code>=</code>, וערך. ב-HTML: <code>href="menu.html"</code>. הבדל אחד: בקורס כותבים את הערך <b>תמיד</b> בתוך מירכאות, גם כשהוא מספר (<code>width="150"</code>).</div>
+    <div class="bridge">מאפיין נראה כמו השמה ב-C#: <code>string page = "menu.html";</code> – שם, סימן <code>=</code>, וערך. ב-HTML: <code>href="menu.html"</code>. שני הבדלים: (1) ב-C# את שם המשתנה <b>ממציאים אתם</b>. ב-HTML שמות המאפיינים <b>קבועים מראש</b> – לקישור יש href, ולא שם אחר שתבחרו. (2) בקורס כותבים את הערך <b>תמיד</b> בתוך מירכאות, גם כשהוא מספר (<code>width="150"</code>).</div>
     <div class="tip">💡 בשמות של תגיות ומאפיינים, HTML לא מבדילה בין אותיות גדולות לקטנות: <code>&lt;H1&gt;</code> ו-<code>&lt;h1&gt;</code> עובדות אותו דבר. אבל המוסכמה היא לכתוב תמיד <b>באותיות קטנות</b> – וכך נכתוב בקורס.</div>
+    <div class="tip">💡 ושגיאת כתיב בשם של מאפיין – למשל hreff במקום href? <b>לא תופיע שגיאה.</b> הדפדפן מתעלם ממאפיין שהוא לא מכיר – והקישור פשוט לא יעבוד.</div>
     <div class="trap">מירכאות "חכמות" (<code>“</code> ו-<code>”</code>) – כאלה שמגיעות בהעתקה מ-Word או ממצגת – שוברות את המאפיין, והדפדפן לא מבין אותו. בקוד כותבים רק את המירכאות הישרות של המקלדת: <code>"</code>.</div>
     <details class="more"><summary>🚀 להעמקה: חייבים מירכאות?</summary>
       <p>האמת: כשבערך אין רווחים וסימנים מיוחדים, הדפדפן מבין אותו גם בלי מירכאות – <code>href=menu.html</code> עובד. אבל ערך עם רווח נשבר: ב-<code>href=my menu.html</code> הדפדפן חושב שהערך הוא רק my, ושהמילה שאחרי הרווח היא שם של מאפיין חדש.</p>
@@ -158,7 +159,7 @@
   </article>
   <article class="spread">
     <h3>תגית בתוך תגית (nesting)</h3>
-    <p>מותר לשים תגית <b>בתוך</b> תגית. לזה קוראים <b>קינון</b> (nesting). כאן נשתמש בשתי תגיות חדשות וקטנות: <code>b</code> – טקסט <b>מודגש</b> (bold), ו-<code>i</code> – טקסט <i>נטוי</i> (italic).</p>
+    <p>מותר לשים תגית <b>בתוך</b> תגית. לזה קוראים <b>קינון</b> (nesting). כבר עשיתם את זה בשיעור 1: h1 ו-p נמצאות בתוך body, ו-body בתוך html. כאן נשתמש בשתי תגיות חדשות וקטנות: <code>b</code> – טקסט <b>מודגש</b> (bold), ו-<code>i</code> – טקסט <i>נטוי</i> (italic).</p>
     <p>הכלל: <b>מה שנפתח אחרון – נסגר ראשון</b>.</p>
     <div class="bridge">בדיוק כמו סוגריים בחשבון ובקוד C#: ב-<code>(2 * (3 + 4))</code> הסוגר שנפתח אחרון נסגר ראשון. וב-C#, אם כתבתם if בתוך לולאה – ה-<code>}</code> של ה-if בא לפני ה-<code>}</code> של הלולאה.</div>
     <div class="ctrls"><div class="seg" id="nestSeg"></div></div>
@@ -218,7 +219,7 @@
       <div class="pane"><div class="pane-h"><span class="dot"></span>מה רואים בדפדפן</div><div id="skelHost"><div class="host"></div></div></div>
     </div>
     <div class="what" id="skelWhat"></div>
-    <div class="bridge">זה כמו התבנית שמקבלים בכל תוכנית C# חדשה: יש <code>class</code> ובתוכו <code>Main</code>, ואת הקוד שלכם כותבים בתוך Main. כאן – את התוכן כותבים בתוך body, וכל השאר הוא מסגרת קבועה.</div>
+    <div class="bridge">זה כמו הקוד ההתחלתי שמקבלים בכל תוכנית C# חדשה: יש <code>class</code> ובתוכו <code>Main</code>, ואת הקוד שלכם כותבים בתוך Main. כאן – את התוכן כותבים בתוך body, וכל השאר הוא מסגרת קבועה.</div>
     <div class="tip">💡 חלק מהשלד נשכח? זה בסדר גמור – בדיוק בשביל זה חוזרים. ההסבר המלא נמצא בשיעור 1: <a href="intro.html#notepad-7">השלד המלא – כל החלקים יחד</a>.</div>
   </article>
   <article class="spread">
@@ -279,14 +280,24 @@
   </article>
   <article class="spread">
     <h3>Enter בקוד = שורה חדשה בדף?</h3>
-    <p>רוצים לכתוב בדף את הכתובת של הפיצרייה, בשלוש שורות. כתבנו בקוד שלוש שורות, עם Enter אחרי כל אחת.</p>
+    <p>רוצים לכתוב בדף את הכתובת של הפיצרייה, בשלוש שורות. כתבנו אותה בתוך <b>פסקה אחת</b>, ולחצנו Enter אחרי כל שורה:</p>
+    <div class="codeblock"><pre data-code="html">
+&lt;p&gt;
+    רחוב הנמל 5
+    אשקלון
+    טלפון: 08-1234567
+&lt;/p&gt;
+</pre></div>
     <div class="predict" id="pBr"></div>
     <div id="brDemo" hidden>
       <div class="ctrls"><div class="seg" id="brSeg"></div></div>
       <div id="br"></div>
       <div class="what">הדפדפן מתייחס ל-Enter ולרצף של רווחים בקוד כאל <b>רווח אחד</b>. כדי לרדת שורה כותבים <code>&lt;br /&gt;</code> (מהמילה break – שבירה).</div>
+      <p><b>רגע – ועד עכשיו?</b> כשכתבתם h1 ו-p בשורות נפרדות בקוד, הם כן הופיעו בשורות נפרדות. נכון – אבל לא בגלל ה-Enter: כל כותרת וכל פסקה מתחילה שורה חדשה <b>בעצמה</b>. גם שתי פסקאות שכתובות באותה שורה בקוד יופיעו אחת מתחת לשנייה. מה שקובע הוא התגיות – אף פעם לא ה-Enter.</p>
       <div class="bridge">ב-C#, שתי פקודות <code>Console.Write</code> בשתי שורות בקוד מדפיסות באותה שורה במסך. כדי לרדת שורה צריך <code>Console.WriteLine</code>. גם כאן: Enter בקוד הוא לא ירידת שורה בדף – בשביל זה יש <code>&lt;br /&gt;</code>.</div>
-      <p><b>שימו לב:</b> ל-br <b>אין תגית סוגרת</b>. אין לה תוכן – אז אין מה לסגור. לתגיות כאלה קוראים <b>תגיות ריקות</b> (void). הלוכסן לפני ה-<code>&gt;</code> לא חובה, אבל Visual Studio כותב אותו – וגם אנחנו.</p>
+      <p><b>שימו לב:</b> ל-br <b>אין תגית סוגרת</b>. אין לה תוכן – אז אין מה לסגור. לתגיות כאלה קוראים <b>תגיות ריקות</b> (void) – כמו meta משיעור 1. הלוכסן לפני ה-<code>&gt;</code> לא חובה, אבל Visual Studio כותב אותו – וגם אנחנו.</p>
+      <div class="trap">איפה הלוכסן? <b>בסוף</b>, לפני ה-<code>&gt;</code>. לוכסן בהתחלה, כמו ב-<code>&lt;/b&gt;</code>, שייך לתגית סוגרת – ול-br אין כזו. לכן לא כותבים <code>&lt;/br&gt;</code> אף פעם. ועוד זוג שקל לבלבל: <code>&lt;b&gt;</code> מדגישה, ו-<code>&lt;br /&gt;</code> יורדת שורה.</div>
+      <div class="tip">💡 <b>br או p?</b> שורות ששייכות לאותו עניין – כמו שורות של כתובת – מפרידים ב-br. עניין חדש – פסקה חדשה. רואים גם הבדל: בין שתי פסקאות הדפדפן משאיר רווח, ו-br רק יורד שורה. כמו בוואטסאפ: br הוא ירידת שורה בתוך אותה הודעה; p חדשה היא הודעה חדשה.</div>
     </div>
   </article>
   <article class="spread">
@@ -303,7 +314,7 @@
     <div id="nbspDemo" hidden>
       <div id="nbsp"></div>
       <div class="what">בשורה הראשונה הקלדנו שמונה רווחים – והדפדפן צמצם אותם לרווח <b>אחד</b>. זה אותו כלל שכבר פגשתם עם Enter: בשביל הדפדפן, כל רצף של רווחים וירידות שורה בקוד הוא רווח אחד. בשורה השנייה כתבנו ארבע פעמים <code>&amp;nbsp;</code> – וכל אחד מהם הוא רווח אמיתי, שלא נעלם.</div>
-      <p><b>שימו לב:</b> <code>&amp;nbsp;</code> הוא <b>לא תגית</b> – אין בו סוגריים משולשים. הוא <b>ישות</b> (entity): קוד של תו מיוחד, שמתחיל ב-<code>&amp;</code> ונגמר ב-<code>;</code>. nbsp הם ראשי תיבות של non-breaking space – רווח שלא נשבר.</p>
+      <p><b>שימו לב:</b> <code>&amp;nbsp;</code> הוא <b>לא תגית</b> – אין בו סוגריים משולשים. הוא <b>ישות</b> (entity): קוד של תו מיוחד, שמתחיל ב-<code>&amp;</code> ונגמר ב-<code>;</code>. nbsp הם ראשי תיבות של non-breaking space – רווח שלא נשבר. למה "לא נשבר"? כי הדפדפן אף פעם לא יורד שורה במקום הזה: שתי המילים שמשני הצדדים שלו נשארות יחד, באותה שורה.</p>
     </div>
     <details><summary>להרחבה: עוד ישויות שימושיות</summary>
       <table>
@@ -366,6 +377,7 @@
     <div class="ctrls"><div class="seg" id="l2seg"></div></div>
     <div id="l2"></div>
     <div class="what" id="l2what"></div>
+    <p><b>ובין הדפים של האתר שלכם?</b> בלי target. אחרת כל לחיצה פותחת עוד לשונית של אותו אתר.</p>
     <div class="tip">💡 במצגת כתוב <code>_target</code> – הנכון הוא <code>_blank</code>. ברירת המחדל, בלי target בכלל, היא <code>_self</code> – אותה לשונית.</div>
   </article>
   <article class="spread act">
@@ -384,8 +396,9 @@
   <article class="spread">
     <h3># ו-id</h3>
     <p>בקוד שלמטה יש שני דברים חדשים: לכותרת "מחירון" יש מאפיין חדש בשם <code>id</code>, ולקישור הראשון יש href שמתחיל בסולמית (<code>#</code>) – במקום שם של קובץ.</p>
+    <p><b>id</b> (מהמילה identifier – מזהה) הוא <b>שם ייחודי</b> שנותנים לתגית אחת בדף. את השם <b>בוחרים אתם</b> – כאן בחרנו prices (מחירים).</p>
     <details class="more"><summary>🐢 רוצים הסבר לאט יותר?</summary>
-      <p><b>id</b> (מהמילה identifier – מזהה) הוא <b>שם ייחודי</b> שנותנים לתגית אחת בדף – כמו שלט עם שם על דלת. ב-<code>&lt;h2 id="prices"&gt;</code> קראנו לכותרת "מחירון" בשם prices.</p>
+      <p>חשבו על id כמו על <b>שלט עם שם על דלת</b>. ב-<code>&lt;h2 id="prices"&gt;</code> תלינו על הכותרת "מחירון" שלט עם השם prices.</p>
       <p>עד עכשיו כתבנו ב-href שם של קובץ, כמו menu.html. כאן אין שם קובץ – רק סולמית ואחריה השם prices. מה הדפדפן יעשה עם זה? נסו לנחש.</p>
     </details>
     <div class="predict" id="pJump"></div>
@@ -397,6 +410,7 @@
         <li>נותנים לתגית היעד <b>שם ייחודי</b> עם המאפיין id – למשל <code>&lt;h2 id="prices"&gt;</code> לכותרת של המחירון.</li>
         <li>בקישור כותבים סולמית ואת אותו השם – <code>href="#prices"</code> – בלי רווח ביניהם.</li>
       </ol>
+      <p>את השם בוחרים כמו שם של משתנה: מקובל באנגלית, ובלי רווחים. בקישור כותבים אותו <b>בדיוק אותו דבר</b>, כולל אותיות גדולות וקטנות: קישור אל <code>#Prices</code> לא ימצא את <code>id="prices"</code> – והדף לא יזוז.</p>
       <details class="more"><summary>🐢 צעד אחר צעד: מה הדפדפן עושה כשלוחצים?</summary>
         <ol>
           <li>הוא רואה <b>סולמית</b>: "לא מחפשים דף אחר – מחפשים מקום <b>בדף הזה</b>".</li>
@@ -459,14 +473,14 @@
 &lt;p&gt;&lt;a href="#top"&gt;חזרה למעלה ↑&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="practice.html"&gt;חזרה לדף התרגול&lt;/a&gt;&lt;/p&gt;
 </pre></div></li>
-      <li>עברו ל-practice.html, ומתחת לכותרת h1 הוסיפו קישור לתפריט. (<a href="#" data-go="links:3">כמו בשלב 3</a>: הדפים באותה תיקייה, אז ב-href כותבים רק menu.html.)
+      <li>עברו ל-practice.html, ומתחת לכותרת h1 הוסיפו קישור לתפריט. (<a href="#" data-go="links:3">כמו בשלב 3</a>: הדפים באותה תיקייה, אז ב-href כותבים רק menu.html.) למה הקישור עטוף ב-p? קישור לא יורד שורה לבד – הוא יושב בשורה כמו מילה (<a href="#" data-go="links:1">ראיתם בשלב 1</a>). הפסקה נותנת לו שורה משלו.
         <div class="codeblock"><pre data-code="html">&lt;p&gt;&lt;a href="menu.html"&gt;לתפריט שלנו&lt;/a&gt;&lt;/p&gt;</pre></div></li>
       <li>ב-practice.html, בסוף ה-body (אחרי הכתובת), הוסיפו קישור למפה – שנפתח בלשונית חדשה:
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">&lt;p&gt;&lt;a href="https://maps.google.com" target="_blank"&gt;איך מגיעים? (מפה)&lt;/a&gt;&lt;/p&gt;</pre></div></li>
       <li>שמרו את <b>שני</b> הקבצים (בדקו שאין כוכבית ליד השמות בלשוניות), ופתחו את practice.html בדפדפן (View in Browser). עכשיו לחצו לפי הסדר: "לתפריט שלנו" &rlm;←&rlm; "למחירון ↓" &rlm;←&rlm; "חזרה למעלה ↑" &rlm;←&rlm; "חזרה לדף התרגול" &rlm;←&rlm; ולבסוף המפה.</li>
       <li>🔨 <b>שברו בכוונה:</b> ב-practice.html, בקישור לתפריט, מחקו את הסיומת <code>.html</code> מתוך ה-href – כך שיישאר רק menu. שמרו, רעננו ולחצו עליו: מקבלים דף שגיאה עם המספר 404 ("לא נמצא"). החזירו את הסיומת ושמרו.</li>
     </ol>
-    <div class="expect">מהדף שמסתיים ב-<code>/HTML/practice.html</code> הקישור מעביר לכתובת שמסתיימת ב-<code>/HTML/menu.html</code>, ועל הלשונית כתוב "התפריט – פיצה דני". "למחירון ↓" מוסיף לסוף הכתובת <code>#prices</code> – והדף גולל מטה, אל המחירון שאחרי רשימת הפיצות. (המסך שלכם גבוה מאוד, וכל הדף נכנס בו? הקטינו את החלון – ואז תראו את הקפיצה.) "חזרה למעלה ↑" מחזיר לראש הדף. המפה נפתחת <b>בלשונית חדשה</b>, ו-practice.html נשאר פתוח בלשונית שלו.</div>
+    <div class="expect">מהדף שמסתיים ב-<code>/HTML/practice.html</code> הקישור מעביר לכתובת שמסתיימת ב-<code>/HTML/menu.html</code>, ועל הלשונית כתוב "התפריט – פיצה דני". "למחירון ↓" מוסיף לסוף הכתובת <code>#prices</code> – והדף גולל מטה, אל המחירון שאחרי רשימת הפיצות. (המסך שלכם גבוה מאוד, וכל הדף נכנס בו? הקטינו את החלון – ואז תראו את הקפיצה.) "חזרה למעלה ↑" מחזיר לראש הדף. המפה נפתחת <b>בלשונית חדשה</b>, ו-practice.html נשאר פתוח בלשונית שלו. קישור שלחצתם עליו הפך מכחול לסגול? זה לא באג: כך הדפדפן מסמן קישור שכבר ביקרתם בו.</div>
     <div class="trouble" id="trLinks"></div>
   </article>
   <article class="spread cpstep">
@@ -481,6 +495,7 @@
     <h3>התגית img: תמונה בדף</h3>
     <p>תמונה מוסיפים עם התגית <code>img</code> (image – תמונה). המאפיין <code>src</code> (source – מקור) אומר <b>איפה קובץ התמונה</b>. גם img היא <b>תגית ריקה</b>, כמו br – אין לה תגית סוגרת.</p>
     <div id="i1"></div>
+    <p><b>שימו לב להבדל מ-Word:</b> התמונה לא נכנסת לתוך קובץ ה-HTML. בקובץ כתוב רק <b>איפה היא נמצאת</b>. הדפדפן קורא את השורה, ומבקש מהשרת את קובץ התמונה בבקשה נפרדת – כמו שביקש את הדף עצמו (שיעור 1). לכן קובץ תמונה שנמחק, זז או קיבל שם אחר – נעלם מהדף, גם אם בקוד לא נגעתם.</p>
     <p><b>שלושה צעדים ב-Visual Studio:</b></p>
     <ol>
       <li>ב-Solution Explorer: קליק ימני על wwwroot &rlm;←&rlm; Add &rlm;←&rlm; New Folder, ונותנים לה את השם <b>Img</b>. בפרויקט חדש אין תיקייה כזו – יוצרים אותה פעם אחת, וכל התמונות של האתר יגורו בה.</li>
@@ -511,7 +526,7 @@
       <p>הלוכסן <code>/</code> מפריד בין הצעדים. הדפדפן הולך באותו מסלול בדיוק – אתם רק כותבים לו אותו במילים.</p>
     </details>
     <div class="predict" id="pPath"></div>
-    <div class="tip">💡 <b>קיצור דרך של Visual Studio:</b> אחרי שהבנתם איך הנתיב בנוי, לא חייבים להקליד אותו. גוררים את קובץ התמונה <b>מ-Solution Explorer אל המקום בקוד</b> שבו רוצים את התמונה – ו-Visual Studio כותב לבד את התגית img, עם הנתיב הנכון. נשאר רק לבדוק שיש בה alt עם תיאור של התמונה.</div>
+    <div class="tip">💡 <b>קיצור דרך של Visual Studio:</b> אחרי שהבנתם איך הנתיב בנוי, לא חייבים להקליד אותו. גוררים את קובץ התמונה <b>מ-Solution Explorer אל המקום בקוד</b> שבו רוצים את התמונה – ו-Visual Studio כותב בעצמו את התגית img עם נתיב אל הקובץ. בדקו שהנתיב מתחיל ב-<code>../Img/</code>, כמו שלמדתם כאן – ושיש בתגית alt עם תיאור של התמונה.</div>
     <div class="tip">💡 כתבו את שם התיקייה בדיוק כמו ב-Solution Explorer: <code>Img</code>. ב-Windows גם <code>img</code> יעבוד, אבל כשהאתר יעלה לשרת אמיתי (שם בדרך כלל אותיות גדולות וקטנות כן משנות) – התמונה תישבר.</div>
   </article>
   <article class="spread">
@@ -544,7 +559,7 @@
     <ol>
       <li>הקובץ באמת נמצא בתיקייה Img? (בדקו ב-Solution Explorer)</li>
       <li>השם <b>והסיומת</b> זהים בדיוק? <code>pizza.jpg</code> ולא <code>pizza.png</code>, ולא <code>piza.jpg</code>.</li>
-      <li>הנתיב מתחיל ב-<code>../</code>? הדף בתיקייה HTML, אז קודם עולים תיקייה. (לא בטוחים בנתיב? מחקו את התגית, וגררו את התמונה מ-Solution Explorer אל הקוד – Visual Studio יכתוב אותו נכון.)</li>
+      <li>הנתיב מתחיל ב-<code>../</code>? הדף בתיקייה HTML, אז קודם עולים תיקייה. (לא בטוחים בנתיב? מחקו את התגית, וגררו את התמונה מ-Solution Explorer אל הקוד: Visual Studio כותב בעצמו את התגית img עם נתיב אל הקובץ – בדקו שהוא מתחיל ב-<code>../Img/</code>, כמו בשלב הקודם.)</li>
       <li>שם התיקייה כתוב בדיוק: <code>Img</code>?</li>
       <li>שמרתם (Ctrl+S) ורעננתם את הדפדפן?</li>
     </ol>
@@ -561,7 +576,11 @@
   </article>
   <article class="spread">
     <h3>block ו-inline: מי תופס שורה שלמה?</h3>
-    <p>יש תגיות שתופסות <b>שורה שלמה</b> – קוראים להן <b>block</b> (בלוק). ויש תגיות שיושבות <b>בתוך השורה, כמו מילה</b> – ולא תופסות את כל השורה כמו block. קוראים להן <b>inline</b> (בתוך השורה).</p>
+    <p>כבר ראיתם את זה, בלי שם: כותרות ופסקאות מתחילות תמיד בשורה חדשה, וקישור יושב בתוך המשפט כמו מילה. לשני הסוגים יש שמות:</p>
+    <ul>
+      <li><b>block</b> (בלוק) – תגית שתופסת את <b>כל רוחב הדף</b>, ולכן עומדת בשורה משלה.</li>
+      <li><b>inline</b> (בתוך השורה) – תגית שתופסת <b>רק את המקום של התוכן שלה</b>, וממשיכה באותה שורה, כמו מילה.</li>
+    </ul>
     <div class="predict" id="pKinds"></div>
     <div id="kindsDemo" hidden>
       <div class="ctrls"><div class="seg" id="kindsSeg"></div></div>
@@ -569,11 +588,14 @@
       <div class="kinds-legend"><span class="k-block" style="border-color:#2563eb">כחול, קו רציף = block</span><span class="k-inline" style="border-color:#db2777">ורוד, קו מקווקו = inline</span></div>
       <div class="what">הכחולים, עם הקו הרציף (h2, p, hr), נמתחים <b>לכל רוחב הדף</b>, גם כשהטקסט בתוכם קצר – ולכן כל אחד מתחיל בשורה חדשה. הוורודים, עם הקו המקווקו (img, b, a), תופסים <b>רק את המקום שלהם</b>, ויושבים זה ליד זה בתוך השורה. לכן שתי התמונות עמדו אחת ליד השנייה.</div>
       <table>
-        <tr><th>block – שורה שלמה</th><th>inline – בתוך השורה, כמו מילה (לא תופסת את כל השורה)</th></tr>
-        <tr><td><code>h1</code>–<code>h6</code>, <code>p</code>, <code>hr</code></td><td><code>a</code>, <code>img</code>, <code>b</code>, <code>i</code>, <code>br</code></td></tr>
+        <tr><th>block – שורה שלמה</th><th>inline – בתוך השורה, כמו מילה</th></tr>
+        <tr><td><code>h1</code>–<code>h6</code>, <code>p</code>, <code>hr</code></td><td><code>a</code>, <code>img</code>, <code>b</code>, <code>i</code></td></tr>
       </table>
+      <p><b>"שורה שלמה"</b> פירושו כל הרוחב – לא שורה אחת של טקסט: פסקה ארוכה שנשברת לחמש שורות היא עדיין block אחד.</p>
+      <div class="tip">💡 <b>ומה עם <code>&lt;br /&gt;</code>?</b> היא מורידה שורה – אז היא block? לא. הסתכלו בהדגמה על הפסקה האחרונה: יש בה br, ושתי השורות שלה נמצאות בתוך <b>מסגרת כחולה אחת</b>. br לא פתחה block חדש – היא רק הורידה את המשך הטקסט לשורה הבאה, בתוך אותה פסקה. block תופסת מקום בדף; br לא תופסת שום מקום – היא רק נקודה בטקסט שבה יורדים שורה. לכן היא נחשבת inline.</div>
+      <p><b>ומה עושים עם זה?</b> רוצים שתמונה או קישור יקבלו שורה משלהם – עוטפים אותם בפסקה (p). בכיוון ההפוך זה לא עובד: בתוך p שמים רק טקסט ותגיות inline – לא כותרת ולא פסקה אחרת.</p>
     </div>
-    <div class="bridge">כמו בחיבור: פסקה תמיד מתחילה בשורה חדשה (block), ומילה מודגשת בתוך משפט נשארת באותה שורה (inline). בשיעור 3 תלמדו לשנות את ההתנהגות הזו עם CSS – למשל להעמיד תמונה באמצע השורה.</div>
+    <div class="bridge">כמו בחיבור: פסקה תמיד מתחילה בשורה חדשה (block), ומילה מודגשת בתוך משפט נשארת באותה שורה (inline). בשיעור 3 תלמדו לשנות את ההתנהגות הזו עם CSS.</div>
   </article>
   <article class="spread act">
     <h3>🍕 הכול ביחד: האתר של פיצה דני</h3>
@@ -585,17 +607,17 @@
     <h3>💻 עכשיו אצלכם ב-Visual Studio</h3>
     <p>עכשיו תמונות אמיתיות: יוצרים בפרויקט את התיקייה Img, שמים בה תמונות, ומוסיפים אותן לשני דפי התרגול – כולל תמונה שהיא קישור.</p>
     <ol class="vsdo">
-      <li>ב-Solution Explorer: <b>קליק ימני</b> על <b>wwwroot</b> &rlm;←&rlm; <b>Add</b> &rlm;←&rlm; <b>New Folder</b> &rlm;←&rlm; כתבו <b>Img</b> (עם I גדולה) &rlm;←&rlm; Enter. בפרויקט חדש אין תיקייה כזו – בתבנית יש רק css, js ו-lib – ולכן יוצרים אותה.</li>
+      <li>ב-Solution Explorer: <b>קליק ימני</b> על <b>wwwroot</b> &rlm;←&rlm; <b>Add</b> &rlm;←&rlm; <b>New Folder</b> &rlm;←&rlm; כתבו <b>Img</b> (עם I גדולה) &rlm;←&rlm; Enter. בפרויקט חדש אין תיקייה כזו – בפרויקט ההתחלתי ש-Visual Studio יצר יש רק css, js ו-lib – ולכן יוצרים אותה.</li>
       <li>שמרו במחשב 2–3 תמונות של פיצה (או של כל דבר אחר). איך? באתר כלשהו: קליק ימני על תמונה &rlm;←&rlm; <bdi>Save image as</bdi> (שמירת התמונה בשם). תנו להן שמות באנגלית, בלי רווחים – למשל pizza.jpg ו-margherita.jpg. גררו אותן מסייר הקבצים של Windows אל התיקייה Img ב-Solution Explorer. שימו לב: ב-Solution Explorer רואים את השם <b>המלא</b>, עם הסיומת. כתוב שם png או jpeg? כתבו בקוד בדיוק את מה שכתוב שם.</li>
-      <li>ב-practice.html, מיד אחרי הכותרת h1, הוסיפו תמונה – עם השם של התמונה שלכם. (אפשר להקליד, ואפשר לגרור את התמונה מ-Solution Explorer אל השורה בקוד – Visual Studio כותב את התגית עם הנתיב הנכון, ואתם משלימים alt ו-width.)
-        <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">&lt;img src="../Img/pizza.jpg" alt="פיצה חמה" width="150" /&gt;</pre></div></li>
+      <li>ב-practice.html, מיד אחרי הכותרת h1, הוסיפו תמונה – עם השם של התמונה שלכם. את התמונה הראשונה <b>הקלידו בעצמכם</b> (בלי להעתיק ובלי לגרור) – כדי לוודא שהנתיב ברור לכם:
+        <div class="codeblock"><pre data-code="html">&lt;img src="../Img/pizza.jpg" alt="פיצה חמה" width="150" /&gt;</pre></div></li>
       <li>הפכו את התמונה לקישור לתפריט (<a href="#" data-go="images:6">כמו בשלב 6</a>): החליפו את שורת ה-img מצעד 3 בשלוש השורות האלה – ושוב עם השם של התמונה שלכם. שימו לב שגם ה-alt אומר עכשיו לאן הקישור מוביל:
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html" data-marks="1:new,3:new">
 &lt;a href="menu.html"&gt;
     &lt;img src="../Img/pizza.jpg" alt="פיצה חמה – לתפריט" width="150" /&gt;
 &lt;/a&gt;
 </pre></div></li>
-      <li>ב-menu.html, מיד אחרי הכותרת h1, הוסיפו שתי תמונות – כל אחת בשורה משלה בקוד, עם השמות של התמונות שלכם. (יש לכם רק תמונה אחת? כתבו אותה פעמיים.)
+      <li>ב-menu.html, מיד אחרי הכותרת h1, הוסיפו שתי תמונות – כל אחת בשורה משלה בקוד, עם השמות של התמונות שלכם. (יש לכם רק תמונה אחת? כתבו אותה פעמיים.) כאן כבר אפשר לגרור כל תמונה מ-Solution Explorer אל השורה בקוד: Visual Studio כותב בעצמו את התגית img עם נתיב אל הקובץ – בדקו שהוא מתחיל ב-<code>../Img/</code>, והשלימו alt ו-width.
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
 &lt;img src="../Img/pizza.jpg" alt="פיצה" width="90" /&gt;
 &lt;img src="../Img/margherita.jpg" alt="פיצה מרגריטה" width="90" /&gt;
@@ -627,7 +649,7 @@
       <p style="margin:10px 0 4px"><b>על איזה נושא?</b> הכי משתלם: על <b>הנושא של הפרויקט שלכם לשנה</b>, ובאותו פרויקט משיעור 1 – כך כל דף שתבנו עכשיו ייכנס גם להגשה 1. עוד לא בחרתם נושא? בחירת הנושא היא מטלה 3, והיא לוקחת בערך שעה – שווה לעשות אותה קודם (<a href="#" data-go="practice:3">הפרטים בשלב הבא</a>).</p>
       <details class="more"><summary>🧪 מעדיפים לתרגל קודם על נושא אחר – המשפחה, קבוצת ספורט, להקה? ככה עושים</summary>
         <p>גם זה בסדר גמור. רק פותחים לזה <b>פרויקט חדש</b> ב-Visual Studio, כדי שאתר התרגול לא יתערבב עם הפרויקט של השנה:</p>
-        <p>יוצרים פרויקט חדש מאותה תבנית (<a href="intro.html#vs-5">כמו בשיעור 1</a>), ובתוך wwwroot יוצרים שוב את התיקייה HTML, את הדף index.html (<a href="intro.html#page-7">כמו בשיעור 1</a>) ואת התיקייה Img. משם ממשיכים בצעדים שכאן.</p>
+        <p>יוצרים פרויקט חדש מאותו סוג (<a href="intro.html#vs-5">כמו בשיעור 1</a>), ובתוך wwwroot יוצרים שוב את התיקייה HTML, את הדף index.html (<a href="intro.html#page-7">כמו בשיעור 1</a>) ואת התיקייה Img. משם ממשיכים בצעדים שכאן.</p>
       </details>
       <div class="trap">עוד לא הגשתם את <b>מטלה 1</b> (צילום המסך של index.html עם השם שלכם)? קודם מצלמים ומגישים (<a href="intro.html#practice-2">איך – בשיעור 1</a>) – ורק אז משנים את הדף.</div>
       <ol>
@@ -683,7 +705,7 @@
         <table>
           <tr><td><code>h1</code>–<code>h6</code></td><td>כותרות, מהחשובה ביותר</td></tr>
           <tr><td><code>p</code></td><td>פסקה</td></tr>
-          <tr><td><code>&lt;br /&gt;</code></td><td>ירידת שורה</td></tr>
+          <tr><td><code>&lt;br /&gt;</code></td><td>ירידת שורה, בתוך אותה פסקה</td></tr>
           <tr><td><code>&lt;hr /&gt;</code></td><td>קו מפריד</td></tr>
           <tr><td><code>&amp;nbsp;</code></td><td>רווח שלא נעלם (ישות, לא תגית)</td></tr>
           <tr><td><code>b</code> · <code>i</code></td><td>מודגש · נטוי</td></tr>
@@ -701,7 +723,7 @@
 &lt;img src="../Img/pizza.jpg" alt="פיצה"
      width="150" /&gt;
 </pre></div>
-        <ul><li><code>../</code> = עלו תיקייה אחת (מ-HTML ל-wwwroot)</li><li>ב-Visual Studio: גוררים תמונה מ-Solution Explorer לקוד – והתגית נכתבת לבד</li><li>alt בכל תמונה. גודל: מספיק width או height</li><li>תמונה כקישור: img בתוך a</li><li>block (h, p, hr) = שורה שלמה · inline (a, img, b) = בתוך השורה, כמו מילה</li></ul></div>
+        <ul><li><code>../</code> = עלו תיקייה אחת (מ-HTML ל-wwwroot)</li><li>ב-Visual Studio: גוררים תמונה מ-Solution Explorer לקוד, והתגית נכתבת לבד – בודקים שהנתיב מתחיל ב-<code>../Img/</code>, כמו בשורה הקודמת</li><li>alt בכל תמונה. גודל: מספיק width או height</li><li>תמונה כקישור: img בתוך a</li><li>block (h, p, hr) = כל הרוחב, שורה משלה · inline (a, img, b) = רק המקום שלה, כמו מילה</li></ul></div>
       <div class="card"><h4>התמונה לא מופיעה? בודקים:</h4>
         <ul><li>הקובץ באמת בתיקייה Img</li><li>שם וסיומת זהים בדיוק</li><li>הנתיב מתחיל ב-<code>../</code></li><li>שם התיקייה בדיוק <code>Img</code></li><li>שמירה (Ctrl+S) ורענון</li></ul></div>
     </div>
@@ -836,8 +858,8 @@ let aq = Math.min(state.anaQ || 0, AQ.length);
 function paintAQ(fb){
   $('#anaQ').innerHTML = aq < AQ.length
     ? '<b>🎯 אתגר ' + (aq + 1) + ' מתוך ' + AQ.length + ':</b> ' + AQ[aq].q + (fb ? '<div class="fbk">' + fb + '</div>' : '')
-    : '🎉 <b>מצוין!</b> זיהיתם את כל החלקים של התגית. <button class="btn" type="button" id="anaAgain" style="margin-inline-start:8px">↺ שוב</button>';
-  const again = $('#anaAgain'); if (again) again.onclick = () => { aq = 0; state.anaQ = 0; save(); paintAQ(); };
+    : '🎉 <b>מצוין!</b> זיהיתם את כל החלקים של התגית.' + Course.finBadge('anaQ') + ' <button class="btn" type="button" id="anaAgain" style="margin-inline-start:8px">↺ שוב</button>';
+  const again = $('#anaAgain'); if (again) again.onclick = () => { aq = 0; state.anaQ = 0; state.anaMiss = 0; save(); paintAQ(); };
 }
 $('#ana').addEventListener('click', e => {
   const b = e.target.closest('.atok'); if (!b) return;
@@ -845,8 +867,11 @@ $('#ana').addEventListener('click', e => {
   document.querySelectorAll('#ana .atok').forEach(x => x.classList.toggle('sel', x === b));
   $('#anaInfo').innerHTML = '<b>' + a.name + '</b> – ' + a.d;
   if (aq < AQ.length) {
-    if (AQ[aq].ok === i) { aq++; state.anaQ = aq; save(); paintAQ('<span style="color:var(--ok)">✔ נכון!</span>'); Course.celebrate($('#anaQ'), aq === AQ.length ? 'big' : 'small'); }
-    else { paintAQ('<span class="err">✘ זה ' + a.name + '. נסו שוב.</span>'); Course.SFX.play('bad'); }
+    if (AQ[aq].ok === i) { aq++; state.anaQ = aq; save(); const end = aq === AQ.length;
+      /* the last challenge: one finale for the whole lab (perfect = no wrong click on the way) instead of one more answer tone */
+      if (end) Course.finale($('#anaQ'), {key: 'anaQ', perfect: !state.anaMiss, sub: AQ.length + ' מתוך ' + AQ.length + ' אתגרים'});
+      paintAQ('<span style="color:var(--ok)">✔ נכון!</span>'); if (!end) Course.celebrate($('#anaQ'), 'small'); }
+    else { state.anaMiss = 1; paintAQ('<span class="err">✘ זה ' + a.name + '. נסו שוב.</span>'); Course.SFX.play('bad'); }
   }
 });
 paintAQ();
@@ -908,8 +933,8 @@ let skq = Math.min(state.skelQ || 0, SKQ.length), skReady = false;
 function paintSKQ(fb){
   $('#skelQ').innerHTML = skq < SKQ.length
     ? '<b>🎯 זוכרים? ' + (skq + 1) + ' מתוך ' + SKQ.length + ':</b> ' + SKQ[skq].q + ' <span class="muted">(בכפתורים שמתחת)</span>' + (fb ? '<div class="fbk">' + fb + '</div>' : '')
-    : '🎉 <b>השלד יושב טוב בראש.</b> אפשר להמשיך. <button class="btn" type="button" id="skelAgain" style="margin-inline-start:8px">↺ שוב</button>';
-  const again = $('#skelAgain'); if (again) again.onclick = () => { skq = 0; state.skelQ = 0; save(); paintSKQ(); };
+    : '🎉 <b>השלד יושב טוב בראש.</b> אפשר להמשיך.' + Course.finBadge('skelQ') + ' <button class="btn" type="button" id="skelAgain" style="margin-inline-start:8px">↺ שוב</button>';
+  const again = $('#skelAgain'); if (again) again.onclick = () => { skq = 0; state.skelQ = 0; state.skelMiss = 0; save(); paintSKQ(); };
 }
 seg($('#skelSeg'), SK.map(s => ({label: esc(s.label), mono: true, v: s})), (o, i) => {
   const s = o.v;
@@ -917,8 +942,10 @@ seg($('#skelSeg'), SK.map(s => ({label: esc(s.label), mono: true, v: s})), (o, i
   skelBr.flash(!!s.tab); $('#skelHost .host').classList.toggle('hl', !!s.body);
   $('#skelWhat').innerHTML = s.t;
   if (skReady && skq < SKQ.length) {
-    if (SKQ[skq].ok === i) { skq++; state.skelQ = skq; save(); paintSKQ('<span style="color:var(--ok)">✔ נכון!</span>'); Course.celebrate($('#skelQ'), skq === SKQ.length ? 'big' : 'small'); }
-    else { paintSKQ('<span class="err">✘ זה ' + esc(s.label) + ' – ההסבר שלו מופיע מתחת לקוד. נסו שוב.</span>'); Course.SFX.play('bad'); }
+    if (SKQ[skq].ok === i) { skq++; state.skelQ = skq; save(); const end = skq === SKQ.length;
+      if (end) Course.finale($('#skelQ'), {key: 'skelQ', perfect: !state.skelMiss, sub: SKQ.length + ' מתוך ' + SKQ.length + ' שאלות'});
+      paintSKQ('<span style="color:var(--ok)">✔ נכון!</span>'); if (!end) Course.celebrate($('#skelQ'), 'small'); }
+    else { state.skelMiss = 1; paintSKQ('<span class="err">✘ זה ' + esc(s.label) + ' – ההסבר שלו מופיע מתחת לקוד. נסו שוב.</span>'); Course.SFX.play('bad'); }
   }
 }, 0);
 skReady = true; paintSKQ();
@@ -997,9 +1024,9 @@ seg($('#brSeg'), ['כמו שכתבנו', 'עם <code>&lt;br /&gt;</code>'], (o,i
 }, 0);
 predict('#pBr', {
   q: 'איך הכתובת תופיע בדפדפן?',
-  opts: ['בשלוש שורות', 'בשורה אחת', 'רק בשורה הראשונה'],
+  opts: ['בשלוש שורות, כמו בקוד', 'בשורה אחת, עם רווח בין החלקים', 'בשורה אחת, והכול דבוק בלי רווחים'],
   correct: 1,
-  why: ['ככה זה נראה בקוד – אבל הדפדפן לא מתייחס ל-Enter שבקוד.', 'הדפדפן מתייחס ל-Enter בקוד כאל רווח רגיל. הנה ההוכחה:', 'כל הטקסט יופיע – השאלה רק באיזה סידור.'],
+  why: ['ככה זה נראה בקוד – אבל שלוש השורות נמצאות בתוך פסקה אחת, ובתוך פסקה הדפדפן הופך כל Enter לרווח.', 'הדפדפן הופך כל Enter שבתוך הפסקה לרווח אחד. הנה ההוכחה:', 'Enter לא נעלם לגמרי: הדפדפן הופך אותו לרווח אחד, ולכן המילים לא נדבקות.'],
   onCorrect: () => { $('#brDemo').hidden = false; }
 });
 
@@ -1152,13 +1179,13 @@ const i6 = new Split($('#i6')).setHtml(['<p>לחצו על הפיצה כדי לר
 i6.stage.onLink = () => i6.say('👆 בדפדפן אמיתי, לחיצה על התמונה הייתה מעבירה אתכם לדף <code>menu.html</code>.');
 
 /* ---------- block & inline ---------- */
-const kinds = new Split($('#kinds')).setHtml(['<h2>המנות של היום</h2>', '<img src="../Img/margherita.jpg" alt="מרגריטה" width="80" />', '<img src="../Img/mushrooms.jpg" alt="פטריות" width="80" />', '<p>מרגריטה – <b>45 שקל</b></p>', '<hr />', '<p>פטריות – <a href="#">להזמנה</a></p>'].join('\n'));
+const kinds = new Split($('#kinds')).setHtml(['<h2>המנות של היום</h2>', '<img src="../Img/margherita.jpg" alt="מרגריטה" width="80" />', '<img src="../Img/mushrooms.jpg" alt="פטריות" width="80" />', '<p>מרגריטה – <b>45 שקל</b></p>', '<hr />', '<p>פטריות – <a href="#">להזמנה</a><br />', 'משלוח תוך 30 דקות</p>'].join('\n'));
 seg($('#kindsSeg'), ['הדף כרגיל', 'הראו לי block ו-inline'], (o,i) => kinds.stage.page.classList.toggle('kinds', i === 1), 1);
 predict('#pKinds', {
   q: 'בקוד יש שתי תמונות, כל אחת <b>בשורה נפרדת</b> בקוד. איפה הן יופיעו בדף?',
   opts: ['אחת מתחת לשנייה', 'אחת ליד השנייה'],
   correct: 1,
-  why: ['ככה מתנהגות פסקאות וכותרות (block). תמונה היא inline – כמו מילה. וזוכרים? Enter בקוד הוא רק רווח.', 'תמונה היא inline: היא יושבת בתוך השורה, כמו מילה, ולא תופסת את כל השורה כמו block. לכן התמונה הבאה ממשיכה לידה.'],
+  why: ['ככה מתנהגות פסקאות וכותרות (block). תמונה היא inline – כמו מילה. וזוכרים? Enter בקוד הוא רק רווח.', 'תמונה היא inline: היא תופסת רק את המקום שלה, כמו מילה. לכן התמונה הבאה ממשיכה לידה, באותה שורה.'],
   onCorrect: () => { $('#kindsDemo').hidden = false; }
 });
 
@@ -1179,7 +1206,10 @@ const STASKS = [
 const siteDone = state.site || {};
 $('#siteTasks').innerHTML = STASKS.map((t,i) => '<li data-t="' + t.id + '"><span class="st">' + (i+1) + '</span><span>' + t.t + '</span></li>').join('');
 function paintSite(){ STASKS.forEach((t,i) => { const li = $('#siteTasks [data-t="' + t.id + '"]'); li.classList.toggle('done', !!siteDone[t.id]); li.querySelector('.st').textContent = siteDone[t.id] ? '✔' : (i+1); }); }
-function siteTask(id){ if (!siteDone[id]) { siteDone[id] = true; state.site = siteDone; save(); paintSite(); const li = document.querySelector('#siteTasks [data-t="' + id + '"]') || $('#siteTasks'); if (li) Course.celebrate(li, "small"); } }
+function siteTask(id){ if (!siteDone[id]) { siteDone[id] = true; state.site = siteDone; save(); paintSite(); const li = document.querySelector('#siteTasks [data-t="' + id + '"]') || $('#siteTasks');
+  /* the task that completes the list: one finale for the whole lab instead of one more answer tone */
+  if (STASKS.every(t => siteDone[t.id])) Course.finale($('#siteTasks'), {key: 'site', perfect: true, title: 'כל האתר עובד!', sub: STASKS.length + ' מתוך ' + STASKS.length + ' משימות'});
+  else if (li) Course.celebrate(li, "small"); } }
 const site = new Split($('#site'), {htmlTitle:'HTML/index.html'});
 const siteBr = chrome(resultPane(site), {editable:true});
 let siteCur = 'index.html';
@@ -1455,7 +1485,7 @@ Course.assignment('#asg2', {n:2,
     '<b>דף ראשי:</b> תמונה, כותרת עם שם האתר, פסקה שמתארת את הנושא, וקישור לכל אחד מהדפים האחרים. (את רובו כבר בניתם <a href="#" data-go="practice:2">בצעד בפרויקט</a> · <a href="#" data-go="links:3">קישור לדף אחר</a> · <a href="#" data-go="images:1">התגית img</a>)',
     '<b>לפחות ארבעה דפים נוספים</b> – בכל דף: כותרת, תמונה, פסקה עם פרטים, וקישור חזרה לדף הראשי. (דף אחד כבר בניתם בצעד בפרויקט – נשארו שלושה, באותה דרך.)',
     'כל הקישורים עובדים וכל התמונות מופיעות – בדקתי בדפדפן, דף אחרי דף. (תמונה לא מופיעה? <a href="#" data-go="images:5">בודקים לפי הסדר</a>)',
-    'כתבתי ב<b>יומן התקלות</b> (בתיק הפרויקט) שורה על כל באג שלקח לי יותר מ-10 דקות, ובפרק 11 בתיק – כל מקור או כלי AI שעזר לי. (עוד אין לכם תיק פרויקט? מורידים את התבנית מהמטלה "הגשה סופית" בקלאסרום – ראו מטלה 3 למטה.)',
+    'כתבתי ב<b>יומן התקלות</b> (בתיק הפרויקט) שורה על כל באג שלקח לי יותר מ-10 דקות, ובפרק 11 בתיק – כל מקור או כלי AI שעזר לי. (עוד אין לכם תיק פרויקט? מורידים את "תבנית תיק הפרויקט" מהמטלה "הגשה סופית" בקלאסרום – ראו מטלה 3 למטה.)',
     'ארזתי את <b>כל תיקיית הפרויקט</b> לקובץ zip. (<a href="submission1.html#zip-2">איך אורזים zip – צעד אחר צעד</a>)'
   ],
   how:'בקלאסרום &rlm;←&rlm; <b>סביבת הלמידה</b> &rlm;←&rlm; הנושא <b><bdi>HTML &amp; CSS</bdi></b> &rlm;←&rlm; {name} &rlm;←&rlm; <b>הוספה או יצירה</b> &rlm;←&rlm; <b>קובץ</b> &rlm;←&rlm; מעלים את קובץ ה-zip &rlm;←&rlm; <b>הגשה</b>. בקלאסרום, במטלה, יש גם סרטון שמראה איך אורזים ומגישים. נתקעתם? פועלים לפי <b>חוק 3 השלבים</b>, ואם עדיין לא הולך – כותבים למורה תגובה פרטית במטלה.'

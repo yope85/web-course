@@ -11,6 +11,10 @@
 /* submission page – local components (engine styles stay in assets/course.css) */
 /* the engine's lesson time plan (minutes per topic) is misleading on a 4-week work page – this page has its own weekly plan */
 .timeplan{display:none}
+/* there is no video for this page, and every step here is a doing-step (all are "act") – so the after-video box is not shown */
+.videobox{display:none}
+/* the engine's per-topic time line (minutes) is as misleading here as the lesson time plan */
+#topicTime{display:none}
 .nw{white-space:nowrap}
 /* what you submit + deadline */
 .deliver{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:12px 0}
@@ -21,6 +25,8 @@
 .deadline .big{font-size:28px;font-weight:700;color:var(--accent);line-height:1.15}
 .deadline .when{font-weight:600}
 .deadline .muted{display:block}
+.facts{display:flex;flex-wrap:wrap;gap:6px 10px;margin:10px 0}
+.facts span{background:var(--surface2);border:1px solid var(--line);border-radius:99px;padding:2px 12px;font-size:15px;line-height:1.6}
 /* road to the submission */
 .road{list-style:none;padding:0;margin:10px 0}
 .road>li{display:grid;grid-template-columns:36px minmax(0,1fr);gap:12px;padding:6px 0 12px;position:relative}
@@ -37,6 +43,7 @@
 .plan td:first-child b{display:block;white-space:nowrap}
 .plan .wh{display:block;font-size:14px;color:var(--muted);line-height:1.5}
 .plan tr.cur td{background:var(--accent-soft)}
+.plan .pdates{display:block;font-size:14px;white-space:nowrap;line-height:1.5}
 .plan .here{display:inline-block;margin-top:4px;font-size:12.5px;font-weight:700;color:var(--on-accent);background:var(--accent);border-radius:99px;padding:0 8px;margin-top:2px}
 .plan tr.past td{color:var(--muted)}
 .plan tr.cur .wh{color:var(--text)}
@@ -45,6 +52,14 @@
 .meter{flex:1 1 200px;height:10px;background:var(--surface2);border-radius:99px;overflow:hidden;border:1px solid var(--line)}
 .meter i{display:block;height:100%;width:0;background:var(--ok);transition:width .3s}
 .req{list-style:none;padding:0;margin:0}
+.reqg{margin:14px 0 6px;font-size:17px}
+.reqg .muted{font-weight:500;font-size:14px}
+.req .note{font-size:14.5px;margin:2px 0 0;padding-inline-start:32px;line-height:1.6}
+.pre{list-style:none;padding:0;margin:6px 0}
+.pre li{display:flex;gap:10px;align-items:flex-start;border:1px dashed var(--line);border-radius:12px;padding:8px 12px;margin-bottom:6px;background:var(--surface)}
+.pre li.done{border-style:solid;border-color:var(--ok);background:var(--ok-soft)}
+.pre .mark{flex:0 0 22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:700;border:2px solid var(--line);margin-top:3px}
+.pre li.done .mark{background:var(--ok);border-color:var(--ok);color:var(--on-ok)}
 .req>li{border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:8px;background:var(--surface)}
 .req>li.done{border-color:var(--ok);background:var(--ok-soft)}
 .req .rh{display:flex;gap:10px;align-items:flex-start}
@@ -70,6 +85,10 @@
 .rub fieldset{border:1px solid var(--line);border-radius:12px;padding:8px 12px 12px;margin:0 0 12px;background:var(--surface);min-width:0}
 .rub legend{font-weight:700;padding:0 6px;font-size:17px}
 .rub legend .mx{font-weight:500;color:var(--muted);font-size:14px}
+.rub .grp{border:1px solid var(--line);border-radius:14px;padding:8px 10px 0;margin:0 0 12px;background:var(--surface2)}
+.rub .grp>.gh{font-weight:700;font-size:17px;margin:2px 4px 8px}
+.rub .grp>.gh .mx{font-weight:500;color:var(--muted);font-size:14px}
+.rub .grp label{background:var(--surface)}
 .rub .lv{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
 @media (max-width:760px){.rub .lv{grid-template-columns:1fr}}
 .rub label{display:flex;gap:8px;align-items:flex-start;border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:var(--surface2);cursor:pointer;font-size:14.5px;line-height:1.5;min-width:0}
@@ -83,6 +102,8 @@
 .rubnext b.h{display:block;color:var(--what)}
 .look{list-style:none;padding:0;margin:8px 0}
 .look li{background:var(--surface2);border-radius:10px;padding:8px 12px;margin-bottom:6px}
+.fc-key{display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center;font-size:14.5px;margin:8px 0}
+.fc-key span{background:var(--surface2);border:1px solid var(--line);border-radius:99px;padding:0 10px;white-space:nowrap}
 /* field checker */
 .fc{border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:var(--surface);margin:12px 0}
 .fc>label{display:block;font-weight:600;margin:6px 0 4px}
@@ -102,22 +123,30 @@
 .fc-sum.ok{background:var(--ok-soft)}.fc-sum.bad{background:var(--bad-soft)}.fc-sum.warn{background:var(--warn-soft)}
 /* zip */
 .ftree.zip{overflow:auto;font-size:14px;line-height:1.8}
+.zipkey{margin:8px 0;padding-inline-start:22px;font-size:15px}
+.zipkey li{margin:3px 0}
 .dont{margin:6px 0;padding-inline-start:22px}
 .dont li{margin:4px 0}
 /* final */
-.final{list-style:none;padding:0;margin:8px 0}
-.final li{margin-bottom:6px}
-.final label{display:flex;gap:10px;align-items:flex-start;padding:8px 12px;border-radius:10px;background:var(--surface2);border:1px solid transparent;cursor:pointer}
-.final label input{width:20px;height:20px;accent-color:var(--ok);flex:0 0 auto;margin-top:4px}
-.final label:has(input:checked){background:var(--ok-soft);border-color:var(--ok)}
-.final label:has(input:checked) .ft{text-decoration:line-through;text-decoration-thickness:1px}
 .status{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:10px 0}
 @media (max-width:760px){.status{grid-template-columns:1fr}}
 .status>div{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--surface);font-size:15px;line-height:1.55;min-width:0}
 .status>div.ok{border-color:var(--ok);background:var(--ok-soft)}
 .status>div.warn{border-color:var(--warn);background:var(--warn-soft)}
+.status>div.todo{border-style:dashed;background:var(--surface2)}
 .status b.h{display:block;font-size:16px}
-.allset{font-size:18px;font-weight:700;text-align:center;border-radius:12px;padding:12px;background:var(--ok-soft);border:2px solid var(--ok);margin:10px 0}
+.asgfb{border:2px solid var(--accent);border-radius:14px;padding:12px 14px;margin:12px 0;background:var(--surface)}
+.asgfb ol{margin:6px 0;padding-inline-start:24px}
+.asgfb li{margin:4px 0}
+/* weak page / good page (two live mini pages), start status, small helpers */
+.wg .cap{font-weight:700;text-align:center}
+.wgsigns{margin:6px 0;padding-inline-start:24px}
+.wgsigns li{margin:4px 0}
+.rub .rhelp{font-size:14px;margin:0 0 8px}
+.rub .grp>.gh a{font-weight:500;font-size:14px}
+.allowed{list-style:none;padding:0;margin:8px 0}
+.allowed li{background:var(--surface2);border-radius:10px;padding:6px 12px;margin-bottom:6px}
+.partial{border:1px dashed var(--line);border-radius:12px;padding:10px 14px;margin:12px 0;background:var(--surface2)}
 </style>
 </head>
 <body data-lesson="sub1" data-title="הגשה 1">
@@ -150,48 +179,67 @@
 <section class="topic" data-id="start" data-icon="🌱" data-title="פתיחה">
   <article class="spread welcome">
     <h3>הגשה 1: מה מגישים, ועד מתי?</h3>
-    <p class="lead">בהגשה הזו מגישים <b>אתר שלם ומעוצב</b> – האתר שאתם בונים צעד אחרי צעד מהשיעור הראשון. זו <b>הגשה עם ציון</b>.</p>
+    <p class="lead">בהגשה הזו מגישים <b>אתר שלם ומעוצב</b> – האתר שאתם בונים צעד אחרי צעד מהשיעור הראשון. הדף הזה הוא <b>דף ליווי</b>: אין בו חומר חדש. הוא עוזר לבדוק שלא חסר כלום, ולהגיש נכון.</p>
     <div class="deliver">
-      <div><b>1</b>דף נחיתה – הדף הראשי של האתר</div>
-      <div><b>10+</b>דפי תוכן, כולם מעוצבים באותו סגנון</div>
-      <div><b>3</b>טפסים: כניסה, הרשמה ושחזור סיסמה</div>
-      <div><b>1</b>תפריט מעוצב, משותף לכל הדפים</div>
+      <div><b>1</b>דף פתיחה / דף ראשי – אצלכם: דף הנחיתה</div>
+      <div><b><bdi dir="ltr">10+</bdi></b>דפי תוכן, כולם באותו סגנון</div>
+      <div><b>3</b>דפי טפסים: כניסה (Login), הרשמה (Register) ושחזור סיסמה (Recover Password)</div>
+      <div><b>3</b>דרישות טכניות: CSS חיצוני · כל הדפים cshtml עם Layout · תפריט ראשי בכל דף</div>
     </div>
-    <p>כל הדפים הם דפי cshtml, וכל העיצוב בקובץ CSS חיצוני. מגישים את <b>כל תיקיית הפרויקט</b> כקובץ zip, במטלה בקלאסרום.</p>
+    <div class="facts" id="facts"></div>
     <div class="deadline" id="deadline"></div>
-    <h4>איך הדף הזה עוזר?</h4>
-    <ul class="how">
-      <li>✅ <b>רשימת הדרישות</b> – כל דרישה עם תיבת סימון, וקישור לשלב שבו למדתם אותה.</li>
-      <li>🧮 <b>מחוון</b> – נותנים לעצמכם ציון לפני ההגשה, ורואים איפה הכי כדאי לשפר.</li>
-      <li>🔎 <b>בודק הטפסים</b> – מדביקים את הקוד של טופס, ורואים מה חסר בו.</li>
-      <li>📦 <b>קובץ zip</b> – איך מכווצים את הפרויקט נכון, צעד אחרי צעד.</li>
-      <li>🚀 <b>לפני שמגישים</b> – סיבוב בדיקה אחרון ורשימה סופית.</li>
-      <li>💾 הסימונים נשמרים בדפדפן הזה, במחשב הזה. קריאה ראשונה של כל הדף – בערך רבע שעה. אחר כך חוזרים לכאן בכל שבוע, ומסמנים מה התקדם.</li>
-    </ul>
+    <p id="startHint"></p>
+    <div class="status" id="status0" hidden></div>
+    <ol class="ctour" aria-label="🧭 סיור קצר: איך דף הליווי עובד">
+      <li data-t="👣 שלב אחד בכל פעם"><p>בדף <b>6 נושאים</b> – הלשוניות למעלה. בכל נושא יש כמה שלבים קצרים, ורואים <b>שלב אחד בכל פעם</b>. עוברים לשלב הבא בכפתור "הבא ←" שבתחתית.</p><p>זה לא שיעור: קריאה ראשונה של הכול – בערך רבע שעה. אחר כך <b>חוזרים לכאן בכל שבוע</b>, ומסמנים מה התקדם.</p></li>
+      <li data-t="✅ רשימות שנשמרות"><p><a href="#" data-go="list:1">רשימת הדרישות</a> – כל דרישה מהמטלה, עם תיבת סימון וקישור לשלב שבו למדתם אותה. <a href="#" data-go="rubric:3">המחוון</a> – נותנים לעצמכם ציון, ורואים איפה הכי כדאי לשפר.</p><p>💾 הסימונים נשמרים <b>בדפדפן הזה, במחשב הזה</b>. במחשב אחר הרשימות יופיעו ריקות.</p></li>
+      <li data-t="🔎 כלים שבודקים איתכם"><p><a href="#" data-go="forms:1">בודק הטפסים</a> – מדביקים את הקוד של טופס, ורואים מה חסר בו. <a href="#" data-go="zip:1">קובץ zip</a> – איזו תיקייה אורזים, ואיך – צעד אחרי צעד.</p><p>ובסוף: <a href="#" data-go="submit:1">סיבוב בדיקה אחרון</a> באתר, ו<a href="#" data-go="submit:2">הרשימה שלפני ההגשה</a>.</p></li>
+      <li data-t="🆘 נתקעתם?"><p>בכל שלב 💻 יש 🔧 רשימת <b>"עבד באתר ולא אצלי?"</b> – בודקים לפי הסדר. שם מופיע גם <b>חוק 3 השלבים</b>: מנסים לבד 10–15 דקות, חוזרים להסבר, ורק אז שואלים.</p><p>משהו באתר לא עובד? שואלים את <b>המנטור</b>. משהו מהחומר לא ברור? שואלים בצ׳אט של <b>מחברת הנושא</b>. איך שואלים טוב – ב<a href="#" data-go="submit:3">שלב "ככה שואלים"</a>.</p></li>
+      <li data-t="📌 מה מגישים, ומתי"><p>מגישים קובץ zip אחד עם כל הפרויקט, במטלה בקלאסרום. <span data-asg="5"></span></p><p><span id="tourFacts"></span> איך בדיוק מגישים – ב<a href="#" data-go="submit:2">שלב ההגשה</a>.</p></li>
+      <li data-t="⏳ לפני שמתחילים"><p>הדף מניח שסיימתם את <b>שיעורים 1–6</b>, כולל שלבי "🧩 צעד בפרויקט" שבסוף השיעורים. עוד לא? <a href="#" data-go="start:2">הדרך להגשה</a> מראה מה חסר, עם קישור לכל שיעור.</p><p>🖥 הכי נוח: הדף הזה בחצי מסך, ו-Visual Studio עם <b>הפרויקט שלכם</b> בחצי השני.</p></li>
+    </ol>
     <div class="eggnote">🥚 <b>ועוד משהו:</b> גם כאן מוחבאות ביצי הפתעה – <b>3</b>. מוצאים אותן תוך כדי עבודה אמיתית על ההגשה. המונה למעלה; לחיצה עליו נותנת רמזים.</div>
   </article>
-  <article class="spread">
+  <article class="spread act">
     <h3>הדרך להגשה: 7 תחנות</h3>
-    <p>את רוב העבודה עושים בשלבי <b>"🧩 צעד בפרויקט"</b> שבסוף כל שיעור. כל תחנה כאן מובילה לשלב שבו בונים אותה:</p>
+    <p>את רוב העבודה עושים <b>בתוך השיעורים</b>: בשלבי "💻 עכשיו אצלכם", ובשלב "🧩 צעד בפרויקט" שבסוף כל שיעור. כל תחנה כאן מובילה למקום שבו בונים אותה:</p>
     <ol class="road" id="road"></ol>
-    <p class="muted">✔ = בשיעור הזה סימנתם "עשיתי את הצעד בפרויקט שלי". הסימון נשמר רק בדפדפן הזה – לכן במחשב אחר התחנות יופיעו בלי ✔.</p>
-    <div class="tip">💡 כל תחנה בונה על הקודמת. תחנה בלי ✔? פתחו את הקישור שלה ועשו את הצעד – לפני שממשיכים לבאה.</div>
+    <p class="muted">✔ = באותו שיעור סימנתם "עשיתי את הצעד בפרויקט שלי". הסימון נשמר רק בדפדפן הזה – לכן במחשב אחר התחנות יופיעו בלי ✔. (בשיעור 1 אין תיבה כזו, ולכן בשתי התחנות הראשונות אין סימון.)</p>
+    <div class="tip">💡 כל תחנה בונה על הקודמת. תחנה שעוד לא עשיתם? פתחו את הקישור שלה ועשו אותה – לפני שממשיכים לבאה.</div>
+    <h4>ומה נשאר אחרי שבע התחנות?</h4>
+    <p>בעיקר <b>דפי תוכן</b>. והחדשות הטובות: <b>הדפים ממטלה 4 נספרים.</b> כל דף תוכן של האתר שבניתם שם הוא אחד מה-10 – אחרי שהוא עובר למבנה של דף הבסיס (שיעור 5) ולדף cshtml (שיעור 6), ויש בו תוכן של ממש. מי שהגיש את מטלה 4 צריך לבנות בערך <b>5 דפים חדשים</b> – לא 10.</p>
+    <div class="tip">📝 <b>קודם רשימה, אחר כך דפים.</b> לפני שבונים עוד דף – כתבו 10 שמות של דפים. נתקעתם באמצע הרשימה? שאלו: מה ירצה לדעת מי שלא מכיר את הנושא? למשל: איך זה התחיל · סוגים · איך מתחילים · ציוד · טעויות נפוצות · שאלות ותשובות · גלריה · המלצות. מהרשימה הזו תכתבו גם את פרק 3 בתיק הפרויקט (עץ האתר).</div>
   </article>
-  <article class="spread">
+  <article class="spread act">
     <h3>תוכנית עבודה: שבוע אחרי שבוע</h3>
-    <p>אתר של 14 דפים לא נבנה בלילה האחרון. זו חלוקה מומלצת, לפי תוכנית השיעורים:</p>
+    <p>אתר של 14 דפים (דף ראשי, 10 דפי תוכן ו-3 טפסים) לא נבנה בלילה האחרון. זו חלוקה מומלצת של <b>חמשת השבועות שלפני תאריך היעד</b>. התוכנית מניחה ששיעורים 1–4 והמטלה שלהם כבר מאחוריכם. <span data-asg="4"></span></p>
+    <p class="muted" id="planNote"></p>
     <table class="plan" id="plan"></table>
-    <div class="tip">💡 הכי מסוכן: להשאיר את 10 דפי התוכן לשבוע האחרון. מיד אחרי שיעור 5 יש לכם תבנית – כל דף חדש הוא העתקה שלה עם תוכן אחר. דף או שניים בכל שבוע, והשבוע האחרון נשאר לליטוש.</div>
+    <div class="tip">💡 הכי מסוכן: להשאיר את דפי התוכן לשבוע האחרון. מיד אחרי שיעור 5 יש לכם <b>דף בסיס</b> לדפי התוכן. דף חדש = יוצרים דף (Add), מדביקים בו את <b>התוכן</b> של דף הבסיס – ומחליפים את הטקסט ואת התמונות. את הקובץ עצמו לא מעתיקים (שיעור 6). שניים–שלושה דפים בכל שבוע, והשבוע האחרון נשאר לליטוש.<br />⏱ מדדו כמה זמן לקח לכם דף אחד. כפול מספר הדפים שחסרים – זה הזמן שצריך לשריין. יש חופשה באמצע? זמן טוב לכתוב טקסטים ולאסוף תמונות.</div>
+    <div class="tip">🐢 <b>מאחור בתוכנית?</b> לא מדלגים על שיעורים 5 ו-6: בלי Layout חסרה דרישה של ההגשה. מקצרים בסדר הזה:
+      <ol>
+        <li>אתר שרץ, וכל הדפים שכבר יש הם דפי cshtml שנכנסים ל-Layout.</li>
+        <li>שלושת הטפסים עוברים את <a href="#" data-go="forms:1">בודק הטפסים</a> – זה מהיר.</li>
+        <li>דפי תוכן – כמה שמספיקים, וכל אחד מהם גמור.</li>
+        <li>ליטוש.</li>
+      </ol>
+      חוששים שלא תספיקו הכול? <a href="#" data-go="submit:2">ראו בשלב ההגשה</a>.</div>
   </article>
 </section>
 
 <!-- ======================= רשימת הדרישות ======================= -->
 <section class="topic" data-id="list" data-icon="✅" data-title="רשימת הדרישות">
-  <article class="spread">
+  <article class="spread act">
     <h3>כל הדרישות – וי אחרי וי</h3>
-    <p>זו הרשימה המלאה של הגשה 1. סמנו כל דבר שכבר יש <b>באתר שלכם</b>. בכל שורה יש קישור לשלב שבו למדתם את זה.</p>
+    <p>זו הרשימה של הגשה 1: מה מגישים (א, ב, ג), הדרישות הטכניות, ומה בודקים לפני שמגישים – <b>כמו שכתוב במטלה</b>. מתחת לכל טופס מופיעים השדות <b>כמו שבניתם אותם בשיעור 4</b> (<a href="html-advanced.html#practice-4">הטבלה שם</a>) – זו הרשימה שלנו, כדי שלא יחסר שדה. סמנו כל דבר שכבר יש <b>באתר שלכם</b>. בכל שורה יש קישור למקום שבו למדתם את זה.</p>
     <div class="reqtop"><span id="reqTxt" aria-live="polite"></span><div class="meter" aria-hidden="true"><i id="reqBar"></i></div></div>
-    <ul class="req" id="req"></ul>
+    <h4 class="reqg">מה מגישים</h4>
+    <ul class="req" id="reqA"></ul>
+    <h4 class="reqg">דרישות טכניות</h4>
+    <ul class="req" id="reqB"></ul>
+    <h4 class="reqg">לפני שמגישים <span class="muted" id="preTxt"></span></h4>
+    <p class="muted">את חמשת הסעיפים האלה מסמנים במקום אחד – ב<a href="#" data-go="submit:2">שלב ההגשה</a>, רגע לפני שמגישים. כאן רואים רק מה מצבם:</p>
+    <ul class="pre" id="pre"></ul>
     <div class="tip">💡 דרך מהירה לסמן את השדות של הטפסים: הדביקו את הקוד של הטופס ב<a href="#" data-go="forms:1">בודק הטפסים</a>, ולחצו שם "סמנו ברשימת הדרישות".</div>
   </article>
   <article class="spread cpstep">
@@ -202,42 +250,77 @@
 
 <!-- ======================= מחוון ======================= -->
 <section class="topic" data-id="rubric" data-icon="🧮" data-title="מחוון">
-  <article class="spread">
+  <article class="spread act">
+    <h3>לפני הציון: שני דפי תוכן</h3>
+    <p>הסעיף הגדול ביותר במחוון הוא דפי התוכן. לפני שנותנים לעצמכם ציון – מכיילים את העין. שני תלמידים בנו דף על הפיצות לאתר של פיצה דני. הביטו בשני הדפים:</p>
+    <div class="compare wg">
+      <div><div id="wgA"></div><div class="cap">דף א</div></div>
+      <div><div id="wgB"></div><div class="cap">דף ב</div></div>
+    </div>
+    <div class="predict" id="pWeak"></div>
+    <div id="wgAfter">
+      <div class="what"><b>המבחן:</b> מי שקרא את הדף – למד משהו שלא ידע קודם? בדף א – לא. בדף ב – כן: אילו פיצות יש, מה יש בכל אחת וכמה היא עולה. העיצוב של שני הדפים זהה – אותו תפריט, אותם צבעים, אותו גריד. ההבדל כולו בתוכן.</div>
+      <h4>דף תוכן "גמור" – ארבעה סימנים</h4>
+      <p class="muted">אלה סימנים <b>שלנו</b>, שעוזרים לספור בכנות – לא דרישות נוספות מהמטלה.</p>
+      <ol class="wgsigns">
+        <li><b>נושא משלו:</b> אפשר להגיד במשפט אחד מה לומדים מהדף – וזה לא אותו משפט כמו בדף אחר.</li>
+        <li><b>תוכן שכתבתם:</b> כותרת וכמה פסקאות, או טבלה, או רשימה. לא שורה אחת, ולא "בקרוב".</li>
+        <li><b>תמונה שקשורה לנושא</b>, עם alt.</li>
+        <li><b>חלק מהאתר:</b> הדף בנוי על דף הבסיס, ויש קישור שמגיע אליו.</li>
+      </ol>
+      <p>את המונה ב<a href="#" data-go="list:1">רשימת הדרישות</a> מעלים רק על דף גמור.</p>
+    </div>
+  </article>
+  <article class="spread act">
+    <h3>"התרשמות כללית": מה בודקים בעצמכם?</h3>
+    <p>לסעיף ה אין רשימת שדות כמו לטפסים – אבל יש סימנים שאפשר לבדוק לבד. אלה סימנים שעוזרים להתרשמות – <b>לא דרישות נוספות</b>.</p>
+    <h4>ה1 · סדר ובנייה נכונה</h4>
+    <ul class="look">
+      <li>▶ <b>רץ:</b> הפרויקט רץ בלי שגיאות, וכל דף נפתח מהתפריט. (<a href="#" data-go="submit:1">סיבוב הבדיקה האחרון</a>)</li>
+      <li>🧱 <b>מבנה קבוע:</b> כל הדפים הם דפי cshtml שנכנסים לאותו Layout, וכל דפי התוכן בנויים על אותו דף בסיס – עם תוכן אחר בכל דף. (<a href="razor.html#layout-3">שיעור 6: Layout באתר שלכם</a> · <a href="bootstrap.html#grid-1">שיעור 5: הגריד</a>)</li>
+      <li>📁 <b>כל דבר במקום:</b> התמונות בתיקייה Img, והעיצוב בקובצי CSS חיצוניים (site-style.css), בלי style בתוך התגיות. (<a href="css.html#site-1">למה קובץ נפרד?</a>)</li>
+      <li>🔗 <b>שום דבר שבור:</b> כל קישור מוביל לדף, וכל תמונה נטענת. ב-F12 &rlm;←&rlm; Console אין שגיאת 404. (<a href="html-basics.html#images-5">התמונה לא מופיעה?</a>)</li>
+    </ul>
+    <h4>ה2 · עיצוב אחיד וקריא</h4>
+    <ul class="look">
+      <li>🎨 <b>אחיד:</b> אותם צבעים, אותו גופן ואותו תפריט בכל הדפים – כי כולם מחוברים לאותו קובץ CSS ולאותו Layout.</li>
+      <li>👀 <b>קריא:</b> טקסט כהה על רקע בהיר, או בהיר על כהה – בגודל שנוח לקרוא. (<a href="css.html#look-1">צבע וגודל</a>)</li>
+      <li>🫧 <b>מרווח:</b> padding ו-margin – התוכן לא נדבק לקצוות, לתמונות או לתוכן אחר. (<a href="css.html#look-5">כל השכבות יחד</a>)</li>
+      <li>🖼 <b>תמונות מסודרות:</b> בגודל שמתאים לדף, עם alt, ובכרטיסים – באותו גודל. (<a href="bootstrap.html#comps-1">שיעור 5: רכיבים מוכנים</a>) ⚠ בדוגמת הכרטיס שבתיעוד של Bootstrap יש מאפיין style בתוך התגית, שקובע רוחב. אל תעתיקו אותו: את הרוחב קובעת העמודה בגריד, וכל עיצוב נוסף – ב-site-style.css. (<a href="bootstrap.html#mine-2">שיעור 5: מעתיקים דוגמה מהתיעוד</a>)</li>
+      <li>📱 <b>גם בטלפון:</b> ברוחב של טלפון (F12, ואז Ctrl+Shift+M – כמו בשיעור 5) התפריט מתקפל, ואין גלילה הצידה. בדקו גם רוחב ביניים: הצרו לאט את חלון הדפדפן, וראו שהתפריט לא יוצא מהמסך. (<a href="#" data-go="submit:1">התפריט ארוך?</a>)</li>
+    </ul>
+    <div class="tip">💡 בדיקה של 10 שניות: הראו את הדף הראשי למישהו מהמשפחה ושאלו "על מה האתר הזה?". עונה מהר? הרושם טוב.</div>
+    <details class="more"><summary>🚀 להעמקה: כמה "ניגוד" צריך בין טקסט לרקע?</summary>
+      <p>יש לזה מספר: יחס הניגודיות (contrast ratio). לפי תקן הנגישות WCAG, טקסט רגיל צריך יחס של <b>4.5 לפחות</b> מול הרקע שלו. שחור על לבן הוא 21 – המקסימום. אפור בהיר על לבן נופל מתחת ל-4.5 – וקשה לקרוא אותו.</p>
+      <p>איך בודקים? ב-F12, בכלי החץ (בחירת אלמנט), עומדים עם העכבר על טקסט – בחלונית הקטנה שנפתחת מופיעה שורת Contrast עם המספר. עוד על זה: <a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/Guides/Understanding_WCAG/Perceivable/Color_contrast" target="_blank" rel="noopener">MDN: Color contrast</a> (באנגלית).</p>
+    </details>
+  </article>
+  <article class="spread act">
     <h3>מחוון: תנו לעצמכם ציון</h3>
-    <p>זה המחוון של ההגשה: 100 נקודות בחמש שורות. לפני שמגישים, תנו לעצמכם ציון בכנות – בכל שורה בחרו את המשפט שהכי מתאר את האתר שלכם <b>היום</b>. החישוב נעשה לבד.</p>
-    <p class="muted">הניקוד שליד כל משפט הוא הערכה שנועדה לעזור לכם לחשוב. הציון עצמו נקבע אחרי ההגשה. הבחירות נשמרות – חזרו לעדכן בכל שבוע.</p>
+    <p>זה המחוון של ההגשה, כמו שהוא כתוב במטלה: <b><span id="rubMax"></span> נקודות</b> בחמישה סעיפים, א עד ה. הסעיף האחרון – "התרשמות כללית" – מתחלק לשניים: ה1 ו-ה2. לפני שמגישים, תנו לעצמכם ציון בכנות: בכל שורה בחרו את המשפט שהכי מתאר את האתר שלכם <b>היום</b>. החישוב נעשה לבד.</p>
+    <p>הסעיפים והניקוד המרבי שלהם – מהמטלה. המשפטים והניקוד שבתוך כל סעיף הם <b>הערכה שלנו</b>, שנועדה לעזור לכם לחשוב. הציון עצמו נקבע אחרי ההגשה.</p>
+    <p>את הציון הזה רואים <b>רק אתם</b>: הוא נשמר בדפדפן שלכם, ולא נשלח לאף אחד. לכן אין טעם לייפות – ציון גבוה מדי רק מסתיר מכם מה לתקן. <b>כלל הכרעה:</b> רמה מתאימה רק אם <b>כל</b> המשפט שלה נכון אצלכם היום. רק חלק ממנו נכון? בוחרים ברמה שמתחתיה.</p>
+    <p class="muted">הבחירות נשמרות – חזרו לעדכן בכל שבוע.</p>
     <div class="rubsum" id="rubSum" aria-live="polite"></div>
     <div id="rubNext"></div>
     <div class="rub" id="rub"></div>
     <div class="ctrls"><button class="btn" type="button" id="rubReset">↺ ניקוי הבחירות</button></div>
   </article>
-  <article class="spread">
-    <h3>"רושם עיצובי כללי": מה עושה אתר שנראה גמור?</h3>
-    <p>אחרי דפי התוכן, זו השורה הגדולה במחוון – 25 נקודות. אין לה רשימת שדות, אבל יש סימנים שאפשר לבדוק בעצמכם. אלה סימנים שעוזרים לרושם – <b>לא דרישות נוספות</b>:</p>
-    <ul class="look">
-      <li>🎨 <b>אחיד:</b> אותם צבעים, אותו גופן ואותו תפריט בכל הדפים – כי כולם מחוברים לאותו קובץ CSS. (<a href="css.html#site-1">למה קובץ אחד?</a>)</li>
-      <li>👀 <b>קריא:</b> טקסט כהה על רקע בהיר, או בהיר על כהה – בגודל שנוח לקרוא. (<a href="css.html#look-1">צבע וגודל</a>)</li>
-      <li>🫧 <b>מרווח:</b> padding ו-margin – התוכן לא נדבק לקצוות, לתמונות או לתוכן אחר. (<a href="css.html#look-6">מודל הקופסה</a>)</li>
-      <li>🖼 <b>תמונות מסודרות:</b> בגודל שמתאים לדף, עם alt, ובכרטיסים – באותו גודל. (<a href="bootstrap.html#comps-3">בונים כרטיס</a>) ⚠ בדוגמאות של כרטיסים – גם בתיעוד של Bootstrap – יש לפעמים <code>style="width: 18rem;"</code> בתוך התגית. אל תעתיקו אותו: את הרוחב קובעת העמודה בגריד, וכל עיצוב נוסף – ב-site-style.css.</li>
-      <li>🧱 <b>מבנה קבוע:</b> כל דפי התוכן בנויים מאותה תבנית. (<a href="bootstrap.html#grid-7">התבנית של דף תוכן</a>)</li>
-      <li>🔗 <b>שום דבר שבור:</b> כל קישור מוביל לדף, וכל תמונה נטענת. ב-F12 &rlm;←&rlm; Console אין שגיאת 404. (<a href="html-basics.html#images-5">התמונה לא מופיעה?</a>)</li>
-    </ul>
-    <div class="tip">💡 בדיקה של 10 שניות: הראו את דף הבית למישהו מהמשפחה ושאלו "על מה האתר הזה?". עונה מהר? הרושם טוב.</div>
-    <details class="more"><summary>🚀 להעמקה: כמה "ניגוד" צריך בין טקסט לרקע?</summary>
-      <p>יש לזה מספר: יחס הניגודיות (contrast ratio). לפי תקן הנגישות WCAG, טקסט רגיל צריך יחס של <b>4.5 לפחות</b> מול הרקע שלו. שחור על לבן הוא 21 – המקסימום. אפור בהיר על לבן נופל מתחת ל-4.5 – וקשה לקרוא אותו.</p>
-      <p>איך בודקים? ב-F12, בכלי החץ (בחירת אלמנט), עומדים עם העכבר על טקסט – בחלונית הקטנה שנפתחת מופיעה שורת Contrast עם המספר. עוד על זה: <a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/Understanding_WCAG/Perceivable/Color_contrast" target="_blank" rel="noopener">MDN: Color contrast</a> (באנגלית).</p>
-    </details>
+  <article class="spread cpstep">
+    <h3>🎯 הבנתם את כל מה שלמדתם עד עכשיו?</h3>
+    <div id="cpRubric"></div>
   </article>
 </section>
 
 <!-- ======================= בודק הטפסים ======================= -->
 <section class="topic" data-id="forms" data-icon="🔎" data-title="בודק הטפסים">
-  <article class="spread">
+  <article class="spread act">
     <h3>🔎 בודק הטפסים: מה חסר בטופס שלכם?</h3>
-    <p>הדביקו כאן את <b>כל הקוד</b> של אחד מדפי הטפסים שלכם (ב-Visual Studio לוחצים Ctrl+A, ואז Ctrl+C). הבודק עובר על הדרישות שדה אחרי שדה – עם אותם 13 שמות (name) שבניתם <a href="html-advanced.html#send-6">בשיעור 4</a>.</p>
+    <p>הדביקו כאן את <b>כל הקוד</b> של אחד מדפי הטפסים שלכם (ב-Visual Studio: לוחצים בתוך הקוד, ואז Ctrl+A ו-Ctrl+C). הבודק עובר על הטופס שדה אחרי שדה – עם אותם 13 שמות (name) מ<a href="html-advanced.html#practice-4">הטבלה של שיעור 4</a>.</p>
+    <p class="fc-key"><b>מקרא:</b> <span>✔ עבר</span> <span>✘ חסר משהו – מתקנים</span> <span>⚠ כדאי לבדוק (לא תמיד טעות)</span> <span>💡 מידע</span></p>
     <div class="fc" id="fc">
       <div class="ctrls"><span class="lbl">איזה טופס?</span><div class="seg" id="fcKind"></div></div>
-      <label for="fcIn">הדביקו את הקוד של הדף (html או cshtml) – או את הכתובת מהדפדפן אחרי השליחה:</label>
+      <label for="fcIn">הדביקו את הקוד של הדף (cshtml או html) – או את הכתובת מהדפדפן אחרי השליחה:</label>
       <textarea id="fcIn" spellcheck="false" autocomplete="off" placeholder="<form> ... </form>"></textarea>
       <div class="ctrls"><button class="btn" type="button" id="fcSample">📋 טענו טופס הרשמה לדוגמה (עם טעויות)</button><button class="btn" type="button" id="fcClear">↺ ניקוי התיבה</button></div>
       <div class="fc-out" id="fcOut" aria-live="polite"></div>
@@ -252,7 +335,6 @@
         <li>שיש כפתור שליחה (ובהרשמה – גם כפתור ניקוי), ובכניסה – קישורים להרשמה ולשחזור.</li>
         <li>שאין <code>style</code> בתוך התגיות – כל העיצוב בקובץ החיצוני.</li>
       </ul>
-      <p>✘ = חסר משהו מהדרישות. ⚠ = כדאי לבדוק (לא תמיד טעות). 💡 = מידע.</p>
     </details>
     <details class="more"><summary>🚀 להעמקה: איך הבודק "קורא" את הקוד שלכם?</summary>
       <p>הדפדפן יודע להפוך טקסט של HTML לעץ של תגיות – אותו עץ משפחה מ<a href="css.html#rules-7">שיעור 3</a>. הבודק מבקש מהדפדפן לבנות את העץ (בעזרת DOMParser), ואז מחפש בו עם בוררים – בדיוק כמו ב-CSS. למשל, הבורר <code>input[type=radio]</code> בוחר את כל התגיות input שהמאפיין type שלהן הוא radio.</p>
@@ -263,10 +345,10 @@
     <h3>💻 עכשיו אצלכם ב-Visual Studio</h3>
     <p>בודקים את שלושת הטפסים <b>שלכם</b> – פעם אחת דרך הקוד, ופעם אחת דרך מה שבאמת נשלח.</p>
     <ol class="vsdo">
-      <li>פתחו את הפרויקט ב-Visual Studio, ופתחו את <b>דף ההרשמה</b> (register.html – או הדף שלו בתיקייה Pages, אם כבר עברתם לשיעור 6).</li>
+      <li>פתחו את הפרויקט ב-Visual Studio, ופתחו את <b>דף ההרשמה</b>: אחרי שיעור 6 זה הקובץ Register.cshtml (או השם שנתתם לו), בתיקייה Pages &rlm;←&rlm; Site. עוד לא העברתם אותו ל-Razor? פתחו את register.html – הבודק קורא את שניהם.</li>
       <li>לחצו בתוך הקוד, ואז Ctrl+A ו-Ctrl+C. הדביקו ב<a href="#" data-go="forms:1">בודק הטפסים</a>.</li>
       <li>תקנו ב-Visual Studio כל שורה עם ✘, שמרו (Ctrl+S) – והדביקו שוב. ממשיכים עד שאין אף ✘.</li>
-      <li>הריצו (▶ הירוק), פתחו את דף ההרשמה, מלאו את <b>כל</b> השדות ולחצו על כפתור השליחה. העתיקו את הכתובת משורת הכתובת של הדפדפן, והדביקו אותה בבודק.</li>
+      <li>הריצו (▶ הירוק), פתחו את דף ההרשמה, מלאו את <b>כל</b> השדות בפרטים מומצאים (למשל dana ו-1234) – לא בסיסמה אמיתית, כי היא תופיע בכתובת. סמנו מין, ולחצו על כפתור השליחה. העתיקו את הכתובת משורת הכתובת של הדפדפן, והדביקו אותה בבודק.</li>
       <li>אותו דבר לדף הכניסה ולדף שחזור הסיסמה. כל טופס שעבר? לחצו בבודק "סמנו ברשימת הדרישות".</li>
     </ol>
     <div class="expect">בכל אחד משלושת הטפסים הבודק מראה רק ✔ (ולפעמים 💡). אחרי שליחת טופס ההרשמה, בכתובת יש <b>13 זוגות</b> של <code>name=value</code> – מ-userName ועד answer2. ברשימת הדרישות מסומנים כל השדות של שלושת הטפסים.</div>
@@ -280,10 +362,9 @@
 
 <!-- ======================= zip ======================= -->
 <section class="topic" data-id="zip" data-icon="📦" data-title="קובץ zip">
-  <article class="spread">
-    <h3>איזו תיקייה מכווצים?</h3>
-    <p>מגישים קובץ <b>zip</b> – קובץ אחד שבתוכו תיקייה שלמה, דחוסה (compressed). כך נראית תיקיית הפרויקט במחשב, אם יצרתם אותו כמו <a href="intro.html#vs-3">בשיעור 1</a>:</p>
-    <p class="muted">התיקייה בציור מקוצרת: יש בה עוד קבצים ותיקיות. ואם נתתם לפרויקט שם אחר – במקום MyFirstWeb יופיע השם שלכם.</p>
+  <article class="spread act">
+    <h3>איזו תיקייה אורזים?</h3>
+    <p>מגישים קובץ <b>zip</b> – קובץ אחד שבתוכו תיקייה שלמה, דחוסה (compressed). במטלה כתוב: ה-zip כולל את <b>כל תיקיית הפרויקט וקובץ ה-sln</b>. כך נראות התיקיות במחשב, אם יצרתם את הפרויקט כמו <a href="intro.html#vs-3">בשיעור 1</a>:</p>
     <div class="ftree zip">repos   ①
 └─ 📁 MyFirstWeb   ②
    ├─ 📄 MyFirstWeb.sln
@@ -292,55 +373,58 @@
       ├─ 📁 obj
       ├─ 📁 Pages
       ├─ 📁 wwwroot   ④
-      ├─ 📄 MyFirstWeb.csproj
       └─ 📄 Program.cs</div>
-    <p class="muted">קובץ ה-sln הוא קובץ ה-Solution – ה"מעטפת" שפותחים ב-Visual Studio (הכרתם אותו בשיעור 1).</p>
+    <ul class="zipkey">
+      <li><b>MyFirstWeb.sln</b> – קובץ ה-Solution: ה"מעטפת" שפותחים ב-Visual Studio (הכרתם אותו בשיעור 1).</li>
+      <li><b>bin ו-obj</b> – שתי תיקיות ש-Visual Studio יוצר בעצמו, כשהוא בונה (build) את הפרויקט לקראת הרצה. אתם לא כותבים בהן כלום.</li>
+      <li>הציור מקוצר: יש בתיקיות עוד קבצים. ואם נתתם לפרויקט שם אחר – במקום MyFirstWeb יופיע השם שלכם.</li>
+    </ul>
     <div class="predict" id="pZip"></div>
-    <div class="what">מכווצים את <b>התיקייה שבתוכה נמצא קובץ ה-sln</b> – כאן ②. בתוכה יש הכול: קובץ ה-sln, ובתיקייה הפנימית – התיקיות Pages ו-wwwroot, הקובץ Program.cs וכל השאר. ככה אפשר לפתוח את הפרויקט במחשב אחר ולהריץ אותו.<br />🐢 אצלכם קובץ ה-sln נמצא באותה תיקייה עם wwwroot? (זה קורה אם ביצירת הפרויקט סימנתם את התיבה <bdi>Place solution and project in the same directory</bdi>.) אז מכווצים את התיקייה הזו. הכלל לא משתנה: <b>התיקייה שבתוכה ה-sln</b>.</div>
+    <div class="what">אורזים את <b>תיקיית ה-Solution (החיצונית – זו שבתוכה קובץ ה-sln)</b> – כאן ②. בתוכה יש הכול: קובץ ה-sln, ובתיקייה הפנימית – התיקיות Pages ו-wwwroot, הקובץ Program.cs וכל השאר. ככה אפשר לפתוח את הפרויקט במחשב אחר ולהריץ אותו.<br />👀 שימו לב למילים: בשיעור 1 קראנו ל-③ "התיקייה של הפרויקט". במטלה כתוב "כל תיקיית הפרויקט <b>וקובץ ה-sln</b>" – ואת שניהם יחד מקבלים רק כשאורזים את ②.<br />🐢 אצלכם קובץ ה-sln נמצא באותה תיקייה עם wwwroot? (זה קורה אם ביצירת הפרויקט התיבה <bdi>Place solution and project in the same directory</bdi> הייתה מסומנת.) אז אורזים את התיקייה הזו. הכלל לא משתנה: <b>התיקייה שבתוכה קובץ ה-sln</b>.</div>
   </article>
   <article class="spread vsstep">
     <h3>💻 עכשיו אצלכם ב-Visual Studio</h3>
-    <p>יוצרים את קובץ ה-zip של ההגשה. עושים את זה <b>בסוף</b>, אחרי הסיבוב האחרון באתר – ואם שיניתם משהו אחר כך, יוצרים zip חדש.</p>
+    <p>יוצרים את קובץ ה-zip של ההגשה. עושים את זה <b>בסוף</b>, אחרי <a href="#" data-go="submit:1">הסיבוב האחרון באתר</a> – ואם שיניתם משהו אחר כך, יוצרים zip חדש.</p>
     <ol class="vsdo">
-      <li>ב-Solution Explorer: קליק ימני על השורה <b>הראשונה</b> – <bdi>Solution 'MyFirstWeb'</bdi> (או השם שנתתם לפרויקט) &rlm;←&rlm; <b><bdi class="nw">Open Folder in File Explorer</bdi></b>. נפתח סייר הקבצים (File Explorer), ובו הקובץ MyFirstWeb.sln. (אם הסיומות מוסתרות אצלכם, רואים שני פריטים בשם MyFirstWeb: תיקייה, וקובץ עם הסמל של Visual Studio.)</li>
-      <li>סגרו את Visual Studio (✕ בפינה). שואל אם לשמור שינויים? לחצו <b>Yes</b>.</li>
-      <li>בסייר הקבצים עלו תיקייה אחת למעלה: Alt+↑, או החץ ↑ שליד שורת הכתובת. עכשיו רואים את התיקייה <b>MyFirstWeb</b> – זו שבתוכה ה-sln.</li>
-      <li>קליק ימני על התיקייה הזו, ואז:
+      <li>ב-Solution Explorer: קליק ימני על השורה <b>הראשונה</b> – <bdi>Solution 'MyFirstWeb'</bdi> (או השם שנתתם לפרויקט) &rlm;←&rlm; <b><bdi class="nw">Open Folder in File Explorer</bdi></b>. נפתח סייר הקבצים (File Explorer), ובו קובץ ה-sln. (אם הסיומות מוסתרות אצלכם, רואים שני פריטים בשם MyFirstWeb: תיקייה, וקובץ עם סמל של Visual Studio.)</li>
+      <li>חזרו ל-Visual Studio ושמרו הכול: <bdi>File</bdi> &rlm;←&rlm; <b><bdi>Save All</bdi></b> (Ctrl+Shift+S). (שינוי שלא נשמר נמצא רק על המסך – ולא ייכנס ל-zip.) אחר כך סגרו את Visual Studio (✕ בפינה). נפתח חלון ששואל על שמירת שינויים? בחרו לשמור.</li>
+      <li>בסייר הקבצים עלו תיקייה אחת למעלה: Alt+↑, או החץ ↑ שליד שורת הכתובת. עכשיו רואים את <b>תיקיית ה-Solution</b> – התיקייה MyFirstWeb החיצונית, זו שבתוכה קובץ ה-sln.</li>
+      <li>לחיצה ימנית על התיקייה הזו &rlm;←&rlm; האפשרות של <b>דחיסה ל-ZIP</b>. באנגלית היא נקראת:
         <ul>
-          <li><b>ב-Windows 11</b> – בוחרים <b><bdi class="nw">Compress to ZIP file</bdi></b>. בגרסאות חדשות יותר: <bdi>Compress to</bdi> &rlm;←&rlm; <b><bdi>ZIP File</bdi></b></li>
-          <li><b>ב-Windows 10</b> – בוחרים <bdi>Send to</bdi> &rlm;←&rlm; <b><bdi class="nw">Compressed (zipped) folder</bdi></b>. גם ב-Windows 11 האפשרות הזו קיימת, תחת <bdi>Show more options</bdi>.</li>
-        </ul></li>
-      <li>ליד התיקייה נוצר הקובץ <b>MyFirstWeb.zip</b>. לחיצה כפולה עליו פותחת אותו כמו תיקייה: בפנים צריכים להיות התיקייה MyFirstWeb, ובתוכה MyFirstWeb.sln והתיקייה הפנימית.</li>
-      <li>בקלאסרום: פתחו את המטלה של הגשה 1 &rlm;←&rlm; <bdi>Add or create</bdi> ("הוספה או יצירה") &rlm;←&rlm; <bdi>File</bdi> ("קובץ"). בחלון שנפתח עברו ללשונית <bdi>Upload</bdi> ("העלאה"), ובחרו את ה-zip. <b>חכו שההעלאה תסתיים</b> – עד שהקובץ מופיע במטלה. רק אז לחצו <bdi>Turn in</bdi> ("הגשה"), ובחלון האישור – שוב <bdi>Turn in</bdi></li>
+          <li><b><bdi class="nw">Compress to ZIP file</bdi></b>, או</li>
+          <li><bdi>Send to</bdi> &rlm;←&rlm; <b><bdi class="nw">Compressed (zipped) folder</bdi></b></li>
+        </ul>
+        ב-Windows בעברית – מחפשים בתפריט את המילה ZIP או את המילה "דחוס".</li>
+      <li>ליד התיקייה נוצר קובץ באותו שם, עם הסיומת zip: <b>MyFirstWeb.zip</b>. לחיצה כפולה עליו פותחת אותו כמו תיקייה. בדקו: בפנים התיקייה MyFirstWeb, ובתוכה הקובץ MyFirstWeb.sln והתיקייה הפנימית.</li>
+      <li>ה-zip מוכן. את ההעלאה לקלאסרום עושים ב<a href="#" data-go="submit:2">שלב ההגשה</a> – אחרי שעוברים שם על הרשימה שלפני ההגשה.</li>
     </ol>
-    <div class="expect">ליד התיקייה MyFirstWeb יש קובץ MyFirstWeb.zip. בתוכו: תיקייה אחת, MyFirstWeb, ובתוכה הקובץ MyFirstWeb.sln ועוד תיקייה בשם MyFirstWeb – ובה התיקיות Pages ו-wwwroot והקובץ Program.cs. בקלאסרום, במטלה, מופיע הקובץ המצורף, והמטלה מסומנת כ"הוגשה".</div>
+    <div class="expect">ליד תיקיית ה-Solution יש קובץ MyFirstWeb.zip. בתוכו: תיקייה אחת, MyFirstWeb, ובתוכה הקובץ MyFirstWeb.sln ועוד תיקייה בשם MyFirstWeb – ובה התיקיות Pages ו-wwwroot והקובץ Program.cs.</div>
     <div class="trouble" id="trZip"></div>
   </article>
-  <article class="spread">
+  <article class="spread act">
     <h3>מה לא לעשות – ובדיקת הזהב</h3>
     <div class="trap">
       <ul class="dont">
-        <li><b>לא</b> לכווץ רק את wwwroot. חסרים בו דפי ה-cshtml (הם בתיקייה Pages), קובץ ה-sln וכל השאר.</li>
-        <li><b>לא</b> לכווץ את התיקייה הפנימית ③ – אין בה קובץ sln.</li>
-        <li><b>לא</b> לכווץ כש-Visual Studio עדיין פתוח.</li>
+        <li><b>לא</b> לארוז רק את wwwroot. חסרים בה דפי ה-cshtml (הם בתיקייה Pages), קובץ ה-sln וכל השאר.</li>
+        <li><b>לא</b> לארוז את התיקייה הפנימית ③ – אין בה קובץ sln.</li>
+        <li><b>לא</b> לארוז לפני ששמרתם הכול וסגרתם את Visual Studio.</li>
         <li><b>לא</b> להעלות קבצים בודדים במקום zip אחד.</li>
         <li><b>לא</b> לשנות את הפרויקט אחרי שיצרתם zip – שיניתם? יוצרים zip חדש.</li>
       </ul>
     </div>
     <h4>ה-zip גדול מאוד?</h4>
-    <p>מה יכול לנפח אותו:</p>
+    <p>שני דברים יכולים לנפח אותו:</p>
     <ul>
-      <li><b>תמונות ישר מהטלפון:</b> כל אחת שוקלת כמה MB – וגם הדף נטען לאט. הקטינו אותן לפני שמכניסים אותן לאתר (למשל ב-Paint, בכלי Resize, ושמירה מחדש).</li>
-      <li><b>התיקיות bin ו-obj</b> (בתוך התיקייה הפנימית): אלה <b>תוצרי בנייה</b> (build output) – Visual Studio יוצר אותן מחדש בכל הרצה, ולכן מחיקה שלהן לא מזיקה לפרויקט. אם ה-zip ענק, אפשר למחוק <b>רק את שתיהן</b> לפני הכיווץ (כש-Visual Studio סגור), ולכווץ שוב.</li>
-      <li><b>התיקייה הנסתרת <code>.vs</code></b> (ליד קובץ ה-sln): Visual Studio שומר בה הגדרות ומידע זמני, והיא יכולה להיות גדולה. בדרך כלל לא רואים אותה, כי היא מוסתרת.</li>
+      <li><b>תמונות ישר מהטלפון:</b> כל אחת שוקלת כמה MB – וגם הדף נטען לאט. הקטינו אותן לפני שמכניסים אותן לאתר – למשל בתוכנת הצייר (Paint): הכלי Resize, ואז שמירה.</li>
+      <li><b>התיקיות bin ו-obj</b> (בתוך התיקייה הפנימית): Visual Studio יוצר אותן מחדש בכל בנייה של הפרויקט. <b>מותר להשאיר אותן</b> ב-zip. ואם ה-zip ענק – אפשר למחוק <b>רק את שתיהן</b> (כש-Visual Studio סגור) ולארוז שוב: ה-zip יהיה קטן יותר, ובהרצה הבאה Visual Studio ייצור אותן מחדש.</li>
     </ul>
-    <h4>🏅 בדיקת הזהב (רשות, 5 דקות)</h4>
-    <p>הדרך הבטוחה ביותר לדעת שה-zip שלם: לעשות בדיוק מה שיעשו איתו אחרי ההגשה.</p>
+    <h4>🏅 בדיקת הזהב (5 דקות – מומלץ מאוד)</h4>
+    <p>"רץ אצלי" מוכיח שהפרויקט תקין. הוא לא מוכיח שה-<b>zip</b> תקין – ומה שמגישים זה ה-zip. הדרך הבטוחה ביותר לדעת שהוא שלם: לעשות בדיוק מה שיעשו איתו אחרי ההגשה.</p>
     <ol>
-      <li>קליק ימני על ה-zip &rlm;←&rlm; <bdi>Extract All</bdi>, וחלצו אותו למקום אחר – למשל לשולחן העבודה.</li>
-      <li>בתיקייה שחולצה, לחיצה כפולה על MyFirstWeb.sln – Visual Studio נפתח.</li>
+      <li>קליק ימני על ה-zip &rlm;←&rlm; <bdi>Extract All</bdi> (חילוץ של כל הקבצים), וחלצו אותו למקום אחר – למשל לשולחן העבודה.</li>
+      <li>בתיקייה שחולצה (נכנסים לתיקייה MyFirstWeb שבפנים), לחיצה כפולה על MyFirstWeb.sln – Visual Studio נפתח.</li>
       <li>הריצו ▶ ועברו על כמה דפים בתפריט. הכול עובד? ה-zip מוכן להגשה.</li>
-      <li>אחרי הבדיקה סגרו את העותק. ממשיכים לעבוד <b>רק</b> בתיקייה המקורית – אחרת קל להתבלבל ולשנות את העותק הלא נכון.</li>
+      <li>אחרי הבדיקה סגרו את Visual Studio, ומחקו את <b>העותק שחילצתם</b> (זה שעל שולחן העבודה). התיקייה המקורית נשארת במקומה, וממשיכים לעבוד רק בה – אחרת קל להתבלבל ולשנות את העותק הלא נכון.</li>
     </ol>
   </article>
   <article class="spread cpstep">
@@ -355,8 +439,8 @@
     <h3>💻 סיבוב בדיקה אחרון באתר שלכם</h3>
     <p>עוברים על האתר כמו מי שיבדוק אותו: מהתפריט, דף אחרי דף. עשו את הסיבוב הזה <b>לפני</b> שיוצרים את ה-zip.</p>
     <ol class="vsdo">
-      <li>פתחו את הפרויקט והריצו (▶ הירוק). נפתח חלון ששואל אם להריץ את הגרסה הקודמת שעבדה (<bdi>There were build errors…</bdi>)? לחצו <b>No</b> – אחרת תראו גרסה ישנה של האתר. אז פתחו <bdi>View</bdi> &rlm;←&rlm; <bdi>Error List</bdi> (רשימת השגיאות) ותקנו – לפני כל דבר אחר.</li>
-      <li>מדף הבית: לחצו על <b>כל</b> קישור בתפריט, אחד אחרי השני. כל דף נפתח? בכל דף אותו תפריט ואותו עיצוב?</li>
+      <li>פתחו את הפרויקט והריצו (▶ הירוק). נפתח חלון שמודיע על שגיאות בנייה (<bdi>There were build errors…</bdi>) ושואל אם להריץ את הגרסה האחרונה שעבדה? לחצו <b>No</b> – אחרת תראו גרסה ישנה של האתר. אז פתחו <bdi>View</bdi> &rlm;←&rlm; <bdi>Error List</bdi> (רשימת השגיאות) ותקנו – לפני כל דבר אחר.</li>
+      <li>מהדף הראשי: לחצו על <b>כל</b> קישור בתפריט, אחד אחרי השני. כל דף נפתח? בכל דף אותו תפריט ואותו עיצוב? ושימו לב לשורת הכתובת: אף כתובת של דף באתר שלכם לא מסתיימת ב-html – דף Razor נפתח בלי סיומת (שיעור 6).</li>
       <li>ספרו את דפי התוכן: לפחות 10, וכולם מגיעים מהתפריט. עדכנו את המונה ב<a href="#" data-go="list:1">רשימת הדרישות</a>.</li>
       <li>שלושת הטפסים: עברו על השדות מול הרשימה, שדה אחרי שדה – הכי מהר עם <a href="#" data-go="forms:1">בודק הטפסים</a>.</li>
       <li>חיפוש style בכל הפרויקט: לחצו Ctrl+Shift+F (חיפוש בכל הקבצים – Find in Files). כתבו <code>style=</code> ובחרו לחפש בכל הפרויקט (<bdi>Entire solution</bdi>). אחר כך חפשו באותה דרך גם <code>&lt;style</code> – תגית style שלמה. בקבצים שלכם לא אמורה להיות אף תוצאה. מצאתם? העבירו את העיצוב לכלל ב-site-style.css.</li>
@@ -365,23 +449,31 @@
     <div class="expect">הפרויקט רץ בלי חלון שגיאות. כל קישור בתפריט פותח דף, ובכל הדפים אותו תפריט ואותם צבעים. יש לפחות 10 דפי תוכן. החיפוש של style לא מוצא כלום בקבצים שלכם, וב-Console אין שגיאות אדומות.</div>
     <div class="trouble" id="trFinal"></div>
   </article>
-  <article class="spread">
-    <h3>✔ לפני שמגישים – הרשימה הסופית</h3>
-    <p>מה מצב האתר שלכם, לפי מה שסימנתם בדף הזה:</p>
+  <article class="spread act">
+    <h3>📌 הגשה 1: הרשימה שלפני ההגשה, ואיך מגישים</h3>
+    <p>קודם – מה מצב האתר, לפי מה שסימנתם בדף הזה:</p>
     <div class="status" id="status"></div>
-    <p>ועכשיו הרשימה האחרונה. סמנו רק מה ש<b>באמת</b> עשיתם:</p>
-    <ul class="final" id="final"></ul>
-    <div id="allset" aria-live="polite"></div>
+    <p>ועכשיו רשימת הבדיקה שכתובה במטלה. חדש כאן רק <b>תיק הפרויקט</b>: זה הקובץ שהורדתם בשיעור 2 (<a href="html-basics.html#practice-3">"תבנית תיק הפרויקט" – במטלה "הגשה סופית" בקלאסרום</a>), ובו כתבתם את פרק 1. עכשיו כותבים בו עוד שני פרקים.</p>
+    <div id="asg5"></div>
+    <div class="partial"><b>לא הספקתם הכול?</b> המחוון מחולק לסעיפים, וכל סעיף מקבל נקודות בנפרד – אתר שרץ, עם Layout, שלושה טפסים ו-7 דפי תוכן מקבל נקודות על כל מה שיש בו. שאלה על הזמן? שואלים את המורה לפני תאריך היעד, לא אחריו.</div>
   </article>
-  <article class="spread">
+  <article class="spread act">
     <h3>🆘 נתקעתם? ככה שואלים</h3>
-    <p>נתקעים – זה חלק מהעבודה. העיקר לא לחכות ללילה של 24/12: שאלה ששואלים היום נפתרת מחר.</p>
+    <p>נתקעים – זה חלק מהעבודה. העיקר לא לחכות ללילה שלפני תאריך היעד: שאלה ששואלים היום נפתרת מחר.</p>
     <ul>
       <li>🧑‍🏫 <b>משהו באתר לא עובד?</b> (דף שלא נפתח, עיצוב שלא נתפס, שגיאה) – שאלו את <b>מנטור הקורס</b>, עם הקוד שלכם.</li>
-      <li>📒 <b>משהו מהחומר לא ברור?</b> (מה זה Layout, איך עובד הגריד) – שאלו את <b>מחברת ה-Gemini</b> של הנושא.</li>
+      <li>📒 <b>משהו מהחומר לא ברור?</b> (מה זה Layout, איך עובד הגריד) – שאלו בצ׳אט של <b>מחברת הנושא</b>.</li>
       <li>🔎 לפני ששואלים: עברתם על "עבד באתר ולא אצלי?" בשלבי ה-💻? הדבקתם את הטופס בבודק?</li>
     </ul>
     <div id="askFinal"></div>
+    <h4>מותר לי…?</h4>
+    <ul class="allowed">
+      <li>✔ <b>יותר מ-10 דפי תוכן</b> – במטלה כתוב "לפחות 10".</li>
+      <li>✔ <b>להעתיק דוגמה מהתיעוד של Bootstrap ולהתאים אותה לאתר</b> – כמו שעשיתם ב<a href="bootstrap.html#mine-2">שיעור 5</a>.</li>
+      <li>✔ <b>להיעזר במנטור ובמחברת הנושא.</b></li>
+      <li>📝 <b>תמיד:</b> כל מקור או כלי AI שעזר לכם – רושמים בפרק 11 בתיק הפרויקט.</li>
+      <li>❓ שאלה אחרת של "מותר?" – שואלים את המורה, בתגובה פרטית במטלה.</li>
+    </ul>
     <div class="bridge">שאלה טובה אומרת מה ניסיתם, מה ציפיתם שיקרה ומה קרה בפועל – בדיוק כמו כשמחפשים באג ב-C#. ככה גם אתם מבינים את הבעיה טוב יותר – ולפעמים כבר תוך כדי כתיבת השאלה.</div>
   </article>
 </section>
@@ -394,83 +486,102 @@
 <script>
 (function(){
 "use strict";
-const {$, esc, state, save, seg, predict, checkpoint, trouble, askBox, toast, party, findEgg, store} = Course;
+const {$, esc, state, save, seg, predict, checkpoint, trouble, askBox, toast, findEgg, store, celebrate, SFX, Frame} = Course;
 const DAY = 864e5;
 const NOW = () => (window.__sub1Now ? new Date(window.__sub1Now) : new Date());
 const dayOf = d => new Date(d.getFullYear(), d.getMonth(), d.getDate());
-const D = (m, d) => new Date(2026, m - 1, d);
-const DEADLINE = new Date(2026, 11, 24, 23, 59, 0);
+const addDays = (d, n) => new Date(d.getFullYear(), d.getMonth(), d.getDate() + n);
+const dm = d => d.getDate() + '/' + (d.getMonth() + 1);
+/* 📅 no date is written in this page: the due date comes from assets/cohort.js, through the engine (Course.ASSIGN).
+   No date there yet (or a broken one) = DUE is null, and the page works without dates. */
+const A5 = (Course.ASSIGN && Course.ASSIGN[5]) || {};
+const DUE = (() => {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(A5.due || ''); if (!m) return null;
+  const d = new Date(+m[1], +m[2] - 1, +m[3]);
+  return d.getMonth() === +m[2] - 1 && d.getDate() === +m[3] ? d : null;
+})();
+const DAYS_LEFT = DUE ? Math.round((DUE - dayOf(NOW())) / DAY) : null;
 
 /* ---------- ⏰ deadline ---------- */
 (function deadline(){
-  const now = NOW(), el = $('#deadline');
-  const days = Math.round((dayOf(D(12, 24)) - dayOf(now)) / DAY);
-  let big;
-  if (now > DEADLINE) big = 'מועד ההגשה עבר';
-  else if (days === 0) big = 'היום! עד 23:59';
-  else if (days === 1) big = 'מחר!';
-  else big = 'עוד ' + days + ' ימים';
-  el.innerHTML = '<div class="big">⏰ ' + big + '</div><div><span class="when">עד יום חמישי, 24/12, בשעה 23:59 – במטלה בקלאסרום.</span>' +
-    '<span class="muted">' + (now > DEADLINE ? 'עוד לא הגשתם? פנו ליוחאי.' : 'לפני שמגישים – נותנים לעצמכם ציון לפי המחוון ועוברים על <a href="#" data-go="submit:2">הרשימה הסופית</a>.') + '</span></div>';
+  let big, sub;
+  if (DAYS_LEFT === null) { big = '📅 תאריך היעד עוד לא נקבע'; sub = 'כשהוא ייקבע, הוא יופיע כאן – ובמטלה בקלאסרום.'; }
+  else {
+    big = '⏰ ' + (DAYS_LEFT < 0 ? 'תאריך היעד עבר' : DAYS_LEFT === 0 ? 'מגישים היום!' : DAYS_LEFT === 1 ? 'מגישים מחר!' : 'עוד ' + DAYS_LEFT + ' ימים');
+    sub = DAYS_LEFT < 0 ? 'עוד לא הגשתם? הגישו כמה שיותר מהר, וכתבו למורה תגובה פרטית במטלה.'
+      : 'לפני שמגישים: נותנים לעצמכם ציון לפי <a href="#" data-go="rubric:3">המחוון</a>, ועוברים על <a href="#" data-go="submit:2">הרשימה שלפני ההגשה</a>.';
+  }
+  $('#deadline').innerHTML = '<div class="big">' + big + '</div><div><span class="when"><span data-asg="5"></span></span><span class="muted">' + sub + '</span></div>';
 })();
 
-/* ---------- 🛤 road to the submission (✔ comes from each lesson's "I did the project step" box) ---------- */
+/* ---------- 🛤 road to the submission (✔ comes from each lesson's "I did the project step" box; lesson 1 has no such box) ---------- */
 const ROAD = [
-  {t:'הפרויקט רץ', l:'שיעור 1', les:'l1', links:[['intro.html#vs-5', 'יוצרים את MyFirstWeb'], ['intro.html#run-5', 'מריצים ▶']]},
-  {t:'תיקיית HTML ודף ראשון', l:'שיעור 1', les:'l1', links:[['intro.html#page-7', 'הדף הראשון בפרויקט'], ['intro.html#practice-2', 'הצעד בפרויקט']]},
-  {t:'השלד של דף הנחיתה + דף תוכן ראשון', l:'שיעור 2', les:'l2', links:[['html-basics.html#practice-2', 'הצעד בפרויקט']]},
-  {t:'קובץ עיצוב חיצוני אחד: site-style.css', l:'שיעור 3', les:'css3', links:[['css.html#practice-2', 'הצעד בפרויקט: site-style.css']]},
-  {t:'שלושת הטפסים, עם כל השדות', l:'שיעור 4', les:'l4', links:[['html-advanced.html#forms-6', 'כניסה, הרשמה, שחזור'], ['html-advanced.html#fields-7', 'radio ו-select'], ['html-advanced.html#practice-2', 'הצעד בפרויקט']]},
-  {t:'דף תוכן בגריד של Bootstrap – התבנית ל-10 הדפים', l:'שיעור 5', les:'l5', links:[['bootstrap.html#grid-7', 'התבנית'], ['bootstrap.html#comps-9', 'תפריט וכרטיסים'], ['bootstrap.html#practice-2', 'הצעד בפרויקט']]},
-  {t:'Layout עם תפריט, והדפים עוברים ל-cshtml', l:'שיעור 6', les:'l6', links:[['razor.html#layout-3', 'Layout בפרויקט'], ['razor.html#move-3', 'מעבירים דפים ל-cshtml'], ['razor.html#practice-2', 'הצעד בפרויקט']]}
+  {t:'הפרויקט רץ', l:'שיעור 1', links:[['intro.html#vs-5', 'יוצרים את הפרויקט'], ['intro.html#run-5', 'מריצים ▶']]},
+  {t:'התיקייה HTML והדף הראשון', l:'שיעור 1', links:[['intro.html#page-7', 'הדף הראשון בפרויקט']]},
+  {t:'דף הנחיתה ודף תוכן ראשון', l:'שיעור 2', les:'l2', links:[['html-basics.html#practice-2', 'צעד בפרויקט']]},
+  {t:'קובץ עיצוב חיצוני אחד: site-style.css', l:'שיעור 3', les:'css3', links:[['css.html#practice-2', 'צעד בפרויקט']]},
+  {t:'שלושת הטפסים, עם כל השדות', l:'שיעור 4', les:'l4', links:[['html-advanced.html#forms-6', 'כניסה, הרשמה, שחזור'], ['html-advanced.html#fields-7', 'radio ו-select'], ['html-advanced.html#practice-4', 'בודקים את שלושת הטפסים']]},
+  {t:'דף תוכן בגריד של Bootstrap – דף הבסיס של דפי התוכן – ותפריט', l:'שיעור 5', les:'l5', links:[['bootstrap.html#grid-1', 'הגריד'], ['bootstrap.html#comps-1', 'רכיבים מוכנים'], ['bootstrap.html#practice-2', 'צעד בפרויקט']]},
+  {t:'Layout עם התפריט, וכל הדפים עוברים ל-cshtml', l:'שיעור 6', les:'l6', links:[['razor.html#layout-3', 'Layout באתר שלכם'], ['razor.html#move-3', 'מעבירים דפים ל-cshtml'], ['razor.html#practice-2', 'צעד בפרויקט']]}
 ];
 const lessonState = id => { try { return JSON.parse(localStorage.getItem(id + '-state')) || {}; } catch(e){ return {}; } };
 $('#road').innerHTML = ROAD.map((r, i) => {
-  const done = !!lessonState(r.les).step;
+  const done = !!(r.les && lessonState(r.les).step);
   return '<li' + (done ? ' class="done"' : '') + '><span class="num" aria-hidden="true">' + (i + 1) + '</span><div><div class="rt"><span class="sr">תחנה ' + (i + 1) + ': </span>' + r.t +
-    ' <span class="st">' + (done ? '✔ סימנתם שעשיתם' : '○ עוד לא סומן') + '</span></div><div class="meta">' + r.l + ' · ' +
+    (r.les ? ' <span class="st">' + (done ? '✔ סימנתם שעשיתם' : '○ עוד לא סומן') + '</span>' : '') + '</div><div class="meta">' + r.l + ' · ' +
     r.links.map(x => '<a href="' + x[0] + '">' + x[1] + '</a>').join(' · ') + '</div></div></li>';
 }).join('');
 
-/* ---------- 📅 weekly plan, with "you are here" ---------- */
+/* ---------- 📅 weekly plan: five weeks counted BACK from the due date (so a new cohort needs no edit here) ---------- */
 const PLAN = [
-  {from:null, to:D(11, 21), when:'עד 21/11', what:'שיעורים 1–4', goal:'הפרויקט רץ, דף נחיתה ודף תוכן ראשון, site-style.css, ושלושת הטפסים עם כל השדות. <b>יעד:</b> הטפסים עוברים את <a href="#" data-go="forms:1">בודק הטפסים</a>.'},
-  {from:D(11, 22), to:D(11, 28), when:'שבוע 22/11', what:'שיעור 5 – Bootstrap', goal:'דף התוכן הראשון הופך לתבנית בגריד, עם תפריט. <b>יעד:</b> התבנית, ועוד 2 דפי תוכן.'},
-  {from:D(11, 29), to:D(12, 5), when:'שבוע 29/11', what:'שיעור 6 – Razor Pages ו-Layout', goal:'הדפים עוברים ל-cshtml, והתפריט עובר למקום אחד. <b>יעד:</b> כל הדפים שכבר יש – cshtml, ובערך 5 דפי תוכן.'},
-  {from:D(12, 6), to:D(12, 12), when:'שבוע 6/12', what:'חופשה', goal:'נחו. רוצים להתקדם? אספו טקסטים ותמונות לשאר דפי התוכן.'},
-  {from:D(12, 13), to:D(12, 19), when:'שבוע 13/12', what:'שבוע עבודה מלא', goal:'משלימים ל-10 דפי תוכן מהתבנית – וכולם בתפריט. <b>יעד:</b> <a href="#" data-go="list:1">רשימת הדרישות</a> כמעט מלאה.'},
-  {from:D(12, 20), to:D(12, 24), when:'שבוע 20/12', what:'שבוע ההגשה', goal:'ליטוש, <a href="#" data-go="rubric:1">מחוון</a>, <a href="#" data-go="submit:1">סיבוב בדיקה אחרון</a>, zip – והגשה עד חמישי 23:59. 💡 הגישו כבר ביום רביעי: יום אחד של ביטחון.'}
+  {what:'שיעור 5 – Bootstrap', goal:'כותבים <a href="#" data-go="start:2">רשימה של 10 דפי התוכן</a> – וממנה את פרק 3 בתיק הפרויקט (עץ האתר). דף התוכן הראשון הופך לדף הבסיס של דפי התוכן – בגריד – ולאתר יש תפריט. <b>יעד:</b> הרשימה, דף הבסיס, ועוד 2 מדפי התוכן שלכם במבנה שלו.'},
+  {what:'שיעור 6 – Razor Pages ו-Layout', goal:'הדפים עוברים ל-cshtml, והתפריט עובר למקום אחד – Layout. <b>יעד:</b> כל הדפים שכבר יש הם דפי cshtml. דפים חדשים – רק מהשבוע הבא.'},
+  {what:'דפי תוכן חדשים', goal:'שניים–שלושה דפים חדשים, מדף הבסיס, לפי הרשימה. סיימתם דף? כתבו עליו שורה בפרק 6 בתיק הפרויקט. <b>יעד:</b> בערך 8 דפי תוכן <a href="#" data-go="rubric:1">גמורים</a>, ושלושת הטפסים עוברים את <a href="#" data-go="forms:1">בודק הטפסים</a>.'},
+  {what:'משלימים', goal:'משלימים ל-10 דפי תוכן גמורים – וכולם בתפריט. <b>יעד:</b> <a href="#" data-go="list:1">רשימת הדרישות</a> כמעט מלאה, ובפרק 6 יש שורה על כל דף.'},
+  {what:'שבוע ההגשה', goal:'ליטוש, <a href="#" data-go="rubric:3">מחוון</a>, קריאה אחרונה של פרקים 3 ו-6 בתיק הפרויקט, <a href="#" data-go="submit:1">סיבוב בדיקה אחרון</a>, zip – ו<a href="#" data-go="submit:2">הגשה</a>. 💡 הגישו יום לפני תאריך היעד: יום אחד של ביטחון.'}
 ];
 (function plan(){
-  const today = dayOf(NOW());
-  let cur = PLAN.findIndex(p => (!p.from || today >= p.from) && today <= p.to);
-  $('#plan').innerHTML = '<tr><th>מתי</th><th>מה כדאי שיהיה מוכן בסוף</th></tr>' + PLAN.map((p, i) =>
-    '<tr class="' + (i === cur ? 'cur' : cur > i || (cur < 0 && today > p.to) ? 'past' : '') + '"><td><b>' + p.when + '</b><span class="wh">' + p.what + '</span>' + (i === cur ? '<span class="here">📍 אתם כאן</span>' : '') + '</td><td>' + p.goal + '</td></tr>').join('');
+  const today = dayOf(NOW()), N = PLAN.length;
+  /* week k (1..N) ends 7*(N-k) days before the due date, and starts 6 days earlier */
+  const span = k => { const to = addDays(DUE, -7 * (N - k)); return [addDays(to, -6), to]; };
+  let cur = -1, note = '';
+  if (DUE) {
+    cur = PLAN.findIndex((p, i) => { const [a, b] = span(i + 1); return today >= a && today <= b; });
+    const first = span(1)[0];
+    note = today < first ? '📍 שבוע 1 עוד לא התחיל – זה הזמן להשלים את שיעורים 1–4.' : today > DUE ? 'תאריך היעד עבר.' : '';
+  } else note = 'כשייקבע תאריך היעד, יופיעו כאן גם התאריכים של כל שבוע.';
+  $('#planNote').textContent = note; $('#planNote').hidden = !note;
+  $('#plan').innerHTML = '<tr><th>מתי</th><th>מה כדאי שיהיה מוכן בסוף השבוע</th></tr>' + PLAN.map((p, i) => {
+    const s = DUE ? span(i + 1) : null, past = DUE && today > s[1];
+    return '<tr class="' + (i === cur ? 'cur' : past ? 'past' : '') + '"><td><b>שבוע ' + (i + 1) + '</b>' + (s ? '<span class="pdates">' + dm(s[0]) + ' עד ' + dm(s[1]) + '</span>' : '') +
+      '<span class="wh">' + p.what + '</span>' + (i === cur ? '<span class="here">📍 אתם כאן</span>' : '') + '</td><td>' + p.goal + '</td></tr>';
+  }).join('');
 })();
 
-/* ---------- ✅ requirement checklist (remembered) ---------- */
+/* ---------- ✅ requirement checklist (remembered) – the items and their order follow the assignment text in Classroom ---------- */
 const REG = [['userName','שם משתמש'], ['password','סיסמה'], ['password2','אימות סיסמה'], ['firstName','שם פרטי'], ['lastName','שם משפחה'], ['city','עיר'], ['phone','טלפון'],
   ['email','מייל – עם <code>type="text"</code> (החלטה של הקורס)'], ['gender','מין – כפתורי radio'], ['question1','שאלה לשחזור 1 – רשימה נפתחת (select)'], ['answer1','תשובה לשאלה 1'],
   ['question2','שאלה לשחזור 2 – רשימה נפתחת (select)'], ['answer2','תשובה לשאלה 2'], ['submit','כפתור שליחה (submit)'], ['reset','כפתור ניקוי (reset)']];
 const NAMED = ['userName','password','password2','firstName','lastName','city','phone','email','gender','question1','answer1','question2','answer2'];
 const REQ = [
-  {id:'landing', t:'דף נחיתה (הדף הראשי)', learn:[['intro.html#practice-2','שיעור 1: index.html'], ['html-basics.html#practice-2','שיעור 2: השלד'], ['bootstrap.html#comps-9','שיעור 5: תפריט וכרטיסים']]},
-  {id:'content', t:'לפחות 10 דפי תוכן – כולם מעוצבים באותו סגנון', pages:true, learn:[['html-basics.html#practice-2','שיעור 2: page1.html'], ['bootstrap.html#grid-7','שיעור 5: התבנית'], ['bootstrap.html#practice-2','שיעור 5: דפים חדשים מהתבנית']]},
-  {id:'login', t:'דף כניסה', subs:[['userName','שם משתמש'], ['password','סיסמה'], ['submit','כפתור שליחה'], ['toRegister','קישור לטופס ההרשמה'], ['toRecover','קישור לטופס שחזור הסיסמה']], learn:[['html-advanced.html#forms-6','שיעור 4: login.html']]},
-  {id:'register', t:'דף הרשמה', subs:REG, learn:[['html-advanced.html#forms-6','שיעור 4: register.html'], ['html-advanced.html#fields-7','שיעור 4: radio ו-select'], ['html-advanced.html#forms-5','שיעור 4: submit ו-reset']]},
-  {id:'recover', t:'דף שחזור סיסמה', subs:[['userName','שם משתמש'], ['question1','שאלה לשחזור 1'], ['answer1','תשובה לשאלה 1'], ['question2','שאלה לשחזור 2'], ['answer2','תשובה לשאלה 2']], learn:[['html-advanced.html#forms-6','שיעור 4: recover.html'], ['html-advanced.html#fields-7','שיעור 4: שאלות השחזור']]},
-  {id:'cshtml', t:'כל הדפים הם דפי cshtml', learn:[['razor.html#move-3','שיעור 6: מעבירים דפים ל-cshtml'], ['razor.html#practice-2','שיעור 6: כל האתר ב-Razor']]},
-  {id:'css', t:'העיצוב מקובץ CSS חיצוני – בלי style בתוך התגיות', learn:[['css.html#site-1','שיעור 3: למה קובץ אחד'], ['css.html#practice-2','שיעור 3: site-style.css']]},
-  {id:'menu', t:'תפריט מעוצב, משותף לכל הדפים', learn:[['html-advanced.html#lists-3','שיעור 4: nav'], ['bootstrap.html#comps-9','שיעור 5: navbar'], ['razor.html#layout-3','שיעור 6: Layout']]}
+  {g:'A', id:'landing', t:'א. דף פתיחה / דף ראשי (אצלכם: דף הנחיתה)', learn:[['html-basics.html#practice-2','שיעור 2: index.html'], ['bootstrap.html#comps-1','שיעור 5: רכיבים מוכנים'], ['razor.html#practice-2','שיעור 6: צעד בפרויקט']]},
+  {g:'A', id:'content', t:'ב. לפחות 10 דפי תוכן – כולם באותו סגנון', pages:true, note:'"אותו סגנון" = אותם צבעים, אותו גופן, אותו תפריט ואותם מרווחים. <b>מה שבתוך הדף שונה בכל דף:</b> נושא אחר, טקסט אחר, תמונות אחרות. גם הסידור יכול להשתנות – בדף אחד טבלה, בדף אחר כרטיסים. סופרים רק דפים גמורים: <a href="#" data-go="rubric:1">מה זה דף "גמור"?</a>', learn:[['html-basics.html#practice-2','שיעור 2: דף התוכן הראשון'], ['bootstrap.html#grid-1','שיעור 5: הגריד'], ['bootstrap.html#practice-2','שיעור 5: צעד בפרויקט']]},
+  {g:'A', id:'login', t:'ג. דף כניסה (Login)', subs:[['userName','שם משתמש'], ['password','סיסמה'], ['submit','כפתור שליחה'], ['toRegister','קישור לדף ההרשמה'], ['toRecover','קישור לדף שחזור הסיסמה']], learn:[['html-advanced.html#forms-6','שיעור 4: login.html']]},
+  {g:'A', id:'register', t:'ג. דף הרשמה (Register)', subs:REG, learn:[['html-advanced.html#forms-6','שיעור 4: register.html'], ['html-advanced.html#fields-7','שיעור 4: radio ו-select'], ['html-advanced.html#practice-4','שיעור 4: טבלת השדות']]},
+  {g:'A', id:'recover', t:'ג. דף שחזור סיסמה (Recover Password)', subs:[['userName','שם משתמש'], ['question1','שאלה לשחזור 1'], ['answer1','תשובה לשאלה 1'], ['question2','שאלה לשחזור 2'], ['answer2','תשובה לשאלה 2'], ['submit','כפתור שליחה']], learn:[['html-advanced.html#forms-6','שיעור 4: recover.html'], ['html-advanced.html#fields-7','שיעור 4: שאלות השחזור']]},
+  {g:'B', id:'css', t:'העיצוב בקובץ CSS חיצוני', note:'כלומר: הכללים בקובצי CSS חיצוניים (site-style.css) – בלי style בתוך התגיות, ובלי תגית style בדפים.', learn:[['css.html#site-1','שיעור 3: למה קובץ נפרד?'], ['css.html#practice-2','שיעור 3: site-style.css']]},
+  {g:'B', id:'cshtml', t:'כל הדפים הם דפי cshtml, מבוססים על Layout', note:'גם דף הנחיתה, גם דפי התוכן וגם שלושת הטפסים. דף שכבר עבר ל-cshtml <b>ונבדק</b> – את קובץ ה-html הישן שלו מוחקים (שיעור 6: קודם בודקים, רק אז מוחקים). דפי התרגול של פיצה דני (practice.html, menu.html, pizza.html) אינם חלק מהאתר – לא ממירים אותם.', learn:[['razor.html#layout-3','שיעור 6: Layout באתר שלכם'], ['razor.html#move-3','שיעור 6: מעבירים דפים ל-cshtml']]},
+  {g:'B', id:'menu', t:'תפריט ראשי בכל דף', note:'התפריט כתוב פעם אחת, ב-Layout – ולכן הוא מופיע בכל דף.', learn:[['bootstrap.html#comps-1','שיעור 5: רכיבים מוכנים'], ['razor.html#layout-3','שיעור 6: Layout באתר שלכם']]}
 ];
 state.req = state.req || {}; state.pages = state.pages || 0;
 const R = state.req;
+const reqBox = $('#reqA').closest('article');
 const isNamed = n => NAMED.includes(n);
 const reqDone = r => r.pages ? state.pages >= 10 : r.subs ? r.subs.every(s => R[r.id + ':' + s[0]]) : !!R[r.id];
 const learnHtml = r => '📚 איפה למדנו? ' + r.learn.map(x => '<a href="' + x[0] + '">' + x[1] + '</a>').join(' · ') +
   (r.subs ? ' · <a href="#" data-go="forms:1">🔎 בדיקה בבודק</a>' : '');
 function dotsHtml(n){ let s = ''; for (let i = 0; i < 10; i++) s += i < n ? '<span>●</span>' : '<span class="off">○</span>'; return s + (n > 10 ? '<span>+' + (n - 10) + '</span>' : ''); }
-$('#req').innerHTML = REQ.map(r => {
+const reqHtml = r => {
   let head, body = '';
   if (r.subs) {
     head = '<span class="mark" aria-hidden="true"></span><span class="tt">' + r.t + ' <span class="cnt"></span></span>';
@@ -479,15 +590,27 @@ $('#req').innerHTML = REQ.map(r => {
     head = '<span class="mark" aria-hidden="true"></span><span class="tt">' + r.t + '</span>';
     body = '<div class="pagesctl"><span>כמה דפי תוכן גמורים יש לכם?</span><button class="btn" type="button" data-pg="-1" aria-label="דף אחד פחות">−</button><output id="pgOut" aria-live="polite"></output><button class="btn" type="button" data-pg="1" aria-label="עוד דף אחד">+</button><span class="dots" id="pgDots" aria-hidden="true"></span></div>';
   } else head = '<input type="checkbox" id="rq-' + r.id + '" data-k="' + r.id + '" /><label for="rq-' + r.id + '">' + r.t + '</label>';
-  return '<li data-r="' + r.id + '"><div class="rh">' + head + '</div>' + body + '<p class="learn">' + learnHtml(r) + '</p></li>';
-}).join('');
-$('#req').querySelectorAll('input[data-k]').forEach(i => { i.checked = !!R[i.dataset.k]; });
-$('#req').addEventListener('change', e => { const i = e.target.closest('input[data-k]'); if (!i) return; R[i.dataset.k] = i.checked; save(); paintReq(); });
-$('#req').addEventListener('click', e => { const b = e.target.closest('[data-pg]'); if (!b) return; state.pages = Math.max(0, Math.min(30, (state.pages || 0) + +b.dataset.pg)); save(); paintReq(); });
-function paintReq(){
-  let n = 0;
+  return '<li data-r="' + r.id + '"><div class="rh">' + head + '</div>' + (r.note ? '<p class="note muted">' + r.note + '</p>' : '') + body + '<p class="learn">' + learnHtml(r) + '</p></li>';
+};
+$('#reqA').innerHTML = REQ.filter(r => r.g === 'A').map(reqHtml).join('');
+$('#reqB').innerHTML = REQ.filter(r => r.g === 'B').map(reqHtml).join('');
+const syncReqBoxes = () => reqBox.querySelectorAll('input[data-k]').forEach(i => { i.checked = !!R[i.dataset.k]; });
+syncReqBoxes();
+reqBox.addEventListener('change', e => { const i = e.target.closest('input[data-k]'); if (!i) return; R[i.dataset.k] = i.checked; save(); if (i.checked) SFX.play('tick'); paintReq(true); });
+reqBox.addEventListener('click', e => { const b = e.target.closest('[data-pg]'); if (!b) return; state.pages = Math.max(0, Math.min(30, (state.pages || 0) + +b.dataset.pg)); save(); paintReq(true); });
+/* the five "before you submit" lines are ticked in ONE place – the 📌 box in the last topic; here they are only shown */
+const PRE = ['הפרויקט רץ בלי שגיאות', 'בדקתי כל דף בדפדפן – כולל התפריט', 'ה-zip כולל את כל תיקיית הפרויקט ואת קובץ ה-sln', 'תיק הפרויקט: פרק 3 (עץ האתר) ופרק 6 (הדפים שבניתי)', 'יומן התקלות, ופרק 11 בתיק הפרויקט'];
+const preState = () => (state.asg && state.asg[5]) || {};
+function paintPre(){
+  const st = preState(), n = PRE.filter((t, i) => st[i]).length;
+  $('#pre').innerHTML = PRE.map((t, i) => '<li' + (st[i] ? ' class="done"' : '') + '><span class="mark" aria-hidden="true">' + (st[i] ? '✔' : '') + '</span><span><span class="sr">' + (st[i] ? 'סומן: ' : 'עוד לא סומן: ') + '</span>' + t + '</span></li>').join('');
+  $('#preTxt').textContent = '(' + n + ' מתוך ' + PRE.length + ' מסומנים)';
+}
+let reqWas = null;
+function paintReq(cheer){
+  let n = 0; const now = {};
   REQ.forEach(r => {
-    const li = $('#req [data-r="' + r.id + '"]'), ok = reqDone(r); if (ok) n++;
+    const li = reqBox.querySelector('[data-r="' + r.id + '"]'), ok = reqDone(r); if (ok) n++; now[r.id] = ok;
     li.classList.toggle('done', ok);
     const mk = li.querySelector('.mark'); if (mk) mk.textContent = ok ? '✔' : '';
     if (r.subs) { const k = r.subs.filter(s => R[r.id + ':' + s[0]]).length; li.querySelector('.cnt').textContent = k + '/' + r.subs.length; }
@@ -497,25 +620,45 @@ function paintReq(){
   $('#pgDots').innerHTML = dotsHtml(p);
   $('#reqTxt').innerHTML = n === REQ.length ? '✔ <b>כל ' + REQ.length + ' הדרישות מסומנות!</b>' : '<b>' + n + ' מתוך ' + REQ.length + '</b> דרישות מלאות';
   $('#reqBar').style.width = (100 * n / REQ.length) + '%';
-  paintStatus();
+  /* a sound for every success: a requirement that just became full = small cheer, the whole list = big one */
+  if (cheer && reqWas) { const fresh = REQ.find(r => now[r.id] && !reqWas[r.id]); if (fresh && n === REQ.length) Course.finale($('#reqTxt'), {key: 'req', title: 'כל הדרישות מסומנות!', sub: n + ' מתוך ' + n + ' דרישות'});
+    else if (fresh) celebrate(reqBox.querySelector('[data-r="' + fresh.id + '"] .rh'), 'small'); }
+  reqWas = now;
+  paintPre(); paintStatus();
 }
 
-/* ---------- 🧮 rubric: self-grading, auto sum, "what to improve first" ---------- */
+/* ---------- 🧮 rubric: self-grading, auto sum, "what to improve first" ----------
+   The rows, their labels and their maximum points are the rubric of the assignment in Classroom (א–ה, with ה = ה1 + ה2).
+   The level sentences inside each row are this page's own self-assessment aid. */
 const RUB = [
-  {id:'home', t:'דף ראשי מעוצב', max:15, go:['html-basics.html#practice-2', 'השלד של דף הנחיתה', 'bootstrap.html#comps-9', 'תפריט וכרטיסים'], levels:[
-    [0, 'עוד אין דף ראשי'], [5, 'יש דף, אבל כמעט בלי עיצוב'], [10, 'מעוצב, אבל משהו חסר או לא מסודר – למשל תמונה שלא נטענת או טקסט צפוף'], [15, 'מזמין ומסודר, ברור על מה האתר, עם התפריט המשותף']]},
-  {id:'pages', t:'10 דפי תוכן מעוצבים', max:30, go:['bootstrap.html#practice-2', 'דפים חדשים מהתבנית'], levels:[
-    [0, 'עוד אין דפי תוכן'], [10, 'פחות מ-5 דפים, או דפים כמעט ריקים'], [20, '5–9 דפים – או 10, אבל חלקם בסגנון אחר'], [30, '10 דפים (או יותר) עם תוכן אמיתי – כולם באותו סגנון']]},
-  {id:'login', t:'דפי כניסה ושחזור', max:15, go:['html-advanced.html#forms-6', 'בונים את הטפסים'], local:'forms:1', levels:[
+  {id:'home', t:'א. דף ראשי מעוצב', max:15, go:['html-basics.html#practice-2', 'שיעור 2: דף הנחיתה', 'bootstrap.html#comps-1', 'שיעור 5: רכיבים מוכנים'], levels:[
+    [0, 'עוד אין דף ראשי'], [5, 'יש דף, אבל כמעט בלי עיצוב'], [10, 'מעוצב, אבל חסר אחד מהדברים שברמה הבאה – או שיש תמונה שלא נטענת או טקסט צפוף'], [15, 'במבט ראשון רואים: שם האתר, על מה הוא, תמונה, ודרך להגיע לדפי התוכן – וגם התפריט הראשי']]},
+  {id:'pages', t:'ב. 10 דפי תוכן', max:30, help:['rubric:1', 'מה זה דף "גמור"?'], go:['bootstrap.html#practice-2', 'שיעור 5: צעד בפרויקט'], levels:[
+    [0, 'עוד אין דפי תוכן'], [10, 'פחות מ-5 דפים גמורים'], [20, '5–9 דפים גמורים – או 10, אבל בחלקם כמעט אין תוכן או שהסגנון שונה'], [30, '10 דפים גמורים (או יותר): לכל אחד נושא ותוכן משלו, וכולם באותו סגנון']]},
+  {id:'login', t:'ג. התחברות + שחזור סיסמה', max:15, go:['html-advanced.html#forms-6', 'שיעור 4: בונים את הטפסים'], local:'forms:1', levels:[
     [0, 'עוד אין'], [5, 'יש רק אחד מהשניים, או שחסרים בהם שדות או קישורים'], [10, 'שני הדפים קיימים, אבל בבודק עוד יש ✘'], [15, 'שני הדפים עם כל השדות והקישורים, ובבודק אין ✘']]},
-  {id:'register', t:'דף הרשמה עם כל השדות', max:15, go:['html-advanced.html#fields-7', 'radio ו-select'], local:'forms:1', levels:[
+  {id:'register', t:'ד. דף הרשמה לפי הדרישות', max:15, go:['html-advanced.html#practice-4', 'שיעור 4: טבלת השדות'], local:'forms:1', levels:[
     [0, 'עוד אין'], [5, 'יש דף, אבל חסרים כמה שדות'], [10, 'כמעט הכול: חסר שדה או כפתור, או שבבודק עוד יש ✘'], [15, 'כל השדות, שליחה וניקוי – ובבודק אין ✘']]},
-  {id:'look', t:'רושם עיצובי כללי', max:25, local:'rubric:2', levels:[
-    [5, 'כל דף נראה אחרת'], [15, 'רוב הדפים אחידים, אבל יש פרטים לא מסודרים: צבעים שלא מתאימים, טקסט שקשה לקרוא, תמונות בגדלים שונים'], [20, 'אחיד ונעים, עם כמה פרטים קטנים לשפר'], [25, 'נראה כמו אתר אמיתי: צבעים תואמים, טקסט קריא, רווחים מסודרים, אותו תפריט בכל דף']]}
+  {id:'look1', grp:'ה. התרשמות כללית', t:'ה1. סדר ובנייה נכונה', max:10, local:'rubric:2', levels:[
+    [2, 'הפרויקט לא רץ, או שחלק מהדפים עדיין לא דפי cshtml'], [5, 'רץ, אבל יש כמה בעיות: קישורים שבורים, דפים בלי התפריט או style בתוך תגיות'], [8, 'רץ, וכל הדפים cshtml עם Layout – ובסיבוב הבדיקה מצאתי רק בעיה אחת או שתיים'], [10, 'רץ בלי שגיאות: כל הדפים cshtml עם Layout, CSS חיצוני, וכל קישור עובד']]},
+  {id:'look2', grp:'ה. התרשמות כללית', t:'ה2. עיצוב אחיד וקריא', max:15, local:'rubric:2', levels:[
+    [3, 'כל דף נראה אחרת'], [8, 'רוב הדפים אחידים, אבל יש טקסט שקשה לקרוא או צבעים שלא מתאימים'], [12, 'אחיד בכל הדפים – ומצאתי מקום או שניים לתקן: טקסט צפוף, תמונות בגדלים שונים או גלילה הצידה'], [15, 'אותם צבעים, אותו גופן ואותו תפריט בכל דף, טקסט שנוח לקרוא – וגם ברוחב של טלפון אין גלילה הצידה']]}
 ];
+const RUB_MAX = RUB.reduce((s, r) => s + r.max, 0);
 state.rub = state.rub || {};
-$('#rub').innerHTML = RUB.map(r => '<fieldset><legend>' + r.t + ' <span class="mx">(' + r.max + ' נקודות)</span></legend><div class="lv">' +
-  r.levels.map((l, k) => '<label><input type="radio" name="rub-' + r.id + '" value="' + l[0] + '"' + (state.rub[r.id] === l[0] ? ' checked' : '') + ' /><span><span class="pts">' + l[0] + ' נקודות</span>' + l[1] + '</span></label>').join('') + '</div></fieldset>').join('');
+delete state.rub.look; /* the old single "general impression" row was split into ה1 + ה2 */
+(function buildRub(){
+  const field = r => '<fieldset><legend>' + r.t + ' <span class="mx">(' + r.max + ' נקודות)</span></legend>' + (r.help ? '<p class="rhelp">❔ <a href="#" data-go="' + r.help[0] + '">' + r.help[1] + '</a></p>' : '') + '<div class="lv">' +
+    r.levels.map(l => '<label><input type="radio" name="rub-' + r.id + '" value="' + l[0] + '"' + (state.rub[r.id] === l[0] ? ' checked' : '') + ' /><span><span class="pts">' + l[0] + ' נקודות</span>' + l[1] + '</span></label>').join('') + '</div></fieldset>';
+  let h = '';
+  for (let i = 0; i < RUB.length; i++) {
+    const r = RUB[i];
+    if (!r.grp) { h += field(r); continue; }
+    const g = RUB.filter(x => x.grp === r.grp); i += g.length - 1;
+    h += '<div class="grp"><div class="gh">' + r.grp + ' <span class="mx">(' + g.reduce((s, x) => s + x.max, 0) + ' נקודות = ' + g.map(x => x.max).join(' + ') + ')</span> · <a href="#" data-go="rubric:2">הסימנים שבודקים – בשלב הקודם</a></div>' + g.map(field).join('') + '</div>';
+  }
+  $('#rub').innerHTML = h; $('#rubMax').textContent = RUB_MAX;
+})();
 $('#rub').addEventListener('change', e => { const i = e.target; if (!i.name || !i.name.startsWith('rub-')) return; state.rub[i.name.slice(4)] = +i.value; save(); paintRub(); });
 let rubT;
 $('#rubReset').addEventListener('click', () => {
@@ -528,20 +671,28 @@ const rubTotal = () => RUB.reduce((s, r) => s + (state.rub[r.id] || 0), 0);
 const rubChosen = () => RUB.filter(r => typeof state.rub[r.id] === 'number').length;
 function paintRub(){
   const k = rubChosen(), tot = rubTotal();
-  $('#rubSum').innerHTML = '<div class="tot">' + tot + ' <small>/ 100</small></div><div>' +
-    (k === RUB.length ? '<b>הציון העצמי שלכם.</b> חזרו לעדכן אחרי כל שיפור.' : 'בחרתם רמה ב-<b>' + k + ' מתוך ' + RUB.length + '</b> שורות. בחרו בכולן כדי לראות את הסכום המלא.') + '</div>';
+  $('#rubSum').innerHTML = '<div class="tot">' + (k ? tot : '—') + ' <small>/ ' + RUB_MAX + '</small></div><div>' +
+    (!k ? 'עוד לא מילאתם. בחרו בכל שורה את המשפט שמתאר את האתר שלכם היום – והסכום יופיע כאן.' : k === RUB.length ? '<b>הציון העצמי שלכם.</b> חזרו לעדכן אחרי כל שיפור.' : 'בחרתם רמה ב-<b>' + k + ' מתוך ' + RUB.length + '</b> שורות. בחרו בכולן כדי לראות את הסכום המלא.') + '</div>';
   const gaps = RUB.filter(r => typeof state.rub[r.id] === 'number' && state.rub[r.id] < r.max).map(r => ({r, gap: r.max - state.rub[r.id]})).sort((a, b) => b.gap - a.gap);
   let h = '';
   if (k && gaps.length) {
     const g = gaps[0].r, links = [];
-    if (g.local) links.push('<a href="#" data-go="' + g.local + '">' + (g.local === 'forms:1' ? '🔎 בודק הטפסים' : '🎨 מה עושה אתר שנראה גמור') + '</a>');
+    if (g.local) links.push('<a href="#" data-go="' + g.local + '">' + (g.local === 'forms:1' ? '🔎 בודק הטפסים' : '🎨 מה בודקים בעצמכם') + '</a>');
     for (let i = 0; g.go && i < g.go.length; i += 2) links.push('<a href="' + g.go[i] + '">' + g.go[i + 1] + '</a>');
-    h = '<div class="rubnext"><b class="h">💡 מה לשפר קודם?</b>הכי הרבה נקודות מחכות לכם בשורה <b>"' + g.t + '"</b> – עד <b>' + gaps[0].gap + '</b> נקודות נוספות. ' +
-      'שיפור קטן שם שווה יותר מליטוש של שורה שכבר כמעט מלאה. מאיפה מתחילים: ' + links.join(' · ') + '</div>';
+    const quick = gaps.find(x => x.r.local === 'forms:1');
+    h = '<div class="rubnext"><b class="h">💡 מה לשפר קודם?</b>הכי הרבה נקודות מחכות לכם בשורה <b>"' + g.t + '"</b> – עד <b>' + gaps[0].gap + '</b> נקודות נוספות. מאיפה מתחילים: ' + links.join(' · ') + '.' +
+      (quick && quick.r !== g ? '<br />⚡ <b>והכי מהר:</b> השורה <b>"' + quick.r.t + '"</b> (עד ' + quick.gap + ' נקודות). <a href="#" data-go="forms:1">בודק הטפסים</a> אומר בדיוק מה חסר, ולכן את ה-✘ שם מתקנים מהר – הרבה יותר מהר מלבנות דף תוכן חדש.'
+        : quick ? '<br />⚡ זו גם שורה מהירה: הבודק אומר בדיוק מה חסר.' : '') + '</div>';
   } else if (k === RUB.length) h = '<div class="rubnext"><b class="h">🎉 כל השורות בניקוד מלא – לפי ההערכה שלכם.</b>עכשיו בדקו את זה באמת: <a href="#" data-go="submit:1">סיבוב הבדיקה האחרון</a>.</div>';
   $('#rubNext').innerHTML = h;
   paintStatus();
 }
+/* the facts of the assignment: points = the sum of the rubric; time and "graded" = from the engine (ASSIGN) – nothing typed twice */
+(function facts(){
+  const pts = (A5.graded ? '🎯 הגשה עם ציון: ' : '🎯 ') + RUB_MAX + ' נקודות', est = A5.est ? '⏱ זמן עבודה משוער: ' + esc(A5.est) : '';
+  $('#facts').innerHTML = '<span>' + pts + '</span>' + (est ? '<span>' + est + ', על פני כמה שבועות</span>' : '') + (A5.graded ? '<span>אחת מחמש ההגשות עם ציון בקורס</span>' : '');
+  $('#tourFacts').textContent = (A5.graded ? 'זו הגשה עם ציון – ' + RUB_MAX + ' נקודות, אחת מחמש ההגשות עם ציון בקורס.' : RUB_MAX + ' נקודות.') + (A5.est ? ' זמן עבודה משוער: ' + A5.est + '.' : '');
+})();
 
 /* ---------- 🔎 field checker: paste a form page (html / cshtml) or the address after sending it ---------- */
 const NAMES = {login:['userName','password'], register:NAMED, recover:['userName','question1','answer1','question2','answer2']};
@@ -550,34 +701,45 @@ const LABEL = {userName:'שם משתמש', password:'סיסמה', password2:'א�
   question1:'שאלה לשחזור 1', answer1:'תשובה לשאלה 1', question2:'שאלה לשחזור 2', answer2:'תשובה לשאלה 2'};
 state.fcOk = state.fcOk || {}; state.urlOk = state.urlOk || {};
 let fcKind = 'auto', fcPassed = [], fcKindNow = null, fromSample = false; /* the sample form never counts as the student's own work */
+let fcQuiet = true, fcVerdict = null; /* sound only when the verdict CHANGES (not on every key), and never while the page loads */
 const ta = $('#fcIn'), out = $('#fcOut');
-function detectKind(namesLower, text){
+/* which form is it? The field names decide; a heading / page name (hint) decides when the names are not enough:
+   a recover page may have only userName, or an email / a new-password field – and must not be read as login or register. */
+function detectKind(namesLower, text, hint){
   const has = n => namesLower.includes(n.toLowerCase());
-  if (['password2', 'gender', 'firstName', 'lastName', 'phone', 'email', 'city'].some(has)) return 'register';
-  if (['question1', 'question2', 'answer1', 'answer2'].some(has) && !has('password')) return 'recover';
+  const qa = ['question1', 'question2', 'answer1', 'answer2'].some(has), regOnly = ['password2', 'gender', 'firstName'].some(has);
+  if (qa && !regOnly) return 'recover';
+  if (regOnly || has('lastName')) return hint === 'recover' && !has('gender') && !has('firstName') ? 'recover' : 'register';
+  if (hint) return hint;
+  if (['phone', 'email', 'city'].some(has)) return 'register';
   if (has('password') || has('userName')) return 'login';
-  if (/הרשמה/.test(text)) return 'register';
-  if (/שחזור/.test(text)) return 'recover';
-  if (/כניסה|התחברות/.test(text)) return 'login';
-  return null;
+  return hintOf(text);
 }
+function hintOf(t){ return /שחזור|שכחתי/.test(t) ? 'recover' : /הרשמה/.test(t) ? 'register' : /כניסה|התחברות/.test(t) ? 'login' : null; }
 const C = s => '<code>' + esc(s) + '</code>';
 function checkHtml(src){
   const doc = new DOMParser().parseFromString(src, 'text/html');
   const ctrls = [...doc.querySelectorAll('input, select, textarea')];
   const nm = e => e.getAttribute('name');
-  const kind = fcKind !== 'auto' ? fcKind : detectKind(ctrls.map(nm).filter(Boolean).map(x => x.toLowerCase()), doc.body ? doc.body.textContent : '');
+  /* the heading of the page: title, h1–h3, and in a Razor page also ViewData["Title"] = "…" */
+  const vd = /ViewData\s*\[\s*"Title"\s*\]\s*=\s*"([^"]*)"/.exec(src);
+  const head = [doc.title || ''].concat([...doc.querySelectorAll('h1, h2, h3')].map(h => h.textContent), vd ? [vd[1]] : []).join(' ');
+  const kind = fcKind !== 'auto' ? fcKind : detectKind(ctrls.map(nm).filter(Boolean).map(x => x.toLowerCase()), doc.body ? doc.body.textContent : '', hintOf(head));
   if (!kind) return {msg:'לא הצלחתי לזהות איזה טופס זה – אין בו אף אחד מהשמות של הרשימה. בחרו אותו למעלה, ב"איזה טופס?".'};
   const rows = [], passed = [];
-  const add = (s, t, sub) => { rows.push({s, t}); if (s === 'ok' && sub) passed.push(kind + ':' + sub); };
+  const add = (s, t, sub, link) => { rows.push({s, t, link: !!link}); if (s === 'ok' && sub) passed.push(kind + ':' + sub); };
   const typeOf = e => e.tagName === 'INPUT' ? (e.getAttribute('type') || 'text').toLowerCase() : e.tagName.toLowerCase();
   const forms = [...doc.querySelectorAll('form')];
-  const outside = e => forms.length && !e.closest('form');
+  /* is the field inside a form? In a real page the browser also attaches fields to a <form> that was written between table rows
+     (the parser moves the tag, but remembers it); a parsed copy does not – so the source text is checked too: the field's tag sits between <form and </form>. */
+  const formSpans = []; { const re = /<form\b|<\/form\s*>/gi; let m, open = -1; while ((m = re.exec(src))) { if (m[0][1] !== '/') { if (open < 0) open = m.index; } else if (open >= 0) { formSpans.push([open, m.index]); open = -1; } } if (open >= 0) formSpans.push([open, src.length]); }
+  const inFormSrc = e => { const n = nm(e); if (!n) return true; const m = new RegExp('<(?:input|select|textarea)\\b[^>]*\\bname\\s*=\\s*["\']?' + n.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '(?![\\w-])', 'i').exec(src); return !m || formSpans.some(([x, y]) => m.index > x && m.index < y); };
+  const outside = e => forms.length && !(e.form || e.closest('form') || inFormSrc(e));
   function find(n){
     const ex = ctrls.filter(e => nm(e) === n);
     if (ex.length) return ex;
     const near = ctrls.find(e => nm(e) && nm(e).toLowerCase() === n.toLowerCase());
-    if (near) add('bad', LABEL[n] + ' – אצלכם כתוב ' + C('name="' + nm(near) + '"') + ', וצריך ' + C(n) + '. אותיות גדולות וקטנות חשובות!');
+    if (near) add('bad', LABEL[n] + ' – אצלכם כתוב ' + C('name="' + nm(near) + '"') + ', וצריך ' + C(n) + '. כותבים בדיוק כמו ברשימה – כולל אותיות גדולות וקטנות.');
     else add('bad', LABEL[n] + ' – לא מצאתי שדה עם ' + C('name="' + n + '"') + '. לשדה חסר name, או שה-name כתוב אחרת.');
     return null;
   }
@@ -614,7 +776,7 @@ function checkHtml(src){
       return;
     }
     const near = radios.filter(e => (nm(e) || '').toLowerCase() === 'gender');
-    if (near.length) { add('bad', 'מין – אצלכם כתוב ' + C('name="' + nm(near[0]) + '"') + ', וצריך ' + C('gender') + '. אותיות גדולות וקטנות חשובות!'); return; }
+    if (near.length) { add('bad', 'מין – אצלכם כתוב ' + C('name="' + nm(near[0]) + '"') + ', וצריך ' + C('gender') + '. כותבים בדיוק כמו ברשימה – כולל אותיות גדולות וקטנות.'); return; }
     if (radios.length) {
       const ns = [...new Set(radios.map(e => nm(e) || '(בלי name)'))];
       add('bad', 'מין – יש ' + radios.length + ' כפתורי radio, אבל אף אחד מהם לא נקרא gender' + (ns.length > 1 ? ' (אצלכם: ' + ns.map(C).join(', ') + '). כשלכל כפתור name אחר, אפשר לסמן כמה יחד' : '') + '. תנו לכולם ' + C('name="gender"') + '.');
@@ -633,8 +795,7 @@ function checkHtml(src){
   const submits = [...doc.querySelectorAll('input[type=submit i], input[type=image i], button')].filter(b => b.tagName !== 'BUTTON' || !b.getAttribute('type') || b.getAttribute('type').toLowerCase() === 'submit');
   const resets = [...doc.querySelectorAll('input[type=reset i], button[type=reset i]')];
   if (submits.length) add('ok', 'כפתור שליחה (submit)', 'submit');
-  else if (kind === 'recover') add('warn', 'אין כפתור שליחה – בלי כפתור כזה אי אפשר לשלוח את הטופס.');
-  else add('bad', 'אין כפתור שליחה: ' + C('<input type="submit" />'));
+  else add('bad', 'אין כפתור שליחה – בלי כפתור כזה אי אפשר לשלוח את הטופס: ' + C('<input type="submit" />'));
   if (kind === 'register') { if (resets.length) add('ok', 'כפתור ניקוי (reset)', 'reset'); else add('bad', 'אין כפתור ניקוי: ' + C('<input type="reset" />')); }
   /* links in the login page */
   if (kind === 'login') {
@@ -642,9 +803,9 @@ function checkHtml(src){
     [['toRegister', /regist|sign-?up/i, 'קישור לטופס ההרשמה', 'register'], ['toRecover', /recover|forgot|restore|reset/i, 'קישור לטופס שחזור הסיסמה', 'recover']].forEach(([sub, re, label, word]) => {
       const a = as.find(x => re.test(hrefOf(x)) && !x.closest('nav')), inNav = as.find(x => re.test(hrefOf(x)));
       if (a) add('ok', label + ' · ' + C(hrefOf(a).trim()), sub);
-      else if (inNav) add('warn', label + ' – מצאתי קישור כזה רק בתפריט (nav). לפי הדרישות הקישור נמצא בדף הכניסה עצמו – ליד הטופס.');
+      else if (inNav) add('warn', label + ' – מצאתי קישור כזה רק בתפריט (nav). לפי הרשימה של שיעור 4, הקישור נמצא בדף הכניסה עצמו – ליד הטופס.', null, true);
       else if (!as.length) add('bad', label + ' – אין בדף אף קישור (אף תגית a).');
-      else add('warn', label + ' – לא מצאתי קישור שהכתובת שלו כוללת ' + C(word) + '. קראתם לדף בשם אחר? בדקו בעצמכם שהקישור קיים ומגיע לדף הנכון.');
+      else add('warn', label + ' – לא מצאתי קישור שהכתובת שלו כוללת ' + C(word) + '. קראתם לדף בשם אחר? בדקו בעצמכם שהקישור קיים ומגיע לדף הנכון.', null, true);
     });
     add('info', 'ודאו בדפדפן ששני הקישורים מופיעים בדף הכניסה עצמו, ושכל אחד מהם פותח את הדף הנכון.');
   }
@@ -661,12 +822,12 @@ function checkUrl(v){
   const q = v.indexOf('?');
   if (q >= 0) { qs = v.slice(q + 1).split('#')[0]; path = v.slice(0, q); }
   else if (/^[\w.%\[\]-]+=/.test(v)) qs = v;
-  else return {msg:'אין כאן סימן שאלה – כלומר אין בכתובת נתונים. לחצתם על כפתור השליחה? אם הטופס נשלח ב-post, הנתונים לא בכתובת – ראו "עבד באתר ולא אצלי?" בשלב הבא.'};
+  else return {msg:'אין כאן סימן שאלה – כלומר אין בכתובת נתונים. לחצתם על כפתור השליחה? ואם לחצתם – ראו "עבד באתר ולא אצלי?" בשלב הבא.'};
   let pairs = []; try { pairs = [...new URLSearchParams(qs)]; } catch(e){}
   const got = {}; pairs.forEach(([k, val]) => { (got[k] = got[k] || []).push(val); });
   /* the names decide (a register form may send to login.html with action); the page name in the path only breaks a tie */
   const pm = path.match(/(login|register|recover)/ig);
-  const kind = fcKind !== 'auto' ? fcKind : detectKind(Object.keys(got).map(x => x.toLowerCase()), '') || (pm ? pm[pm.length - 1].toLowerCase() : null);
+  const kind = fcKind !== 'auto' ? fcKind : detectKind(Object.keys(got).map(x => x.toLowerCase()), '', pm ? pm[pm.length - 1].toLowerCase() : null);
   if (!kind) return {msg:'לא הצלחתי לזהות מאיזה טופס הכתובת הזו. בחרו אותו למעלה, ב"איזה טופס?".'};
   const rows = [], passed = []; let full = true;
   /* an address shows only that a name arrived – not radio, select, buttons or links, so only plain fields may be ticked from here */
@@ -676,7 +837,7 @@ function checkUrl(v){
     if (got[n]) { const empty = got[n].every(x => !x.trim()); if (empty) full = false; add('ok', LABEL[n] + ' · ' + C(n) + (empty ? ' <span class="muted">(ריק – לא מילאתם)</span>' : ''), n); return; }
     full = false;
     const near = Object.keys(got).find(k => k.toLowerCase() === n.toLowerCase());
-    if (near) add('bad', LABEL[n] + ' – אצלכם כתוב ' + C(near) + ', וצריך ' + C(n) + '. אותיות גדולות וקטנות חשובות!');
+    if (near) add('bad', LABEL[n] + ' – אצלכם כתוב ' + C(near) + ', וצריך ' + C(n) + '. כותבים בדיוק כמו ברשימה – כולל אותיות גדולות וקטנות.');
     else if (n === 'gender') add('bad', 'מין – gender לא הגיע. סימנתם מין לפני השליחה? אם כן – לכפתורי ה-radio חסר ' + C('name="gender"') + '.');
     else add('bad', LABEL[n] + ' – ' + C(n) + ' לא הגיע: לשדה חסר name, או שה-name כתוב אחרת.');
   });
@@ -693,21 +854,27 @@ const ICON = {ok:'✔', bad:'✘', warn:'⚠', info:'💡'};
 let runT;
 function run(){
   const v = ta.value.trim();
-  if (!v) { out.innerHTML = '<p class="muted">כאן יופיעו התוצאות.</p>'; fcPassed = []; if (fromSample) { fromSample = false; keep(); } return; }
+  if (!v) { out.innerHTML = '<p class="muted">כאן יופיעו התוצאות.</p>'; fcPassed = []; fcVerdict = null; if (fromSample) { fromSample = false; keep(); } return; }
   const r = /<\s*[a-zA-Z!]/.test(v) ? checkHtml(v) : checkUrl(v);
-  if (r.msg) { out.innerHTML = '<p class="fc-sum warn">' + r.msg + '</p>'; fcPassed = []; return; }
+  if (r.msg) { out.innerHTML = '<p class="fc-sum warn">' + r.msg + '</p>'; fcPassed = []; fcVerdict = null; return; }
   fcPassed = r.passed; fcKindNow = r.kind;
   const bad = r.rows.filter(x => x.s === 'bad').length, warn = r.rows.filter(x => x.s === 'warn').length, ok = r.rows.filter(x => x.s === 'ok').length;
+  const linkWarn = r.rows.filter(x => x.s === 'warn' && x.link).length;
   const sum = bad ? '<p class="fc-sum bad">✘ ' + (bad === 1 ? 'נשאר דבר אחד' : 'נשארו ' + bad + ' דברים') + ' לתקן. מתחילים מהראשון ברשימה.</p>'
-    : warn ? '<p class="fc-sum warn">✔ כל ' + ok + ' הבדיקות של הדרישות עברו. יש ' + (warn === 1 ? 'הערה אחת' : warn + ' הערות') + ' ⚠ – כדאי להציץ.</p>'
+    : linkWarn ? '<p class="fc-sum warn">✔ השדות עברו. את ' + (linkWarn === 2 ? 'שני הקישורים' : 'הקישור שמסומן ב-⚠') + ' בדקו בעצמכם.</p>'
+    : warn ? '<p class="fc-sum warn">✔ ' + ok + ' בדיקות עברו. יש ' + (warn === 1 ? 'הערה אחת' : warn + ' הערות') + ' ⚠ – כדאי להציץ.</p>'
     : '<p class="fc-sum ok">✔ מצוין! כל ' + ok + ' הבדיקות עברו.</p>';
   out.innerHTML = '<p class="found">זיהיתי: ' + (r.mode === 'url' ? 'כתובת אחרי שליחה של ' : 'הקוד של ') + KIND_HE[r.kind] + (fcKind === 'auto' ? ' <span class="muted">(לא נכון? בחרו למעלה)</span>' : '') + '</p>' + sum +
     '<ul>' + r.rows.map(x => '<li class="' + x.s + '"><span class="ic" aria-hidden="true">' + ICON[x.s] + '</span><span><span class="sr">' + {ok:'עבר:', bad:'לתקן:', warn:'שימו לב:', info:'מידע:'}[x.s] + ' </span>' + x.t + '</span></li>').join('') + '</ul>' +
     (fromSample ? '<p class="muted">📋 זה הטופס לדוגמה, ולכן הוא לא נספר ברשימת הדרישות ובמצב ההגשה. כדי לבדוק טופס שלכם – נקו את התיבה והדביקו אותו.</p>'
       : r.passed.length ? '<div class="ctrls"><button class="btn primary" type="button" id="fcMark">✔ סמנו ברשימת הדרישות ' + (r.mode === 'url' ? 'את השדות שהגיעו' : 'את מה שעבר') + ' (' + r.passed.length + ')</button></div>' +
         (r.mode === 'url' ? '<p class="muted">מהכתובת מסמנים רק שדות רגילים. מין (radio), שאלות השחזור (select), המייל, הכפתורים והקישורים – בודקים בקוד של הדף.</p>' : '') : '');
-  if (!bad && !fromSample && r.mode === 'html') { state.fcOk[r.kind] = true; save(); paintStatus(); }
+  /* the ✔ of a form follows its LAST check: a form that breaks later loses it */
+  if (!fromSample && r.mode === 'html' && !!state.fcOk[r.kind] !== !bad) { state.fcOk[r.kind] = !bad; save(); paintStatus(); }
   if (r.mode === 'html' && r.kind === 'register' && !bad && !warn) findEgg('perfect');
+  const verdict = (bad ? 'bad:' : 'ok:') + r.kind + ':' + r.mode;
+  if (!fcQuiet && verdict !== fcVerdict) { if (bad) SFX.play('bad'); else celebrate(out.querySelector('.fc-sum'), 'small'); }
+  fcVerdict = verdict;
 }
 const keep = () => { try { store.set('fc', ta.value); store.set('fcSample', fromSample); } catch(e){} };
 /* pasting a whole page (not a line or two while fixing the sample) = the student's own code again */
@@ -716,7 +883,8 @@ ta.addEventListener('input', () => { clearTimeout(runT); runT = setTimeout(() =>
 out.addEventListener('click', e => {
   if (!e.target.closest('#fcMark')) return;
   let n = 0; fcPassed.forEach(k => { if (!R[k]) { R[k] = true; n++; } });
-  save(); $('#req').querySelectorAll('input[data-k]').forEach(i => { i.checked = !!R[i.dataset.k]; }); paintReq();
+  save(); syncReqBoxes(); paintReq(false);
+  if (n) celebrate(out.querySelector('#fcMark'), 'small');
   toast(n ? '✔ סימנו ' + n + ' פריטים של ' + KIND_HE[fcKindNow] + ' ברשימת הדרישות' : 'כל מה שעבר כבר היה מסומן ברשימה 🙂');
 });
 const SAMPLE = [
@@ -761,102 +929,153 @@ $('#fcClear').addEventListener('click', () => { ta.value = ''; fromSample = fals
 try { const sv = store.get('fc'); if (sv) ta.value = sv; fromSample = !!store.get('fcSample'); } catch(e){}
 /* the kind buttons call run() once on creation – so they are built last, after everything run() needs */
 seg($('#fcKind'), [{label:'זיהוי אוטומטי'}, {label:'כניסה'}, {label:'הרשמה'}, {label:'שחזור סיסמה'}], (o, i) => { fcKind = ['auto', 'login', 'register', 'recover'][i]; run(); });
+fcQuiet = false;
 
 /* ---------- ❓ guess: which folder do you zip? ---------- */
-predict('#pZip', {q:'איזו תיקייה מכווצים ל-zip של ההגשה?',
+predict('#pZip', {q:'איזו תיקייה אורזים ל-zip של ההגשה?', keepOrder:true,
   opts:['① – התיקייה repos', '② – התיקייה MyFirstWeb החיצונית', '③ – התיקייה MyFirstWeb הפנימית', '④ – התיקייה wwwroot'], correct:1,
   why:['repos היא התיקייה של <b>כל</b> הפרויקטים שלכם ב-Visual Studio – לא רק של האתר. מגישים רק את הפרויקט הזה.',
-    'זו התיקייה שבתוכה קובץ ה-sln – וגם כל הפרויקט, בתיקייה הפנימית. ממנה אפשר לפתוח ולהריץ את הכול.',
-    'קרוב! יש בה את כל הקוד – אבל קובץ ה-sln נמצא תיקייה אחת מעליה. ובדרישות כתוב במפורש: כולל קובץ ה-sln.',
+    'זו תיקיית ה-Solution: בתוכה קובץ ה-sln – וגם כל הפרויקט, בתיקייה הפנימית. ממנה אפשר לפתוח ולהריץ את הכול.',
+    'קרוב! יש בה את כל הקוד – אבל קובץ ה-sln נמצא תיקייה אחת מעליה. ובמטלה כתוב במפורש: כולל קובץ ה-sln.',
     'ב-wwwroot יש רק מה שהדפדפן מקבל כמו שהוא: css, תמונות ו-Bootstrap. דפי ה-cshtml (בתיקייה Pages), קובץ ה-sln וכל השאר – בחוץ.']});
 
-/* ---------- ✔ before submitting: the final list + where you stand ---------- */
-const FINAL = [
-  'הפרויקט רץ ב-Visual Studio בלי שגיאות.',
-  'נכנסתי לכל דף דרך התפריט ובדקתי אותו – כולל 10 דפי התוכן.',
-  'עברתי על השדות של שלושת הטפסים מול הרשימה, שדה אחרי שדה.',
-  'כל העיצוב בקובץ החיצוני – אין style בתוך התגיות.',
-  'סגרתי את Visual Studio ויצרתי zip של כל תיקיית הפרויקט, כולל קובץ ה-sln.',
-  'נתתי לעצמי ציון לפי <a href="#" data-go="rubric:1">המחוון</a>.',
-  'העליתי את ה-zip למטלה בקלאסרום ולחצתי "הגשה" – עד יום חמישי, 24/12, בשעה 23:59.'
+/* ---------- 👀 weak page / good page: two live mini pages with the SAME design – only the content differs ---------- */
+(function weakGood(){
+  const NAV = '<nav class="navbar navbar-light bg-warning mb-3"><div class="container"><span class="navbar-brand">🍕 פיצה דני</span></div></nav>';
+  const IMG = alt => '<img src="Img/pizza.jpg" alt="' + alt + '" width="150" class="img-fluid" />';
+  const page = (h1, body, alt) => NAV + '<div class="container"><h1>' + h1 + '</h1><div class="row"><div class="col-md-7">' + body + '</div><div class="col-md-5">' + IMG(alt) + '</div></div></div>';
+  const A = page('פיצות', '<p>יש לנו הרבה פיצות טעימות.</p>', 'פיצה');
+  const B = page('הפיצות שלנו', '<p>את הבצק מכינים אצלנו כל בוקר, ואת הפיצות אופים בתנור אבן. אלה שלוש הפיצות שהכי מזמינים:</p>' +
+    '<table class="table"><tr><th>פיצה</th><th>מה יש בה</th><th>מחיר</th></tr><tr><td>מרגריטה</td><td>רוטב עגבניות, מוצרלה, בזיליקום</td><td>42 ₪</td></tr>' +
+    '<tr><td>פטריות</td><td>מוצרלה, פטריות, שום</td><td>48 ₪</td></tr><tr><td>יוונית</td><td>זיתים, גבינה בולגרית, בצל סגול</td><td>52 ₪</td></tr></table>' +
+    '<p><a href="#">להזמנת פיצה ←</a></p>', 'פיצה עגולה עם פרוסות פפרוני');
+  [['#wgA', A, 'דף א – תצוגה חיה', 'pizzot'], ['#wgB', B, 'דף ב – תצוגה חיה', 'pizzas']].forEach(([sel, html, title, name]) => {
+    const host = $(sel), f = new Frame(host, {url:'localhost:7123/Site/' + name, title, height:360});
+    const fit = () => { try { const d = f.iframe.contentDocument; if (d && d.body && d.documentElement.scrollHeight > 60) f.iframe.style.height = d.documentElement.scrollHeight + 'px'; } catch(e){} };
+    f.onLoad = d => { d.addEventListener('click', e => { if (e.target.closest('a')) e.preventDefault(); }); fit(); setTimeout(fit, 300); };
+    f.show({links:['assets/bootstrap.rtl.min.css'], html, css:'body{padding:0}'});
+    host.closest('.spread').addEventListener('stepshow', () => requestAnimationFrame(fit));
+    addEventListener('resize', fit);
+  });
+  predict('#pWeak', {q:'מה הדבר העיקרי שחסר בדף א?', veil:'#wgAfter',
+    opts:['תוכן – אין בו מה ללמוד', 'צבעים – הוא לא צבעוני מספיק', 'תמונות – אחת זה מעט מדי', 'כותרת – היא קטנה מדי'], correct:0,
+    why:['בדף א יש משפט אחד, והוא לא מספר כלום. בדף ב יש מה לקרוא: פתיחה, טבלה של שלוש פיצות עם מחירים, וקישור להמשך.',
+      'לשני הדפים אותם צבעים בדיוק. עוד צבע לא נותן לקורא שום דבר חדש לקרוא.',
+      'גם בדף ב יש תמונה אחת. ההבדל הוא במה שכתוב לידה.',
+      'הכותרות באותו גודל. ההבדל הוא במה שבא אחרי הכותרת.']});
+})();
+
+/* ---------- 📌 before submitting: where you stand + the assignment box (the checklist is the one written in the assignment in Classroom) ---------- */
+const ASG_ITEMS = [
+  'הפרויקט <b>רץ בלי שגיאות</b>. (<a href="#" data-go="submit:1">סיבוב הבדיקה האחרון</a>, צעד 1)',
+  'בדקתי <b>כל דף בדפדפן</b> – כולל התפריט. (<a href="#" data-go="submit:1">סיבוב הבדיקה האחרון</a>, צעדים 2–6)',
+  'ה-zip כולל את <b>כל תיקיית הפרויקט ואת קובץ ה-sln</b>: ארזתי את תיקיית ה-Solution (החיצונית – זו שבתוכה קובץ ה-sln), ופתחתי את ה-zip כדי לבדוק. (<a href="#" data-go="zip:2">איך אורזים – צעד אחרי צעד</a>)',
+  '<b>תיק הפרויקט:</b> כתבתי את פרק 3 (עץ האתר) ואת פרק 6 (הדפים שבניתי). כ-40 דקות.',
+  'ב<b>יומן התקלות</b> (בתיק הפרויקט) יש שורה על כל באג שלקח לי יותר מ-10 דקות, ובפרק 11 בתיק – כל מקור או כלי AI שעזר לי.'
 ];
-state.final = state.final || {};
-$('#final').innerHTML = FINAL.map((t, i) => '<li><label><input type="checkbox" data-f="' + i + '"' + (state.final[i] ? ' checked' : '') + ' /><span class="ft">' + t + '</span></label></li>').join('');
-$('#final').addEventListener('change', e => {
-  const i = e.target.closest('[data-f]'); if (!i) return;
-  const was = FINAL.every((t, k) => state.final[k]);
-  state.final[i.dataset.f] = i.checked; save(); paintFinal();
-  if (!was && FINAL.every((t, k) => state.final[k])) { Course.celebrate($('#allset'), 'big'); toast('🎉 הגשתם! כל הכבוד על העבודה.'); }
-});
-function paintFinal(){
-  const n = FINAL.filter((t, k) => state.final[k]).length;
-  $('#allset').innerHTML = n === FINAL.length ? '<div class="allset">🎉 הגשתם את הגשה 1! עבודה של כמה שבועות – באתר אחד שלם. כל הכבוד.</div>' : '<p class="muted">סימנתם ' + n + ' מתוך ' + FINAL.length + '.</p>';
-}
+const ASG_HOW = 'בקלאסרום &rlm;←&rlm; <b>סביבת הלמידה</b> &rlm;←&rlm; הנושא <b><bdi>HTML &amp; CSS</bdi></b> &rlm;←&rlm; {name} &rlm;←&rlm; <b>הוספה או יצירה</b> &rlm;←&rlm; <b>קובץ</b> &rlm;←&rlm; בוחרים את קובץ ה-zip, ומחכים עד שהוא מופיע במטלה &rlm;←&rlm; <b>הגשה</b>. נתקעתם? פועלים לפי <b>חוק 3 השלבים</b>, ואם עדיין לא הולך – כותבים למורה תגובה פרטית במטלה.';
+const ASG_AFTER = '💡 הגישו יום לפני תאריך היעד – יום אחד של ביטחון. שיניתם משהו בפרויקט אחרי שיצרתם את ה-zip? יוצרים zip חדש לפני שמעלים.';
+Course.assignment('#asg5', {n:5, lead:'זו <b>רשימת הבדיקה שכתובה במטלה עצמה</b>. מסמנים רק מה שבאמת עשיתם – וכשהכול מסומן, מגישים.', items:ASG_ITEMS, how:ASG_HOW, after:ASG_AFTER});
+/* no due date in assets/cohort.js yet = the engine draws no box. The checklist still has to work (same saved state, same look). */
+(function asgFallback(){
+  const el = $('#asg5'); if (el.classList.contains('asg')) return;
+  state.asg = state.asg || {}; const st = state.asg[5] = state.asg[5] || {};
+  el.className = 'asgfb';
+  el.innerHTML = '<div class="asg-h"><b>📌 הרשימה שלפני ההגשה</b></div><p class="muted">תאריך היעד עוד לא נקבע – הוא יופיע כאן ובמטלה בקלאסרום.</p><p class="asg-prog" aria-live="polite"></p><ol class="asg-list">' +
+    ASG_ITEMS.map((h, i) => '<li><label class="vsck"><input type="checkbox" aria-label="סימנתי: ' + (i + 1) + '" /></label><div class="vsbody">' + h + '</div></li>').join('') + '</ol>' +
+    '<div class="asg-how">📤 <b>איך מגישים:</b> ' + ASG_HOW.replace('{name}', 'המטלה של הגשה 1') + '</div><p class="asg-after">' + ASG_AFTER + '</p>';
+  const lis = [...el.querySelectorAll('.asg-list > li')];
+  const paint = () => { const n = lis.filter((li, i) => st[i]).length; lis.forEach((li, i) => { li.classList.toggle('done', !!st[i]); li.querySelector('input').checked = !!st[i]; });
+    el.querySelector('.asg-prog').textContent = n === lis.length ? '✔ הכול מוכן – נשאר רק להגיש בקלאסרום.' : 'סימנתם ' + n + ' מתוך ' + lis.length; };
+  lis.forEach((li, i) => li.querySelector('input').addEventListener('change', e => { st[i] = e.target.checked; save(); paint(); if (e.target.checked && lis.every((x, k) => st[k])) celebrate(el, 'big'); }));
+  paint();
+})();
+$('#asg5').addEventListener('change', () => paintPre());
 function paintStatus(){
-  const el = $('#status'); if (!el) return;
-  const n = REQ.filter(reqDone).length, missing = REQ.filter(r => !reqDone(r)).map(r => r.t);
+  const el = $('#status'), el0 = $('#status0'), hint = $('#startHint'); if (!el) return;
+  const n = REQ.filter(reqDone).length, missing = REQ.filter(r => !reqDone(r)).map(r => r.t.replace(/^[א-ה]\. /, ''));
   const k = rubChosen(), tot = rubTotal();
   const forms = ['login', 'register', 'recover'].map(x => '<span class="nw">' + {login:'כניסה', register:'הרשמה', recover:'שחזור'}[x] + ': ' + (state.fcOk[x] ? '✔' : '○') + ' קוד · ' + (state.urlOk[x] ? '✔' : '○') + ' שליחה</span>');
   const fOk = ['login', 'register', 'recover'].every(x => state.fcOk[x]);
+  const fAny = ['login', 'register', 'recover'].some(x => state.fcOk[x] || state.urlOk[x]);
+  /* nothing done yet = a calm "not started" box, not a warning */
+  const box = (done, started, title, body) => '<div class="' + (done ? 'ok' : started ? 'warn' : 'todo') + '"><b class="h">' + (done ? '✔' : started ? '⚠' : '○') + ' ' + title + '</b>' + body + '</div>';
   el.innerHTML =
-    '<div class="' + (n === REQ.length ? 'ok' : 'warn') + '"><b class="h">' + (n === REQ.length ? '✔' : '⚠') + ' רשימת הדרישות: ' + n + '/' + REQ.length + '</b>' +
-      (missing.length ? 'עוד לא מסומן: ' + missing.slice(0, 3).join(' · ') + (missing.length > 3 ? ' ועוד ' + (missing.length - 3) : '') + '. ' : 'הכול מסומן. ') + '<a href="#" data-go="list:1">לרשימה</a></div>' +
-    '<div class="' + (k === RUB.length ? 'ok' : 'warn') + '"><b class="h">' + (k === RUB.length ? '✔' : '⚠') + ' מחוון: ' + tot + '/100</b>' +
-      (k === RUB.length ? 'הציון העצמי שלכם. ' : 'בחרתם רמה ב-' + k + ' מתוך ' + RUB.length + ' שורות. ') + '<a href="#" data-go="rubric:1">למחוון</a></div>' +
-    '<div class="' + (fOk ? 'ok' : 'warn') + '"><b class="h">' + (fOk ? '✔' : '⚠') + ' בודק הטפסים</b>' + forms.join('<br />') + '<br /><span class="muted">קוד ✔ = הקוד של הדף עבר בלי ✘. שליחה ✔ = כל השמות הגיעו בכתובת.</span> <a href="#" data-go="forms:1">לבודק</a></div>';
+    box(n === REQ.length, n > 0, 'רשימת הדרישות: ' + n + '/' + REQ.length,
+      (!n ? 'עוד לא סימנתם. ' : missing.length ? 'עוד לא מסומן: ' + missing.slice(0, 3).join(' · ') + (missing.length > 3 ? ' ועוד ' + (missing.length - 3) : '') + '. ' : 'הכול מסומן. ') + '<a href="#" data-go="list:1">לרשימה</a>') +
+    box(k === RUB.length, k > 0, 'מחוון: ' + (k ? tot : '—') + ' / ' + RUB_MAX,
+      (!k ? 'עוד לא מילאתם. ' : k === RUB.length ? 'הציון העצמי שלכם. ' : 'בחרתם רמה ב-' + k + ' מתוך ' + RUB.length + ' שורות. ') + '<a href="#" data-go="rubric:3">למחוון</a>') +
+    box(fOk, fAny, 'בודק הטפסים', (fAny ? forms.join('<br />') + '<br /><span class="muted">קוד ✔ = הקוד של הדף עבר בלי ✘. שליחה ✔ = כל השמות הגיעו בכתובת.</span> ' : 'עוד לא בדקתם אף טופס. ') + '<a href="#" data-go="forms:1">לבודק</a>');
+  /* the opening step: a first-time visitor gets one line; a returning one sees where he stands */
+  const any = n > 0 || k > 0 || fAny || (state.pages || 0) > 0;
+  if (el0) { el0.hidden = !any; el0.innerHTML = any ? el.innerHTML : ''; }
+  if (hint) hint.innerHTML = any ? '<b>חוזרים לדף?</b> זה המצב, לפי מה שסימנתם כאן עד עכשיו:' : '<b>פעם ראשונה כאן?</b> עברו על הסיור הקצר שלמטה, ואחריו על <a href="#" data-go="start:2">הדרך להגשה</a>.';
 }
 
 /* ---------- 🔧 works on the site but not for me? (custom lists – the pages here are the student's whole project) ---------- */
 trouble('#trForms', {base:false, items:[
-  {t:'הבודק כותב ✘, אבל השדה מופיע בדף?', how:'הבודק מחפש את ה-<code>name</code> – לא את ה-id ולא את התווית. בדקו את האיות, כולל אותיות גדולות וקטנות: <code>userName</code> ולא <code>username</code>.'},
+  {t:'הבודק כותב ✘, אבל השדה מופיע בדף?', how:'הבודק מחפש את ה-<code>name</code> – לא את ה-id ולא את התווית. בדקו שהוא כתוב בדיוק כמו ברשימה, כולל אותיות גדולות וקטנות: <code>userName</code> ולא <code>username</code>.'},
   {t:'הבודק לא מזהה איזה טופס הדבקתם?', how:'בחרו אותו בעצמכם, בכפתורים "איזה טופס?" שמעל התיבה.'},
-  {t:'אחרי השליחה אין סימן שאלה בכתובת?', how:'כנראה שהטופס נשלח ב-post – ואז הנתונים לא בכתובת. מוצאים אותם ב-F12 &rlm;←&rlm; Network &rlm;←&rlm; Payload, תחת Form Data (כמו <a href="html-advanced.html#send-6">בשיעור 4</a>). שם, הקישור view source מראה אותם בשורה אחת – ואותה אפשר להדביק בבודק.'},
+  {t:'אחרי השליחה אין סימן שאלה בכתובת?', how:'בדקו את השורה של התגית form: צריך להיות כתוב בה <code>method="get"</code> – רק ב-get הנתונים מופיעים בכתובת (<a href="html-advanced.html#send-6">שיעור 4: id ו-method לכל טופס</a>). ובדקו שכפתור השליחה נמצא בתוך ה-form.'},
   {t:'אפשר לסמן גם "זכר" וגם "נקבה"?', how:'לכפתורי ה-radio יש name שונה. לכולם צריך אותו <code>name="gender"</code>, ו-id שונה לכל אחד (<a href="html-advanced.html#fields-2">השלב על radio</a>).'},
   {t:'תיקנתם ב-Visual Studio, אבל הבודק עדיין מראה את הטעות?', how:'הבודק רואה רק את מה שהדבקתם. שמרו, העתיקו שוב (Ctrl+A ואז Ctrl+C) והדביקו מחדש במקום הקוד הישן.'}]});
 trouble('#trZip', {base:false, items:[
-  {t:'אין בתפריט Open Folder in File Explorer?', how:'פתחו את סייר הקבצים בעצמכם (Win+E), ולכו לתיקייה שבחרתם ב-Location כשיצרתם את הפרויקט. אם לא שיניתם אותה – זו התיקייה source\\repos שבתיקייה של המשתמש שלכם.'},
-  {t:'הכיווץ נכשל, עם הודעה שקובץ "בשימוש"?', how:'Visual Studio עדיין פתוח – אולי בחלון נוסף. סגרו אותו, ונסו שוב.'},
-  {t:'אין קובץ sln בתוך ה-zip?', how:'כיווצתם תיקייה פנימית. מחקו את ה-zip, עלו תיקייה אחת למעלה – עד שרואים תיקייה שבתוכה קובץ ה-sln – וכווצו אותה.'},
+  {t:'אין בתפריט Open Folder in File Explorer?', how:'פתחו את סייר הקבצים בעצמכם (Win+E), ולכו לתיקייה שבחרתם ב-Location כשיצרתם את הפרויקט (<a href="intro.html#vs-3">שיעור 1</a>). אם לא שיניתם אותה – זו התיקייה source\\repos שבתיקייה של המשתמש שלכם.'},
+  {t:'האריזה נכשלה, עם הודעה שקובץ נמצא בשימוש?', how:'בדקו ש-Visual Studio סגור – אולי הוא פתוח בחלון נוסף. סגרו אותו, ונסו שוב.'},
+  {t:'אין קובץ sln בתוך ה-zip?', how:'ארזתם את התיקייה הפנימית. מחקו את ה-zip, עלו תיקייה אחת למעלה – עד שרואים את תיקיית ה-Solution, זו שבתוכה קובץ ה-sln – וארזו אותה.'},
   {t:'ה-zip גדול מאוד?', how:'בשלב הבא – מה מנפח אותו ומה עושים (<a href="#" data-go="zip:3">ה-zip גדול מאוד?</a>).'},
-  {t:'לא מוצאים את ה-zip?', how:'הוא נוצר באותה תיקייה, ליד התיקייה שכיווצתם – עם אותו שם והסיומת zip.'}]});
+  {t:'לא מוצאים את ה-zip?', how:'הוא נוצר באותה תיקייה, ליד התיקייה שארזתם – עם אותו שם והסיומת zip.'}]});
 trouble('#trFinal', {base:false, items:[
   {t:'Visual Studio מראה שגיאות ולא מריץ?', how:'ב-<bdi>View</bdi> &rlm;←&rlm; <bdi>Error List</bdi>, לחיצה כפולה על שגיאה קופצת לשורה שלה. בדף cshtml שימו לב לסימן <code>@</code> בטקסט: Razor חושב שאחריו בא קוד של C#. כדי לכתוב את הסימן הזה בטקסט, כותבים <code>@@</code> במקומו.'},
-  {t:'קישור בתפריט מוביל לדף "לא נמצא" (404)?', how:'הכתובת בקישור לא תואמת לשם הדף או לתיקייה שלו. השוו אות אחרי אות: הקישור מול שם הקובץ ב-Solution Explorer.'},
-  {t:'דף אחד נראה בלי עיצוב?', how:'הדף לא מחובר לקובץ העיצוב – או שהוא לא משתמש ב-Layout כמו שאר הדפים. השוו אותו לדף שכן עובד.'},
+  {t:'קישור בתפריט מוביל לדף "לא נמצא" (404), או לא עושה כלום?', how:'הכתובת בקישור לא תואמת לשם הדף או לתיקייה שלו. פתחו את התפריט ב-<code>_Layout.cshtml</code> והשוו אות אחרי אות: מה שכתוב ב-asp-page מול שם הקובץ והתיקייה ב-Solution Explorer (שיעור 6).'},
+  {t:'התפריט ארוך – יוצא מהמסך, או שהשמות בו נשברים לשתי שורות?', how:'זה קורה כשיש בתפריט הרבה קישורים. שני תיקונים ב-<code>_Layout.cshtml</code>: <b>1.</b> קצרו את השמות שבתפריט – מילה או שתיים לכל קישור. <b>2.</b> בתגית nav החליפו את <code>navbar-expand-md</code> ב-<code>navbar-expand-xl</code>: עכשיו התפריט נפרס רק במסך רחב (xl – מ-1200 פיקסלים), ובכל מסך צר יותר הוא מתקפל ל-☰. בדיקה: הצרו לאט את חלון הדפדפן, וראו שאין גלילה הצידה.'},
+  {t:'דף אחד נראה אחרת – בלי התפריט או בלי העיצוב?', how:'כנראה שזה עדיין דף html ישן, ולא דף cshtml שנכנס ל-Layout. בדקו בשורת הכתובת: היא מסתיימת ב-html? העבירו את הדף ל-Razor (שיעור 6), ותקנו את הקישור בתפריט.'},
   {t:'תמונה לא מופיעה?', how:'F12 &rlm;←&rlm; Console: שגיאת 404 = הנתיב או שם הקובץ שגויים. בדקו גם את הסיומת: jpg מול png.'},
-  {t:'שיניתם ולא רואים את השינוי?', how:'שמרתם (Ctrl+S)? רעננו <b>בדפדפן</b> עם Ctrl+F5 – רענון מלא, בלי גרסה ישנה מהזיכרון (cache).'},
-  {t:'החיפוש של style מוצא תוצאות בתיקייה lib?', how:'אלה קבצים של Bootstrap ו-jQuery שהגיעו עם התבנית – לא שלכם. מדלגים עליהם.'}]});
+  {t:'שיניתם ולא רואים את השינוי?', how:'שמרתם (Ctrl+S)? בדף cshtml: לחצו 🔥 Hot Reload ב-Visual Studio, ואז רעננו בדפדפן. עדיין לא? עצרו (■) והריצו שוב (▶) – זה עובד תמיד (שיעור 6). שיניתם רק את site-style.css? מספיק Ctrl+F5 <b>בדפדפן</b> – רענון מלא, בלי גרסה ישנה מהזיכרון (cache).'},
+  {t:'תוצאות מתוך התיקייה lib, או מדף תרגול (pizza.html)?', how:'אלה לא הדפים שלכם – מדלגים. בתיקייה lib נמצאים קבצים מוכנים שהגיעו עם תבנית הפרויקט של Visual Studio (כמו Bootstrap). רואים בחלון החיפוש שדה בשם File types? אפשר לכתוב בו <code>*.cshtml</code> – ואז החיפוש עובר רק על דפי ה-Razor.'}]});
 askBox('#askFinal');
 
 /* ---------- 🎯 understanding checks ---------- */
 checkpoint('#cpList', [
-  {q:'מה מהדברים האלה <b>יוריד נקודות</b> בהגשה?', opts:['בדף תוכן אחד כתוב <code>&lt;h1 style="color: red;"&gt;</code>', 'בשדה המייל כתוב <code>type="text"</code>', 'התפריט כתוב פעם אחת, ב-Layout, ומופיע בכל הדפים', 'ב-zip יש גם את התיקיות bin ו-obj'], correct:0,
-   why:['לפי הדרישות, כל העיצוב בקובץ החיצוני – בלי style בתוך התגיות. מעבירים את הצבע לכלל של h1 ב-site-style.css.', 'זו בדיוק ההחלטה של הקורס: מייל עם type="text". זה לא יוריד נקודות.', 'זו בדיוק הדרישה: תפריט מעוצב, משותף לכל הדפים.', 'מגישים zip של כל תיקיית הפרויקט – ו-bin ו-obj הן חלק ממנה.'], back:'list:1'},
-  {q:'בדף הכניסה יש שם משתמש, סיסמה וכפתור שליחה. מה עוד חסר בו לפי הדרישות?', opts:['קישור להרשמה וקישור לשחזור סיסמה', 'שדה של אימות סיסמה, מתחת לסיסמה', 'שתי שאלות לשחזור סיסמה, עם תשובות', 'כפתור ניקוי (reset) ליד השליחה'], correct:0,
-   why:['שני הקישורים האלה הם חלק מהדרישות של דף הכניסה.', 'אימות סיסמה שייך לדף ההרשמה.', 'שאלות השחזור שייכות לדף ההרשמה ולדף שחזור הסיסמה.', 'כפתור ניקוי נדרש בדף ההרשמה.'], back:'list:1'},
-  {q:'יש לכם 9 דפי תוכן, כולם בסגנון אחיד. מה כדאי לעשות?', opts:['ליצור עוד דף מהתבנית, עם תוכן חדש', 'להגיש ככה – 9 דפים זה כמעט 10', 'להעתיק דף קיים, בלי לשנות בו דבר', 'לספור גם את דף ההרשמה כדף תוכן'], correct:0,
-   why:['בדרישות כתוב "לפחות 10 דפי תוכן". דף חדש מהתבנית – וכבר הוא באותו סגנון כמו כולם.', 'הדרישה היא לפחות 10. דף חסר = פחות נקודות בשורה של דפי התוכן במחוון.', 'דף זהה לדף אחר לא מוסיף תוכן – הוא לא באמת עוד דף.', 'דפי הטפסים הם דרישה נפרדת. 10 דפי התוכן באים בנוסף להם.'], back:'list:1'}
+  {q:'איזה מהדברים האלה <b>לא</b> מתאים לדרישות של ההגשה?', opts:['בדף תוכן אחד כתוב <code>&lt;h1 style="color: red;"&gt;</code>', 'בשדה המייל שבדף ההרשמה כתוב <code>type="text"</code>', 'התפריט כתוב פעם אחת, ב-Layout, ומופיע בכל דף', 'כל דפי התוכן בנויים על אותו דף בסיס, עם תוכן אחר'], correct:0,
+   why:['הדרישה היא CSS חיצוני: העיצוב בקובץ site-style.css, ולא במאפיין style בתוך התגית. מעבירים את הצבע לכלל של h1 בקובץ.', 'זו בדיוק ההחלטה של הקורס (שיעור 4): בשדה המייל כותבים type="text".', 'זו בדיוק הדרישה: תפריט ראשי בכל דף. ו-Layout הוא הדרך לכתוב אותו פעם אחת (שיעור 6).', 'זו בדיוק הדרישה: דפי תוכן באותו סגנון – ובכל אחד תוכן משלו. דף בסיס אחד הוא הדרך הבטוחה לזה (שיעור 5).'], back:'list:1'},
+  {q:'בדף הכניסה יש שם משתמש, סיסמה וכפתור שליחה. מה עוד חסר בו לפי הרשימה?', opts:['קישור להרשמה וקישור לשחזור סיסמה', 'שדה של אימות סיסמה, מתחת לסיסמה', 'שתי שאלות לשחזור סיסמה, עם תשובות', 'כפתור ניקוי (reset) ליד כפתור השליחה'], correct:0,
+   why:['שני הקישורים האלה הם חלק מדף הכניסה – כך בניתם אותו בשיעור 4.', 'אימות סיסמה שייך לדף ההרשמה.', 'שאלות השחזור שייכות לדף ההרשמה ולדף שחזור הסיסמה.', 'כפתור ניקוי נמצא ברשימה של דף ההרשמה, לא של דף הכניסה.'], back:'list:1'},
+  {q:'יש לכם 9 דפי תוכן, כולם בסגנון אחיד. מה כדאי לעשות?', opts:['ליצור עוד דף מדף הבסיס, עם תוכן חדש', 'להגיש ככה – 9 דפים זה כמעט 10', 'להעתיק דף קיים, בלי לשנות בו דבר', 'לספור גם את דף ההרשמה כדף תוכן'], correct:0,
+   why:['במטלה כתוב "לפחות 10 דפי תוכן". דף חדש מדף הבסיס – וכבר הוא באותו סגנון כמו כולם.', 'הדרישה היא "לפחות 10" – ובמחוון יש סעיף שלם על 10 דפי התוכן.', 'דף זהה לדף אחר לא מוסיף תוכן – הוא לא באמת עוד דף.', 'דפי הטפסים הם סעיף נפרד (ג). 10 דפי התוכן באים בנוסף להם.'], back:'list:1'},
+  {q:'באתר יש 10 דפי תוכן, אבל שלושה מהם עדיין קובצי html בתיקייה wwwroot/HTML. מה עושים?', opts:['מעבירים גם אותם לדפי cshtml שנכנסים ל-Layout', 'כלום – בדפדפן דף html ודף cshtml נראים אותו דבר', 'רק משנים את הסיומת של שלושת הקבצים ל-cshtml', 'מעתיקים לכל אחד מהם את התפריט מתוך ה-Layout'], correct:0,
+   why:['הדרישה הטכנית: כל הדפים הם דפי cshtml שמבוססים על Layout. מעבירים אותם לפי המתכון של שיעור 6.', 'אולי הם נראים דומה – אבל הדרישה היא שכל הדפים יהיו דפי cshtml שמבוססים על Layout.', 'שינוי סיומת לא מספיק. דף Razor נמצא בתיקייה Pages, מתחיל בשורה <code>@page</code>, ויוצרים אותו דרך Add (שיעור 6).', 'להפך: כל הרעיון של Layout הוא שהתפריט כתוב פעם אחת, ולא מועתק לכל דף.'], back:'list:1'}
+]);
+checkpoint('#cpRubric', [
+  {q:'לדנה 10 דפי תוכן. בשבעה מהם יש כותרת, כמה פסקאות ותמונה. בשלושה – רק כותרת והמילה "בקרוב". איזו רמה בסעיף ב הכי כנה?',
+   opts:['0 – עד שהכול גמור, אין ציון', '10 – כי עוד לא הכול מושלם', '20 – שלושה דפים עוד לא גמורים', '30 – יש 10 דפים, כמו שנדרש'], correct:2,
+   why:['המחוון נותן נקודות גם על חלק מהעבודה. שבעה דפים גמורים שווים הרבה יותר מאפס.', 'שבעה דפים גמורים הם יותר מ"פחות מ-5". גם ציון נמוך מדי מטעה – הוא מסתיר מה כבר עשיתם.', 'סופרים רק דפים גמורים: שבעה. זו הרמה של "5–9 דפים גמורים". כשגם שלושת הדפים האחרונים יקבלו תוכן – השורה תהיה מלאה.', 'דף שכתוב בו רק "בקרוב" הוא קובץ, לא דף תוכן. סופרים דפים גמורים – ויש שבעה.'], back:'rubric:1'},
+  {q:'ליובל 10 דפי תוכן גמורים. בבודק הטפסים, דף ההרשמה שלו מראה שלושה ✘. נשארה לו שעת עבודה אחת. מה הכי משתלם לעשות בה?',
+   opts:['לתקן את שלושת ה-✘ בדף ההרשמה', 'להחליף את הגופן של כל האתר', 'לבנות דף תוכן נוסף, דף 11', 'לשנות את הצבע של התפריט'], correct:0,
+   why:['לדף ההרשמה יש סעיף משלו במחוון, והבודק אומר בדיוק מה חסר. זה התיקון שנותן הכי הרבה בזמן הכי קצר.', 'זה ליטוש – ושינוי שנוגע בכל האתר רגע לפני ההגשה. קודם סוגרים את מה שחסר לפי הדרישות.', 'מותר – אבל הדרישה היא "לפחות 10", ויש לו כבר 10 דפים גמורים. מה שחסר עכשיו הוא דף ההרשמה.', 'זה ליטוש. קודם סוגרים את מה שחסר לפי הדרישות.'], back:'rubric:3'}
 ]);
 checkpoint('#cpForms', [
   {q:'בדף ההרשמה כתוב:<div class="codeblock"><pre data-code="html">&lt;input type="radio" id="male" name="male" value="male" /&gt;\n&lt;input type="radio" id="female" name="female" value="female" /&gt;</pre></div>מה הבעיה?',
    opts:['אפשר לסמן את שניהם, ו-gender לא נשלח', 'אין בעיה – לכל כפתור באמת צריך name משלו', 'שני הכפתורים לא יופיעו בדף בכלל', 'צריך <code>type="checkbox"</code> במקום radio'], correct:0,
    why:['כפתורי radio הם "קבוצה" רק כשיש להם אותו name. כאן יש שני שמות – לכן אפשר לסמן את שניהם, ובכתובת יופיע male או female במקום gender. התיקון: name="gender" לשניהם (<a href="html-advanced.html#fields-2">השלב על radio בשיעור 4</a>).', 'דווקא להפך: את ה-id נותנים שונה לכל כפתור, אבל ה-name חייב להיות זהה – זה מה שמחבר אותם לקבוצה.', 'הם יופיעו בדף. הבעיה היא באיך הם מתנהגים ומה נשלח.', 'checkbox מאפשר לסמן כמה – ובמין בוחרים אחד. radio הוא הנכון, רק עם name אחד.'], back:'forms:1'},
   {q:'בשדה המייל בטופס ההרשמה כתבו <code>type="text"</code>. למה?', opts:['החלטה של הקורס: את בדיקת המייל תכתבו לבד', 'כי <code>type="email"</code> לא קיים בכלל ב-HTML', 'כי text שולח את המייל לשרת בצורה מוצפנת', 'כי אין שום הבדל בין text לבין email'], correct:0,
-   why:['בדיוק. type="email" היה גורם לדפדפן לבדוק את המייל במקומכם – ואתם תלמדו לכתוב את הבדיקה הזו לבד.', 'type="email" קיים ועובד: הדפדפן בודק שיש @. בקורס פשוט בחרנו לא להשתמש בו.', 'שום type לא מצפין. ב-get כל הערכים גלויים בכתובת.', 'יש הבדל: עם email הדפדפן לא שולח טופס עם מייל לא תקין.'], back:'forms:1'},
+   why:['בדיוק. type="email" היה גורם לדפדפן לבדוק את המייל במקומכם – ואתם תלמדו לכתוב את הבדיקה הזו לבד.', 'type="email" קיים ועובד: הדפדפן בודק את המייל בעצמו. בקורס פשוט בחרנו לא להשתמש בו.', 'שום type לא מצפין. ב-get כל הערכים גלויים בכתובת.', 'יש הבדל: עם email הדפדפן בודק את המייל לפני השליחה.'], back:'forms:1'},
   {type:'text', q:'שלחתם את טופס הכניסה ב-get, וכתבתם שם משתמש dana וסיסמה 1234. מה יופיע בכתובת <b>אחרי</b> סימן השאלה?', placeholder:'name=ערך…',
    accept:[/^\s*(\S*\?)?\s*userName\s*=\s*dana\s*&\s*password\s*=\s*1234\s*$/], answer:'userName=dana&password=1234',
-   wrong:'כל שדה נשלח כ-name=ערך, ובין שדה לשדה יש &. בדקו גם אותיות גדולות וקטנות ב-name.',
+   wrong:'כל שדה נשלח כ-name=ערך, ובין שדה לשדה יש &. בדקו שכתבתם את ה-name בדיוק כמו ברשימה.',
    explain:'כל שדה שולח את ה-<code>name</code> שלו, סימן שוויון והערך שהוקלד. בין זוג לזוג מפריד הסימן <code>&amp;</code> – וככה בדיוק הבודק קורא כתובת.', back:'forms:2'},
-  {q:'הבודק כותב: "שם פרטי – אצלכם כתוב name=&quot;firstname&quot;, וצריך firstName". מה מתקנים?', opts:['את ה-name ל-firstName, עם N גדולה', 'שום דבר – למחשב זה אותו שם בדיוק', 'את ה-id של השדה ל-firstName', 'את הטקסט שבתווית (label) של השדה'], correct:0,
-   why:['שמות ב-HTML רגישים לאותיות גדולות וקטנות: firstname ו-firstName הם שני שמות שונים – והשרת יחפש את firstName.', 'למחשב אלה שני שמות שונים, בדיוק כמו משתנים ב-C#: firstname ו-firstName.', 'ה-id לא נשלח לשרת. הבודק מדבר על ה-name.', 'התווית היא רק הטקסט שעל המסך. היא לא משפיעה על מה שנשלח.'], back:'forms:1'}
+  {q:'הבודק כותב: "שם פרטי – אצלכם כתוב name=&quot;firstname&quot;, וצריך firstName". מה מתקנים?', opts:['את ה-name ל-firstName, עם N גדולה', 'שום דבר – למחשב זה תמיד אותו שם', 'את ה-id של השדה ל-firstName', 'את הטקסט שבתווית (label) של השדה'], correct:0,
+   why:['בקורס יש רשימת שמות אחת, וכותבים אותם בדיוק – כולל אותיות גדולות וקטנות. כך הקוד שתכתבו בהמשך השנה ימצא כל שדה בשם שהוא מצפה לו.', 'לא תמיד. יש מקומות שבהם אות גדולה ואות קטנה נחשבות אותו דבר, ויש מקומות שלא: ב-C#, למשל, firstname ו-firstName הם שני משתנים שונים. לכן כותבים בדיוק כמו ברשימה.', 'ה-id לא נשלח לשרת. הבודק מדבר על ה-name.', 'התווית היא רק הטקסט שעל המסך. היא לא משפיעה על מה שנשלח.'], back:'forms:1'}
 ]);
 checkpoint('#cpZip', [
-  {q:'פתחתם את ה-zip, ובתוכו רק התיקיות css, Img, js ו-lib. מה קרה?', opts:['כיווצתם רק את wwwroot – חסר כל השאר', 'הכול בסדר – אלה כל הקבצים של האתר', 'Windows מסתיר את שאר הקבצים בתוך zip', 'שאר הקבצים יופיעו אחרי ההעלאה לקלאסרום'], correct:0,
-   why:['נכון. חסרים קובץ ה-sln, התיקייה Pages עם דפי ה-cshtml, Program.cs וכל השאר. מכווצים מחדש את התיקייה שבתוכה קובץ ה-sln.', 'דפי ה-cshtml שלכם נמצאים ב-Pages – לא ב-wwwroot. בלעדיהם אין אתר.', 'zip מראה את כל מה שכיווצתם. אם משהו חסר – הוא לא כווץ.', 'קלאסרום מעלה את הקובץ כמו שהוא. מה שחסר ב-zip חסר גם בהגשה.'], back:'zip:1'},
-  {q:'למה סוגרים את Visual Studio לפני שיוצרים את ה-zip?', opts:['כדי שהשינויים יישמרו, ושום קובץ לא יהיה תפוס', 'כי Visual Studio מוחק כל קובץ zip שנוצר לידו', 'כי אחרת ה-zip לא ייפתח במחשב אחר', 'אין סיבה אמיתית – זה רק מנהג של הקורס'], correct:0,
-   why:['Visual Studio שואל אם לשמור שינויים כשסוגרים אותו, ומשחרר את הקבצים שהוא מחזיק פתוחים. ככה ה-zip מכיל את הגרסה האחרונה, בלי תקלות.', 'Visual Studio לא נוגע בקבצי zip.', 'zip נפתח בכל מחשב. הבעיה היא שבלי לסגור, אולי חסרים בו השינויים האחרונים.', 'יש סיבה: שינויים שלא נשמרו לא ייכנסו ל-zip.'], back:'zip:2'},
+  {q:'פתחתם את ה-zip: בפנים תיקייה wwwroot, ובה css, Img, js, lib – ואין Pages ואין קובץ sln. מה קרה?', opts:['ארזתם רק את wwwroot – חסר כל השאר', 'הכול בסדר – אלה כל הקבצים של האתר', 'Windows מסתיר את שאר הקבצים בתוך zip', 'שאר הקבצים יופיעו אחרי ההעלאה לקלאסרום'], correct:0,
+   why:['נכון. חסרים קובץ ה-sln, התיקייה Pages עם דפי ה-cshtml, Program.cs וכל השאר. אורזים מחדש את תיקיית ה-Solution – זו שבתוכה קובץ ה-sln.', 'דפי ה-cshtml שלכם נמצאים ב-Pages – לא ב-wwwroot. בלעדיהם אין אתר.', 'zip מראה את כל מה שנארז. התיקייה Pages וקובץ ה-sln נמצאים מחוץ ל-wwwroot – ולכן הם לא נארזו.', 'קלאסרום מעלה את הקובץ כמו שהוא. מה שחסר ב-zip חסר גם בהגשה.'], back:'zip:1'},
+  {q:'למה שומרים הכול וסוגרים את Visual Studio לפני שיוצרים את ה-zip?', opts:['כדי שה-zip יכיל את הגרסה האחרונה של כל קובץ', 'כי Visual Studio מוחק כל קובץ zip שנוצר לידו', 'כי אחרת ה-zip לא ייפתח במחשב אחר', 'אין סיבה אמיתית – זה רק מנהג של הקורס'], correct:0,
+   why:['שינוי שלא נשמר נמצא רק על המסך – לא בקובץ שבתיקייה. ה-zip אורז את הקבצים שבתיקייה, ולכן קודם שומרים הכול.', 'Visual Studio לא נוגע בקובצי zip.', 'zip נפתח בכל מחשב. הבעיה היא שבלי לשמור, חסרים בו השינויים האחרונים.', 'יש סיבה: שינויים שלא נשמרו לא ייכנסו ל-zip.'], back:'zip:2'},
   {q:'איך בודקים שה-zip שלם, בלי לסמוך על מזל?', opts:['מחלצים אותו למקום אחר ומריצים משם', 'בודקים שהשם שלו מסתיים ב-zip', 'בודקים שהוא שוקל יותר מ-1 MB', 'מעלים לקלאסרום ומחכים לתגובה'], correct:0,
-   why:['זו "בדיקת הזהב": עושים בדיוק מה שיעשו עם ה-zip אחרי ההגשה. רץ אצלכם – ירוץ גם שם.', 'כל zip מסתיים ב-zip – גם zip של התיקייה הלא נכונה.', 'גם zip של wwwroot בלבד יכול לשקול יותר מ-1 MB (בגלל Bootstrap ותמונות).', 'אחרי ההגשה כבר מאוחר. בודקים לפני.'], back:'zip:3'}
+   why:['זו "בדיקת הזהב": עושים בדיוק מה שיעשו עם ה-zip אחרי ההגשה. רץ אצלכם מהעותק – ה-zip שלם.', 'כל zip מסתיים ב-zip – גם zip של התיקייה הלא נכונה.', 'גם zip של wwwroot בלבד יכול לשקול יותר מ-1 MB (בגלל Bootstrap ותמונות).', 'אחרי ההגשה כבר מאוחר. בודקים לפני.'], back:'zip:3'},
+  {q:'ב-zip שלכם יש גם התיקיות bin ו-obj. מה נכון?', opts:['מותר להשאיר; מוחקים רק אם ה-zip ענק', 'חובה למחוק – אחרת הפרויקט לא ייפתח', 'אסור לגעת בהן – בלעדיהן הקוד אבוד', 'צריך להעביר אותן לתוך wwwroot'], correct:0,
+   why:['Visual Studio יוצר את שתי התיקיות האלה בעצמו, בכל בנייה. מותר להשאיר אותן; ומי שמוחק אותן מקבל zip קטן יותר – ובהרצה הבאה הן נוצרות מחדש.', 'הפרויקט נפתח איתן ובלעדיהן. מותר להשאיר אותן ב-zip.', 'הקוד שלכם לא שם: הוא בתיקיות Pages ו-wwwroot. את bin ו-obj Visual Studio יוצר מחדש לבד.', 'ב-wwwroot נמצא רק מה שהאתר מגיש לדפדפן. bin ו-obj הן תיקיות עבודה של Visual Studio.'], back:'zip:3'}
 ]);
 
 /* ---------- finish line: this page is a work companion, not a lesson ---------- */
@@ -875,7 +1094,7 @@ const EGGS = [
    h1:'לפני כל הגשה, מפתחים בודקים שאין באתר שגיאות. איפה הדפדפן מראה אותן?', h2:'לחצו F12 ועברו ללשונית <b>Console</b>.', code:'Tk9FUlJPUlM='}
 ];
 Course.start({eggs: EGGS, console: ['🥚 מצאתם ביצה!', 'בדיוק כאן בודקים לפני הגשה: שגיאה אדומה ב-Console = משהו באתר שבור.\nהקוד הסודי: NOERRORS\nהקלידו אותו במונה הביצים שבראש הדף.\nועכשיו – אותה בדיקה בכל דף באתר שלכם.']});
-paintReq(); paintRub(); paintFinal();
+paintReq(false); paintRub();
 })();
 </script>
 </body>

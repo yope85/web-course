@@ -40,6 +40,8 @@ td code{overflow-wrap:normal;white-space:normal}
 .crumb{direction:ltr;unicode-bidi:isolate}
 .cls{font-family:"JetBrains Mono",Consolas,monospace;direction:ltr;unicode-bidi:isolate}
 .nw{white-space:nowrap}
+.navparts>li{margin-bottom:8px}
+.navparts ul{margin-top:6px}
 </style>
 </head>
 <body data-lesson="l5" data-title="שיעור 5" data-next="razor.html" data-next-name="Razor Pages ותבנית Layout">
@@ -77,31 +79,31 @@ td code{overflow-wrap:normal;white-space:normal}
     <h4>איך לומדים את השיעור?</h4>
     <div class="ways">
       <div class="way main"><b>📖 כאן, בדף הזה</b>הדף מכסה את כל מה שיש בסרטון ובמצגת, ומוסיף דוגמאות חיות לשחק בהן. מתאים למי שאוהב לקרוא ולנסות.</div>
-      <div class="way"><b>🎬 מעדיפים סרטון?</b>הסרטון של השיעור נמצא בקלאסרום. אחריו – חזרו לכאן והפעילו את <b>מצב אחרי-סרטון</b> (למטה): עושים רק את החלקים הפעילים.</div>
+      <div class="way"><b>🎬 מעדיפים סרטון?</b>הסרטונים של השיעור נמצאים בקלאסרום. אחריהם – חזרו לכאן (הסבר בתיבה למטה).</div>
       <div class="way"><b>📒 מחברת הנושא</b>חומר משלים, לא חובה. בקלאסרום מחכים פודקאסט, מפות חשיבה, סרטונים קצרים, בחנים, כרטיסיות ועוד – לחזרה ולהעמקה. ללמוד לתכנת – כאן ובסרטונים.</div>
     </div>
-    <h4>איך הדף עובד?</h4>
-    <ul class="how">
-      <li>🧭 <b>6 נושאים</b> (הלשוניות למעלה), ובכל אחד כמה שלבים קצרים. רואים <b>שלב אחד בכל פעם</b>.</li>
-      <li>📱 בהרבה דוגמאות יש <b>כפתורי מכשיר</b>: טלפון, טאבלט, מחשב. ככה רואים איך אותו דף נראה בכל מסך.</li>
-      <li>❓ לפני חלק מהתוצאות יש שאלת ניחוש. מותר לטעות – בשביל זה היא שם.</li>
-      <li>💻 בסוף כל נושא – <b>"עכשיו אצלכם ב-Visual Studio"</b>: מלבישים את הדפים של האתר שלכם ב-Bootstrap, צעד אחרי צעד.</li>
-      <li>🎯 ואחריו <b>בדיקת הבנה</b> קצרה, בלי ציון. טעיתם? היא תראה לכם לאיזה שלב לחזור.</li>
-      <li>📌 המטלה הבאה: <span data-asg="5"></span> – הגשה 1, אחרי שיעור 6. מה שתבנו כאן ב-Bootstrap הוא חלק ממנה.</li>
-      <li>💾 ההתקדמות נשמרת בדפדפן הזה. כמה זמן זה לוקח? פתחו את <b>⏱ כמה זמן זה לוקח?</b> למטה – ותכננו בעצמכם. אפשר (ורצוי) בכמה ישיבות.</li>
-    </ul>
-    <div class="eggnote">🥚 <b>ועוד משהו:</b> בדף מוחבאות <b>5 ביצי הפתעה</b>. כדי למצוא אותן צריך סקרנות, כלי המפתחים (F12) – וכמה דברים שתלמדו היום. אחת מהן מסתתרת כבר בדף שלמעלה. המונה בראש הדף; לחיצה עליו נותנת רמזים.</div>
+    <ol class="ctour" aria-label="🧭 סיור קצר: איך השיעור הזה עובד">
+      <li data-t="👣 שלב אחד בכל פעם"><p>בשיעור <b>6 נושאים</b> – הלשוניות למעלה. בכל נושא יש כמה שלבים קצרים, ורואים <b>שלב אחד בכל פעם</b>. עוברים לשלב הבא בכפתור "הבא ←" שבתחתית.</p><p>💾 ההתקדמות נשמרת בדפדפן הזה – אפשר לעצור ולהמשיך מחר בדיוק מאותו מקום.</p></li>
+      <li data-t="👆 לומדים בעשייה"><p>כל דוגמה כאן <b>חיה</b>, ובהרבה מהן יש <b>כפתורי מכשיר</b>: 📱 טלפון, 📟 טאבלט, 🖥 מחשב. לוחצים – ורואים איך אותו דף בדיוק מסתדר בכל מסך. אי אפשר לשבור כלום.</p><p>❓ לפני חלק מהתוצאות יש <b>שאלת ניחוש</b>. מותר לטעות – בשביל זה היא שם.</p></li>
+      <li data-t="💻 בסוף כל נושא: עושים באמת"><p>שלב <b>"עכשיו אצלכם ב-Visual Studio"</b>. הפעם עובדים ישר על <b>האתר שלכם</b>: מחברים אליו את Bootstrap, והופכים את דף התוכן הראשון (page1.html) ל<b>דף הבסיס</b> של כל דפי התוכן – עם גריד, תפריט וכרטיסים.</p><p>🎯 אחריו – <b>בדיקת הבנה</b> קצרה, בלי ציון. טעיתם? היא תראה לאיזה שלב לחזור.</p></li>
+      <li data-t="🆘 נתקעתם?"><p>בכל "עכשיו אצלכם" יש 🔧 <b>רשימת בדיקה</b> – בודקים לפי הסדר. כמעט תמיד התקלה שם.</p><p>עדיין תקועים? 🆘 <b>"ככה שואלים"</b>: את <b>המנטור</b> – כשהקוד לא עובד, או את <b>המחברת</b> בקלאסרום – כשלא הבנתם משהו בחומר.</p></li>
+      <li data-t="📌 מה מגישים"><p><b>אחרי השיעור הזה לא מגישים כלום.</b> שיעור 5 ושיעור 6 ביחד מובילים למטלה אחת: <span data-asg="5"></span>. זו <b>הגשה 1</b> – האתר המעוצב כולו – ומגישים אותה רק אחרי שיעור 6.</p><p>כל מה שתבנו היום נכנס להגשה הזו. בסוף השיעור יש שלב שמסכם מה כבר מוכן ומה נשאר (<a href="#" data-go="practice:3">מה מגישים אחרי השיעור הזה?</a>), ולהגשה עצמה יש דף ליווי: <a href="submission1.html">הגשה 1 – צעד אחרי צעד</a>.</p></li>
+      <li data-t="⏳ לפני שמתחילים"><p>פתחו ב-Visual Studio את <b>הפרויקט שלכם</b>. צריך שיהיו בו: דף הנחיתה index.html (בקלאסרום הוא נקרא "הדף הראשי"), דף התוכן page1.html (או השם שנתתם לו), קובץ העיצוב site-style.css, ושלושת דפי הטפסים. חסר משהו? קודם <a href="html-advanced.html">שיעור 4</a>.</p><p>עוד לא הגשתם את <span data-asg="4"></span>? הגישו אותה לפני שממשיכים: בשיעור הזה מחליפים את כותרת האתר שבניתם בשבילה.</p><p>⏱ כמה זמן הכול לוקח? פתחו למטה את <b>"כמה זמן זה לוקח?"</b> – ותכננו. אפשר (ורצוי) בכמה ישיבות. 🖥 הכי נוח: הדף הזה בחצי מסך, ו-Visual Studio בחצי השני.</p></li>
+    </ol>
+    <div class="eggnote">🥚 <b>ועוד משהו:</b> בדף מוחבאות <b>5 ביצי הפתעה</b>. כדי למצוא אותן צריך סקרנות, כלי המפתחים (F12) – וכמה דברים שתלמדו היום. אחת מהן מסתתרת כבר בדף של פיצה דני שלמעלה. המונה בראש הדף; לחיצה עליו נותנת רמזים.</div>
   </article>
 
   <article class="spread">
     <h3>Bootstrap – עיצוב שמישהו כבר כתב בשבילכם</h3>
-    <p><b>Bootstrap</b> היא <b>ספרייה</b> (library) – אוסף מוכן של אלפי כללי CSS, ועוד קצת JavaScript לדברים שזזים (כמו תפריט שנפתח). אתם לא כותבים את הכללים – רק <b>מוסיפים לתגיות שמות של class</b>, ו-Bootstrap כבר יודע איך לעצב אותן.</p>
-    <p>הנה אותו HTML בדיוק, פעמיים. בקוד אין אף שורת CSS שלנו – רק class-ים. ההבדל היחיד: בצד אחד הדף מחובר לקובץ של Bootstrap.</p>
+    <p><b>Bootstrap</b> היא <b>ספרייה</b> (library) – אוסף מוכן של אלפי כללי CSS, ועוד קצת JavaScript (השפה שרצה בדפדפן, שהזכרנו בשיעור 4) לדברים שזזים, כמו תפריט שנפתח. אתם לא כותבים את הכללים – רק <b>מוסיפים לתגיות שמות של class</b>, ו-Bootstrap כבר יודע איך לעצב אותן.</p>
+    <p>הנה אותו HTML בדיוק, פעמיים. בקוד אין אף שורת CSS שלנו – רק class-ים. ההבדל היחיד: בדוגמה אחת הדף מחובר לקובץ של Bootstrap. (את השמות עצמם עוד לא צריך להכיר – נלמד אותם אחד אחד.)</p>
     <div class="codeblock"><pre class="cv" id="s12code"></pre></div>
     <div class="compare" id="s12"></div>
     <div class="bridge">בשיעור 3 <b>המצאתם</b> שם של class (כמו <code>sale</code>) ו<b>כתבתם</b> לו כלל CSS. עם Bootstrap החלק השני כבר עשוי: מישהו כתב אלפי כללים, ואתם רק <b>מלבישים את השמות</b> על התגיות. ממש כמו ב-C#: אתם כותבים <code>Console.WriteLine</code> בלי לכתוב בעצמכם איך היא עובדת – מישהו כבר כתב אותה בספרייה.</div>
-    <p>ככה, בערך, נראה אחד הכללים בתוך הקובץ של Bootstrap (בגרסה מקוצרת):</p>
+    <p>ומה כתוב בתוך הקובץ של Bootstrap? כללי CSS רגילים, כמו שכתבתם בשיעור 3. הנה שניים מהם, בגרסה מפושטת (בקובץ האמיתי הם כתובים בצורה מתוחכמת יותר – אבל זה מה שהם עושים):</p>
     <div class="codeblock"><pre class="cv" id="s12css"></pre></div>
+    <div class="what">את <code>text-align: center;</code> אתם מכירים משיעור 3. ה-class <code>text-center</code> הוא בסך הכול <b>שם מוכן</b> להוראה הזו – לכן הכותרת בדוגמה למעלה עברה לאמצע רק בצד שמחובר ל-Bootstrap.</div>
+    <p>ועוד דבר שרואים בהשוואה: האותיות של הכותרת "פיצה דני" נעשו <b>דקות יותר</b> – ואף class לא ביקש את זה. ב-Bootstrap יש שני סוגי כללים: כללי class, שפועלים רק על תגית שכתבתם עליה את השם; וקומץ <b>כללי בסיס</b> לתגיות עצמן – כמו <code>body</code>, <code>h1</code> ו-<code>a</code> – שפועלים על כל הדף מהרגע שהקובץ מחובר: גופן, גודל ועובי של כותרות, צבע קישורים.</p>
     <ul>
       <li><b>קוד פתוח</b> (open source) – חינם, וכל אחד יכול להשתמש בו ולראות איך הוא כתוב.</li>
       <li>נכתב במקור על ידי מפתחים ב<b>טוויטר</b> (2011), והיום זו אחת מספריות העיצוב הנפוצות בעולם.</li>
@@ -115,25 +117,26 @@ td code{overflow-wrap:normal;white-space:normal}
 <section class="topic" data-id="setup" data-icon="🔌" data-title="מחברים את Bootstrap">
   <article class="spread">
     <h3>שלוש שורות בכל דף</h3>
-    <p>כדי שדף ישתמש ב-Bootstrap, מוסיפים לו שלוש שורות. הנה דף שלם – השורות החדשות מסומנות. (שימו לב: בשם קובץ ה-CSS יש <b>rtl</b>. למה? בשלב 4.)</p>
-    <div class="codeblock"><button class="copy" type="button">העתקה</button><pre class="cv" id="s21code"></pre></div>
+    <p>כדי שדף ישתמש ב-Bootstrap, מוסיפים לו שלוש שורות. הנה דף שלם – השורות החדשות מסומנות. (שימו לב: בשם קובץ ה-CSS יש <b>rtl</b>. למה? <a href="#" data-go="setup:4">בשלב 4</a>.)</p>
+    <div class="codeblock"><pre class="cv" id="s21code"></pre></div>
     <table>
       <tr><th>שורה</th><th>איפה</th><th>מה היא עושה</th></tr>
-      <tr><td>שורת ה-<code>meta</code></td><td>ב-head</td><td>אומרת לטלפון להציג את הדף ברוחב האמיתי שלו. נבין אותה <a href="#" data-go="setup:5">בעוד כמה שלבים</a>.</td></tr>
+      <tr><td>שורת ה-<code>meta</code> עם viewport</td><td>ב-head</td><td>חשובה בטלפון. נבין אותה <a href="#" data-go="setup:5">בעוד כמה שלבים</a>.</td></tr>
       <tr><td><code>link</code> לקובץ ה-CSS</td><td>ב-head</td><td>מחברת את כל הכללים של Bootstrap – בדיוק כמו ה-link לקובץ העיצוב משיעור 3 (בדף התרגול זה היה style.css, ובאתר שלכם – <span class="nw">site-style.css</span>).</td></tr>
       <tr><td><code>script</code> לקובץ ה-JS</td><td>בסוף ה-body, לפני <code>&lt;/body&gt;</code></td><td>מחברת את קוד ה-JavaScript של Bootstrap – הוא מפעיל דברים שזזים, כמו תפריט שנפתח בלחיצה.</td></tr>
     </table>
-    <div class="what">שתי שורות ב-head ושורה אחת בסוף ה-body – וזהו. כל ה-class-ים של Bootstrap זמינים עכשיו בדף. למה ה-script בסוף? כי קודם הדפדפן מציג את התוכן, ורק אחר כך טוען את הקוד ש"מפעיל" אותו – כך הדף מופיע מהר יותר.</div>
-    <div class="tip">💡 במצגת השלב הזה נקרא "התקנה". בפועל לא מתקינים כלום – רק <b>מקשרים</b> לקבצים, כמו שקישרתם לקובץ CSS.</div>
+    <div class="what"><code>script</code> היא תגית חדשה: היא מחברת לדף קובץ JavaScript – כמו ש-<code>link</code> מחברת קובץ CSS. המאפיין <code>src</code> אומר איפה הקובץ, בדיוק כמו בתמונה. למה היא בסוף ה-body? כי קודם הדפדפן מציג את התוכן, ורק אחר כך טוען את הקוד ש"מפעיל" אותו – כך הדף מופיע מהר יותר.</div>
+    <div class="trap">סוגרים את script בקיצור, כמו את link – כותבים <code>&lt;script src="..." /&gt;</code> ומסיימים. ב-meta, ב-link וב-img הקיצור עובד, כי אין להן תוכן. script היא תגית עם פתיחה וסגירה, והדפדפן לא מקבל בה את הקיצור: הקוד של Bootstrap לא ירוץ – ולא תופיע שום הודעת שגיאה. תמיד כותבים <code>&lt;script src="..."&gt;&lt;/script&gt;</code> – עם תגית סוגרת, גם כשאין שום דבר באמצע.</div>
+    <div class="tip">💡 לפעמים קוראים לשלב הזה "התקנה" של Bootstrap. בפועל לא מתקינים כלום – רק <b>מקשרים</b> לקבצים, כמו שקישרתם לקובץ CSS.</div>
     <details class="more"><summary>🚀 להעמקה: למה דווקא bundle?</summary>
       <p>בתיקייה js של Bootstrap יש כמה קבצים. <b>bundle</b> פירושו "חבילה": בקובץ <code>bootstrap.bundle.min.js</code> ארוז גם הקוד של Bootstrap וגם ספרייה קטנה נוספת בשם <b>Popper</b>, שיודעת לחשב איפה להציג חלונית קופצת – למשל רשימה נפתחת (dropdown) או בועת הסבר (tooltip) – כך שלא תיחתך בקצה המסך.</p>
       <p>הקובץ <code>bootstrap.min.js</code> (בלי bundle) הוא בלי Popper. לכן הכי פשוט לקשר תמיד ל-bundle – וכל הרכיבים יעבדו. אפשר לקרוא עוד ב-<a href="https://getbootstrap.com/docs/5.3/getting-started/introduction/" target="_blank" rel="noopener">התיעוד של Bootstrap</a> (באנגלית).</p>
     </details>
   </article>
 
-  <article class="spread">
+  <article class="spread act">
     <h3>Bootstrap כבר נמצא בפרויקט שלכם</h3>
-    <p>כשיצרתם את הפרויקט ב-Visual Studio, התבנית כבר הכניסה לתוכו את Bootstrap – בתיקייה <b>wwwroot/lib/bootstrap/dist</b>. לכן מקשרים לקבצים שבפרויקט, ולא לאתר באינטרנט. בואו נלך מהדף אל הקובץ, צעד אחר צעד:</p>
+    <p>כשיצרתם את הפרויקט, Visual Studio כבר הכניס לתוכו את Bootstrap – בתיקייה <b>wwwroot/lib/bootstrap/dist</b>. לכן מקשרים לקבצים שבפרויקט, ולא לאתר באינטרנט. בואו נלך מהדף אל הקובץ, צעד אחר צעד. לחצו על "הצעד הבא" (הקובץ שאליו רוצים להגיע מסומן בקו ירוק מקווקו):</p>
     <div class="walk">
       <div class="ftree" id="ftree"></div>
       <div>
@@ -142,45 +145,49 @@ td code{overflow-wrap:normal;white-space:normal}
         <div class="ctrls"><button class="btn primary" id="walkNext" type="button">הצעד הבא ←</button><button class="btn" id="walkReset" type="button">↺ מההתחלה</button></div>
       </div>
     </div>
-    <div class="bridge">זה בדיוק כמו <code>../css/site-style.css</code> משיעור 3, רק דרך יותר תיקיות: <code>../</code> עולה מ-HTML ל-wwwroot, ומשם נכנסים פנימה, תיקייה אחרי תיקייה: <span class="crumb">lib/bootstrap/dist/css</span>. וקובץ ה-JS? אותו מסלול, רק בתיקייה js במקום css: <code class="brk">../lib/bootstrap/dist/js/bootstrap.bundle.min.js</code></div>
+    <div class="bridge">זה בדיוק כמו <code>../css/site-style.css</code> משיעור 3, רק דרך יותר תיקיות: <code>../</code> עולה מ-HTML ל-wwwroot, ומשם נכנסים פנימה, תיקייה אחרי תיקייה: <span class="crumb">lib/bootstrap/dist/css</span>. זה נתיב יחסי (relative), כמו בשיעורים 2 ו-3. וקובץ ה-JS? אותו מסלול, רק בתיקייה js במקום css: <code class="brk">../lib/bootstrap/dist/js/bootstrap.bundle.min.js</code></div>
+    <p>קבצים שנמצאים בפרויקט עצמו – מה זה נותן, ומה המחיר:</p>
     <table>
       <tr><th>✔ היתרון</th><th>✘ החיסרון</th></tr>
       <tr><td>הקבצים לא משתנים מעצמם – העיצוב של האתר לא "יזוז" פתאום בגלל עדכון.</td><td>לא מקבלים עדכונים ושיפורים חדשים של Bootstrap.</td></tr>
     </table>
-    <div class="tip">💡 מה זה <b>min</b> בשם הקובץ? minified – "מכווץ": מחקו ממנו את כל הרווחים והשורות כדי שייטען מהר. אל תערכו אותו – לעיצוב שלכם יש קובץ משלכם. ורוצים לדעת איזו גרסה של Bootstrap יש בפרויקט? פתחו את הקובץ – הגרסה כתובה בשורות הראשונות שלו.</div>
+    <div class="tip">💡 מה זה <b>min</b> בשם הקובץ? minified – "מכווץ": מחקו ממנו את כל הרווחים והשורות כדי שייטען מהר. אל תערכו אותו – לעיצוב שלכם יש קובץ משלכם. ורוצים לדעת איזו גרסה של Bootstrap יש בפרויקט? פתחו את הקובץ – הגרסה כתובה בשורות הראשונות שלו. בפרויקט שלכם זו כנראה גרסה 5.1 או גרסה 5.3. כל מה שלומדים בשיעור הזה עובד בשתיהן.</div>
   </article>
 
   <article class="spread">
     <h3>דרך אחרת: לקשר לאינטרנט (CDN)</h3>
-    <p>אפשר גם לקשר לקבצים של Bootstrap ששמורים <b>באינטרנט</b>. השרת שמגיש אותם נקרא <b>CDN</b> (Content Delivery Network – רשת שרתים שמגישה קבצים מוכנים במהירות, מכל מקום בעולם). את השורות מעתיקים מהאתר: <span class="crumb">getbootstrap.com → Docs → Getting started → Introduction</span>.</p>
-    <div class="codeblock"><button class="copy" type="button">העתקה</button><pre class="cv" id="s23code"></pre></div>
+    <p>אפשר גם לקשר לקבצים של Bootstrap ששמורים <b>באינטרנט</b>. השרת שמגיש אותם נקרא <b>CDN</b> (Content Delivery Network – רשת שרתים שמגישה קבצים מוכנים במהירות, מכל מקום בעולם). <b>בקורס לא נשתמש בדרך הזו</b> – אבל תפגשו אותה בהרבה דוגמאות ברשת, אז כדאי לזהות אותה. ככה היא נראית:</p>
+    <div class="codeblock"><pre class="cv" id="s23code"></pre></div>
+    <p>ההבדל היחיד מהשורות שלנו: ב-href וב-src כתובה <b>כתובת מלאה</b> שמתחילה ב-<code>https://</code> (נתיב מוחלט, משיעור 2) – ובתוכה מספר הגרסה, 5.3.3. הסוף אותו סוף: <span class="crumb">dist/css/bootstrap.rtl.min.css</span>.</p>
     <table>
       <tr><th></th><th>📁 קבצים בפרויקט (מה שאנחנו עושים)</th><th>🌐 CDN</th></tr>
       <tr><td><b>מה כותבים ב-href</b></td><td>נתיב בפרויקט: <code class="brk">../lib/bootstrap/...</code></td><td>כתובת אינטרנט: <code class="brk">https://cdn.jsdelivr.net/...</code></td></tr>
-      <tr><td><b>בלי אינטרנט</b></td><td>עובד ✔</td><td>העיצוב נעלם ✘</td></tr>
+      <tr><td><b>בלי אינטרנט</b></td><td>עובד ✔</td><td>העיצוב עלול להיעלם ✘</td></tr>
       <tr><td><b>עדכונים</b></td><td>לא מתעדכן</td><td>בוחרים גרסה בכתובת (5.3.3)</td></tr>
     </table>
     <div class="what">בשתי הדרכים מקבלים את אותם class-ים בדיוק. ההבדל הוא רק <b>מאיפה</b> הדפדפן מביא את הקובץ. בפרויקט שלנו – מהפרויקט עצמו.</div>
-    <div class="tip">💡 באתר של Bootstrap תראו בשורות האלה עוד שני מאפיינים: <code>integrity</code> ו-<code>crossorigin</code>. הם בדיקת אבטחה שמוודאת שהקובץ לא שונה בדרך. מעתיקים אותם כמו שהם.</div>
+    <div class="tip">💡 בשורות ה-CDN שבאתר של Bootstrap (<span class="crumb">getbootstrap.com → Docs → Getting started → Introduction</span>) תראו עוד שני מאפיינים: <code>integrity</code> ו-<code>crossorigin</code>. זו בדיקת אבטחה: <code>integrity</code> הוא מעין "טביעת אצבע" של <b>קובץ אחד מסוים</b>, והדפדפן מסרב להשתמש בקובץ שלא מתאים לה. לכן אי אפשר להעביר אותה משורה של קובץ אחד לשורה של קובץ אחר. אצלנו, עם הקבצים שבפרויקט, <b>לא כותבים אותם בכלל</b>.</div>
   </article>
 
-  <article class="spread">
+  <article class="spread act">
     <h3>דף בעברית: dir וקובץ RTL</h3>
-    <p>עברית נכתבת <b>מימין לשמאל</b> – RTL (right to left). בדף בעברית צריך שני דברים:</p>
+    <p>עברית נכתבת <b>מימין לשמאל</b> – RTL (right to left). בדף בעברית עם Bootstrap צריך שני דברים:</p>
     <ol>
-      <li>בתגית html: <code>dir="rtl"</code> (כיוון: מימין לשמאל) ו-<code>lang="he"</code> (השפה: עברית – עוזר לקוראי מסך ולבדיקת איות).</li>
+      <li>בתגית html: <code>lang="he" dir="rtl"</code> – כמו בכל דף שבניתם מאז שיעור 1.</li>
       <li>לקשר לקובץ המיוחד <code>bootstrap.rtl.min.css</code> – הוא נמצא באותה תיקייה בדיוק, ליד הקובץ הרגיל.</li>
     </ol>
-    <p>מה קורה אם שמים <code>dir="rtl"</code> אבל מקשרים לקובץ הרגיל? הנה אותו טופס קטן, פעמיים. את ה-class-ים של הטופס נכיר בהמשך – עכשיו הסתכלו רק <b>איפה החץ</b> של הרשימה ו<b>איפה תיבת הסימון</b>:</p>
+    <p>למה צריך קובץ מיוחד? הקובץ הרגיל של Bootstrap נכתב לאנגלית – הוא "חושב משמאל לימין". הנה טופס קטן עם רשימה נפתחת ותיבת סימון (משיעור 4). את ה-class-ים של הטופס נכיר בהמשך השיעור – עכשיו חשוב רק <b>איפה כל דבר עומד</b>:</p>
     <div class="codeblock"><pre class="cv" id="s24code"></pre></div>
-    <div class="compare" id="s24"></div>
-    <div class="what">הקובץ הרגיל של Bootstrap "חושב משמאל לימין": הוא שם את החץ של הרשימה בצד ימין – בדיוק על הטקסט העברי – ואת תיבת הסימון בצד שמאל, רחוק מהמילים שלה. קובץ ה-RTL הופך את כל הצדדים. <b>מעכשיו, בכל דף בעברית: <code>bootstrap.rtl.min.css</code>.</b></div>
-    <div class="tip">💡 במצגת הקישור להסבר על RTL מוביל לגרסה 5.2 של האתר. הדף העדכני: <a href="https://getbootstrap.com/docs/5.3/getting-started/rtl/" target="_blank" rel="noopener">getbootstrap.com/docs/5.3/getting-started/rtl</a></div>
+    <div class="predict" id="p24"></div>
+    <!-- data-lock: the captions tell the answer of #p24 – the whole comparison is covered until the guess -->
+    <div class="compare" id="s24" data-lock></div>
+    <div class="what">עם הקובץ הרגיל, תיבת הסימון נדחקת לקצה ה<b>שמאלי</b> – רחוק מהמילים שבימין – וגם החץ של הרשימה בצד הלא נכון. למה <code>dir="rtl"</code> לבד לא הספיק? הוא הופך רק את מה שלא נקבע לו צד, כמו כיוון הטקסט. אבל בקובץ הרגיל יש כללים שכתוב בהם במפורש "שמאל" – ובהם dir לא נוגע. בקובץ ה-RTL אותם כללים כתובים הפוך. וגם להפך: קובץ ה-RTL בלי dir משאיר את הטקסט מיושר לשמאל. <b>לכן, בכל דף בעברית – שניהם: <code>dir="rtl"</code> וגם <code>bootstrap.rtl.min.css</code>.</b></div>
+    <div class="tip">💡 רוצים לקרוא עוד? הדף על RTL בתיעוד של Bootstrap: <a href="https://getbootstrap.com/docs/5.3/getting-started/rtl/" target="_blank" rel="noopener">getbootstrap.com/docs/5.3/getting-started/rtl</a> (באנגלית).</div>
   </article>
 
-  <article class="spread">
+  <article class="spread act">
     <h3>שורת ה-viewport: מה היא עושה?</h3>
-    <p>נשארה השורה הראשונה בתבנית:</p>
+    <p>נשארה השורה הראשונה מתוך השלוש (viewport – "חלון התצוגה": החלק של המסך שבו הדף מוצג):</p>
     <div class="codeblock"><pre class="cv" id="s25code"></pre></div>
     <p>כדי להבין אותה, צריך לדעת משהו מפתיע על טלפונים.</p>
     <div class="predict" id="p25"></div>
@@ -196,16 +203,17 @@ td code{overflow-wrap:normal;white-space:normal}
       </ol>
       <p>בשפת הקוד: <code>width=device-width</code> = "רוחב הדף = רוחב המכשיר". <code>initial-scale=1</code> = "בלי זום בהתחלה".</p>
     </details>
-    <div class="tip">💡 על ההדמיה: מסגרת בתוך דף לא מושפעת משורת viewport, ולכן בנינו כאן הדמיה נאמנה למה שטלפון אמיתי עושה. רוצים לבדוק דף בגודל של טלפון בדפדפן אמיתי? F12 &rlm;←&rlm; סמל הטלפון (Ctrl+Shift+M) – כך תבדקו מעכשיו כל דף שלכם. במצגת יש גם קישור להדגמה באתר W3Schools.</div>
+    <div class="tip">💡 איך בודקים דף בגודל של טלפון, בלי טלפון? בדפדפן במחשב: F12 (כלי המפתחים), ואז Ctrl+Shift+M – הדף מוצג בתוך מסגרת, ובראשה אפשר לבחור רוחב. כך תבדקו מעכשיו כל דף שלכם. ובטלפון שלכם? האתר שלכם לא ייפתח שם: localhost הוא "המחשב הזה" (שיעור 1), והטלפון הוא מחשב אחר. (ההדמיה שלמעלה מדמה את מה שטלפון אמיתי עושה.)</div>
     <div class="egg-w" id="eggWidth">🥚 תפסתם את המסך ברוחב המדויק! ההודעה הזו מופיעה רק כשהחלון ברוחב 700 עד 760 פיקסלים – כלל CSS שפועל רק בטווח רוחב מסוים. בדיוק ככה Bootstrap בנוי בפנים. הקוד הסודי: BREAKPOINT</div>
   </article>
   <article class="spread vsstep">
     <h3>💻 עכשיו אצלכם ב-Visual Studio</h3>
-    <p>מחברים את Bootstrap ל<b>דף התוכן הראשון</b> שלכם (page1.html משיעור 2 – או השם שנתתם לו), ולדף הנחיתה index.html. במהלך השיעור הדף page1.html יהפוך ל<b>תבנית</b> של כל דפי התוכן באתר – לכן מתחילים בו.</p>
+    <p>מחברים את Bootstrap ל<b>דף התוכן הראשון</b> שלכם (page1.html משיעור 2 – או השם שנתתם לו), ולדף הנחיתה index.html. במהלך השיעור הדף page1.html יהפוך ל<b>דף הבסיס</b> של כל דפי התוכן באתר – לכן מתחילים בו.</p>
+    <div class="tip">✋ עוד לא הגשתם את <span data-asg="4"></span>? הגישו אותה <b>לפני</b> הצעד הראשון. מכאן האתר משתנה, ובנושא "רכיבים מוכנים" מוחקים את כותרת האתר שהמטלה הזו דורשת.</div>
     <ol class="vsdo">
       <li>ב-Solution Explorer פתחו את התיקיות wwwroot &rlm;←&rlm; lib &rlm;←&rlm; bootstrap &rlm;←&rlm; dist &rlm;←&rlm; css, ודאו שהקובץ <b>bootstrap.rtl.min.css</b> נמצא שם. זה הקובץ שאליו נקשר (<a href="#" data-go="setup:2">הדרך אליו – בשלב 2</a>).</li>
       <li>פתחו את page1.html (בתיקייה HTML). בשורה של התגית html ודאו שכתוב <code>lang="he" dir="rtl"</code> (כמו בשיעור 2).</li>
-      <li>בתוך ה-head, מיד אחרי השורה של <code>meta charset</code>, הדביקו את שתי השורות האלה. הן חייבות להיות <b>מעל</b> השורה של <span class="nw">site-style.css</span> שכבר יש לכם משיעור 3: קודם Bootstrap, ואחריו העיצוב שלכם – כך הכללים שלכם מנצחים. (למה? בנושא "משלכם + התיעוד".)
+      <li>בתוך ה-head, מיד אחרי השורה של <code>meta charset</code>, הדביקו את שתי השורות האלה. הן חייבות להיות <b>מעל</b> השורה של <span class="nw">site-style.css</span> שכבר יש לכם משיעור 3: קודם Bootstrap, ואחריו העיצוב שלכם – כך, כשכלל שלכם וכלל של Bootstrap שווים בכוח, שלכם מנצח. (למה? <a href="#" data-go="mine:1">בנושא "משלכם + התיעוד"</a>.)
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
 &lt;meta name="viewport" content="width=device-width, initial-scale=1" /&gt;
 &lt;link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.rtl.min.css" /&gt;
@@ -217,7 +225,7 @@ td code{overflow-wrap:normal;white-space:normal}
       <li>בדיקה שהחיבור עובד: לכותרת h1 של הדף הוסיפו <code>class="text-center"</code> – כמו <a href="#" data-go="start:2">בדוגמה הראשונה של השיעור</a>. (כבר יש לה class? הוסיפו את text-center באותן מירכאות, אחרי רווח.) שמרו (Ctrl+S), ואז קליק ימני על page1.html &rlm;←&rlm; <b>View in Browser</b>.</li>
       <li>עשו את צעדים 2–4 גם בדף הנחיתה <b>index.html</b> – אותן שלוש שורות, באותם מקומות. כך שני הדפים מוכנים לתפריט המשותף שתבנו בנושא "רכיבים מוכנים".</li>
     </ol>
-    <div class="expect">בכתובת שמסתיימת ב-<code>/HTML/page1.html</code> רואים: הכותרת באמצע השורה – סימן ש-Bootstrap מחובר. כנראה תראו עוד שינוי קטן: התוכן צמוד עכשיו לקצה החלון, כי Bootstrap מאפס את השוליים של body (בנושא הבא container יחזיר את הרווח). ובדיקה בטוחה, גם אם הכותרת שלכם כבר הייתה באמצע קודם: בדפדפן F12 &rlm;←&rlm; Console – אין שגיאה אדומה (404). אותו דבר ב-index.html.</div>
+    <div class="expect">בכתובת שמסתיימת ב-<code>/HTML/page1.html</code> רואים: הכותרת באמצע השורה – סימן ש-Bootstrap מחובר. גם בלי שהוספתם class, הדף נראה קצת אחרת – אלה <a href="#" data-go="start:2">כללי הבסיס</a> של Bootstrap: גופן אחר, כותרות וקישורים אחרים, ו-body בלי margin – לכן התוכן צמוד לקצה החלון (בנושא הבא container יחזיר את הרווח). ובדיקה בטוחה, גם אם הכותרת שלכם כבר הייתה באמצע קודם: בדפדפן F12 &rlm;←&rlm; Console – אין שגיאה אדומה (404). אותו דבר ב-index.html.</div>
     <div class="trouble" id="trSetup"></div>
   </article>
   <article class="spread cpstep">
@@ -228,7 +236,7 @@ td code{overflow-wrap:normal;white-space:normal}
 
 <!-- ====================================================== 3. grid -->
 <section class="topic" data-id="grid" data-icon="🧱" data-title="הגריד: שורות ועמודות">
-  <article class="spread">
+  <article class="spread act">
     <h3>container, row, col – שלוש קופסאות</h3>
     <p>הדרך של Bootstrap לסדר דף נקראת <b>גריד</b> (Grid – רשת). היא בנויה משלוש קופסאות, אחת בתוך השנייה:</p>
     <ul>
@@ -245,7 +253,7 @@ td code{overflow-wrap:normal;white-space:normal}
     <div class="bridge">זוכרים את הטבלאות משיעור 4? <code>row</code> הוא כמו שורה בטבלה (<code>tr</code>), ו-<code>col</code> הוא כמו תא (<code>td</code>). ההבדל הגדול: טבלה תמיד נשארת טבלה, וגריד יודע <b>להסתדר מחדש</b> בטלפון. עוד מעט תראו איך.</div>
   </article>
 
-  <article class="spread">
+  <article class="spread act">
     <h3>12 חלקים בכל שורה</h3>
     <p>כל שורה מחולקת ל-<b>12 חלקים שווים</b>. המספר אחרי <code>col-</code> אומר כמה חלקים העמודה תופסת: <code>col-6</code> = 6 מתוך 12 = חצי. <code>col-4</code> = שליש. <code>col-3</code> = רבע. ו-<code>col</code> בלי מספר = כל העמודות מתחלקות שווה בשווה.</p>
     <div class="predict" id="p32"></div>
@@ -255,7 +263,7 @@ td code{overflow-wrap:normal;white-space:normal}
     <p class="rulecap">הסרגל האפור למעלה (1 עד 12) – רק להמחשה, כדי לספור חלקים.</p>
     <div class="what" id="s32what"></div>
     <!-- data-lock: the trap and the slow explanation both tell the answer of #p32 – covered until the guess -->
-    <div class="trap" id="s32trap" data-lock>סכום העמודות בשורה גדול מ-12 (למשל <code>col-8</code> ועוד <code>col-6</code>): העמודה שלא נכנסת <b>יורדת לשורה הבאה</b>. אין הודעת שגיאה – רק סידור מוזר. בודקים שהמספרים בכל שורה מסתכמים ב-12 לכל היותר.</div>
+    <div class="trap" id="s32trap" data-lock>עמודה יורדת שורה בלי שהתכוונתם. רציתם שתיים זו ליד זו וכתבתם <code>col-8</code> ועוד <code>col-6</code>? 14 לא נכנס ב-12, והשנייה <b>יורדת לשורה הבאה</b> – בלי הודעת שגיאה. רוצים אותן זו ליד זו? הסכום שלהן – 12 לכל היותר.</div>
     <details class="more" data-lock><summary>🐢 רוצים הסבר לאט יותר?</summary>
       <p>חשבו על פיצה של פיצה דני, חתוכה ל-<b>12 משולשים</b>. השורה (<code>row</code>) היא הפיצה, וכל עמודה מקבלת כמה משולשים:</p>
       <ul>
@@ -265,10 +273,10 @@ td code{overflow-wrap:normal;white-space:normal}
       </ul>
       <p>ולמה דווקא 12? כי 12 מתחלק יפה ב-2, 3, 4 ו-6 – אפשר לחלק לחצאים, לשלישים ולרבעים.</p>
     </details>
-    <div class="tip">💡 אפשר לשים <code>row</code> חדש בתוך עמודה (במצגת: "גריד מכונן" – הכוונה ל<b>מקונן</b>, nested). זה עובד, אבל העמודות נהיות צרות מאוד – בדרך כלל לא כדאי.</div>
+    <div class="tip" data-lock>💡 ירידת שורה היא לא שגיאה – זה הכלל שכל הגריד בנוי עליו: עמודה שלא נכנסת יורדת לשורה הבאה. לכן <code>row</code> אחד יכול להחזיק כמה שורות על המסך. בשלבים הבאים נשתמש בזה בכוונה.</div>
   </article>
 
-  <article class="spread">
+  <article class="spread act">
     <h3>איך זה נראה בטלפון?</h3>
     <p>שלוש מנות, כל אחת <code>col-4</code>. במחשב זה נראה מצוין. עכשיו בחרו <b>📱 טלפון</b>:</p>
     <div class="codeblock"><pre class="cv" id="s33code"></pre></div>
@@ -277,7 +285,7 @@ td code{overflow-wrap:normal;white-space:normal}
     <div class="tip">💡 על כפתורי המכשיר: המסגרת מקבלת בדיוק את הרוחב שבחרתם, ו-Bootstrap מגיב אליה כמו למסך אמיתי. כשהמסך שלכם צר מדי – ההדמיה מוקטנת כדי להיכנס, וכתוב מתחתיה בכמה.</div>
   </article>
 
-  <article class="spread">
+  <article class="spread act">
     <h3>נקודות שבירה: col-md-4</h3>
     <p>אפשר לכתוב באמצע השם של עמודה <b>מאיזה רוחב מסך</b> ה-class מתחיל לפעול:</p>
     <div class="anat">
@@ -295,14 +303,15 @@ td code{overflow-wrap:normal;white-space:normal}
       <tr><td><code>xl</code></td><td>1200px</td><td>מחשב</td></tr>
       <tr><td><code>xxl</code></td><td>1400px</td><td>מסך גדול</td></tr>
     </table>
+    <div class="tip">💡 "טלפון", "טאבלט" ו"מחשב" הם רק דוגמאות. Bootstrap לא יודע איזה מכשיר יש לכם – הוא בודק דבר אחד: <b>כמה רחב חלון הדפדפן</b>. חלון צר במחשב מתנהג בדיוק כמו טלפון.</div>
     <div class="predict" id="p34"></div>
     <div class="codeblock"><pre class="cv" id="s34code"></pre></div>
     <div id="s34"></div>
-    <div class="what" id="s34what" hidden>מ-md (768) ומעלה, כל מנה מקבלת 4 מתוך 12 – שלוש בשורה. מתחת ל-md, ה-class לא פועל, וכל מנה תופסת <b>שורה שלמה</b> – אחת מתחת לשנייה. העמודות הפכו לשורות! עברו בין המכשירים וראו בדיוק איפה זה מתחלף.</div>
+    <div class="what" id="s34what" hidden>מ-md (768) ומעלה, כל מנה מקבלת 4 מתוך 12 – שלוש בשורה. מתחת ל-md, ה-class לא פועל, וכל מנה תופסת <b>שורה שלמה</b>. זה הכלל של 12 החלקים: 12 ועוד 12 ועוד 12 לא נכנס בשורה אחת, אז כל מנה יורדת שורה. עברו בין המכשירים וראו בדיוק איפה זה מתחלף.</div>
     <!-- data-lock: the C# bridge and the slow explanation tell the answer of #p34 – covered until the guess -->
     <div class="bridge" data-lock>ב-C# זה היה נראה בערך כך – בדיוק מה ש-<code>col-md-4</code> אומר:<div class="codeblock"><pre class="cv" id="s34cs"></pre></div>Bootstrap כותב את התנאי בשבילכם בתוך הקובץ שלו.</div>
     <details class="more" data-lock><summary>🐢 רוצים הסבר לאט יותר?</summary>
-      <p>כש-Bootstrap פוגש מנה עם <code>col-md-4</code>, הוא שואל שאלה אחת: "<b>המסך רחב לפחות 768 פיקסלים?</b>"</p>
+      <p>כש-Bootstrap פוגש מנה עם <code>col-md-4</code>, הוא שואל שאלה אחת: "<b>חלון הדפדפן רחב לפחות 768 פיקסלים?</b>"</p>
       <ul>
         <li><b>כן</b> (טאבלט, מחשב) – המנה מקבלת 4 משולשים מתוך 12. שלוש מנות = שורה מלאה.</li>
         <li><b>לא</b> (טלפון) – ה-class "לא נדלק", והמנה מתנהגת כמו div רגיל: תופסת את כל הרוחב.</li>
@@ -311,32 +320,37 @@ td code{overflow-wrap:normal;white-space:normal}
     </details>
   </article>
 
-  <article class="spread">
-    <h3>🔬 מעבדת גריד</h3>
-    <p>בחרו class לשלוש המנות, ואז עברו בין המכשירים. מתחת להדמיה כתוב כמה מנות יש בכל שורה.</p>
+  <article class="spread act">
+    <h3>🔬 מעבדת גריד: כמה class-ים על אותה עמודה</h3>
+    <p>לעמודה מותר לתת <b>כמה class-ים של רוחב</b> – אחד לכל נקודת שבירה, עם רווח ביניהם. למשל <code>col-12 col-md-6</code>:</p>
+    <ul>
+      <li><code>col-12</code> – בלי שם של נקודת שבירה, אז הוא פועל <b>תמיד</b>: 12 מתוך 12, שורה שלמה.</li>
+      <li><code>col-md-6</code> – "נדלק" מ-md ומעלה, ו<b>גובר</b> על הקודם: חצי שורה.</li>
+    </ul>
+    <p>הכלל: מבין ה-class-ים שכבר נדלקו, קובע זה של <b>נקודת השבירה הגדולה ביותר</b>. הסדר שבו כותבים אותם בתוך המירכאות לא משנה: <code>col-md-6 col-12</code> הוא אותו דבר בדיוק. עכשיו נסו בעצמכם – בחרו class לשלוש המנות, ועברו בין המכשירים. מתחת להדמיה כתוב כמה מנות יש בכל שורה.</p>
     <div class="ctrls"><span class="lbl">ה-class של כל מנה:</span><div class="seg" id="s35cls"></div></div>
     <div class="codeblock"><pre class="cv" id="s35code"></pre></div>
     <div id="s35"></div>
     <p class="res-note" id="s35count"></p>
     <div class="tip">
-      <b>🎯 אתגר:</b> איזה class נותן <b>מנה אחת</b> בשורה בטלפון, <b>שתיים</b> בטלפון לרוחב ובטאבלט, ו<b>שלוש</b> במחשב? נסו את האפשרויות ובדקו בכל מכשיר.
+      <b>🎯 אתגר:</b> איזו מהאפשרויות נותנת <b>מנה אחת</b> בשורה בטלפון, <b>שתיים</b> בטלפון לרוחב ובטאבלט, ו<b>שלוש</b> במחשב? בחרו אותה, ובדקו אותה בכל ארבעת המכשירים – כשתעברו על כולם, המעבדה תודיע שפתרתם.
     </div>
-    <details><summary>הפתרון</summary><p><code>col-sm-6 col-lg-4</code>. אפשר לתת לתגית כמה class-ים עם נקודות שבירה שונות: מ-sm ומעלה חצי (6), ומ-lg ומעלה שליש (4). מתחת ל-sm – שורה שלמה.</p></details>
+    <details><summary>🔓 הראו לי את הפתרון</summary><p><code>col-sm-6 col-lg-4</code>. מתחת ל-sm אף class לא נדלק – שורה שלמה, מנה אחת. מ-sm (576) ומעלה נדלק <code>col-sm-6</code> – חצי, שתיים בשורה. ומ-lg (992) ומעלה נדלק גם <code>col-lg-4</code> וגובר – שליש, שלוש בשורה.</p></details>
   </article>
 
-  <article class="spread">
-    <h3>row-cols: כמה בשורה, לכל מסך</h3>
-    <p>יש דרך קצרה יותר: במקום לכתוב class על <b>כל</b> עמודה, כותבים על <b>השורה</b> כמה עמודות יהיו בה. העמודות עצמן מקבלות רק <code>col</code>.</p>
+  <article class="spread act">
+    <h3>row-cols, רווחים ותמונות</h3>
+    <p>יש דרך קצרה יותר: במקום לכתוב class על <b>כל</b> עמודה, כותבים על <b>השורה</b> כמה עמודות יהיו בה (cols – קיצור של columns, עמודות). העמודות עצמן מקבלות רק <code>col</code>. עברו בין המכשירים:</p>
     <div class="codeblock"><pre class="cv" id="s36code"></pre></div>
     <div id="s36"></div>
     <p class="res-note" id="s36count"></p>
-    <div class="what">קראו את ה-class-ים של השורה משמאל לימין, כמו שלושה כללים:
+    <div class="what">שלושה class-ים על השורה – שלושה כללים:
       <br>• <code>row-cols-1</code> – תמיד: עמודה אחת בשורה (טלפון).
       <br>• <code>row-cols-sm-2</code> – מ-sm ומעלה: שתיים בשורה (טלפון לרוחב).
       <br>• <code>row-cols-md-4</code> – מ-md ומעלה: ארבע בשורה (טאבלט ומחשב).
-      <br>כל כלל "דורס" את הקודם כשהמסך מספיק רחב. זה בדיוק הסידור שבמצגת.</div>
-    <div class="tip">💡 ומה זה <code>g-3</code>? g = gutter – <b>רווח</b> בין העמודות, גם לרוחב וגם לגובה. המספר בין 0 (צמוד) ל-5 (הכי רחוק).</div>
-    <div class="tip">💡 ותמונה בתוך עמודה? תמונה רחבה לא מתכווצת לבד – היא עלולה לבלוט מחוץ לעמודה. ה-class <code>img-fluid</code> ("תמונה גמישה") שומר שהתמונה אף פעם לא תהיה רחבה מהעמודה שלה, ומתכווצת יחד איתה: <code class="brk">&lt;img src="../Img/pizza.jpg" alt="פיצה" class="img-fluid" /&gt;</code></div>
+      <br>כל class גובר על הקודם כשהמסך מספיק רחב – אותו כלל מהמעבדה: קובעת נקודת השבירה הגדולה ביותר שכבר נדלקה.</div>
+    <div class="tip">💡 ומה זה <code>g-3</code>? g = gutter – <b>רווח</b> בין העמודות, גם לרוחב וגם לגובה. המספר בין 0 (צמוד) ל-5 (הכי רחוק). רק ש-<code>g-5</code> רחב מדי לטלפון – הוא יוצר גלילה הצידה.</div>
+    <div class="tip">💡 ותמונה בתוך עמודה? תמונה רחבה לא מתכווצת לבד – היא עלולה לבלוט מחוץ לעמודה. ה-class <code>img-fluid</code> ("תמונה גמישה") שומר שהתמונה אף פעם לא תהיה רחבה מהעמודה שלה, ומתכווצת יחד איתה (רק מתכווצת – תמונה קטנה לא נמתחת): <code class="brk">&lt;img src="../Img/pizza.jpg" alt="פיצה" class="img-fluid" /&gt;</code></div>
     <details class="more"><summary>🚀 להעמקה: מה כתוב בתוך Bootstrap?</summary>
       <p>מאחורי כל class עם נקודת שבירה מסתתר כלל CSS מיוחד בשם <b>media query</b> (בערך: "שאלה על המסך"). הוא אומר לדפדפן: "את הכללים שבפנים – החילו רק כשהמסך רחב לפחות כך וכך". ככה, בקיצור, כתוב <code>col-md-4</code> בתוך הקובץ של Bootstrap:</p>
       <div class="codeblock"><pre data-code="css">
@@ -352,10 +366,10 @@ td code{overflow-wrap:normal;white-space:normal}
   </article>
   <article class="spread vsstep">
     <h3>💻 עכשיו אצלכם ב-Visual Studio</h3>
-    <p>הופכים את page1.html ל<b>תבנית של דף תוכן</b>: container שמרחיק את התוכן מהקצוות, ושורה עם שתי עמודות – טקסט ותמונה – שבטלפון יורדות אחת מתחת לשנייה. על התבנית הזו תבנו את כל דפי התוכן של הגשה 1.</p>
+    <p>הופכים את page1.html ל<b>דף הבסיס של דפי התוכן</b>: container שמרחיק את התוכן מהקצוות, ושורה עם שתי עמודות – טקסט ותמונה – שבטלפון יורדות אחת מתחת לשנייה. על הדף הזה תבנו את כל דפי התוכן של הגשה 1.</p>
     <ol class="vsdo">
-      <li>ב-page1.html עטפו את כל התוכן שבתוך ה-body ב-container: שורה חדשה <code>&lt;div class="container"&gt;</code> מיד אחרי <code>&lt;body&gt;</code>, ושורה <code>&lt;/div&gt;</code> מיד <b>לפני</b> שורת ה-script. (ה-script נשאר מחוץ ל-container – הוא לא חלק מהתוכן.)</li>
-      <li>מתחת ל-h1, בתוך ה-container, הדביקו שורה עם שתי עמודות:
+      <li>ב-page1.html עטפו את כל התוכן שבתוך ה-body ב-container: שורה חדשה <code>&lt;div class="container"&gt;</code> מיד אחרי <code>&lt;body&gt;</code>, ושורה <code>&lt;/div&gt;</code> מיד <b>לפני</b> שורת ה-script. (ה-script נשאר מחוץ ל-container – הוא לא חלק מהתוכן.) גם כותרת האתר משיעור 4 – ה-div עם <code>class="site-header"</code> – נכנסת בינתיים לתוך ה-container. בנושא הבא תחליפו אותה בתפריט של Bootstrap.</li>
+      <li>מתחת ל-h1, בתוך ה-container, הדביקו שורה עם שתי עמודות. (ה-h1 שלכם נמצא בתוך קופסת <code>box</code>? הדביקו את השורה אחרי ה-<code>&lt;/div&gt;</code> שסוגר את הקופסה, ואחר כך העבירו את הקופסה כולה לעמודה הראשונה.)
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html" data-marks="7:new">
 &lt;div class="row"&gt;
     &lt;div class="col-md-8"&gt;
@@ -370,9 +384,9 @@ td code{overflow-wrap:normal;white-space:normal}
         <b>בעמודה הראשונה</b> (<code>col-md-8</code>): במקום "כאן הטקסט של הדף" העבירו לשם את הפסקה שכבר יש בדף, ובמקום ההערה – את כל שאר התוכן: קופסת התוכן, אם יש (ה-div עם <code>class="box"</code> משיעור 3), והקישור חזרה לדף הנחיתה. (גזירה: Ctrl+X, הדבקה: Ctrl+V.)<br>
         <b>בעמודה השנייה</b> (<code>col-md-4</code>): תמונה חדשה מהתיקייה Img – במקום my-image.jpg כתבו את שם הקובץ שלכם, וב-alt תיאור אמיתי שלה. את <code>img-fluid</code> הכרתם <a href="#" data-go="grid:6">בשלב על row-cols</a>; בגללו לא כותבים לתמונה width.</li>
       <li>שמרו (Ctrl+S), ואז קליק ימני על page1.html &rlm;←&rlm; <b>View in Browser</b>.</li>
-      <li>בדיקה בגודל טלפון: בדפדפן F12, ואז Ctrl+Shift+M. בראש התצוגה, בתפריט <b>Dimensions</b>, בחרו <b>Responsive</b>, ובשדה הרוחב שלידו כתבו <b>360</b>. אחר כך נסו <b>767</b> ו-<b>768</b> – ותראו בדיוק איפה הסידור מתחלף.</li>
+      <li>בדיקה בגודל טלפון: בדפדפן F12, ואז Ctrl+Shift+M. בראש התצוגה, בתפריט <b>Dimensions</b>, בחרו <b>Responsive</b>, ובשדה הרוחב שלידו כתבו <b>360</b>. אחר כך נסו <b>767</b> ו-<b>768</b> – ותראו בדיוק איפה הסידור מתחלף. (דרך מהירה, בלי F12: הצרו את חלון הדפדפן עצמו – גררו את הקצה שלו פנימה.)</li>
     </ol>
-    <div class="expect">בכתובת שמסתיימת ב-<code>/HTML/page1.html</code> רואים: התוכן כבר לא צמוד לקצה החלון. בחלון רחב – הטקסט בימין והתמונה בשמאל, באותה שורה. ברוחב 360 – התמונה מתחת לטקסט, ברוחב המסך. ב-767 הן עדיין אחת מתחת לשנייה, וב-768 (נקודת השבירה md) – כבר זו ליד זו.</div>
+    <div class="expect">בכתובת שמסתיימת ב-<code>/HTML/page1.html</code> רואים: התוכן כבר לא צמוד לקצה החלון. בחלון רחב – הטקסט בימין והתמונה בשמאל, באותה שורה. ברוחב 360 – התמונה מתחת לטקסט, ולא רחבה מהמסך. ב-767 הן עדיין אחת מתחת לשנייה, וב-768 (נקודת השבירה md) – כבר זו ליד זו.</div>
     <div class="trouble" id="trGrid"></div>
   </article>
   <article class="spread cpstep">
@@ -383,8 +397,8 @@ td code{overflow-wrap:normal;white-space:normal}
 
 <!-- ====================================================== 4. components -->
 <section class="topic" data-id="comps" data-icon="🧩" data-title="רכיבים מוכנים">
-  <article class="spread">
-    <h3>classes קטנים: רווח, צבע, יישור</h3>
+  <article class="spread act">
+    <h3>class-ים קטנים: רווח, צבע, יישור</h3>
     <p>לפני הרכיבים הגדולים – הכירו את ה-class-ים הקטנים של Bootstrap (utilities – כלי עזר). כל אחד עושה <b>דבר אחד</b>, ואפשר לשים כמה על אותה תגית. שחקו:</p>
     <div class="ctrls"><span class="lbl">מרווח מלמעלה:</span><div class="seg" id="s41m"></div></div>
     <div class="ctrls"><span class="lbl">ריפוד:</span><div class="seg" id="s41p"></div></div>
@@ -393,25 +407,35 @@ td code{overflow-wrap:normal;white-space:normal}
     <div id="s41"></div>
     <table>
       <tr><th>ה-class</th><th>מה הוא עושה</th></tr>
-      <tr><td><code>mt-3</code><br><code>mb-3</code><br><code>p-3</code></td><td><b>m</b> = margin, <b>p</b> = padding. אחר כך הצד: <b>t</b> למעלה (top), <b>b</b> למטה (bottom), <b>s</b> בהתחלה (start), <b>e</b> בסוף (end). בלי צד = מכל הצדדים. המספר: 0 עד 5.</td></tr>
-      <tr><td><code>bg-warning</code><br><code>text-danger</code></td><td>צבע רקע / צבע טקסט, לפי שמות הצבעים של Bootstrap (בשלב הבא).</td></tr>
-      <tr><td><code>text-center</code><br><code>fw-bold</code></td><td>יישור הטקסט למרכז / טקסט מודגש.</td></tr>
-      <tr><td><code>d-none</code><br><code>d-md-none</code></td><td>d = display. <code>d-none</code> מסתיר תמיד. <code>d-md-none</code> מסתיר רק מ-md ומעלה – כלומר רואים את התגית <b>רק בטלפון</b>. (שוב נקודת שבירה באמצע השם!)</td></tr>
+      <tr><td><code>mt-3</code><br><code>mb-3</code><br><code>p-3</code></td><td><b>m</b> = margin, <b>p</b> = padding. אחר כך הצד: <b>t</b> למעלה (top), <b>b</b> למטה (bottom), <b>s</b> בהתחלה (start), <b>e</b> בסוף (end). בלי צד = מכל הצדדים. המספר הוא <b>דרגה</b> מ-0 עד 5, לא פיקסלים: 0 = בלי רווח, 3 = רווח בינוני, 5 = הכי גדול.</td></tr>
+      <tr><td><code>bg-warning</code><br><code>text-danger</code><br><code>text-white</code></td><td><b>bg</b> = background, צבע רקע. <b>text</b> ושם של צבע = צבע הטקסט. ל-Bootstrap יש שמות צבעים משלו, כמו warning (צהוב), success (ירוק) ו-danger (אדום) – כולם בשלב הבא.</td></tr>
+      <tr><td><code>text-start</code><br><code>text-center</code><br><code>text-end</code></td><td>יישור הטקסט: לצד ההתחלה (בעברית – ימין), למרכז, או לצד הסוף.</td></tr>
+      <tr><td><code>fw-bold</code></td><td>טקסט מודגש (fw = font weight, עובי הגופן).</td></tr>
     </table>
-    <div class="bridge">בשיעור 3 כתבתם <code>margin-top: 16px;</code> בקובץ CSS. <code>mt-3</code> הוא אותה הוראה בדיוק – רק שהכלל כבר כתוב אצל Bootstrap, ואתם רק מוסיפים את השם. ולמה start ו-end ולא ימין ושמאל? כי בעברית ההתחלה היא בימין. קובץ ה-RTL דואג לזה בשבילכם.</div>
+    <div class="bridge">בשיעור 3 כתבתם <code>margin: 20px;</code> – רווח מכל הצדדים. ב-CSS יש גם תכונה לכל צד בנפרד, למשל <code>margin-top</code> (רק מלמעלה) ו-<code>margin-bottom</code> (רק מלמטה) – וכך גם ב-padding. ה-class <code>mt-3</code> הוא בדיוק <code>margin-top</code>: הכלל כבר כתוב אצל Bootstrap, ואתם רק מוסיפים את השם. ולמה start ו-end ולא ימין ושמאל? כי בעברית ההתחלה היא בימין, ובאנגלית – בשמאל. קובץ ה-RTL דואג לזה בשבילכם.</div>
   </article>
 
-  <article class="spread">
+  <article class="spread act">
     <h3>כפתורים: btn</h3>
     <p>כפתור של Bootstrap מקבל <b>שני</b> class-ים: <code>btn</code> – הצורה הבסיסית, ועוד אחד לצבע. בחרו:</p>
     <div class="ctrls"><span class="lbl">צבע:</span><div class="seg" id="s42c"></div></div>
     <div class="ctrls"><span class="lbl">סגנון:</span><div class="seg" id="s42s"></div></div>
     <div class="ctrls"><span class="lbl">גודל:</span><div class="seg" id="s42z"></div></div>
     <div id="s42"></div>
-    <div class="what">לשמות הצבעים יש <b>משמעות</b>: <code>primary</code> – הפעולה הראשית (כחול), <code>success</code> – הצלחה (ירוק), <code>danger</code> – סכנה, כמו מחיקה (אדום), <code>warning</code> – אזהרה (צהוב), <code>secondary</code> – משני (אפור), <code>dark</code> – כהה. אותם שמות עובדים בכל מקום: <code>bg-success</code>, <code>text-danger</code> ועוד. ושימו לב: <code>btn</code> עובד גם על קישור <code>a</code> – הוא פשוט <b>נראה</b> כמו כפתור.</div>
+    <table>
+      <tr><th>שם הצבע</th><th>המשמעות</th><th>הצבע</th></tr>
+      <tr><td><code>primary</code></td><td>הפעולה הראשית</td><td>כחול</td></tr>
+      <tr><td><code>secondary</code></td><td>משני</td><td>אפור</td></tr>
+      <tr><td><code>success</code></td><td>הצלחה</td><td>ירוק</td></tr>
+      <tr><td><code>danger</code></td><td>סכנה – למשל מחיקה</td><td>אדום</td></tr>
+      <tr><td><code>warning</code></td><td>אזהרה</td><td>צהוב</td></tr>
+      <tr><td><code>info</code></td><td>מידע</td><td>תכלת</td></tr>
+      <tr><td><code>light</code> · <code>dark</code></td><td>בהיר · כהה</td><td>אפור בהיר מאוד · כמעט שחור</td></tr>
+    </table>
+    <div class="what">שם הצבע הוא <b>מילה אחת שמחליפים</b>: <code>btn-success</code> הוא כפתור ירוק, ו-<code>btn-danger</code> – אדום. אותם שמות עובדים גם ב-class-ים הקטנים מהשלב הקודם: <code>bg-success</code>, <code>text-danger</code>, <code>bg-info</code>, <code>bg-light</code>. ועוד שלושה דברים מהכפתורים שלמעלה: <code>btn-outline-success</code> – רק מסגרת בצבע, בלי מילוי (outline = קו מתאר); <code>btn-lg</code> ו-<code>btn-sm</code> – כפתור גדול (large) וכפתור קטן (small). ושימו לב לשורה השנייה בקוד: <code>btn</code> עובד גם על קישור <code>a</code> – הוא פשוט <b>נראה</b> כמו כפתור. <b>מתי איזו תגית?</b> מעבירים לדף אחר – <code>a</code> עם <code>href</code> ועם <code>btn</code> (ל-<code>button</code> אין href, והוא לא יודע לעבור דף). שולחים טופס – <code>input</code> מסוג submit, כמו בשיעור 4. וה-<code>button</code> שבדוגמה? כפתור "ריק" משיעור 4 – כאן הוא רק מראה את העיצוב.</div>
   </article>
 
-  <article class="spread">
+  <article class="spread act">
     <h3>בונים כרטיס, חלק אחרי חלק</h3>
     <p>כרטיס (<code>card</code>) הוא קופסה מעוצבת עם מסגרת ופינות מעוגלות. בתוכו יש חלקים, ולכל חלק class משלו. הוסיפו חלק אחרי חלק:</p>
     <div class="ctrls"><div class="seg" id="s43seg"></div></div>
@@ -425,19 +449,20 @@ td code{overflow-wrap:normal;white-space:normal}
       <tr><td><code>card-body</code></td><td>הגוף – עם ריפוד מבפנים. בתוכו <code>card-title</code> ו-<code>card-text</code></td></tr>
       <tr><td><code>card-footer</code></td><td>שורה תחתונה – מחיר, תאריך וכו'</td></tr>
     </table>
-    <div class="tip">💡 בלי style בתוך התגית – הרוחב בא מהעמודה: הכרטיס יושב בתוך <code>row</code> ועמודה, <code>col-8 col-md-4</code> – שליש שורה מ-md ומעלה, כמו בנושא הגריד. ככה הוא גם מסתדר לבד בטלפון.</div>
+    <div class="tip">💡 מי קובע את הרוחב של הכרטיס? העמודה שהוא יושב בה. בשתי השורות הראשונות של הקוד יש <code>row</code>, ובתוכו עמודה עם <code>col-8 col-md-4</code> – שני class-ים על אותה עמודה, כמו <a href="#" data-go="grid:5">במעבדת הגריד</a>: 8 מתוך 12 במסך צר, ושליש שורה מ-md ומעלה. כרטיס תמיד ממלא את כל הרוחב של העמודה שלו – לכן לא כותבים לו width, ובלי style בתוך התגית.</div>
   </article>
 
-  <article class="spread">
+  <article class="spread act">
     <h3>כל הכרטיס לחיץ: stretched-link</h3>
-    <p>לפעמים רוצים שלחיצה <b>בכל מקום</b> על הכרטיס תפעיל את הקישור – לא רק על הכפתור. מוסיפים לקישור את ה-class <code>stretched-link</code> ("קישור נמתח"). אותו כרטיס, פעמיים. העבירו את העכבר על כל אחד ולחצו על התמונה:</p>
+    <p>לפעמים רוצים שלחיצה <b>בכל מקום</b> על הכרטיס תפעיל את הקישור – לא רק על הכפתור. מוסיפים לקישור את ה-class <code>stretched-link</code> ("קישור נמתח"). אותו כרטיס, פעמיים. בכל אחד מהם לחצו <b>על התמונה</b> (במחשב – שימו לב גם לצורת העכבר):</p>
     <div class="compare" id="s44"></div>
-    <div class="what">בכרטיס הימני רק הכפתור לחיץ. בכרטיס השמאלי הקישור "נמתח" על <b>כל הכרטיס</b> – העכבר הופך ליד בכל מקום, ולחיצה על התמונה או על הטקסט מפעילה את הקישור. במצגת: "לחיצה על כל הכרטיס מעבירה לקישור".</div>
+    <div class="what">בכרטיס הראשון (בלי stretched-link) רק הכפתור לחיץ – לחיצה על התמונה לא עושה כלום. בכרטיס השני הקישור "נמתח" על <b>כל הכרטיס</b>: העכבר הופך ליד בכל מקום, ולחיצה על התמונה או על הטקסט מפעילה את הקישור.</div>
   </article>
 
-  <article class="spread">
+  <article class="spread act">
     <h3>כרטיסים בתוך גריד</h3>
     <p>עכשיו מחברים את שני הנושאים: כל כרטיס יושב בתוך <code>col</code>, והשורה קובעת כמה כרטיסים יהיו בשורה בכל מסך.</p>
+    <p>ויש כאן גם class קטן חדש, <code>h-100</code> – נגיע אליו מיד אחרי השאלה.</p>
     <div class="predict" id="p45"></div>
     <div class="ctrls"><span class="lbl">גובה הכרטיסים:</span><div class="seg" id="s45h"></div></div>
     <div class="codeblock"><pre class="cv" id="s45code"></pre></div>
@@ -445,33 +470,75 @@ td code{overflow-wrap:normal;white-space:normal}
     <div class="what" id="s45what"></div>
   </article>
 
-  <article class="spread">
+  <article class="spread act">
     <h3>תפריט ניווט: navbar</h3>
-    <p>תפריט הניווט של Bootstrap נקרא <code>navbar</code>. את הקוד לקחנו מהאתר של Bootstrap והתאמנו לפיצה דני. הסתכלו בקוד על ה-class השני בשורה הראשונה – <code>navbar-expand-md</code> – ונסו לנחש:</p>
+    <p>בשיעור 4 בניתם תפריט מ-<code>nav</code>, <code>ul</code> ו-<code>li</code>, ועיצבתם אותו בעצמכם. ל-Bootstrap יש תפריט מוכן על אותו בסיס: <code>navbar</code> (navigation bar – פס ניווט). הנה התפריט של פיצה דני. הקוד ארוך – בשני השלבים הבאים נקרא אותו חלק אחרי חלק. בינתיים הסתכלו רק על השורה הראשונה, על ה-class <code>navbar-expand-md</code> (expand = להתפרס; md – נקודת השבירה שכבר הכרתם):</p>
+    <div class="codeblock"><pre class="cv" id="s46code"></pre></div>
     <div class="predict" id="p46"></div>
-    <div class="ctrls"><span class="lbl">קובץ ה-JS:</span><div class="seg" id="s46js"></div></div>
-    <div class="codeblock"><button class="copy" type="button">העתקה</button><pre class="cv" id="s46code"></pre></div>
+    <div class="what" id="s46what" hidden><code>navbar-expand-md</code> = "התפריט פרוס מ-md ומעלה". מתחת ל-md – כמו בטלפון – הקישורים מוסתרים, ובמקומם מופיע כפתור עם שלושה קווים: ☰. לחיצה עליו פותחת את הקישורים, אחד מתחת לשני; לחיצה נוספת סוגרת אותם. עברו בין המכשירים ונסו.</div>
+    <div class="ctrls"><span class="lbl">🔨 ניסוי – קובץ ה-JS:</span><div class="seg" id="s46js"></div></div>
     <div id="s46"></div>
     <p class="res-note" id="s46note"></p>
-    <!-- data-lock: the table and the bridge explain the answer of #p46 – covered until the guess -->
-    <div id="s46more" data-lock>
-    <table>
-      <tr><th>ה-class</th><th>מה הוא</th></tr>
-      <tr><td><code>navbar</code><br><code>navbar-expand-md</code></td><td>התפריט. <code>expand-md</code> = "פתוח לגמרי מ-md ומעלה; מתחת – מקופל".</td></tr>
-      <tr><td><code>navbar-brand</code></td><td>שם האתר או הלוגו</td></tr>
-      <tr><td><code>navbar-toggler</code></td><td>כפתור ה-☰ ("המבורגר"). מופיע רק כשהתפריט מקופל</td></tr>
-      <tr><td><code>collapse</code><br><code>navbar-collapse</code></td><td>החלק שמתקפל. יש לו <code>id="mainMenu"</code></td></tr>
-      <tr><td><code>navbar-nav</code><br><code>nav-link</code></td><td>רשימת הקישורים, וכל קישור בה</td></tr>
-    </table>
-    <div class="bridge">איך הכפתור יודע מה לפתוח? <code>data-bs-target="#mainMenu"</code> – סולמית ושם, בדיוק כמו בורר id משיעור 3: "התגית שה-id שלה הוא mainMenu". ולמה צריך קובץ JS? CSS קובע רק <b>איך דברים נראים</b>. "כשלוחצים – תפתח" זו <b>פעולה</b>, וצריך קוד שירוץ בזמן הלחיצה. רוצים לראות? בחרו למעלה "בלי קובץ ה-JS", עברו ל-📱 ולחצו על ☰.</div>
-    <details class="more"><summary>🚀 להעמקה: מה זה בכלל data-bs-toggle?</summary>
-      <p>מאפיין (attribute) שהשם שלו מתחיל ב-<code>data-</code> הוא מאפיין <b>שממציאים</b>: לדפדפן עצמו אין מה לעשות איתו, אבל קוד JavaScript יכול לקרוא אותו. כך Bootstrap עובד: הקוד שלו מקשיב ללחיצות בדף, וכשלוחצים על תגית עם <code>data-bs-toggle</code> (bs = Bootstrap), הוא קורא את המאפיינים שלה ופועל לפיהם – <code>data-bs-toggle="collapse"</code> = "בלחיצה: קפלו ופתחו", ו-<code>data-bs-target</code> = "את מי".</p>
-      <p>התוצאה: אתם מפעילים JavaScript בלי לכתוב אף שורת JavaScript. אפשר לקרוא עוד ב-<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*" target="_blank" rel="noopener">MDN: data-*</a> (באנגלית).</p>
-    </details>
-    </div>
+    <!-- data-lock: the bridge explains the answer of #p46 – covered until the guess -->
+    <div class="bridge" data-lock>למה התפריט צריך את קובץ ה-JS? CSS קובע רק <b>איך דברים נראים</b>. "כשלוחצים – תפתח" זו <b>פעולה</b>, וצריך קוד שירוץ ברגע הלחיצה: קוד ה-JavaScript של Bootstrap, מהשורה <code>script</code> שבסוף ה-body (<a href="#" data-go="setup:1">אחת משלוש השורות</a>). רוצים לראות? בחרו למעלה "בלי קובץ ה-JS", עברו ל-📱 ולחצו על ☰.</div>
   </article>
 
-  <article class="spread">
+  <article class="spread act">
+    <h3>קוראים את הקוד: המעטפת, שם האתר והקישורים</h3>
+    <p>הקוד של ה-navbar נראה ארוך, אבל הוא בנוי מחמישה חלקים – ואת התגיות שלו אתם כבר מכירים: <code>nav</code>, <code>ul</code> ו-<code>li</code> משיעור 4, וגם <code>a</code>, <code>div</code>, <code>span</code> ו-<code>button</code>. מתחילים בשלושה חלקים. בחרו חלק, והשורות שלו יסומנו בקוד. ההסבר על כל חלק – ברשימה שמתחת לקוד.</p>
+    <div class="ctrls"><span class="lbl">סמנו בקוד:</span><div class="seg" id="navPart"></div></div>
+    <div class="codeblock"><pre class="cv" id="navCode"></pre></div>
+    <ul class="navparts">
+      <li><b>① המעטפת:</b> <code>nav</code> עם ה-class-ים <code>navbar</code>, <code>navbar-expand-md</code>, <code>navbar-light</code> ו-<code>bg-warning</code>, ובתוכו <code>div</code> עם <code>container</code>. זה התפריט כולו, וצבע הרקע שלו. ה-<code>nav</code> עצמו לא יושב בתוך ה-container של הדף – כך הפס הצבעוני נמתח מקצה לקצה של החלון. ה-container ש<b>בתוכו</b> מעמיד את שם האתר והקישורים בדיוק מעל התוכן של הדף. מותר יותר מ-container אחד בדף.
+        <br><code>navbar-light</code> פירושו "תפריט על רקע בהיר". בגרסאות 5.1 ו-5.2 של Bootstrap הוא זה שצובע את הקישורים ואת ☰ בכהה. בגרסה 5.3 כבר לא צריך אותו – והוא לא מזיק.</li>
+      <li><b>② שם האתר:</b> <code>a</code> עם <code>navbar-brand</code> – קישור עם שם האתר או הלוגו (brand = מותג). מוביל לדף הראשי.</li>
+      <li><b>③ הקישורים:</b> <code>ul</code> עם <code>navbar-nav</code>, כל <code>li</code> עם <code>nav-item</code>, וכל <code>a</code> עם <code>nav-link</code> – אותה רשימה של קישורים משיעור 4, עם class לרשימה, לכל פריט (item) ולכל קישור (link). <code>active</code> מדגיש קישור אחד – את זה של הדף שנמצאים בו. Bootstrap לא יודע באיזה דף אתם: כותבים אותו ביד. בתפריט שתדביקו באתר שלכם הוא לא יופיע – אותו תפריט מועתק לכל הדפים, ו"בית" היה מודגש בכולם.</li>
+    </ul>
+    <p>ולשורה האחרונה ברשימת הקישורים יש class שעוד לא פגשתם – <code>d-md-none</code>. הוא שייך למשפחה קטנה של class-ים ש<b>מסתירים</b> תגית:</p>
+    <table>
+      <tr><th>ה-class</th><th>מה הוא עושה</th></tr>
+      <tr><td><code>d-none</code></td><td>d = display. מסתיר את התגית תמיד – כמו <code>display: none</code> משיעור 3.</td></tr>
+      <tr><td><code>d-md-none</code></td><td>מסתיר רק מ-md ומעלה – כלומר רואים את התגית <b>רק במסך צר</b>, כמו טלפון. (שוב נקודת שבירה באמצע השם!)</td></tr>
+    </table>
+    <div class="what">ומה עם השורות שנשארו בלי הסבר – הכפתור ☰ והחלק שמתקפל? אותן נקרא בשלב הבא. שם נמצא כל ה"קסם" של התפריט.</div>
+  </article>
+
+  <article class="spread act">
+    <h3>הכפתור ☰ והחלק שמתקפל</h3>
+    <p>נשארו שני החלקים שעושים את העבודה בטלפון: הכפתור, והחלק שהוא פותח וסוגר. בחרו חלק, והשורות שלו יסומנו:</p>
+    <div class="ctrls"><span class="lbl">סמנו בקוד:</span><div class="seg" id="navPart2"></div></div>
+    <div class="codeblock"><pre class="cv" id="navCode2"></pre></div>
+    <ul class="navparts">
+      <li><b>④ כפתור ☰:</b> <code>button</code> עם <code>navbar-toggler</code> – הכפתור שמופיע רק כשהתפריט מקופל (toggler = מתג). ה-<code>span</code> הריק שבתוכו, עם <code>navbar-toggler-icon</code>, הוא הסמל: Bootstrap מצייר בו את שלושת הקווים. ו-<code>type="button"</code>? זוכרים משיעור 4 – כפתור "ריק", שלא עושה כלום עד שמחברים אליו קוד. כאן Bootstrap הוא שמחבר.
+        <ul>
+          <li><code>data-bs-toggle="collapse"</code> ו-<code class="brk">data-bs-target="#mainMenu"</code> – שני מאפיינים שקוד ה-JavaScript של Bootstrap קורא. האותיות bs בשם שלהם הן קיצור של Bootstrap. הראשון אומר <b>מה לעשות</b> בלחיצה: לקפל ולפתוח (collapse = להתקפל). השני אומר <b>את מי</b>: סולמית ושם, בדיוק כמו בורר id משיעור 3 – התגית שה-id שלה הוא mainMenu.</li>
+          <li>שלושת המאפיינים ששמם מתחיל ב-aria נועדו לקוראי מסך (משיעור 4). במראה הם לא משנים כלום – משאירים אותם.</li>
+        </ul></li>
+      <li><b>⑤ החלק שמתקפל:</b> <code>div</code> עם <code>collapse</code>, <code>navbar-collapse</code> ו-<code>id="mainMenu"</code> – העוטף של הקישורים. זה החלק שמוסתר במסך צר ונפתח בלחיצה. ה-id שלו הוא השם שהכפתור מחפש.</li>
+    </ul>
+    <h4>🔨 ומה אם השמות לא זהים?</h4>
+    <p>שינינו דבר אחד: ה-id של החלק שמתקפל הוא עכשיו <code>menu</code>. הכפתור נשאר כמו שהיה, וקובץ ה-JS מחובר:</p>
+    <div class="codeblock"><pre class="cv" id="navBadCode"></pre></div>
+    <div class="predict" id="pNavId"></div>
+    <div id="navBad"></div>
+    <p class="res-note" id="navBadNote"></p>
+    <div class="what">הכפתור מחפש תגית שה-id שלה הוא mainMenu – ואין כזו: ה-div נקרא עכשיו menu. Bootstrap לא מוצא את מי לפתוח, ולכן לא עושה כלום. וכמו ב-CSS – <b>אין הודעת שגיאה</b>. תפריט לא נפתח אצלכם? קודם כול בודקים שאותו שם בדיוק כתוב בשני המקומות: עם סולמית ב-<code>data-bs-target</code>, ובלי סולמית ב-<code>id</code>.</div>
+    <details class="more"><summary>🚀 להעמקה: שלושת מאפייני aria, אחד אחד</summary>
+      <p>על הכפתור ☰ אין מילים – רק סמל. מי שלא רואה את המסך צריך לשמוע מה הכפתור עושה:</p>
+      <ul>
+        <li><code>aria-label</code> – נותן לכפתור שם שקורא המסך יכול להקריא ("פתיחת התפריט").</li>
+        <li><code>aria-controls</code> – אומר על איזה חלק בדף הכפתור שולט: ה-id של החלק שמתקפל.</li>
+        <li><code>aria-expanded</code> – אומר אם החלק הזה פתוח עכשיו (true) או סגור (false). Bootstrap מעדכן אותו לבד בכל לחיצה.</li>
+      </ul>
+      <p>להרחבה: <a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA" target="_blank" rel="noopener">MDN: ARIA</a> (באנגלית).</p>
+    </details>
+    <details class="more"><summary>🚀 להעמקה: מה מיוחד במאפיינים ששמם מתחיל ב-data?</summary>
+      <p>מאפיין (attribute) שהשם שלו מתחיל במילה data ואחריה מקף הוא מאפיין <b>שממציאים</b>: לדפדפן עצמו אין מה לעשות איתו, אבל קוד JavaScript יכול לקרוא אותו. כך Bootstrap עובד: הקוד שלו מקשיב ללחיצות בדף, וכשלוחצים על תגית שיש לה <code>data-bs-toggle</code>, הוא קורא את המאפיינים שלה ופועל לפיהם.</p>
+      <p>התוצאה: אתם מפעילים JavaScript בלי לכתוב אף שורת JavaScript. אפשר לקרוא עוד ב-<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*" target="_blank" rel="noopener">MDN: data-*</a> (באנגלית).</p>
+    </details>
+  </article>
+
+  <article class="spread act">
     <h3>sticky-top: תפריט שנשאר למעלה</h3>
     <p>מוסיפים לשורה הראשונה של התפריט את ה-class <code>sticky-top</code> ("דבוק למעלה"), והתפריט נשאר בראש המסך גם כשגוללים. בחרו, ואז <b>גללו בתוך המסגרת</b>:</p>
     <div class="ctrls"><div class="seg" id="s47seg"></div></div>
@@ -480,45 +547,55 @@ td code{overflow-wrap:normal;white-space:normal}
     <div class="what">בלי <code>sticky-top</code> התפריט נגלל למעלה ונעלם עם שאר הדף. עם <code>sticky-top</code> הוא "נדבק" לראש המסך – והקישורים תמיד זמינים, גם בתחתית של תפריט ארוך.</div>
   </article>
 
-  <article class="spread">
+  <article class="spread act">
     <h3>טופס מעוצב בתוך כרטיס</h3>
-    <p>בשיעור 4 בניתם טפסים. Bootstrap מעצב אותם עם כמה class-ים. אותו טופס בדיוק, פעמיים – ההבדל היחיד הוא שורת ה-link:</p>
+    <p>בשיעור 4 בניתם טפסים. Bootstrap מעצב אותם עם כמה class-ים – לכל סוג של פקד יש class משלו. אותו טופס בדיוק, פעמיים – ההבדל היחיד הוא שורת ה-link:</p>
     <div class="ctrls"><div class="seg" id="s48seg"></div></div>
     <div id="s48"></div>
     <table>
       <tr><th>ה-class</th><th>על איזו תגית</th><th>מה הוא עושה</th></tr>
       <tr><td><code>form-label</code></td><td><code>label</code></td><td>תווית מסודרת מעל השדה</td></tr>
-      <tr><td><code>form-control</code></td><td><code>input</code>, <code>textarea</code></td><td>שדה ברוחב מלא, עם פינות מעוגלות ומסגרת כחולה כשלוחצים עליו</td></tr>
+      <tr><td><code>form-control</code></td><td><code>input</code> שמקלידים בו – כמו <code>text</code> ו-<code>password</code> – וגם <code>textarea</code></td><td>שדה ברוחב מלא, עם פינות מעוגלות ומסגרת כחולה כשלוחצים עליו</td></tr>
       <tr><td><code>form-select</code></td><td><code>select</code></td><td>רשימה נפתחת מעוצבת</td></tr>
-      <tr><td><code>mb-3</code></td><td>ה-div שעוטף כל שדה</td><td>רווח מתחת לכל שדה</td></tr>
+      <tr><td><code>form-check</code></td><td>ה-<code>div</code> שעוטף תיבת סימון או כפתור radio יחד עם התווית שלו</td><td>מעמיד את התיבה ואת המילים שלה זו ליד זו</td></tr>
+      <tr><td><code>form-check-input</code><br><code>form-check-label</code></td><td><code>input</code> מסוג checkbox או radio, וה-<code>label</code> שלו</td><td>תיבת סימון או כפתור בחירה בעיצוב של Bootstrap, והתווית שלידו</td></tr>
+      <tr><td><code>btn btn-success</code></td><td><code>input</code> מסוג submit או reset</td><td>מראה של כפתור Bootstrap – <code>btn</code> עובד גם על input</td></tr>
+      <tr><td><code>mb-3</code></td><td>ה-<code>div</code> שעוטף כל שדה</td><td>רווח מתחת לכל שדה</td></tr>
     </table>
+    <div class="trap"><code>form-control</code> על תיבת סימון או על כפתור radio. הוא נועד לשדות שמקלידים בהם, ולכן הוא מותח את התיבה הקטנה לפס רחב ומוזר. לפקדי סימון: <code>form-check-input</code>, בתוך div עם <code>form-check</code>.</div>
     <p class="rulecap">גם כאן – בלי style בתוך התגית: הרוחב בא מהעמודה. הכרטיס של הטופס יושב ב-<code>col-md-6</code>: חצי שורה מ-md ומעלה, ושורה שלמה בטלפון.</p>
-    <div class="what">ה-HTML לא השתנה באף אות – רק חיבור הקובץ. בלי Bootstrap ה-class-ים הם סתם שמות שאף כלל לא משתמש בהם (כמו class בלי CSS, בשיעור 3). עם Bootstrap – יש להם כללים, והטופס נראה מקצועי. ובמצגת: "טופס פשוט המעוצב בתוך כרטיס" – בדיוק זה.</div>
+    <div class="what">ה-HTML לא השתנה באף אות – רק חיבור הקובץ. בלי Bootstrap ה-class-ים הם סתם שמות שאף כלל לא משתמש בהם (כמו class בלי CSS, בשיעור 3). עם Bootstrap – יש להם כללים, והטופס נראה מקצועי. ושימו לב: ה-<code>id</code>, ה-<code>name</code> וה-<code>for</code> משיעור 4 נשארו בדיוק כמו שהיו – Bootstrap רק מוסיף class.</div>
   </article>
   <article class="spread vsstep">
     <h3>💻 עכשיו אצלכם ב-Visual Studio</h3>
-    <p>מוסיפים לאתר שלכם <b>תפריט ניווט משותף</b>, ולדף התוכן – <b>כרטיסים בגריד</b>. בהגשה 1 צריך תפריט אחד שמופיע בכל הדפים. בשיעור 6 תלמדו לכתוב אותו <b>פעם אחת</b> לכל האתר – לכן כבר עכשיו הוא זהה בדיוק בכל דף.</p>
+    <p>מחליפים את כותרת האתר משיעור 4 ב<b>תפריט ניווט של Bootstrap</b> – הלוגו ושם האתר עוברים לתוכו – ומוסיפים לדף התוכן <b>כרטיסים בגריד</b>. בהגשה 1 צריך תפריט אחד שמופיע בכל הדפים. בשיעור 6 תלמדו לכתוב אותו <b>פעם אחת</b> לכל האתר – לכן כבר עכשיו הוא זהה בדיוק בכל דף.</p>
     <ol class="vsdo">
-      <li>ב-page1.html, מיד אחרי <code>&lt;body&gt;</code> (לפני ה-container), הדביקו את התפריט. במקום "שם האתר" כתבו את שם האתר שלכם, ובקישורים – את השמות של הדפים שלכם:
+      <li>(מטלה 4 כבר הוגשה? רק אז מוחקים.) ב-page1.html <b>מחקו את כותרת האתר הישנה</b>: את כל ה-div, מהשורה <code>&lt;div class="site-header"&gt;</code> ועד ה-<code>&lt;/div&gt;</code> שסוגר אותו (כולל הלוגו וה-nav שבתוכו). אחר כך, מיד אחרי <code>&lt;body&gt;</code> – <b>לפני</b> ה-div של ה-container – הדביקו את התפריט החדש:
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
-&lt;nav class="navbar navbar-expand-md bg-warning sticky-top"&gt;
+&lt;nav class="navbar navbar-expand-md navbar-light bg-warning sticky-top"&gt;
     &lt;div class="container"&gt;
-        &lt;a class="navbar-brand" href="index.html"&gt;שם האתר&lt;/a&gt;
+        &lt;a class="navbar-brand" href="index.html"&gt;
+            &lt;img src="../Img/logo.png" alt="לוגו האתר" width="40" /&gt;
+            שם האתר
+        &lt;/a&gt;
         &lt;button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenu" aria-controls="mainMenu" aria-expanded="false" aria-label="פתיחת התפריט"&gt;
             &lt;span class="navbar-toggler-icon"&gt;&lt;/span&gt;
         &lt;/button&gt;
         &lt;div class="collapse navbar-collapse" id="mainMenu"&gt;
             &lt;ul class="navbar-nav"&gt;
                 &lt;li class="nav-item"&gt;&lt;a class="nav-link" href="index.html"&gt;דף הבית&lt;/a&gt;&lt;/li&gt;
-                &lt;li class="nav-item"&gt;&lt;a class="nav-link" href="page1.html"&gt;דף תוכן&lt;/a&gt;&lt;/li&gt;
+                &lt;li class="nav-item"&gt;&lt;a class="nav-link" href="page1.html"&gt;שם הדף&lt;/a&gt;&lt;/li&gt;
                 &lt;li class="nav-item"&gt;&lt;a class="nav-link" href="login.html"&gt;כניסה&lt;/a&gt;&lt;/li&gt;
             &lt;/ul&gt;
         &lt;/div&gt;
     &lt;/div&gt;
 &lt;/nav&gt;
 </pre></div>
-        רוצים צבע אחר? החליפו את <code>bg-warning</code> בצבע בהיר אחר, למשל <code>bg-info</code> או <code>bg-light</code> (<a href="#" data-go="comps:2">שמות הצבעים</a>).</li>
-      <li>הדביקו את <b>אותו תפריט בדיוק</b> גם ב-index.html, מיד אחרי <code>&lt;body&gt;</code>. (את שלוש השורות של Bootstrap כבר הוספתם שם בנושא "מחברים את Bootstrap".)</li>
+        עכשיו התאימו אותו לאתר שלכם: שם קובץ הלוגו (מהתיקייה Img), שם האתר, ושורת <code>li</code> לכל דף תוכן שיש לכם – כמו בתפריט הישן. רוצים צבע אחר? החליפו את <code>bg-warning</code>, למשל ב-<code>bg-info</code> או ב-<code>bg-light</code> (<a href="#" data-go="comps:2">שמות הצבעים</a>). עם <code>navbar-light</code> בחרו צבע <b>בהיר</b> – הקישורים כהים. רוצים תפריט כהה? החליפו שני class-ים: את <code>navbar-light</code> ב-<code>navbar-dark</code> (קישורים בהירים), ואת <code>bg-warning</code> ב-<code>bg-dark</code> או ב-<code>bg-primary</code>.</li>
+      <li>אותו דבר ב-index.html: מחקו את ה-div של <code>site-header</code>, והדביקו מיד אחרי <code>&lt;body&gt;</code> את <b>אותו תפריט בדיוק</b> – העתיקו אותו מ-page1.html, אחרי שהתאמתם אותו. (את שלוש השורות של Bootstrap כבר הוספתם שם בנושא "מחברים את Bootstrap".)</li>
+      <li>ב-<span class="nw">site-style.css</span> <b>מחקו את ארבעת הכללים של התפריט הישן</b> – אלה שהבוררים שלהם הם <code>nav ul</code>, <code>nav li</code>, <code>nav a</code> ו-<code>nav a:hover</code>. כל כלל נמחק כולו: מהבורר ועד הסוגר המסולסל שסוגר אותו. שמרו (Ctrl+S).
+        <div class="trap">הכללים הישנים נשארים בקובץ. הבורר <code>nav a</code> אומר "כל קישור שנמצא בתוך תגית nav" – וגם ה-navbar של Bootstrap הוא תגית <code>nav</code>. לכן הכללים הישנים חלים גם על התפריט החדש, ומתערבבים בעיצוב שלו. למשל: כל קישור בתפריט, וגם שם האתר, מקבל את צבע הרקע שכתבתם ב-<code>nav a:hover</code> כשהעכבר עליו.</div>
+        בשאר הדפים עדיין יש כותרת ישנה, והתפריט שבה ייראה בינתיים כמו רשימה רגילה עם תבליטים. זה בסדר: <a href="#" data-go="practice:2">בצעד הפרויקט</a> שבסוף השיעור תחליפו אותה גם שם.</li>
       <li>ב-page1.html, מתחת לשורה של הטקסט והתמונה (אחרי ה-<code>&lt;/div&gt;</code> שסוגר את ה-row), הוסיפו שורה של שלושה כרטיסים:
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
 &lt;div class="row row-cols-1 row-cols-md-3 g-4 mt-3"&gt;
@@ -526,7 +603,7 @@ td code{overflow-wrap:normal;white-space:normal}
         &lt;div class="card h-100"&gt;
             &lt;img src="../Img/my-image1.jpg" class="card-img-top" alt="תיאור התמונה" /&gt;
             &lt;div class="card-body"&gt;
-                &lt;h5 class="card-title"&gt;כותרת 1&lt;/h5&gt;
+                &lt;h2 class="card-title h5"&gt;כותרת 1&lt;/h2&gt;
                 &lt;p class="card-text"&gt;טקסט קצר.&lt;/p&gt;
             &lt;/div&gt;
         &lt;/div&gt;
@@ -535,7 +612,7 @@ td code{overflow-wrap:normal;white-space:normal}
         &lt;div class="card h-100"&gt;
             &lt;img src="../Img/my-image2.jpg" class="card-img-top" alt="תיאור התמונה" /&gt;
             &lt;div class="card-body"&gt;
-                &lt;h5 class="card-title"&gt;כותרת 2&lt;/h5&gt;
+                &lt;h2 class="card-title h5"&gt;כותרת 2&lt;/h2&gt;
                 &lt;p class="card-text"&gt;טקסט קצר.&lt;/p&gt;
             &lt;/div&gt;
         &lt;/div&gt;
@@ -544,7 +621,7 @@ td code{overflow-wrap:normal;white-space:normal}
         &lt;div class="card h-100"&gt;
             &lt;img src="../Img/my-image3.jpg" class="card-img-top" alt="תיאור התמונה" /&gt;
             &lt;div class="card-body"&gt;
-                &lt;h5 class="card-title"&gt;כותרת 3&lt;/h5&gt;
+                &lt;h2 class="card-title h5"&gt;כותרת 3&lt;/h2&gt;
                 &lt;p class="card-text"&gt;טקסט קצר.&lt;/p&gt;
             &lt;/div&gt;
         &lt;/div&gt;
@@ -552,10 +629,10 @@ td code{overflow-wrap:normal;white-space:normal}
 &lt;/div&gt;
 </pre></div>
         בכל כרטיס החליפו את שם התמונה (מהתיקייה Img), את הכותרת ואת הטקסט.</li>
-      <li>שמרו את שני הדפים, והציגו את page1.html בדפדפן (View in Browser). לחצו בתפריט על "דף הבית" – ומשם חזרה לדף התוכן.</li>
+      <li>שמרו את שני הדפים, והציגו את page1.html בדפדפן (View in Browser). אם הוא כבר פתוח – רעננו בדפדפן (Ctrl+F5). לחצו בתפריט על "דף הבית" – ומשם חזרה לדף התוכן.</li>
       <li>בדיקה בגודל טלפון: F12, ואז Ctrl+Shift+M. בתפריט <b>Dimensions</b> בחרו <b>Responsive</b>, ובשדה הרוחב כתבו <b>360</b>. לחצו על ☰.</li>
     </ol>
-    <div class="expect">בכתובת שמסתיימת ב-<code>/HTML/page1.html</code> רואים: בראש הדף פס תפריט צבעוני עם שם האתר ושלושה קישורים. מתחת – הטקסט והתמונה, ומתחתם שלושה כרטיסים באותו גובה, זה ליד זה. לחיצה על "דף הבית" פותחת את index.html – עם אותו תפריט בדיוק. ברוחב 360: במקום הקישורים יש כפתור ☰ שפותח וסוגר אותם, והכרטיסים אחד מתחת לשני. וכשגוללים בדף ארוך – התפריט נשאר למעלה.</div>
+    <div class="expect">בכתובת שמסתיימת ב-<code>/HTML/page1.html</code> רואים, בחלון רחב: בראש הדף פס תפריט צבעוני עם הלוגו, שם האתר והקישורים – והכותרת הישנה נעלמה. מתחת – הטקסט והתמונה, ומתחתם שלושה כרטיסים באותו גובה, זה ליד זה. לחיצה על "דף הבית" פותחת את index.html – עם אותו תפריט בדיוק. ברוחב 360: במקום הקישורים יש כפתור ☰ שפותח וסוגר אותם, והכרטיסים אחד מתחת לשני. וכשגוללים בדף ארוך – התפריט נשאר למעלה. ב-index.html התוכן עדיין צמוד לקצה החלון – את ה-container שלו תוסיפו בצעד הפרויקט.</div>
     <div class="trouble" id="trComps"></div>
   </article>
   <article class="spread cpstep">
@@ -566,15 +643,20 @@ td code{overflow-wrap:normal;white-space:normal}
 
 <!-- ====================================================== 5. your own -->
 <section class="topic" data-id="mine" data-icon="🎨" data-title="משלכם + התיעוד">
-  <article class="spread">
+  <article class="spread act">
     <h3>CSS משלכם מעל Bootstrap</h3>
     <p>Bootstrap לא מחליף את קובץ ה-CSS שלכם – הוא <b>מתחתיו</b>. מקשרים את שניהם, ו<b>הסדר חשוב</b>: קודם Bootstrap, ואחריו <span class="nw">site-style.css</span> שלכם. בדקו מה קורה כשהסדר הפוך:</p>
     <div class="ctrls"><div class="seg" id="s51seg"></div></div>
     <div id="s51"></div>
     <div class="what" id="s51what"></div>
-    <div class="bridge">זה הכלל משיעור 3: כששני כללים <b>שווים בכוח</b> (כאן – שניהם בורר של שם תגית, <code>h1</code>), מנצח <b>זה שנכתב אחרון</b>. הקובץ שמקושר אחרון – הכללים שלו "נכתבו אחרונים".</div>
-    <div class="tip">💡 הדרך הכי בטוחה לעיצוב ייחודי: להמציא class משלכם (כמו <code>price</code>) ולשים אותו ליד ה-class-ים של Bootstrap: <code>class="card-text price"</code>. לתגית מותר לקבל כמה class-ים, מופרדים ברווח.</div>
-    <div class="trap">כותבים כללים בקובץ הלא נכון. בתיקייה css יש גם <b>site.css</b> – קובץ של התבנית של Visual Studio, שלא מחובר לדפי ה-HTML שלכם (כמו בצעד הפרויקט של שיעור 3). ובקובץ של Bootstrap לא נוגעים בכלל. העיצוב שלכם – רק ב-<span class="nw">site-style.css</span>.</div>
+    <div class="bridge">זה הכלל משיעור 3: כששני כללים <b>שווים בכוח</b> (כאן – שניהם בורר של שם תגית, <code>h1</code>), מנצח <b>זה שנכתב אחרון</b>. הדפדפן קורא את הקבצים לפי סדר שורות ה-link – לכן הכללים של הקובץ שמקושר אחרון הם אלה ש"נכתבו אחרונים".</div>
+    <div class="trap">חושבים ש"האחרון מנצח" תמיד. הוא מנצח רק כששני הכללים <b>שווים בכוח</b>. קודם בודקים מי מדויק יותר, כמו בשיעור 3: class חזק משם תגית – וכמעט כל הכללים של Bootstrap הם כללי class. הביטו בשני הקישורים בדוגמה: <code>a { color: darkred; }</code> צבע את הקישור הרגיל, אבל לא את הכפתור – גם כשהקובץ שלכם אחרון.</div>
+    <div class="tip">💡 אז איך משנים משהו של Bootstrap? כותבים כלל עם <b>class</b>: class משלכם (כמו <code>price</code>) ליד ה-class-ים של Bootstrap – <code>class="card-text price"</code>, כמה שמות מופרדים ברווח – או כלל לאותו class ש-Bootstrap משתמש בו, כמו <code>.card-title</code>. לא עזר? בדפדפן F12, סמל החץ, ולחיצה על התגית: ב-Styles ההוראה שלכם מחוקה בקו, ומעליה הכלל שניצח אותה (כמו בשיעור 3). הבורר שלו מראה כמה כוח צריך.</div>
+    <details class="more"><summary>🚀 להעמקה: הכלל שלי אחרון – ובכל זאת הוא מפסיד?</summary>
+      <p>זה קורה עם ה-class-ים הקטנים של Bootstrap (כמו <code>bg-warning</code>, <code>mt-3</code> או <code>text-center</code>). בקובץ של Bootstrap, להוראות שלהם מצורפת המילה <code>!important</code> ("חשוב"). הוראה כזו גוברת על כל הוראה רגילה – גם על כלל שנכתב אחריה, וגם על בורר מדויק יותר.</p>
+      <p>ההיגיון: מי שכתב על תגית <code>bg-warning</code> ביקש במפורש רקע צהוב – אז זה מה שהוא מקבל. לכן לא "נלחמים" ב-class קטן מתוך <span class="nw">site-style.css</span>: פשוט מוחקים אותו מהתגית, ונותנים לה class משלכם. להרחבה: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/important" target="_blank" rel="noopener">MDN: !important</a> (באנגלית).</p>
+    </details>
+    <div class="trap">כותבים כללים בקובץ הלא נכון. בתיקייה css יש גם <b>site.css</b> – קובץ מהפרויקט ההתחלתי ש-Visual Studio יצר, שלא מחובר לדפי ה-HTML שלכם (כמו בצעד הפרויקט של שיעור 3). ובקובץ של Bootstrap לא נוגעים בכלל. העיצוב שלכם – רק ב-<span class="nw">site-style.css</span>.</div>
   </article>
 
   <article class="spread">
@@ -591,12 +673,15 @@ td code{overflow-wrap:normal;white-space:normal}
       <tr><th>בדוגמה באתר</th><th>אצל פיצה דני</th><th>למה</th></tr>
       <tr><td>Navbar, Home, Link</td><td>🍕 פיצה דני, בית, תפריט, הזמנה</td><td>הטקסטים שלנו</td></tr>
       <tr><td><code>navbar-expand-lg</code></td><td><code>navbar-expand-md</code></td><td>שיתקפל רק בטלפון</td></tr>
-      <tr><td><code>bg-body-tertiary</code> (אפור בהיר)</td><td><code>bg-warning</code></td><td>הצבע של פיצה דני</td></tr>
+      <tr><td>רקע אפור בהיר</td><td><code>bg-warning</code></td><td>הצבע של פיצה דני</td></tr>
       <tr><td>רשימה נפתחת ותיבת חיפוש</td><td>נמחקו</td><td>לא צריך אותן</td></tr>
     </table>
-    <p>ועוד רכיבים שמחכים לכם באתר: <b>Accordion</b> (קטעים נפתחים), <b>Carousel</b> (תמונות מתחלפות), <b>Tabs</b> (לשוניות), <b>Alerts</b> (הודעות), <b>List group</b> (רשימות מעוצבות) ועוד הרבה.</p>
-    <div class="tip">💡 בדוגמאות באתר יש מאפיינים כמו <code>aria-label</code> ו-<code>aria-expanded</code>. הם עוזרים לקוראי מסך של אנשים עיוורים – השאירו אותם. ובדקו שאתם קוראים את התיעוד של <b>אותה גרסה</b> שיש בפרויקט שלכם (בחירת הגרסה – בראש האתר).</div>
-    <div class="what">ובמילים של סיכום המצגת: הצגנו רק את קצה הקרחון. הדרך הטובה ביותר היא לחפש באתר של Bootstrap דוגמה, להתאים אותה לאתר שלכם – ולהוסיף מעליה CSS משלכם בשביל המראה הייחודי.</div>
+    <p>ועוד רכיבים שמחכים לכם באתר: <b>Accordion</b> (קטעים נפתחים), <b>Carousel</b> (תמונות מתחלפות), <b>Alerts</b> (הודעות), <b>List group</b> (רשימות מעוצבות) ועוד הרבה. וגם לטבלה משיעור 4 יש עיצוב מוכן: <b>Tables</b> – בתפריט הצד, תחת Content.</p>
+    <div class="tip">💡 שלושה דברים שכדאי לדעת כשמעתיקים מהתיעוד:
+      <br>• בדוגמאות יש מאפיינים כמו <code>aria-label</code> ו-<code>role</code>. הם עוזרים לקוראי מסך (<a href="#" data-go="comps:8">כמו בכפתור של התפריט</a>) – השאירו אותם.
+      <br>• רכיב שנפתח או זז בלחיצה (כמו Accordion ו-Carousel) צריך את שורת ה-script של Bootstrap בסוף ה-body – בדיוק כמו התפריט.
+      <br>• קראו את התיעוד של <b>אותה גרסה</b> שיש בפרויקט שלכם (בחירת הגרסה – בראש האתר). דוגמה: בתיעוד של גרסה 5.3, הרקע האפור של התפריט נכתב עם ה-class <code>bg-body-tertiary</code> – והוא קיים רק מגרסה 5.3. בפרויקט עם גרסה 5.1 הוא פשוט לא יעשה כלום.</div>
+    <div class="trap">מעתיקים מהתיעוד גם <code>style</code>. בדוגמאות של כרטיסים בתיעוד כתוב בתוך התגית <code>style="width: 18rem;"</code> – רוחב קבוע (rem היא יחידת מידה, כמו px). לא מעתיקים אותו: באתר שלכם אין style בתוך התגיות, ואת הרוחב של כרטיס קובעת העמודה שהוא יושב בה (<a href="#" data-go="comps:3">בונים כרטיס</a>).</div>
   </article>
   <article class="spread vsstep">
     <h3>💻 עכשיו אצלכם ב-Visual Studio</h3>
@@ -604,17 +689,17 @@ td code{overflow-wrap:normal;white-space:normal}
     <ol class="vsdo">
       <li>🔨 <b>שברו בכוונה:</b> ב-head של page1.html החליפו את הסדר של שתי שורות ה-<code>link</code>: <span class="nw">site-style.css</span> למעלה, Bootstrap מתחתיה. שמרו ורעננו <b>בדפדפן</b> (Ctrl+F5). צבע הרקע או הגופן שכתבתם ל-body <span class="nw">ב-site-style.css</span> (בשיעור 3) נעלמו? זה Bootstrap שניצח: גם לו יש כלל ל-body, ועכשיו הוא נכתב אחרון – בדיוק כמו <a href="#" data-go="mine:1">בשלב 1</a>.</li>
       <li>החזירו את הסדר הנכון – קודם Bootstrap, ואחריו <span class="nw">site-style.css</span> – שמרו ורעננו. העיצוב שלכם חזר.</li>
-      <li>class משלכם ליד class של Bootstrap: בסוף <span class="nw">site-style.css</span> הוסיפו את הכלל הזה. ואז, בתפריט של page1.html, הוסיפו אותו לשם האתר: <code>class="navbar-brand site-title"</code>.
+      <li>class משלכם ליד class של Bootstrap: בסוף <span class="nw">site-style.css</span> הוסיפו את הכלל הזה (ושנו את הצבע לצבע שמתאים לאתר שלכם). ואז, ב-page1.html, הוסיפו את השם לכותרת של הכרטיס הראשון: <code>class="card-title h5 site-title"</code>.
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="css">
 .site-title {
     color: darkred;
-    font-weight: bold;
+    font-size: 26px;
 }
 </pre></div></li>
-      <li>רכיב מהתיעוד: פתחו את הדף <a href="https://getbootstrap.com/docs/5.3/components/alerts/" target="_blank" rel="noopener"><span class="crumb">getbootstrap.com → Docs → Components → Alerts</span></a> והעתיקו את <b>שלוש השורות</b> של ההודעה הראשונה בדוגמה – תגית <code>&lt;div&gt;</code> עם ה-class &rlm;alert alert-primary&rlm;, הטקסט, ו-<code>&lt;/div&gt;</code> שסוגרת אותה. הדביקו אותן ב-page1.html מתחת ל-h1, החליפו את הטקסט האנגלי במשפט על האתר שלכם, ונסו צבע אחר: במקום <code>alert-primary</code> כתבו <code>alert-warning</code>.</li>
-      <li>שמרו את שני הקבצים (בדקו שאין כוכבית ליד השמות בלשוניות) ורעננו בדפדפן.</li>
+      <li>רכיב מהתיעוד: פתחו את הדף <a href="https://getbootstrap.com/docs/5.3/components/alerts/" target="_blank" rel="noopener"><span class="crumb">getbootstrap.com → Docs → Components → Alerts</span></a> והעתיקו את <b>שלוש השורות</b> של ההודעה הראשונה בדוגמה – תגית <code>&lt;div&gt;</code> עם ה-class-ים <span class="cls">alert alert-primary</span>, הטקסט, ו-<code>&lt;/div&gt;</code> שסוגרת אותה. (יש בה גם המאפיין <code>role="alert"</code> – עוד מאפיין לקוראי מסך. משאירים.) הדביקו אותן ב-page1.html מתחת ל-h1, החליפו את הטקסט האנגלי במשפט על האתר שלכם, ונסו צבע אחר: במקום <code>alert-primary</code> כתבו <code>alert-warning</code> – אותם שמות צבעים כמו בכפתורים.</li>
+      <li>שמרו את שני הקבצים (Ctrl+S בכל אחד) ורעננו בדפדפן.</li>
     </ol>
-    <div class="expect">בכתובת שמסתיימת ב-<code>/HTML/page1.html</code> רואים: הרקע והגופן שלכם במקום (אחרי שהחזרתם את הסדר). שם האתר בתפריט באדום כהה ומודגש. ומתחת לכותרת – קופסת הודעה צבעונית עם פינות מעוגלות, ובתוכה המשפט שלכם.</div>
+    <div class="expect">בכתובת שמסתיימת ב-<code>/HTML/page1.html</code> רואים: הרקע והגופן שלכם במקום (אחרי שהחזרתם את הסדר). הכותרת של הכרטיס הראשון באדום כהה ובאותיות גדולות יותר – ושתי האחרות נשארו כמו שהיו. ומתחת לכותרת הדף – קופסת הודעה צבעונית עם פינות מעוגלות, ובתוכה המשפט שלכם.</div>
     <div class="trouble" id="trMine"></div>
   </article>
   <article class="spread cpstep">
@@ -635,28 +720,92 @@ td code{overflow-wrap:normal;white-space:normal}
   <article class="spread">
     <h3>🧩 צעד בפרויקט – לקראת הגשה 1</h3>
     <div class="stepbox">
-      <b>מלבישים את כל האתר שלכם ב-Bootstrap.</b> בשלבי "עכשיו אצלכם" כבר בניתם את page1.html כתבנית (גריד, תפריט, כרטיסים) וחיברתם את index.html. עכשיו מעבירים את זה לכל השאר:
+      <p style="margin-top:0">⏱ זה הצעד הארוך של השיעור – שעה עד שעתיים. לא חייבים בישיבה אחת.</p>
+      <b>מלבישים את כל האתר שלכם ב-Bootstrap.</b> בשלבי "💻 עכשיו אצלכם" כבר בניתם את page1.html כדף הבסיס של דפי התוכן (גריד, תפריט, כרטיסים), וחיברתם את index.html. עכשיו מעבירים את זה לכל שאר הדפים – דפי התוכן, וגם שלושת דפי הטפסים משיעור 4 (כניסה, הרשמה ושחזור סיסמה):
       <ol>
-        <li>בכל דף באתר – גם בדפי הטפסים משיעור 4 (login, register, recover): בתגית html – <code>lang="he" dir="rtl"</code>. ב-head – שורת viewport, link ל-<code>../lib/bootstrap/dist/css/bootstrap.rtl.min.css</code>, ו<b>אחריו</b> ה-link ל-<code>../css/site-style.css</code>. לפני <code>&lt;/body&gt;</code> – ה-script של <code>bootstrap.bundle.min.js</code>. (העתיקו מ<a href="#" data-go="practice:4">דף הסיכום</a>.)</li>
-        <li>בכל הדפים – <b>אותו navbar בדיוק</b>, עם קישורים לדף הנחיתה, לדפי התוכן ולדף הכניסה. הוספתם דף? הוסיפו קישור אליו בתפריט של <b>כל</b> הדפים. (בשיעור 6 התפריט יעבור למקום אחד – Layout – ואז תתקנו אותו רק פעם אחת.)</li>
-        <li>דפי תוכן חדשים: צרו אותם <b>מהתבנית</b> – העתיקו את כל התוכן של page1.html לדף החדש, והחליפו רק את הכותרת, הטקסט והתמונות. כך כל דפי התוכן באותו סגנון בדיוק.</li>
-        <li>בטפסים: הוסיפו <code>form-label</code>, <code>form-control</code> ו-<code>form-select</code> (<a href="#" data-go="comps:8">השלב על טופס בכרטיס</a>). ה-name, ה-id וה-for נשארים בדיוק כמו שהם.</li>
-        <li>בדקו כל דף בגודל טלפון: F12, ואז Ctrl+Shift+M. התפריט מתקפל ונפתח ב-☰? הגריד יורד לשורות? אין גלילה הצידה?</li>
-        <li>העיצוב הייחודי של האתר – רק <span class="nw">ב-site-style.css</span>, עם class-ים משלכם. בלי style בתוך התגיות.</li>
+        <li><b>שלוש השורות, בכל דף:</b> בתגית html – <code>lang="he" dir="rtl"</code>. ב-head – שורת ה-viewport, אחריה שורת link ל-<code class="brk">../lib/bootstrap/dist/css/bootstrap.rtl.min.css</code>, ו<b>אחריה</b> שורת ה-link ל-<code>../css/site-style.css</code>. לפני <code>&lt;/body&gt;</code> – ה-script של <code>bootstrap.bundle.min.js</code>. העתיקו את השורות מ-page1.html שלכם – שם הן כבר כתובות נכון.</li>
+        <li><b>התפריט, בכל דף:</b> מחקו את ה-div הישן של <code>site-header</code>, ומיד אחרי <code>&lt;body&gt;</code> הדביקו את <b>אותו navbar בדיוק</b> מ-page1.html (<a href="#" data-go="comps:11">כמו שעשיתם שם</a>). הוספתם דף? הוסיפו קישור אליו בתפריט של <b>כל</b> הדפים. אחרי שהכותרת הישנה נמחקה מכל הדפים – מחקו <span class="nw">מ-site-style.css</span> גם את הכללים <code>.site-header</code> ו-<code>.site-name</code>: אף תגית כבר לא משתמשת בהם.</li>
+        <li><b>container, בכל דף:</b> עטפו את כל התוכן שמתחת לתפריט ב-<code>&lt;div class="container"&gt;</code> … <code>&lt;/div&gt;</code> – גם ב-index.html ובדפי הטפסים. הסדר ב-body: קודם ה-nav, אחריו ה-container עם התוכן, ובסוף שורת ה-script (<a href="#" data-go="grid:7">כמו ב-page1.html</a>).</li>
+        <li><b>דף הנחיתה (index.html) – מעוצב:</b> זה הדף הראשון שרואים, ובמחוון של הגשה 1 יש לו שורה משלו. בתוך ה-container שלו בנו פתיחה גדולה וכרטיס לכל דף תוכן. הדביקו, ואז החליפו טקסטים, תמונות וקישורים – ושכפלו את ה-<code>col</code> פעם אחת לכל דף תוכן (בלי row חדש – הכרטיס הרביעי יורד לבד לשורה הבאה):
+          <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
+&lt;div class="p-5 mb-4 bg-light text-center"&gt;
+    &lt;h1&gt;שם האתר שלכם&lt;/h1&gt;
+    &lt;p&gt;משפט פתיחה: על מה האתר?&lt;/p&gt;
+    &lt;a href="page1.html" class="btn btn-primary btn-lg"&gt;לדף הראשון&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class="row row-cols-1 row-cols-md-3 g-4"&gt;
+    &lt;div class="col"&gt;
+        &lt;div class="card h-100"&gt;
+            &lt;img src="../Img/my-image1.jpg" class="card-img-top" alt="תיאור התמונה" /&gt;
+            &lt;div class="card-body"&gt;
+                &lt;h2 class="card-title h5"&gt;שם הדף&lt;/h2&gt;
+                &lt;p class="card-text"&gt;משפט אחד על הדף.&lt;/p&gt;
+                &lt;a href="page1.html" class="btn btn-outline-primary"&gt;לדף&lt;/a&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;!-- one more "col" like this for every content page --&gt;
+&lt;/div&gt;
+</pre></div>
+          הכול class-ים שכבר הכרתם: <code>p-5</code> ו-<code>mb-4</code> (<a href="#" data-go="comps:1">רווחים</a>), <code>bg-light</code> ו-<code>btn-lg</code> (<a href="#" data-go="comps:2">צבעים וכפתורים</a>), וכרטיסים בגריד (<a href="#" data-go="comps:5">כאן</a>). את מה שכבר היה בדף – טקסט, תמונה – שלבו בפנים או השאירו מתחת. רוצים צבעים משלכם? class משלכם <span class="nw">ב-site-style.css</span>.</li>
+        <li><b>דפי התוכן:</b> בכל דף תוכן שכבר יש לכם – אותו מבנה כמו בדף הבסיס page1.html: שורה עם שתי עמודות, טקסט ותמונה. דף חדש? יוצרים דף HTML, מעתיקים אליו את כל התוכן של page1.html, ומחליפים רק את הכותרת, הטקסט והתמונות – כך כל דפי התוכן באותו סגנון בדיוק. בהגשה 1 צריך לפחות 10 דפי תוכן, אבל עכשיו מספיקים 2 דפים נוספים. את השאר נוח יותר ליצור אחרי שיעור 6, ישר כדפי Razor.</li>
+        <li><b>הטפסים:</b> מוסיפים רק class-ים (<a href="#" data-go="comps:10">השלב על טופס מעוצב</a>). ה-name, ה-id וה-for נשארים בדיוק כמו שהם. כל תווית ושדה נכנסים ל-div משלהם, ואת ה-<code>&lt;br /&gt;</code> שביניהם מוחקים – <code>form-control</code> כבר תופס שורה שלמה. שלוש דוגמאות מדף ההרשמה – שדה טקסט, כפתור radio וכפתור שליחה:
+          <div class="codeblock"><pre data-code="html">
+&lt;div class="mb-3"&gt;
+    &lt;label for="userName" class="form-label"&gt;שם משתמש&lt;/label&gt;
+    &lt;input type="text" id="userName" name="userName" class="form-control" /&gt;
+&lt;/div&gt;
+
+&lt;div class="form-check"&gt;
+    &lt;input type="radio" id="male" name="gender" value="male" class="form-check-input" /&gt;
+    &lt;label for="male" class="form-check-label"&gt;זכר&lt;/label&gt;
+&lt;/div&gt;
+
+&lt;input type="submit" value="הרשמה" class="btn btn-primary" /&gt;
+</pre></div>
+          לכל <code>select</code> – <code>form-select</code>, ולתווית שלו <code>form-label</code>. לכפתור הניקוי (reset) – למשל <code>btn btn-secondary</code>. ה-<code>datalist</code> של העיר נשאר מיד אחרי ה-input שלו, באותו div. ובסוף, בכל אחד משלושת הדפים, עטפו את הטופס כולו – מ-<code>&lt;form</code> ועד <code>&lt;/form&gt;</code> – בשורה ועמודה: <code>&lt;div class="row"&gt;</code>, ובתוכו <code>&lt;div class="col-md-6"&gt;</code>. כך הטופס תופס חצי רוחב במחשב ורוחב מלא בטלפון, כמו בשלב על טופס מעוצב.</li>
+        <li><b>בדיקה בגודל טלפון, דף אחרי דף:</b> F12, ואז Ctrl+Shift+M, רוחב 360. התפריט מתקפל ונפתח ב-☰? העמודות יורדות אחת מתחת לשנייה? אין גלילה הצידה? יש? חפשו מה רחב מהמסך: <code>row</code> שלא בתוך container, תמונה בלי <code>img-fluid</code>, <code>width</code> קבוע בפיקסלים <span class="nw">ב-site-style.css</span>, או טבלה רחבה – אותה עוטפים ב-div עם <code>class="table-responsive"</code>, ואז רק היא נגללת.</li>
+        <li><b>העיצוב הייחודי של האתר</b> – רק <span class="nw">ב-site-style.css</span>, עם class-ים משלכם. בלי style בתוך התגיות.</li>
       </ol>
+      <div class="expect">בכל דף של האתר: אותו פס תפריט בראש, עם הלוגו ושם האתר; התוכן לא נדבק לקצוות החלון. בדף הנחיתה: פתיחה גדולה עם כפתור, ומתחתיה כרטיס לכל דף תוכן – שלושה בשורה במחשב, אחד מתחת לשני בטלפון. הטפסים נראים כמו בשלב על טופס מעוצב – תוויות מעל שדות רחבים, וכפתורי ה-radio צמודים למילים שלהם. ברוחב 360 שום דבר לא בורח הצידה. ב-F12 &rlm;←&rlm; Console אין שגיאה אדומה (404).</div>
+      <div class="tip">💡 להדביק את אותו תפריט בכל דף, ולתקן אותו בכל הדפים בכל פעם שמוסיפים דף – זה מעייף, וקל לשכוח דף אחד. בשיעור 6 הדפים יהפכו לדפי cshtml עם תבנית משותפת – Layout – ואז התפריט ייכתב <b>במקום אחד</b> לכל האתר.</div>
       <label style="display:flex;gap:8px;align-items:center;margin-top:8px"><input type="checkbox" id="stepDone" /> עשיתי את הצעד בפרויקט שלי</label>
+    </div>
+  </article>
+
+  <article class="spread act">
+    <h3>📌 מה מגישים אחרי השיעור הזה?</h3>
+    <p><b>עכשיו – כלום.</b> לשיעור 5 אין מטלה משלו. שיעור 5 ושיעור 6 מובילים יחד למטלה אחת: <span data-asg="5"></span>. זו <b>הגשה 1</b> – האתר המעוצב כולו, והיא עם ציון. מגישים אותה רק אחרי שיעור 6.</p>
+    <p>אז מה עושים עכשיו? בודקים שהחלק של שיעור 5 מוכן. סמנו מה שכבר יש באתר שלכם – בכל שורה יש קישור לשלב שמלמד אותה:</p>
+    <div class="asg" id="ready5">
+      <div class="asg-h"><span class="asg-tag">📌 עוד לא מגישים</span> <b>מה השיעור הזה תורם להגשה 1</b></div>
+      <p class="asg-prog" aria-live="polite"></p>
+      <ol class="asg-list">
+        <li><label class="vsck"><input type="checkbox" aria-label="סימנתי: 1" /></label><div class="vsbody"><b>Bootstrap מחובר בכל דף:</b> שורת ה-viewport, שורת ה-link לקובץ ה-RTL, ושורת ה-script בסוף ה-body. והקובץ <span class="nw">site-style.css</span> מקושר <b>אחרי</b> Bootstrap (<a href="#" data-go="setup:6">איך מחברים</a>).</div></li>
+        <li><label class="vsck"><input type="checkbox" aria-label="סימנתי: 2" /></label><div class="vsbody"><b>גריד:</b> התוכן של כל דף בתוך container, ובדפי התוכן יש שורה עם עמודות שיורדות אחת מתחת לשנייה בטלפון (<a href="#" data-go="grid:7">דף הבסיס של דפי התוכן</a>).</div></li>
+        <li><label class="vsck"><input type="checkbox" aria-label="סימנתי: 3" /></label><div class="vsbody"><b>תפריט ראשי בכל דף:</b> אותו navbar בדיוק, עם הלוגו ושם האתר, וקישור לכל דף. בטלפון הוא מתקפל ונפתח ב-☰ (<a href="#" data-go="comps:11">איך בונים אותו</a>).</div></li>
+        <li><label class="vsck"><input type="checkbox" aria-label="סימנתי: 4" /></label><div class="vsbody"><b>בלי שאריות:</b> הכותרת הישנה (ה-div עם <code>site-header</code>) נמחקה מכל הדפים, וכללי <code>nav</code> הישנים נמחקו <span class="nw">מ-site-style.css</span> (<a href="#" data-go="comps:11">למה מוחקים</a>).</div></li>
+        <li><label class="vsck"><input type="checkbox" aria-label="סימנתי: 5" /></label><div class="vsbody"><b>דף נחיתה מעוצב, ודפי תוכן באותו סגנון:</b> ב-index.html פתיחה גדולה וכרטיס לכל דף תוכן, וכל דפי התוכן בנויים כמו דף הבסיס page1.html (<a href="#" data-go="practice:2">צעד בפרויקט</a>).</div></li>
+        <li><label class="vsck"><input type="checkbox" aria-label="סימנתי: 6" /></label><div class="vsbody"><b>שלושת הטפסים מעוצבים</b> עם ה-class-ים של Bootstrap: <code>form-label</code>, <code>form-control</code>, <code>form-select</code>, ולכפתורי ה-radio – <code>form-check</code> (<a href="#" data-go="comps:10">טופס מעוצב</a>).</div></li>
+        <li><label class="vsck"><input type="checkbox" aria-label="סימנתי: 7" /></label><div class="vsbody"><b>העיצוב שלי – רק בקובץ שלי:</b> class-ים משלי <span class="nw">ב-site-style.css</span>, ובלי style בתוך התגיות (<a href="#" data-go="mine:1">CSS משלכם מעל Bootstrap</a>).</div></li>
+        <li><label class="vsck"><input type="checkbox" aria-label="סימנתי: 8" /></label><div class="vsbody"><b>בדקתי כל דף ברוחב של טלפון</b> (F12, ואז Ctrl+Shift+M, רוחב 360) – ואין גלילה הצידה (<a href="#" data-go="grid:7">איך בודקים</a>).</div></li>
+      </ol>
+      <div class="asg-how">➡ <b>מה נשאר עד ההגשה:</b> <b>1.</b> <a href="razor.html">שיעור 6</a> – ההגשה דורשת שכל הדפים יהיו דפי cshtml שבנויים על תבנית משותפת (Layout), ואת זה לומדים שם. התפריט שבניתם היום יעבור לתבנית, וייכתב פעם אחת לכל האתר. <b>2.</b> להשלים את האתר: דף ראשי (דף הנחיתה), לפחות <b>10 דפי תוכן</b> באותו סגנון, ושלושת הטפסים. <b>3.</b> <a href="submission1.html">דף הליווי של הגשה 1</a> – רשימת הדרישות המלאה, המחוון, ואיך אורזים ומגישים.</div>
+      <p class="asg-after">💡 10 דפי תוכן לא בונים בערב אחד. יש לכם עכשיו דף בסיס – אחרי שיעור 6, שניים–שלושה דפים בכל שבוע, והשבוע האחרון נשאר לליטוש.</p>
     </div>
   </article>
 
   <article class="spread" id="quiz">
     <h3>✅ בדקו את עצמכם</h3>
-    <p>5 שאלות. טעיתם? ההסבר יגיד למה – ונסו שוב.</p>
+    <p>10 שאלות שמחברות את כל השיעור – במצבים שעוד לא ראיתם. טעיתם? ההסבר יגיד למה ולאיזה שלב לחזור – ונסו שוב.</p>
   </article>
 
   <article class="spread" id="summary">
     <h3>📄 דף סיכום: כל השיעור במסך אחד</h3>
     <p>כל מה שצריך לזכור. אפשר לחזור לכאן בכל זמן, או להדפיס. <button class="btn" type="button" id="printBtn">🖨 הדפסה</button></p>
     <div class="cheat">
+      <div class="card" style="grid-column:1/-1"><h4>📌 מה מגישים</h4>
+        <p>אחרי שיעור 5 – כלום. שיעורים 5 ו-6 מובילים יחד ל-<span data-asg="5"></span> – הגשה 1, האתר המעוצב כולו (<a href="#" data-go="practice:3">מה כבר מוכן ומה נשאר</a>). קודם <a href="razor.html">שיעור 6</a>, ואחריו <a href="submission1.html">דף הליווי של הגשה 1</a>.</p></div>
       <div class="card" style="grid-column:1/-1"><h4>דף עם Bootstrap (בתיקייה HTML)</h4>
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre class="cv" id="sumPage"></pre></div></div>
       <div class="card"><h4>הגריד</h4>
@@ -666,7 +815,9 @@ td code{overflow-wrap:normal;white-space:normal}
           <tr><td><code>col</code></td><td>עמודות שוות</td></tr>
           <tr><td><code>col-4</code></td><td>4 מתוך 12 – תמיד</td></tr>
           <tr><td><code>col-md-4</code></td><td>4 מתוך 12 מ-md ומעלה; מתחת – שורה שלמה</td></tr>
+          <tr><td><code>col-sm-6 col-lg-4</code></td><td>חצי מ-sm, שליש מ-lg: קובעת נקודת השבירה הגדולה שנדלקה</td></tr>
           <tr><td><code>row-cols-1 row-cols-md-3</code></td><td>על השורה: 1 בשורה בטלפון, 3 מ-md</td></tr>
+          <tr><td><code>g-3</code> · <code>img-fluid</code></td><td>רווח בין עמודות · תמונה שלא בורחת מהעמודה</td></tr>
         </table>
         <p>סכום מעל 12 = העמודה יורדת שורה.</p></div>
       <div class="card"><h4>נקודות שבירה (מהרוחב הזה ומעלה)</h4>
@@ -678,14 +829,14 @@ td code{overflow-wrap:normal;white-space:normal}
       <div class="card"><h4>רכיבים</h4>
         <ul>
           <li><code>btn btn-primary</code> – כפתור (success, danger, warning…)</li>
-          <li><code>card</code> ← <code>card-header</code>, <code>card-img-top</code>, <code>card-body</code>, <code>card-footer</code></li>
+          <li><code>card</code> ← <code>card-header</code>, <code>card-img-top</code>, <code>card-body</code>, <code>card-footer</code> · <code>h-100</code> – גובה שווה</li>
           <li><code>stretched-link</code> – כל הכרטיס לחיץ</li>
-          <li><code>navbar</code> – מתקפל בטלפון (צריך את קובץ ה-JS) · <code>sticky-top</code> – נשאר למעלה</li>
-          <li><code>form-label</code>, <code>form-control</code>, <code>form-select</code></li>
+          <li><code>navbar navbar-expand-md navbar-light</code> – תפריט שמתקפל בטלפון (צריך את קובץ ה-JS) · <code>sticky-top</code> – נשאר למעלה</li>
+          <li>טופס: <code>form-label</code>, <code>form-control</code>, <code>form-select</code> · לתיבת סימון ול-radio: <code>form-check</code> ← <code>form-check-input</code>, <code>form-check-label</code></li>
         </ul></div>
-      <div class="card"><h4>classes קטנים</h4>
+      <div class="card"><h4>class-ים קטנים</h4>
         <ul>
-          <li><code>mt-3</code>, <code>mb-3</code>, <code>p-3</code> – רווחים (0 עד 5)</li>
+          <li><code>mt-3</code>, <code>mb-3</code>, <code>p-3</code> – רווחים (דרגה 0 עד 5)</li>
           <li><code>bg-warning</code>, <code>text-danger</code> – צבעים</li>
           <li><code>text-center</code>, <code>fw-bold</code> – טקסט</li>
           <li><code>d-none</code>, <code>d-md-none</code> – הסתרה</li>
@@ -693,9 +844,12 @@ td code{overflow-wrap:normal;white-space:normal}
       <div class="card"><h4>כללי זהב</h4>
         <ul>
           <li>עברית: <code>dir="rtl"</code> וגם <code>bootstrap.rtl.min.css</code></li>
-          <li><code>site-style.css</code> שלכם – <b>אחרי</b> Bootstrap</li>
-          <li>התפריט לא נפתח? חסר ה-script לפני <code>&lt;/body&gt;</code></li>
-          <li>הכי טוב: לחפש דוגמה ב-getbootstrap.com ולהתאים</li>
+          <li><code>site-style.css</code> שלכם – <b>אחרי</b> Bootstrap. שווים בכוח? האחרון מנצח. אבל class חזק משם תגית – גם כשהוא לא אחרון</li>
+          <li>נקודת שבירה בודקת את רוחב <b>חלון הדפדפן</b>, לא את סוג המכשיר</li>
+          <li>התפריט לא נפתח? בודקים את ה-script לפני <code>&lt;/body&gt;</code> (עם תגית סוגרת!), ואת השם ב-<code>data-bs-target</code> מול ה-<code>id</code></li>
+          <li>כללי <code>nav</code> ישנים ב-site-style.css מתערבבים ב-navbar – מוחקים</li>
+          <li><code>form-control</code> – רק לשדות שמקלידים בהם</li>
+          <li>הכי טוב: לחפש דוגמה ב-getbootstrap.com ולהתאים – בלי להעתיק style</li>
         </ul></div>
     </div>
   </article>
@@ -827,10 +981,11 @@ function rowsText(px, rows){
 const NAV = (o) => {
   o = o || {};
   const a = [
-    '<nav class="navbar navbar-expand-md bg-warning' + (o.sticky ? ' sticky-top' : '') + '">',
+    '<nav class="navbar navbar-expand-md navbar-light bg-warning' + (o.sticky ? ' sticky-top' : '') + '">',
     '    <div class="container">',
     '        <a class="navbar-brand" href="#">🍕 פיצה דני</a>',
-    '        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenu" aria-controls="mainMenu" aria-expanded="false" aria-label="פתיחת התפריט">',
+    '        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenu"',
+    '                aria-controls="mainMenu" aria-expanded="false" aria-label="פתיחת התפריט">',
     '            <span class="navbar-toggler-icon"></span>',
     '        </button>',
     '        <div class="collapse navbar-collapse" id="mainMenu">',
@@ -847,6 +1002,15 @@ const PIZZAS = [
   {img:'olives.jpg', name:'זיתים', text:'זיתים שחורים וירוקים, בצל סגול ומוצרלה על בצק דק במיוחד.', price:'39 שקל במבצע'},
   {img:'spicy.jpg', name:'חריפה', text:'פלפל חריף, סלמי ורוטב פיקנטי.', price:'47 שקל'}
 ];
+// code view for the navbar: a line that only continues the attributes of the tag above it is highlighted like the rest of the tag
+function navLines(pre, lines, marks){
+  codeLines(pre, L(lines), 'html', marks || {});
+  lines.forEach((l, i) => {
+    const m = !l.includes('<') && l.match(/^(\s+)([a-z-]+=.*)$/); if (!m) return;
+    const ln = pre.querySelector('.ln[data-i="' + i + '"]'); if (!ln) return;
+    ln.innerHTML = m[1] + Course.hlHtmlLine('<b ' + m[2]).replace(/^&lt;<span class="t-tag">b<\/span> /, '');
+  });
+}
 const VIS = '.vis{background:#fde68a;border:2px solid #f59e0b;border-radius:10px;padding:10px;text-align:center}.row{row-gap:12px}';
 
 /* ======================================================= 1. welcome */
@@ -862,7 +1026,7 @@ const WELCOME = L(NAV({sticky:true}).concat([
   PIZZAS.slice(0,3).map((p,i) => [
   '        <div class="col"><div class="card h-100">',
   '            <img src="../Img/' + p.img + '" class="card-img-top" alt="' + (i === 2 ? 'פיצת זיתים. 🥚 הקוד הסודי: OLIVES' : 'פיצת ' + p.name) + '" />',
-  '            <div class="card-body"><h5 class="card-title">' + p.name + '</h5><p class="card-text">' + p.text + '</p></div>',
+  '            <div class="card-body"><h3 class="card-title h5">' + p.name + '</h3><p class="card-text">' + p.text + '</p></div>',
   '            <div class="card-footer">' + p.price + '</div>',
   '        </div></div>'].join('\n')),
   ['    </div>', '    <p class="text-center text-secondary mt-4">פיצה דני · אשקלון</p>', '</div>']).flat());
@@ -870,9 +1034,9 @@ const welcomeDev = new Dev($('#welcomeDev'), {height:460, start: innerWidth < 60
 welcomeDev.show(WELCOME, {scripts:[BSJS], css:'body{padding:0}'});
 
 /* ======================================================= 1.2 with / without */
-const S12 = L(['<h1 class="text-center">פיצה דני</h1>', '<div class="card">', '    <div class="card-body">', '        <h5 class="card-title">מרגריטה</h5>', '        <p class="card-text">45 שקל</p>', '        <button class="btn btn-success">להזמנה</button>', '    </div>', '</div>']);
+const S12 = L(['<h1 class="text-center">פיצה דני</h1>', '<div class="card">', '    <div class="card-body">', '        <h2 class="card-title h5">מרגריטה</h2>', '        <p class="card-text">45 שקל</p>', '        <button class="btn btn-success">להזמנה</button>', '    </div>', '</div>']);
 codeLines($('#s12code'), S12, 'html');
-codeLines($('#s12css'), L(['/* inside bootstrap.css (shortened) */', '.btn {', '    padding: 6px 12px;', '    border: 1px solid transparent;', '    border-radius: 6px;', '}', '.btn-success {', '    color: white;', '    background-color: #198754;', '}']), 'css');
+codeLines($('#s12css'), L(['/* inside bootstrap.css (simplified) */', '.text-center {', '    text-align: center;', '}', '.btn {', '    padding: 6px 12px;', '    font-size: 16px;', '    text-align: center;', '}']), 'css');
 function compareFrames(el, items){
   return items.map(it => {
     const d = document.createElement('div'); d.innerHTML = '<div class="fh"></div><div class="cap">' + it.cap + '</div>'; el.appendChild(d);
@@ -892,7 +1056,7 @@ codeLines($('#s21code'), L(PAGE('bootstrap.rtl.min.css')), 'html', {4:'new', 6:'
 const FT = [
   ['wwwroot',0,'root','',''], ['css',1,'css','├─ ',''], ['HTML',1,'html','├─ ',''], ['menu.html',2,'page','│  └─ ','📄 '], ['Img',1,'img','├─ ',''],
   ['lib',1,'lib','└─ ',''], ['bootstrap',2,'bs','   └─ ',''], ['dist',3,'dist','      └─ ',''], ['css',4,'dcss','         ├─ ',''],
-  ['bootstrap.min.css',5,'file','         │  ├─ ','📄 '], ['bootstrap.rtl.min.css',5,'rtl','         │  └─ ','📄 '], ['js',4,'js','         └─ ',''], ['bootstrap.bundle.min.js',5,'jsf','            └─ ','📄 ']
+  ['bootstrap.min.css',5,'file','         │  ├─ ','📄 '], ['bootstrap.rtl.min.css',5,'rtl','         │  ├─ ','📄 '], ['… more files',5,'more','         │  └─ ','📄 '], ['js',4,'js','         └─ ',''], ['bootstrap.bundle.min.js',5,'jsf','            ├─ ','📄 '], ['… more files',5,'more2','            └─ ','📄 ']
 ];
 $('#ftree').innerHTML = FT.map(([n,d,id,g,ic]) => g + '<span class="f" data-f="' + id + '">' + (ic || '📁 ') + n + '</span>').join('\n');
 const WALK = [
@@ -901,17 +1065,17 @@ const WALK = [
   {at:'lib', path:'../lib/', t:'<code>lib/</code> = "היכנסו לתיקייה lib" – כאן Visual Studio שם ספריות מוכנות (lib = library, ספרייה).'},
   {at:'bs', path:'../lib/bootstrap/', t:'<code>bootstrap/</code> – התיקייה של Bootstrap.'},
   {at:'dist', path:'../lib/bootstrap/dist/', t:'<code>dist/</code> – קיצור של distribution: הקבצים המוכנים לשימוש.'},
-  {at:'dcss', path:'../lib/bootstrap/dist/css/', t:'<code>css/</code> – כאן קבצי העיצוב. שימו לב: יש שניים – הרגיל וזה של RTL.'},
-  {at:'file', path:'../lib/bootstrap/dist/css/bootstrap.min.css', t:'הגענו! זה הנתיב שכותבים ב-href. (בדף בעברית נבחר את השכן שלו – מיד נראה למה.)'}
+  {at:'dcss', path:'../lib/bootstrap/dist/css/', t:'<code>css/</code> – כאן קבצי העיצוב. יש בתיקייה הזו הרבה קבצים עם שמות דומים. לנו חשובים שניים: <span class="cls">bootstrap.min.css</span> (הרגיל) ו-<span class="cls">bootstrap.rtl.min.css</span>.'},
+  {at:'rtl', path:'../lib/bootstrap/dist/css/bootstrap.rtl.min.css', t:'הגענו! זה הנתיב שכותבים ב-href. בחרנו בקובץ שיש <b>rtl</b> בשם שלו, ולא בשכן הרגיל – למה? בעוד שני שלבים.'}
 ];
 let wi = 0;
 function drawWalk(){
   const w = WALK[wi];
-  document.querySelectorAll('#ftree .f').forEach(f => { f.classList.toggle('here', f.dataset.f === w.at); f.classList.toggle('goal', f.dataset.f === 'file' && wi < WALK.length - 1); });
+  document.querySelectorAll('#ftree .f').forEach(f => { f.classList.toggle('here', f.dataset.f === w.at); f.classList.toggle('goal', f.dataset.f === 'rtl' && wi < WALK.length - 1); });
   $('#pathbox').innerHTML = 'href=<span class="t-str">"' + esc(w.path) + '"</span>';
   $('#walkTxt').innerHTML = w.t; $('#walkNext').disabled = wi === WALK.length - 1;
 }
-$('#walkNext').addEventListener('click', () => { if (wi < WALK.length - 1) { wi++; drawWalk(); if (wi === WALK.length - 1) Course.celebrate($('#pathbox'), 'small'); } });
+$('#walkNext').addEventListener('click', () => { if (wi < WALK.length - 1) { wi++; drawWalk(); if (wi === WALK.length - 1) Course.finale($('#pathbox'), {key: 'walk5', perfect: true}); } });
 $('#walkReset').addEventListener('click', () => { wi = 0; drawWalk(); });
 drawWalk();
 
@@ -922,13 +1086,19 @@ codeLines($('#s23code'), L(['<!-- in head: -->', '<link rel="stylesheet" href="h
 const S24 = L(['<label class="form-label" for="pizza">איזו פיצה?</label>', '<select class="form-select" id="pizza">', '    <option>מרגריטה</option>', '    <option>פטריות</option>', '</select>', '<div class="form-check mt-3">', '    <input class="form-check-input" type="checkbox" id="cheese" />', '    <label class="form-check-label" for="cheese">תוספת גבינה</label>', '</div>']);
 codeLines($('#s24code'), S24, 'html');
 compareFrames($('#s24'), [
-  {cap:'<b>✘ <span class="cls">bootstrap.min.css</span> (הרגיל)</b>החץ יושב על המילה "מרגריטה", ותיבת הסימון רחוקה בצד שמאל.', show:{html:S24, links:[BS_LTR]}},
-  {cap:'<b>✔ <span class="cls">bootstrap.rtl.min.css</span></b>החץ בצד שמאל, ותיבת הסימון צמודה למילים שלה.', show:{html:S24, links:[BS]}}
+  {cap:'<b>✘ <span class="cls">bootstrap.min.css</span> (הרגיל)</b>תיבת הסימון בקצה השמאלי, רחוק מהמילים שלה. החץ בצד ימין, צמוד לתחילת הטקסט.', show:{html:S24, links:[BS_LTR]}},
+  {cap:'<b>✔ <span class="cls">bootstrap.rtl.min.css</span></b>תיבת הסימון צמודה למילים שלה, והחץ בצד שמאל – בסוף השורה.', show:{html:S24, links:[BS]}}
 ]);
+predict('#p24', {
+  q: 'בדף כתוב <code>dir="rtl"</code>, אבל מקושר הקובץ <b>הרגיל</b> – <span class="cls">bootstrap.min.css</span>. איפה תעמוד תיבת הסימון של "תוספת גבינה"?',
+  opts: ['בצד ימין, צמודה למילים שלה', 'בצד שמאל, רחוק מהמילים שלה', 'באמצע השורה, מעל המילים'],
+  correct: 1,
+  why: ['ככה זה אמור להיראות בעברית – אבל הקובץ הרגיל לא יודע שהדף מימין לשמאל. לאיזה צד הוא רגיל לשים תיבת סימון?', 'בדיוק. הקובץ הרגיל שם את התיבה בצד שמאל – כמו באנגלית – והמילים בעברית נשארות בימין. הנה ההשוואה.', 'Bootstrap לא ממרכז תיבות סימון. חשבו: באנגלית, באיזה צד של המילים עומדת התיבה?']
+});
 
 /* ======================================================= 2.5 viewport (honest simulation) */
 const PHONE_PAGE = L(NAV().concat(['<div class="container mt-3">', '    <h1>פיצה דני</h1>', '    <p>הפיצה הכי טעימה באשקלון. בצק טרי כל בוקר.</p>', '    <div class="row g-3">'],
-  PIZZAS.slice(0,3).map(p => '        <div class="col-md-4"><div class="card"><img src="../Img/' + p.img + '" class="card-img-top" alt="' + p.name + '" /><div class="card-body"><h5 class="card-title">' + p.name + '</h5><p class="card-text">' + p.price + '</p></div></div></div>'),
+  PIZZAS.slice(0,3).map(p => '        <div class="col-md-4"><div class="card"><img src="../Img/' + p.img + '" class="card-img-top" alt="' + p.name + '" /><div class="card-body"><h2 class="card-title h5">' + p.name + '</h2><p class="card-text">' + p.price + '</p></div></div></div>'),
   ['    </div>', '</div>']));
 (function(){
   const host = $('#s25');
@@ -952,10 +1122,10 @@ const PHONE_PAGE = L(NAV().concat(['<div class="container mt-3">', '    <h1>פי
 })();
 predict('#p25', {
   q: 'טלפון ברוחב 360 פותח דף <b>בלי</b> שורת viewport. מה הוא יעשה?',
-  opts: ['יציג את הדף רגיל, מותאם לטלפון', 'יבנה את הדף רחב, ויקטין הכול', 'יציג רק את הצד הימני של הדף'],
+  opts: ['יבנה את הדף ברוחב 360, והכול ייראה רגיל', 'יבנה את הדף ברוחב של מחשב, ויקטין הכול', 'יבנה את הדף ברוחב של מחשב, ויחתוך את מה שלא נכנס'],
   correct: 1,
   onCorrect: () => { $('#s25what').hidden = false; },
-  why: ['בשביל זה בדיוק צריך את השורה – בלעדיה הטלפון לא "מאמין" שהדף מתאים לו.', 'בדיוק. בחרו "בלי שורת viewport" למעלה וראו כמה קטן הכול.', 'הטלפון לא חותך – הוא מקטין. בחרו "בלי" למעלה וראו.']
+  why: ['זה מה שקורה <b>עם</b> השורה. בלעדיה הטלפון לא "מאמין" שהדף מתאים לו.', 'בדיוק. בחרו "בלי שורת viewport" מתחת לשאלה וראו כמה קטן הכול.', 'חצי נכון: הוא באמת בונה את הדף רחב. אבל הוא לא חותך – בחרו "בלי שורת viewport" מתחת לשאלה וראו מה הוא עושה.']
 });
 
 codeLines($('#s25code'), '<meta name="viewport" content="width=device-width, initial-scale=1" />', 'html');
@@ -1014,10 +1184,10 @@ const s34 = new Dev($('#s34'), {start:1140, widths:[360, 640, 820, 1140], bp:tru
 s34.show(visWrap(L(ITEMS3('col-md-4'))), {css:VIS});
 predict('#p34', {
   q: 'לכל מנה <code>col-md-4</code>. כמה מנות יהיו בשורה בטלפון ברוחב 360?',
-  opts: ['3 – כמו במחשב', '1 – כל מנה בשורה משלה', '2'],
-  correct: 1,
+  opts: ['1 – כל מנה בשורה משלה', '2 – והשלישית יורדת שורה', '3 – כמו במחשב, רק צפופות'],
+  correct: 0,
   onCorrect: () => { $('#s34what').hidden = false; s34.pick(0); },
-  why: ['360 קטן מ-md (768), אז <code>col-md-4</code> לא פועל בטלפון.', 'בדיוק. מתחת ל-md ה-class "כבוי", וכל מנה תופסת שורה שלמה. הנה זה בהדמיה.', 'אין כאן שום class של חצי (6). נסו לחשוב: האם 360 גדול מ-768?']
+  why: ['בדיוק. מתחת ל-md ה-class "כבוי", וכל מנה תופסת שורה שלמה. הנה זה בהדמיה.', 'אין כאן שום class של חצי (6). נסו לחשוב: האם 360 גדול מ-768? ואם ה-class לא פועל – איך מתנהג div רגיל?', '360 קטן מ-md (768), אז <code>col-md-4</code> לא פועל בטלפון. ואיך מתנהג div בלי שום class של רוחב?']
 });
 
 /* ======================================================= 3.5 grid lab */
@@ -1032,7 +1202,7 @@ function labCheck(px, doc){
   const r = perRow(doc, '.row > *'); labSeen[px] = r.length ? r[0] : 0;
   if (labSeen[360] === 1 && (labSeen[640] === 2 || labSeen[820] === 2) && labSeen[1140] === 3) {
     state.labDone = true; save();
-    Course.celebrate($('#s35count'), 'big');
+    Course.finale($('#s35count'), {key: 'lab35', perfect: true, title: 'פתרתם את האתגר!', sub: 'אחת בטלפון · שתיים בטאבלט · שלוש במחשב'});
   }
 }
 seg($('#s35cls'), LAB.map(c => ({label:c, mono:true, v:c})), o => {
@@ -1058,7 +1228,7 @@ function draw41(){
 }
 seg($('#s41m'), ['mt-0','mt-3','mt-5'].map(v => ({label:v, mono:true, v})), o => { U.m = o.v; draw41(); }, 1);
 seg($('#s41p'), ['p-0','p-3','p-5'].map(v => ({label:v, mono:true, v})), o => { U.p = o.v; draw41(); }, 1);
-seg($('#s41b'), [{label:'בלי', v:''}, {label:'bg-warning', mono:true, v:'bg-warning'}, {label:'bg-success text-white', mono:true, v:'bg-success text-white'}], o => { U.b = o.v; draw41(); }, 1);
+seg($('#s41b'), [{label:'בלי', v:''}, {label:'bg-warning', mono:true, v:'bg-warning'}, {label:'bg-success text-white', mono:true, v:'bg-success text-white'}, {label:'bg-danger text-white', mono:true, v:'bg-danger text-white'}], o => { U.b = o.v; draw41(); }, 1);
 seg($('#s41t'), ['text-start','text-center','text-end'].map(v => ({label:v, mono:true, v})), o => { U.t = o.v; draw41(); }, 1);
 
 /* ======================================================= 4.2 buttons */
@@ -1069,17 +1239,17 @@ function draw42(){
   const code = ['<button class="' + cls + '">להזמנה</button>', '<a href="#" class="' + cls + '">לתפריט</a>'];
   s42.set(L(code), {0:'new', 1:'new'}, null, {css:'.btn{margin:4px}'});
 }
-seg($('#s42c'), ['primary','secondary','success','danger','warning','dark'].map(v => ({label:v, mono:true, v})), o => { B.c = o.v; draw42(); }, 2);
+seg($('#s42c'), ['primary','secondary','success','danger','warning','info','light','dark'].map(v => ({label:v, mono:true, v})), o => { B.c = o.v; draw42(); }, 2);
 seg($('#s42s'), [{label:'מלא', v:''}, {label:'btn-outline-…', mono:true, v:'o'}], o => { B.s = o.v; draw42(); }, 0);
 seg($('#s42z'), [{label:'רגיל', v:''}, {label:'btn-lg', mono:true, v:'btn-lg'}, {label:'btn-sm', mono:true, v:'btn-sm'}], o => { B.z = o.v; draw42(); }, 0);
 
 /* ======================================================= 4.3 card builder */
 const CARD_ST = [
-  {label:'א. card + card-body', parts:{}, what:'הכרטיס (<code>card</code>) נותן מסגרת ופינות מעוגלות. ה-<code>card-body</code> נותן ריפוד מבפנים. <code>card-title</code> ו-<code>card-text</code> מסדרים את הרווחים של הכותרת והטקסט.'},
+  {label:'א. card + card-body', parts:{}, what:'הכרטיס (<code>card</code>) נותן מסגרת ופינות מעוגלות. ה-<code>card-body</code> נותן ריפוד מבפנים. <code>card-title</code> ו-<code>card-text</code> מסדרים את הרווחים של הכותרת והטקסט. ולמה <code>h2</code> עם ה-class <code>h5</code>? בכרטיס רוצים כותרת קטנה – אבל לפי הכלל משיעור 2 בוחרים רמה לפי חשיבות, לא לפי גודל. אז התגית היא <code>h2</code>, וה-class <code>h5</code> של Bootstrap נותן לה גודל של h5. (בתיעוד תראו תגית <code>h5</code> ממש – אותו מראה.)'},
   {label:'ב. + תמונה', parts:{img:1}, what:'<code>card-img-top</code>: תמונה בראש הכרטיס, ברוחב מלא, עם פינות עליונות מעוגלות שמתאימות לכרטיס.'},
   {label:'ג. + header', parts:{img:1, head:1}, what:'<code>card-header</code>: פס כותרת עליון על רקע אפור, עם קו מתחתיו.'},
   {label:'ד. + footer', parts:{img:1, head:1, foot:1}, what:'<code>card-footer</code>: פס תחתון – מקום טוב למחיר.'},
-  {label:'ה. + כפתור', parts:{img:1, head:1, foot:1, btn:1}, what:'כפתור <code>btn btn-primary</code> בתוך הגוף. הכרטיס מוכן – בדיוק כמו במצגת: כותרת, תמונה, גוף ותחתית.'}
+  {label:'ה. + כפתור', parts:{img:1, head:1, foot:1, btn:1}, what:'כפתור <code>btn btn-primary</code> בתוך הגוף. הכרטיס מוכן: כותרת, תמונה, גוף ותחתית.'}
 ];
 function cardLines(p, o){
   o = o || {};
@@ -1089,7 +1259,7 @@ function cardLines(p, o){
   add('<div class="card">', o.n === 'body');
   if (p.head) add('    <div class="card-header">המנה של היום</div>', o.n === 'head');
   if (p.img) add('    <img src="../Img/margherita.jpg" class="card-img-top" alt="פיצה מרגריטה" />', o.n === 'img');
-  add('    <div class="card-body">', o.n === 'body'); add('        <h5 class="card-title">מרגריטה</h5>', o.n === 'body'); add('        <p class="card-text">רוטב עגבניות ומוצרלה.</p>', o.n === 'body');
+  add('    <div class="card-body">', o.n === 'body'); add('        <h2 class="card-title h5">מרגריטה</h2>', o.n === 'body'); add('        <p class="card-text">רוטב עגבניות ומוצרלה.</p>', o.n === 'body');
   if (p.btn) add('        <a href="#" class="btn btn-primary' + (o.stretch ? ' stretched-link' : '') + '">להזמנה</a>', o.n === 'btn' || o.stretch);
   add('    </div>', o.n === 'body');
   if (p.foot) add('    <div class="card-footer">45 שקל</div>', o.n === 'foot');
@@ -1111,7 +1281,9 @@ const s44f = [];
   $('#s44').appendChild(d);
   const c = cardLines({img:1, btn:1}, {stretch:st}); codeLines(d.querySelector('pre'), c.code, 'html', st ? c.m : {});
   const note = d.querySelector('[data-n]'); note.textContent = 'לחצו על התמונה.';
-  const f = frameBox(d.querySelector('.fh'), {min:60, onLink: () => { note.innerHTML = '✔ הקישור הופעל! (בהדגמה לא עוברים דף)'; setTimeout(() => note.textContent = 'לחצו שוב במקום אחר.', 2200); }});
+  let cheered = false;
+  const f = frameBox(d.querySelector('.fh'), {min:60, onLink: () => { note.innerHTML = '✔ הקישור הופעל! (בהדגמה לא עוברים דף)'; if (st && !cheered) { cheered = true; Course.finale(note, {key: 'stretch5', perfect: true}); } setTimeout(() => note.textContent = 'לחצו שוב במקום אחר.', 2200); },
+    onLoad: doc => { if (!st) doc.addEventListener('click', e => { if (!(e.target.closest && e.target.closest('a'))) { note.innerHTML = '✘ כאן לא קרה כלום – בכרטיס הזה רק הכפתור "להזמנה" לחיץ.'; } }); }});
   f.show(showOpts(c.code)); s44f.push(f);
 });
 
@@ -1121,7 +1293,7 @@ const CARDS = (h) => ['<div class="row row-cols-1 row-cols-md-3 g-4">'].concat(P
   '        <div class="card' + (h ? ' h-100' : '') + '">',
   '            <img src="../Img/' + p.img + '" class="card-img-top" alt="' + p.name + '" />',
   '            <div class="card-body">',
-  '                <h5 class="card-title">' + p.name + '</h5>',
+  '                <h2 class="card-title h5">' + p.name + '</h2>',
   '                <p class="card-text">' + p.text + '</p>',
   '            </div>',
   '            <div class="card-footer">' + p.price + '</div>',
@@ -1132,19 +1304,18 @@ seg($('#s45h'), [{label:'בלי h-100', mono:true}, {label:'עם h-100', mono:tr
   const code = CARDS(i === 1), shown = code.slice(0, 11).concat(['    <!-- two more cards, same structure: mushrooms, olives -->', '</div>']);
   codeLines($('#s45code'), L(shown), 'html', marksOf(shown, i ? /h-100/ : /row-cols/));
   s45.show(L(code));
-  $('#s45what').innerHTML = i ? '<code>h-100</code> = height 100%: כל כרטיס נמתח לגובה המלא של העמודה שלו. עכשיו כל הכרטיסים <b>באותו גובה</b>, והפס התחתון של המחיר מיושר בכולם – גם כשבאחד יש יותר טקסט.' :
-    'במחשב: שלושה כרטיסים בשורה. בטלפון: אחד מתחת לשני. אבל שימו לב לפס המחיר במחשב – הכרטיס של "זיתים" גבוה יותר (יש בו יותר טקסט), והשניים האחרים קצרים ממנו. בחרו "עם h-100".';
+  $('#s45what').innerHTML = i ? '<code>h-100</code> = height 100%: הכרטיס נמתח לכל הגובה של <b>העמודה שלו</b> – לכן שמים אותו על ה-<code>card</code>, ולא על ה-<code>col</code>. עכשיו כל הכרטיסים באותו גובה, ופס המחיר מיושר בכולם.' :
+    'עמודות באותה שורה הן תמיד <b>באותו גובה</b> – כגובה הגבוהה ביותר (כמו תאים בשורה של טבלה). הכרטיס שבתוך העמודה – לא: הוא בגובה התוכן שלו. לכן "זיתים" גבוה מהאחרים, ופסי המחיר לא מיושרים. בחרו "עם h-100". (ובטלפון? כרטיס מתחת לכרטיס – עברו ל-📱.)';
 });
 predict('#p45', {
-  q: 'השורה היא <code>row row-cols-1 row-cols-md-3</code>. כמה כרטיסים יהיו בשורה בטאבלט (820)?',
-  opts: ['1', '3', '2'], correct: 1,
-  onCorrect: () => s45.pick(1),
-  why: ['820 גדול מ-768, אז <code>row-cols-md-3</code> כבר פועל.', 'נכון: 820 ≥ 768 = md, אז 3 בשורה. הנה זה בהדמיה.', 'אין כאן אף class של 2. בדקו: האם 820 גדול מ-md?']
+  q: 'שלושה כרטיסים בשורה אחת, כל אחד בעמודה משלו. בכרטיס של "זיתים" יש יותר טקסט מבשני האחרים. איך הם ייראו במחשב?',
+  opts: ['שלושתם באותו גובה, כי הם באותה שורה', '"זיתים" גבוה יותר משני האחרים', '"זיתים" יורד לשורה משלו, מתחת לאחרים'], correct: 1,
+  why: ['קרוב: ה<b>עמודות</b> באמת באותו גובה. אבל הכרטיס שבתוך העמודה – בגובה של מי הוא?', 'בדיוק. כל כרטיס בגובה התוכן שלו. הנה זה בהדמיה – הביטו בפסי המחיר.', 'עמודה יורדת שורה כשאין לה מקום ב<b>רוחב</b>. טקסט ארוך משנה רק את הגובה.']
 });
 
 /* ======================================================= 4.6 navbar */
 const NAV_CONTENT = ['<div class="container mt-3">', '    <h1>פיצה דני</h1>', '    <p>הפיצה הכי טעימה באשקלון.</p>', '</div>'];
-codeLines($('#s46code'), L(NAV({egg:true}).concat(NAV_CONTENT)), 'html');
+navLines($('#s46code'), NAV({egg:true}).concat(NAV_CONTENT), {0:'peek'});
 let navJs = true;
 const s46 = new Dev($('#s46'), {start:1140, widths:[360, 820, 1140], bp:true,
   onLink: a => {
@@ -1156,11 +1327,39 @@ const s46 = new Dev($('#s46'), {start:1140, widths:[360, 820, 1140], bp:true,
 function draw46(){ s46.show(L(NAV({egg:true}).concat(NAV_CONTENT)), {scripts: navJs ? [BSJS] : [], css:'body{padding:0}'}); }
 seg($('#s46js'), ['✅ עם קובץ ה-JS', '📵 בלי קובץ ה-JS'], (o,i) => { navJs = i === 0; draw46(); $('#s46note').innerHTML = navJs ? '' : 'בחרו 📱 טלפון ולחצו על ☰.'; });
 predict('#p46', {
-  q: 'בחרו קודם: מה יקרה לשלושת הקישורים (בית, תפריט, הזמנה) בטלפון ברוחב 360?',
-  opts: ['יופיעו בשורה אחת, צפופים', 'יתחבאו מאחורי כפתור ☰', 'ייעלמו לגמרי'],
+  q: 'במחשב שלושת הקישורים (בית, תפריט, הזמנה) עומדים בשורה אחת, ליד שם האתר. מה יקרה להם בטלפון ברוחב 360?',
+  opts: ['יישארו בשורה אחת, באותיות קטנות יותר', 'יוסתרו, ויופיע כפתור שפותח אותם', 'יירדו לשורה משלהם, מתחת לשם האתר'],
   correct: 1,
-  onCorrect: () => s46.pick(0),
-  why: ['זה מה שקורה בלי navbar של Bootstrap. כאן התפריט יודע להתקפל.', 'בדיוק. <code>navbar-expand-md</code> = פתוח רק מ-md. מתחת – מקופל לכפתור. לחצו עליו בהדמיה.', 'הם לא נעלמים – הם רק מחכים מאחורי כפתור.']
+  onCorrect: () => { $('#s46what').hidden = false; s46.pick(0); },
+  why: ['Bootstrap לא מקטין אותיות כדי לדחוס. expand = "פרוס" – ו-360 קטן מ-md. אז מתחת ל-md התפריט לא פרוס. מה כן?', 'בדיוק. מתחת ל-md התפריט מקופל. הנה הוא בהדמיה – לחצו על הכפתור.', 'קרוב! כשפותחים אותם הם באמת מופיעים מתחת לשם האתר. אבל עד שלוחצים – איפה הם?']
+});
+
+/* ======================================================= 4.7 reading the navbar code, part by part */
+const NAVC = NAV({egg:true});
+const NAV_PARTS = [
+  {label:'בלי סימון', ln:[]},
+  {label:'① המעטפת', ln:[0,1,15,16]},
+  {label:'② שם האתר', ln:[2]},
+  {label:'③ הקישורים', ln:[8,9,10,11,12,13]}
+];
+seg($('#navPart'), NAV_PARTS.map(x => x.label), (o,i) => { const m = {}; NAV_PARTS[i].ln.forEach(n => { m[n] = 'peek'; }); navLines($('#navCode'), NAVC, m); }, 1);
+/* ======================================================= 4.8 the toggler and the collapsing part */
+const NAV_PARTS2 = [
+  {label:'④ כפתור ☰', ln:[3,4,5,6]},
+  {label:'⑤ החלק שמתקפל', ln:[7,14]}
+];
+seg($('#navPart2'), NAV_PARTS2.map(x => x.label), (o,i) => { const m = {}; NAV_PARTS2[i].ln.forEach(n => { m[n] = 'peek'; }); navLines($('#navCode2'), NAVC, m); }, 0);
+codeLines($('#navBadCode'), L(['<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenu">', '    <span class="navbar-toggler-icon"></span>', '</button>', '<div class="collapse navbar-collapse" id="menu">', '    <!-- the links, as before -->', '</div>']), 'html', {3:'diff'});
+const navBad = new Dev($('#navBad'), {start:360, widths:[360, 1140], bp:true,
+  onLink: a => { $('#navBadNote').innerHTML = 'לחצתם על "' + esc(a.textContent.trim()) + '". (בהדגמה הקישורים לא עוברים דף.)'; },
+  onLoad: doc => { const t = doc.querySelector('.navbar-toggler'); if (t) t.addEventListener('click', () => { $('#navBadNote').innerHTML = 'לחצתם על ☰ – ושום דבר לא נפתח. גם לא הופיעה שום הודעה.'; }); }
+});
+navBad.show(L(NAV().map(l => l.replace('id="mainMenu"', 'id="menu"').replace('aria-controls="mainMenu" ', '')).concat(NAV_CONTENT)), {scripts:[BSJS], css:'body{padding:0}'});
+predict('#pNavId', {
+  q: 'טלפון ברוחב 360. לוחצים על ☰. מה יקרה?',
+  opts: ['התפריט ייפתח – Bootstrap ימצא אותו לבד', 'לא ייפתח כלום, וגם לא תופיע הודעה', 'תופיע בדף הודעת שגיאה אדומה'],
+  correct: 1, lock: false,
+  why: ['Bootstrap לא מנחש. הכפתור מחפש בדיוק את השם שכתוב אחרי הסולמית – האם יש בדף תגית עם ה-id הזה?', 'בדיוק. נסו בעצמכם בהדמיה: לחצו על ☰.', 'כמו ב-CSS, גם כאן טעות בשם לא מציגה הודעה בדף. אז מה כן רואים?']
 });
 
 /* ======================================================= 4.7 sticky-top */
@@ -1168,13 +1367,13 @@ const MENU_LONG = ['מרגריטה – 45 שקל', 'פטריות – 39 שקל',
 const s47 = frameBox($('#s47'), {height:300});
 seg($('#s47seg'), [{label:'בלי sticky-top', mono:true}, {label:'עם sticky-top', mono:true}], (o,i) => {
   const st = i === 1;
-  const code = [NAV({sticky:st})[0], '    <!-- the same menu as in the previous step -->', '</nav>', '<div class="container">', '    <h2>התפריט</h2>', '    <p>מרגריטה – 45 שקל</p>', '    <p>פטריות – 39 שקל</p>', '    <!-- more pizzas... -->', '</div>'];
+  const code = [NAV({sticky:st})[0], '    <!-- the same menu as before -->', '</nav>', '<div class="container">', '    <h2>התפריט</h2>', '    <p>מרגריטה – 45 שקל</p>', '    <p>פטריות – 39 שקל</p>', '    <!-- more pizzas... -->', '</div>'];
   codeLines($('#s47code'), L(code), 'html', {0:'diff'});
   s47.show(showOpts(L(NAV({sticky:st}).concat(['<div class="container"><h2 class="mt-3">התפריט</h2>'], MENU_LONG.map(t => '<p>' + t + '</p>'), ['<p class="text-secondary">⬆ גללו למעלה ולמטה בתוך המסגרת</p></div>'])), {scripts:[BSJS], css:'body{padding:0}'}));
 }, 1);
 
 /* ======================================================= 4.8 form in card */
-const FORM = ['<div class="row">', '    <div class="col-md-6">', '        <div class="card">', '            <div class="card-header">הזמנת פיצה</div>', '            <div class="card-body">', '                <form>', '                    <div class="mb-3">', '                        <label for="name" class="form-label">שם</label>', '                        <input type="text" id="name" class="form-control" />', '                    </div>', '                    <div class="mb-3">', '                        <label for="pizza" class="form-label">איזו פיצה?</label>', '                        <select id="pizza" class="form-select">', '                            <option>מרגריטה</option>', '                            <option>פטריות</option>', '                            <option>זיתים</option>', '                        </select>', '                    </div>', '                    <button type="submit" class="btn btn-success">שליחה</button>', '                </form>', '            </div>', '        </div>', '    </div>', '</div>'];
+const FORM = ['<div class="row">', '    <div class="col-md-6">', '        <div class="card">', '            <div class="card-header">הזמנת פיצה</div>', '            <div class="card-body">', '                <form method="get">', '                    <div class="mb-3">', '                        <label for="name" class="form-label">שם</label>', '                        <input type="text" id="name" name="name" class="form-control" />', '                    </div>', '                    <div class="mb-3">', '                        <label for="pizza" class="form-label">איזו פיצה?</label>', '                        <select id="pizza" name="pizza" class="form-select">', '                            <option value="margherita">מרגריטה</option>', '                            <option value="mushrooms">פטריות</option>', '                            <option value="olives">זיתים</option>', '                        </select>', '                    </div>', '                    <div class="form-check mb-3">', '                        <input type="checkbox" id="cheese" name="extra" value="cheese" class="form-check-input" />', '                        <label for="cheese" class="form-check-label">תוספת גבינה</label>', '                    </div>', '                    <input type="submit" value="שליחה" class="btn btn-success" />', '                </form>', '            </div>', '        </div>', '    </div>', '</div>'];
 const s48 = bsplit($('#s48'), {min:60, onSubmit: (form, doc) => { s48.note.innerHTML = '✔ הטופס נשלח' + (doc.getElementById('name').value ? ' בשם ' + esc(doc.getElementById('name').value) : '') + '. (בהדגמה לא באמת שולחים.)'; }});
 seg($('#s48seg'), ['בלי Bootstrap', 'עם Bootstrap'], (o,i) => {
   const link = '<link rel="stylesheet" href="' + LOCAL_CSS + '" />';
@@ -1185,16 +1384,16 @@ seg($('#s48seg'), ['בלי Bootstrap', 'עם Bootstrap'], (o,i) => {
 }, 0);
 
 /* ======================================================= 5.1 own CSS on top */
-const OWN_CSS = L(['h1 {', '    color: #c0392b;', '    font-weight: bold;', '}', '.price {', '    color: crimson;', '}']);
+const OWN_CSS = L(['h1 {', '    font-size: 44px;', '}', '.price {', '    color: crimson;', '}', 'a {', '    color: darkred;', '}']);
 const OWN_URL = 'data:text/css,' + encodeURIComponent(OWN_CSS);
 const s51 = bsplit($('#s51'), {min:60, css:true, cssTitle:'css/site-style.css'});
 codeLines(s51.cpre, OWN_CSS, 'css');
 seg($('#s51seg'), ['✔ site-style.css אחרי Bootstrap', '✘ site-style.css לפני Bootstrap'], (o,i) => {
   const lb = '    <link rel="stylesheet" href="' + LOCAL_CSS + '" />', lm = '    <link rel="stylesheet" href="../css/site-style.css" />';
-  const code = ['<head>'].concat(i ? [lm, lb] : [lb, lm], ['</head>', '<body>', '    <h1>פיצה דני</h1>', '    <p class="card-text">מרגריטה – <span class="price">45 שקל</span></p>', '</body>']);
-  s51.set(L(code), {1:'diff', 2:'diff'}, '<h1>פיצה דני</h1>\n<p class="card-text">מרגריטה – <span class="price">45 שקל</span></p>', {links: i ? [OWN_URL, BS] : [BS, OWN_URL]});
-  $('#s51what').innerHTML = i ? 'הכותרת חזרה לשחור ולא מודגשת! גם ב-Bootstrap יש כלל ל-<code>h1</code> (צבע ועובי), ועכשיו הוא נכתב <b>אחרי</b> שלכם – אז הוא מנצח. אבל המחיר נשאר אדום: ל-<code>.price</code> אין כלל אצל Bootstrap, אז אין לו עם מי להתחרות.' :
-    'הכותרת אדומה ומודגשת – הכללים שלכם נכתבו <b>אחרונים</b>, אז הם גוברים על הכללים של Bootstrap ל-<code>h1</code>. והמחיר אדום בזכות ה-class שהמצאתם, <code>price</code>.';
+  const code = ['<head>'].concat(i ? [lm, lb] : [lb, lm], ['</head>', '<body>', '    <h1>פיצה דני</h1>', '    <p class="card-text">מרגריטה – <span class="price">45 שקל</span></p>', '    <a href="menu.html">לתפריט המלא</a>', '    <a href="order.html" class="btn btn-primary">להזמנה</a>', '</body>']);
+  s51.set(L(code), {1:'diff', 2:'diff'}, '<h1>פיצה דני</h1>\n<p class="card-text">מרגריטה – <span class="price">45 שקל</span></p>\n<a href="menu.html">לתפריט המלא</a>\n<a href="order.html" class="btn btn-primary">להזמנה</a>', {links: i ? [OWN_URL, BS] : [BS, OWN_URL]});
+  $('#s51what').innerHTML = i ? 'הכותרת התכווצה – חזרה לגודל של Bootstrap! גם ב-Bootstrap יש כלל שקובע את הגודל של <code>h1</code>, ועכשיו הוא נכתב <b>אחרי</b> שלכם – אז הוא מנצח. אבל המחיר נשאר אדום: ל-<code>.price</code> אין כלל אצל Bootstrap, אז אין לו עם מי להתחרות.' :
+    'הכותרת גדולה (44 פיקסלים) – הכלל שלכם נכתב <b>אחרון</b>, אז הוא גובר על הכלל של Bootstrap ל-<code>h1</code>. והמחיר אדום בזכות ה-class שהמצאתם, <code>price</code>. עכשיו בחרו בכפתור השני.';
 }, 0);
 
 /* ======================================================= 6. playground */
@@ -1247,13 +1446,13 @@ const TASKS = [
      explain: '<code>card</code> הוא העוטף – המסגרת והפינות המעוגלות. <code>card-header</code> הוא הפס העליון האפור, ו-<code>card-body</code> הוא הגוף עם הריפוד. שניהם ילדים ישירים של card – לכן הם בתוכו, זה אחרי זה.',
      alt: 'רוצים רווח בין השורה לכרטיס? הוסיפו לכרטיס גם <code>mt-4</code>: <code>class="card mt-4"</code>.'},
    back: 'comps:3'},
-  {id:'t4', text:'בתוך גוף הכרטיס – כפתור ירוק: <code>btn btn-success</code>.',
+  {id:'t4', text:'בתוך גוף הכרטיס – קישור לדף <span class="cls">order.html</span> שנראה כמו כפתור ירוק: <code>btn btn-success</code>.',
    test: d => newCard(d).some(c => { const b = c.querySelector(':scope > .card-body .btn.btn-success'); return !!b && /^(BUTTON|A)$/.test(b.tagName); }),
-   hints: ['כפתור של Bootstrap מקבל שני class-ים: הצורה הבסיסית, ועוד אחד לצבע. ירוק = הצלחה (success). ואיפה? בתוך ה-div של הגוף.',
-           'בתוך ה-div של <code>card-body</code>, אחרי הטקסט: <code>&lt;button class="btn btn-success"&gt;להזמנה&lt;/button&gt;</code>'],
-   solution: {code: L(CARD_SOL.slice(0, 4).concat(['        <button class="btn btn-success">להזמנה</button>'], CARD_SOL.slice(4))), lang: 'html',
-     explain: '<code>btn</code> נותן את צורת הכפתור, ו-<code>btn-success</code> את הצבע הירוק. הכפתור יושב בתוך card-body – ולכן הוא חלק מגוף הכרטיס, עם הריפוד שלו.',
-     alt: 'גם קישור יכול להיראות ככפתור: <code>&lt;a href="#" class="btn btn-success"&gt;להזמנה&lt;/a&gt;</code> – הבדיקה מקבלת גם אותו. כפתור מחוץ ל-card-body – לא, כי המשימה ביקשה אותו בגוף הכרטיס.'},
+   hints: ['כפתור של Bootstrap מקבל שני class-ים: הצורה הבסיסית, ועוד אחד לצבע. ירוק = הצלחה (success). על איזו תגית? מעבירים לדף אחר – אז קישור. ואיפה? בתוך ה-div של הגוף.',
+           'בתוך ה-div של <code>card-body</code>, אחרי הטקסט: <code>&lt;a href="order.html" class="btn btn-success"&gt;להזמנה&lt;/a&gt;</code>'],
+   solution: {code: L(CARD_SOL.slice(0, 4).concat(['        <a href="order.html" class="btn btn-success">להזמנה</a>'], CARD_SOL.slice(4))), lang: 'html',
+     explain: '<code>btn</code> נותן את צורת הכפתור, ו-<code>btn-success</code> את הצבע הירוק. התגית היא <code>a</code>, כי הכפתור מעביר לדף אחר. והוא יושב בתוך card-body – חלק מגוף הכרטיס, עם הריפוד שלו.',
+     alt: 'גם <code>&lt;button class="btn btn-success"&gt;</code> נראה אותו דבר, והבדיקה מקבלת אותו – אבל button לא מעביר לדף אחר. כפתור מחוץ ל-card-body לא מתקבל, כי המשימה ביקשה אותו בגוף הכרטיס.'},
    back: 'comps:2'},
   {id:'t5', text:'תנו לכותרת h1 רווח מלמעלה ויישור למרכז – רק עם class-ים של Bootstrap.',
    test: d => { const h = d.querySelector('h1'); if (!h || h.hasAttribute('style')) return false; const cs = d.defaultView.getComputedStyle(h);
@@ -1282,17 +1481,52 @@ doneCheck('#stepDone', 'step');
 
 /* ======================================================= quiz */
 quiz('#quiz', [
-  {q:'לכל אחד משלושה כרטיסים יש <code>col-md-4</code>. איך הם ייראו בטלפון ברוחב 360?', opts:['שלושה בשורה, צפופים', 'אחד מתחת לשני', 'הם לא יופיעו בכלל'], correct:1,
-   why:['זה מה שקורה עם <code>col-4</code> – בלי נקודת שבירה.', 'נכון: 360 קטן מ-md (768), אז כל כרטיס תופס שורה שלמה.', 'ה-class לא מסתיר – הוא רק קובע רוחב.']},
-  {q:'בשורה אחת יש <code>col-8</code> ו-<code>col-6</code>. מה יקרה?', opts:['שתיהן יתכווצו כדי להיכנס', 'השנייה תרד לשורה הבאה', 'תופיע שגיאה בדפדפן'], correct:1,
-   why:['Bootstrap לא מכווץ עמודות – כל אחת שומרת על הגודל שלה.', '8 + 6 = 14, יותר מ-12. מה שלא נכנס – יורד שורה.', 'ב-CSS אין הודעות שגיאה.']},
-  {q:'בטלפון לוחצים על ☰ בתפריט, ולא קורה כלום. מה כנראה חסר בדף?', opts:['שורת ה-viewport', 'ה-script של <code>bootstrap.bundle.min.js</code> לפני <code>&lt;/body&gt;</code>', 'ה-class <code>container</code>'], correct:1,
-   why:['בלי viewport הדף קטן, אבל הכפתור עדיין היה עובד.', 'נכון. פתיחה בלחיצה היא פעולה – והיא כתובה בקובץ ה-JS. <a href="#" data-go="comps:6">נסו כאן</a>.', 'container רק ממרכז את התוכן.']},
-  {q:'בונים דף בעברית עם Bootstrap. מה צריך?', opts:['רק <code>dir="rtl"</code> בתגית html', '<code>dir="rtl"</code> וגם הקובץ <code>bootstrap.rtl.min.css</code>', 'לכתוב <code>text-align: right</code> לכל תגית'], correct:1,
-   why:['עם הקובץ הרגיל חלק מהרכיבים ייצאו הפוכים – <a href="#" data-go="setup:4">ראו כאן</a>.', 'נכון: הכיוון בתגית html, והקובץ שהופך את הצדדים של Bootstrap.', 'זה לא מספיק – Bootstrap עצמו צריך לדעת שהדף מימין לשמאל.']},
-  {q:'כתבתם ב-<span class="nw">site-style.css</span> <code>h1 { color: red; }</code>, וזה לא עובד. class חדש שהמצאתם – כן עובד. מה הבעיה?', opts:['<span class="nw">site-style.css</span> מקושר <b>לפני</b> Bootstrap', 'Bootstrap לא מרשה לשנות צבעים', 'אסור לכתוב כלל ל-h1 בקובץ חיצוני'], correct:0,
-   why:['נכון. ל-h1 יש כלל גם ב-Bootstrap; שווים בכוח – האחרון מנצח. מקשרים את <span class="nw">site-style.css</span> אחרי Bootstrap.', 'מותר – אם הקובץ שלכם מקושר אחרי Bootstrap.', 'מותר לגמרי. הבעיה היא הסדר של שורות ה-link.']}
+  {q:'דף חדש נשמר בתיקייה <span class="cls">wwwroot/HTML/blog</span> – תיקייה שנמצאת <b>בתוך</b> HTML. מה כותבים ב-href שלו כדי לקשר לקובץ ה-RTL של Bootstrap?',
+   opts:['<code class="brk">../lib/bootstrap/dist/css/bootstrap.rtl.min.css</code>', '<code class="brk">../../lib/bootstrap/dist/css/bootstrap.rtl.min.css</code>', '<code class="brk">lib/bootstrap/dist/css/bootstrap.rtl.min.css</code>', '<code class="brk">../../wwwroot/lib/bootstrap/dist/css/bootstrap.rtl.min.css</code>'], correct:1,
+   why:['<code>../</code> אחד עולה רק מ-blog ל-HTML – ושם אין תיקייה בשם lib.', '<code>../</code> ראשון עולה מ-blog ל-HTML, והשני מ-HTML ל-wwwroot. משם נכנסים ל-lib.', 'בלי <code>../</code> הדפדפן מחפש תיקייה בשם lib בתוך blog עצמה.', 'אחרי שני <code>../</code> כבר עומדים בתוך wwwroot – ואין בתוכה עוד תיקייה בשם wwwroot.'], back:'setup:2'},
+  {q:'בשורה אחת יש ארבע עמודות: שלוש עם <code>col-md-3</code>, ואחרונה עם <code>col-md-6</code>. מה רואים במחשב רחב?',
+   opts:['ארבעתן בשורה אחת – Bootstrap מכווץ אותן', 'שלוש בשורה, והרביעית יורדת שורה', 'כל אחת בשורה משלה, כמו בטלפון'], correct:1,
+   why:['Bootstrap לא מכווץ: כל עמודה שומרת על הרוחב שביקשה. חשבו כמה חלקים ביקשו ארבעתן יחד.', '<span class="crumb">3 + 3 + 3 = 9</span>, ועוד 6 – כבר 15, יותר מ-12. הרביעית לא נכנסת ויורדת לשורה חדשה, ושם היא תופסת חצי.', 'במחשב רחב ה-class-ים של md פועלים, ושלוש הראשונות (9 מתוך 12) נכנסות יפה בשורה אחת.'], back:'grid:2'},
+  {q:'גלריית תמונות: כל תמונה יושבת בעמודה עם <code>class="col-6 col-lg-3"</code>. כמה תמונות יהיו בשורה בטלפון (360), וכמה במחשב (1140)?',
+   opts:['1 בטלפון, 3 במחשב', '1 בטלפון, 4 במחשב', '2 בטלפון, 4 במחשב', '2 בטלפון, 3 במחשב'], correct:2,
+   why:['<code>col-6</code> הוא בלי נקודת שבירה, אז הוא פועל גם בטלפון: 6 מתוך 12. כמה כאלה נכנסות בשורה? ו-<code>col-lg-3</code>: כמה פעמים 3 נכנס ב-12?', 'במחשב צדקתם. אבל בטלפון <code>col-6</code> פועל – 6 מתוך 12 הם חצי שורה, לא שורה שלמה.', '<code>col-6</code> פועל תמיד – חצי, שתיים בשורה. מ-lg (992) נדלק <code>col-lg-3</code> וגובר – רבע, ארבע בשורה.', 'בטלפון צדקתם. במחשב: <code>col-lg-3</code> הוא 3 חלקים מתוך 12 – רבע שורה. כמה רבעים יש בשורה?'], back:'grid:5'},
+  {q:'שכחתם את ה-div של <code>row</code>: שלוש עמודות <code>col-md-4</code> יושבות ישר בתוך ה-container. מה תראו במחשב?',
+   opts:['שלוש זו ליד זו – ה-container מספיק', 'שלוש זו מתחת לזו, ולא בשורה אחת', 'הודעת שגיאה: חסרה שורה'], correct:1,
+   why:['container רק עוטף וממרכז. מי שמעמיד עמודות זו ליד זו הוא <code>row</code>.', 'רק בתוך <code>row</code> העמודות נעמדות זו ליד זו. בלעדיו כל div נשאר block – ומתחיל שורה חדשה.', 'אין הודעות שגיאה – רק סידור שלא ציפיתם לו.'], back:'grid:1'},
+  {q:'תמונה רחבה יושבת בעמודה צרה (<code>col-md-4</code>), ובולטת החוצה – מעל העמודה השכנה. מה מוסיפים לתגית <code>img</code>?',
+   opts:['<code>class="img-fluid"</code>', '<code>class="h-100"</code>', '<code>class="col-12"</code>', '<code>class="container"</code>'], correct:0,
+   why:['עם img-fluid התמונה אף פעם לא רחבה מהעמודה שלה, ומתכווצת יחד איתה.', 'h-100 קובע גובה – 100% מהתגית העוטפת. הבעיה כאן היא הרוחב.', 'col-12 הוא class לעמודה בתוך row, לא לתמונה.', 'container הוא העוטף של תוכן הדף, לא class לתמונה.'], back:'grid:6'},
+  {q:'דף בעברית, עם קובץ ה-RTL. רוצים רווח בצד <b>ימין</b> של קופסה – מחוץ לה – בלי לכתוב CSS. איזה class?',
+   opts:['<code>ms-3</code>', '<code>me-3</code>', '<code>mt-3</code>', '<code>mb-3</code>'], correct:0,
+   why:['s = start, ההתחלה. בדף בעברית ההתחלה היא בצד ימין.', 'e = end, הסוף – ובעברית הסוף הוא בצד שמאל.', 't = top – רווח מלמעלה, לא מהצד.', 'b = bottom – רווח מלמטה, לא מהצד.'], back:'comps:1'},
+  {q:'ב-navbar החלפתם את <code>navbar-expand-md</code> ב-<code>navbar-expand-lg</code>. מה ישתנה בטאבלט ברוחב 820?',
+   opts:['כלום – גם קודם הקישורים היו פרוסים', 'הקישורים יוסתרו, ויופיע כפתור ☰', 'התפריט כולו ייעלם מהדף'], correct:1,
+   why:['קודם הם באמת היו פרוסים: 820 גדול מ-md (768). אבל עכשיו התפריט נפרס רק מ-lg (992) – ו-820 קטן מזה.', '820 קטן מ-lg (992), אז התפריט מקופל – כמו שהיה קודם רק בטלפון.', 'התפריט לא נעלם: שם האתר נשאר, והקישורים מחכים מאחורי ☰.'], back:'comps:6'},
+  {q:'העתקתם את ה-navbar לדף חדש. הוא נראה מצוין, אבל בטלפון ☰ לא פותח כלום. ב-F12, בלשונית Console, יש שורה אדומה: 404 על הקובץ <span class="cls">bootstrap.bundle.min.js</span>. מה הבעיה?',
+   opts:['הנתיב ב-src של שורת ה-script שגוי', 'חסרה שורת ה-viewport ב-head של הדף', 'ה-id של התפריט לא תואם לכפתור ☰', 'הדף מקושר לקובץ ה-CSS הרגיל, לא ל-RTL'], correct:0,
+   why:['404 = הקובץ לא נמצא. הדפדפן חיפש את קובץ ה-JS בנתיב שכתבתם ולא מצא – ובלי הקוד, אין מי שיפתח את התפריט.', 'בלי viewport הדף נראה זעיר בטלפון אמיתי – אבל זה לא יוצר שגיאת 404 על קובץ ה-JS.', 'זו סיבה אפשרית לתפריט שלא נפתח – אבל היא לא יוצרת שגיאת 404. מה ה-Console אומר שחסר?', 'אז תיבות סימון וחצים היו בצד הלא נכון – אבל ה-404 מדבר על קובץ ה-JS.'], back:'setup:1'},
+  {q:'כדי לחסוך זמן הוספתם <code>class="form-control"</code> לכל ה-input בטופס ההרשמה – גם לשני כפתורי ה-radio של "מין". איך ייראו שני הכפתורים האלה?',
+   opts:['עיגולים קטנים, צמודים למילים שלהם', 'פסים רחבים, לכל רוחב הטופס', 'הם ייעלמו מהטופס לגמרי'], correct:1,
+   why:['ככה הם נראים עם <code>form-check-input</code>, בתוך div עם <code>form-check</code>. אבל זה לא מה שנכתב כאן.', 'form-control נועד לשדות שמקלידים בהם, והוא מותח כל input לרוחב מלא – גם כפתור radio. לפקדי סימון: <code>form-check-input</code>.', 'הם לא נעלמים – הם רק מקבלים צורה שלא מתאימה להם.'], back:'comps:10'},
+  {q:'<span class="nw">site-style.css</span> מקושר אחרי Bootstrap, וכתבתם בו <code>.card-title { margin-bottom: 30px; }</code>. גם ב-Bootstrap יש כלל עם הבורר <code>.card-title</code>, שקובע רווח קטן יותר. כמה רווח יהיה מתחת לכותרות של הכרטיסים?',
+   opts:['30 פיקסלים – הכלל שלכם נכתב אחרון', 'הרווח של Bootstrap – ספרייה תמיד מנצחת', 'בלי רווח – שני הכללים מבטלים זה את זה'], correct:0,
+   why:['שני הבוררים שווים בכוח (class אחד), אז מנצח הכלל שנכתב אחרון – והקובץ שלכם מקושר אחרי Bootstrap.', 'לספרייה אין כוח מיוחד: הכללים שלה הם כללי CSS רגילים. שווים בכוח? האחרון מנצח.', 'כללים לא מבטלים זה את זה – תמיד אחד מהם מנצח. מי נכתב אחרון?'], back:'mine:1'}
 ]);
+
+/* ======================================================= 📌 what this lesson adds to submission 1 (nothing is submitted after lesson 5) */
+(function(){
+  const box = $('#ready5'); if (!box) return;
+  const st = state.ready5 = state.ready5 || {};
+  const lis = [...box.querySelectorAll('.asg-list > li')], prog = box.querySelector('.asg-prog');
+  let cheered = false;   /* once per visit: ticking, unticking and ticking again is not a confetti button */
+  function paint(){
+    const n = lis.filter((li, i) => st[i]).length;
+    lis.forEach((li, i) => { li.classList.toggle('done', !!st[i]); li.querySelector('input').checked = !!st[i]; });
+    prog.textContent = n === lis.length ? '✔ החלק של שיעור 5 מוכן. הלאה – לשיעור 6.' : 'סימנתם ' + n + ' מתוך ' + lis.length;
+  }
+  lis.forEach((li, i) => li.querySelector('input').addEventListener('change', e => { st[i] = e.target.checked; save(); paint(); if (e.target.checked && lis.every((x, k) => st[k]) && !cheered) { cheered = true; Course.finale(box, {key: 'ready5', perfect: true, title: 'החלק של שיעור 5 מוכן!', sub: 'הלאה – לשיעור 6'}); } }));
+  paint();
+})();
 
 /* ======================================================= summary */
 codeLines($('#sumPage'), L(PAGE('bootstrap.rtl.min.css').slice(0, 7).concat(['    <link rel="stylesheet" href="../css/site-style.css" />'], PAGE('').slice(7))), 'html', {4:'new', 6:'new', 7:'new', 12:'new'});
@@ -1300,61 +1534,75 @@ codeLines($('#sumPage'), L(PAGE('bootstrap.rtl.min.css').slice(0, 7).concat(['  
 /* ======================================================= eggs */
 const EGGS = [
   {id:'phone', icon:'📱', name:'הקישור של הטלפון', learn:'<code>d-md-none</code> מסתיר תגית מ-md ומעלה – כך מציגים משהו רק בטלפון. וההפך: <code>d-none d-md-block</code> = רק במסכים גדולים.',
-   h1:'בתפריט הניווט של פיצה דני יש קישור אחד שאי אפשר לראות במחשב.', h2:'בשלב "תפריט ניווט": בחרו 📱 טלפון, לחצו על ☰, ולחצו על הקישור שמופיע רק שם.'},
+   h1:'בתפריט הניווט של פיצה דני יש קישור אחד שאי אפשר לראות במחשב.', h2:'בשלב "תפריט ניווט: navbar" (בנושא "רכיבים מוכנים"): בחרו 📱 טלפון, לחצו על ☰, ולחצו על הקישור שמופיע רק שם.'},
   {id:'danger', icon:'🔴', name:'הכפתור שהחליף צבע', learn:'ב-Bootstrap הצבע הוא חלק משם ה-class. מחליפים מילה אחת (<code>primary</code> ← <code>danger</code>) – והעיצוב מתחלף. שינוי ב-F12 הוא זמני ונעלם ברענון.',
-   h1:'בדף "מה תבנו היום" (השלב הראשון) יש כפתור כחול. איזה class צובע אותו – ומה יקרה אם תחליפו לו את השם?', h2:'F12 ← חץ בחירת אלמנט ← לחצו על "להזמנה" ← לחיצה כפולה על <code>btn-primary</code> ← כתבו <code>btn-danger</code> ← Enter.',
+   h1:'בדף של פיצה דני שבשלב הראשון של השיעור ("ברוכים הבאים") יש כפתור כחול. איזה class צובע אותו – ומה יקרה אם תחליפו בו את שם הצבע?', h2:'בשלב הראשון: F12 &rlm;←&rlm; חץ בחירת אלמנט &rlm;←&rlm; לחצו על הכפתור "להזמנה" &rlm;←&rlm; בקוד, לחיצה כפולה על <code>btn-primary</code> &rlm;←&rlm; כתבו במקומו <code>btn-danger</code> &rlm;←&rlm; Enter.',
    poll: () => { const d = welcomeDev.doc; const b = d && d.getElementById('orderBtn'); return !!(b && b.classList.contains('btn-danger')); }},
   {id:'alt', icon:'🖼', name:'הטקסט שמאחורי התמונה', learn:'<code>alt</code> הוא טקסט חלופי: קוראי מסך מקריאים אותו לאנשים עיוורים, והוא מופיע אם התמונה לא נטענת. לכל תמונה בכרטיס כותבים alt עם תיאור אמיתי.',
-   h1:'לכל תמונה בכרטיסים של "מה תבנו היום" יש טקסט שלא רואים על המסך. באחד מהם מחכה לכם משהו.', h2:'F12 ← חץ בחירת אלמנט ← לחצו על תמונת פיצת הזיתים בשלב הראשון ← קראו את המאפיין <code>alt</code>.', code:'T0xJVkVT'},
+   h1:'לכל תמונה בכרטיסים שבדף של פיצה דני (בשלב הראשון של השיעור) יש טקסט שלא רואים על המסך. באחד מהם מחכה לכם משהו.', h2:'בשלב הראשון: F12 &rlm;←&rlm; חץ בחירת אלמנט &rlm;←&rlm; לחצו על התמונה של פיצת הזיתים &rlm;←&rlm; קראו בקוד את המאפיין <code>alt</code> שלה.', code:'T0xJVkVT'},
   {id:'width', icon:'📏', name:'הרוחב הסודי', learn:'מאחורי כל נקודת שבירה יש כלל CSS שנקרא media query: "החל את הכללים האלה רק כשהמסך ברוחב מסוים". כך Bootstrap בנוי בפנים.',
-   h1:'יש הודעה שמופיעה רק כשחלון הדפדפן ברוחב מסוים מאוד – לא רחב ולא צר, בדיוק כמו נקודת שבירה.', h2:'עברו לשלב על שורת ה-viewport. F12 &rlm;←&rlm; סמל הטלפון (Ctrl+Shift+M) &rlm;←&rlm; בתפריט Dimensions בחרו Responsive &rlm;←&rlm; בשדה הרוחב כתבו 730.', code:'QlJFQUtQT0lOVA=='},
+   h1:'יש הודעה שמופיעה רק כשחלון הדפדפן ברוחב מסוים מאוד – לא רחב ולא צר, בדיוק כמו נקודת שבירה.', h2:'עברו לשלב "שורת ה-viewport: מה היא עושה?" (בנושא "מחברים את Bootstrap"). F12, ואז Ctrl+Shift+M &rlm;←&rlm; בתפריט Dimensions בחרו Responsive &rlm;←&rlm; בשדה הרוחב כתבו 730.', code:'QlJFQUtQT0lOVA=='},
   {id:'docs', icon:'📚', name:'צייד בתיעוד', learn:'מפתחים לא זוכרים הכול בעל פה – הם יודעים לחפש בתיעוד (documentation). זו המיומנות החשובה של השיעור.',
    h1:'באתר של Bootstrap יש רכיב שמציג עיגול "טוען..." מסתובב. השם שלו – מילה אחת באנגלית, <b>ביחיד</b> – הוא הקוד.', h2:'<span class="crumb">getbootstrap.com → Docs</span> &rlm;←&rlm; בתפריט הצד, תחת Components, עברו על השמות. אחד מהם הוא עיגול מסתובב. בתפריט השם כתוב ברבים (עם s בסוף) – הקוד הוא אותה מילה ביחיד, בלי ה-s.', code:'U1BJTk5FUg=='}
 ];
 /* ======================================================= 💻 "works on the site but not for me?" – the shared list + what is special in each topic */
-const TR_ORDER = {t:'השורות של Bootstrap במקום ובסדר הנכון?', how:'ב-head: קודם ה-link ל-Bootstrap, ו<b>אחריו</b> ה-link ל-<code>../css/site-style.css</code> – כך הכללים שלכם מנצחים. ה-script – בסוף ה-body, מיד לפני <code>&lt;/body&gt;</code>.'};
+const TR_ORDER = {t:'השורות של Bootstrap במקום ובסדר הנכון?', how:'ב-head: קודם ה-link ל-Bootstrap, ו<b>אחריו</b> ה-link ל-<code>../css/site-style.css</code> – כך, כשכלל שלכם וכלל של Bootstrap שווים בכוח, שלכם מנצח. ה-script – בסוף ה-body, מיד לפני <code>&lt;/body&gt;</code>.'};
 const TR_CLS = {t:'שמות ה-class כתובים בדיוק?', how:'<code>col-md-6</code> – באותיות קטנות, עם מקף בין כל חלק. <code>col-md6</code>, <code>col_md_6</code> או <code>Col-md-6</code> הם סתם שמות ש-Bootstrap לא מכיר. אין הודעת שגיאה – ה-class פשוט לא עושה כלום.'};
-const TR_JS = {t:'משהו שאמור לזוז בלחיצה לא זז?', how:'תפריט שנפתח ב-☰, Accordion, Carousel – כולם צריכים את שורת ה-script של <code>bootstrap.bundle.min.js</code> בסוף ה-body. בדקו שהנתיב עובר בתיקייה <b>js</b> ולא css: <code class="brk">../lib/bootstrap/dist/js/bootstrap.bundle.min.js</code>'};
+const TR_JS_PATH = 'בדקו שהשורה קיימת, ושהנתיב שלה עובר בתיקייה <b>js</b> ולא css: <code class="brk">../lib/bootstrap/dist/js/bootstrap.bundle.min.js</code> – ושהיא נגמרת בתגית סוגרת, <code>&lt;/script&gt;</code>, ולא בקיצור <code>/&gt;</code> כמו link.';
+const TR_JS = {t:'התפריט לא נפתח בלחיצה על ☰?', how:'כל דבר שנפתח או זז בלחיצה צריך את שורת ה-script של <code>bootstrap.bundle.min.js</code> בסוף ה-body. ' + TR_JS_PATH};
+const TR_JS_DOCS = {t:'רכיב מהתיעוד נראה נכון, אבל לא מגיב ללחיצה?', how:'רכיבים שנפתחים או זזים – כמו Accordion ו-Carousel – צריכים את שורת ה-script של <code>bootstrap.bundle.min.js</code> בסוף ה-body. ' + TR_JS_PATH};
+const TR_OLDNAV = {t:'התפריט החדש נראה מוזר – למשל, רקע צבעוני כשהעכבר על קישור?', how:'כנראה נשארו ב-<code>site-style.css</code> כללי התפריט הישנים משיעור 4: <code>nav ul</code>, <code>nav li</code>, <code>nav a</code>, <code>nav a:hover</code>. הם חלים על כל תגית nav – גם על ה-navbar של Bootstrap. מחקו את ארבעתם (צעד 3).'};
+const TR_TWO = {t:'יש בדף שתי כותרות או שני תפריטים?', how:'נשאר בדף ה-div הישן של <code>site-header</code> משיעור 4. מחקו אותו כולו, עד ה-<code>&lt;/div&gt;</code> שסוגר אותו – התפריט החדש מחליף אותו.'};
+const TR_NARROW = {t:'אתם במחשב, והכול נראה כמו בטלפון – ☰ במקום קישורים, עמודות אחת מתחת לשנייה?', how:'חלון הדפדפן צר מנקודת השבירה – למשל כשהוא תופס חצי מסך. הגדילו אותו למסך מלא ובדקו שוב. זו לא תקלה: כך ייראה האתר בכל חלון צר (<a href="#" data-go="grid:4">נקודות שבירה</a>).'};
+const TR_SCROLL = {t:'בגודל טלפון יש גלילה הצידה?', how:'מחפשים מה רחב מהמסך, לפי הסדר: (1) <code>row</code> שלא נמצא בתוך <code>container</code>. (2) תמונה בלי <code>img-fluid</code> (תמונה בכרטיס, עם <code>card-img-top</code>, בסדר). (3) <code>width</code> קבוע בפיקסלים ב-<code>site-style.css</code>, למשל קופסה ברוחב 400px – מחקו את ה-width, והעמודה תקבע את הרוחב. (4) טבלה רחבה משיעור 4 – עטפו אותה ב-div עם <code>class="table-responsive"</code>, ואז רק הטבלה נגללת ולא כל הדף. (5) <code>g-5</code> על שורה – רדו ל-<code>g-4</code>.'};
 const TR_PHONE = {t:'בודקים בגודל טלפון – בדרך הנכונה?', how:'בדפדפן F12, ואז Ctrl+Shift+M. בראש התצוגה, בתפריט Dimensions, בוחרים Responsive – ובשדה הרוחב כותבים 360. בטלפון אמיתי חייבת להיות שורת ה-viewport ב-head – אחרת הכול ייראה קטנטן (<a href="#" data-go="setup:5">השלב על viewport</a>).'};
 trouble('#trSetup', {add:[
   {t:'הנתיב ל-Bootstrap מדויק, אות באות?', how:'מדף בתיקייה HTML: <code class="brk">../lib/bootstrap/dist/css/bootstrap.rtl.min.css</code>. עקבו אחריו ב-Solution Explorer: wwwroot &rlm;←&rlm; lib &rlm;←&rlm; bootstrap &rlm;←&rlm; dist &rlm;←&rlm; css (<a href="#" data-go="setup:2">השלב על הדרך לקובץ</a>).', first:true},
   TR_ORDER,
-  {t:'דף בעברית: גם <code>dir="rtl"</code> וגם קובץ ה-RTL?', how:'צריך את שניהם: <code>dir="rtl"</code> בתגית html, והקובץ <code>bootstrap.rtl.min.css</code> – לא <code>bootstrap.min.css</code>. עם הקובץ הרגיל חצים ותיבות סימון יוצאים בצד הלא נכון (<a href="#" data-go="setup:4">ראו בשלב 4</a>).'},
+  {t:'דף בעברית: גם <code>dir="rtl"</code> וגם קובץ ה-RTL?', how:'צריך את שניהם: <code>dir="rtl"</code> בתגית html, והקובץ <code>bootstrap.rtl.min.css</code> – לא <code>bootstrap.min.css</code>. עם הקובץ הרגיל תיבות סימון וחצים של רשימות נפתחות יוצאים בצד הלא נכון (<a href="#" data-go="setup:4">ראו בשלב 4</a>).'},
   {t:'יש שורת viewport ב-head?', how:'<code>&lt;meta name="viewport" content="width=device-width, initial-scale=1" /&gt;</code> – בלעדיה הכול עובד במחשב, אבל בטלפון אמיתי הדף מוקטן ונראה זעיר.'}]});
 trouble('#trGrid', {add:[
+  TR_NARROW,
   TR_CLS,
   {t:'העמודות יושבות ישר בתוך row?', how:'הסדר: <span class="crumb">container → row → col</span>, אחת בתוך השנייה. עמודה שלא נמצאת <b>ישר</b> בתוך row לא מסתדרת בשורה (<a href="#" data-go="grid:1">השלב על שלוש הקופסאות</a>).'},
-  {t:'סכום העמודות בשורה הוא 12 לכל היותר?', how:'<span class="crumb">8 + 4 = 12</span> ✔. <span class="crumb">8 + 6 = 14</span> – העמודה השנייה יורדת לשורה הבאה (<a href="#" data-go="grid:2">השלב על 12 חלקים</a>).'},
-  {t:'התמונה בורחת מהעמודה שלה?', how:'הוסיפו לתמונה <code>class="img-fluid"</code> ומחקו ממנה את <code>width</code> – כך היא אף פעם לא רחבה מהעמודה.'},
+  {t:'עמודה ירדה שורה כשרציתם אותה ליד השכנה?', how:'חברו את המספרים של העמודות שאמורות לעמוד זו ליד זו: <span class="crumb">8 + 4 = 12</span> ✔. <span class="crumb">8 + 6 = 14</span> – השנייה יורדת לשורה הבאה (<a href="#" data-go="grid:2">השלב על 12 חלקים</a>).'},
+  {t:'התמונה בורחת מהעמודה שלה?', how:'הוסיפו לתמונה <code>class="img-fluid"</code> – כך היא אף פעם לא רחבה מהעמודה.'},
+  TR_SCROLL,
   TR_PHONE]});
 trouble('#trComps', {add:[
+  TR_NARROW,
   TR_JS,
-  {t:'הכפתור ☰ מכוון לאותו id?', how:'בכפתור: <code>data-bs-target="#mainMenu"</code> – עם סולמית. ב-div שמתקפל: <code>id="mainMenu"</code> – בלי סולמית. השם זהה בדיוק, כולל אותיות גדולות וקטנות.'},
+  {t:'הכפתור ☰ מכוון לאותו id?', how:'בכפתור: <code>data-bs-target="#mainMenu"</code> – עם סולמית. ב-div שמתקפל: <code>id="mainMenu"</code> – בלי סולמית. השם זהה בדיוק, כולל אותיות גדולות וקטנות (<a href="#" data-go="comps:8">השלב על הכפתור ☰</a>).'},
+  {t:'הסמל ☰ לא נראה, או שהקישורים בתפריט כחולים?', how:'בדקו שבשורה הראשונה של התפריט – שורת ה-<code>nav</code> – כתוב גם <code>navbar-light</code> (או <code>navbar-dark</code>, בתפריט כהה). בגרסאות 5.1 ו-5.2 של Bootstrap הוא זה שצובע את הקישורים ואת ☰ בכהה.'},
+  TR_OLDNAV,
+  TR_TWO,
   TR_CLS,
   {t:'הכרטיסים לא באותו גובה?', how:'<code>h-100</code> שמים על ה-div של <code>card</code> – לא על ה-col (<a href="#" data-go="comps:5">השלב על כרטיסים בגריד</a>).'},
+  {t:'התפריט ארוך, יוצא מהמסך או נשבר לשתי שורות?', how:'כשיש הרבה קישורים – החליפו את <code>navbar-expand-md</code> ב-<code>navbar-expand-xl</code>: התפריט יתקפל ל-☰ גם במסך בינוני.'},
+  TR_SCROLL,
   TR_PHONE]});
 trouble('#trMine', {add:[
   {t:'העיצוב שלכם לא מנצח את Bootstrap?', how:'ב-head: קודם Bootstrap, ואחריו <span class="nw">site-style.css</span>. כששני כללים שווים בכוח – מנצח זה שנכתב אחרון (<a href="#" data-go="mine:1">שלב 1</a>). ב-F12 &rlm;←&rlm; Styles, הוראה מחוקה בקו = כלל אחר ניצח אותה.', first:true},
-  {t:'אתם כותבים בקובץ הנכון?', how:'הכללים שלכם – רק ב-<code>site-style.css</code>. לא ב-<code>bootstrap.rtl.min.css</code> (קובץ של הספרייה – לא עורכים אותו) ולא ב-<code>site.css</code> (קובץ של התבנית, שלא מחובר לדפים שלכם).'},
+  {t:'אתם כותבים בקובץ הנכון?', how:'הכללים שלכם – רק ב-<code>site-style.css</code>. לא ב-<code>bootstrap.rtl.min.css</code> (קובץ של הספרייה – לא עורכים אותו) ולא ב-<code>site.css</code> (קובץ מהפרויקט ההתחלתי ש-Visual Studio יצר, שלא מחובר לדפים שלכם).'},
   {t:'העתקתם מהתיעוד של אותה גרסה?', how:'בראש האתר של Bootstrap בוחרים גרסה. class שקיים רק בגרסה חדשה יותר לא יעבוד אצלכם. הגרסה שבפרויקט כתובה בשורות הראשונות של <code>bootstrap.rtl.min.css</code>.'},
-  TR_JS]});
+  TR_JS_DOCS]});
 
 /* ======================================================= 🎯 understanding checks – one at the end of every content topic */
 checkpoint('#cpSetup', [
   {type:'text', q:'הדף נמצא ב-<code>wwwroot/HTML</code>. מה כותבים ב-href כדי לקשר לקובץ העיצוב של Bootstrap <b>לעברית</b>?', placeholder:'כתבו את הנתיב',
    accept:[/^\s*(href\s*=\s*)?["']?(\.\.)?\/lib\/bootstrap\/dist\/css\/bootstrap\.rtl\.min\.css["']?\s*$/], answer:'../lib/bootstrap/dist/css/bootstrap.rtl.min.css',
    wrong:'בדקו לפי הסדר: <code>../</code> (עולים מ-HTML ל-wwwroot), ואז lib, bootstrap, dist, css – ושם הקובץ של RTL. הכול באותיות קטנות, עם <code>/</code> בין התיקיות.',
-   explain:'<code>../</code> עולה ל-wwwroot, ומשם נכנסים תיקייה אחרי תיקייה עד הקובץ. בדף בעברית – הקובץ עם <b>rtl</b> בשם. (כתבתם <code>/lib/…</code> עם / בהתחלה? גם זה עובד – זה נתיב מהשורש של האתר. אבל בקורס כותבים <code>../</code>, כמו לתמונות ולקובץ העיצוב שלכם.)', back:'setup:2'},
-  {type:'line', q:'דף בעברית. ברשימה נפתחת בטופס, החץ יושב על הטקסט. באיזו שורה הבעיה?', lang:'html',
+   explain:'<code>../</code> עולה ל-wwwroot, ומשם נכנסים תיקייה אחרי תיקייה עד הקובץ. בדף בעברית – הקובץ עם <b>rtl</b> בשם. (כתבתם <code>/lib/…</code>, עם לוכסן בהתחלה? כשהאתר רץ מהשרת גם זה עובד: נתיב שמתחיל בלוכסן מתחיל מהתיקייה wwwroot. אבל בשיעור הזה כותבים <code>../</code> – נתיב יחסי, כמו לתמונות ולקובץ העיצוב שלכם.)', back:'setup:2'},
+  {type:'line', q:'דף בעברית עם Bootstrap. בטופס, תיבות הסימון נדחקו לקצה השמאלי – רחוק מהמילים שלהן. באיזו שורה הבעיה?', lang:'html',
    code:'<html lang="he" dir="rtl">\n<head>\n    <meta charset="utf-8" />\n    <meta name="viewport" content="width=device-width, initial-scale=1" />\n    <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css" />\n    <link rel="stylesheet" href="../css/site-style.css" />\n</head>',
    correct:5, why:{1:'עברית ומימין לשמאל – בדיוק מה שצריך.', 2:'פתיחת head – תקינה.', 3:'קידוד התווים – תקין.', 4:'שורת ה-viewport – תקינה.', 6:'הקובץ שלכם, אחרי Bootstrap – בדיוק במקום.', 7:'סגירת head – תקינה.'},
-   explain:'זה הקובץ <b>הרגיל</b> של Bootstrap, שחושב משמאל לימין. בדף בעברית מקשרים ל-<code>bootstrap.rtl.min.css</code> – והוא שם את החץ בצד הנכון.', back:'setup:4'},
+   explain:'זה הקובץ <b>הרגיל</b> של Bootstrap, שחושב משמאל לימין. בדף בעברית מקשרים ל-<code>bootstrap.rtl.min.css</code> – והוא מצמיד כל תיבת סימון למילים שלה.', back:'setup:4'},
   {q:'שכחתם את שורת ה-script של <code>bootstrap.bundle.min.js</code>. מה יפסיק לעבוד?', opts:['כל העיצוב של Bootstrap: צבעים, כפתורים, גריד', 'דברים שזזים בלחיצה – כמו תפריט שנפתח ב-☰', 'הדף בטלפון ייראה קטנטן', 'שום דבר – השורה הזו רק מאיצה את הדף'], correct:1,
    why:['העיצוב מגיע מקובץ ה-CSS (ה-link) – והוא עדיין מחובר.', 'קובץ ה-JS אחראי על <b>פעולות</b>: "כשלוחצים – פתחו". בלעדיו הכול נראה נכון, אבל לא זז.', 'על זה אחראית שורת ה-viewport, לא ה-script.', 'השורה הזו מפעילה רכיבים שזזים. בלעדיה הם פשוט לא מגיבים ללחיצה.'], back:'setup:1'},
-  {q:'פתחתם את האתר בטלפון אמיתי, והכול זעיר – צריך לעשות זום עם האצבעות. איזו שורה כנראה חסרה?', opts:['ה-link ל-Bootstrap', 'שורת ה-meta של viewport', 'ה-script בסוף ה-body', '<code>dir="rtl"</code>'], correct:1,
+  {q:'אתר שכבר עלה לאינטרנט נפתח בטלפון אמיתי, והכול זעיר – צריך לעשות זום עם האצבעות. איזו שורה כנראה חסרה בו?', opts:['שורת ה-link ל-Bootstrap', 'שורת ה-meta של viewport', 'שורת ה-script בסוף ה-body', 'המאפיין <code>dir="rtl"</code>'], correct:1,
    why:['בלי Bootstrap הדף לא היה מעוצב – אבל הוא לא היה מוקטן.', 'בלעדיה הטלפון מעמיד פנים שהמסך רחב (בערך 980) ומקטין את כל הדף.', 'ה-script מפעיל דברים שזזים. הוא לא קובע את רוחב הדף.', 'dir קובע את הכיוון – ימין או שמאל – לא את הגודל.'], back:'setup:5'},
-  {q:'בכיתה נפל האינטרנט, ואתם מריצים את האתר ב-Visual Studio. איזה דף עדיין ייראה מעוצב ב-Bootstrap?', opts:['דף שמקושר לקבצים שבתיקייה lib בפרויקט', 'דף שמקושר ל-CDN', 'שניהם – Bootstrap תמיד עובד'], correct:0,
-   why:['נכון: הקבצים נמצאים בפרויקט עצמו, במחשב שלכם – לא צריך אינטרנט.', 'CDN = שרת באינטרנט. בלי אינטרנט הדפדפן לא יכול להביא ממנו את הקובץ, והעיצוב נעלם.', 'דף שמקושר ל-CDN מביא את הקובץ מהאינטרנט – בלעדיו אין עיצוב.'], back:'setup:3'}
+  {q:'בכיתה נפל האינטרנט, ואתם מריצים את האתר ב-Visual Studio. איזה דף <b>בטוח</b> ייראה מעוצב ב-Bootstrap?', opts:['דף שמקושר לקבצים שבפרויקט', 'דף שמקושר ל-CDN באינטרנט', 'שניהם בטוח ייראו אותו דבר'], correct:0,
+   why:['הקבצים נמצאים בפרויקט עצמו, במחשב שלכם – לא צריך אינטרנט.', 'CDN = שרת באינטרנט. בלי אינטרנט הדפדפן לא יכול להביא ממנו את הקובץ – אז אי אפשר לסמוך על זה.', 'דף שמקושר ל-CDN צריך להביא את הקובץ מהאינטרנט. בלי אינטרנט – אי אפשר לסמוך על זה שהעיצוב יופיע.'], back:'setup:3'}
 ]);
 checkpoint('#cpGrid', [
   {q:'איזה class ממרכז את כל התוכן ושומר שהוא לא יימרח על כל הרוחב של מסך ענק?', opts:['<code>row</code>', '<code>container</code>', '<code>col</code>'], correct:1,
@@ -1372,9 +1620,9 @@ checkpoint('#cpGrid', [
    correct:5, why:{1:'העוטף החיצוני – תקין.', 2:'פתיחת השורה – תקינה.', 3:'עמודה של 4 מ-md – תקינה.', 4:'עמודה של 4 מ-md – תקינה.', 6:'סוגר את השורה.', 7:'סוגר את ה-container.'},
    explain:'<code>col-md4</code> – חסר מקף בין md ל-4. Bootstrap לא מכיר את השם הזה, ולכן "זיתים" מתנהגת כמו div רגיל בתוך row: שורה שלמה. בלי שום הודעת שגיאה.', back:'grid:4'},
   {q:'לכל אחת משלוש מנות יש <code>class="col-sm-6 col-lg-4"</code>. כמה מנות יהיו בכל שורה בטאבלט ברוחב 820?', opts:['1', '2', '3'], correct:1,
-   why:['מנה אחת בשורה – רק מתחת ל-sm (576). 820 גדול מזה, אז <code>col-sm-6</code> כבר פועל.', 'נכון: 820 גדול מ-sm (576), אז <code>col-sm-6</code> פועל – חצי שורה. אבל 820 קטן מ-lg (992), אז <code>col-lg-4</code> עוד כבוי. חצי + חצי = 2 בשורה.', '3 בשורה – רק מ-lg (992) ומעלה, כש-<code>col-lg-4</code> נדלק. 820 קטן מזה.'], back:'grid:5'},
+   why:['מנה אחת בשורה – רק מתחת ל-sm (576). 820 גדול מזה, אז <code>col-sm-6</code> כבר פועל.', '820 גדול מ-sm (576), אז <code>col-sm-6</code> פועל – חצי שורה. אבל 820 קטן מ-lg (992), אז <code>col-lg-4</code> עוד כבוי. חצי + חצי = 2 בשורה.', '3 בשורה – רק מ-lg (992) ומעלה, כש-<code>col-lg-4</code> נדלק. 820 קטן מזה.'], back:'grid:5'},
   {q:'על השורה: <code>row row-cols-2 row-cols-lg-4</code>, ובתוכה 8 עמודות <code>col</code>. כמה יהיו בכל שורה בטלפון ברוחב 360?', opts:['1', '2', '4'], correct:1,
-   why:['אין כאן <code>row-cols-1</code>. ה-class בלי נקודת שבירה הוא <code>row-cols-2</code> – והוא פועל תמיד.', 'נכון: <code>row-cols-2</code> פועל בכל רוחב, ו-<code>row-cols-lg-4</code> נדלק רק מ-992.', '4 בשורה – רק מ-lg (992) ומעלה. 360 קטן בהרבה.'], back:'grid:6'}
+   why:['אין כאן <code>row-cols-1</code>. ה-class בלי נקודת שבירה הוא <code>row-cols-2</code> – והוא פועל תמיד.', '<code>row-cols-2</code> פועל בכל רוחב, ו-<code>row-cols-lg-4</code> נדלק רק מ-992.', '4 בשורה – רק מ-lg (992) ומעלה. 360 קטן בהרבה.'], back:'grid:6'}
 ]);
 checkpoint('#cpComps', [
   {q:'רוצים אוויר <b>בתוך</b> קופסה, מכל הצדדים. איזה class?', opts:['<code>m-3</code>', '<code>p-3</code>', '<code>mt-3</code>', '<code>pt-3</code>'], correct:1,
@@ -1383,30 +1631,36 @@ checkpoint('#cpComps', [
    accept:[/^\s*(class\s*=\s*)?["']?\s*(btn\s+btn-success|btn-success\s+btn)\s*["']?\s*$/], answer:'btn btn-success',
    wrong:'כפתור של Bootstrap צריך <b>שני</b> class-ים, עם רווח ביניהם: הצורה הבסיסית, ועוד אחד לצבע. ירוק = הצלחה, באנגלית.',
    explain:'<code>btn</code> נותן את צורת הכפתור, ו-<code>btn-success</code> את הצבע הירוק.', back:'comps:2'},
-  {q:'לקישור בתפריט יש <code>class="nav-link d-md-none"</code>. איפה רואים אותו?', opts:['רק מ-md ומעלה – כמו מחשב', 'רק במסכים צרים מ-md – כמו טלפון', 'בשום מקום – הוא מוסתר תמיד'], correct:1,
-   why:['הפוך: מ-md ומעלה דווקא מסתירים אותו.', 'נכון: <code>d-md-none</code> מסתיר <b>מ-md ומעלה</b>. מתחת ל-md הוא גלוי.', 'זה <code>d-none</code> בלי נקודת שבירה. כאן יש md באמצע השם – אז ההסתרה רק מ-md ומעלה.'], back:'comps:1'},
-  {q:'שלושה כרטיסים בשורה. באחד יש יותר טקסט, והכרטיסים יצאו בגבהים שונים. מה מוסיפים?', opts:['<code>row-cols-3</code> לשורה', '<code>mt-3</code> לכל כרטיס', '<code>h-100</code> ל-div של כל card'], correct:2,
+  {q:'לקישור בתפריט יש <code>class="nav-link d-md-none"</code>. איפה רואים אותו?', opts:['רק במסכים רחבים, מ-md ומעלה', 'רק במסכים צרים, מתחת ל-md', 'בשום מקום – הוא מוסתר תמיד'], correct:1,
+   why:['הפוך: מ-md ומעלה דווקא מסתירים אותו.', '<code>d-md-none</code> מסתיר <b>מ-md ומעלה</b>. מתחת ל-md הוא גלוי.', 'זה <code>d-none</code> בלי נקודת שבירה. כאן יש md באמצע השם – אז ההסתרה רק מ-md ומעלה.'], back:'comps:7'},
+  {q:'שלושה כרטיסים בשורה. באחד יש יותר טקסט, והכרטיסים יצאו בגבהים שונים. מה מוסיפים?', opts:['<code>row-cols-3</code> ל-div של השורה', '<code>mt-3</code> ל-div של כל card', '<code>h-100</code> ל-div של כל card'], correct:2,
    why:['כבר יש שלושה בשורה. row-cols קובע כמה בשורה, לא את הגובה.', 'mt-3 מוסיף רווח מלמעלה – הגבהים נשארים שונים.', 'h-100 = גובה 100%: כל כרטיס נמתח לגובה של העמודה שלו – וכולם שווים.'], back:'comps:5'},
-  {q:'רוצים שלחיצה <b>בכל מקום</b> על הכרטיס תפעיל את הקישור "להזמנה" שבתוכו. מה עושים?', opts:['מוסיפים לכרטיס את <code>btn</code>', 'מוסיפים לקישור את <code>stretched-link</code>', 'עוטפים את הכרטיס בתגית <code>button</code>'], correct:1,
-   why:['btn רק נותן לתגית <b>מראה</b> של כפתור – הוא לא הופך אותה ללחיצה.', 'נכון: הקישור "נמתח" על כל הכרטיס.', 'button הוא לא קישור – הוא לא מעביר לדף אחר.'], back:'comps:4'},
+  {q:'רוצים שלחיצה <b>בכל מקום</b> על הכרטיס תפעיל את הקישור "להזמנה" שבתוכו. מה עושים?', opts:['מוסיפים ל-div של הכרטיס את <code>btn</code>', 'מוסיפים לקישור את <code>stretched-link</code>', 'עוטפים את הכרטיס בתגית <code>button</code>'], correct:1,
+   why:['btn רק נותן לתגית <b>מראה</b> של כפתור – הוא לא הופך אותה ללחיצה.', 'הקישור "נמתח" על כל הכרטיס.', 'button הוא לא קישור – הוא לא מעביר לדף אחר.'], back:'comps:4'},
   {type:'line', q:'קובץ ה-JS מחובר, אבל בטלפון לחיצה על ☰ לא פותחת את התפריט. באיזו שורה הטעות?', lang:'html',
-   code:'<nav class="navbar navbar-expand-md bg-warning">\n    <a class="navbar-brand" href="index.html">פיצה דני</a>\n    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="mainMenu">\n        <span class="navbar-toggler-icon"></span>\n    </button>\n    <div class="collapse navbar-collapse" id="mainMenu">\n        <ul class="navbar-nav">\n            <li class="nav-item"><a class="nav-link" href="menu.html">תפריט</a></li>\n        </ul>\n    </div>\n</nav>',
+   code:'<nav class="navbar navbar-expand-md navbar-light bg-warning">\n    <a class="navbar-brand" href="index.html">פיצה דני</a>\n    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="mainMenu">\n        <span class="navbar-toggler-icon"></span>\n    </button>\n    <div class="collapse navbar-collapse" id="mainMenu">\n        <ul class="navbar-nav">\n            <li class="nav-item"><a class="nav-link" href="menu.html">תפריט</a></li>\n        </ul>\n    </div>\n</nav>',
    correct:3, why:{1:'תקין: פתוח מ-md, מקופל מתחת.', 2:'שם האתר – תקין.', 4:'הסמל ☰ עצמו – תקין.', 5:'סוגר את הכפתור.', 6:'החלק שמתקפל, עם <code>id="mainMenu"</code> – תקין. הבעיה אצל מי שמצביע עליו.', 7:'רשימת הקישורים – תקינה.', 8:'קישור בתפריט – תקין.', 9:'סוגר את הרשימה.', 10:'סוגר את החלק שמתקפל.', 11:'סוגר את התפריט.'},
-   explain:'ב-<code>data-bs-target</code> חסרה הסולמית: <code>"#mainMenu"</code> – בדיוק כמו בורר id משיעור 3. בלי סולמית Bootstrap מחפש <b>תגית</b> בשם mainMenu, ואין כזו.', back:'comps:6'},
+   explain:'ב-<code>data-bs-target</code> חסרה הסולמית: <code>"#mainMenu"</code> – בדיוק כמו בורר id משיעור 3. בלי סולמית Bootstrap מחפש <b>תגית</b> בשם mainMenu, ואין כזו.', back:'comps:8'},
   {q:'איזה class שמים על <code>input</code> כדי שיקבל את המראה של Bootstrap – רוחב מלא ופינות מעוגלות?', opts:['<code>form-label</code>', '<code>form-control</code>', '<code>form-select</code>'], correct:1,
-   why:['form-label הוא בשביל התווית (label), לא בשביל השדה.', 'form-control – לשדות input ו-textarea.', 'form-select – לרשימה נפתחת (select).'], back:'comps:8'}
+   why:['form-label הוא בשביל התווית (label), לא בשביל השדה.', 'form-control – לשדות שמקלידים בהם: input ו-textarea.', 'form-select – לרשימה נפתחת (select).'], back:'comps:10'},
+  {q:'בטופס ההרשמה יש שני כפתורי radio – "זכר" ו"נקבה". איזה class מקבל כל <code>input</code> כזה?', opts:['<code>form-control</code>', '<code>form-check-input</code>', '<code>form-select</code>', '<code>form-check-label</code>'], correct:1,
+   why:['form-control נועד לשדות שמקלידים בהם. על כפתור radio הוא מותח אותו לפס רחב.', 'וכל כפתור יושב, יחד עם התווית שלו, בתוך div עם <code>form-check</code>.', 'form-select הוא לרשימה נפתחת – התגית select.', 'קרוב: זה ה-class של ה-<b>label</b> שליד הכפתור, לא של ה-input.'], back:'comps:10'},
+  {q:'אחרי שהדבקתם את ה-navbar, כל קישור בו מקבל רקע צבעוני כשהעכבר עליו – בדיוק כמו בתפריט הישן משיעור 4. מאיפה זה בא?', opts:['מ-Bootstrap – ככה נראה כל navbar', 'מהכלל הישן <code>nav a:hover</code> ב-site-style.css', 'מה-class <code>bg-warning</code> שעל ה-nav'], correct:1,
+   why:['ה-navbar של Bootstrap לא צובע רקע של קישור במעבר עכבר. מישהו אחר כתב את הכלל הזה… מי?', 'הבורר <code>nav a:hover</code> תופס כל קישור בתוך כל תגית nav – גם ב-navbar. את כללי התפריט הישן מוחקים.', 'bg-warning צובע את כל הפס – תמיד, לא רק כשהעכבר על קישור.'], back:'comps:11'}
 ]);
 checkpoint('#cpMine', [
-  {q:'ב-site-style.css כתבתם <code>body { background-color: ivory; }</code>, ובדפדפן הרקע לבן. ב-head קודם מקושר <span class="nw">site-style.css</span>, ואחריו Bootstrap. מה התיקון?', opts:['להעביר את ה-link של Bootstrap לסוף ה-body, ליד ה-script', 'להעביר את השורה של <span class="nw">site-style.css</span> אל מתחת לשורה של Bootstrap', 'לכתוב את הכלל בתוך הקובץ bootstrap.rtl.min.css'], correct:1,
-   why:['אז Bootstrap עדיין יהיה <b>אחרי</b> הקובץ שלכם – והוא ימשיך לנצח.', 'נכון: גם ל-Bootstrap יש כלל ל-body. שני הכללים שווים בכוח – ומנצח הקובץ שמקושר אחרון.', 'את הקובץ של Bootstrap לא עורכים: הוא לא שלכם, ובהחלפת גרסה כל השינויים בו נמחקים.'], back:'mine:1'},
-  {q:'מה המשמעות של <code>class="card-text price"</code>?', opts:['לתגית יש class אחד, ששמו "card-text price"', 'רק הראשון חל – על השני הדפדפן מדלג', 'לתגית יש שני class-ים – card-text של Bootstrap ו-price שלכם – ושניהם חלים עליה'], correct:2,
-   why:['שם של class לא יכול להכיל רווח – הרווח מפריד בין שני שמות.', 'שניהם חלים. אם שניהם קובעים את אותה תכונה – מנצח הכלל החזק יותר, או זה שנכתב אחרון.', 'נכון: רווח מפריד בין class-ים. כך מוסיפים עיצוב משלכם ליד העיצוב של Bootstrap.'], back:'mine:1'},
-  {q:'איפה כותבים את כללי העיצוב של האתר שלכם?', opts:['ב-<code>site-style.css</code>', 'ב-<code>bootstrap.rtl.min.css</code>', 'ב-<code>site.css</code>'], correct:0,
-   why:['נכון: הקובץ שלכם, שמקושר אחרי Bootstrap.', 'זה קובץ של הספרייה – מכווץ, ולא שלכם. לא עורכים אותו.', 'site.css שייך לתבנית של Visual Studio, ולא מחובר לדפי ה-HTML שלכם (זוכרים משיעור 3?).'], back:'mine:1'},
-  {q:'רוצים באתר "קטעים נפתחים" (Accordion), שלא למדנו בשיעור. מה הדרך הטובה?', opts:['לנחש שמות של class עד שמשהו יעבוד', 'לחפש בתיעוד של Bootstrap דוגמה, להעתיק ולהתאים', 'לכתוב את כל העיצוב לבד <span class="nw">ב-site-style.css</span>'], correct:1,
+  {q:'ב-site-style.css כתבתם <code>body { background-color: ivory; }</code>, ובדפדפן הרקע לבן. ב-head קודם מקושר <span class="nw">site-style.css</span>, ואחריו Bootstrap. מה התיקון?', opts:['להעביר את ה-link של Bootstrap לסוף ה-body, ליד ה-script', 'להעביר את ה-link של <span class="nw">site-style.css</span> אל מתחת ל-Bootstrap', 'לכתוב את הכלל בתוך הקובץ bootstrap.rtl.min.css'], correct:1,
+   why:['אז Bootstrap עדיין יהיה <b>אחרי</b> הקובץ שלכם – והוא ימשיך לנצח.', 'גם ל-Bootstrap יש כלל ל-body. שני הכללים שווים בכוח – ומנצח הקובץ שמקושר אחרון.', 'את הקובץ של Bootstrap לא עורכים: הוא לא שלכם, ובהחלפת גרסה כל השינויים בו נמחקים.'], back:'mine:1'},
+  {q:'מה המשמעות של <code>class="card-text price"</code>?', opts:['לתגית יש class אחד, ששמו "card-text price"', 'לתגית יש שני class-ים, ורק הראשון חל עליה', 'לתגית יש שני class-ים, ושניהם חלים עליה'], correct:2,
+   why:['שם של class לא יכול להכיל רווח – הרווח מפריד בין שני שמות.', 'שניהם חלים. אם שניהם קובעים את אותה תכונה – מנצח הכלל החזק יותר, או זה שנכתב אחרון בקובצי ה-CSS. הסדר של השמות בתוך class לא משנה.', 'רווח מפריד בין class-ים – כאן card-text של Bootstrap ו-price שלכם. כך מוסיפים עיצוב משלכם ליד העיצוב של Bootstrap.'], back:'mine:1'},
+  {q:'<span class="nw">site-style.css</span> מקושר אחרי Bootstrap, וכתבתם בו <code>a { color: green; }</code>. לקישור בתפריט יש <code>class="nav-link"</code>, ו-Bootstrap קובע לו צבע בכלל עם בורר class. באיזה צבע יהיה הקישור?', opts:['ירוק – הקובץ שלכם מקושר אחרון', 'בצבע של Bootstrap – class חזק משם תגית', 'בלי צבע בכלל – שני הכללים מבטלים זה את זה'], correct:1,
+   why:['"האחרון מנצח" – רק כששני הכללים שווים בכוח. כאן הם לא שווים: מי מדויק יותר, בורר של שם תגית או בורר class?', 'קודם בודקים מי מדויק יותר – ורק כששווים, מי אחרון. כדי לשנות את הצבע כותבים כלל עם class.', 'כללים לא מבטלים זה את זה – תמיד אחד מנצח. מי מדויק יותר: שם תגית או class?'], back:'mine:1'},
+  {q:'רוצים באתר "קטעים נפתחים" (Accordion), שלא למדנו בשיעור. מה הדרך הטובה?', opts:['לנחש שמות של class עד שמשהו יעבוד', 'לחפש דוגמה בתיעוד, להעתיק ולהתאים', 'לכתוב את כל העיצוב לבד <span class="nw">ב-site-style.css</span>'], correct:1,
    why:['ניחוש לוקח הרבה זמן – וכמעט אף פעם לא מגיע למבנה המדויק שהרכיב צריך.', 'בדיוק כך עובדים מפתחים: Docs &rlm;←&rlm; Components &rlm;←&rlm; Accordion, מעתיקים, ומתאימים טקסטים.', 'אפשר – אבל זה המון עבודה, ובשביל פתיחה בלחיצה צריך גם JavaScript. Bootstrap כבר עשה את זה.'], back:'mine:2'},
-  {q:'העתקתם Accordion מהתיעוד. הוא נראה מצוין – אבל לחיצה על כותרת לא פותחת כלום. מה כנראה חסר?', opts:['ה-script של <code>bootstrap.bundle.min.js</code> בסוף ה-body', 'שורת ה-viewport', 'ה-link <span class="nw">ל-site-style.css</span>'], correct:0,
-   why:['נכון: פתיחה בלחיצה היא פעולה – והיא כתובה בקובץ ה-JS.', 'viewport קובע את הרוחב בטלפון – לא פעולות בלחיצה.', 'העיצוב שלכם לא אחראי על פתיחה וסגירה.'], back:'setup:1'}
+  {q:'העתקתם דוגמה מהתיעוד, וכמה מה-class-ים שבה לא עושים אצלכם כלום. השמות כתובים נכון. מה כדאי לבדוק קודם?', opts:['שקראתם את התיעוד של הגרסה שבפרויקט', 'שיש שורת viewport ב-head של הדף', 'שהדף שמור בתיקייה HTML שבתוך wwwroot'], correct:0,
+   why:['class שנוסף רק בגרסה חדשה יותר לא קיים בקובץ שבפרויקט שלכם. הגרסה כתובה בראש הקובץ bootstrap.rtl.min.css, ובאתר בוחרים גרסה למעלה.', 'viewport משפיע על הרוחב בטלפון – לא על השאלה אם class קיים.', 'התיקייה משפיעה על הנתיב ל-Bootstrap. אם שאר ה-class-ים עובדים – הקובץ מחובר, והבעיה במקום אחר.'], back:'mine:2'},
+  {q:'בדוגמה של כרטיס מהתיעוד כתוב בתוך התגית <code>style="width: 18rem;"</code>. מה עושים איתו באתר שלכם?', opts:['משאירים – זה חלק מהדוגמה הרשמית של Bootstrap', 'מוחקים, ושמים את הכרטיס בעמודה של הגריד', 'מעבירים אותו לקובץ bootstrap.rtl.min.css'], correct:1,
+   why:['באתר שלכם אין style בתוך התגיות – כל העיצוב בקובץ החיצוני. ורוחב קבוע גם לא מסתדר לבד בטלפון.', 'כרטיס ממלא את הרוחב של העמודה שלו, והעמודה יודעת להשתנות לפי המסך.', 'את הקובץ של Bootstrap לא עורכים – וגם אי אפשר לכתוב בקובץ CSS מאפיין של תגית.'], back:'mine:2'}
 ]);
 
 Course.start({eggs: EGGS, console: ['🍕 שלום, מפתחים!', 'הדף הזה בנוי מ-HTML, CSS ו-JavaScript – בדיוק כמו Bootstrap.\nטיפ לצייד ביצים: אחת הביצים מופיעה רק ברוחב חלון מסוים מאוד.\nכלי המפתחים יודעים לשנות את רוחב המסך: Ctrl+Shift+M 😉']});
