@@ -68,11 +68,11 @@ const LESSONS = [
   {id:'sub1', file:'submission1.html', n:'הגשה 1', title:'האתר המעוצב', desc:'רשימת הדרישות, מחוון לבדיקה עצמית, בודק הטפסים, ואיך מכינים zip – מלווה אתכם עד ההגשה.'}
 ];
 /* 📌 Classroom assignments – titles here; the DATES come from assets/cohort.js (one place for every cohort) */
-const ASG = {1:['התקנת סביבת העבודה',''], 2:['האתר הראשון שלי',''], 3:['בחירת נושא הפרויקט',''], 4:['דפי הפרויקט המעוצבים',''], 5:['הגשה 1: האתר המעוצב','']};
+const ASG = {0:['משימת הפתיחה',''], 1:['התקנת סביבת העבודה',''], 2:['האתר הראשון שלי',''], 3:['בחירת נושא הפרויקט',''], 4:['דפי הפרויקט המעוצבים',''], 5:['הגשה 1: האתר המעוצב','']};
 try { const C = window.COHORT && window.COHORT.due; if (C) Object.keys(ASG).forEach(n => { if (C[n]) ASG[n][1] = C[n]; }); } catch(e){}
-const L_ASG = {l1:[1], l2:[2,3], l4:[4], l6:[5], sub1:[5]};
+const L_ASG = {l1:[0,1], l2:[2,3], l4:[4], l6:[5], sub1:[5]};
 const asgTxt = id => (L_ASG[id] || []).filter(n => ASG[n] && ASG[n][1]).map(n => { const [t, d] = ASG[n], [y, m, dd] = d.split('-').map(Number);
-  return '<span class="asgl">📌 מטלה ' + n + ' בקלאסרום · עד ' + dd + '/' + m + '</span>'; }).join('');
+  return '<span class="asgl">📌 ' + (n == 0 ? t : 'מטלה ' + n) + ' בקלאסרום · עד ' + dd + '/' + m + '</span>'; }).join('');
 const get = k => { try { return JSON.parse(localStorage.getItem(k)); } catch(e){ return null; } };
 try { const th = localStorage.getItem('course-theme'); if (th) document.documentElement.dataset.theme = th; } catch(e){}
 document.getElementById('themeBtn').addEventListener('click', () => {
