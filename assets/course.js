@@ -883,10 +883,22 @@ const SFX = (() => {
   const STEPS = [0, 2, 4, 7, 9, 12, 14, 16];   /* pentatonic climb: each step is clearly higher */
   const isOn = () => { try { return localStorage.getItem('course-sound') !== 'off'; } catch(e){ return true; } };
   function ac(){
-    if (!ctx) { const C = window.AudioContext || window.webkitAudioContext; if (!C) return null; try { ctx = new C(); } catch(e){ return null; } }
+    if (!ctx) { const C = window.AudioContext || window.webkitAudioContext; if (!C) return null; try { ctx = new C({latencyHint:'interactive'}); } catch(e){ try { ctx = new C(); } catch(e2){ return null; } } }
     if (ctx.state === 'suspended') ctx.resume().catch(() => {});
     return ctx;
   }
+  /* "ready" sound: the first tone after a pause came late – the browser creates the audio engine on demand, and many
+     speakers / Bluetooth headphones fall asleep after a few seconds of silence. So on the first touch of the page we
+     start the engine, and keep the output awake with an inaudible low hum (about -66 dB, 40 Hz). Stops when sound is off or the tab is hidden. */
+  let keep = null;
+  function warm(){
+    if (!isOn() || document.hidden) return;
+    const c = ac(); if (!c || keep) return;
+    try { const o = c.createOscillator(), g = c.createGain(); o.frequency.value = 40; g.gain.value = 0.0005; o.connect(g); g.connect(c.destination); o.start(); keep = o; } catch(e){}
+  }
+  function cool(){ if (keep) { try { keep.stop(); } catch(e){} keep = null; } if (ctx && ctx.state === 'running') ctx.suspend().catch(() => {}); }
+  ['pointerdown', 'keydown', 'touchstart'].forEach(ev => document.addEventListener(ev, warm, {capture:true, passive:true}));
+  document.addEventListener('visibilitychange', () => { if (document.hidden) cool(); });
   function tone(c, f, t0, dur, vol, type, f2){
     const o = c.createOscillator(), g = c.createGain();
     o.type = type || 'sine'; o.frequency.setValueAtTime(f, t0); if (f2) o.frequency.exponentialRampToValueAtTime(f2, t0 + dur);
@@ -916,7 +928,7 @@ const SFX = (() => {
     } catch(e){}
   }
   function paintBtn(b){ const on = isOn(); b.textContent = on ? '🔊' : '🔇'; b.setAttribute('aria-pressed', String(!on)); b.setAttribute('aria-label', on ? 'צלילים פועלים – לחצו כדי לכבות' : 'צלילים כבויים – לחצו כדי להפעיל'); b.title = b.getAttribute('aria-label'); }
-  function set(on){ try { localStorage.setItem('course-sound', on ? 'on' : 'off'); } catch(e){} document.querySelectorAll('.sndbtn').forEach(paintBtn); if (on) play('on'); }
+  function set(on){ try { localStorage.setItem('course-sound', on ? 'on' : 'off'); } catch(e){} document.querySelectorAll('.sndbtn').forEach(paintBtn); if (on) { play('on'); warm(); } else cool(); }
   function init(){
     const tb = $('#themeBtn'); if (!tb || $('#sndBtn')) return;
     const b = document.createElement('button'); b.type = 'button'; b.id = 'sndBtn'; b.className = 'sndbtn';
