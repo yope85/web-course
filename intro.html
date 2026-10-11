@@ -156,6 +156,7 @@
 .simsteps li.cur{outline:2px solid var(--accent)}
 .simsteps li.done{background:var(--ok-soft)}.simsteps li.done .st{background:var(--ok);border-color:var(--ok);color:#fff}
 .simfb{border-radius:10px;padding:8px 12px;margin:8px 0;background:var(--surface2);min-height:2.6em}
+.npnote{margin-top:8px;padding:8px 10px;border-radius:8px;background:var(--accent-soft);border-inline-start:4px solid var(--accent)}
 .simfb.ok{background:var(--ok-soft)}.simfb.bad{background:var(--bad-soft)}
 /* VS overview mock */
 .vsmenu{display:flex;gap:12px;padding:3px 10px;background:#1f1f1f;color:#ddd;font-size:12.5px;white-space:nowrap;overflow:hidden}
@@ -1126,11 +1127,20 @@ function npRefresh(){
   else if (npShown === npCur && npDirty()) npSay('רעננתם – אבל השינוי <b>עוד לא נשמר</b> בקובץ, אז הדפדפן קרא שוב את אותה גרסה. קודם שומרים (Ctrl+S), ואז מרעננים.', 'bad');
   else if (npShown !== npCur && disk[npCur] !== disk[npShown]) npSay('רעננתם את <span class="ltr">' + esc(npShown) + '</span> – הקובץ שהדפדפן פתוח עליו. אבל את השינוי שמרתם בקובץ <b>אחר</b>, <span class="ltr">' + esc(npCur) + '</span>: שמרתם בשם חדש = קובץ חדש. רענון קורא שוב רק את הקובץ שכבר פתוח. כדי לראות את החדש: 📂 פתיחת קובץ (Ctrl+O).', 'bad');
   else npSay('הדפדפן קרא את הקובץ מחדש. אין בו שום שינוי חדש.');
+  npCharsetNote();
   if (isTxt(npShown)) npSay('הסיומת היא txt – אז הדפדפן מציג את הקובץ <b>כטקסט</b>, אות באות, בלי לצייר דף. החזירו את השם ל-hello.html.', 'bad');
+}
+/* the learner deleted meta charset and Hebrew still looks fine? That is true in real Chrome too (a file from the computer) –
+   say so right away, and why we still write it (constitution §5: no question left without an answer) */
+function npCharsetNote(){
+  const src = disk[npShown] || '';
+  if (!isHtml(npShown) || /<meta[^>]*charset/i.test(src) || !/[\u0590-\u05FF]/.test(src)) return;
+  npMsg.insertAdjacentHTML('beforeend', '<div class="npnote">🤔 <b>מחקתם את meta charset – והעברית עדיין תקינה?</b> נכון, וזה כך גם במחשב שלכם: כשפותחים קובץ ישר מהמחשב, Chrome בדרך כלל <b>מנחש</b> נכון את הקידוד. אבל כשאותו דף מגיע מ<b>שרת</b> – כמו באתר שנבנה ב-Visual Studio – הניחוש נכשל, והעברית הופכת לג׳יבריש (<a href="#" data-go="notepad:6">ראו בשלב 6</a>). לכן כותבים את השורה בכל דף, גם כשבלעדיה זה נראה תקין.</div>');
 }
 function npOpen(){
   npRender(npCur);
   npSay(isTxt(npCur) ? 'הסיומת היא txt – אז הדפדפן מציג את הקובץ <b>כטקסט</b>, אות באות, בלי לצייר דף. החזירו את השם ל-hello.html.' : 'פתחתם בדפדפן את הקובץ <span class="ltr">' + esc(npCur) + '</span> – שימו לב: גם הכתובת בשורת הכתובת השתנתה.', isTxt(npCur) ? 'bad' : '');
+  npCharsetNote();
 }
 $('#npSave').addEventListener('click', npSave);
 $('#npSaveAs').addEventListener('click', () => npSaveAs());
