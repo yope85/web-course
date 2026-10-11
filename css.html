@@ -25,12 +25,12 @@
   <span class="brand">🛠 שיעור 3 · CSS</span>
   <span class="now" id="now"></span>
   <span class="progress" title="שלבים שעברתם בשיעור"><span class="bar"><i id="progBar"></i></span> <span id="progTxt">0/0</span></span>
-  <button class="eggbtn" id="eggBtn" type="button" title="ביצי הפתעה – לחצו לרמזים">🥚 <span id="eggCount">0/5</span></button>
+  <button class="eggbtn" id="eggBtn" type="button" title="ביצי הפתעה – לחצו לרמזים">🥚 <span id="eggCount">0/3</span></button>
   <button class="themebtn" id="themeBtn" type="button">🌓 מצב תצוגה</button>
 </div></header>
 <dialog id="eggDlg" aria-labelledby="eggTitle">
   <div class="dlg-h"><h3 id="eggTitle">🥚 ביצי הפתעה</h3><button class="btn" type="button" id="eggClose" aria-label="סגירה">✕</button></div>
-  <p class="muted" id="eggIntro">בדף מוחבאות 5 ביצים. כל אחת נמצאת בעזרת משהו שלומדים בשיעור. תקועים? לחצו על "רמז נוסף".</p>
+  <p class="muted" id="eggIntro">בדף מוחבאות 3 ביצים. כל אחת נמצאת בעזרת משהו שלומדים בשיעור. תקועים? לחצו על "רמז נוסף".</p>
   <ul class="egglist" id="eggList"></ul>
   <form class="codebox" id="codeForm"><label for="codeIn">מצאתם קוד סודי?</label><input id="codeIn" autocomplete="off" spellcheck="false" placeholder="הקלידו כאן" /><button class="btn primary" type="submit">בדיקה</button></form>
   <p id="codeMsg" class="res-note"></p>
@@ -59,7 +59,7 @@
       <li data-t="📌 מה מגישים"><p>לשיעור הזה אין מטלה משלו. המטלה הבאה היא <span data-asg="4"></span> – שישה דפים מעוצבים של הפרויקט. מגישים אותה אחרי שיעור 4, אבל את <b>קובץ העיצוב</b> שלה מתחילים כבר כאן (<a href="#" data-go="practice:2">צעד בפרויקט</a>).</p><p>עוד לא בחרתם נושא לפרויקט? קודם <span data-asg="3"></span>.</p></li>
       <li data-t="⏳ לפני שמתחילים"><p>פתחו ב-Visual Studio את <b>הפרויקט שלכם</b> – עם התיקיות HTML ו-Img משיעור 2, ותמונה אחת לפחות בתיקייה Img. עוד אין? קודם <a href="html-basics.html">שיעור 2</a>.</p><p>⏱ כמה זמן הכול לוקח? פתחו למטה את <b>"כמה זמן זה לוקח?"</b> – ותכננו. אפשר (ורצוי) בכמה ישיבות.</p><p>🖥 בשלבי 💻 (עכשיו אצלכם) הכי נוח: הדף הזה בחצי מסך, ו-Visual Studio בחצי השני. בשאר השלבים – הדף לבד.</p></li>
     </ol>
-    <div class="eggnote">🥚 <b>ועוד משהו:</b> בדף מוחבאות <b>5 ביצי הפתעה</b>. כדי למצוא אותן צריך סקרנות – וכמה דברים שתלמדו היום. המונה למעלה; לחיצה עליו נותנת רמזים.</div>
+    <div class="eggnote">🥚 <b>ועוד משהו:</b> בדף מוחבאות <b><span class="eggn">3</span> ביצי הפתעה</b>. כדי למצוא אותן צריך סקרנות – וכמה דברים שתלמדו היום. המונה למעלה; לחיצה עליו נותנת רמזים.</div>
   </article>
   <article class="spread">
     <h3>HTML זה התוכן. CSS זה המראה.</h3>
@@ -589,7 +589,6 @@ p::first-letter {
     <div class="tip">💡 במצגת כתוב שזו המשמעות של המילה cascading. זה לא מדויק: cascading הוא בעצם סדר הקדימויות מהשלב הקודם (מי מנצח), והירושה היא נושא נפרד.</div>
   </article>
   <article class="spread">
-    <!-- 🥚 לחישה: הדפדפן מדלג על הערות – אבל אתם לא! הקוד הסודי: WHISPER. הקלידו אותו במונה הביצים למעלה. -->
     <h3>להסביר, ולכבות לרגע</h3>
     <p>ב-CSS כותבים הערה (comment) כך: <code>/* comment */</code> – פותחים בלוכסן וכוכבית, וסוגרים בכוכבית ולוכסן. הדפדפן מדלג עליה. משתמשים בזה לשני דברים: להסביר את הקוד, ו<b>לכבות הוראה לרגע</b> בלי למחוק אותה – כדי לבדוק מה היא עושה.</p>
     <div class="ctrls"><div class="seg" id="s101seg"></div></div>
@@ -1275,12 +1274,8 @@ const ACCENTS = (() => { const de = document.documentElement, had = de.hasAttrib
   ['light', 'dark'].forEach(t => { de.dataset.theme = t; list.push(accentNow()); });
   if (had) de.dataset.theme = was; else de.removeAttribute('data-theme'); return list; })();
 const EGGS = [
-  {id:'console', icon:'🕵️', name:'הודעה סודית למפתחים', learn:'כלי המפתחים (F12) הם חלון אל מאחורי הקלעים של כל אתר – גם של אתרים שלא אתם בניתם.',
-   h1:'מפתחים אמיתיים מסתכלים גם מאחורי הקלעים של הדף. איפה הדפדפן כותב הודעות שמיועדות רק למפתחים?', h2:'לחצו F12 ועברו ללשונית <b>Console</b>.', code:'REVWVE9PTFM='},
   {id:'ghost', icon:'👻', name:'הרוח הנסתרת', learn:'<code>display: none</code> מעלים תגית מהמסך – אבל היא עדיין שם, בקוד.',
    h1:'באחד השלבים של "מראה ורווחים" מסתתר משפט שאי אפשר לראות. איזו תכונת CSS גורמת לתגית להיעלם?', h2:'F12 &rlm;←&rlm; לשונית Elements &rlm;←&rlm; Ctrl+F וחפשו ghost. מצאתם? בטלו לו את ה-<code>display: none</code> (לחיצה על תיבת הסימון ליד ההוראה).', code:'R0hPU1Q=', poll: () => { const g = $('#eggGhost'); return g && getComputedStyle(g).display !== 'none'; }},
-  {id:'whisper', icon:'💬', name:'הלחישה', learn:'הערות לא מוצגות בדף, אבל כל אחד יכול לקרוא אותן בקוד המקור. אל תכתבו בהן סודות אמיתיים!',
-   h1:'למדתם שהדפדפן מדלג על הערות. אבל הן עדיין כתובות בקוד של הדף...', h2:'Ctrl+U פותח את קוד המקור של הדף. שם, Ctrl+F וחפשו את המילה "לחישה".', code:'V0hJU1BFUg=='},
   {id:'star', icon:'⭐', name:'הכוכב שבוחר הכול', learn:'הבורר <code>*</code> (כוכבית) בוחר את כל התגיות. לא לימדנו אותו – גיליתם לבד!',
    h1:'במעבדת הבוררים: אפשר לבחור את כל 11 התגיות בבת אחת?', h2:'יש בורר של תו אחד בלבד שעושה את זה. הוא נראה כמו כוכב.'},
   {id:'paint', icon:'🎨', name:'צובעים את המדריך', learn:'משתני CSS (כמו <code>--accent</code>) מאפשרים לשנות צבע בכל האתר ממקום אחד – אותו רעיון כמו קובץ חיצוני.',
@@ -1390,7 +1385,7 @@ Course.autoCode();
 document.querySelectorAll('pre[data-code="html"]').forEach(pre => { let inside = false;
   pre.querySelectorAll('.ln').forEach(ln => { const t = ln.textContent; if (/<\/style>/.test(t)) inside = false; if (inside) ln.innerHTML = hlCssLine(t); if (/<style>/.test(t)) inside = true; }); });
 
-Course.start({eggs: EGGS, console: ['🥚 מצאתם ביצה!', 'מפתחים אמיתיים מציצים מאחורי הקלעים 🕵️\nהקוד הסודי: DEVTOOLS\nהקלידו אותו במונה הביצים שבראש הדף.\nשמתם לב? גם ההודעה הזו מעוצבת ב-CSS. ויש עוד 4 ביצים בדף 😉']});
+Course.start({eggs: EGGS, console: ['🎨 שלום, מפתחים!', 'שמתם לב? גם ההודעה הזו מעוצבת ב-CSS 😉\nבשיעור הזה הביצים לא בקונסול – אבל כלי המפתחים (F12) יעזרו לכם למצוא שתיים מהן.']});
 })();
 </script>
 </body>

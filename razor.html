@@ -73,12 +73,12 @@ table.nwcode td code{white-space:normal;overflow-wrap:normal;word-break:keep-all
   <span class="brand">🛠 שיעור 6 · Razor</span>
   <span class="now" id="now"></span>
   <span class="progress" title="שלבים שעברתם בשיעור"><span class="bar"><i id="progBar"></i></span> <span id="progTxt">0/0</span></span>
-  <button class="eggbtn" id="eggBtn" type="button" title="ביצי הפתעה – לחצו לרמזים">🥚 <span id="eggCount">0/5</span></button>
+  <button class="eggbtn" id="eggBtn" type="button" title="ביצי הפתעה – לחצו לרמזים">🥚 <span id="eggCount">0/3</span></button>
   <button class="themebtn" id="themeBtn" type="button">🌓 מצב תצוגה</button>
 </div></header>
 <dialog id="eggDlg" aria-labelledby="eggTitle">
   <div class="dlg-h"><h3 id="eggTitle">🥚 ביצי הפתעה</h3><button class="btn" type="button" id="eggClose" aria-label="סגירה">✕</button></div>
-  <p class="muted" id="eggIntro">בדף מוחבאות 5 ביצים. כל אחת נמצאת בעזרת משהו שלומדים בשיעור. תקועים? לחצו על "רמז נוסף".</p>
+  <p class="muted" id="eggIntro">בדף מוחבאות 3 ביצים. כל אחת נמצאת בעזרת משהו שלומדים בשיעור. תקועים? לחצו על "רמז נוסף".</p>
   <ul class="egglist" id="eggList"></ul>
   <form class="codebox" id="codeForm"><label for="codeIn">מצאתם קוד סודי?</label><input id="codeIn" autocomplete="off" spellcheck="false" placeholder="הקלידו כאן" /><button class="btn primary" type="submit">בדיקה</button></form>
   <p id="codeMsg" class="res-note"></p>
@@ -109,7 +109,7 @@ table.nwcode td code{white-space:normal;overflow-wrap:normal;word-break:keep-all
       <li data-t="📌 מה מגישים"><p><span data-asg="5"></span> – זו <b>הגשה 1</b>: האתר כולו, מעוצב, וכל הדפים שלו דפי Razor בתבנית אחת. אחרי השיעור הזה יש לכם כל מה שצריך בשבילה.</p><p>בסוף השיעור מעבירים את כל האתר (<a href="#" data-go="practice:2">צעד בפרויקט</a>), ויש שלב שמסביר בדיוק מה ואיך מגישים (<a href="#" data-go="practice:3">מטלה 5</a>). הרשימה המלאה והמחוון – ב<a href="submission1.html">דף הליווי של הגשה 1</a>.</p></li>
       <li data-t="⏳ לפני שמתחילים"><p>פתחו ב-Visual Studio את <b>הפרויקט שלכם</b>. צריך שיהיו בו: דפי ה-HTML של האתר (בתיקייה wwwroot/HTML), קובץ העיצוב site-style.css, ו-Bootstrap מחובר לדפים, עם תפריט navbar – כמו בשיעור 5. חסר משהו? קודם <a href="bootstrap.html">שיעור 5</a>.</p><p>⏱ כמה זמן הכול לוקח? פתחו למטה את <b>"כמה זמן זה לוקח?"</b> – ותכננו. אפשר (ורצוי) בכמה ישיבות.</p><p>🖥 בשלבי 💻 (עכשיו אצלכם) הכי נוח: הדף הזה בחצי מסך, ו-Visual Studio בחצי השני. בשאר השלבים – הדף לבד.</p></li>
     </ol>
-    <div class="eggnote">🥚 <b>ועוד משהו:</b> בדף מוחבאות <b>5 ביצי הפתעה</b> – מוצאים אותן עם מה שתלמדו היום. המונה למעלה; לחיצה עליו נותנת רמזים.</div>
+    <div class="eggnote">🥚 <b>ועוד משהו:</b> בדף מוחבאות <b><span class="eggn">3</span> ביצי הפתעה</b> – מוצאים אותן עם מה שתלמדו היום. המונה למעלה; לחיצה עליו נותנת רמזים.</div>
   </article>
   <article class="spread act">
     <h3>למה? תפריט אחד במקום שישה</h3>
@@ -900,7 +900,6 @@ function drawTtl(){
   const v = $('#ttlIn').value;
   rzLines($('#ttlPage'), '@{\n    ViewData["Title"] = "' + v + '";\n}', 'rz', {1:'diff'});
   $('#ttlTab').textContent = tabTitle(v);
-  if (v.trim() === 'ביצה') findEgg('title');
 }
 $('#ttlIn').addEventListener('input', drawTtl); drawTtl();
 
@@ -1168,7 +1167,6 @@ Frame.prototype.show = function(o){
     if (r.noPage) { this.title('localhost'); return showOrig.call(this, {html: NOT_FOUND + '<p style="direction:rtl;font-family:Arial;padding:0 18px;color:#555">(בדף חסרה השורה <b>@page</b> בראש הקובץ – ולכן אין לו כתובת.)</p>'}); }
     if (r.clash) { this.title('Internal Server Error'); return showOrig.call(this, {html: ERR_HREF + '<p style="direction:rtl;font-family:Arial;padding:0 18px;color:#555">(באחד הקישורים יש גם <b>href</b> וגם <b style="white-space:nowrap">asp-page</b> – והשרת עוצר. מחקו את ה-href.)</p>'}); }
     this.title(tabTitle(r.title));
-    if (r.title.trim() === 'ביצה') findEgg('title');
     return showOrig.call(this, {html: imgFix(wrapMine(body, false, '/Site/About'), '/Site/About'), links:[BS_RTL], scripts:[BS_JS], css: SIM_CSS});
   }
   return showOrig.call(this, o);
@@ -1410,12 +1408,8 @@ checkpoint('#cpMove', [
    11. easter eggs
    ===================================================================== */
 const EGGS = [
-  {id:'console', icon:'🕵️', name:'הודעה סודית למפתחים', learn:'כלי המפתחים (F12) הם חלון אל מאחורי הקלעים של כל אתר – גם של אתרים שלא אתם בניתם.',
-   h1:'מפתחים אמיתיים מסתכלים גם מאחורי הקלעים של הדף. איפה הדפדפן כותב הודעות שמיועדות רק למפתחים?', h2:'לחצו F12 ועברו ללשונית <b>Console</b>.', code:'TEFZT1VU'},
   {id:'server', icon:'🙈', name:'ההערה שהשרת מחק', learn:'הערת Razor – <code>@* *@</code> – נמחקת בשרת ולא מגיעה לדפדפן. הערת HTML – <code>&lt;!-- --&gt;</code> – מגיעה, וכל אחד יכול לקרוא אותה ב-Ctrl+U.',
    h1:'בשלב על <code>@</code> יש שורה שנעלמת בדרך מהשרת לדפדפן.', h2:'השוו את About.cshtml לחלון "מה הדפדפן מקבל": איזו שורה חסרה שם? יש בה קוד.', code:'U0VSVkVS'},
-  {id:'title', icon:'🏷', name:'כותרת ביצה', learn:'הכותרת בלשונית מגיעה מ-<code>ViewData["Title"]</code> – הדף כותב, והתבנית קוראת.',
-   h1:'הכותרת של הלשונית בידיים שלכם. מה יקרה אם תקראו לדף "ביצה"?', h2:'בשלב על ViewData כתבו בתיבה: ביצה.'},
   {id:'ext', icon:'🔗', name:'הסיומת המיותרת', learn:'לכתובת של דף Razor אין סיומת: <code>/Site/About</code>, לא <code>/Site/About.cshtml</code> עם הסיומת.',
    h1:'במפת הכתובות: מה קורה אם מוסיפים לכתובת את סיומת הקובץ?', h2:'כתבו במפה <code>/Site/About.cshtml</code> וראו מה קורה.'},
   {id:'everywhere', icon:'🧭', name:'עובד מכל מקום', learn:'<code>~/</code> עובד מכל דף Razor, בכל עומק: השרת כותב במקומו לוכסן, והדפדפן מתחיל מתחילת האתר.',
@@ -1435,7 +1429,7 @@ Course.assignment('#asg5', {n:5,
   how:'בקלאסרום &rlm;←&rlm; <b>סביבת הלמידה</b> &rlm;←&rlm; הנושא <b><bdi>HTML &amp; CSS</bdi></b> &rlm;←&rlm; {name} &rlm;←&rlm; <b>הוספה או יצירה</b> &rlm;←&rlm; <b>קובץ</b> &rlm;←&rlm; מעלים את קובץ ה-zip &rlm;←&rlm; <b>הגשה</b>. נתקעתם? פועלים לפי <b>חוק 3 השלבים</b>, ואם עדיין לא הולך – כותבים למורה תגובה פרטית במטלה.',
   after:'🧮 איך נקבע הציון? המחוון (100 נקודות), בודק הטפסים וסיבוב בדיקה אחרון – ב<a href="submission1.html">דף הליווי של הגשה 1</a>. עברו עליו לפני שמגישים.'
 });
-Course.start({eggs: EGGS, console: ['🥚 מצאתם ביצה!', 'מפתחים אמיתיים מציצים מאחורי הקלעים 🕵️\nהקוד הסודי: LAYOUT\nהקלידו אותו במונה הביצים שבראש הדף.\nויש עוד 4 ביצים בדף 😉']});
+Course.start({eggs: EGGS, console: ['🍕 שלום, מפתחים!', 'בשיעור הזה הביצים לא בקונסול 😉\nרמז: לא כל מה שכתוב בקובץ cshtml מגיע לדפדפן.']});
 })();
 
 </script>

@@ -49,12 +49,12 @@ td code{overflow-wrap:normal;white-space:normal}
   <span class="brand">🛠 שיעור 5 · Bootstrap</span>
   <span class="now" id="now"></span>
   <span class="progress" title="שלבים שעברתם בשיעור"><span class="bar"><i id="progBar"></i></span> <span id="progTxt">0/0</span></span>
-  <button class="eggbtn" id="eggBtn" type="button" title="ביצי הפתעה – לחצו לרמזים">🥚 <span id="eggCount">0/5</span></button>
+  <button class="eggbtn" id="eggBtn" type="button" title="ביצי הפתעה – לחצו לרמזים">🥚 <span id="eggCount">0/4</span></button>
   <button class="themebtn" id="themeBtn" type="button">🌓 מצב תצוגה</button>
 </div></header>
 <dialog id="eggDlg" aria-labelledby="eggTitle">
   <div class="dlg-h"><h3 id="eggTitle">🥚 ביצי הפתעה</h3><button class="btn" type="button" id="eggClose" aria-label="סגירה">✕</button></div>
-  <p class="muted" id="eggIntro">בדף מוחבאות 5 ביצים. כל אחת נמצאת בעזרת משהו שלומדים בשיעור. תקועים? לחצו על "רמז נוסף".</p>
+  <p class="muted" id="eggIntro">בדף מוחבאות 4 ביצים. כל אחת נמצאת בעזרת משהו שלומדים בשיעור. תקועים? לחצו על "רמז נוסף".</p>
   <ul class="egglist" id="eggList"></ul>
   <form class="codebox" id="codeForm"><label for="codeIn">מצאתם קוד סודי?</label><input id="codeIn" autocomplete="off" spellcheck="false" placeholder="הקלידו כאן" /><button class="btn primary" type="submit">בדיקה</button></form>
   <p id="codeMsg" class="res-note"></p>
@@ -85,7 +85,7 @@ td code{overflow-wrap:normal;white-space:normal}
       <li data-t="📌 מה מגישים"><p><b>אחרי השיעור הזה לא מגישים כלום.</b> שיעור 5 ושיעור 6 ביחד מובילים למטלה אחת: <span data-asg="5"></span>. זו <b>הגשה 1</b> – האתר המעוצב כולו – ומגישים אותה רק אחרי שיעור 6.</p><p>כל מה שתבנו היום נכנס להגשה הזו. בסוף השיעור יש שלב שמסכם מה כבר מוכן ומה נשאר (<a href="#" data-go="practice:3">מה מגישים אחרי השיעור הזה?</a>), ולהגשה עצמה יש דף ליווי: <a href="submission1.html">הגשה 1 – צעד אחרי צעד</a>.</p></li>
       <li data-t="⏳ לפני שמתחילים"><p>פתחו ב-Visual Studio את <b>הפרויקט שלכם</b>. צריך שיהיו בו: דף הנחיתה index.html (בקלאסרום הוא נקרא "הדף הראשי"), דף התוכן about.html (או השם שנתתם לו), קובץ העיצוב site-style.css, ושלושת דפי הטפסים. חסר משהו? קודם <a href="html-advanced.html">שיעור 4</a>.</p><p>עוד לא הגשתם את <span data-asg="4"></span>? הגישו אותה לפני שממשיכים: בשיעור הזה מחליפים את כותרת האתר שבניתם בשבילה.</p><p>⏱ כמה זמן הכול לוקח? פתחו למטה את <b>"כמה זמן זה לוקח?"</b> – ותכננו. אפשר (ורצוי) בכמה ישיבות. 🖥 בשלבי 💻 (עכשיו אצלכם) הכי נוח: הדף הזה בחצי מסך, ו-Visual Studio בחצי השני. בשאר השלבים – הדף לבד.</p></li>
     </ol>
-    <div class="eggnote">🥚 <b>ועוד משהו:</b> בדף מוחבאות <b>5 ביצי הפתעה</b>. כדי למצוא אותן צריך סקרנות, כלי המפתחים (F12) – וכמה דברים שתלמדו היום. אחת מהן מסתתרת כבר בדף של פיצה דני שלמעלה. המונה בראש הדף; לחיצה עליו נותנת רמזים.</div>
+    <div class="eggnote">🥚 <b>ועוד משהו:</b> בדף מוחבאות <b><span class="eggn">4</span> ביצי הפתעה</b>. כדי למצוא אותן צריך סקרנות, כלי המפתחים (F12) – וכמה דברים שתלמדו היום. אחת מהן מסתתרת כבר בדף של פיצה דני שלמעלה. המונה בראש הדף; לחיצה עליו נותנת רמזים.</div>
   </article>
 
   <article class="spread">
@@ -1007,7 +1007,7 @@ const WELCOME = L(NAV({sticky:true}).concat([
   '    <div class="row row-cols-1 row-cols-md-3 g-4">'],
   PIZZAS.slice(0,3).map((p,i) => [
   '        <div class="col"><div class="card h-100">',
-  '            <img src="../Img/' + p.img + '" class="card-img-top" alt="' + (i === 2 ? 'פיצת זיתים. 🥚 הקוד הסודי: OLIVES' : 'פיצת ' + p.name) + '" />',
+  '            <img src="../Img/' + p.img + '" class="card-img-top" alt="' + 'פיצת ' + p.name + '" />',
   '            <div class="card-body"><h3 class="card-title h5">' + p.name + '</h3><p class="card-text">' + p.text + '</p></div>',
   '            <div class="card-footer">' + p.price + '</div>',
   '        </div></div>'].join('\n')),
@@ -1542,8 +1542,6 @@ const EGGS = [
   {id:'danger', icon:'🔴', name:'הכפתור שהחליף צבע', learn:'ב-Bootstrap הצבע הוא חלק משם ה-class. מחליפים מילה אחת (<code>primary</code> ← <code>danger</code>) – והעיצוב מתחלף. שינוי ב-F12 הוא זמני ונעלם ברענון.',
    h1:'בדף של פיצה דני שבשלב הראשון של השיעור ("ברוכים הבאים") יש כפתור כחול. איזה class צובע אותו – ומה יקרה אם תחליפו בו את שם הצבע?', h2:'בשלב הראשון: F12 &rlm;←&rlm; חץ בחירת אלמנט &rlm;←&rlm; לחצו על הכפתור "להזמנה" &rlm;←&rlm; בקוד, לחיצה כפולה על <code>btn-primary</code> &rlm;←&rlm; כתבו במקומו <code>btn-danger</code> &rlm;←&rlm; Enter.',
    poll: () => { const d = welcomeDev.doc; const b = d && d.getElementById('orderBtn'); return !!(b && b.classList.contains('btn-danger')); }},
-  {id:'alt', icon:'🖼', name:'הטקסט שמאחורי התמונה', learn:'<code>alt</code> הוא טקסט חלופי: קוראי מסך מקריאים אותו לאנשים עיוורים, והוא מופיע אם התמונה לא נטענת. לכל תמונה בכרטיס כותבים alt עם תיאור אמיתי.',
-   h1:'לכל תמונה בכרטיסים שבדף של פיצה דני (בשלב הראשון של השיעור) יש טקסט שלא רואים על המסך. באחד מהם מחכה לכם משהו.', h2:'בשלב הראשון: F12 &rlm;←&rlm; חץ בחירת אלמנט &rlm;←&rlm; לחצו על התמונה של פיצת הזיתים &rlm;←&rlm; קראו בקוד את המאפיין <code>alt</code> שלה.', code:'T0xJVkVT'},
   {id:'width', icon:'📏', name:'הרוחב הסודי', learn:'מאחורי כל נקודת שבירה יש כלל CSS שנקרא media query: "החל את הכללים האלה רק כשהמסך ברוחב מסוים". כך Bootstrap בנוי בפנים.',
    h1:'יש הודעה שמופיעה רק כשחלון הדפדפן ברוחב מסוים מאוד – לא רחב ולא צר, בדיוק כמו נקודת שבירה.', h2:'עברו לשלב "שורת ה-viewport: מה היא עושה?" (בנושא "מחברים את Bootstrap"). F12, ואז Ctrl+Shift+M &rlm;←&rlm; בתפריט Dimensions בחרו Responsive &rlm;←&rlm; בשדה הרוחב כתבו 730.', code:'QlJFQUtQT0lOVA=='},
   {id:'docs', icon:'📚', name:'צייד בתיעוד', learn:'מפתחים לא זוכרים הכול בעל פה – הם יודעים לחפש בתיעוד (documentation). זו המיומנות החשובה של השיעור.',

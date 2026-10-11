@@ -63,11 +63,11 @@ a.lcard:hover{transform:translateY(-3px);border-color:var(--accent)}
 "use strict";
 const LESSONS = [
   {id:'l1', eggs:5, file:'intro.html', n:'שיעור 1', title:'מבוא ל-HTML ודף ראשון', desc:'מה זה HTML, פרויקט ראשון ב-Visual Studio, שרת ודפדפן, והדף הראשון של פיצה דני.'},
-  {id:'l2', eggs:5, file:'html-basics.html', n:'שיעור 2', title:'תגיות בסיסיות, קישורים ותמונות', desc:'מבנה הדף, תגיות ומאפיינים, קישורים בין דפים, תמונות ונתיבים, block ו-inline.'},
-  {id:'css3', eggs:5, file:'css.html', n:'שיעור 3', title:'עיצוב עם CSS', desc:'כללים ובוררים, מודל הקופסה החי, קובץ CSS אחד לכל האתר, ומי מנצח.'},
+  {id:'l2', eggs:4, file:'html-basics.html', n:'שיעור 2', title:'תגיות בסיסיות, קישורים ותמונות', desc:'מבנה הדף, תגיות ומאפיינים, קישורים בין דפים, תמונות ונתיבים, block ו-inline.'},
+  {id:'css3', eggs:3, file:'css.html', n:'שיעור 3', title:'עיצוב עם CSS', desc:'כללים ובוררים, מודל הקופסה החי, קובץ CSS אחד לכל האתר, ומי מנצח.'},
   {id:'l4', eggs:5, file:'html-advanced.html', n:'שיעור 4', title:'טבלאות, רשימות וטפסים', desc:'טבלת התפריט, רשימות ותפריט ניווט, טופס הזמנה, ומה באמת נשלח ב-get וב-post.'},
-  {id:'l5', eggs:5, file:'bootstrap.html', n:'שיעור 5', title:'Bootstrap ועיצוב רספונסיבי', desc:'הגריד ונקודות השבירה, כרטיסים, תפריט ניווט, ואתר שנראה טוב גם בטלפון.'},
-  {id:'l6', eggs:5, file:'razor.html', n:'שיעור 6', title:'Razor Pages ותבנית Layout', desc:'דף Razor ו-@, תבנית אחת עם תפריט משותף, כתובות ו-~/, והעברת האתר לדפי cshtml.'},
+  {id:'l5', eggs:4, file:'bootstrap.html', n:'שיעור 5', title:'Bootstrap ועיצוב רספונסיבי', desc:'הגריד ונקודות השבירה, כרטיסים, תפריט ניווט, ואתר שנראה טוב גם בטלפון.'},
+  {id:'l6', eggs:3, file:'razor.html', n:'שיעור 6', title:'Razor Pages ותבנית Layout', desc:'דף Razor ו-@, תבנית אחת עם תפריט משותף, כתובות ו-~/, והעברת האתר לדפי cshtml.'},
   {id:'sub1', eggs:3, file:'submission1.html', n:'הגשה 1', title:'האתר המעוצב', desc:'רשימת הדרישות, מחוון לבדיקה עצמית, בודק הטפסים, ואיך מכינים zip – מלווה אתכם עד ההגשה.'}
 ];
 /* 📌 Classroom assignments – titles here; the DATES come from assets/cohort.js (one place for every cohort) */
@@ -93,7 +93,7 @@ box.innerHTML = LESSONS.map(l => {
   if (l.soon) return '<div class="lcard soon"><span class="n">' + l.n + '</span><h2>' + l.title + '</h2><span class="badge">בקרוב</span></div>';
   const st = get(l.id + '-state') || {};
   const seen = st.stepsSeen || 0, total = st.stepsTotal || 0;
-  const e = Object.keys(st.eggs || {}).length, et = st.eggTotal || l.eggs || 5;
+  const et = l.eggs || st.eggTotal || 5, e = Math.min(et, Object.keys(st.eggs || {}).length);   /* l.eggs = the source of truth (a lesson may drop an egg) */
   eggs += e; eggTotal += et;
   if (!last && seen && seen < total) last = l;
   if (total && seen === total) anyDone = true;

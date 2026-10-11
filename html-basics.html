@@ -53,12 +53,12 @@
   <span class="brand">🛠 שיעור 2 · תגיות, קישורים ותמונות</span>
   <span class="now" id="now"></span>
   <span class="progress" title="שלבים שעברתם בשיעור"><span class="bar"><i id="progBar"></i></span> <span id="progTxt">0/0</span></span>
-  <button class="eggbtn" id="eggBtn" type="button" title="ביצי הפתעה – לחצו לרמזים">🥚 <span id="eggCount">0/5</span></button>
+  <button class="eggbtn" id="eggBtn" type="button" title="ביצי הפתעה – לחצו לרמזים">🥚 <span id="eggCount">0/4</span></button>
   <button class="themebtn" id="themeBtn" type="button">🌓 מצב תצוגה</button>
 </div></header>
 <dialog id="eggDlg" aria-labelledby="eggTitle">
   <div class="dlg-h"><h3 id="eggTitle">🥚 ביצי הפתעה</h3><button class="btn" type="button" id="eggClose" aria-label="סגירה">✕</button></div>
-  <p class="muted" id="eggIntro">בדף מוחבאות 5 ביצים. כל אחת נמצאת בעזרת משהו שלומדים בשיעור. תקועים? לחצו על "רמז נוסף".</p>
+  <p class="muted" id="eggIntro">בדף מוחבאות 4 ביצים. כל אחת נמצאת בעזרת משהו שלומדים בשיעור. תקועים? לחצו על "רמז נוסף".</p>
   <ul class="egglist" id="eggList"></ul>
   <form class="codebox" id="codeForm"><label for="codeIn">מצאתם קוד סודי?</label><input id="codeIn" autocomplete="off" spellcheck="false" placeholder="הקלידו כאן" /><button class="btn primary" type="submit">בדיקה</button></form>
   <p id="codeMsg" class="res-note"></p>
@@ -89,7 +89,7 @@
       <li data-t="📌 מה מגישים"><p><span data-asg="2"></span> – אתר ראשון משלכם, של חמישה דפים, עם מה שתלמדו כאן.</p><p><span data-asg="3"></span> – בוחרים את הנושא של הפרויקט שילווה אתכם כל השנה.</p><p>בסוף השיעור יש שלב שמסביר בדיוק מה, איך, ובאיזה סדר כדאי (<a href="#" data-go="practice:3">המטלות של השיעור</a>).</p></li>
       <li data-t="⏳ לפני שמתחילים"><p>פתחו ב-Visual Studio את <b>הפרויקט משיעור 1</b> – עם התיקייה HTML והדף index.html. עוד אין לכם? קודם עושים את <a href="intro.html">שיעור 1</a>.</p><p>⏱ כמה זמן הכול לוקח? פתחו למטה את <b>"כמה זמן זה לוקח?"</b> – ותכננו. אפשר (ורצוי) בכמה ישיבות.</p><p>🖥 בשלבי 💻 (עכשיו אצלכם) הכי נוח: הדף הזה בחצי מסך, ו-Visual Studio בחצי השני. בשאר השלבים – הדף לבד.</p></li>
     </ol>
-    <div class="eggnote">🥚 <b>ועוד משהו:</b> בדף מוחבאות <b>5 ביצי הפתעה</b>. כדי למצוא אותן צריך סקרנות – וכמה דברים שתלמדו היום: קישורים, תמונות ומאפיינים. המונה למעלה; לחיצה עליו נותנת רמזים.</div>
+    <div class="eggnote">🥚 <b>ועוד משהו:</b> בדף מוחבאות <b><span class="eggn">4</span> ביצי הפתעה</b>. כדי למצוא אותן צריך סקרנות – וכמה דברים שתלמדו היום: קישורים, תמונות ומאפיינים. המונה למעלה; לחיצה עליו נותנת רמזים.</div>
   </article>
   <article class="spread">
     <h3>תזכורת: מה כבר יודעים משיעור 1</h3>
@@ -1131,7 +1131,7 @@ new Split($('#i1')).setHtml('<h1>פיצה דני</h1>\n<img src="../Img/pizza.jp
 /* ---------- images: path walker ---------- */
 const FT = [['wwwroot', 0, 'root'], ['css', 1, 'css'], ['HTML', 1, 'html'], ['index.html', 2, 'page'], ['menu.html', 2, 'menu'], ['Img', 1, 'img'], ['pizza.jpg', 2, 'file']];
 const FTG = ['', '├─ ', '├─ ', '│  ├─ ', '│  └─ ', '└─ ', '   └─ '];
-$('#ftree').innerHTML = FT.map(([n, d, id], i) => FTG[i] + '<span class="f" data-f="' + id + '"' + (id === 'file' ? ' title="🥚 הקוד הסודי: OREGANO"' : '') + '>' + (id === 'page' || id === 'menu' ? '📄 ' : id === 'file' ? '🖼 ' : '📁 ') + n + '</span>').join('\n');
+$('#ftree').innerHTML = FT.map(([n, d, id], i) => FTG[i] + '<span class="f" data-f="' + id + '"' + '>' + (id === 'page' || id === 'menu' ? '📄 ' : id === 'file' ? '🖼 ' : '📁 ') + n + '</span>').join('\n');
 const WALK = [
   {at:'page', path:'', t:'מתחילים <b>בדף</b> – index.html, שנמצא בתיקייה HTML. מכאן הדפדפן מתחיל לחפש. התמונה לא כאן.'},
   {at:'root', path:'../', t:'<code>../</code> = "עלו תיקייה אחת למעלה". יצאנו מ-HTML, ועכשיו אנחנו ב-wwwroot.'},
@@ -1371,8 +1371,6 @@ const EGGS = [
    h1:'בדף התפריט של האתר החי יש תגית עם id שאף קישור לא מוביל אליה. אבל קישור הוא לא הדרך היחידה לקפוץ ל-id...', h2:'בשורת הכתובת של האתר החי כתבו <code>localhost:7123/HTML/menu.html#oven</code> ולחצו Enter.'},
   {id:'emoji', icon:'🥚', name:'הביצה שנכתבה במספר', learn:'לכל תו בעולם יש מספר (בתקן שנקרא Unicode), ואפשר לכתוב כל תו ב-HTML כישות לפי המספר שלו – למשל <code>&amp;#x1F95A;</code>.',
    h1:'לכל תו יש מספר – גם לאימוג\'י. בשלב "כמה רווחים רואים בדף?" (בנושא "תגיות בסיס") יש טבלה שמסבירה איך כותבים תו לפי המספר שלו. המספר של 🥚 הוא 1F95A.', h2:'בארגז החול (בנושא "תרגול וסיכום") כתבו בתוך פסקה: <code>&amp;#x1F95A;</code>'},
-  {id:'tooltip', icon:'💬', name:'הבועה הנסתרת', learn:'המאפיין title מציג "בועה" (tooltip) כשמחזיקים את העכבר מעל תגית – בלי שום קוד נוסף.',
-   h1:'למדתם על המאפיין title, שמציג בועה כשהעכבר מעל תגית. באחד משלבי "תמונות" מסתתרת בועה כזו.', h2:'בשלב "הדרך אל התמונה", החזיקו את העכבר מעל הקובץ pizza.jpg בעץ התיקיות וחכו שנייה. (בטלפון זה לא עובד – נסו במחשב.)', code:'T1JFR0FOTw=='},
   {id:'alt', icon:'🖼', name:'מה שה-alt מסתיר', learn:'alt מופיע רק כשהתמונה לא נטענת. ב-F12 אפשר לראות את כל המאפיינים של כל תגית – גם את אלה שלא מוצגים.',
    h1:'יש בדף תמונה שה-alt שלה מסתיר סוד. אבל alt מופיע רק כשמשהו משתבש...', h2:'בשלב "התמונה לא מופיעה!" יש פיצה קטנה בסוף. לחצו עליה קליק ימני &rlm;←&rlm; Inspect (בדיקה): נפתחים כלי המפתחים, עם הקוד של התמונה. קראו שם את ה-alt שלה. או: שנו שם את ה-src למשהו שגוי.', code:'QkFTSUw='}
 ];
