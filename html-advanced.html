@@ -445,7 +445,7 @@ nav a:hover {
           <tr><td>טלפון</td><td><code>text</code></td><td><code>phone</code></td></tr>
           <tr><td>מייל</td><td><code>text</code></td><td><code>email</code></td></tr>
         </table>
-        (יש גם סוג מיוחד למייל – תכירו אותו בנושא הבא. בפרויקט כותבים למייל <code>type="text"</code>: את הבדיקה שהמייל תקין תכתבו בעצמכם, בשיעורי JavaScript.)</li>
+        (יש גם סוג מיוחד למייל – תכירו אותו בנושא הבא. בפרויקט כותבים למייל <code>type="text"</code>: את הבדיקה שהמייל תקין תכתבו בעצמכם, בשיעורי JavaScript.)<br />שדה אחד עוד חסר כאן: <b>תאריך לידה</b>. הוא נכתב עם סוג שעוד לא למדתם – תוסיפו אותו בנושא הבא.</li>
       <li><b>recover.html – שחזור סיסמה:</b> צרו דף שלישי באותה דרך (אותו שלד, וב-title: <b>שחזור סיסמה</b>), והדביקו בתוך body. את שאלות השחזור תוסיפו בנושא הבא:
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
 &lt;h1&gt;שחזור סיסמה&lt;/h1&gt;
@@ -476,9 +476,10 @@ nav a:hover {
   <article class="spread">
     <h3>תאריך ושעה: date, time, datetime-local</h3>
     <p>עם <code>type="date"</code> הדפדפן מציג לוח שנה, ועם <code>type="time"</code> – בחירת שעה. <code>datetime-local</code> מציג את שניהם יחד. הגולש לא צריך להקליד – רק לבחור.</p>
+    <p>בטופס ההרשמה שלכם זה יהיה שדה <b>תאריך הלידה</b> – תוסיפו אותו בסוף הנושא.</p>
     <div class="predict" id="pDate"></div>
     <div id="k1"></div>
-    <div class="what" id="k1what" hidden>התאריך <b>מוצג</b> לכם בפורמט שתלוי בהגדרות אצלכם, אבל <b>נשלח</b> תמיד באותו פורמט: שנה-חודש-יום (<code>2026-10-09</code>). שעה נשלחת כמו <code>19:30</code> (בשורת הכתובת הנקודתיים נראות כמו <code>%3A</code> – זה קידוד של הסימן), ו-datetime-local שולח את שניהם עם T באמצע: <code>2026-10-09T19:30</code>. כך השרת מבין את התאריך בכל מדינה ובכל שפה.</div>
+    <div class="what" id="k1what" hidden>התאריך <b>מוצג</b> לכם בפורמט שתלוי בהגדרות אצלכם, אבל <b>נשלח</b> תמיד באותו פורמט: שנה-חודש-יום (<code>2026-10-09</code>). שעה נשלחת כמו <code>19:30</code> (בשורת הכתובת הנקודתיים נראות כמו <code>%3A</code> – זה קידוד של הסימן), ו-datetime-local שולח את שניהם עם T באמצע: <code>2026-10-09T19:30</code>. כך השרת מבין את התאריך בכל מדינה ובכל שפה. ובטופס ההרשמה: מי שנולד ב-17 במאי 2010 יישלח כך – <code>birthDate=2010-05-17</code>.</div>
     <div class="tip">💡 במצגת כתוב "המאפיין date". ליתר דיוק: המאפיין הוא <code>type</code>, ו-date הוא <b>ערך</b> שלו – בדיוק כמו text או password. ועוד דבר: לוח השנה נראה קצת אחרת בכל דפדפן. זה בסדר.</div>
   </article>
   <article class="spread">
@@ -530,9 +531,15 @@ nav a:hover {
   </article>
   <article class="spread vsstep">
     <h3>💻 עכשיו אצלכם ב-Visual Studio</h3>
-    <p>משלימים את דף ההרשמה ואת דף השחזור שהתחלתם <a href="#" data-go="forms:6">בנושא הקודם</a>: כפתורי radio למין, רשימת הצעות לעיר, ושתי שאלות לשחזור סיסמה.</p>
+    <p>משלימים את דף ההרשמה ואת דף השחזור שהתחלתם <a href="#" data-go="forms:6">בנושא הקודם</a>: תאריך לידה, כפתורי radio למין, רשימת הצעות לעיר, ושתי שאלות לשחזור סיסמה.</p>
     <ol class="vsdo">
-      <li><b>מין – radio:</b> ב-register.html, <b>אחרי</b> שדה המייל ולפני כפתור "הרשמה", הדביקו. שימו לב: לשני הכפתורים <b>אותו name</b>, ו-id שונה לכל אחד:
+      <li><b>תאריך לידה – date:</b> ב-register.html, <b>אחרי</b> שדה שם המשפחה ולפני שדה העיר, הדביקו (<a href="#" data-go="fields:1">השלב על date</a>):
+        <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
+&lt;label for="birthDate"&gt;תאריך לידה&lt;/label&gt;
+&lt;input type="date" id="birthDate" name="birthDate" /&gt;
+&lt;br /&gt;
+</pre></div>
+        <b>מין – radio:</b> באותו דף, <b>אחרי</b> שדה המייל ולפני כפתור "הרשמה", הדביקו. שימו לב: לשני הכפתורים <b>אותו name</b>, ו-id שונה לכל אחד:
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
 &lt;p&gt;מין:&lt;/p&gt;
 &lt;input type="radio" id="male" name="gender" value="male" /&gt;
@@ -575,9 +582,9 @@ nav a:hover {
 &lt;br /&gt;
 </pre></div></li>
       <li><b>recover.html:</b> בדף השחזור, במקום ההערה <code style="white-space:normal;overflow-wrap:anywhere">&lt;!-- recovery questions: next topic --&gt;</code>, הדביקו <b>את אותו קוד בדיוק</b> מצעד 3 – עם אותם name. כך, כשתכתבו בהמשך השנה את הקוד בשרת, הוא יוכל להשוות בין מה שנשמר בהרשמה לבין מה שהוקלד בשחזור.</li>
-      <li><b>בודקים:</b> שמרו את שני הקבצים ופתחו את register.html בדפדפן (View in Browser). נסו לסמן גם "זכר" וגם "נקבה"; לחצו בתיבת העיר והקלידו את האות א; בחרו שאלות, מלאו הכול ולחצו "הרשמה" – והעתיקו את הכתובת שקיבלתם לבדיקה המהירה שמתחת לצעדים. אחר כך פתחו את recover.html.</li>
+      <li><b>בודקים:</b> שמרו את שני הקבצים ופתחו את register.html בדפדפן (View in Browser). בחרו תאריך לידה בלוח השנה; נסו לסמן גם "זכר" וגם "נקבה"; לחצו בתיבת העיר והקלידו את האות א; בחרו שאלות, מלאו הכול ולחצו "הרשמה" – והעתיקו את הכתובת שקיבלתם לבדיקה המהירה שמתחת לצעדים. אחר כך פתחו את recover.html.</li>
     </ol>
-    <div class="expect">בכתובת שמסתיימת ב-<code>/HTML/register.html</code> רואים את כל השדות של ההרשמה. אפשר לסמן רק אחד מכפתורי המין. בתיבת העיר מופיעות הצעות (אשקלון, אשדוד…) – ואפשר גם להקליד עיר אחרת. אחרי "הרשמה" הכתובת ארוכה, ויש בה למשל <code>gender=female</code> ו-<code>question1=pet</code> – ה-value, לא הטקסט שעל המסך. ב-recover.html: שם משתמש, שתי רשימות נפתחות ושתי תיבות לתשובות.</div>
+    <div class="expect">בכתובת שמסתיימת ב-<code>/HTML/register.html</code> רואים את כל השדות של ההרשמה. בשדה תאריך הלידה נפתח לוח שנה. אפשר לסמן רק אחד מכפתורי המין. בתיבת העיר מופיעות הצעות (אשקלון, אשדוד…) – ואפשר גם להקליד עיר אחרת. אחרי "הרשמה" הכתובת ארוכה, ויש בה למשל <code>birthDate=2010-05-17</code> (שנה-חודש-יום), <code>gender=female</code> ו-<code>question1=pet</code> – ה-value, לא הטקסט שעל המסך. ב-recover.html: שם משתמש, שתי רשימות נפתחות ושתי תיבות לתשובות.</div>
     <div class="urlcheck" id="ucFields"></div>
     <div class="trouble" id="trFields"></div>
   </article>
@@ -735,10 +742,10 @@ form {
 }
 </pre></div>
         הכלל <code>form</code> חל על שלושת הטפסים, והכלל <code>#loginForm</code> רק על טופס הכניסה – הוא קצר, אז הקופסה שלו צרה יותר.</li>
-      <li><b>מה נשלח?</b> שמרו את כל הקבצים, פתחו את login.html בדפדפן, מלאו ולחצו "כניסה" – והסתכלו בשורת הכתובת. עשו אותו דבר ב-register.html: מלאו את <b>כל</b> השדות, סמנו מין, ולחצו "הרשמה".</li>
+      <li><b>מה נשלח?</b> שמרו את כל הקבצים, פתחו את login.html בדפדפן, מלאו ולחצו "כניסה" – והסתכלו בשורת הכתובת. עשו אותו דבר ב-register.html: מלאו את <b>כל</b> השדות, בחרו תאריך לידה, סמנו מין, ולחצו "הרשמה".</li>
       <li><b>בכלי המפתחים:</b> ב-login.html לחצו F12 &rlm;←&rlm; לשונית <b>Network</b>. <b>רק עכשיו</b> מלאו ולחצו "כניסה" (Network רושם רק מה שקורה כשהוא פתוח). ברשימה לחצו על השורה הראשונה – זו שמתחילה ב-<code>login.html?userName=</code> – ואז על הלשונית <b>Payload</b>. ב-get הזוגות מופיעים שם תחת הכותרת <b>Query String Parameters</b>. (בטופס שנשלח ב-post הם יופיעו באותה לשונית, תחת <b>Form Data</b> – ככה תבדקו אותם בהמשך.)</li>
     </ol>
-    <div class="expect">טופס הכניסה בתוך קופסה צרה עם מסגרת; טפסי ההרשמה והשחזור בקופסה באותו סגנון. אחרי "כניסה" הכתובת מסתיימת למשל כך:<div class="codeblock urlline"><pre data-code="text">login.html?userName=dana&amp;password=1234</pre></div>אחרי "הרשמה" יש בכתובת <b>13 זוגות</b> name=ערך, מ-userName ועד answer2 – הכפתורים לא נשלחים, כי אין להם name. ב-F12, בלשונית Payload, תחת Query String Parameters, מופיעים אותם זוגות ברשימה מסודרת.</div>
+    <div class="expect">טופס הכניסה בתוך קופסה צרה עם מסגרת; טפסי ההרשמה והשחזור בקופסה באותו סגנון. אחרי "כניסה" הכתובת מסתיימת למשל כך:<div class="codeblock urlline"><pre data-code="text">login.html?userName=dana&amp;password=1234</pre></div>אחרי "הרשמה" יש בכתובת <b>14 זוגות</b> name=ערך, מ-userName ועד answer2 – הכפתורים לא נשלחים, כי אין להם name. ב-F12, בלשונית Payload, תחת Query String Parameters, מופיעים אותם זוגות ברשימה מסודרת.</div>
     <div class="urlcheck" id="ucSend"></div>
     <div class="trouble" id="trSend"></div>
   </article>
@@ -760,9 +767,9 @@ form {
     <div class="stepbox">
       <b>בונים את הכותרת הקבועה של האתר שלכם.</b> מטלה 4 דורשת שבכל דף תהיה אותה כותרת, עם <b>תמונה או לוגו</b> של האתר, וקישור לדף הראשי. עכשיו יש לכם את כל הכלים: div ותמונה (שיעורים 2–3), ותפריט nav מהשיעור הזה.
       <ol>
-        <li><b>הדפים:</b> למטלה 4 צריך דף ראשי ועוד <b>5 דפי תוכן</b> לפחות. חסרים לכם דפים? צרו אותם עכשיו, כמו page1.html בשיעור 2: שלד, שורת link ל-site-style.css, כותרת h1, תמונה ופסקה. את התוכן תשלימו אחר כך – אבל הקבצים צריכים להיות קיימים לפני שבונים תפריט.</li>
+        <li><b>הדפים:</b> למטלה 4 צריך דף ראשי ועוד <b>5 דפי תוכן</b> לפחות. חסרים לכם דפים? צרו אותם עכשיו, כמו דף התוכן הראשון שלכם משיעור 2 (about.html, או השם שנתתם לדף שלכם): שלד, שורת link ל-site-style.css, כותרת h1, תמונה ופסקה. את התוכן תשלימו אחר כך – אבל הקבצים צריכים להיות קיימים לפני שבונים תפריט. לכל דף – שם משמעותי באנגלית, בלי רווחים: gallery.html, contact.html (לא page1.html).</li>
         <li><b>הלוגו:</b> שימו בתיקייה Img תמונה קטנה שתהיה הלוגו של האתר – כל תמונה שמתאימה לנושא שלכם. שם באנגלית, בלי רווחים, למשל logo.png.</li>
-        <li><b>הכותרת:</b> ב-index.html, מיד אחרי השורה <code>&lt;body&gt;</code>, הדביקו. אחר כך שנו שלושה דברים: את שם קובץ הלוגו, את שם האתר, ובתפריט – שורת <code>li</code> לכל דף תוכן. כך גם הדף הראשי מקשר לכל דפי התוכן, כמו שהמטלה דורשת:
+        <li><b>הכותרת:</b> ב-index.html, מיד אחרי השורה <code>&lt;body&gt;</code>, הדביקו. אחר כך שנו שלושה דברים: את שם קובץ הלוגו, את שם האתר, ובתפריט – שורת <code>li</code> לכל דף תוכן, עם שם הקובץ שלו ב-href. כך גם הדף הראשי מקשר לכל דפי התוכן, כמו שהמטלה דורשת:
           <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
 &lt;div class="site-header"&gt;
     &lt;a href="index.html"&gt;&lt;img src="../Img/logo.png" alt="לוגו האתר – לדף הראשי" width="60" /&gt;&lt;/a&gt;
@@ -770,7 +777,7 @@ form {
     &lt;nav&gt;
         &lt;ul&gt;
             &lt;li&gt;&lt;a href="index.html"&gt;דף הבית&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="page1.html"&gt;שם הדף&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="about.html"&gt;שם הדף&lt;/a&gt;&lt;/li&gt;
         &lt;/ul&gt;
     &lt;/nav&gt;
 &lt;/div&gt;
@@ -820,9 +827,9 @@ nav a:hover {
     <div class="stepbox">
       <b>משלימים ובודקים את שלושת הטפסים.</b> הם לא חלק ממטלה 4 – הם שייכים להגשה 1 (<span data-asg="5"></span>), אבל כבר בניתם אותם, אז סוגרים אותם עכשיו. את רוב העבודה כבר עשיתם בשלבי "💻 עכשיו אצלכם": <a href="#" data-go="forms:6">בנושא טפסים</a> · <a href="#" data-go="fields:7">בנושא עוד סוגי שדות</a> · <a href="#" data-go="send:6">בנושא שליחה לשרת</a>. עכשיו עוברים על הרשימה ומוודאים שלא חסר כלום.
       <ol>
-        <li><b>login.html – כניסה:</b> שם משתמש, סיסמה, כפתור שליחה, קישור לדף ההרשמה וקישור לדף שחזור הסיסמה.</li>
-        <li><b>register.html – הרשמה:</b> כל השדות בטבלה למטה, בלי לדלג על אף אחד.</li>
-        <li><b>recover.html – שחזור סיסמה:</b> שם משתמש, שתי שאלות לשחזור סיסמה (כל שאלה ברשימה נפתחת), ותשובה לכל שאלה – עם אותם name כמו בדף ההרשמה.</li>
+        <li><b>login.html – כניסה (5 רכיבים):</b> שם משתמש, סיסמה, כפתור שליחה, קישור לדף ההרשמה וקישור לדף שחזור הסיסמה.</li>
+        <li><b>register.html – הרשמה (16 רכיבים):</b> כל מה שבטבלה למטה – 14 שדות ושני כפתורים, בלי לדלג על אף אחד. שדה מסוג לא נכון נחשב חסר.</li>
+        <li><b>recover.html – שחזור סיסמה (4 רכיבים):</b> שם משתמש, שתי שאלות לשחזור סיסמה (כל שאלה ברשימה נפתחת), ותשובה לכל שאלה – עם אותם name כמו בדף ההרשמה – וכפתור שליחה.</li>
         <li>בכל שדה: <code>label</code> עם <code>for</code>, ובשדה <code>id</code> ו-<code>name</code>.</li>
         <li>בכל טופס: <code>id</code> ו-<code>method="get"</code>. עם post נעבוד רק בדפי Razor, בהמשך.</li>
         <li>שלושת הדפים מחוברים לקובץ העיצוב שלכם (site-style.css), והטפסים מעוצבים שם – בצבעים של האתר שלכם, בלי style בתוך התגיות.</li>
@@ -835,6 +842,7 @@ nav a:hover {
         <tr><td>אימות סיסמה</td><td><code>password</code></td><td><code>password2</code></td></tr>
         <tr><td>שם פרטי</td><td><code>text</code></td><td><code>firstName</code></td></tr>
         <tr><td>שם משפחה</td><td><code>text</code></td><td><code>lastName</code></td></tr>
+        <tr><td>תאריך לידה</td><td><code>date</code></td><td><code>birthDate</code></td></tr>
         <tr><td>עיר</td><td><code>text</code> + datalist</td><td><code>city</code></td></tr>
         <tr><td>טלפון</td><td><code>text</code></td><td><code>phone</code></td></tr>
         <tr><td>מייל</td><td><code>text</code> (לא email!)</td><td><code>email</code></td></tr>
@@ -1473,8 +1481,8 @@ const EGGS = [
    h2:'באזור התרגול, הוסיפו לטבלה שורה עם תא אחד בלבד, ותנו לו את המאפיין <code>colspan="2"</code>. למשל: "כל המחירים כוללים מע״מ".'}
 ];
 /* ---------- 🔎 "what reached the server?" – paste the address you got after sending one of YOUR forms ---------- */
-const UC_NAMES = {login:['userName','password'], register:['userName','password','password2','firstName','lastName','city','phone','email','gender','question1','answer1','question2','answer2'], recover:['userName','question1','answer1','question2','answer2']};
-const UC_LATER = ['gender','question1','answer1','question2','answer2']; /* added in the topic "עוד סוגי שדות" */
+const UC_NAMES = {login:['userName','password'], register:['userName','password','password2','firstName','lastName','birthDate','city','phone','email','gender','question1','answer1','question2','answer2'], recover:['userName','question1','answer1','question2','answer2']};
+const UC_LATER = ['birthDate','gender','question1','answer1','question2','answer2']; /* added in the topic "עוד סוגי שדות" */
 function urlCheck(host, early){
   host.innerHTML = '<b>🔎 בדיקה מהירה: מה הגיע לשרת?</b><label class="muted" for="' + host.id + 'In">אחרי השליחה, העתיקו את הכתובת מהדפדפן שלכם (login, register או recover) והדביקו כאן:</label>' +
     '<input id="' + host.id + 'In" spellcheck="false" autocomplete="off" placeholder="https://localhost:7123/HTML/register.html?userName=…" /><div class="uc-out" aria-live="polite"></div>';
@@ -1490,6 +1498,7 @@ function urlCheck(host, early){
     const want = UC_NAMES[page], rows = []; let ok = 0, need = 0;
     want.forEach(n => {
       const later = early && page !== 'login' && UC_LATER.includes(n);
+      if (n === 'birthDate' && got[n] && got[n].some(x => x.trim() && !/^\d{4}-\d{2}-\d{2}$/.test(x.trim()))) { need++; rows.push('<li class="n">✘ birthDate – הערך לא בצורה שנה-חודש-יום. בשדה הזה צריך להיות כתוב <bdi dir="ltr">type="date"</bdi></li>'); return; }
       if (got[n]) { ok++; need++; rows.push('<li class="y">✔ ' + n + (got[n].every(x => !x.trim()) ? ' <span class="l">(ריק – לא מילאתם)</span>' : '') + '</li>'); return; }
       const near = Object.keys(got).find(k => k.toLowerCase() === n.toLowerCase());
       if (later && !near) { rows.push('<li class="l">⏳ ' + n + ' – תוסיפו בנושא הבא</li>'); return; }
@@ -1635,7 +1644,7 @@ Course.assignment('#asg4', {n:4,
     '<b>לפחות 5 דפי תוכן</b>, כולם באותו סגנון. בכל דף: כותרת קבועה שחוזרת בכל הדפים – עם תמונה או לוגו של האתר (<a href="#" data-go="practice:2">בניתם אותה בצעד בפרויקט</a>); מתחת לכותרת – תוכן הדף, עם תמונות וטקסט; וקישור לדף הראשי (קישור טקסט, תמונה או סמל – הלוגו והתפריט שלכם כבר עושים את זה).',
     'העיצוב בקובץ CSS <b>חיצוני</b> (External) – הקובץ site-style.css משיעור 3 (<a href="css.html#practice-2">צעד הפרויקט בשיעור 3</a>). אפשר קובץ אחד לכל הדפים, או קובץ נוסף רק לדף הראשי – אבל לא קובץ נפרד לכל דף תוכן.',
     'כל הדפים נפתחים ונראים טוב בדפדפן, וכל הקישורים עובדים – בדקתי דף אחרי דף.',
-    'כתבתי ב<b>יומן התקלות</b> (בתיק הפרויקט) שורה על כל באג שלקח לי יותר מ-10 דקות, ובפרק 11 בתיק – כל מקור או כלי AI שעזר לי.',
+    'כתבתי ב<b>יומן התקלות</b> שורה על כל באג שלקח לי יותר מ-10 דקות, ובפרק 11 של <b>תיק הפרויקט</b> – כל מקור או כלי AI שעזר לי. (שניהם עותקים אישיים שלכם ב-Google Docs, מצורפים בקלאסרום – כותבים ישר בהם.)',
     'ארזתי את כל תיקיית הפרויקט – <b>כולל הקובץ עם הסיומת sln</b> – לקובץ zip (או rar), ובדקתי שקובץ ה-sln בפנים. (<a href="submission1.html#zip-2">איך אורזים zip – צעד אחר צעד</a>)'
   ],
   how:'בקלאסרום &rlm;←&rlm; <b>סביבת הלמידה</b> &rlm;←&rlm; הנושא <b><bdi>HTML &amp; CSS</bdi></b> &rlm;←&rlm; {name} &rlm;←&rlm; <b>הוספה או יצירה</b> &rlm;←&rlm; <b>קובץ</b> &rlm;←&rlm; מעלים את קובץ ה-zip &rlm;←&rlm; <b>הגשה</b>. נתקעתם? פועלים לפי <b>חוק 3 השלבים</b>, ואם עדיין לא הולך – כותבים למורה תגובה פרטית במטלה.',

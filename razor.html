@@ -225,7 +225,8 @@ namespace MyFirstWeb.Pages.Site
 
   <article class="spread vsstep">
     <h3>💻 עכשיו אצלכם ב-Visual Studio</h3>
-    <p>יוצרים בפרויקט שלכם את דף ה-Razor הראשון – "אודות" – בתיקייה חדשה, Site. בתיקייה הזו יהיו כל הדפים של האתר.</p>
+    <p>יוצרים בפרויקט שלכם את דף ה-Razor הראשון – "אודות" – בתיקייה חדשה, Site. בתיקייה הזו יהיו כל הדפים של האתר. בינתיים הדף יקבל תוכן לניסוי; את התוכן האמיתי שלו תכניסו בנושא "מעבירים את האתר".</p>
+    <div class="tip">💡 <b>איך קוראים לדף Razor?</b> הכלל של הפרויקט: לכל דף שם <b>משמעותי</b> באנגלית, בלי רווחים – שם שאומר מה יש בדף: About, Gallery, Contact. לא Page1. בדפי Razor נהוג להתחיל את השם באות גדולה, כמו Index. השם הזה הוא גם הכתובת של הדף (<code>/Site/About</code>) – גולשים רואים אותו.</div>
     <ol class="vsdo">
       <li>האתר רץ כרגע? עצרו אותו קודם (■ האדום). כשמוסיפים דף חדש, הכי בטוח לעצור, להוסיף, ולהריץ מחדש. ב-Solution Explorer: <b>קליק ימני</b> על התיקייה <b>Pages</b> &rlm;←&rlm; <b>Add</b> &rlm;←&rlm; <b>New Folder</b>. קראו לה <b>Site</b> ולחצו Enter.</li>
       <li><b>קליק ימני</b> על <b>Site</b> &rlm;←&rlm; <b>Add</b> &rlm;←&rlm; <b><bdi>Razor Page...</bdi></b> &rlm;←&rlm; בחלון שנפתח בחרו <b>Razor Page - Empty</b> &rlm;←&rlm; <b>Add</b> &rlm;←&rlm; בשדה Name כתבו <b>About.cshtml</b> &rlm;←&rlm; <b>Add</b>. (בשדה Name כבר כתוב שם? מחקו אותו, וכתבו About.cshtml.) נוצרו שני קבצים: About.cshtml, ומתחתיו (חץ קטן לידו) About.cshtml.cs.
@@ -312,7 +313,7 @@ namespace MyFirstWeb.Pages.Site
 </pre></div>
         (יש אצלכם ב-head גם שורה <code>&lt;script type="importmap"&gt;&lt;/script&gt;</code> בין השורות? לא נוגעים בה.)
         <br><b>בדיקת ביניים:</b> שמרו (Ctrl+S) והריצו (▶). הטקסט מיושר לימין, והעיצוב שלכם מופיע? התפריט עדיין Home ו-Privacy – זה בסדר, הוא הצעד הבא. עצרו (■) והמשיכו.</li>
-      <li><b>התפריט:</b> בתבנית כבר יש navbar – Visual Studio שם אותו שם, עם הקישורים Home ו-Privacy, עטוף בתגית header. סמנו את הכול – מ-<code>&lt;header&gt;</code> ועד <code>&lt;/header&gt;</code> כולל – ומחקו. במקומו הדביקו את ה-navbar <b>שלכם</b> מ-page1.html – דף הבסיס של דפי התוכן (שיעור 5) – מ-<code>&lt;nav</code> ועד <code>&lt;/nav&gt;</code> כולל. (למה בלי header? בתוך header, ה-<code>sticky-top</code> שלכם לא "נדבק" למעלה.) הקישורים בו עוד לא יעבדו – נתקן בנושא הבא.<br><b>והלוגו:</b> בתוך ה-navbar יש תמונת הלוגו משיעור 5. שנו בה רק את תחילת הנתיב: במקום <code>../Img/logo.png</code> כתבו <code>~/Img/logo.png</code> (הסימן <code>~/</code> – "מתחילים מ-wwwroot" – משלב 3 בנושא הקודם). התבנית משרתת דפים מכל התיקיות, ולכן כל נתיב בה מתחיל כך.</li>
+      <li><b>התפריט:</b> בתבנית כבר יש navbar – Visual Studio שם אותו שם, עם הקישורים Home ו-Privacy, עטוף בתגית header. סמנו את הכול – מ-<code>&lt;header&gt;</code> ועד <code>&lt;/header&gt;</code> כולל – ומחקו. במקומו הדביקו את ה-navbar <b>שלכם</b> מ-about.html – דף הבסיס של דפי התוכן משיעור 5 (או השם שנתתם לדף שלכם) – מ-<code>&lt;nav</code> ועד <code>&lt;/nav&gt;</code> כולל. (למה בלי header? בתוך header, ה-<code>sticky-top</code> שלכם לא "נדבק" למעלה.) הקישורים בו עוד לא יעבדו – נתקן בנושא הבא.<br><b>והלוגו:</b> בתוך ה-navbar יש תמונת הלוגו משיעור 5. שנו בה רק את תחילת הנתיב: במקום <code>../Img/logo.png</code> כתבו <code>~/Img/logo.png</code> (הסימן <code>~/</code> – "מתחילים מ-wwwroot" – משלב 3 בנושא הקודם). התבנית משרתת דפים מכל התיקיות, ולכן כל נתיב בה מתחיל כך.</li>
       <li><b>צבע הקישורים:</b> ליד <code>_Layout.cshtml</code> (חץ קטן לידו) יש קובץ בשם <code>_Layout.cshtml.css</code> – כללי CSS ש-Visual Studio יצר יחד עם התבנית, והם חלים רק על מה שכתוב ב-<code>_Layout</code>. פתחו אותו ומחקו ממנו שני כללים: הכלל <code>a { color: #0077cc; }</code> (הקוד <code>#0077cc</code> הוא צבע כחול) – הוא עלול לצבוע בכחול קישורים בתפריט שלכם; והכלל <code>a.navbar-brand { … }</code> – הוא עלול לשבור את שם האתר באמצע מילה. את הקובץ עצמו <b>לא</b> מוחקים.</li>
       <li><b>התחתית:</b> ב-footer מחקו את השורה שמתחילה ב-<code>&amp;copy;</code> (עם הקישור Privacy), וכתבו במקומה שורה משלכם, למשל:
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-rz="rz">
@@ -393,22 +394,23 @@ namespace MyFirstWeb.Pages.Site
     <h3>💻 עכשיו אצלכם ב-Visual Studio</h3>
     <p>מתקנים את הקישורים בתפריט שב-<code>_Layout</code>, ומוסיפים קישור לדף "אודות".</p>
     <ol class="vsdo">
-      <li>ב-<code>_Layout.cshtml</code>, בתפריט שלכם, החליפו כל href שמסתיים ב-html במאפיין asp-page, לפי הטבלה. את דפי התוכן, הכניסה וההרשמה תיצרו בנושא הבא, עם השמות האלה (או שמות משלכם – באנגלית, באות גדולה):
+      <li>ב-<code>_Layout.cshtml</code>, בתפריט שלכם, החליפו כל href שמסתיים ב-html במאפיין asp-page, לפי הטבלה (עם השמות של הדפים שלכם). הדף About כבר קיים; את שאר הדפים תיצרו בנושא הבא, בשמות שכתבתם כאן. <b>יש אצלכם דף בשם כמו page1.html?</b> זה הרגע לתקן: ב-asp-page כתבו כבר את השם המשמעותי שדף ה-Razor שלו יקבל – למשל <code>/Site/Gallery</code>, לא Page1.
         <table class="nwcode">
           <tr><th>היה בתפריט</th><th>כותבים עכשיו</th></tr>
           <tr><td><code>href=<wbr>"index.html"</code></td><td><code>asp-page=<wbr>"/Index"</code></td></tr>
-          <tr><td><code>href=<wbr>"page1.html"</code></td><td><code>asp-page=<wbr>"/Site/Page1"</code></td></tr>
+          <tr><td><code>href=<wbr>"about.html"</code></td><td><code>asp-page=<wbr>"/Site/About"</code></td></tr>
+          <tr><td><code>href=<wbr>"gallery.html"</code></td><td><code>asp-page=<wbr>"/Site/Gallery"</code></td></tr>
           <tr><td><code>href=<wbr>"login.html"</code></td><td><code>asp-page=<wbr>"/Site/Login"</code></td></tr>
         </table>
         גם בשם האתר (navbar-brand) כותבים <code>asp-page="/Index"</code> במקום href.</li>
-      <li>הוסיפו לרשימת הקישורים, לפני <code>&lt;/ul&gt;</code>, קישור לדף "אודות":
+      <li>אין בתפריט שלכם קישור לדף About? הוסיפו אותו לרשימת הקישורים, לפני <code>&lt;/ul&gt;</code>. (כבר יש, מהצעד הקודם? דלגו.)
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-rz="rz">
 &lt;li class="nav-item"&gt;&lt;a class="nav-link" asp-page="/Site/About"&gt;אודות&lt;/a&gt;&lt;/li&gt;
 </pre></div></li>
       <li>שמרו (Ctrl+S). האתר רץ? לחצו 🔥 Hot Reload ורעננו את הדפדפן. (לא התעדכן? ■ ואז ▶.) לא רץ? הריצו (▶). בדף הבית לחצו בתפריט על "אודות", ומשם על שם האתר – חזרה לדף הבית.</li>
       <li>בדף "אודות" לחצו Ctrl+U וחפשו (Ctrl+F) <code>Site/About</code>: מצאתם <code>href="/Site/About"</code> – ואף asp-page? חפשו גם <code>Img</code> – כל src, גם של הלוגו, מתחיל ב-<code>/Img/</code> – ואין שם <code>~</code> או <code>../</code> בכלל.</li>
     </ol>
-    <div class="expect">בתפריט מופיע "אודות", והלחיצה פותחת את הכתובת שמסתיימת ב-<code>/Site/About</code> עם הדף שלכם. לחיצה על שם האתר מחזירה לדף הבית. הקישורים לדפים שעוד לא יצרתם (Page1, Login) עדיין לא מעבירים לשום דף – ב-Ctrl+U כתוב בהם <code>href=""</code>. הם יתחילו לעבוד ברגע שתיצרו את הדפים, בנושא הבא.</div>
+    <div class="expect">בתפריט מופיע "אודות", והלחיצה פותחת את הכתובת שמסתיימת ב-<code>/Site/About</code> עם הדף שלכם. לחיצה על שם האתר מחזירה לדף הבית. הקישורים לדפים שעוד לא יצרתם (למשל Gallery ו-Login) עדיין לא מעבירים לשום דף – ב-Ctrl+U כתוב בהם <code>href=""</code>. הם יתחילו לעבוד ברגע שתיצרו את הדפים, בנושא הבא.</div>
     <div class="trouble" id="trPaths"></div>
   </article>
   <article class="spread cpstep">
@@ -447,16 +449,16 @@ namespace MyFirstWeb.Pages.Site
     <h3>💻 עכשיו אצלכם ב-Visual Studio</h3>
     <p>מעבירים שני דפים, לפי <a href="#" data-go="move:2">המתכון</a>: דף התוכן ודף הכניסה. כל השאר – בצעד הפרויקט, בסוף השיעור.</p>
     <ol class="vsdo">
-      <li><b>דף התוכן:</b> האתר רץ? עצרו אותו (■). קליק ימני על <b>Site</b> &rlm;←&rlm; Add &rlm;←&rlm; <bdi>Razor Page...</bdi> &rlm;←&rlm; Razor Page - Empty &rlm;←&rlm; Add &rlm;←&rlm; בשדה Name כתבו <b>Page1.cshtml</b> (השם שכתבתם בתפריט) &rlm;←&rlm; Add. השאירו את <code>@page</code> ו-<code>@model</code>, ובמקום הבלוק הריק שמתחתיהן כתבו כותרת ללשונית – עם שם הדף שלכם במקום שלוש הנקודות:
+      <li><b>דף התוכן:</b> לדף about.html כבר יש דף Razor – About.cshtml, שיצרתם בנושא "דף Razor". פתחו אותו. השאירו את <code>@page</code>, את <code>@model</code> ואת הבלוק של הכותרת, ומחקו את תוכן הניסוי – כל מה שמתחת לבלוק. (לדף התוכן שלכם שם אחר? צרו לו דף Razor חדש, כמו בצעד 4 – בשם משמעותי באנגלית, בלי רווחים. לא Page1: דף שנקרא page1.html מקבל עכשיו שם שאומר מה יש בו. ובבלוק שלו כתבו כותרת ללשונית.) כך נראה בלוק הכותרת – עם שם הדף שלכם במקום שלוש הנקודות:
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-rz="rz">
 @{ ViewData["Title"] = "..."; }
 </pre></div></li>
-      <li>פתחו את page1.html. מעתיקים רק את התוכן – בלי ה-nav, בלי ה-div של container עצמו ובלי שורת ה-script: סמנו מהשורה שאחרי <code>&lt;div class="container"&gt;</code> ועד השורה שלפני ה-<code>&lt;/div&gt;</code> האחרון – זה שמעל שורת ה-script. העתיקו (Ctrl+C), והדביקו ב-Page1.cshtml, מתחת לכותרת.</li>
-      <li>בדף החדש: כל <code>../Img/</code> &rlm;←&rlm; <code>~/Img/</code>. וקישור לדף אחר באתר: <code>href="x.html"</code> &rlm;←&rlm; <code>asp-page="/Site/X"</code> – חוץ מ-index.html, שהופך ל-<code>asp-page="/Index"</code> (דף הבית). קישור לאתר אחר (<code>https://…</code>) נשאר כמו שהוא. שמרו, הריצו (▶) ולחצו בתפריט על הקישור לדף.</li>
-      <li><b>דף הכניסה:</b> אותו דבר ל-login.html, בדף בשם <b>Login.cshtml</b> (עוצרים ■, יוצרים, מעתיקים, מתקנים, מריצים). בדקו: מלאו את הטופס ולחצו "כניסה".</li>
-      <li><b>מנקים – רק אחרי שבדקתם:</b> הדף החדש עובד? תפריט אחד, התמונות מופיעות, הקישורים פותחים דפים? עכשיו קובץ ה-HTML הישן כבר לא נחוץ: קליק ימני על page1.html &rlm;←&rlm; Delete, ומאשרים. אותו דבר ל-login.html. משהו עוד לא עובד בדף החדש? <b>אל תמחקו עדיין</b> – הקובץ הישן הוא הגיבוי שלכם עד שהחדש תקין.</li>
+      <li>פתחו את about.html. מעתיקים רק את התוכן – בלי ה-nav, בלי ה-div של container עצמו ובלי שורת ה-script: סמנו מהשורה שאחרי <code>&lt;div class="container"&gt;</code> ועד השורה שלפני ה-<code>&lt;/div&gt;</code> האחרון – זה שמעל שורת ה-script. העתיקו (Ctrl+C), והדביקו ב-About.cshtml, מתחת לבלוק הכותרת.</li>
+      <li>בדף ה-Razor: כל <code>../Img/</code> &rlm;←&rlm; <code>~/Img/</code>. וקישור לדף אחר באתר: <code>href="x.html"</code> &rlm;←&rlm; <code>asp-page="/Site/X"</code> – חוץ מ-index.html, שהופך ל-<code>asp-page="/Index"</code> (דף הבית). קישור לאתר אחר (<code>https://…</code>) נשאר כמו שהוא. שמרו, הריצו (▶) ולחצו בתפריט על הקישור לדף.</li>
+      <li><b>דף הכניסה:</b> כאן יוצרים דף חדש. עצרו (■). קליק ימני על <b>Site</b> &rlm;←&rlm; Add &rlm;←&rlm; <bdi>Razor Page...</bdi> &rlm;←&rlm; Razor Page - Empty &rlm;←&rlm; Add &rlm;←&rlm; בשדה Name כתבו <b>Login.cshtml</b> &rlm;←&rlm; Add. ומכאן אותו דבר: כותרת בבלוק, התוכן של login.html, תיקון נתיבים, והרצה (▶). בדקו: מלאו את הטופס ולחצו "כניסה".</li>
+      <li><b>מנקים – רק אחרי שבדקתם:</b> הדף החדש עובד? תפריט אחד, התמונות מופיעות, הקישורים פותחים דפים? עכשיו קובץ ה-HTML הישן כבר לא נחוץ: קליק ימני על about.html &rlm;←&rlm; Delete, ומאשרים. אותו דבר ל-login.html. משהו עוד לא עובד בדף החדש? <b>אל תמחקו עדיין</b> – הקובץ הישן הוא הגיבוי שלכם עד שהחדש תקין.</li>
     </ol>
-    <div class="expect">הקישורים בתפריט לדף התוכן ולכניסה פותחים את <code>/Site/Page1</code> ואת <code>/Site/Login</code> – בלי סיומת – ובכל דף יש <b>תפריט אחד</b>, התמונות מופיעות ובלשונית הכותרת של הדף. אחרי "כניסה" הכתובת מסתיימת בערך כך: <code>/Site/Login?userName=dana&amp;password=1234</code> (עם מה שהקלדתם). ובתיקייה HTML כבר אין page1.html ו-login.html.</div>
+    <div class="expect">הקישורים בתפריט לדף התוכן ולכניסה פותחים את <code>/Site/About</code> ואת <code>/Site/Login</code> – בלי סיומת – ובכל דף יש <b>תפריט אחד</b>, התמונות מופיעות ובלשונית הכותרת של הדף. אחרי "כניסה" הכתובת מסתיימת בערך כך: <code>/Site/Login?userName=dana&amp;password=1234</code> (עם מה שהקלדתם). ובתיקייה HTML כבר אין about.html ו-login.html.</div>
     <div class="tip">💡 למה למחוק את הישנים? בהגשה 1 <b>כל</b> דפי האתר הם דפי cshtml שמבוססים על התבנית. שני עותקים של אותו דף – אחד html ואחד cshtml – מבלבלים: קל לתקן בטעות את הקובץ הלא נכון.</div>
     <div class="trouble" id="trMove"></div>
   </article>
@@ -479,13 +481,13 @@ namespace MyFirstWeb.Pages.Site
     <div class="stepbox">
       <b>האתר שלכם – כולו ב-Razor, בתבנית אחת.</b> שני דפים כבר עברו (<a href="#" data-go="move:3">בשלב 💻</a>). עכשיו כל השאר, באותה דרך בדיוק (<a href="#" data-go="move:2">המתכון</a>):
       <ol>
-        <li><b>register.html</b> ו-<b>recover.html</b> &rlm;←&rlm; דפים בשם Register ו-Recover ב-<code>Pages/Site</code>. וכך גם כל דף תוכן נוסף שיש לכם.</li>
+        <li><b>register.html</b> ו-<b>recover.html</b> &rlm;←&rlm; דפים בשם Register ו-Recover ב-<code>Pages/Site</code>. וכך גם כל דף תוכן נוסף שיש לכם – כל אחד בשם משמעותי באנגלית, בלי רווחים (Gallery, Contact – לא Page2). הכלל הזה נבדק במחוון של ההגשה.</li>
         <li><b>דף הנחיתה:</b> לא יוצרים דף חדש – פותחים את <code>Pages/Index.cshtml</code> שכבר קיים (הוא נפתח בכתובת <code>/</code>). משאירים את <code>@page</code> ואת <code>@model IndexModel</code>, מחליפים את "Home page" בכותרת שלכם, ואת כל ה-div של "Welcome" – בתוכן של index.html (בלי ה-nav, בלי ה-div של container עצמו ובלי שורת ה-script – בדיוק כמו במתכון).</li>
-        <li><b>דפי תוכן חדשים</b> (בהגשה 1 צריך לפחות 10): את כל הדפים שעוד חסרים יוצרים ישר כדפי Razor ב-<code>Pages/Site</code> – קליק ימני על Site &rlm;←&rlm; Add &rlm;←&rlm; <bdi>Razor Page...</bdi> – ולא כקובצי html. כדי שכולם יהיו באותו סגנון: מעתיקים מ-Page1.cshtml – דף הבסיס של דפי התוכן – רק את <b>התוכן</b> (כל מה שמתחת לשורת <code>@model</code>), מדביקים במקום הבלוק הריק <code>@{ }</code> של הדף החדש, ומחליפים כותרת, טקסט ותמונות. את הקובץ עצמו לא מעתיקים.</li>
+        <li><b>דפי תוכן חדשים</b> (בהגשה 1 צריך לפחות 10): את כל הדפים שעוד חסרים יוצרים ישר כדפי Razor ב-<code>Pages/Site</code> – קליק ימני על Site &rlm;←&rlm; Add &rlm;←&rlm; <bdi>Razor Page...</bdi> – ולא כקובצי html. כדי שכולם יהיו באותו סגנון: מעתיקים מ-About.cshtml – דף הבסיס של דפי התוכן – רק את <b>התוכן</b> (כל מה שמתחת לשורת <code>@model</code>), מדביקים במקום הבלוק הריק <code>@{ }</code> של הדף החדש, ומחליפים כותרת, טקסט ותמונות. את הקובץ עצמו לא מעתיקים.</li>
         <li><b>התפריט</b> ב-<code>_Layout</code>: קישור asp-page לכל דף. הוספתם דף? מוסיפים לו קישור <b>רק כאן</b>.</li>
         <li><b>בכל דף:</b> <code>@page</code> ו-<code>@model</code> למעלה, כותרת עם ViewData, תמונות עם <code>~/Img/…</code>, קישורים לדפי האתר עם asp-page, טפסים עם <code>method="get"</code> – ובלי html, head, body, nav, ה-div של container ו-script.</li>
         <li><b>בדיקה:</b> הריצו ועברו על <b>כל</b> הקישורים – גם ברוחב טלפון (F12, ואז Ctrl+Shift+M). בכל דף: תפריט אחד, תמונות, כותרת בלשונית, ובלי שגיאה אדומה ב-Console.</li>
-        <li><b>מנקים:</b> כל דף שעבר ונבדק – מוחקים את קובץ ה-html הישן שלו מהתיקייה HTML (קליק ימני &rlm;←&rlm; Delete). לא ממהרים: קודם בודקים שהדף החדש עובד, ורק אז מוחקים את הישן. בסוף, כל דפי האתר הם דפי cshtml – בלי כפילויות. ומה עם דפי התרגול (practice.html, menu.html, pizza.html והקובץ style.css)? הם לא דפים של האתר: לא מעבירים אותם ל-Razor ולא מקשרים אליהם מהתפריט. והדף About מהתרגול? הוא דף אמיתי באתר שלכם: החליפו את טקסט התרגול בתוכן משלכם. ו-Privacy.cshtml הוא דף לדוגמה מהפרויקט ההתחלתי ש-Visual Studio יצר. אין אליו יותר קישור, אז גולשים לא יגיעו אליו במקרה – אבל בכתובת <code>/Privacy</code> הוא עדיין נפתח. אפשר להשאיר אותו או למחוק אותו.</li>
+        <li><b>מנקים:</b> כל דף שעבר ונבדק – מוחקים את קובץ ה-html הישן שלו מהתיקייה HTML (קליק ימני &rlm;←&rlm; Delete). לא ממהרים: קודם בודקים שהדף החדש עובד, ורק אז מוחקים את הישן. בסוף, כל דפי האתר הם דפי cshtml – בלי כפילויות. <br><b>ומה לא נכנס להגשה?</b> דפי התרגול (practice.html, menu.html, pizza.html והקובץ style.css של התרגול) והדף Privacy.cshtml – דף לדוגמה מהפרויקט ההתחלתי ש-Visual Studio יצר. לפני שאורזים את ה-zip, מחקו אותם מהפרויקט (קליק ימני &rlm;←&rlm; Delete). רוצים לשמור אותם? העתיקו אותם קודם לתיקייה אחרת במחשב. ואחרי שמחקתם את Privacy.cshtml – פתחו את <code>_Layout.cshtml</code> וחפשו (Ctrl+F) את המילה Privacy: לא אמור להישאר אף קישור אליו, לא בתפריט ולא ב-footer. (מחקתם אותם <a href="#" data-go="layout:3">בשלב 💻 של התבנית</a>.) נשאר קישור? מחקו אותו.</li>
       </ol>
       <label style="display:flex;gap:8px;align-items:center;margin-top:8px"><input type="checkbox" id="stepDone" /> עשיתי את הצעד בפרויקט שלי</label>
     </div>
@@ -507,7 +509,7 @@ namespace MyFirstWeb.Pages.Site
     <p>כל מה שצריך לזכור. אפשר לחזור לכאן בכל זמן, או להדפיס. <button class="btn" type="button" id="printBtn">🖨 הדפסה</button></p>
     <div class="cheat">
       <div class="card"><h4>📌 מה מגישים</h4>
-        <p><span data-asg="5"></span> – האתר המעוצב כולו: דף ראשי, 10 דפי תוכן לפחות, כניסה, הרשמה ושחזור סיסמה. כל הדפים cshtml בתבנית אחת, עם תפריט בכל דף ו-CSS חיצוני; zip עם קובץ ה-sln (<a href="#" data-go="practice:3">כל הפרטים</a>).</p>
+        <p><span data-asg="5"></span> – האתר המעוצב כולו: דף נחיתה, 10 דפי תוכן לפחות, כניסה, הרשמה ושחזור סיסמה. כל הדפים cshtml בתבנית אחת, עם תפריט בכל דף, CSS חיצוני ושם משמעותי לכל דף; zip עם קובץ ה-sln (<a href="#" data-go="practice:3">כל הפרטים</a>).</p>
         <p>הרשימה המלאה והמחוון: <a href="submission1.html">דף הליווי של הגשה 1</a>.</p></div>
       <div class="card"><h4>דף Razor</h4>
         <ul>
@@ -844,9 +846,9 @@ function siteSim(host, o){
 siteSim($('#welcomeSite'), {kind:'mine', pages: MY, start:'/', height: 380});
 
 const WHY = [
-  {files: ['index.html', 'page1.html', 'page2.html', 'login.html', 'register.html', 'recover.html'].map(f => ({f, s:'☰ עותק של התפריט'})),
+  {files: ['index.html', 'about.html', 'gallery.html', 'login.html', 'register.html', 'recover.html'].map(f => ({f, s:'☰ עותק של התפריט'})),
    done: () => '✎ 6 קבצים לערוך – בכל אחד אותו שינוי בדיוק'},
-  {files: [{f:'_Layout.cshtml', s:'☰ התפריט – רק כאן', lay:true}].concat(['Index.cshtml', 'Site/Page1.cshtml', 'Site/Page2.cshtml', 'Site/Login.cshtml', 'Site/Register.cshtml', 'Site/Recover.cshtml'].map(f => ({f, s:'בלי תפריט – מקבל מהתבנית'}))),
+  {files: [{f:'_Layout.cshtml', s:'☰ התפריט – רק כאן', lay:true}].concat(['Index.cshtml', 'Site/About.cshtml', 'Site/Gallery.cshtml', 'Site/Login.cshtml', 'Site/Register.cshtml', 'Site/Recover.cshtml'].map(f => ({f, s:'בלי תפריט – מקבל מהתבנית'}))),
    done: () => '✎ קובץ אחד לערוך – וכל הדפים מתעדכנים לבד'}
 ];
 let whyI = 0, whyDone = false;
@@ -1283,7 +1285,7 @@ quiz('#quiz', [
         'בדפדפן אין קוד שירוץ: ה-<bdi>C#</bdi> רץ בשרת, ולדפדפן הגיע רק הטקסט של השעה.' + goBack('razor:2', 'חזרו לשלב על @'),
         'השרת עונה רק כשמבקשים ממנו דף. בלי רענון אין בקשה חדשה – ואין תשובה חדשה.' + goBack('razor:2', 'חזרו לשלב על @'),
         'הדף הוא לא קובץ מוכן שנשמר בשרת: בכל בקשה השרת מריץ אותו מחדש, וכותב את השעה של אותו רגע.' + goBack('razor:2', 'חזרו לשלב על @')]},
-  {q:'ב-page2.html – קובץ html שעוד לא העברתם ל-Razor – כתבתם <code>src="~/Img/pic.jpg"</code>, כמו בדפי Razor. מה יקרה כשתפתחו אותו?',
+  {q:'ב-gallery.html – קובץ html שעוד לא העברתם ל-Razor – כתבתם <code>src="~/Img/pic.jpg"</code>, כמו בדפי Razor. מה יקרה כשתפתחו אותו?',
    opts:['התמונה לא תופיע – אף אחד לא מחליף את <code>~/</code>', 'התמונה תופיע – <code>~/</code> עובד מכל דף באתר', 'יופיע דף שגיאה של השרת במקום הדף', 'התמונה תופיע – אבל רק אחרי Hot Reload'], correct:0, back:'paths:3',
    why:['קובץ html נשלח כמו שהוא. הדפדפן מקבל את <code>~/</code> בלי שינוי, מחפש תיקייה בשם <code>~</code> ליד הדף – ואין כזו. <code>~/</code> ו-asp-page עובדים רק בקובצי cshtml.',
         'מכל דף <b>Razor</b>. את <code>~/</code> מחליף השרת כשהוא בונה דף – וקובץ html הוא לא בונה, רק שולח.' + goBack('paths:3', 'חזרו למעבדת הנתיבים'),
@@ -1403,7 +1405,7 @@ checkpoint('#cpMove', [
    why:['דפי Razor נמצאים ב-Pages. קובץ ב-wwwroot נשלח כמו שהוא – השרת לא מריץ אותו.', 'התבנית משותפת לכל הדפים – תוכן של דף אחד לא נכנס אליה.', 'Index הוא ברירת המחדל: <code>Pages/Index.cshtml</code> נפתח בכתובת <code>/</code> – דף הבית.'], back:'paths:1'},
   {q:'ב-login.html היה קישור <code>href="index.html"</code>, לדף הבית. מה כותבים ב-Login.cshtml?', opts:['<code>asp-page="/Index"</code>', '<code>asp-page="/Site/Index"</code>', 'משאירים <code>href="index.html"</code>'], correct:0,
    why:['דף הבית הוא <code>Pages/Index.cshtml</code> – ישר בתוך Pages, בלי Site.', 'אין דף Index בתוך Site: דף הבית נמצא ישר ב-Pages.', 'index.html הוא הקובץ הישן ב-wwwroot/HTML – ומהכתובת <code>/Site/Login</code> הקישור הזה לא יגיע אליו בכלל.'], back:'move:2'},
-  {q:'העברתם את page1.html לדף Razor בשם Page1. מתי מוחקים את page1.html?', opts:['אחרי שבדקתי שהדף החדש עובד', 'מיד, לפני שיוצרים את הדף החדש', 'אף פעם – הוא חייב להישאר בפרויקט'], correct:0,
+  {q:'העברתם את about.html לדף Razor בשם About. מתי מוחקים את about.html?', opts:['אחרי שבדקתי שהדף החדש עובד', 'מיד, לפני שיוצרים את הדף החדש', 'אף פעם – הוא חייב להישאר בפרויקט'], correct:0,
    why:['קודם בודקים – תפריט אחד, תמונות, קישורים – ורק אז מוחקים. עד אז הקובץ הישן הוא הגיבוי.', 'אז אין מאיפה להעתיק את התוכן, ואין גיבוי אם משהו משתבש.', 'בהגשה 1 כל דפי האתר הם cshtml. עותק html ישן רק מבלבל – מוחקים אותו אחרי הבדיקה.'], back:'move:3'}
 ]);
 
@@ -1427,16 +1429,19 @@ Course.autoCode();
 Course.assignment('#asg5', {n:5,
   lead:'<b>האתר המעוצב, כולו</b> – ההגשה הראשונה עם ציון. זה מה שצריך להיות בה:',
   items:[
-    '<b>דף פתיחה (דף ראשי)</b> מעוצב – אצלכם זה <code>Pages/Index.cshtml</code> (<a href="#" data-go="practice:2">צעד בפרויקט, סעיף 2</a>).',
-    '<b>לפחות 10 דפי תוכן</b>, כולם באותו סגנון (<a href="bootstrap.html">שיעור 5: דף התוכן המעוצב</a> · <a href="#" data-go="practice:2">צעד בפרויקט, סעיף 3</a>).',
-    'דפי <b>Login</b>, <b>Register</b> ו-<b>Recover Password</b> – כניסה, הרשמה ושחזור סיסמה, עם כל השדות (<a href="html-advanced.html#practice-4">שיעור 4: בודקים את שלושת הטפסים</a>).',
-    'העיצוב בקובץ <b>CSS חיצוני</b> – site-style.css, שמקושר פעם אחת, בתבנית (<a href="css.html#practice-2">שיעור 3: קובץ העיצוב של האתר</a> · <a href="#" data-go="layout:3">הקישור בתבנית</a>).',
-    '<b>כל הדפים הם דפי cshtml שמבוססים על Layout</b> – ואין לידם עותקי html ישנים (<a href="#" data-go="move:2">המתכון</a> · <a href="#" data-go="move:3">שלב 💻</a>).',
-    '<b>תפריט ראשי בכל דף</b> – כתוב פעם אחת ב-<code>_Layout</code>, עם קישור asp-page לכל דף (<a href="#" data-go="layout:3">התפריט בתבנית</a> · <a href="#" data-go="paths:4">הקישורים</a>).',
-    'הפרויקט רץ בלי שגיאות, ובדקתי כל דף בדפדפן – כולל התפריט.',
-    'ארזתי את <b>כל תיקיית הפרויקט – כולל הקובץ עם הסיומת sln</b> – לקובץ zip, ובדקתי שקובץ ה-sln בפנים (<a href="submission1.html#zip-2">איך אורזים zip – צעד אחר צעד</a>).',
-    '<b>תיק הפרויקט:</b> כתבתי את פרק 3 (עץ האתר) ואת פרק 6 (הדפים שבניתי) – כ-40 דקות.',
-    'כתבתי ב<b>יומן התקלות</b> (בתיק הפרויקט) שורה על כל באג שלקח לי יותר מ-10 דקות, ובפרק 11 בתיק – כל מקור או כלי AI שעזר לי.'
+    '<b>דף ראשי – דף נחיתה:</b> <code>Pages/Index.cshtml</code> (<a href="#" data-go="practice:2">צעד בפרויקט, סעיף 2</a>).',
+    '<b>10 דפי תוכן לפחות</b>, מעוצבים בצורה דומה, על נושא האתר (<a href="#" data-go="practice:2">צעד בפרויקט, סעיף 3</a> · <a href="submission1.html#rubric-1">מה נספר כדף תוכן</a>).',
+    '<b>Login, Register ו-Recover Password</b> – עברתי על השדות בשלושת הטפסים מול הטבלה (<a href="submission1.html#forms-1">בודק הטפסים בדף הליווי</a>).',
+    '<b>כל הדפים cshtml, כולם על Layout אחת</b>, ובה תפריט ראשי שמופיע בכל הדפים (<a href="#" data-go="move:2">המתכון</a> · <a href="#" data-go="layout:3">התפריט בתבנית</a> · <a href="#" data-go="paths:4">הקישורים</a>).',
+    'לכל דף <b>שם משמעותי באנגלית, בלי רווחים</b> (לא page1) (<a href="#" data-go="razor:5">הכלל</a>).',
+    '<b>כל העיצוב בקובץ ה-CSS החיצוני</b> – site-style.css, שמקושר פעם אחת, בתבנית (<a href="#" data-go="layout:3">הקישור בתבנית</a>).',
+    '<b>הקבצים בתיקיות הנכונות:</b> דפי Razor ב-Pages (אצלכם <code>Pages/Site</code>), תמונות ב-<code>wwwroot/Img</code>, עיצוב ב-<code>wwwroot/css</code> (ובהמשך השנה: JavaScript ב-<code>wwwroot/js</code>).',
+    'מחקתי מהפרויקט את <b>דפי התרגול, את קובצי ה-html הישנים ואת Privacy.cshtml</b> (<a href="#" data-go="practice:2">צעד בפרויקט, סעיף 7</a>).',
+    '<b>האתר רץ בלי שגיאות</b>, ונכנסתי לכל דף דרך התפריט – כולל 10 דפי התוכן.',
+    'נתתי לעצמי <b>ציון לפי המחוון</b> (<a href="submission1.html#rubric-3">המחוון בדף הליווי</a>).',
+    'סגרתי את Visual Studio, וארזתי את <b>כל תיקיית הפרויקט, כולל קובץ ה-sln</b>, לקובץ zip (<a href="submission1.html#zip-2">איך אורזים zip – צעד אחר צעד</a>).',
+    '<b>תיק הפרויקט:</b> כתבתי את פרק 3 (עץ האתר) ואת פרק 6 (הדפים שבניתי) – בערך 40 דקות. התיק הוא העותק האישי שלכם ב-Google Docs, שמצורף למטלת ההגשה הסופית בקלאסרום: כותבים ישר בו, בלי להוריד – ולא לוחצים שם "הגשה" עד סוף השנה.',
+    '<b>יומן התקלות</b> מעודכן (גם הוא עותק אישי, באותה מטלה), ובפרק 11 בתיק – המקורות וכלי ה-AI שעזרו לי.'
   ],
   how:'בקלאסרום &rlm;←&rlm; <b>סביבת הלמידה</b> &rlm;←&rlm; הנושא <b><bdi>HTML &amp; CSS</bdi></b> &rlm;←&rlm; {name} &rlm;←&rlm; <b>הוספה או יצירה</b> &rlm;←&rlm; <b>קובץ</b> &rlm;←&rlm; מעלים את קובץ ה-zip &rlm;←&rlm; <b>הגשה</b>. נתקעתם? פועלים לפי <b>חוק 3 השלבים</b>, ואם עדיין לא הולך – כותבים למורה תגובה פרטית במטלה.',
   after:'🧮 איך נקבע הציון? המחוון (100 נקודות), הרשימה המלאה של הדרישות, בודק הטפסים וסיבוב בדיקה אחרון – ב<a href="submission1.html">דף הליווי של הגשה 1</a>. עברו עליו לפני שמגישים.'
