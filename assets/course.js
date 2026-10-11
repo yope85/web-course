@@ -583,6 +583,12 @@ const ASSIGN = {
   5: {title:'הגשה 1: האתר המעוצב', due:'2026-12-24', est:'כ-12 שעות', graded:true},
   final: {label:'ההגשה הסופית', title:'הפרויקט ותיק הפרויקט', due:'', est:'', graded:true}
 };
+/* 🏠 topic home: every lesson returns to the home page of ITS topic (html-css.html, later javascript.html...). <body data-home="x.html" data-home-name="..."> overrides. */
+const TOPIC_HOME = [(document.body && document.body.dataset.home) || 'html-css.html', (document.body && document.body.dataset.homeName) || 'HTML & CSS'];
+(function(){ const add = () => { const b = document.querySelector('.topbar .brand'); if (!b || document.querySelector('.topbar .homelnk')) return;
+  const a = document.createElement('a'); a.className = 'homelnk'; a.href = TOPIC_HOME[0]; a.title = 'חזרה לדף הבית – ' + TOPIC_HOME[1]; a.setAttribute('aria-label', a.title);
+  a.innerHTML = '🏠 <span>דף הבית</span>'; b.parentNode.insertBefore(a, b); };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', add); else add(); })();
 const asgName = n => (ASSIGN[n] && ASSIGN[n].label) || ('מטלה ' + n);
 /* the dates come from assets/cohort.js (the one file to edit for a new cohort); the dates above are only a fallback */
 try { const C = window.COHORT && window.COHORT.due; if (C) Object.keys(C).forEach(n => { const ok = /^\d{4}-\d{2}-\d{2}$/.test(C[n] || ''); if (ok || ASSIGN[n]) (ASSIGN[n] = ASSIGN[n] || {title:'', est:''}).due = ok ? C[n] : ''; }); } catch(e){}
@@ -1274,7 +1280,7 @@ function show(ti, si, scroll){
     (next ? '<button type="button" class="next">' + label(next, true) + '</button>' :
       '<div class="what finish" style="margin:0">🎉 סיימתם את ' + esc(document.body.dataset.title || 'השיעור') + '! ' +
       (EGGS.length && !EGGS.every(e => found[e.id]) ? 'עוד לא מצאתם את כל הביצים? <a href="#" id="openEggs">רמזים כאן</a>. ' : '') +
-      (nextLesson ? '<a class="btn primary" href="' + nextLesson + '">לשיעור הבא: ' + esc(nextName || '') + ' ←</a>' : '<a href="index.html">חזרה לכל השיעורים</a>') + '</div>');
+      (nextLesson ? '<a class="btn primary" href="' + nextLesson + '">לשיעור הבא: ' + esc(nextName || '') + ' ←</a>' : '<a href="' + TOPIC_HOME[0] + '">🏠 חזרה לדף הבית – ' + TOPIC_HOME[1] + '</a>') + '</div>');
   if (prev) $('#stepnav .prev').onclick = () => show(prev[0], prev[1], true);
   if (next) $('#stepnav .next').onclick = () => show(next[0], next[1], true);
   const oe = $('#openEggs'); if (oe) oe.onclick = e => { e.preventDefault(); $('#eggBtn').click(); };

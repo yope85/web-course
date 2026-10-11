@@ -568,3 +568,9 @@ ol.ctour>li p{margin:4px 0}
 
 /* no font ligatures in code: "<!--" and "-->" must look exactly like the characters the student types (JetBrains Mono joins them into arrows) */
 html,code,.ltr,pre,.cv,.cv *,.codeblock pre,button,.chip,.tree,.ftree,.pathbox,.netpanel,.dt,textarea,input,.gcp-lines button,.urlbar .url{font-variant-ligatures:none;font-feature-settings:"liga" 0,"calt" 0}
+
+/* 🏠 home link in the top bar */
+.topbar .homelnk{flex:none;display:inline-flex;align-items:center;gap:5px;text-decoration:none;color:var(--text);background:var(--surface2);border:1px solid var(--line);border-radius:99px;padding:3px 11px;font-size:14px;line-height:1.5}
+.topbar .homelnk:hover,.topbar .homelnk:focus-visible{border-color:var(--accent);color:var(--accent)}
+@media (max-width:600px){.topbar .homelnk span{display:none}.topbar .homelnk{padding:3px 8px}}
+@media print{.topbar .homelnk{display:none}}
