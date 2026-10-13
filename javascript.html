@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>JavaScript – המדריך המעשי – בניית אתרים</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/course.css" />
+<style>
+.home{max-width:980px;margin:auto;padding:28px 16px 60px}
+.home h1{font-size:32px;margin:4px 0 6px;line-height:1.3}
+.home .lead{font-size:18px;color:var(--text);margin:0 0 6px}
+.totals{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 6px}
+.totals .pill{background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:5px 14px;font-size:15px}
+.resume{display:none;margin:12px 0}
+.nextasg{display:none;margin:4px 0 0;font-size:15px}
+.nextasg .soon{color:var(--warn);font-weight:600}
+.lessons{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px;margin-top:18px}
+.lcard{display:flex;flex-direction:column;gap:6px;text-decoration:none;color:inherit;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--shadow);transition:transform .15s,border-color .15s}
+a.lcard:hover{transform:translateY(-3px);border-color:var(--accent)}
+.lcard .n{font-size:13px;color:var(--accent);font-weight:600}
+.lcard h2{margin:0;font-size:20px;line-height:1.35}
+.lcard p{margin:0;color:var(--muted);font-size:15px}
+.lcard .meter{height:8px;background:var(--surface2);border-radius:99px;overflow:hidden;margin-top:4px}
+.lcard .meter i{display:block;height:100%;width:0;background:var(--ok)}
+.lcard .stats{display:flex;flex-wrap:wrap;gap:4px 10px;justify-content:space-between;font-size:13px;color:var(--muted)}
+.lcard.soon{opacity:.55;box-shadow:none}
+.badge{display:inline-block;background:var(--accent-soft);color:var(--accent);border-radius:99px;padding:1px 10px;font-size:12px;align-self:flex-start}
+.howto{margin-top:26px}
+.asgs{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 4px}
+.asgl{font-size:13px;font-weight:600;background:var(--accent-soft,#e3ecff);border:1px solid var(--accent,#2a5bd7);border-radius:99px;padding:1px 9px}
+</style>
+</head>
+<body>
+<header class="topbar"><div class="in">
+  <span class="brand">🛠 בניית אתרים · JavaScript</span>
+  <span class="progress"></span>
+  <button class="themebtn" id="themeBtn" type="button">🌓 מצב תצוגה</button>
+</div></header>
+<main class="home">
+  <div class="school" style="color:var(--muted);font-size:13px">אורט הנרי רונסון אשקלון · מגמת מדעי המחשב והנדסת תוכנה · יוחאי פרץ</div>
+  <h1>🛠 המדריך המעשי – JavaScript</h1>
+  <p class="lead">כאן לומדים לכתוב קוד שרץ בדפדפן: דוגמאות שאפשר להריץ ולשבור, שאלות ניחוש, ובכל שיעור תוכניות אמיתיות בפרויקט. אפשר ללמוד מכאן במקום מהסרטון – או בנוסף אליו.</p>
+  <div class="totals" id="totals"></div>
+  <a class="btn primary resume" id="resume" href="#">המשיכו מאיפה שעצרתם ←</a>
+  <p class="nextasg" id="nextAsg"></p>
+  <div class="lessons" id="lessons"></div>
+  <div class="spread howto">
+    <h3>💡 איך לומדים הכי טוב עם המדריך?</h3>
+    <ul class="how">
+      <li>🖥 בשלבי 💻 (עכשיו אצלכם): חצי מסך למדריך וחצי ל-Visual Studio – ועושים אצלכם בדיוק את מה שכתוב בשלב. בשאר השלבים – המדריך לבד.</li>
+      <li>⌨ בארגזי הקוד כותבים, מריצים (▶ או Ctrl+Enter) ורואים. 🔨 "שברו בכוונה" מראה איך נראות שגיאות – כדי שלא תיבהלו מהן אחר כך.</li>
+      <li>🐢 משהו לא ברור? חפשו את "רוצים הסבר לאט יותר?" – ואם עדיין לא ברור, שאלו את 📒 מחברת הנושא בקלאסרום.</li>
+      <li>🥚 בכל שיעור מוחבאות ביצי הפתעה. מוצאים אותן עם מה שלומדים – וזה בדיוק העניין.</li>
+      <li>💾 ההתקדמות נשמרת בדפדפן הזה, במחשב הזה. במחשב אחר מתחילים את הסימון מחדש (החומר עצמו זהה).</li>
+    </ul>
+  </div>
+</main>
+<footer>בניית אתרים · המדריך המעשי · יוחאי פרץ</footer>
+<script src="assets/cohort.js"></script>
+<script>
+(function(){
+"use strict";
+const LESSONS = [
+  {id:'js1', eggs:5, file:'js-basics.html', n:'שיעור 1', title:'משתנים, תנאים ולולאות', desc:'JavaScript בדפדפן, ארגז קוד עם Console, משתנים וקלט, תנאים ו-switch, לולאות וטבלת מעקב – ושבע התוכניות של מטלה 6.'},
+  {id:'js2', soon:true, n:'שיעור 2', title:'פונקציות ואירועים'},
+  {id:'js3', soon:true, n:'שיעור 3', title:'אינטראקציה עם הדף'},
+  {id:'js4', soon:true, n:'שיעור 4', title:'אובייקטים ומחרוזות'}
+];
+/* 📌 Classroom assignments – titles here; the DATES come from assets/cohort.js (one place for every cohort) */
+const ASG = {6:['תרגול JavaScript: משתנים, תנאים ולולאות','']};
+try { const C = window.COHORT && window.COHORT.due; if (C) Object.keys(ASG).forEach(n => { if (C[n]) ASG[n][1] = C[n]; }); } catch(e){}
+const L_ASG = {js1:[6]};
+const asgTxt = id => (L_ASG[id] || []).filter(n => ASG[n] && ASG[n][1]).map(n => { const [t, d] = ASG[n], [y, m, dd] = d.split('-').map(Number);
+  return '<span class="asgl">📌 ' + (n == 0 ? t : 'מטלה ' + n) + ' בקלאסרום · עד ' + dd + '/' + m + '</span>'; }).join('');
+const get = k => { try { return JSON.parse(localStorage.getItem(k)); } catch(e){ return null; } };
+try { const th = localStorage.getItem('course-theme'); if (th) document.documentElement.dataset.theme = th; } catch(e){}
+document.getElementById('themeBtn').addEventListener('click', () => {
+  const cur = document.documentElement.dataset.theme;
+  const dark = cur ? cur === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+  const next = dark ? 'light' : 'dark'; document.documentElement.dataset.theme = next;
+  try { localStorage.setItem('course-theme', next); } catch(e){}
+});
+let eggs = 0, eggTotal = 0, last = null, firstNew = null, anyDone = false;
+/* 🎯 understanding checks: how many passed on the first try, and a gentle "worth reviewing" signal */
+const cpTxt = st => { const t = st.cpTotal || 0; if (!t) return ''; const r = Object.values(st.cp || {}); const ok = r.filter(x => x.ok === x.n).length, more = r.filter(x => x.ok < x.n).length;
+  return '<span title="בדיקות הבנה שעברתם בניסיון הראשון">🎯 ' + ok + '/' + t + (more ? ' · כדאי לחזור על ' + more : '') + '</span>'; };
+const box = document.getElementById('lessons');
+box.innerHTML = LESSONS.map(l => {
+  if (l.soon) return '<div class="lcard soon"><span class="n">' + l.n + '</span><h2>' + l.title + '</h2><span class="badge">בקרוב</span></div>';
+  const st = get(l.id + '-state') || {};
+  const seen = st.stepsSeen || 0, total = st.stepsTotal || 0;
+  const et = l.eggs || st.eggTotal || 5, e = Math.min(et, Object.keys(st.eggs || {}).length);   /* l.eggs = the source of truth (a lesson may drop an egg) */
+  eggs += e; eggTotal += et;
+  if (!last && seen && seen < total) last = l;
+  if (total && seen === total) anyDone = true;
+  if (!firstNew && !seen && anyDone) firstNew = l;
+  const pct = total ? Math.round(100 * seen / total) : 0;
+  return '<a class="lcard" href="' + l.file + '"><span class="n">' + l.n + '</span><h2>' + l.title + '</h2><p>' + l.desc + '</p>' +
+    '<div class="meter"><i style="width:' + pct + '%"></i></div>' +
+    (asgTxt(l.id) ? '<div class="asgs">' + asgTxt(l.id) + '</div>' : '') + '<div class="stats"><span>' + (total ? (seen === total ? '✔ סיימתם' : seen + ' מתוך ' + total + ' שלבים') : 'עוד לא התחלתם') + '</span><span>🥚 ' + e + '/' + et + '</span>' + cpTxt(st) + '</div></a>';
+}).join('');
+document.getElementById('totals').innerHTML = '<span class="pill">🥚 ביצים שמצאתם בנושא הזה: <b>' + eggs + '/' + eggTotal + '</b></span>';
+last = last || firstNew;
+/* first visit (nothing seen yet): a clear "start here" – the same button */
+const fresh = !last && LESSONS.every(l => !((get(l.id + '-state') || {}).stepsSeen));
+const goTo = last || (fresh ? LESSONS[0] : null);
+if (goTo) { const r = document.getElementById('resume'); r.href = goTo.file; r.textContent = (last ? 'המשיכו מאיפה שעצרתם: ' : 'התחילו כאן: ') + goTo.n + ' – ' + goTo.title + ' ←'; r.style.display = 'inline-block'; }
+/* 📌 the nearest assignment that is still ahead – one line, so it never gets lost among the cards */
+try {
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const up = Object.keys(ASG).filter(n => ASG[n][1]).map(n => { const [y, m, d] = ASG[n][1].split('-').map(Number); return {n, t: ASG[n][0], d, m, days: Math.round((new Date(y, m - 1, d) - today) / 864e5)}; })
+    .filter(x => x.days >= 0).sort((a, b) => a.days - b.days);
+  if (up.length) { const x = up[0], na = document.getElementById('nextAsg'), same = up.filter(y => y.days === x.days);
+    na.innerHTML = '📌 ' + (same.length > 1 ? 'המטלות הקרובות: ' : 'המטלה הקרובה: ') + same.map(y => '<b>' + (y.n == 0 ? y.t : 'מטלה ' + y.n + ' – ' + y.t) + '</b>').join(' ו') + ' · עד ' + x.d + '/' + x.m + ' <span class="' + (x.days <= 3 ? 'soon' : '') + '">(' + (x.days === 0 ? 'היום!' : x.days === 1 ? 'מחר' : 'עוד ' + x.days + ' ימים') + ')</span>';
+    na.style.display = 'block'; }
+} catch(e){}
+})();
+</script>
+</body>
+</html>
