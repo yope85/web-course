@@ -382,23 +382,20 @@ function tagIssueText(x){
     : 'בשורה ' + x.line + ' יש תגית סוגרת <code>&lt;/' + t + '&gt;</code> – בלי תגית פותחת לפניה';
 }
 
-function playground(container, o){
-  if (typeof container === 'string') container = $(container);
-  const id = o.id || 'pg';
-  container.innerHTML = '<div class="pg"><div class="editor">' +
-    '<span class="lbl">' + (o.htmlLabel || 'HTML') + '</span><textarea class="edH" spellcheck="false" aria-label="עורך HTML" aria-describedby="' + id + '-edhint"></textarea>' +
-    (o.css !== undefined ? '<span class="lbl">' + (o.cssLabel || 'CSS – style.css') + '</span><textarea class="edC" spellcheck="false" aria-label="עורך CSS" aria-describedby="' + id + '-edhint"></textarea>' : '') +
-    '<span class="edhint" id="' + id + '-edhint">⌨ Tab מוסיף רווחים. כדי לצאת מהעורך עם המקלדת: Esc ואז Tab.</span>' +
-    '<div><button class="btn reset" type="button">↺ התחלה מחדש</button></div></div>' +
-    '<div><div class="pg-frame"></div></div></div><p class="pg-fin" role="status"></p><ul class="tasks"></ul><div class="pg-ask"></div>';
-  const edH = container.querySelector('.edH'), edC = container.querySelector('.edC');
-  const frame = new Frame(container.querySelector('.pg-frame'), {url: o.url || 'localhost:7123/HTML/test.html', height: o.height || 440});
-  const tasksBox = container.querySelector('.tasks');
-  const done = (state.tasks = state.tasks || {});
-  const help = (state.help = state.help || {});
-  const key = t => id + ':' + t.id;
-  const TS = o.tasks || [];
-  const tries = {}, nudged = {}; let lastTry = 0, lastCode = null;
+
+/* ---------- taskList: the task list shared by playground (HTML/CSS labs) and jsbox (JavaScript labs) ----------
+   ONE place for: the <li> of a task (+ the optional "עובד אצלי" checkbox), the help ladder (hint 1 -> hint 2 -> solution -> "now try alone"),
+   the "this is hard" nudge after 3 tries, the progress line + finale, and the ONE celebration per check.
+   State keys are the ones students already have in localStorage – do NOT rename:
+     state.tasks[id + ':' + task.id] = true   ·   state.help[id + ':' + task.id] = {h, open, sol, seen}   ·   state.fin[o.finKey]
+   box    : element that contains  <p class="pg-fin"> + <ul class="tasks">   (see TASKS_HTML)
+   o      : {id, tasks, finKey, solLang(t) -> 'css'|'html'|'js', focus(), onTask(t)}
+   api    : {check(run, gate), tried(), open(), paint, paintHelp, done, key, tasksBox, finBox} */
+const TASKS_HTML = '<p class="pg-fin" role="status"></p><ul class="tasks"></ul><div class="pg-ask"></div>';
+function taskList(box, o){
+  const id = o.id, TS = o.tasks || [], tasksBox = box.querySelector('.tasks'), finBox = box.querySelector('.pg-fin');
+  const done = (state.tasks = state.tasks || {}), help = (state.help = state.help || {});
+  const key = t => id + ':' + t.id, tries = {}, nudged = {};
   TS.forEach((t,i) => {
     const li = document.createElement('li'); li.dataset.k = key(t);
     li.innerHTML = '<span class="st">' + (i+1) + '</span><div><div class="tt">' + t.text + (t.manual ? ' <label style="margin-inline-start:6px;white-space:nowrap"><input type="checkbox" data-manual="1" /> עובד אצלי</label>' : '') + '</div><div class="tk-lint" role="status" hidden></div><div class="tk-x"></div></div>';
@@ -409,7 +406,7 @@ function playground(container, o){
       const h = help[key(t)] = help[key(t)] || {h:0};
       if (b.dataset.a === 'hint') h.h = Math.min((t.hints || []).length, (h.h || 0) + 1);
       if (b.dataset.a === 'sol') { h.open = !h.open; h.sol = true; }
-      if (b.dataset.a === 'alone') { h.open = false; h.seen = true; (edC || edH).focus(); }
+      if (b.dataset.a === 'alone') { h.open = false; h.seen = true; if (o.focus) o.focus(); }
       save(); paintHelp(i, b.dataset.a);
     });
     tasksBox.appendChild(li);
@@ -432,15 +429,15 @@ function playground(container, o){
     if (btns.length) html += '<div class="tk-help">' + btns.join('') + '</div>';
     if (isDone && h.seen) html += '<span class="tk-seen">👀 נעזרתם בפתרון – נסו בפעם הבאה עם רמז אחד פחות</span>';
     x.innerHTML = html;
-    const pre = x.querySelector('pre[data-sol]'); if (pre) codeLines(pre, t.solution.code, t.solution.lang || (edC ? 'css' : 'html'));
+    const pre = x.querySelector('pre[data-sol]'); if (pre) codeLines(pre, t.solution.code, o.solLang ? o.solLang(t) : (t.solution.lang || 'html'));
     if (focusAfter) { const f = x.querySelector('[data-a="' + (focusAfter === 'hint' ? 'hint' : 'sol') + '"]') || x.querySelector('button,a'); if (f && focusAfter !== 'alone') f.focus(); }
   }
   /* the finale belongs to the tasks that are checked automatically; "perfect" = finished without opening a solution (hints are fine) */
-  const AUTO = TS.filter(t => !t.manual), finBox = container.querySelector('.pg-fin');
+  const AUTO = TS.filter(t => !t.manual);
   const autoDone = () => AUTO.length > 0 && AUTO.every(t => done[key(t)]);
   const noSol = () => !TS.some(t => { const h = help[key(t)]; return h && (h.sol || h.seen || h.open); });
   function paintFin(){
-    if (!finBox) return; const n = TS.filter(t => done[key(t)]).length, N = TS.length; if (!N) { finBox.hidden = true; return; }
+    if (!finBox) return; const n = TS.filter(t => done[key(t)]).length, N = TS.length; finBox.hidden = !N; if (!N) return;
     const all = autoDone(), txt = all ? '<b>🏆 ' + (n === N ? 'כל ' + N + ' המשימות הושלמו!' : 'הושלמו ' + n + ' מתוך ' + N + ' משימות') + '</b>' + (noSol() ? ' <span class="fin-badge">⭐ לבד – בלי לפתוח פתרון</span>' : '')
       : 'הושלמו <b>' + n + ' מתוך ' + N + '</b> משימות';
     const html = '<span class="pg-bar"><i style="width:' + (100 * n / N) + '%"></i></span><span>' + txt + '</span>';
@@ -449,30 +446,52 @@ function playground(container, o){
   function paint(){ TS.forEach((t,i) => { const li = tasksBox.children[i]; const ok = !!done[key(t)]; const was = li.classList.contains('done'); li.classList.toggle('done', ok); li.querySelector('.st').textContent = ok ? '✔' : (i+1); li.querySelector('.st').setAttribute('aria-label', ok ? 'הושלמה' : 'משימה ' + (i+1)); if (was !== ok) paintHelp(i); }); paintFin(); }
   saveHooks.push(paint);
   startHooks.push(() => TS.forEach((t,i) => paintHelp(i)));
+  /* check(run, gate): run(t) -> did the student's work pass this task?   gate(t) -> null = fine · string = "not yet" + this message under the task (first one only) · true = "not yet", silently.
+     ONE celebration per check, even when several tasks turn green together: the last task that was solved, or the finale when all are done. */
+  function check(run, gate){
+    TS.forEach((t, i) => { const lb = tasksBox.children[i] && tasksBox.children[i].querySelector('.tk-lint'); if (lb) { lb.hidden = true; lb.innerHTML = ''; } });
+    const fresh = [];
+    TS.forEach(t => { if (t.manual) return; let ok = false; try { ok = !!run(t); } catch(e){}
+      if (ok && !done[key(t)] && gate) { const v = gate(t); if (v) { ok = false;
+        if (typeof v === 'string' && !tasksBox.querySelector('.tk-lint:not([hidden])')) { const lb = tasksBox.children[TS.indexOf(t)].querySelector('.tk-lint'); lb.innerHTML = v; lb.hidden = false; } } }
+      if (ok && !done[key(t)]) { done[key(t)] = true; fresh.push(t); if (o.onTask) o.onTask(t); } });
+    if (fresh.length) { const li = tasksBox.children[TS.indexOf(fresh[fresh.length - 1])], all = autoDone(), pf = all && noSol();
+      setTimeout(() => all ? finale(finBox || li, {near: li, perfect: pf, key: o.finKey, title: pf ? 'לבד, עד הסוף!' : 'כל המשימות הושלמו!', sub: AUTO.length + ' מתוך ' + AUTO.length + ' משימות' + (pf ? ' – בלי לפתוח פתרון' : '')}) : celebrate(li, 'small'), 60); }
+    return fresh;
+  }
+  /* one more unsuccessful try on the first unfinished task; the 3rd one shows the gentle nudge. Returns false when nothing is left to try. WHEN a try counts is the caller's rule. */
+  function tried(){
+    const ci = TS.findIndex(t => !t.manual && !done[key(t)]); if (ci < 0) return false;
+    const k = key(TS[ci]); tries[k] = (tries[k] || 0) + 1;
+    if (tries[k] >= 3 && !nudged[k]) { nudged[k] = true; paintHelp(ci); }
+    return true;
+  }
+  return {check, tried, paint, paintHelp, tasksBox, finBox, done, key, open: () => TS.find(t => !t.manual && !done[key(t)])};
+}
+
+function playground(container, o){
+  if (typeof container === 'string') container = $(container);
+  const id = o.id || 'pg';
+  container.innerHTML = '<div class="pg"><div class="editor">' +
+    '<span class="lbl">' + (o.htmlLabel || 'HTML') + '</span><textarea class="edH" spellcheck="false" aria-label="עורך HTML" aria-describedby="' + id + '-edhint"></textarea>' +
+    (o.css !== undefined ? '<span class="lbl">' + (o.cssLabel || 'CSS – style.css') + '</span><textarea class="edC" spellcheck="false" aria-label="עורך CSS" aria-describedby="' + id + '-edhint"></textarea>' : '') +
+    '<span class="edhint" id="' + id + '-edhint">⌨ Tab מוסיף רווחים. כדי לצאת מהעורך עם המקלדת: Esc ואז Tab.</span>' +
+    '<div><button class="btn reset" type="button">↺ התחלה מחדש</button></div></div>' +
+    '<div><div class="pg-frame"></div></div></div>' + TASKS_HTML;
+  const edH = container.querySelector('.edH'), edC = container.querySelector('.edC');
+  const frame = new Frame(container.querySelector('.pg-frame'), {url: o.url || 'localhost:7123/HTML/test.html', height: o.height || 440});
+  const TS = o.tasks || [];
+  const tl = taskList(container, {id, tasks: TS, finKey: 'pg:' + id, solLang: t => t.solution.lang || (edC ? 'css' : 'html'), focus: () => (edC || edH).focus(), onTask: o.onTask});
+  let lastTry = 0, lastCode = null;
   function render(){ frame.show({html: edH.value, css: edC ? edC.value.replace(/<\/style/gi,'') : '', links: o.links || []}); }
   frame.onLoad = d => {
     /* strict tags: a task is not done while the student's code has an unclosed / stray tag that wasn't in the starting code */
     const issues = o.strictTags === false ? [] : newTagIssues(edH.value, o.html);
-    TS.forEach((t, i) => { const lb = tasksBox.children[i] && tasksBox.children[i].querySelector('.tk-lint'); if (lb) { lb.hidden = true; lb.innerHTML = ''; } });
-    const fresh = [];
-    TS.forEach(t => { if (!t.manual) { let ok = false; try { ok = !!t.test(d, d.defaultView); } catch(e){}
-      if (ok && !done[key(t)] && issues.length && t.strictTags !== false) {
-        const lb = tasksBox.children[TS.indexOf(t)].querySelector('.tk-lint'); ok = false;
-        if (tasksBox.querySelector('.tk-lint:not([hidden])')) return;
-        lb.innerHTML = '✋ <b>כמעט!</b> בתצוגה זה כבר נראה נכון – כי הדפדפן משלים לבד תגיות שחסרות. אבל בקוד ' + tagIssueText(issues[0]) + ' – תקנו, והמשימה תסומן.';
-        lb.hidden = false;
-      }
-      if (ok && !done[key(t)]) { done[key(t)] = true; fresh.push(t); if (o.onTask) o.onTask(t); } } });
-    /* ONE celebration per render, even when several tasks turn green together: the last task that was solved, or the finale when all are done */
-    if (fresh.length) { const li = tasksBox.children[TS.indexOf(fresh[fresh.length - 1])], all = autoDone(), pf = all && noSol();
-      setTimeout(() => all ? finale(finBox || li, {near: li, perfect: pf, key: 'pg:' + id, title: pf ? 'לבד, עד הסוף!' : 'כל המשימות הושלמו!', sub: AUTO.length + ' מתוך ' + AUTO.length + ' משימות' + (pf ? ' – בלי לפתוח פתרון' : '')}) : celebrate(li, 'small'), 60); }
+    tl.check(t => t.test(d, d.defaultView), t => issues.length && t.strictTags !== false ? '✋ <b>כמעט!</b> בתצוגה זה כבר נראה נכון – כי הדפדפן משלים לבד תגיות שחסרות. אבל בקוד ' + tagIssueText(issues[0]) + ' – תקנו, והמשימה תסומן.' : null);
     if (o.onRender) try { o.onRender(d, edH.value, edC && edC.value); } catch(e){}
     /* count a "try" on the first unfinished task: the code changed and some time passed since the last counted try */
-    const code = edH.value + '\n' + (edC ? edC.value : ''); const ci = TS.findIndex(t => !t.manual && !done[key(t)]);
-    if (lastCode !== null && code !== lastCode && ci >= 0 && Date.now() - lastTry > 15000) {
-      lastTry = Date.now(); const k = key(TS[ci]); tries[k] = (tries[k] || 0) + 1;
-      if (tries[k] >= 3 && !nudged[k]) { nudged[k] = true; paintHelp(ci); }
-    }
+    const code = edH.value + '\n' + (edC ? edC.value : '');
+    if (lastCode !== null && code !== lastCode && Date.now() - lastTry > 15000 && tl.tried()) lastTry = Date.now();
     lastCode = code;
     save();
   };
@@ -495,10 +514,10 @@ function playground(container, o){
     edH.value = o.html; if (edC) edC.value = o.css; store.set('code-' + id, null); render(); toast('↺ הקוד חזר להתחלה. המשימות שכבר הצלחתם נשארות מסומנות.');
   });
   askBox(container.querySelector('.pg-ask'), {
-    task: () => { const t = TS.find(t => !done[key(t)]); return t ? plain(t.text) : ''; },
+    task: () => { const t = tl.open(); return t ? plain(t.text) : ''; },
     code: () => (edC ? '/* CSS */\n' + edC.value + '\n\n<!-- HTML -->\n' : '') + edH.value
   });
-  render(); paint();
+  render(); tl.paint();
   return {edH, edC, frame, render};
 }
 const plain = h => { const d = document.createElement('div'); d.innerHTML = h; d.querySelectorAll('a').forEach(a => a.remove()); return d.textContent.replace(/\s+/g, ' ').replace(/\(\s*\)/g, '').trim(); };
@@ -1508,6 +1527,11 @@ function jsGuard(code){
     if (c === '/' && code[j + 1] === '/') { j = skipLine(j); continue; }
     if (c === '/' && code[j + 1] === '*') { j = skipBlock(j); continue; }
     if (c === '(') d++; else if (c === ')') { d--; if (!d) return j; } j++; } return -1; }
+  function splitTop(t){ const parts = []; let d = 0, st = 0;
+    for (let j = 0; j < t.length; j++) { const c = t[j];
+      if (c === '"' || c === "'" || c === '`') { j++; while (j < t.length && t[j] !== c) { if (t[j] === '\\') j++; j++; } continue; }
+      if (c === '(' || c === '[' || c === '{') d++; else if (c === ')' || c === ']' || c === '}') d--; else if (c === ';' && !d) { parts.push(t.slice(st, j)); st = j + 1; } }
+    parts.push(t.slice(st)); return parts; }
   let out = '', i = 0;
   while (i < n) {
     const c = code[i], d = code[i + 1];
@@ -1520,7 +1544,17 @@ function jsGuard(code){
       const w = code.slice(i, j);
       if (w === 'for' || w === 'while' || w === 'do') {
         let k = j; while (/\s/.test(code[k] || '')) k++;
-        if (w !== 'do') { if (code[k] === '(') { const e = matchParen(k); if (e < 0) { out += w; i = j; continue; } k = e + 1; while (/\s/.test(code[k] || '')) k++; } else { out += w; i = j; continue; } }
+        if (w !== 'do') {
+          if (code[k] !== '(') { out += w; i = j; continue; }
+          const e = matchParen(k); if (e < 0) { out += w; i = j; continue; }
+          /* guard in the loop HEADER too – a loop with no braces ("while (i < 3);") has no body to put the counter in */
+          const inner = code.slice(k + 1, e); let hdr = code.slice(k, e + 1);
+          if (w === 'while') hdr = '(__lg(), (' + inner + '))';
+          else { const parts = splitTop(inner); if (parts.length === 3) hdr = '(' + parts[0] + ';(__lg(), ' + (parts[1].trim() || 'true') + ');' + parts[2] + ')'; }
+          out += code.slice(i, k) + hdr; i = e + 1; k = i; while (/\s/.test(code[k] || '')) k++;
+          if (code[k] === '{') { out += code.slice(i, k + 1) + ' __lg();'; i = k + 1; }
+          continue;
+        }
         if (code[k] === '{') { out += code.slice(i, k + 1) + ' __lg();'; i = k + 1; continue; }
       }
       out += w; i = j; continue;
@@ -1595,10 +1629,10 @@ function jsRunnerDoc(code, o){
   return build(doc.slice(0, idx).split('\n').length);
 }
 /* Chrome's error messages -> what they mean, in plain Hebrew (the English line itself is exactly what F12 shows) */
-function jsExplain(e, srcLine){
+function jsExplain(e, srcLine, lets){
   const m = e.msg || '', tl = srcLine ? '<div class="jsb-qline">שורה ' + e.line + ': <code dir="ltr">' + esc(srcLine.trim()) + '</code></div>' : '';
   let t, m1;
-  if ((m1 = m.match(/^(.+) is not defined$/))) t = 'המחשב לא מכיר את השם <code>' + esc(m1[1]) + '</code>. הסיבות הנפוצות: שגיאת כתיב (ב-JavaScript <code>name</code> ו-<code>Name</code> הם שני שמות שונים), או ששכחתם להגדיר אותו עם <code>let</code> לפני השימוש.';
+  if ((m1 = m.match(/^(.+) is not defined$/))) t = 'המחשב לא מכיר את השם <code>' + esc(m1[1]) + '</code>. הסיבות הנפוצות: שגיאת כתיב (ב-JavaScript <code>name</code> ו-<code>Name</code> הם שני שמות שונים), או <b>טקסט שנכתב בלי מרכאות</b> – מילה בלי מרכאות נראית למחשב כמו שם של משהו, לא כמו טקסט.' + (lets ? ' ועוד סיבה: ששכחתם להגדיר אותו עם <code>let</code> לפני השימוש.' : '');
   else if ((m1 = m.match(/^Cannot access '(.+)' before initialization$/))) t = 'השתמשתם ב-<code>' + esc(m1[1]) + '</code> לפני השורה שמגדירה אותו (עם <code>let</code>). קודם מגדירים, אחר כך משתמשים.';
   else if (/^Assignment to constant variable/.test(m)) t = 'ניסיתם לשנות משתנה שהוגדר עם <code>const</code> – והוא קבוע, אי אפשר לשנות אותו. אם צריך לשנות – מגדירים עם <code>let</code>.';
   else if ((m1 = m.match(/^Identifier '(.+)' has already been declared$/))) t = 'הגדרתם את <code>' + esc(m1[1]) + '</code> פעמיים עם <code>let</code>/<code>const</code> באותו מקום. מגדירים משתנה פעם אחת; בהמשך רק משנים את ערכו: <code>' + esc(m1[1]) + ' = …</code>';
@@ -1608,13 +1642,15 @@ function jsExplain(e, srcLine){
   else if (/^Unexpected end of input/.test(m)) t = 'הקוד נגמר באמצע: חסר סוגר – <code>}</code> או <code>)</code> – שמתאים לפותח שנשאר פתוח.';
   else if (/^missing \) after argument list/.test(m)) t = 'חסר סוגר <code>)</code> בסוף הקריאה, או פסיק/<code>+</code> בין הערכים שבתוך הסוגריים.';
   else if (/^Invalid or unexpected token/.test(m)) t = 'תו שלא חוקי – לרוב מרכאות שנפתחו ולא נסגרו, או מרכאות "חכמות" שהודבקו מ-Word או מהודעה.';
+  else if (/^Unexpected identifier/.test(m) && srcLine && /^\s*(?:\}\s*else\s+)?(if|while|for|switch)\s+[A-Za-z_$]/.test(srcLine)) t = 'אחרי <code>' + srcLine.trim().match(/(if|while|for|switch)/)[1] + '</code> חייב לבוא סוגר <code>(</code>, ובתוכו התנאי. כאן באה מיד מילה – ולכן JavaScript לא מבינה.';
   else if ((m1 = m.match(/^Unexpected identifier(?: '(.+)')?/))) t = 'מילה במקום שלא מצפים לה' + (m1[1] ? ' (<code>' + esc(m1[1]) + '</code>)' : '') + '. לרוב חסר משהו <b>לפניה</b>: <code>;</code>, פסיק, <code>+</code>, או שהמילה הקודמת נכתבה לא נכון.';
   else if (/^Unexpected string/.test(m)) t = 'טקסט במרכאות במקום שלא מצפים לו – לרוב חסר <code>+</code> או פסיק לפניו.';
   else if (/^Unexpected number/.test(m)) t = 'מספר במקום שלא מצפים לו – לרוב חסר אופרטור (<code>+</code>, <code>*</code>…) או פסיק לפניו.';
   else if ((m1 = m.match(/^Unexpected token '?(.+?)'?$/))) t = 'המחשב נתקל ב-<code>' + esc(m1[1]) + '</code> במקום שלא מצפים לו. בדקו סוגריים, מרכאות ופסיקים – בשורה הזו <b>ובשורה שלפניה</b> (לפעמים הטעות שם).';
+  else if (/^Maximum call stack size exceeded/.test(m)) t = 'משהו בקוד קורא לעצמו שוב ושוב בלי סוף, עד שנגמר המקום. לרוב – לולאה או קריאה שלא נעצרת.';
   else if (/^Illegal break statement|^Illegal continue/.test(m)) t = '<code>break</code>/<code>continue</code> מותרים רק בתוך לולאה (או switch).';
   else t = 'ככה נראית הודעת שגיאה: <b>סוג</b> (<code>' + esc(e.name) + '</code>) ואחריו <b>מה</b> השתבש, ובצד – באיזו שורה. התחילו מהשורה הזו.';
-  return '<div class="jsb-help" role="note"><b>🔎 מה זה אומר?</b> ' + t + tl + '<div class="jsb-f12">בדיוק אותה שורה אדומה תראו ב-F12 ‏←‏ Console (בדפדפן Chrome או Edge; בדפדפנים אחרים הניסוח שונה קצת).</div></div>';
+  return '<div class="jsb-help" dir="rtl" role="note"><b>🔎 מה זה אומר?</b> ' + t + tl + '<div class="jsb-f12">בדיוק אותה שורה אדומה תראו ב-F12 ‏←‏ Console (בדפדפן Chrome או Edge; בדפדפנים אחרים הניסוח שונה קצת).</div></div>';
 }
 function jsbox(container, o){
   if (typeof container === 'string') container = $(container);
@@ -1622,7 +1658,7 @@ function jsbox(container, o){
   const id = o.id || 'jsb', file = o.file || 'script.js', TS = o.tasks || [], BR = o.breaks || [];
   container.classList.add('jsb'); if (o.noPage) container.classList.add('jsb-nopage');
   container.innerHTML = '<div class="pg jsb-grid"><div class="editor jsb-ed"><span class="lbl">JavaScript – <bdi dir="ltr">' + esc(file) + '</bdi></span>' +
-    '<textarea class="jsb-code" spellcheck="false" aria-label="עורך JavaScript" aria-describedby="' + id + '-hint"></textarea>' +
+    '<div class="jsb-edwrap"><textarea class="jsb-code" wrap="off" spellcheck="false" aria-label="עורך JavaScript" aria-describedby="' + id + '-hint"></textarea><div class="jsb-hl" hidden aria-hidden="true"></div></div>' +
     '<span class="edhint" id="' + id + '-hint">⌨ Ctrl+Enter מריץ · Tab מוסיף רווחים · כדי לצאת מהעורך עם המקלדת: Esc ואז Tab.</span>' +
     '<div class="ctrls jsb-bar"><button class="btn primary jsb-run" type="button">▶ הריצו</button><button class="btn reset jsb-reset" type="button">↺ התחלה מחדש</button></div>' +
     (BR.length ? '<div class="ctrls jsb-breaks"><span class="lbl">🔨 שברו בכוונה:</span></div>' : '') +
@@ -1630,16 +1666,14 @@ function jsbox(container, o){
     '<iframe class="mini jsb-page" title="הדף – מה שהקוד מציג" sandbox="allow-scripts"></iframe></div>' +
     '<div class="jsb-dlgs" aria-live="polite" hidden></div>' +
     '<div class="jsb-con" dir="ltr"><div class="jsb-contab"><span>Console</span><span class="jsb-count" aria-live="polite"></span></div><div class="jsb-log" role="log" aria-label="Console"></div></div></div></div>' +
-    '<div class="what jsb-why" hidden></div><p class="pg-fin jsb-fin" role="status"></p><ul class="tasks"></ul><div class="pg-ask"></div>';
+    '<div class="what jsb-why" hidden></div>' + TASKS_HTML;
   const ta = container.querySelector('.jsb-code'), iframe = container.querySelector('.jsb-page'), logBox = container.querySelector('.jsb-log'), dlgBox = container.querySelector('.jsb-dlgs');
   const runBtn = container.querySelector('.jsb-run'), bar = container.querySelector('.jsb-bar'), brBar = container.querySelector('.jsb-breaks'), whyBox = container.querySelector('.jsb-why');
-  const countEl = container.querySelector('.jsb-count'), tasksBox = container.querySelector('.tasks'), finBox = container.querySelector('.jsb-fin');
+  const countEl = container.querySelector('.jsb-count');
   iframe.style.height = (o.pageHeight || 120) + 'px';
-  const done = (state.tasks = state.tasks || {}), help = (state.help = state.help || {});
-  const key = t => id + ':' + t.id;
-  const tries = {}, nudged = {}; let runId = 0, answers = [], res = null, runs = 0, srcLines = [];
+  let runId = 0, answers = [], res = null, runs = 0, srcLines = [];
   const locked = () => (bar.classList.contains('veiling') || (bar.closest && bar.closest('.veil-wrap.veiling')));
-  const setCountText = () => { const e = res.errors.length; countEl.textContent = e ? '✖ ' + e + (e === 1 ? ' שגיאה' : ' שגיאות') : (res.logs.length ? res.logs.length + ' הודעות' : ''); };
+  const setCountText = () => { const e = res.errors.length; countEl.className = 'jsb-count' + (e ? ' bad' : ''); countEl.textContent = e ? '✖ ' + e + (e === 1 ? ' שגיאה' : ' שגיאות') : (res.logs.length ? (res.logs.length === 1 ? 'הודעה אחת' : res.logs.length + ' הודעות') : ''); };
   function row(cls, icon, text, line){
     const r = document.createElement('div'); r.className = 'jsb-row ' + cls;
     r.innerHTML = '<span class="jsb-ic" aria-hidden="true">' + icon + '</span><span class="jsb-msg"></span>' + (line ? '<span class="jsb-src">' + esc(file) + ':' + line + '</span>' : '');
@@ -1678,7 +1712,7 @@ function jsbox(container, o){
     else if (d.t === 'need') { res.need = d; }
     else if (d.t === 'loop') { res.loop = true; res.errors.push({name: 'LoopGuard', msg: 'loop', line: d.line}); const r = row('loop', '⛔', 'המדריך עצר את הלולאה', d.line);
       const h = document.createElement('div'); h.className = 'jsb-help loop'; h.innerHTML = '<b>🔎 מה קרה?</b> הלולאה רצה יותר מ-' + JS_LOOP_LIMIT.toLocaleString('he-IL') + ' פעמים בלי להפסיק – כנראה <b>לולאה אינסופית</b>: התנאי שלה אף פעם לא נהיה שקר. בדפדפן אמיתי הלשונית הייתה נתקעת ("הדף אינו מגיב"), ולכן כאן עצרנו אותה. בדקו: האם משהו בתוך הלולאה משנה את המשתנה שבתנאי?'; r.after(h); }
-    else if (d.t === 'error') { res.errors.push({name: d.name, msg: d.msg, line: d.line}); const r = row('err', '✖', 'Uncaught ' + d.name + ': ' + d.msg, d.line); const h = document.createElement('div'); h.innerHTML = jsExplain({name: d.name, msg: d.msg, line: d.line}, d.line ? srcLines[d.line - 1] : ''); r.after(h.firstChild); }
+    else if (d.t === 'error') { res.errors.push({name: d.name, msg: d.msg, line: d.line}); const r = row('err', '✖', 'Uncaught ' + d.name + ': ' + d.msg, d.line); const h = document.createElement('div'); h.innerHTML = jsExplain({name: d.name, msg: d.msg, line: d.line}, d.line ? srcLines[d.line - 1] : '', o.lets !== false); r.after(h.firstChild); }
     else if (d.t === 'done') { clearTimeout(res.tm); res.text = d.text || ''; res.html = d.html || ''; finish(); }
   }
   window.addEventListener('message', onMsg);
@@ -1703,58 +1737,33 @@ function jsbox(container, o){
     if (locked()) { toast('🔒 קודם עונים על שאלת הניחוש – אחר כך מריצים.'); return; }
     runs++; store.set('jscode-' + id, ta.value); runIt(false);
   }
-  /* tasks (same help ladder as the HTML playground: hint 1 → hint 2 → solution → "now try alone") */
-  const AUTO = TS, noSol = () => !TS.some(t => { const h = help[key(t)]; return h && (h.sol || h.seen || h.open); });
-  const autoDone = () => AUTO.length > 0 && AUTO.every(t => done[key(t)]);
-  TS.forEach((t, i) => {
-    const li = document.createElement('li'); li.dataset.k = key(t);
-    li.innerHTML = '<span class="st">' + (i + 1) + '</span><div><div class="tt">' + t.text + '</div><div class="tk-x"></div></div>';
-    li.querySelector('.tk-x').addEventListener('click', e => {
-      const b = e.target.closest('button[data-a]'); if (!b) return;
-      const h = help[key(t)] = help[key(t)] || {h: 0};
-      if (b.dataset.a === 'hint') h.h = Math.min((t.hints || []).length, (h.h || 0) + 1);
-      if (b.dataset.a === 'sol') { h.open = !h.open; h.sol = true; }
-      if (b.dataset.a === 'alone') { h.open = false; h.seen = true; ta.focus(); }
-      save(); paintHelp(i, b.dataset.a);
-    });
-    tasksBox.appendChild(li);
-  });
-  function paintHelp(i, focusAfter){
-    const t = TS[i], li = tasksBox.children[i], x = li.querySelector('.tk-x'), k = key(t), h = help[k] || {h: 0}, hints = t.hints || [], isDone = !!done[k]; let html = '';
-    hints.slice(0, h.h || 0).forEach((tx, n) => { html += '<div class="tk-hint">💡 <b>רמז ' + (n + 1) + ':</b> ' + tx + (n === hints.length - 1 && t.back ? ' <a href="#" data-go="' + t.back + '">↩ השלב שמסביר את זה' + (stepName(t.back) ? ': ' + stepHtml(t.back) : '') + '</a>' : '') + '</div>'; });
-    if (nudged[k] && !isDone) html += '<div class="tk-nudge">🤔 המשימה הזו מאתגרת? זה בסדר גמור – ככה לומדים. אפשר לפתוח רמז' + (t.back ? ', או לחזור רגע <a href="#" data-go="' + t.back + '">לשלב: ' + (stepName(t.back) ? stepHtml(t.back) : 'ההסבר') + '</a>' : '') + '.</div>';
-    if (h.open && t.solution) { const so = t.solution;
-      html += '<div class="tk-sol" role="region" aria-label="הפתרון"><b>🔓 הפתרון</b><div class="codeblock"><pre class="cv" data-sol="1"></pre></div>' + (so.explain ? '<p style="margin:4px 0"><b>למה זה עובד?</b> ' + so.explain + '</p>' : '') +
-        (so.alt ? '<details class="more"><summary>🚀 דרך נוספת לפתור</summary>' + so.alt + '</details>' : '') + '<button class="btn primary" type="button" data-a="alone">הבנתי – עכשיו נסו לבד (הפתרון ייסגר)</button></div>'; }
-    const btns = [];
-    if (!isDone && h.h < hints.length) btns.push('<button type="button" data-a="hint">💡 ' + (h.h ? 'רמז נוסף' : 'רמז') + '</button>');
-    if (!isDone && t.solution && (h.h || 0) >= hints.length) btns.push('<button type="button" data-a="sol" aria-expanded="' + !!h.open + '">' + (h.open ? 'הסתירו את הפתרון' : '🔓 הראו לי את הפתרון') + '</button>');
-    if (btns.length) html += '<div class="tk-help">' + btns.join('') + '</div>';
-    if (isDone && h.seen) html += '<span class="tk-seen">👀 נעזרתם בפתרון – נסו בפעם הבאה עם רמז אחד פחות</span>';
-    x.innerHTML = html;
-    const pre = x.querySelector('pre[data-sol]'); if (pre) codeLines(pre, t.solution.code, 'js');
-    if (focusAfter) { const f = x.querySelector('[data-a="' + (focusAfter === 'hint' ? 'hint' : 'sol') + '"]') || x.querySelector('button,a'); if (f && focusAfter !== 'alone') f.focus(); }
-  }
-  function paintFin(){
-    const n = TS.filter(t => done[key(t)]).length, N = TS.length; if (!N) { finBox.hidden = true; return; } finBox.hidden = false;
-    const all = autoDone(), txt = all ? '<b>🏆 ' + (n === N ? 'כל ' + N + ' המשימות הושלמו!' : 'הושלמו ' + n + ' מתוך ' + N + ' משימות') + '</b>' + (noSol() ? ' <span class="fin-badge">⭐ לבד – בלי לפתוח פתרון</span>' : '') : 'הושלמו <b>' + n + ' מתוך ' + N + '</b> משימות';
-    const html = '<span class="pg-bar"><i style="width:' + (100 * n / N) + '%"></i></span><span>' + txt + '</span>';
-    if (finBox.dataset.h !== html) { finBox.dataset.h = html; finBox.innerHTML = html; finBox.classList.toggle('all', all); }
-  }
-  function paint(){ TS.forEach((t, i) => { const li = tasksBox.children[i], ok = !!done[key(t)], was = li.classList.contains('done'); li.classList.toggle('done', ok); li.querySelector('.st').textContent = ok ? '✔' : (i + 1); li.querySelector('.st').setAttribute('aria-label', ok ? 'הושלמה' : 'משימה ' + (i + 1)); if (was !== ok) paintHelp(i); }); paintFin(); }
+  /* tasks: the shared taskList (same help ladder as the HTML playground: hint 1 -> hint 2 -> solution -> "now try alone") */
+  const tl = taskList(container, {id, tasks: TS, finKey: 'jsb:' + id, solLang: () => 'js', focus: () => ta.focus()});
   function checkTasks(){
     if (!TS.length) return;
-    const fresh = [];
-    TS.forEach(t => { let ok = false; try { ok = !!t.test(res); } catch(e){}
-      if (ok && res.errors.length && t.allowErrors !== true) ok = false;
-      if (ok && !done[key(t)]) { done[key(t)] = true; fresh.push(t); } });
-    if (fresh.length) { const li = tasksBox.children[TS.indexOf(fresh[fresh.length - 1])], all = autoDone(), pf = all && noSol();
-      setTimeout(() => all ? finale(finBox, {near: li, perfect: pf, key: 'jsb:' + id, title: pf ? 'לבד, עד הסוף!' : 'כל המשימות הושלמו!', sub: AUTO.length + ' מתוך ' + AUTO.length + ' משימות' + (pf ? ' – בלי לפתוח פתרון' : '')}) : celebrate(li, 'small'), 60); }
-    const ci = TS.findIndex(t => !done[key(t)]);
-    if (!fresh.length && ci >= 0) { const k = key(TS[ci]); tries[k] = (tries[k] || 0) + 1; if (tries[k] >= 3 && !nudged[k]) { nudged[k] = true; paintHelp(ci); } }
+    const fresh = tl.check(t => t.test(res), t => res.errors.length && t.allowErrors !== true);
+    if (!fresh.length) tl.tried();
     save();
   }
-  saveHooks.push(paint); startHooks.push(() => TS.forEach((t, i) => paintHelp(i)));
+  /* highlight of the line a 🔨 changed: a translucent bar over the textarea (fixed line-height, no wrapping) */
+  const hlBox = container.querySelector('.jsb-hl'); let hlLines = [];
+  function changedLines(a, b){
+    const x = a.split('\n'), y = b.split('\n');
+    if (x.length === y.length) { const lines = []; y.forEach((l, k) => { if (l !== x[k]) lines.push(k); }); return {lines, before: lines.map(k => x[k]).join('\n'), after: lines.map(k => y[k]).join('\n')}; }
+    let i = 0; while (i < x.length && i < y.length && x[i] === y[i]) i++;
+    let j = 0; while (j < x.length - i && j < y.length - i && x[x.length - 1 - j] === y[y.length - 1 - j]) j++;
+    const lines = []; for (let k = i; k < y.length - j; k++) lines.push(k);
+    if (!lines.length && y.length) lines.push(Math.max(0, Math.min(i - 1, y.length - 1)));
+    return {lines, before: x.slice(i, x.length - j).join('\n'), after: y.slice(i, y.length - j).join('\n')};
+  }
+  function placeHl(){
+    if (!hlLines.length) { hlBox.hidden = true; return; }
+    const cs = getComputedStyle(ta), lh = parseFloat(cs.lineHeight) || 21, pt = parseFloat(cs.paddingTop) || 0;
+    hlBox.hidden = false; hlBox.innerHTML = '';
+    const runs = []; hlLines.slice().sort((x, y) => x - y).forEach(k => { const r = runs[runs.length - 1]; if (r && k === r[1] + 1) r[1] = k; else runs.push([k, k]); });
+    runs.forEach(r => { const bar = document.createElement('i'); bar.style.top = (pt + r[0] * lh - ta.scrollTop) + 'px'; bar.style.height = ((r[1] - r[0] + 1) * lh) + 'px'; hlBox.appendChild(bar); });
+  }
+  function showHl(lines){ hlLines = lines; placeHl(); }
   /* breaks */
   BR.forEach(b => {
     const bt = document.createElement('button'); bt.type = 'button'; bt.className = 'btn jsb-brk'; bt.textContent = b.label; brBar.appendChild(bt);
@@ -1762,14 +1771,18 @@ function jsbox(container, o){
       if (locked()) return;
       const base = o.code; let code = typeof b.apply === 'function' ? b.apply(base) : base.replace(b.from, b.to);
       ta.value = code; store.set('jscode-' + id, code); runs++; runIt(false);
-      whyBox.hidden = false; whyBox.innerHTML = '<b>🔨 ' + esc(b.label) + '</b> – ' + b.explain + ' <button type="button" class="btn jsb-fix">↺ החזירו את הקוד התקין</button>';
-      whyBox.querySelector('.jsb-fix').addEventListener('click', () => { ta.value = base; store.set('jscode-' + id, base); whyBox.hidden = true; runIt(false); });
+      const ch = changedLines(base, code); if (b.marks) ch.lines = b.marks.slice(); if (b.diff) { ch.before = b.diff[0]; ch.after = b.diff[1]; } showHl(ch.lines);
+      const diff = ch.lines.length ? '<div class="jsb-diff" dir="ltr"><div class="jd-h" dir="rtl">' + (ch.lines.length > 1 ? 'שורות ' + ch.lines.map(k => k + 1).join(' ו-') : 'שורה ' + (ch.lines[0] + 1)) + ': לפני ואחרי</div>' +
+        (ch.before ? '<div class="jd-old"><span>−</span><code>' + esc(ch.before) + '</code></div>' : '') + (ch.after ? '<div class="jd-new"><span>+</span><code>' + esc(ch.after) + '</code></div>' : '') + '</div>' : '';
+      whyBox.hidden = false; whyBox.innerHTML = '<b>' + esc(b.label) + '</b> – ' + b.explain + diff + ' <button type="button" class="btn jsb-fix">↺ החזירו את הקוד התקין</button>';
+      whyBox.querySelector('.jsb-fix').addEventListener('click', () => { ta.value = base; store.set('jscode-' + id, base); whyBox.hidden = true; showHl([]); runIt(false); });
     });
   });
   /* editor */
   let free = false;
   ta.addEventListener('focus', () => { free = false; });
-  ta.addEventListener('input', () => store.set('jscode-' + id, ta.value));
+  ta.addEventListener('input', () => { store.set('jscode-' + id, ta.value); showHl([]); });
+  ta.addEventListener('scroll', () => placeHl());
   ta.addEventListener('keydown', e => {
     if (e.key === 'Escape') { free = true; return; }
     if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); run(); return; }
@@ -1782,28 +1795,48 @@ function jsbox(container, o){
   rb.addEventListener('click', () => {
     if (!rb.classList.contains('confirm')) { rb.classList.add('confirm'); rb.textContent = 'בטוחים? הקוד שכתבתם יימחק – לחצו שוב'; clearTimeout(rbT); rbT = setTimeout(() => { rb.classList.remove('confirm'); rb.textContent = '↺ התחלה מחדש'; }, 4000); return; }
     clearTimeout(rbT); rb.classList.remove('confirm'); rb.textContent = '↺ התחלה מחדש';
-    ta.value = o.code || ''; store.set('jscode-' + id, null); whyBox.hidden = true; logBox.innerHTML = ''; countEl.textContent = ''; dlgBox.innerHTML = ''; dlgBox.hidden = true; runId++; iframe.srcdoc = '';
+    ta.value = o.code || ''; store.set('jscode-' + id, null); whyBox.hidden = true; showHl([]); logBox.innerHTML = ''; countEl.textContent = ''; dlgBox.innerHTML = ''; dlgBox.hidden = true; runId++; iframe.srcdoc = '';
     toast('↺ הקוד חזר להתחלה. המשימות שכבר הצלחתם נשארות מסומנות.');
   });
   askBox(container.querySelector('.pg-ask'), {
-    task: () => { const t = TS.find(t => !done[key(t)]); return t ? plain(t.text) : ''; },
+    task: () => { const t = tl.open(); return t ? plain(t.text) : ''; },
     code: () => ta.value
   });
   logBox.innerHTML = '<div class="jsb-empty">לחצו <b>▶ הריצו</b> – וכאן יופיע מה שהקוד כותב ל-Console.</div>';
-  paint();
+  tl.paint();
   return {ta, run, runIt, getResult: () => res, setCode: c => { ta.value = c; }};
 }
 
 /* ---------- start: called by each lesson after its own demos are ready ---------- */
 /* bidi: Latin tokens that end/start with a symbol (C#, .NET) flip in Hebrew text – isolate them everywhere, once */
 const BIDI_SKIP = new Set(['CODE','PRE','SCRIPT','STYLE','BDI','TEXTAREA','INPUT','KBD']);
+const JS_LESSON = /^js/.test(LESSON);
+/* bidi in JavaScript lessons: every run of code-like text inside Hebrew ("2 + 3", "x >= 5", "NaN", "-1", "10-20", "<=") is isolated LTR,
+   otherwise it is shown reversed ("3 + 2"). A token = starts with a letter/digit (or a "-" before a digit / a lone operator), may contain
+   letters, digits, spaces, operators and BALANCED brackets, and an en dash only between two digits. Hebrew ends a token. */
+const TECH_RX = /(C#|(?:ASP)?\.NET(?: Core)?)/g;
+const CODE_RX = new RegExp('(C#|(?:ASP)?\\.NET(?: Core)?|(?<=^|[\\s(])-(?=\\d)[0-9A-Za-z_.]*(?:[ +\\-*/%<>=!&|.,:;()\\[\\]{}A-Za-z0-9_]|(?<=\\d)[\\u2013\\u2011](?=\\d))*|(?<=^|[\\s(])[<>=!&|+*/%]{1,3}(?=$|[\\s).,:;])|[A-Za-z0-9_](?:[ +\\-*/%<>=!&|().,:;\\[\\]{}A-Za-z0-9_]|(?<=\\d)[\\u2013\\u2011](?=\\d))*)', 'g');
+/* cut a token where its brackets stop being balanced, and drop trailing spaces/punctuation: they stay outside the isolate */
+function bidiCore(tok){
+  const st = []; let cut = tok.length;
+  for (let k = 0; k < tok.length; k++) { const c = tok[k];
+    if (c === '(' || c === '[' || c === '{') st.push(k);
+    else if (c === ')' || c === ']' || c === '}') { if (!st.length) { cut = k; break; } st.pop(); } }
+  if (cut === tok.length && st.length) cut = st[0];
+  let core = tok.slice(0, cut).replace(/[ .,:;]+$/, '');
+  return [core, tok.slice(core.length)];
+}
 function fixBidiTokens(root){
-  const RX = /(C#|(?:ASP)?\.NET(?: Core)?)/g, skip = BIDI_SKIP;
+  const RX = JS_LESSON ? CODE_RX : TECH_RX, skip = BIDI_SKIP;
   const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {acceptNode: n => {
-    for (let p = n.parentElement; p; p = p.parentElement) if (skip.has(p.tagName) || p.classList.contains('cv') || p.dir === 'ltr' || p.tagName === 'X-PAGE') return NodeFilter.FILTER_REJECT;
+    for (let p = n.parentElement; p; p = p.parentElement) { if (skip.has(p.tagName) || p.classList.contains('cv') || p.tagName === 'X-PAGE') return NodeFilter.FILTER_REJECT; if (p.hasAttribute('dir')) { if (p.dir === 'ltr') return NodeFilter.FILTER_REJECT; break; } }
     RX.lastIndex = 0; return RX.test(n.nodeValue) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP; }});
   const list = []; while (w.nextNode()) list.push(w.currentNode);
-  list.forEach(n => { const f = document.createDocumentFragment(); n.nodeValue.split(RX).forEach((part, i) => { if (i % 2) { const b = document.createElement('bdi'); b.dir = 'ltr'; b.textContent = part; f.appendChild(b); } else if (part) f.appendChild(document.createTextNode(part)); }); n.replaceWith(f); });
+  list.forEach(n => { const f = document.createDocumentFragment();
+    n.nodeValue.split(RX).forEach((part, i) => {
+      if (i % 2) { const [core, rest] = JS_LESSON ? bidiCore(part) : [part, '']; if (core) { const b = document.createElement('bdi'); b.dir = 'ltr'; b.textContent = core; f.appendChild(b); } if (rest) f.appendChild(document.createTextNode(rest)); }
+      else if (part) f.appendChild(document.createTextNode(part)); });
+    n.replaceWith(f); });
 }
 function start(o){
   o = o || {};
