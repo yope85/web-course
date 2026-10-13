@@ -213,7 +213,9 @@ function pickTarget(b, k){
 function shuffled(o, key, block){
   if (!o || o.keepOrder || !Array.isArray(o.opts) || o.opts.length < 2 || typeof o.correct !== 'number') return o;
   const plainO = o.opts.map(x => String(x).replace(/<[^>]+>/g, '').trim());
-  if (plainO.every(x => /^\d/.test(x))) return o;
+  if (plainO.every(x => /^\d/.test(x))) { /* numbers stay in reading order, but their fixed place still counts in the block's balance, so the other questions spread around it */
+    if (block) { block.counts[o.correct] = (block.counts[o.correct] || 0) + 1; block.hist.push(o.correct); }
+    if (window.__ansLog) window.__ansLog.push([key, o.correct + 1, o.opts.length]); return o; }
   let seed = hashStr(key) || 1; const rnd = () => { seed ^= seed << 13; seed >>>= 0; seed ^= seed >>> 17; seed ^= seed << 5; seed >>>= 0; return seed / 4294967296; };
   const idx = o.opts.map((x, i) => i);
   for (let i = idx.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [idx[i], idx[j]] = [idx[j], idx[i]]; }
@@ -1339,6 +1341,35 @@ function paintVideoBox(){
     '<b>מצב אחרי-סרטון</b> מדלג על שלבי הקריאה ומשאיר את הפעילים: ❓, סימולטורים ותרגול, 🎯, 💻 ו-📌. ' +
     '<div style="margin-top:8px"><button class="btn' + (on ? '' : ' primary') + '" type="button" aria-pressed="' + on + '">' + (on ? '✔ מצב אחרי-סרטון פועל – לחצו לכיבוי' : '🎬 צפיתי בסרטון – הפעילו מצב אחרי-סרטון') + '</button></div>';
 }
+/* ---------- 🤔 "נתקעתי בשלב הזה" (decision of Yochai, 13/10/2026) ----------
+   Anonymous on purpose: only the lesson, the step, its title and the kind of trouble go to Yochai's Google Form –
+   no name and nothing identifying (the students are minors). He gets a sheet of the steps where students really get stuck.
+   Off until STUCK.url is set. One report per step per browser. */
+const STUCK = {url:'', f:{lesson:'', step:'', title:'', kind:''}};
+const STUCK_KINDS = ['לא הבנתי את ההסבר', 'השאלה או התרגיל לא ברורים', 'באתר עבד – אצלי ב-Visual Studio לא', 'משהו אחר'];
+const STUCK_RULE = 'בינתיים – <b>חוק 3 השלבים</b>: בדיקה עצמית &rlm;←&rlm; המנטור או מחברת הנושא &rlm;←&rlm; חבר/ת למידה.';
+let stuckDone = {}; try { stuckDone = JSON.parse(localStorage.getItem('course-stuck') || '{}') || {}; } catch(e){}
+function paintStuck(ti, si){
+  if (!STUCK.url || !T[ti] || !$('#stepnav')) return;
+  let row = $('#stuckRow'); if (!row) { row = document.createElement('div'); row.id = 'stuckRow'; row.className = 'stuck'; $('#stepnav').after(row); }
+  const step = T[ti].id + '-' + (si + 1), key = LESSON + ':' + step;
+  if (stuckDone[key]) { row.innerHTML = '<span>✔ סיפרתם שנתקעתם בשלב הזה – תודה. ' + STUCK_RULE + '</span>'; return; }
+  row.innerHTML = '<button type="button" class="stk" aria-expanded="false">🤔 נתקעתי בשלב הזה</button><span class="stkn">בלי שם – נשלחים רק השיעור והשלב, כדי שהמורה ידע מה לשפר.</span>';
+  row.querySelector('.stk').onclick = ev => { ev.stopPropagation(); /* the click must not reach the row handler set below */
+    row.innerHTML = '<span class="stkq">מה הכי מתאים?</span>' + STUCK_KINDS.map((k, i) => '<button type="button" class="stk" data-k="' + i + '">' + k + '</button>').join('') + '<button type="button" class="stk stkx" aria-label="ביטול">✕</button>';
+    row.querySelector('.stk').focus();
+    row.onclick = e => { const b = e.target.closest('button[data-k], button.stkx'); if (!b) return; row.onclick = null;
+      if (b.classList.contains('stkx')) return paintStuck(ti, si);
+      const st = T[ti].steps[si], h = st && st.querySelector('h3') && st.querySelector('h3').cloneNode(true); if (h) h.querySelectorAll('.sn').forEach(x => x.remove()); const title = h ? h.textContent.replace(/\s+/g, ' ').trim().slice(0, 120) : '';
+      const body = new URLSearchParams(); body.append(STUCK.f.lesson, LESSON); body.append(STUCK.f.step, step); body.append(STUCK.f.title, title); body.append(STUCK.f.kind, STUCK_KINDS[+b.dataset.k]);
+      row.innerHTML = '<span>שולחים…</span>';
+      fetch(STUCK.url, {method:'POST', mode:'no-cors', body}).then(() => {
+        stuckDone[key] = 1; try { localStorage.setItem('course-stuck', JSON.stringify(stuckDone)); } catch(e){}
+        if (pos.ti === ti && pos.si === si) row.innerHTML = '<span>✔ תודה! המורה יראה שהשלב הזה צריך שיפור. ' + STUCK_RULE + '</span>';
+      }).catch(() => { if (pos.ti === ti && pos.si === si) row.innerHTML = '<span>⚠ לא נשלח – אין חיבור לאינטרנט? נסו שוב בעוד רגע.</span>'; setTimeout(() => { if (pos.ti === ti && pos.si === si) paintStuck(ti, si); }, 4000); });
+    };
+  };
+}
 function show(ti, si, scroll){
   ti = Math.max(0, Math.min(T.length - 1, ti)); si = Math.max(0, Math.min(T[ti].steps.length - 1, si));
   pos = {ti, si};
@@ -1368,6 +1399,7 @@ function show(ti, si, scroll){
   const tm = T[ti].time, tl = $('#topicTime');
   if (tl) tl.innerHTML = tm && ti > 0 ? '⏱ הנושא הזה: בדף ' + rng(tm.fast, tm.slow) + ' דק׳' + (tm.vs ? ' · ב-<bdi>VS</bdi> ' + r5(tm.vs) + ' דק׳' : '') : '';
   try { history.replaceState(null, '', '#' + T[ti].id + '-' + (si+1)); } catch(e){}
+  paintStuck(ti, si);
   ['#topics', '#steps'].forEach(q => { const ac = $(q + ' [aria-current="true"]'); if (ac && ac.scrollIntoView) ac.scrollIntoView({block:'nearest', inline:'center'}); });
   if (scroll) { const y = $('#topics').getBoundingClientRect().top + scrollY - 64; window.scrollTo({top: Math.max(0, y), behavior: 'smooth'}); }
   T[ti].steps[si].dispatchEvent(new CustomEvent('stepshow', {bubbles:true}));

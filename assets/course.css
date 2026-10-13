@@ -228,6 +228,11 @@ footer{color:var(--muted);font-size:13px;text-align:center;padding:20px}
 .stepnav button.next{background:var(--accent);border-color:var(--accent);color:var(--on-accent);margin-inline-start:auto}
 .stepnav button.next small{color:var(--on-accent-dim)}
 .stepnav button:disabled{visibility:hidden}
+.stuck{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;margin:-18px 0 30px;font-size:14px;color:var(--muted);line-height:1.6}
+.stuck .stk{font:inherit;font-size:13.5px;border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:99px;padding:3px 12px;cursor:pointer}
+.stuck .stk:hover,.stuck .stk:focus-visible{border-color:var(--accent)}
+.stuck .stkx{padding:3px 9px;color:var(--muted)}
+.stuck .stkq{font-weight:600;color:var(--text)}
 .welcome .lead{font-size:18px}
 .welcome h4{margin:18px 0 6px;font-size:18px}
 .ways{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:8px 0}
@@ -271,7 +276,7 @@ dialog#eggDlg::backdrop{background:rgba(10,15,30,.45)}
 @keyframes fall{to{transform:translateY(110vh) rotate(540deg)}}
 .ghost{background:#ede9fe;color:#4c1d95;border-radius:10px;padding:10px 14px;margin-top:12px;font-weight:600}
 @media (max-width:700px){.cheat td code{white-space:normal;overflow-wrap:break-word} .ways,.cheat{grid-template-columns:1fr} .stepnav button{max-width:60%} .lesson-head h1{font-size:23px}}
-@media print{.topbar,.topics,.steps,.stepnav,.lesson-head,footer,#printBtn{display:none!important} body{background:#fff} .spread{box-shadow:none;border:0}}
+@media print{.topbar,.topics,.steps,.stepnav,.stuck,.lesson-head,footer,#printBtn{display:none!important} body{background:#fff} .spread{box-shadow:none;border:0}}
 
 /* ---------- mini browser (iframe) ---------- */
 .framewrap{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;max-width:100%}
