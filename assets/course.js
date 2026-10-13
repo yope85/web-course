@@ -1344,8 +1344,9 @@ function paintVideoBox(){
 /* ---------- 🤔 "נתקעתי בשלב הזה" (decision of Yochai, 13/10/2026) ----------
    Anonymous on purpose: only the lesson, the step, its title and the kind of trouble go to Yochai's Google Form –
    no name and nothing identifying (the students are minors). He gets a sheet of the steps where students really get stuck.
-   Off until STUCK.url is set. One report per step per browser. */
-const STUCK = {url:'', f:{lesson:'', step:'', title:'', kind:''}};
+   The sheet gets: lesson name · a clickable link to the step · topic + step title · kind. One report per step per browser. */
+const STUCK = {url:'https://docs.google.com/forms/d/e/1FAIpQLSdRsHJtBtydrvmPav4vDUo9wXuOLzeHtlLT7p57RBIX0y0mVA/formResponse',
+  f:{lesson:'entry.150629550', step:'entry.1283506296', title:'entry.1451785466', kind:'entry.1831254847'}};  /* form "נתקעתי בשלב הזה – מדריך בניית אתרים" in Yochai's personal Google account */
 const STUCK_KINDS = ['לא הבנתי את ההסבר', 'השאלה או התרגיל לא ברורים', 'באתר עבד – אצלי ב-Visual Studio לא', 'משהו אחר'];
 const STUCK_RULE = 'בינתיים – <b>חוק 3 השלבים</b>: בדיקה עצמית &rlm;←&rlm; המנטור או מחברת הנושא &rlm;←&rlm; חבר/ת למידה.';
 let stuckDone = {}; try { stuckDone = JSON.parse(localStorage.getItem('course-stuck') || '{}') || {}; } catch(e){}
@@ -1361,7 +1362,7 @@ function paintStuck(ti, si){
     row.onclick = e => { const b = e.target.closest('button[data-k], button.stkx'); if (!b) return; row.onclick = null;
       if (b.classList.contains('stkx')) return paintStuck(ti, si);
       const st = T[ti].steps[si], h = st && st.querySelector('h3') && st.querySelector('h3').cloneNode(true); if (h) h.querySelectorAll('.sn').forEach(x => x.remove()); const title = h ? h.textContent.replace(/\s+/g, ' ').trim().slice(0, 120) : '';
-      const body = new URLSearchParams(); body.append(STUCK.f.lesson, LESSON); body.append(STUCK.f.step, step); body.append(STUCK.f.title, title); body.append(STUCK.f.kind, STUCK_KINDS[+b.dataset.k]);
+      const body = new URLSearchParams(); body.append(STUCK.f.lesson, document.body.dataset.title || LESSON); body.append(STUCK.f.step, location.origin + location.pathname + '#' + step); body.append(STUCK.f.title, T[ti].title + ' · ' + title); body.append(STUCK.f.kind, STUCK_KINDS[+b.dataset.k]);
       row.innerHTML = '<span>שולחים…</span>';
       fetch(STUCK.url, {method:'POST', mode:'no-cors', body}).then(() => {
         stuckDone[key] = 1; try { localStorage.setItem('course-stuck', JSON.stringify(stuckDone)); } catch(e){}
