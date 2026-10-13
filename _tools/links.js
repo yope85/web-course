@@ -1,7 +1,7 @@
 // links.js – every data-go / back / X.html#topic-N in all pages (HTML + scripts) points to a step that exists
 const fs = require('fs');
 const dir = '/home/claude/web-course/';
-const pages = ['intro', 'html-basics', 'css', 'html-advanced', 'bootstrap', 'razor', 'submission1', 'html-css'];
+const pages = ['intro', 'html-basics', 'css', 'html-advanced', 'bootstrap', 'razor', 'js-basics', 'submission1', 'html-css', 'javascript'];
 const steps = {};
 for (const p of pages) {
   const s = fs.readFileSync(dir + p + '.html', 'utf8');

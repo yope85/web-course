@@ -1,7 +1,7 @@
 const { chromium } = require('playwright');
 (async () => { const b = await chromium.launch(); const ctx = await b.newContext({viewport:{width:1280,height:900}});
-  await ctx.addInitScript(() => { localStorage.setItem('course-sound-noted','1'); });
-  for (const f of ['intro','html-basics','css','html-advanced','bootstrap','razor','submission1']) {
+  await ctx.addInitScript(() => { try { localStorage.setItem('course-sound-noted','1'); } catch(e){} });
+  for (const f of ['intro','html-basics','css','html-advanced','bootstrap','razor','js-basics','submission1']) {
     const pg = await ctx.newPage(); await pg.route(/fonts\./, r => r.abort());
     const errs = [], cons = []; pg.on('pageerror', e => errs.push(String(e))); pg.on('console', m => { if (m.type() === 'error') cons.push(m.text() + ' @ ' + (m.location().url || '')); });
     await pg.goto('http://localhost:8812/' + f + '.html'); await pg.waitForTimeout(700);
