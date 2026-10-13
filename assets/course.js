@@ -1341,34 +1341,58 @@ function paintVideoBox(){
     '<b>מצב אחרי-סרטון</b> מדלג על שלבי הקריאה ומשאיר את הפעילים: ❓, סימולטורים ותרגול, 🎯, 💻 ו-📌. ' +
     '<div style="margin-top:8px"><button class="btn' + (on ? '' : ' primary') + '" type="button" aria-pressed="' + on + '">' + (on ? '✔ מצב אחרי-סרטון פועל – לחצו לכיבוי' : '🎬 צפיתי בסרטון – הפעילו מצב אחרי-סרטון') + '</button></div>';
 }
-/* ---------- 🤔 "נתקעתי בשלב הזה" (decision of Yochai, 13/10/2026) ----------
-   Anonymous on purpose: only the lesson, the step, its title and the kind of trouble go to Yochai's Google Form –
-   no name and nothing identifying (the students are minors). He gets a sheet of the steps where students really get stuck.
-   The sheet gets: lesson name · a clickable link to the step · topic + step title · kind. One report per step per browser. */
+/* ---------- 🤔 "נתקעתי בשלב הזה" (decisions of Yochai, 13/10/2026) ----------
+   Anonymous on purpose: no name and nothing identifying (the students are minors).
+   Flow: the button -> what kind of trouble -> "מה בדיוק?" in the student's words (required, at least 2 words –
+   so a bored click sends nothing and every row Yochai gets is concrete) -> sent to his Google Form.
+   The sheet gets: lesson name · a clickable link to the step · topic + step title · kind · the student's words.
+   One report per step per browser. The box says plainly that no one answers here, and points to the 3-step rule. */
 const STUCK = {url:'https://docs.google.com/forms/d/e/1FAIpQLSdRsHJtBtydrvmPav4vDUo9wXuOLzeHtlLT7p57RBIX0y0mVA/formResponse',
-  f:{lesson:'entry.150629550', step:'entry.1283506296', title:'entry.1451785466', kind:'entry.1831254847'}};  /* form "נתקעתי בשלב הזה – מדריך בניית אתרים" in Yochai's personal Google account */
-const STUCK_KINDS = ['לא הבנתי את ההסבר', 'השאלה או התרגיל לא ברורים', 'באתר עבד – אצלי ב-Visual Studio לא', 'משהו אחר'];
-const STUCK_RULE = 'בינתיים – <b>חוק 3 השלבים</b>: בדיקה עצמית &rlm;←&rlm; המנטור או מחברת הנושא &rlm;←&rlm; חבר/ת למידה.';
+  f:{lesson:'entry.150629550', step:'entry.1283506296', title:'entry.1451785466', kind:'entry.1831254847', what:'entry.1364617555'}};  /* form "נתקעתי בשלב הזה – מדריך בניית אתרים" in Yochai's personal Google account */
+const STUCK_KINDS = [['לא הבנתי את ההסבר', 'איזה משפט או איזו מילה לא ברורים לכם?'],
+  ['השאלה או התרגיל לא ברורים', 'מה בשאלה או בתרגיל לא ברור?'],
+  ['באתר עבד – אצלי ב-Visual Studio לא', 'מה עשיתם, ומה רואים אצלכם? (למשל: מה כתוב בהודעת השגיאה)'],
+  ['משהו אחר', 'מה קרה?']];
+const STUCK_RULE = '<b>חוק 3 השלבים</b>: בדיקה עצמית &rlm;←&rlm; המנטור או מחברת הנושא &rlm;←&rlm; חבר/ת למידה.';
 let stuckDone = {}; try { stuckDone = JSON.parse(localStorage.getItem('course-stuck') || '{}') || {}; } catch(e){}
-function paintStuck(ti, si){
+const stuckDraft = {};
+function paintStuck(ti, si, kind){
   if (!STUCK.url || !T[ti] || !$('#stepnav')) return;
   let row = $('#stuckRow'); if (!row) { row = document.createElement('div'); row.id = 'stuckRow'; row.className = 'stuck'; $('#stepnav').after(row); }
-  const step = T[ti].id + '-' + (si + 1), key = LESSON + ':' + step;
-  if (stuckDone[key]) { row.innerHTML = '<span>✔ סיפרתם שנתקעתם בשלב הזה – תודה. ' + STUCK_RULE + '</span>'; return; }
-  row.innerHTML = '<button type="button" class="stk" aria-expanded="false">🤔 נתקעתי בשלב הזה</button><span class="stkn">בלי שם – נשלחים רק השיעור והשלב, כדי שהמורה ידע מה לשפר.</span>';
-  row.querySelector('.stk').onclick = ev => { ev.stopPropagation(); /* the click must not reach the row handler set below */
-    row.innerHTML = '<span class="stkq">מה הכי מתאים?</span>' + STUCK_KINDS.map((k, i) => '<button type="button" class="stk" data-k="' + i + '">' + k + '</button>').join('') + '<button type="button" class="stk stkx" aria-label="ביטול">✕</button>';
-    row.querySelector('.stk').focus();
-    row.onclick = e => { const b = e.target.closest('button[data-k], button.stkx'); if (!b) return; row.onclick = null;
-      if (b.classList.contains('stkx')) return paintStuck(ti, si);
-      const st = T[ti].steps[si], h = st && st.querySelector('h3') && st.querySelector('h3').cloneNode(true); if (h) h.querySelectorAll('.sn').forEach(x => x.remove()); const title = h ? h.textContent.replace(/\s+/g, ' ').trim().slice(0, 120) : '';
-      const body = new URLSearchParams(); body.append(STUCK.f.lesson, document.body.dataset.title || LESSON); body.append(STUCK.f.step, location.origin + location.pathname + '#' + step); body.append(STUCK.f.title, T[ti].title + ' · ' + title); body.append(STUCK.f.kind, STUCK_KINDS[+b.dataset.k]);
-      row.innerHTML = '<span>שולחים…</span>';
-      fetch(STUCK.url, {method:'POST', mode:'no-cors', body}).then(() => {
-        stuckDone[key] = 1; try { localStorage.setItem('course-stuck', JSON.stringify(stuckDone)); } catch(e){}
-        if (pos.ti === ti && pos.si === si) row.innerHTML = '<span>✔ תודה! המורה יראה שהשלב הזה צריך שיפור. ' + STUCK_RULE + '</span>';
-      }).catch(() => { if (pos.ti === ti && pos.si === si) row.innerHTML = '<span>⚠ לא נשלח – אין חיבור לאינטרנט? נסו שוב בעוד רגע.</span>'; setTimeout(() => { if (pos.ti === ti && pos.si === si) paintStuck(ti, si); }, 4000); });
+  row.onclick = null;
+  const step = T[ti].id + '-' + (si + 1), key = LESSON + ':' + step, here = () => pos.ti === ti && pos.si === si;
+  if (stuckDone[key]) { row.innerHTML = '<span>✔ סיפרתם שנתקעתם בשלב הזה – תודה. לעזרה עכשיו: ' + STUCK_RULE + '</span>'; return; }
+  if (kind == null) {   /* 1. the button */
+    row.innerHTML = '<button type="button" class="stk">🤔 נתקעתי בשלב הזה</button><span class="stkn">בלי שם – כדי שהמורה ידע מה לשפר במדריך.</span>';
+    row.querySelector('.stk').onclick = ev => { ev.stopPropagation(); /* the click must not reach the row handler set below */
+      row.innerHTML = '<span class="stkq">מה הכי מתאים?</span>' + STUCK_KINDS.map((k, i) => '<button type="button" class="stk" data-k="' + i + '">' + k[0] + '</button>').join('') + '<button type="button" class="stk stkx" aria-label="ביטול">✕</button>';
+      row.querySelector('.stk').focus();
+      row.onclick = e => { const b = e.target.closest('button[data-k], button.stkx'); if (!b) return; paintStuck(ti, si, b.classList.contains('stkx') ? null : +b.dataset.k); };
     };
+    return;
+  }
+  /* 2. "מה בדיוק?" – required, in their own words */
+  const [kname, ask] = STUCK_KINDS[kind];
+  row.innerHTML = '<div class="stkbox"><label for="stkWhat"><b>' + kname + '.</b> ' + ask + '</label>' +
+    '<textarea id="stkWhat" rows="2" maxlength="300" placeholder="משפט אחד מספיק"></textarea>' +
+    '<div class="stkn">✋ בלי שמות ובלי פרטים אישיים. כאן לא עונים לכם – זה עוזר לשפר את המדריך.<br>🆘 לעזרה עכשיו – ' + STUCK_RULE + '</div>' +
+    '<div class="stkact"><button type="button" class="btn primary" disabled>שליחה</button><button type="button" class="btn stkx">ביטול</button><span class="stkhint" aria-live="polite"></span></div></div>';
+  const ta = row.querySelector('textarea'), send = row.querySelector('.btn.primary'), hint = row.querySelector('.stkhint');
+  ta.value = stuckDraft[key] || '';
+  const ok = () => { const v = ta.value.trim(); return v.length >= 8 && v.split(/\s+/).length >= 2; };
+  const upd = () => { stuckDraft[key] = ta.value; send.disabled = !ok(); hint.textContent = ok() || !ta.value.trim() ? '' : 'עוד קצת – מה בדיוק?'; };
+  ta.addEventListener('input', upd); upd(); ta.focus();
+  row.querySelector('.stkx').onclick = () => paintStuck(ti, si);
+  send.onclick = () => {
+    if (!ok()) return;
+    const st = T[ti].steps[si], h = st && st.querySelector('h3') && st.querySelector('h3').cloneNode(true); if (h) h.querySelectorAll('.sn').forEach(x => x.remove()); const title = h ? h.textContent.replace(/\s+/g, ' ').trim().slice(0, 120) : '';
+    const body = new URLSearchParams(); body.append(STUCK.f.lesson, document.body.dataset.title || LESSON); body.append(STUCK.f.step, location.origin + location.pathname + '#' + step);
+    body.append(STUCK.f.title, T[ti].title + ' · ' + title); body.append(STUCK.f.kind, kname); body.append(STUCK.f.what, ta.value.trim().slice(0, 300));
+    row.innerHTML = '<span>שולחים…</span>';
+    fetch(STUCK.url, {method:'POST', mode:'no-cors', body}).then(() => {
+      stuckDone[key] = 1; delete stuckDraft[key]; try { localStorage.setItem('course-stuck', JSON.stringify(stuckDone)); } catch(e){}
+      if (here()) row.innerHTML = '<span>✔ תודה! המורה יראה מה לא היה ברור כאן. לעזרה עכשיו: ' + STUCK_RULE + '</span>';
+    }).catch(() => { if (!here()) return; row.innerHTML = '<span>⚠ לא נשלח – אין חיבור לאינטרנט? מה שכתבתם נשמר; נסו שוב בעוד רגע.</span>'; setTimeout(() => { if (here()) paintStuck(ti, si, kind); }, 3000); });
   };
 }
 function show(ti, si, scroll){

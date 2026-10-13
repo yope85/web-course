@@ -233,6 +233,13 @@ footer{color:var(--muted);font-size:13px;text-align:center;padding:20px}
 .stuck .stk:hover,.stuck .stk:focus-visible{border-color:var(--accent)}
 .stuck .stkx{padding:3px 9px;color:var(--muted)}
 .stuck .stkq{font-weight:600;color:var(--text)}
+.stuck .stkbox{flex:1 1 100%;display:grid;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;color:var(--text)}
+.stuck .stkbox label{font-size:14.5px}
+.stuck .stkbox textarea{font:inherit;font-size:15px;width:100%;box-sizing:border-box;border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:var(--bg, var(--surface));color:var(--text);resize:vertical}
+.stuck .stkbox .stkn{font-size:13px;color:var(--muted)}
+.stuck .stkact{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.stuck .stkhint{font-size:13px;color:var(--muted)}
+.stuck .btn:disabled{opacity:.45;cursor:not-allowed}
 .welcome .lead{font-size:18px}
 .welcome h4{margin:18px 0 6px;font-size:18px}
 .ways{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:8px 0}
