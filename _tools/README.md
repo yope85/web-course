@@ -34,3 +34,9 @@ NODE_PATH=$(npm root -g) node /home/claude/tools/sweep.js css razor
 - `js-breaks-audit.js` – לוחץ על כל 🔨 ומדפיס אילו שורות סומנו ומה ההפרש שהוצג.
 - `brk.js נושא שלב [אינדקס] [רוחב]` – צילום מסך אחרי לחיצה על 🔨 (נשמר ב-`look/`, לא נכנס ל-git).
 צריך שרת מקומי: `python3 -m http.server 8812` מתיקיית הפרויקט.
+
+## JavaScript (נוסף 13/10)
+- `js-ledger-check.js <page>` – יומן מושגים באופן מכני: אף מונח לא מופיע (גם בטקסט מוסתר) לפני השלב שמלמד אותו. קודם `dump.js <page>`. מרחיבים את LEDGER לכל נושא.
+- `js-lesson-test.js <page>` – כל תיבות jsbox: משימות, שברו בכוונה, שגיאות צפויות.
+- `js-bidi-audit.js` / `js-bidi-visual.js` – `PAGE=<page>` (ברירת מחדל js-basics) – טקסט לטיני לא מבודד בתוך עברית.
+- `brk.js` – משתנה סביבה `PAGE`. `sweep.js` – נכשל גם על שגיאת טעינה (LOAD ERR) ועל דף בלי שלבים (NO TOPICS BUILT).

@@ -3,7 +3,7 @@ const { chromium } = require('playwright');
 (async () => { const b = await chromium.launch(); const ctx = await b.newContext({viewport:{width:1280,height:900}});
   await ctx.addInitScript(() => { try { localStorage.setItem('course-sound-noted','1'); localStorage.setItem('course-sound','off'); } catch(e){} });
   const pg = await ctx.newPage(); await pg.route(/fonts\./, r => r.abort());
-  await pg.goto('http://localhost:8812/js-basics.html'); await pg.waitForTimeout(500);
+  await pg.goto('http://localhost:8812/'+(process.env.PAGE||'js-basics')+'.html'); await pg.waitForTimeout(500);
   const steps = await pg.evaluate(() => [...document.querySelectorAll('section.topic')].flatMap(s => [...s.querySelectorAll('article.spread')].map((a, i) => [s.dataset.id, i + 1])));
   const seen = new Set(); let bad = 0;
   for (const [t, n] of steps) {

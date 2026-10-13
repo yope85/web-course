@@ -19,6 +19,9 @@ const MODES = [{w: 1280, h: 900, theme: 'light'}, {w: 390, h: 844, theme: 'light
       await pg.goto('http://localhost:8812/' + p + '.html', {waitUntil: 'load'});
       await pg.waitForTimeout(400);
       const steps = await pg.evaluate(() => [...document.querySelectorAll('section.topic')].map(s => [s.dataset.id, s.querySelectorAll(':scope article.spread').length]));
+      /* errors while the page loads (a broken lesson script) used to be lost: the loop below saw no steps and said "clean" */
+      if (errs.length) report.push(`${p} ${m.w}/${m.theme}: LOAD ERR ${errs.join(' | ')}`);
+      if (!steps.length || !(await pg.evaluate(() => document.querySelectorAll('.topics button, .topics a').length))) report.push(`${p} ${m.w}/${m.theme}: NO TOPICS BUILT (the lesson script did not start)`);
       for (const [id, n] of steps) for (let k = 1; k <= n; k++) {
         const before = errs.length;
         await pg.evaluate(([id, k]) => Course.go(id, k), [id, k]);

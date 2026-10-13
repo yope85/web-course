@@ -4,7 +4,7 @@ const { chromium } = require('playwright');
   const b = await chromium.launch(); const ctx = await b.newContext({viewport:{width:W,height:W<600?844:900}});
   await ctx.addInitScript(() => { try { localStorage.setItem('course-sound-noted','1'); localStorage.setItem('course-sound','off'); } catch(e){} });
   const pg = await ctx.newPage(); await pg.route(/fonts\.(googleapis|gstatic)/, r => r.abort());
-  await pg.goto('http://localhost:8812/js-basics.html'); await pg.waitForTimeout(400);
+  await pg.goto('http://localhost:8812/'+(process.env.PAGE||'js-basics')+'.html'); await pg.waitForTimeout(400);
   await pg.evaluate(([t,n]) => Course.go(t, +n), [t,n]); await pg.waitForTimeout(300);
   await pg.screenshot({path: __dirname+'/look/brk-before.png', fullPage:true});
   // answer predicts by trying options
