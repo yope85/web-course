@@ -1,0 +1,20 @@
+// stucktest.js – the "נתקעתי בשלב הזה" button: shows under the step nav, sends ONLY lesson/step/title/kind, remembers per step
+const { chromium } = require('playwright'); const fs = require('fs');
+(async () => { const b = await chromium.launch(); const ctx = await b.newContext({viewport:{width:1100,height:900}});
+  await ctx.addInitScript(() => { localStorage.setItem('course-sound-noted','1'); localStorage.setItem('course-sound','off'); });
+  const pg = await ctx.newPage(); await pg.route(/fonts\./, r => r.abort()); const errs = []; pg.on('pageerror', e => errs.push(String(e)));
+  await pg.route('**/assets/course.js', async r => { let s = fs.readFileSync('/home/claude/web-course/assets/course.js', 'utf8');
+    s = s.replace(/const STUCK = \{url:'[^']*',\s*f:\{lesson:'[^']*', step:'[^']*', title:'[^']*', kind:'[^']*', what:'[^']*'\}\};/, "const STUCK = {url:'https://docs.google.com/forms/d/e/TEST/formResponse', f:{lesson:'entry.1', step:'entry.2', title:'entry.3', kind:'entry.4', what:'entry.5'}};");
+    r.fulfill({body:s, contentType:'application/javascript'}); });
+  const sent = []; await pg.route('https://docs.google.com/**', r => { sent.push(r.request().postData()); r.fulfill({status:200, body:'ok'}); });
+  await pg.goto('http://localhost:8812/css.html#rules-3'); await pg.waitForTimeout(500);
+  const t1 = await pg.textContent('#stuckRow');
+  await pg.click('#stuckRow .stk'); const t2 = await pg.textContent('#stuckRow');
+  await pg.click('#stuckRow .stk[data-k="2"]'); await pg.waitForTimeout(200); const tBox = await pg.textContent('#stuckRow');
+  await pg.fill('#stkWhat', 'לא'); const dis1 = await pg.$eval('#stuckRow .btn.primary', b => b.disabled); const hint1 = await pg.textContent('#stuckRow .stkhint');
+  await pg.fill('#stkWhat', 'אחרי Ctrl+F5 הדף לבן ואין כותרת'); const dis2 = await pg.$eval('#stuckRow .btn.primary', b => b.disabled);
+  await pg.click('#stuckRow .btn.primary'); await pg.waitForTimeout(400); const t3 = await pg.textContent('#stuckRow');
+  await pg.reload(); await pg.waitForTimeout(500); const t4 = await pg.textContent('#stuckRow');
+  await pg.goto('http://localhost:8812/css.html#rules-4'); await pg.waitForTimeout(400); const t5 = await pg.textContent('#stuckRow');
+  await pg.evaluate(() => document.querySelector('#stuckRow').scrollIntoView({block:'center'})); await pg.waitForTimeout(200); const bx = await pg.evaluate(() => { const a = document.querySelector('#stepnav').getBoundingClientRect(), c = document.querySelector('#stuckRow').getBoundingClientRect(); return {x:0, y:a.top + scrollY - 20, width:1100, height:c.bottom - a.top + 40}; }); await pg.screenshot({path:'/home/claude/tools/look/stuck.png', clip:bx, fullPage:true}); await pg.click('#stuckRow .stk'); await pg.click('#stuckRow .stk[data-k="0"]'); await pg.waitForTimeout(200); const by = await pg.evaluate(() => { const a = document.querySelector('#stepnav').getBoundingClientRect(), c = document.querySelector('#stuckRow').getBoundingClientRect(); return {x:0, y:a.top + scrollY - 20, width:1100, height:c.bottom - a.top + 40}; }); await pg.screenshot({path:'/home/claude/tools/look/stuck2.png', clip:by, fullPage:true}); await pg.setViewportSize({width:390, height:800}); await pg.waitForTimeout(300); await pg.evaluate(() => document.querySelector('#stuckRow').scrollIntoView({block:'center'})); const bm = await pg.evaluate(() => { const a = document.querySelector('#stepnav').getBoundingClientRect(), c = document.querySelector('#stuckRow').getBoundingClientRect(); return {x:0, y:a.top + scrollY - 10, width:390, height:c.bottom - a.top + 20}; }); await pg.screenshot({path:'/home/claude/tools/look/stuck3.png', clip:bm, fullPage:true});
+  console.log({tBox, dis1, hint1, dis2, t1, t2, t3, t4, t5, sent: sent.map(x => decodeURIComponent(x.replace(/\+/g, ' '))), errs}); await b.close(); })();
