@@ -1504,7 +1504,7 @@ function initPlayer(){
 }
 
 /* ---------- 🟨 jsbox: a JavaScript sandbox – the code runs next to its result, with a Console that looks like F12 ----------
-   Course.jsbox(el, {id, code, page, file, answers, breaks, tasks, pageHeight, onRun})
+   Course.jsbox(el, {id, code, page, file, early (the error help uses only what was taught so far), inline (code sits between <script> tags: label + "שורה N" instead of file:N), answers, breaks, tasks, pageHeight, onRun})
    - runs the student's code in a closed iframe (sandbox="allow-scripts": no access to the course page)
    - console.log / console.error ... -> the Console panel; an uncaught error -> a red line like F12 + an explanation in Hebrew under it
    - alert / confirm / prompt are simulated (the real ones are blocked in a closed frame): alert is listed, prompt/confirm STOP the code,
@@ -1629,7 +1629,21 @@ function jsRunnerDoc(code, o){
   return build(doc.slice(0, idx).split('\n').length);
 }
 /* Chrome's error messages -> what they mean, in plain Hebrew (the English line itself is exactly what F12 shows) */
-function jsExplain(e, srcLine, lets){
+/* "which lines ran?" – next to every error: a syntax error stops the code BEFORE it starts (nothing ran); any other error stops it AT that line (what came before already ran) */
+function jsRan(e, lines){
+  if (!e.line || !lines || !lines.length) return '';
+  const N = e.line, syn = e.name === 'SyntaxError';
+  const real = k => { const t = (lines[k] || '').trim(); return t && !/^\/\//.test(t); };
+  const idx = []; for (let k = 0; k < lines.length; k++) if (real(k) || k === N - 1) idx.push(k + 1);
+  if (idx.length < 2) return '';
+  const chip = k => { const cls = k === N ? 'x' : (syn || k > N ? 'no' : 'ok'), sym = k === N ? '✗' : (syn || k > N ? '○' : '✓');
+    return '<span class="rn ' + cls + '"><b>' + k + '</b>' + sym + '</span>'; };
+  const msg = syn
+    ? '<b>🧭 מה רץ?</b> <b>אף שורה.</b> הדפדפן קורא את כל הקוד <b>לפני</b> שהוא מריץ שורה אחת. כשהוא מוצא טעות כתיב – הוא לא מריץ כלום, גם לא את השורות התקינות' + (N > 1 ? ' שלפניה' : '') + '. לכן ב-Console אין שום פלט מהן.'
+    : '<b>🧭 מה רץ?</b> הקוד רץ מלמעלה למטה' + (N > 1 ? ' – שורות <bdi dir="ltr">1</bdi> עד <bdi dir="ltr">' + (N - 1) + '</bdi> כבר רצו (מה שהן הדפיסו נמצא למעלה)' : '') + ', ושורה <bdi dir="ltr">' + N + '</bdi> עצרה אותו. מה שאחריה לא הגיע לרוץ.';
+  return '<div class="jsb-ran">' + msg + '<div class="rn-row" dir="ltr" aria-label="אילו שורות רצו">' + idx.map(chip).join('') + '</div><div class="rn-key"><span class="rn ok"><b>1</b>✓</span> רצה · <span class="rn x"><b>1</b>✗</span> ' + (syn ? 'הטעות' : 'כאן נעצר') + ' · <span class="rn no"><b>1</b>○</span> לא רצה</div></div>';
+}
+function jsExplain(e, srcLine, lets, lines, early){
   const m = e.msg || '', tl = srcLine ? '<div class="jsb-qline">שורה ' + e.line + ': <code dir="ltr">' + esc(srcLine.trim()) + '</code></div>' : '';
   let t, m1;
   if ((m1 = m.match(/^(.+) is not defined$/))) t = 'המחשב לא מכיר את השם <code>' + esc(m1[1]) + '</code>. הסיבות הנפוצות: שגיאת כתיב (ב-JavaScript <code>name</code> ו-<code>Name</code> הם שני שמות שונים), או <b>טקסט שנכתב בלי מרכאות</b> – מילה בלי מרכאות נראית למחשב כמו שם של משהו, לא כמו טקסט.' + (lets ? ' ועוד סיבה: ששכחתם להגדיר אותו עם <code>let</code> לפני השימוש.' : '');
@@ -1640,24 +1654,24 @@ function jsExplain(e, srcLine, lets){
   else if ((m1 = m.match(/^Cannot read properties of (null|undefined) \(reading '(.+)'\)$/))) t = 'ביקשתם את <code>' + esc(m1[2]) + '</code> מתוך <code>' + m1[1] + '</code> – הדבר שכתבתם לפני הנקודה לא קיים (ערכו ' + m1[1] + ').';
   else if ((m1 = m.match(/^Cannot set properties of (null|undefined) \(setting '(.+)'\)$/))) t = 'ניסיתם לשנות את <code>' + esc(m1[2]) + '</code> של משהו שערכו <code>' + m1[1] + '</code> – כלומר הדבר שלפני הנקודה לא נמצא. (בדף: בדרך כלל ה-id שגוי, או שהסקריפט רץ לפני שהאלמנט נטען.)';
   else if (/^Unexpected end of input/.test(m)) t = 'הקוד נגמר באמצע: חסר סוגר – <code>}</code> או <code>)</code> – שמתאים לפותח שנשאר פתוח.';
-  else if (/^missing \) after argument list/.test(m)) t = 'חסר סוגר <code>)</code> בסוף הקריאה, או פסיק/<code>+</code> בין הערכים שבתוך הסוגריים.';
-  else if (/^Invalid or unexpected token/.test(m)) t = 'תו שלא חוקי – לרוב מרכאות שנפתחו ולא נסגרו, או מרכאות "חכמות" שהודבקו מ-Word או מהודעה.';
+  else if (/^missing \) after argument list/.test(m)) t = early ? 'חסר סוגר <code>)</code> בסוף הפקודה, או שמשהו בתוך הסוגריים נכתב לא נכון – למשל טקסט בלי מרכאות, או מרכאות שנסגרו מוקדם מדי.' : 'חסר סוגר <code>)</code> בסוף הקריאה, או פסיק/<code>+</code> בין הערכים שבתוך הסוגריים.';
+  else if (/^Invalid or unexpected token/.test(m)) t = 'תו שלא חוקי – לרוב <b>מרכאות שנפתחו ולא נסגרו</b>, או מרכאות "חכמות" שהודבקו מ-Word או מהודעה.';
   else if (/^Unexpected identifier/.test(m) && srcLine && /^\s*(?:\}\s*else\s+)?(if|while|for|switch)\s+[A-Za-z_$]/.test(srcLine)) t = 'אחרי <code>' + srcLine.trim().match(/(if|while|for|switch)/)[1] + '</code> חייב לבוא סוגר <code>(</code>, ובתוכו התנאי. כאן באה מיד מילה – ולכן JavaScript לא מבינה.';
-  else if ((m1 = m.match(/^Unexpected identifier(?: '(.+)')?/))) t = 'מילה במקום שלא מצפים לה' + (m1[1] ? ' (<code>' + esc(m1[1]) + '</code>)' : '') + '. לרוב חסר משהו <b>לפניה</b>: <code>;</code>, פסיק, <code>+</code>, או שהמילה הקודמת נכתבה לא נכון.';
-  else if (/^Unexpected string/.test(m)) t = 'טקסט במרכאות במקום שלא מצפים לו – לרוב חסר <code>+</code> או פסיק לפניו.';
+  else if ((m1 = m.match(/^Unexpected identifier(?: '(.+)')?/))) t = 'מילה במקום שלא מצפים לה' + (m1[1] ? ' (<code>' + esc(m1[1]) + '</code>)' : '') + (early ? '. לרוב חסר משהו <b>לפניה</b>: <code>;</code> בסוף הפקודה הקודמת, או <b>מרכאות</b> סביב טקסט – בלי מרכאות המחשב קורא כל מילה כמו פקודה.' : '. לרוב חסר משהו <b>לפניה</b>: <code>;</code>, פסיק, <code>+</code>, או שהמילה הקודמת נכתבה לא נכון.');
+  else if (/^Unexpected string/.test(m)) t = early ? 'טקסט במרכאות במקום שלא מצפים לו – לרוב חסר משהו לפניו: סוגר פותח <code>(</code> אחרי שם הפקודה, או <code>;</code> בסוף הפקודה הקודמת.' : 'טקסט במרכאות במקום שלא מצפים לו – לרוב חסר <code>+</code> או פסיק לפניו.';
   else if (/^Unexpected number/.test(m)) t = 'מספר במקום שלא מצפים לו – לרוב חסר אופרטור (<code>+</code>, <code>*</code>…) או פסיק לפניו.';
-  else if ((m1 = m.match(/^Unexpected token '?(.+?)'?$/))) t = 'המחשב נתקל ב-<code>' + esc(m1[1]) + '</code> במקום שלא מצפים לו. בדקו סוגריים, מרכאות ופסיקים – בשורה הזו <b>ובשורה שלפניה</b> (לפעמים הטעות שם).';
+  else if ((m1 = m.match(/^Unexpected token '?(.+?)'?$/))) t = 'המחשב נתקל ב-<code>' + esc(m1[1]) + '</code> במקום שלא מצפים לו. בדקו סוגריים, מרכאות' + (early ? '' : ' ופסיקים') + ' – בשורה הזו <b>ובשורה שלפניה</b> (לפעמים הטעות שם).';
   else if (/^Maximum call stack size exceeded/.test(m)) t = 'משהו בקוד קורא לעצמו שוב ושוב בלי סוף, עד שנגמר המקום. לרוב – לולאה או קריאה שלא נעצרת.';
   else if (/^Illegal break statement|^Illegal continue/.test(m)) t = '<code>break</code>/<code>continue</code> מותרים רק בתוך לולאה (או switch).';
   else t = 'ככה נראית הודעת שגיאה: <b>סוג</b> (<code>' + esc(e.name) + '</code>) ואחריו <b>מה</b> השתבש, ובצד – באיזו שורה. התחילו מהשורה הזו.';
-  return '<div class="jsb-help" dir="rtl" role="note"><b>🔎 מה זה אומר?</b> ' + t + tl + '<div class="jsb-f12">בדיוק אותה שורה אדומה תראו ב-F12 ‏←‏ Console (בדפדפן Chrome או Edge; בדפדפנים אחרים הניסוח שונה קצת).</div></div>';
+  return '<div class="jsb-help" dir="rtl" role="note"><b>🔎 מה זה אומר?</b> ' + t + tl + jsRan(e, lines) + '<div class="jsb-f12">בדיוק אותה שורה אדומה תראו ב-F12 ‏←‏ Console (בדפדפן Chrome או Edge; בדפדפנים אחרים הניסוח שונה קצת).</div></div>';
 }
 function jsbox(container, o){
   if (typeof container === 'string') container = $(container);
   o = o || {};
   const id = o.id || 'jsb', file = o.file || 'script.js', TS = o.tasks || [], BR = o.breaks || [];
   container.classList.add('jsb'); if (o.noPage) container.classList.add('jsb-nopage');
-  container.innerHTML = '<div class="pg jsb-grid"><div class="editor jsb-ed"><span class="lbl">JavaScript – <bdi dir="ltr">' + esc(file) + '</bdi></span>' +
+  container.innerHTML = '<div class="pg jsb-grid"><div class="editor jsb-ed"><span class="lbl">' + (o.inline ? 'JavaScript – הקוד שבין התגיות <bdi dir="ltr">&lt;script&gt;</bdi>' : 'JavaScript – <bdi dir="ltr">' + esc(file) + '</bdi>') + '</span>' +
     '<div class="jsb-edwrap"><textarea class="jsb-code" wrap="off" spellcheck="false" aria-label="עורך JavaScript" aria-describedby="' + id + '-hint"></textarea><div class="jsb-hl" hidden aria-hidden="true"></div></div>' +
     '<span class="edhint" id="' + id + '-hint">⌨ Ctrl+Enter מריץ · Tab מוסיף רווחים · כדי לצאת מהעורך עם המקלדת: Esc ואז Tab.</span>' +
     '<div class="ctrls jsb-bar"><button class="btn primary jsb-run" type="button">▶ הריצו</button><button class="btn reset jsb-reset" type="button">↺ התחלה מחדש</button></div>' +
@@ -1676,7 +1690,7 @@ function jsbox(container, o){
   const setCountText = () => { const e = res.errors.length; countEl.className = 'jsb-count' + (e ? ' bad' : ''); countEl.textContent = e ? '✖ ' + e + (e === 1 ? ' שגיאה' : ' שגיאות') : (res.logs.length ? (res.logs.length === 1 ? 'הודעה אחת' : res.logs.length + ' הודעות') : ''); };
   function row(cls, icon, text, line){
     const r = document.createElement('div'); r.className = 'jsb-row ' + cls;
-    r.innerHTML = '<span class="jsb-ic" aria-hidden="true">' + icon + '</span><span class="jsb-msg"></span>' + (line ? '<span class="jsb-src">' + esc(file) + ':' + line + '</span>' : '');
+    r.innerHTML = '<span class="jsb-ic" aria-hidden="true">' + icon + '</span><span class="jsb-msg"></span>' + (line ? '<span class="jsb-src">' + (o.inline ? 'שורה ' + line : esc(file) + ':' + line) + '</span>' : '');
     r.querySelector('.jsb-msg').textContent = text; logBox.appendChild(r); return r;
   }
   function addDialog(d){
@@ -1712,7 +1726,7 @@ function jsbox(container, o){
     else if (d.t === 'need') { res.need = d; }
     else if (d.t === 'loop') { res.loop = true; res.errors.push({name: 'LoopGuard', msg: 'loop', line: d.line}); const r = row('loop', '⛔', 'המדריך עצר את הלולאה', d.line);
       const h = document.createElement('div'); h.className = 'jsb-help loop'; h.innerHTML = '<b>🔎 מה קרה?</b> הלולאה רצה יותר מ-' + JS_LOOP_LIMIT.toLocaleString('he-IL') + ' פעמים בלי להפסיק – כנראה <b>לולאה אינסופית</b>: התנאי שלה אף פעם לא נהיה שקר. בדפדפן אמיתי הלשונית הייתה נתקעת ("הדף אינו מגיב"), ולכן כאן עצרנו אותה. בדקו: האם משהו בתוך הלולאה משנה את המשתנה שבתנאי?'; r.after(h); }
-    else if (d.t === 'error') { res.errors.push({name: d.name, msg: d.msg, line: d.line}); const r = row('err', '✖', 'Uncaught ' + d.name + ': ' + d.msg, d.line); const h = document.createElement('div'); h.innerHTML = jsExplain({name: d.name, msg: d.msg, line: d.line}, d.line ? srcLines[d.line - 1] : '', o.lets !== false); r.after(h.firstChild); }
+    else if (d.t === 'error') { res.errors.push({name: d.name, msg: d.msg, line: d.line}); const r = row('err', '✖', 'Uncaught ' + d.name + ': ' + d.msg, d.line); const h = document.createElement('div'); h.innerHTML = jsExplain({name: d.name, msg: d.msg, line: d.line}, d.line ? srcLines[d.line - 1] : '', o.lets !== false, srcLines, !!o.early); r.after(h.firstChild); }
     else if (d.t === 'done') { clearTimeout(res.tm); res.text = d.text || ''; res.html = d.html || ''; finish(); }
   }
   window.addEventListener('message', onMsg);
@@ -1764,24 +1778,27 @@ function jsbox(container, o){
     runs.forEach(r => { const bar = document.createElement('i'); bar.style.top = (pt + r[0] * lh - ta.scrollTop) + 'px'; bar.style.height = ((r[1] - r[0] + 1) * lh) + 'px'; hlBox.appendChild(bar); });
   }
   function showHl(lines){ hlLines = lines; placeHl(); }
-  /* breaks */
+  /* breaks: the pressed one stays marked while its broken code is in the editor; any edit, fix or reset clears it */
+  function setBrk(on){ container.querySelectorAll('.jsb-brk').forEach(x => { const p = x === on; x.classList.toggle('on', p); x.setAttribute('aria-pressed', p ? 'true' : 'false'); }); }
   BR.forEach(b => {
-    const bt = document.createElement('button'); bt.type = 'button'; bt.className = 'btn jsb-brk'; bt.textContent = b.label; brBar.appendChild(bt);
+    const bt = document.createElement('button'); bt.type = 'button'; bt.className = 'btn jsb-brk'; bt.textContent = b.label; bt.setAttribute('aria-pressed', 'false'); brBar.appendChild(bt);
     bt.addEventListener('click', () => {
       if (locked()) return;
+      setBrk(bt);
       const base = o.code; let code = typeof b.apply === 'function' ? b.apply(base) : base.replace(b.from, b.to);
       ta.value = code; store.set('jscode-' + id, code); runs++; runIt(false);
       const ch = changedLines(base, code); if (b.marks) ch.lines = b.marks.slice(); if (b.diff) { ch.before = b.diff[0]; ch.after = b.diff[1]; } showHl(ch.lines);
       const diff = ch.lines.length ? '<div class="jsb-diff" dir="ltr"><div class="jd-h" dir="rtl">' + (ch.lines.length > 1 ? 'שורות ' + ch.lines.map(k => k + 1).join(' ו-') : 'שורה ' + (ch.lines[0] + 1)) + ': לפני ואחרי</div>' +
         (ch.before ? '<div class="jd-old"><span>−</span><code>' + esc(ch.before) + '</code></div>' : '') + (ch.after ? '<div class="jd-new"><span>+</span><code>' + esc(ch.after) + '</code></div>' : '') + '</div>' : '';
       whyBox.hidden = false; whyBox.innerHTML = '<b>' + esc(b.label) + '</b> – ' + b.explain + diff + ' <button type="button" class="btn jsb-fix">↺ החזירו את הקוד התקין</button>';
-      whyBox.querySelector('.jsb-fix').addEventListener('click', () => { ta.value = base; store.set('jscode-' + id, base); whyBox.hidden = true; showHl([]); runIt(false); });
+      whyBox.querySelector('.jsb-fix').addEventListener('click', () => { ta.value = base; store.set('jscode-' + id, base); whyBox.hidden = true; showHl([]); setBrk(null); runIt(false); });
+      try { whyBox.scrollIntoView({block: 'nearest', behavior: 'smooth'}); } catch(e){}
     });
   });
   /* editor */
   let free = false;
   ta.addEventListener('focus', () => { free = false; });
-  ta.addEventListener('input', () => { store.set('jscode-' + id, ta.value); showHl([]); });
+  ta.addEventListener('input', () => { store.set('jscode-' + id, ta.value); showHl([]); setBrk(null); });
   ta.addEventListener('scroll', () => placeHl());
   ta.addEventListener('keydown', e => {
     if (e.key === 'Escape') { free = true; return; }
@@ -1795,7 +1812,7 @@ function jsbox(container, o){
   rb.addEventListener('click', () => {
     if (!rb.classList.contains('confirm')) { rb.classList.add('confirm'); rb.textContent = 'בטוחים? הקוד שכתבתם יימחק – לחצו שוב'; clearTimeout(rbT); rbT = setTimeout(() => { rb.classList.remove('confirm'); rb.textContent = '↺ התחלה מחדש'; }, 4000); return; }
     clearTimeout(rbT); rb.classList.remove('confirm'); rb.textContent = '↺ התחלה מחדש';
-    ta.value = o.code || ''; store.set('jscode-' + id, null); whyBox.hidden = true; showHl([]); logBox.innerHTML = ''; countEl.textContent = ''; dlgBox.innerHTML = ''; dlgBox.hidden = true; runId++; iframe.srcdoc = '';
+    ta.value = o.code || ''; store.set('jscode-' + id, null); whyBox.hidden = true; showHl([]); setBrk(null); logBox.innerHTML = ''; countEl.textContent = ''; dlgBox.innerHTML = ''; dlgBox.hidden = true; runId++; iframe.srcdoc = '';
     toast('↺ הקוד חזר להתחלה. המשימות שכבר הצלחתם נשארות מסומנות.');
   });
   askBox(container.querySelector('.pg-ask'), {
