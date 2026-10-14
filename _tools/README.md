@@ -40,3 +40,8 @@ NODE_PATH=$(npm root -g) node /home/claude/tools/sweep.js css razor
 - `js-lesson-test.js <page>` – כל תיבות jsbox: משימות, שברו בכוונה, שגיאות צפויות.
 - `js-bidi-audit.js` / `js-bidi-visual.js` – `PAGE=<page>` (ברירת מחדל js-basics) – טקסט לטיני לא מבודד בתוך עברית.
 - `brk.js` – משתנה סביבה `PAGE`. `sweep.js` – נכשל גם על שגיאת טעינה (LOAD ERR) ועל דף בלי שלבים (NO TOPICS BUILT).
+
+## בדיקות שנוספו אחרי סקירת הקורס (14/10)
+- `qlen.js <page>` – כלל 5: מסמן שאלות שבהן התשובה הנכונה היא הארוכה ביותר וגם ≥1.25 פי הממוצע של האחרות (ניחוש לפי אורך).
+- `hintcheck.js <page> […]` – כלל 6: מסמן משימות בתרגול שבהן הרמז האחרון הוא למעשה הפתרון (רמז 2 = איפה לחפש, לא מה לכתוב).
+- בכל עורך קוד (playground ו-jsbox) יש מספרי שורה (`lineNumbers` ב-course.js).
