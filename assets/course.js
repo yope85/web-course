@@ -1672,7 +1672,7 @@ function jsbox(container, o){
   const id = o.id || 'jsb', file = o.file || 'script.js', TS = o.tasks || [], BR = o.breaks || [];
   container.classList.add('jsb'); if (o.noPage) container.classList.add('jsb-nopage');
   container.innerHTML = '<div class="pg jsb-grid"><div class="editor jsb-ed"><span class="lbl">' + (o.inline ? 'JavaScript – הקוד שבין התגיות <bdi dir="ltr">&lt;script&gt;</bdi>' : 'JavaScript – <bdi dir="ltr">' + esc(file) + '</bdi>') + '</span>' +
-    '<div class="jsb-edwrap"><textarea class="jsb-code" wrap="off" spellcheck="false" aria-label="עורך JavaScript" aria-describedby="' + id + '-hint"></textarea><div class="jsb-hl" hidden aria-hidden="true"></div></div>' +
+    '<div class="jsb-edwrap"><div class="jsb-gut" aria-hidden="true"><div class="jsb-gn"></div></div><textarea class="jsb-code" wrap="off" spellcheck="false" aria-label="עורך JavaScript" aria-describedby="' + id + '-hint"></textarea><div class="jsb-hl" hidden aria-hidden="true"></div></div>' +
     '<span class="edhint" id="' + id + '-hint">⌨ Ctrl+Enter מריץ · Tab מוסיף רווחים · כדי לצאת מהעורך עם המקלדת: Esc ואז Tab.</span>' +
     '<div class="ctrls jsb-bar"><button class="btn primary jsb-run" type="button">▶ הריצו</button><button class="btn reset jsb-reset" type="button">↺ התחלה מחדש</button></div>' +
     (BR.length ? '<div class="ctrls jsb-breaks"><span class="lbl">🔨 שברו בכוונה:</span></div>' : '') +
@@ -1685,6 +1685,18 @@ function jsbox(container, o){
   const runBtn = container.querySelector('.jsb-run'), bar = container.querySelector('.jsb-bar'), brBar = container.querySelector('.jsb-breaks'), whyBox = container.querySelector('.jsb-why');
   const countEl = container.querySelector('.jsb-count');
   iframe.style.height = (o.pageHeight || 120) + 'px';
+  /* line numbers: the errors and the questions talk about "line 3", so the editor shows the numbers (a gutter that follows the text and the scroll) */
+  const gut = container.querySelector('.jsb-gut'), gn = container.querySelector('.jsb-gn');
+  let gutN = 0;
+  function updateGut(){
+    const n = ta.value.split('\n').length;
+    if (n !== gutN) { gutN = n; let t = ''; for (let k = 1; k <= n; k++) t += k + '\n'; gn.textContent = t.slice(0, -1); }
+    gut.style.height = ta.clientHeight + 'px'; gn.style.transform = 'translateY(' + (-ta.scrollTop) + 'px)';
+  }
+  { const vd = Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype, 'value');
+    Object.defineProperty(ta, 'value', {configurable: true, get(){ return vd.get.call(ta); }, set(v){ vd.set.call(ta, v); updateGut(); }}); }
+  ta.addEventListener('input', updateGut); ta.addEventListener('scroll', updateGut);
+  if (window.ResizeObserver) new ResizeObserver(updateGut).observe(ta);
   let runId = 0, answers = [], res = null, runs = 0, srcLines = [];
   const locked = () => (bar.classList.contains('veiling') || (bar.closest && bar.closest('.veil-wrap.veiling')));
   const setCountText = () => { const e = res.errors.length; countEl.className = 'jsb-count' + (e ? ' bad' : ''); countEl.textContent = e ? '✖ ' + e + (e === 1 ? ' שגיאה' : ' שגיאות') : (res.logs.length ? (res.logs.length === 1 ? 'הודעה אחת' : res.logs.length + ' הודעות') : ''); };
