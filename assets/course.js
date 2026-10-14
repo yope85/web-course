@@ -1658,7 +1658,7 @@ function jsRan(e, lines){
     return '<span class="rn ' + cls + '"><b>' + k + '</b>' + sym + '</span>'; };
   const msg = syn
     ? '<b>🧭 מה רץ?</b> <b>אף שורה.</b> הדפדפן קורא את כל הקוד <b>לפני</b> שהוא מריץ שורה אחת. כשהוא מוצא טעות כתיב – הוא לא מריץ כלום, גם לא את השורות התקינות' + (N > 1 ? ' שלפניה' : '') + '. לכן ב-Console אין שום פלט מהן.'
-    : '<b>🧭 מה רץ?</b> הקוד רץ מלמעלה למטה' + (N > 1 ? ' – שורות <bdi dir="ltr">1</bdi> עד <bdi dir="ltr">' + (N - 1) + '</bdi> כבר רצו (מה שהן הדפיסו נמצא למעלה)' : '') + ', ושורה <bdi dir="ltr">' + N + '</bdi> עצרה אותו. מה שאחריה לא הגיע לרוץ.';
+    : '<b>🧭 מה רץ?</b> הקוד רץ מלמעלה למטה' + (N === 2 ? ' – שורה <bdi dir="ltr">1</bdi> כבר רצה (מה שהיא הדפיסה נמצא למעלה)' : N > 2 ? ' – שורות <bdi dir="ltr">1</bdi> עד <bdi dir="ltr">' + (N - 1) + '</bdi> כבר רצו (מה שהן הדפיסו נמצא למעלה)' : '') + ', ושורה <bdi dir="ltr">' + N + '</bdi> עצרה אותו. מה שאחריה לא הגיע לרוץ.';
   return '<div class="jsb-ran">' + msg + '<div class="rn-row" dir="ltr" aria-label="אילו שורות רצו">' + idx.map(chip).join('') + '</div><div class="rn-key"><span class="rn ok"><b>1</b>✓</span> רצה · <span class="rn x"><b>1</b>✗</span> ' + (syn ? 'הטעות' : 'כאן נעצר') + ' · <span class="rn no"><b>1</b>○</span> לא רצה</div></div>';
 }
 function jsExplain(e, srcLine, lets, lines, early){
@@ -1668,7 +1668,7 @@ function jsExplain(e, srcLine, lets, lines, early){
   else if ((m1 = m.match(/^Cannot access '(.+)' before initialization$/))) t = 'השתמשתם ב-<code>' + esc(m1[1]) + '</code> לפני השורה שמגדירה אותו (עם <code>let</code>). קודם מגדירים, אחר כך משתמשים.';
   else if (/^Assignment to constant variable/.test(m)) t = 'ניסיתם לשנות משתנה שהוגדר עם <code>const</code> – והוא קבוע, אי אפשר לשנות אותו. אם צריך לשנות – מגדירים עם <code>let</code>.';
   else if ((m1 = m.match(/^Identifier '(.+)' has already been declared$/))) t = 'הגדרתם את <code>' + esc(m1[1]) + '</code> פעמיים עם <code>let</code>/<code>const</code> באותו מקום. מגדירים משתנה פעם אחת; בהמשך רק משנים את ערכו: <code>' + esc(m1[1]) + ' = …</code>';
-  else if ((m1 = m.match(/^(.+) is not a function$/))) t = 'ניסיתם להפעיל את <code>' + esc(m1[1]) + '</code> עם סוגריים, אבל זה לא פונקציה. בדקו כתיב (אותיות גדולות וקטנות!) ושהשם הוא באמת של פונקציה.';
+  else if ((m1 = m.match(/^(.+) is not a function$/))) t = early ? 'ניסיתם להפעיל את <code>' + esc(m1[1]) + '</code> כפקודה (עם סוגריים), אבל פקודה בשם הזה לא קיימת. בדקו כתיב – אותיות גדולות וקטנות הן שני דברים שונים.' : 'ניסיתם להפעיל את <code>' + esc(m1[1]) + '</code> עם סוגריים, אבל זה לא פונקציה. בדקו כתיב (אותיות גדולות וקטנות!) ושהשם הוא באמת של פונקציה.';
   else if ((m1 = m.match(/^Cannot read properties of (null|undefined) \(reading '(.+)'\)$/))) t = 'ביקשתם את <code>' + esc(m1[2]) + '</code> מתוך <code>' + m1[1] + '</code> – הדבר שכתבתם לפני הנקודה לא קיים (ערכו ' + m1[1] + ').';
   else if ((m1 = m.match(/^Cannot set properties of (null|undefined) \(setting '(.+)'\)$/))) t = 'ניסיתם לשנות את <code>' + esc(m1[2]) + '</code> של משהו שערכו <code>' + m1[1] + '</code> – כלומר הדבר שלפני הנקודה לא נמצא. (בדף: בדרך כלל ה-id שגוי, או שהסקריפט רץ לפני שהאלמנט נטען.)';
   else if (/^Unexpected end of input/.test(m)) t = 'הקוד נגמר באמצע: חסר סוגר – <code>}</code> או <code>)</code> – שמתאים לפותח שנשאר פתוח.';
@@ -1678,6 +1678,7 @@ function jsExplain(e, srcLine, lets, lines, early){
   else if ((m1 = m.match(/^Unexpected identifier(?: '(.+)')?/))) t = 'מילה במקום שלא מצפים לה' + (m1[1] ? ' (<code>' + esc(m1[1]) + '</code>)' : '') + (early ? '. לרוב חסר משהו <b>לפניה</b>: <code>;</code> בסוף הפקודה הקודמת, או <b>מרכאות</b> סביב טקסט – בלי מרכאות המחשב קורא כל מילה כמו פקודה.' : '. לרוב חסר משהו <b>לפניה</b>: <code>;</code>, פסיק, <code>+</code>, או שהמילה הקודמת נכתבה לא נכון.');
   else if (/^Unexpected string/.test(m)) t = early ? 'טקסט במרכאות במקום שלא מצפים לו – לרוב חסר משהו לפניו: סוגר פותח <code>(</code> אחרי שם הפקודה, או <code>;</code> בסוף הפקודה הקודמת.' : 'טקסט במרכאות במקום שלא מצפים לו – לרוב חסר <code>+</code> או פסיק לפניו.';
   else if (/^Unexpected number/.test(m)) t = 'מספר במקום שלא מצפים לו – לרוב חסר אופרטור (<code>+</code>, <code>*</code>…) או פסיק לפניו.';
+  else if (/^Unexpected token '?<'?$/.test(m) && srcLine && /^\s*<\/?script/i.test(srcLine)) t = 'זו תגית <code>script</code> – תגית של HTML, לא של JavaScript. את התגיות <code>&lt;script&gt;</code> ו-<code>&lt;/script&gt;</code> לא כותבים כאן: כאן כותבים רק את הקוד עצמו. מחקו אותן ונסו שוב.';
   else if ((m1 = m.match(/^Unexpected token '?(.+?)'?$/))) t = 'המחשב נתקל ב-<code>' + esc(m1[1]) + '</code> במקום שלא מצפים לו. בדקו סוגריים, מרכאות' + (early ? '' : ' ופסיקים') + ' – בשורה הזו <b>ובשורה שלפניה</b> (לפעמים הטעות שם).';
   else if (/^Maximum call stack size exceeded/.test(m)) t = 'משהו בקוד קורא לעצמו שוב ושוב בלי סוף, עד שנגמר המקום. לרוב – לולאה או קריאה שלא נעצרת.';
   else if (/^Illegal break statement|^Illegal continue/.test(m)) t = '<code>break</code>/<code>continue</code> מותרים רק בתוך לולאה (או switch).';
@@ -1694,7 +1695,7 @@ function jsbox(container, o){
     '<span class="edhint" id="' + id + '-hint">⌨ Ctrl+Enter מריץ · Tab מוסיף רווחים · כדי לצאת מהעורך עם המקלדת: Esc ואז Tab.</span>' +
     '<div class="ctrls jsb-bar"><button class="btn primary jsb-run" type="button">▶ הריצו</button><button class="btn reset jsb-reset" type="button">↺ התחלה מחדש</button></div>' +
     (BR.length ? '<div class="ctrls jsb-breaks"><span class="lbl">🔨 שברו בכוונה:</span></div>' : '') +
-    '</div><div class="jsb-res"><div class="framewrap jsb-pagewrap"><div class="urlbar"><span class="dots"><i></i><i></i><i></i></span><span class="url" dir="ltr">localhost:7123/HTML/page.html</span></div>' +
+    '</div><div class="jsb-res"><div class="framewrap jsb-pagewrap"><div class="urlbar"><span class="dots"><i></i><i></i><i></i></span><span class="url" dir="ltr">localhost:7123/Site/Page</span></div>' +
     '<iframe class="mini jsb-page" title="הדף – מה שהקוד מציג" sandbox="allow-scripts"></iframe></div>' +
     '<div class="jsb-dlgs" aria-live="polite" hidden></div>' +
     '<div class="jsb-con" dir="ltr"><div class="jsb-contab"><span>Console</span><span class="jsb-count" aria-live="polite"></span></div><div class="jsb-log" role="log" aria-label="Console"></div></div></div></div>' +
@@ -1752,7 +1753,7 @@ function jsbox(container, o){
   function finish(){
     if (res.need) { setCountText(); askDialog(res.need); return; }
     res.finished = true; setCountText();
-    if (!logBox.firstChild) { const r = document.createElement('div'); r.className = 'jsb-empty'; r.textContent = res.errors.length ? '' : '(ה-Console ריק – הקוד לא כתב אליו כלום)'; if (r.textContent) logBox.appendChild(r); }
+    if (!logBox.firstChild) { const r = document.createElement('div'); r.className = 'jsb-empty'; r.textContent = res.errors.length ? '' : (o.noPage && (res.html || res.text || '').trim() ? '(ה-Console ריק. הקוד כתב לדף, אבל בארגז הזה אין תצוגת דף.)' : '(ה-Console ריק – הקוד לא כתב אליו כלום)'); if (r.textContent) logBox.appendChild(r); }
     checkTasks();
     if (o.onRun) try { o.onRun(res); } catch(e){}
   }

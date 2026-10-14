@@ -605,6 +605,7 @@ html,code,.ltr,pre,.cv,.cv *,.codeblock pre,button,.chip,.tree,.ftree,.pathbox,.
 .jsb-contab>span:first-child{border-bottom:2px solid #8ab4f8;padding:2px 2px 4px;margin-bottom:-5px}
 .jsb-count{color:#9aa0a6;font-weight:600}.jsb-count.bad{color:#ff9b9b}
 .jsb-log{max-height:380px;min-height:56px;overflow:auto}
+.jsb-log:has(.jsb-help){max-height:none}
 .jsb-row{display:flex;align-items:flex-start;gap:8px;padding:3px 10px;border-bottom:1px solid #333;line-height:1.55}
 .jsb-ic{flex:0 0 14px;text-align:center}
 .jsb-msg{flex:1;min-width:0;white-space:pre-wrap;overflow-wrap:anywhere;direction:ltr;text-align:left}
@@ -645,7 +646,7 @@ html,code,.ltr,pre,.cv,.cv *,.codeblock pre,button,.chip,.tree,.ftree,.pathbox,.
 .rn.no{border-style:dashed;color:var(--muted)}
 .rn-key{font-size:12.5px;color:var(--muted)}
 .rn-key .rn{font-size:12px}
-@media (max-width:860px){.jsb-log{max-height:320px}}
+@media (max-width:860px){.jsb-log{max-height:320px}.jsb-log:has(.jsb-help){max-height:none}}
 
 .jsb-nopage .jsb-pagewrap{display:none}
 .cv .he,.jsb-code .he{direction:ltr}
