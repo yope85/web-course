@@ -145,6 +145,7 @@
 .status>div.ok{border-color:var(--ok);background:var(--ok-soft)}
 .status>div.warn{border-color:var(--warn);background:var(--warn-soft)}
 .status>div.todo{border-style:dashed;background:var(--surface2)}
+.status>div.part{background:var(--surface2)}
 .status b.h{display:block;font-size:16px}
 .asgfb{border:2px solid var(--accent);border-radius:14px;padding:12px 14px;margin:12px 0;background:var(--surface)}
 .asgfb ol{margin:6px 0;padding-inline-start:24px}
@@ -190,7 +191,7 @@
 <section class="topic" data-id="start" data-icon="🌱" data-title="פתיחה">
   <article class="spread welcome">
     <h3>הגשה 1: מה מגישים, ועד מתי?</h3>
-    <p class="lead">בהגשה הזו מגישים <b>אתר שלם ומעוצב</b> – האתר שאתם בונים צעד אחרי צעד מהשיעור הראשון. הדף הזה הוא <b>דף ליווי</b>: אין בו חומר חדש. הוא עוזר לבדוק שלא חסר כלום, ולהגיש נכון.</p>
+    <p class="lead">בהגשה הזו מגישים <b>אתר שלם ומעוצב</b> – האתר שאתם בונים צעד אחרי צעד מהשיעור הראשון. הדף הזה הוא <b>דף ליווי</b>: אין בו שיעור חדש בתכנות – יש בו מה שחדש להגשה עצמה: איך אורזים zip, כלי שבודק את הטפסים, וכללי ההגשה. הוא עוזר לבדוק שלא חסר כלום, ולהגיש נכון.</p>
     <div class="deliver">
       <div><b>1</b>דף ראשי – דף נחיתה</div>
       <div><b><bdi dir="ltr">10+</bdi></b>דפי תוכן לפחות, מעוצבים בצורה דומה</div>
@@ -234,7 +235,7 @@
         <li>דפי תוכן – כמה שמספיקים, וכל אחד מהם עומד בשלושת התנאים.</li>
         <li>ליטוש.</li>
       </ol>
-      חוששים שלא תספיקו הכול? <a href="#" data-go="submit:2">ראו בשלב ההגשה</a>.</div>
+      חוששים שלא תספיקו הכול? <a href="#" data-go="submit:2" data-late>כללי הגשה חלקית ואיחור – בשלב ההגשה</a>.</div>
   </article>
 </section>
 
@@ -392,6 +393,7 @@
       <li><b>MyFirstWeb.sln</b> – קובץ ה-Solution: ה"מעטפת" שפותחים ב-Visual Studio (הכרתם אותו בשיעור 1).</li>
       <li><b>bin ו-obj</b> – שתי תיקיות ש-Visual Studio יוצר בעצמו, כשהוא בונה (build) את הפרויקט לקראת הרצה. אתם לא כותבים בהן כלום.</li>
       <li>הציור מקוצר: יש בתיקיות עוד קבצים. ואם נתתם לפרויקט שם אחר – במקום MyFirstWeb יופיע השם שלכם.</li>
+      <li>אצלכם יש רק תיקייה אחת בשם MyFirstWeb, בלי תיקייה בתוכה? אז ② ו-③ אצלכם הן אותה תיקייה – ענו כרגיל; ההסבר המלא אחרי התשובה.</li>
     </ul>
     <div class="predict" id="pZip"></div>
     <div class="what">אורזים את <b>תיקיית ה-Solution (החיצונית – זו שבתוכה קובץ ה-sln)</b> – כאן ②. בתוכה יש הכול: קובץ ה-sln, ובתיקייה הפנימית – התיקיות Pages ו-wwwroot, הקובץ Program.cs וכל השאר. ככה אפשר לפתוח את הפרויקט במחשב אחר ולהריץ אותו.<br />👀 שימו לב למילים: בשיעור 1 קראנו ל-③ "התיקייה של הפרויקט". במטלה כתוב "כל תיקיית הפרויקט, <b>כולל קובץ ה-sln</b>" – ואת שניהם יחד מקבלים רק כשאורזים את ②.<br />🐢 אצלכם קובץ ה-sln נמצא באותה תיקייה עם wwwroot? (זה קורה אם ביצירת הפרויקט התיבה <bdi>Place solution and project in the same directory</bdi> הייתה מסומנת.) אז אורזים את התיקייה הזו. הכלל לא משתנה: <b>התיקייה שבתוכה קובץ ה-sln</b>.</div>
@@ -410,7 +412,7 @@
         </ul>
         ב-Windows בעברית – מחפשים בתפריט את המילה ZIP או את המילה "דחוס".</li>
       <li>ליד התיקייה נוצר קובץ באותו שם, עם הסיומת zip: <b>MyFirstWeb.zip</b>. לחיצה כפולה עליו פותחת אותו כמו תיקייה. בדקו: בפנים התיקייה MyFirstWeb, ובתוכה הקובץ MyFirstWeb.sln והתיקייה הפנימית.</li>
-      <li>ה-zip מוכן. במטלות 2 ו-4 – מעלים אותו עכשיו (איך מגישים – בשלב המטלה בשיעור). בהגשה 1 – אחרי הרשימה שלפני ההגשה, ב<a href="#" data-go="submit:2">שלב ההגשה</a>.</li>
+      <li>ה-zip מוכן. <b>בהגשה 1 עוד לא מעלים</b> – קודם הרשימה שלפני ההגשה, ב<a href="#" data-go="submit:2">שלב ההגשה</a>. (במטלות 2 ו-4 מעלים אותו מיד – איך מגישים, בשלב המטלה באותו שיעור.)</li>
     </ol>
     <div class="expect">ליד תיקיית ה-Solution יש קובץ MyFirstWeb.zip. בתוכו: תיקייה אחת, MyFirstWeb, ובתוכה הקובץ MyFirstWeb.sln ועוד תיקייה בשם MyFirstWeb – ובה התיקיות Pages ו-wwwroot והקובץ Program.cs.</div>
     <div class="trouble" id="trZip"></div>
@@ -456,7 +458,7 @@
       <li>מהדף הראשי: לחצו על <b>כל</b> קישור בתפריט, אחד אחרי השני. כל דף נפתח? בכל דף אותו תפריט ואותו עיצוב? ושימו לב לשורת הכתובת: אף כתובת של דף באתר שלכם לא מסתיימת ב-html – דף Razor נפתח בלי סיומת (שיעור 6).</li>
       <li>ספרו את דפי התוכן: לפחות 10, ו<b>כל אחד מהם נפתח מהתפריט</b>. סופרים רק דף שעומד ב<a href="#" data-go="rubric:1">שלושת התנאים</a>. עדכנו את המונה ב<a href="#" data-go="list:1">רשימת הדרישות</a>.</li>
       <li>שלושת הטפסים: עברו על השדות מול הטבלה, רכיב אחרי רכיב – הכי מהר עם <a href="#" data-go="forms:1">בודק הטפסים</a>.</li>
-      <li>חיפוש style בכל הפרויקט, באותה דרך (Ctrl+Shift+F, <bdi>Entire solution</bdi>): קודם <code>style=</code>, ואחר כך <code>&lt;style</code> – תגית style שלמה. בקבצים שלכם לא אמורה להיות אף תוצאה. מצאתם? העבירו את העיצוב לכלל ב-site-style.css.</li>
+      <li>חיפוש style בכל הפרויקט, באותה דרך (Ctrl+Shift+F, <bdi>Entire solution</bdi>): קודם <code>style=</code>, ואחר כך <code>&lt;style</code> – תגית style שלמה. בקבצים שלכם לא אמורה להיות אף תוצאה. מצאתם? העבירו את העיצוב לכלל ב-site-style.css. יש תוצאות בתיקייה <code>lib</code>? אלה קבצים מוכנים שהגיעו עם הפרויקט (כמו Bootstrap) – מדלגים עליהם ובודקים רק את הקבצים שלכם.</li>
       <li>בכל דף: F12 &rlm;←&rlm; Console. שגיאה אדומה עם 404? קובץ – בדרך כלל תמונה – לא נמצא.</li>
     </ol>
     <div class="expect">הפרויקט רץ בלי חלון שגיאות. כל קישור בתפריט פותח דף, ובכל הדפים אותו תפריט ואותם צבעים. יש לפחות 10 דפי תוכן, וכולם נפתחים מהתפריט. דפי התרגול ו-Privacy.cshtml כבר לא בפרויקט. החיפוש של style לא מוצא כלום בקבצים שלכם, וב-Console אין שגיאות אדומות.</div>
@@ -544,7 +546,7 @@ const DAYS_LEFT = DUE ? Math.round((DUE - dayOf(NOW())) / DAY) : null;
 /* ---------- 🛤 road to the submission (✔ comes from each lesson's "I did the project step" box; lesson 1 has no such box) ---------- */
 const ROAD = [
   {t:'הפרויקט רץ', l:'שיעור 1', links:[['intro.html#vs-5', 'יוצרים את הפרויקט'], ['intro.html#run-5', 'מריצים ▶']]},
-  {t:'התיקייה HTML והדף הראשון', l:'שיעור 1', links:[['intro.html#page-7', 'הדף הראשון בפרויקט']]},
+  {t:'הדף הראשון באתר – קובץ html בתיקייה HTML (בשיעור 6 הוא הופך לדף cshtml)', l:'שיעור 1', links:[['intro.html#page-7', 'הדף הראשון בפרויקט']]},
   {t:'דף הנחיתה ודף תוכן ראשון', l:'שיעור 2', les:'l2', links:[['html-basics.html#practice-2', 'צעד בפרויקט']]},
   {t:'קובץ עיצוב חיצוני אחד: site-style.css', l:'שיעור 3', les:'css3', links:[['css.html#practice-2', 'צעד בפרויקט']]},
   {t:'שלושת הטפסים, עם כל השדות', l:'שיעור 4', les:'l4', links:[['html-advanced.html#forms-6', 'כניסה, הרשמה, שחזור'], ['html-advanced.html#fields-7', 'radio ו-select'], ['html-advanced.html#practice-4', 'בודקים את שלושת הטפסים']]},
@@ -726,7 +728,7 @@ function paintRub(){
     (!k ? 'עוד לא מילאתם. עברו שורה אחרי שורה – והסכום יופיע כאן.' : k === RUB.length ? '<b>הציון העצמי שלכם.</b> חזרו לעדכן אחרי כל שיפור.' : rubMissTxt() + 'בלי זה הסכום חלקי.') + '</div>';
   const gaps = RUB.filter(r => rubIsSet(r) && rubPts(r) < r.max).map(r => ({r, gap: r.max - rubPts(r)})).sort((a, b) => b.gap - a.gap);
   let h = '';
-  if (k && gaps.length) {
+  if (k === RUB.length && gaps.length) { /* "what to improve first" only when every row was filled – before that it would point at a row the student never opened */
     const g = gaps[0].r, links = [];
     if (g.local) links.push('<a href="#" data-go="' + g.local + '">' + (g.local === 'forms:1' ? '🔎 בודק הטפסים' : '🎨 איך בודקים כל סעיף') + '</a>');
     for (let i = 0; g.go && i < g.go.length; i += 2) links.push('<a href="' + g.go[i] + '">' + g.go[i + 1] + '</a>');
@@ -1000,7 +1002,7 @@ fcQuiet = false;
 
 /* ---------- ❓ guess: which folder do you zip? ---------- */
 predict('#pZip', {q:'איזו תיקייה אורזים ל-zip של ההגשה?', keepOrder:true,
-  opts:['① – התיקייה repos', '② – התיקייה MyFirstWeb החיצונית', '③ – התיקייה MyFirstWeb הפנימית', '④ – התיקייה wwwroot'], correct:1,
+  opts:['① – התיקייה repos של כל הפרויקטים', '② – התיקייה MyFirstWeb החיצונית', '③ – התיקייה MyFirstWeb הפנימית', '④ – התיקייה wwwroot שבתוך הפרויקט'], correct:1,
   why:['repos היא התיקייה של <b>כל</b> הפרויקטים שלכם ב-Visual Studio – לא רק של האתר. מגישים רק את הפרויקט הזה.',
     'זו תיקיית ה-Solution: בתוכה קובץ ה-sln – וגם כל הפרויקט, בתיקייה הפנימית. ממנה אפשר לפתוח ולהריץ את הכול.',
     'קרוב! יש בה את כל הקוד – אבל קובץ ה-sln נמצא תיקייה אחת מעליה. ובמטלה כתוב במפורש: כולל קובץ ה-sln.',
@@ -1069,11 +1071,11 @@ function paintStatus(){
   const fOk = ['login', 'register', 'recover'].every(x => state.fcOk[x]);
   const fAny = ['login', 'register', 'recover'].some(x => state.fcOk[x] || state.urlOk[x]);
   /* nothing done yet = a calm "not started" box, not a warning */
-  const box = (done, started, title, body) => '<div class="' + (done ? 'ok' : started ? 'warn' : 'todo') + '"><b class="h">' + (done ? '✔' : started ? '⚠' : '○') + ' ' + title + '</b>' + body + '</div>';
+  const box = (done, started, title, body) => '<div class="' + (done ? 'ok' : started ? 'part' : 'todo') + '"><b class="h">' + (done ? '✔' : started ? '◔' : '○') + ' ' + title + '</b>' + body + '</div>';
   el.innerHTML =
     box(n === REQ.length, n > 0, 'רשימת הדרישות: ' + n + '/' + REQ.length,
       (!n ? 'עוד לא סימנתם. ' : missing.length ? 'עוד לא מסומן: ' + missing.slice(0, 3).join(' · ') + (missing.length > 3 ? ' ועוד ' + (missing.length - 3) : '') + '. ' : 'הכול מסומן. ') + '<a href="#" data-go="list:1">לרשימה</a>') +
-    box(k === RUB.length, k > 0, 'מחוון: ' + (k ? tot : '—') + ' / ' + RUB_MAX,
+    box(k === RUB.length, k > 0, 'מחוון: ' + (k ? tot : '—') + ' / ' + RUB_MAX + (k && k < RUB.length ? ' (עוד לא גמור)' : ''),
       (!k ? 'עוד לא מילאתם. ' : k === RUB.length ? 'הציון העצמי שלכם. ' : rubMissTxt()) + '<a href="#" data-go="rubric:3">למחוון</a>') +
     box(fOk, fAny, 'בודק הטפסים', (fAny ? forms.join('<br />') + '<br /><span class="muted">קוד ✔ = הקוד של הדף עבר בלי ✘. שליחה ✔ = כל השמות הגיעו בכתובת.</span> ' : 'עוד לא בדקתם אף טופס. ') + '<a href="#" data-go="forms:1">לבודק</a>');
   /* the opening step: a first-time visitor gets one line; a returning one sees where he stands */
@@ -1098,7 +1100,7 @@ trouble('#trZip', {base:false, items:[
 trouble('#trFinal', {base:false, items:[
   {t:'Visual Studio מראה שגיאות ולא מריץ?', how:'ב-<bdi>View</bdi> &rlm;←&rlm; <bdi>Error List</bdi>, לחיצה כפולה על שגיאה קופצת לשורה שלה. בדף cshtml שימו לב לסימן <code>@</code> בטקסט: Razor חושב שאחריו בא קוד של C#. כדי לכתוב את הסימן הזה בטקסט, כותבים <code>@@</code> במקומו.'},
   {t:'קישור בתפריט מוביל לדף "לא נמצא" (404), או לא עושה כלום?', how:'הכתובת בקישור לא תואמת לשם הדף או לתיקייה שלו. פתחו את התפריט ב-<code>_Layout.cshtml</code> והשוו אות אחרי אות: מה שכתוב ב-asp-page מול שם הקובץ והתיקייה ב-Solution Explorer (שיעור 6).'},
-  {t:'התפריט ארוך – יוצא מהמסך, או שהשמות בו נשברים לשתי שורות?', how:'זה קורה כשיש בתפריט הרבה קישורים. שני תיקונים ב-<code>_Layout.cshtml</code>: <b>1.</b> קצרו את השמות שבתפריט – מילה או שתיים לכל קישור. <b>2.</b> בתגית nav החליפו את <code>navbar-expand-md</code> ב-<code>navbar-expand-xl</code>: עכשיו התפריט נפרס רק במסך רחב (xl – מ-1200 פיקסלים), ובכל מסך צר יותר הוא מתקפל ל-☰. בדיקה: הצרו לאט את חלון הדפדפן, וראו שאין גלילה הצידה.'},
+  {t:'התפריט ארוך – יוצא מהמסך, או שהשמות בו נשברים לשתי שורות?', how:'זה קורה כשיש בתפריט הרבה קישורים. שני תיקונים ב-<code>_Layout.cshtml</code>: <b>1.</b> קצרו את השמות שבתפריט – מילה או שתיים לכל קישור. <b>2.</b> בתגית nav החליפו את <code>navbar-expand-md</code> (או <code>navbar-expand-lg</code>, אם כתוב אצלכם כך) ב-<code>navbar-expand-xl</code>: עכשיו התפריט נפרס רק במסך רחב (xl – מ-1200 פיקסלים), ובכל מסך צר יותר הוא מתקפל ל-☰. בדיקה: הצרו לאט את חלון הדפדפן, וראו שאין גלילה הצידה.'},
   {t:'דף אחד נראה אחרת – בלי התפריט או בלי העיצוב?', how:'כנראה שזה עדיין דף html ישן, ולא דף cshtml שנכנס ל-Layout. בדקו בשורת הכתובת: היא מסתיימת ב-html? העבירו את הדף ל-Razor (שיעור 6), ותקנו את הקישור בתפריט.'},
   {t:'תמונה לא מופיעה?', how:'F12 &rlm;←&rlm; Console: שגיאת 404 = הנתיב או שם הקובץ שגויים. בדקו גם את הסיומת: jpg מול png.'},
   {t:'שיניתם ולא רואים את השינוי?', how:'שמרתם (Ctrl+S)? בדף cshtml: לחצו 🔥 Hot Reload ב-Visual Studio, ואז רעננו בדפדפן. עדיין לא? עצרו (■) והריצו שוב (▶) – זה עובד תמיד (שיעור 6). שיניתם רק את site-style.css? מספיק Ctrl+F5 <b>בדפדפן</b> – רענון מלא, בלי גרסה ישנה מהזיכרון (cache).'},
@@ -1166,6 +1168,7 @@ const EGGS = [
 Course.start({eggs: EGGS, console: ['🔎 בודקים לפני הגשה', 'שורה אדומה כאן ב-Console = משהו באתר שבור.\nגם בדף הזה יש שורה אדומה אחת – בכוונה: תמונה שלא נמצאה (404).\nשם הקובץ שלה, בלי הסיומת, הוא קוד של ביצה 😉\nועכשיו – אותה בדיקה בכל דף באתר שלכם.']});
 /* the 🕵️ egg: one deliberate 404 (an image that does not exist), so the Console shows exactly what a broken path looks like */
 new Image().src = 'Img/lostpizza.jpg';
+document.addEventListener('click', e => { if (!e.target.closest('[data-late]')) return; setTimeout(() => { const p = document.querySelector('.partial'); if (p && p.scrollIntoView) p.scrollIntoView({block:'center', behavior:'smooth'}); }, 150); });
 paintReq(false); paintRub();
 })();
 </script>
