@@ -664,8 +664,9 @@ html,code,.ltr,pre,.cv,.cv *,.codeblock pre,button,.chip,.tree,.ftree,.pathbox,.
 .jd-old code,.jd-new code{background:none;padding:0;white-space:pre-wrap}
 
 .jsb-edwrap{overflow:hidden;border-radius:10px}
-/* line-number gutter (jsbox) */
-.jsb-gut{position:absolute;left:0;top:0;width:40px;overflow:hidden;background:rgba(255,255,255,.07);border-right:1px solid rgba(255,255,255,.14);pointer-events:none;z-index:1}
-.jsb-gn{padding:12px 8px 12px 0;text-align:right;direction:ltr;white-space:pre;font-family:"JetBrains Mono",monospace;font-size:14px;line-height:1.55;color:#8b949e;user-select:none}
-.jsb-edwrap textarea.jsb-code{padding-left:50px}
+/* line-number gutter (code editors: jsbox + playground) */
+.ed-wrap{position:relative;overflow:hidden;border-radius:10px}
+.ed-wrap textarea{white-space:pre;overflow:auto;display:block;padding-left:50px}
+.ed-gut{position:absolute;left:0;top:0;width:40px;overflow:hidden;background:rgba(255,255,255,.07);border-right:1px solid rgba(255,255,255,.14);pointer-events:none;z-index:1}
+.ed-gn{padding:12px 8px 12px 0;text-align:right;direction:ltr;white-space:pre;font-family:"JetBrains Mono",monospace;font-size:14px;line-height:1.55;color:#8b949e;user-select:none}
 .jsb-hl{z-index:2}

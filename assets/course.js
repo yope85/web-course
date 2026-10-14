@@ -469,16 +469,34 @@ function taskList(box, o){
   return {check, tried, paint, paintHelp, tasksBox, finBox, done, key, open: () => TS.find(t => !t.manual && !done[key(t)])};
 }
 
+/* line numbers for a code editor (<textarea> inside .ed-wrap with .ed-gut > .ed-gn): the questions and the error messages talk about "line 3",
+   so the numbers must be on the screen. No wrapping (wrap=off), so one text line = one number; the gutter follows the text and the scroll,
+   and a hook on .value also catches every programmatic change (reset, 🔨, solution) */
+function lineNumbers(ta){
+  const wrap = ta.parentNode, gut = wrap.querySelector('.ed-gut'), gn = wrap.querySelector('.ed-gn'); let n0 = 0;
+  function upd(){
+    const n = ta.value.split('\n').length;
+    if (n !== n0) { n0 = n; let t = ''; for (let k = 1; k <= n; k++) t += k + '\n'; gn.textContent = t.slice(0, -1); }
+    gut.style.height = ta.clientHeight + 'px'; gn.style.transform = 'translateY(' + (-ta.scrollTop) + 'px)';
+  }
+  const vd = Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype, 'value');
+  Object.defineProperty(ta, 'value', {configurable: true, get(){ return vd.get.call(ta); }, set(v){ vd.set.call(ta, v); upd(); }});
+  ta.addEventListener('input', upd); ta.addEventListener('scroll', upd);
+  if (window.ResizeObserver) new ResizeObserver(upd).observe(ta);
+  upd();
+}
+
 function playground(container, o){
   if (typeof container === 'string') container = $(container);
   const id = o.id || 'pg';
   container.innerHTML = '<div class="pg"><div class="editor">' +
-    '<span class="lbl">' + (o.htmlLabel || 'HTML') + '</span><textarea class="edH" spellcheck="false" aria-label="עורך HTML" aria-describedby="' + id + '-edhint"></textarea>' +
-    (o.css !== undefined ? '<span class="lbl">' + (o.cssLabel || 'CSS – style.css') + '</span><textarea class="edC" spellcheck="false" aria-label="עורך CSS" aria-describedby="' + id + '-edhint"></textarea>' : '') +
+    '<span class="lbl">' + (o.htmlLabel || 'HTML') + '</span><div class="ed-wrap"><div class="ed-gut" aria-hidden="true"><div class="ed-gn"></div></div><textarea class="edH" wrap="off" spellcheck="false" aria-label="עורך HTML" aria-describedby="' + id + '-edhint"></textarea></div>' +
+    (o.css !== undefined ? '<span class="lbl">' + (o.cssLabel || 'CSS – style.css') + '</span><div class="ed-wrap"><div class="ed-gut" aria-hidden="true"><div class="ed-gn"></div></div><textarea class="edC" wrap="off" spellcheck="false" aria-label="עורך CSS" aria-describedby="' + id + '-edhint"></textarea></div>' : '') +
     '<span class="edhint" id="' + id + '-edhint">⌨ Tab מוסיף רווחים. כדי לצאת מהעורך עם המקלדת: Esc ואז Tab.</span>' +
     '<div><button class="btn reset" type="button">↺ התחלה מחדש</button></div></div>' +
     '<div><div class="pg-frame"></div></div></div>' + TASKS_HTML;
   const edH = container.querySelector('.edH'), edC = container.querySelector('.edC');
+  lineNumbers(edH); if (edC) lineNumbers(edC);
   const frame = new Frame(container.querySelector('.pg-frame'), {url: o.url || 'localhost:7123/HTML/test.html', height: o.height || 440});
   const TS = o.tasks || [];
   const tl = taskList(container, {id, tasks: TS, finKey: 'pg:' + id, solLang: t => t.solution.lang || (edC ? 'css' : 'html'), focus: () => (edC || edH).focus(), onTask: o.onTask});
@@ -1672,7 +1690,7 @@ function jsbox(container, o){
   const id = o.id || 'jsb', file = o.file || 'script.js', TS = o.tasks || [], BR = o.breaks || [];
   container.classList.add('jsb'); if (o.noPage) container.classList.add('jsb-nopage');
   container.innerHTML = '<div class="pg jsb-grid"><div class="editor jsb-ed"><span class="lbl">' + (o.inline ? 'JavaScript – הקוד שבין התגיות <bdi dir="ltr">&lt;script&gt;</bdi>' : 'JavaScript – <bdi dir="ltr">' + esc(file) + '</bdi>') + '</span>' +
-    '<div class="jsb-edwrap"><div class="jsb-gut" aria-hidden="true"><div class="jsb-gn"></div></div><textarea class="jsb-code" wrap="off" spellcheck="false" aria-label="עורך JavaScript" aria-describedby="' + id + '-hint"></textarea><div class="jsb-hl" hidden aria-hidden="true"></div></div>' +
+    '<div class="jsb-edwrap ed-wrap"><div class="ed-gut" aria-hidden="true"><div class="ed-gn"></div></div><textarea class="jsb-code" wrap="off" spellcheck="false" aria-label="עורך JavaScript" aria-describedby="' + id + '-hint"></textarea><div class="jsb-hl" hidden aria-hidden="true"></div></div>' +
     '<span class="edhint" id="' + id + '-hint">⌨ Ctrl+Enter מריץ · Tab מוסיף רווחים · כדי לצאת מהעורך עם המקלדת: Esc ואז Tab.</span>' +
     '<div class="ctrls jsb-bar"><button class="btn primary jsb-run" type="button">▶ הריצו</button><button class="btn reset jsb-reset" type="button">↺ התחלה מחדש</button></div>' +
     (BR.length ? '<div class="ctrls jsb-breaks"><span class="lbl">🔨 שברו בכוונה:</span></div>' : '') +
@@ -1685,18 +1703,7 @@ function jsbox(container, o){
   const runBtn = container.querySelector('.jsb-run'), bar = container.querySelector('.jsb-bar'), brBar = container.querySelector('.jsb-breaks'), whyBox = container.querySelector('.jsb-why');
   const countEl = container.querySelector('.jsb-count');
   iframe.style.height = (o.pageHeight || 120) + 'px';
-  /* line numbers: the errors and the questions talk about "line 3", so the editor shows the numbers (a gutter that follows the text and the scroll) */
-  const gut = container.querySelector('.jsb-gut'), gn = container.querySelector('.jsb-gn');
-  let gutN = 0;
-  function updateGut(){
-    const n = ta.value.split('\n').length;
-    if (n !== gutN) { gutN = n; let t = ''; for (let k = 1; k <= n; k++) t += k + '\n'; gn.textContent = t.slice(0, -1); }
-    gut.style.height = ta.clientHeight + 'px'; gn.style.transform = 'translateY(' + (-ta.scrollTop) + 'px)';
-  }
-  { const vd = Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype, 'value');
-    Object.defineProperty(ta, 'value', {configurable: true, get(){ return vd.get.call(ta); }, set(v){ vd.set.call(ta, v); updateGut(); }}); }
-  ta.addEventListener('input', updateGut); ta.addEventListener('scroll', updateGut);
-  if (window.ResizeObserver) new ResizeObserver(updateGut).observe(ta);
+  lineNumbers(ta);
   let runId = 0, answers = [], res = null, runs = 0, srcLines = [];
   const locked = () => (bar.classList.contains('veiling') || (bar.closest && bar.closest('.veil-wrap.veiling')));
   const setCountText = () => { const e = res.errors.length; countEl.className = 'jsb-count' + (e ? ' bad' : ''); countEl.textContent = e ? '✖ ' + e + (e === 1 ? ' שגיאה' : ' שגיאות') : (res.logs.length ? (res.logs.length === 1 ? 'הודעה אחת' : res.logs.length + ' הודעות') : ''); };
