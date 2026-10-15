@@ -642,9 +642,9 @@ const ASSIGN = {
   4: {title:'בניית דפי הפרויקט המעוצבים', due:'', est:'כ-6 שעות'},
   5: {title:'הגשה 1: האתר המעוצב', due:'', est:'כ-12 שעות', graded:true},
   6: {title:'תרגול JavaScript: משתנים, תנאים ולולאות', due:'', est:'כ-3.5 שעות'},
-  7: {title:'בדיקת שדות הטופס בזמן ההקלדה', due:'', est:''},
-  8: {title:'הגשה 2: אימות טפסים ב-JavaScript', due:'', est:'', graded:true},
-  9: {title:'בדיקה עצמית ותיקון הגשה 2', due:'', est:''},
+  7: {title:'בדיקת שדות הטופס בזמן ההקלדה', due:'', est:'כ-2.5 שעות'},
+  8: {title:'הגשה 2: אימות טפסים ב-JavaScript', due:'', est:'כ-8.5 שעות', graded:true},
+  9: {title:'בדיקה עצמית ותיקון הגשה 2', due:'', est:'כשעתיים'},
   final: {label:'ההגשה הסופית', title:'הפרויקט ותיק הפרויקט', due:'', est:'6–10 שעות לשבוע הסיום', graded:true}
 };
 /* 🏠 topic home: every lesson returns to the home page of ITS topic (html-css.html, later javascript.html...). <body data-home="x.html" data-home-name="..."> overrides. */
