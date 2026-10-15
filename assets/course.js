@@ -635,7 +635,7 @@ function trouble(el, o){
    Course.assignment(el, {n, lead, items:['html', …], how, after}) renders the box (remembered checklist, days left, where to submit).
    <span data-asg="N"></span> anywhere in a page becomes a short "📌 מטלה N · עד יום ה׳ 22/10" chip. */
 const ASSIGN = {
-  0: {label:'משימת הפתיחה', title:'מתרגלים ללמוד נכון עם AI', due:'', est:''},
+  0: {label:'משימת הפתיחה', title:'מתרגלים ללמוד נכון עם AI', due:'', est:'כשעה'},
   1: {title:'התקנת סביבת העבודה Visual Studio 2022', due:'', est:'כשעה וחצי'},
   2: {title:'האתר הראשון שלי (המשפחה שלי או נושא לבחירה)', due:'', est:'כ-3.5 שעות'},
   3: {title:'בחירת נושא הפרויקט והשראה', due:'', est:'כשעה'},
@@ -645,7 +645,7 @@ const ASSIGN = {
   7: {title:'בדיקת שדות הטופס בזמן ההקלדה', due:'', est:''},
   8: {title:'הגשה 2: אימות טפסים ב-JavaScript', due:'', est:'', graded:true},
   9: {title:'בדיקה עצמית ותיקון הגשה 2', due:'', est:''},
-  final: {label:'ההגשה הסופית', title:'הפרויקט ותיק הפרויקט', due:'', est:'', graded:true}
+  final: {label:'ההגשה הסופית', title:'הפרויקט ותיק הפרויקט', due:'', est:'6–10 שעות לשבוע הסיום', graded:true}
 };
 /* 🏠 topic home: every lesson returns to the home page of ITS topic (html-css.html, later javascript.html...). <body data-home="x.html" data-home-name="..."> overrides. */
 const TOPIC_HOME = [(document.body && document.body.dataset.home) || 'html-css.html', (document.body && document.body.dataset.homeName) || 'HTML & CSS'];
