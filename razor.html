@@ -306,7 +306,11 @@ namespace MyFirstWeb.Pages.Site
     <ol class="vsdo">
       <li>האתר רץ? עצרו אותו (■). ב-Solution Explorer פתחו את <b>Pages</b> &rlm;←&rlm; <b>Shared</b> &rlm;←&rlm; <b><code>_Layout.cshtml</code></b> (לחיצה כפולה).</li>
       <li>מצאו את השורה <code>&lt;html lang="en"&gt;</code> – השנייה בקובץ, מתחת ל-<code>&lt;!DOCTYPE html&gt;</code> – ושנו אותה ל-<code>&lt;html lang="he" dir="rtl"&gt;</code> – עברית, מימין לשמאל.</li>
-      <li>ב-head יש שורת link לקובץ של Bootstrap: <code>~/lib/bootstrap/dist/css/bootstrap.min.css</code>. הנתיב מתחיל ב-<code>~/</code>, כלומר מ-wwwroot. שנו בה רק את שם הקובץ, ל-<code>bootstrap.rtl.min.css</code> – מוסיפים rtl, כמו בשיעור 5.</li>
+      <li>ב-head יש שורת link לקובץ של Bootstrap: <code>~/lib/bootstrap/dist/css/bootstrap.min.css</code> – הקובץ הרגיל, שנכתב לאנגלית. בפרויקט אין קובץ בעברית (RTL), ולכן <b>מוחקים את כל השורה</b> ובמקומה מדביקים את אותה שורה כמו בדפים שלכם, עם הכתובת מה-CDN (<a href="bootstrap.html#setup-4">שיעור 5, שלב 4</a>):
+        <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
+&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.rtl.min.css" /&gt;
+</pre></div>
+        (גרסה אחרת ב-bootstrap.css שלכם? כתבו אותה במקום 5.1.0, כמו בשיעור 5.)</li>
       <li>ב-head יש עוד שתי שורות link: אחת ל-<code>~/css/site.css</code> – קובץ עיצוב מהפרויקט ההתחלתי ש-Visual Studio יצר, ואחת שבה כתוב שם הפרויקט שלכם ואחריו <code>styles.css</code> בסוף. משאירים את שתיהן. <b>אחריהן</b> – לפני <code>&lt;/head&gt;</code> – הדביקו את השורה של העיצוב שלכם. כך הקובץ שלכם מקושר אחרון, וכששני כללים שווים בכוח – האחרון מנצח (שיעור 3):
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
 &lt;link rel="stylesheet" href="~/css/site-style.css" /&gt;
@@ -1093,7 +1097,7 @@ const LOGIN_OLD = `<!DOCTYPE html>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>כניסה</title>
-    <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.rtl.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.rtl.min.css" />
     <link rel="stylesheet" href="../css/site-style.css" />
 </head>
 <body>
@@ -1349,7 +1353,7 @@ const T_MENU = {t:'☰ מתנהג מוזר בטלפון – למשל נפתח ו
 trouble('#trRazor', {base:false, items:[T_SAVE, T_REFRESH, T_WHERE, T_URL, T_PAGE, T_ERR, T_COPY, T_AT, T_TILDE, T_F12]});
 trouble('#trLayout', {base:false, items:[T_SAVE, T_REFRESH,
   {t:'עורכים את הקובץ הנכון?', how:'התבנית היא <code>Pages/Shared/_Layout.cshtml</code>. בקובץ <code>_Layout.cshtml.css</code> שלידה מוחקים רק את שני הכללים מצעד 6 – לא את הקובץ.'},
-  {t:'הדף עדיין מיושר לשמאל?', how:'ב-<code>_Layout</code>, השורה <code>&lt;html …&gt;</code> (השנייה בקובץ) צריכה להיות <code>&lt;html lang="he" dir="rtl"&gt;</code>, וב-head צריך להיות <code>bootstrap.rtl.min.css</code> (עם rtl) במקום <code>bootstrap.min.css</code>.'},
+  {t:'הדף עדיין מיושר לשמאל?', how:'ב-<code>_Layout</code>, השורה <code>&lt;html …&gt;</code> (השנייה בקובץ) צריכה להיות <code>&lt;html lang="he" dir="rtl"&gt;</code>, וב-head צריך להיות הקובץ <code>bootstrap.rtl.min.css</code> (עם rtl) מה-CDN, במקום <code>bootstrap.min.css</code> (<a href="bootstrap.html#setup-4">שיעור 5, שלב 4</a>).'},
   {t:'העיצוב שלכם (<span class="nw">site-style.css</span>) לא מופיע?', how:'ב-head של <code>_Layout</code> צריכה להיות <code>&lt;link rel="stylesheet" href="~/css/site-style.css" /&gt;</code> – <b>אחרונה</b>, אחרי כל שורות ה-link. ובדקו שהקובץ באמת נמצא ב-<code>wwwroot/css</code>.'},
   T_BLUE,
   {t:'קישור בתפריט נצבע בכתום כשהעכבר מעליו?', how:'אלה הכללים הישנים משיעור 4 ב-<span class="nw">site-style.css</span>, שמתחילים ב-<code>nav</code> (ל-<code>nav ul</code>, ל-<code>nav li</code>, ל-<code>nav a</code> ול-<code>nav a:hover</code>). הם חלים גם על ה-navbar, כי גם הוא תגית nav. בשיעור 5 מחקתם אותם. נשארו? מחקו עכשיו.'},
@@ -1402,9 +1406,9 @@ checkpoint('#cpLayout', [
   {q:'הוספתם לאתר דף חדש, Contact.cshtml, ובו רק תוכן. מה צריך לכתוב <b>בדף</b> כדי שיקבל את התפריט מהתבנית?', opts:['כלום – כל דף מקבל את התבנית', 'שורת link לקובץ <code>_Layout.cshtml</code>', 'עותק של ה-nav מהתבנית'], correct:0,
    why:['הקובץ <code>_ViewStart.cshtml</code> כבר קובע שכל הדפים משתמשים ב-<code>_Layout</code>.', 'link מחבר קובצי CSS, לא תבנית. את החיבור לתבנית עושה <code>_ViewStart.cshtml</code> – לכל הדפים יחד.', 'אז יהיו בדף שני תפריטים: אחד מהתבנית, ואחד שהעתקתם.'], back:'layout:1'},
   {type:'line', q:'אחרי השינויים ב-<code>_Layout</code> התפריט וה-padding עדיין "בצד הלא נכון". איזו שורה עוד צריך לתקן?', lang:'html',
-   code:'<html lang="he" dir="rtl">\n<head>\n    <meta charset="utf-8" />\n    <title>@ViewData["Title"] - MyFirstWeb</title>\n    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />\n    <link rel="stylesheet" href="~/css/site-style.css" />\n</head>', correct:5,
+   code:'<html lang="he" dir="rtl">\n<head>\n    <meta charset="utf-8" />\n    <title>@ViewData["Title"] - MyFirstWeb</title>\n    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" />\n    <link rel="stylesheet" href="~/css/site-style.css" />\n</head>', correct:5,
    why:{1:'עברית מימין לשמאל – תקינה.', 2:'פותחת את head – תקינה.', 3:'קידוד התווים (charset) – תקינה.', 4:'הכותרת מ-ViewData – תקינה.', 6:'העיצוב שלכם, אחרון – תקינה.', 7:'סוגרת את head – תקינה.'},
-   explain:'בעברית מקשרים ל-<code>bootstrap.rtl.min.css</code> – הקובץ שהופך את הצדדים (שיעור 5).', back:'layout:3'},
+   explain:'בעברית מקשרים ל-<code>bootstrap.rtl.min.css</code> (באותה כתובת, עם rtl בשם) – הקובץ שהופך את הצדדים (שיעור 5).', back:'layout:3'},
   {q:'רון הדביק את ה-navbar שלו בתבנית – והקישורים בו נצבעו בכחול, לא כמו בשיעור 5. מי צובע אותם?', opts:['כלל בקובץ <code>_Layout.cshtml.css</code>', 'הקובץ של Bootstrap, שמקושר ראשון', 'הדפדפן – קישורים תמיד כחולים'], correct:0,
    why:['בקובץ הזה, ש-Visual Studio יצר יחד עם התבנית, יש כלל שצובע קישורים שכתובים בתבנית. מוחקים את הכלל – ואת הקובץ עצמו משאירים.', 'אותו Bootstrap היה מקושר גם בדפי ה-HTML של רון – ושם הקישורים לא היו כחולים.', 'צבע ברירת המחדל של הדפדפן מפסיד לכל כלל CSS – וגם בשיעור 5 הקישורים האלה לא היו כחולים.'], back:'layout:3'},
   {q:'שאלה משיעור 5: ב-head של <code>_Layout</code> יש link ל-Bootstrap וגם ל-<span class="nw">site-style.css</span> שלכם. מה הסדר הנכון?', opts:['קודם Bootstrap, אחריו site-style.css', 'קודם site-style.css, אחריו Bootstrap', 'לא משנה – שניהם נטענים'], correct:0,

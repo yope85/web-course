@@ -96,6 +96,7 @@
 .ifoot{display:flex;justify-content:flex-end;padding:8px 12px;border-top:1px solid #e5e7eb}
 /* template picker + project name */
 .srch{padding:8px 10px;border-bottom:1px solid #e5e7eb}
+.fld select{width:100%;font:inherit;font-size:13px;padding:5px 8px;border:1px solid #9ca3af;border-radius:4px;background:#fff;color:#111;direction:ltr}
 .srch input,.fld input{width:100%;font:inherit;font-size:13px;padding:5px 8px;border:1px solid #9ca3af;border-radius:4px;background:#fff;color:#111;direction:ltr}
 .tplist{list-style:none;margin:0;padding:6px;max-height:340px;overflow:auto}
 .tplist li{padding:7px 10px;border-radius:6px;cursor:pointer;border:1px solid transparent}
@@ -548,10 +549,38 @@
       <li><b>שם:</b> באנגלית בלבד, ובלי רווחים. למשל MyFirstWeb.</li>
       <li><b>מיקום</b> (Location): אפשר להשאיר את מה שמוצע, או לבחור תיקייה קבועה משלכם. <b>לא</b> בתיקיית ההורדות (Downloads) – וזכרו איפה שמרתם.</li>
       <li><b>תיבת הסימון</b> Place solution and project in the same directory – <b>בלי סימון</b>. ככה Visual Studio יוצר תיקייה של ה-Solution (פתרון – "מעטפת" שמחזיקה פרויקט אחד או יותר), ובתוכה תיקייה של הפרויקט עצמו. זה המבנה שנשתמש בו כל השנה – גם בהגשה: מגישים את התיקייה החיצונית, של ה-Solution, עם הפרויקט שבתוכה. מסומן אצלכם? הורידו את הסימון. נסו בסימולטור ותראו מה משתנה בשורה התחתונה.</li>
-      <li>לוחצים <b>Next</b>. במסך הבא, Additional information, <b>משאירים הכול כמו שהוא</b> ולוחצים <b>Create</b>.</li>
+      <li>לוחצים <b>Next</b> – ונפתח עוד מסך אחד, האחרון לפני היצירה (בשלב הבא).</li>
     </ul>
     <div class="tip">💡 בפעם הבאה שתרצו לפתוח את הפרויקט: פותחים את Visual Studio ובוחרים אותו ברשימת הפרויקטים האחרונים – או פותחים את קובץ ה-Solution, עם הסיומת sln. הוא נמצא בתיקייה של ה-Solution – החיצונית מבין השתיים שבשורה התחתונה של הסימולטור.</div>
   </article>
+  <article class="spread act">
+    <h3>המסך האחרון לפני היצירה: Additional information</h3>
+    <p>אחרי <b>Next</b> נפתח עוד מסך אחד, והוא <b>האחרון</b> – רק אחריו Visual Studio יוצר את הפרויקט. כאן קובעים כמה הגדרות. את רובן עוד לא למדנו, ו<b>אין צורך להבין אותן עכשיו</b>: בקורס משאירים אותן כמו שהן. רק דבר אחד כדאי לבדוק – שהכול נראה כמו בסימולטור (<b>ברירת המחדל</b>). אפשר לשחק בו: שנו הגדרה ותראו מה הסימולטור אומר.</p>
+    <div class="win">
+      <div class="tb"><span class="vslogo">VS</span><span class="nm">Additional information – ASP.NET Core Web App (Razor Pages)</span><span class="wx">✕</span></div>
+      <div class="fld">
+        <span class="k">Framework</span><select id="aiFw" aria-label="Framework"><option value="8">.NET 8.0 (Long Term Support)</option><option value="9">.NET 9.0 (Standard Term Support)</option></select>
+        <span class="k">Authentication type</span><select id="aiAuth" aria-label="Authentication type"><option value="none">None</option><option value="ind">Individual Accounts</option></select>
+        <label class="chk"><input type="checkbox" id="aiHttps" checked /> <span>Configure for HTTPS</span></label>
+        <label class="chk"><input type="checkbox" id="aiCont" /> <span>Enable container support</span></label>
+        <label class="chk"><input type="checkbox" id="aiTop" /> <span>Do not use top-level statements</span></label>
+        <label class="chk"><input type="checkbox" id="aiAsp" /> <span>Enlist in .NET Aspire orchestration</span></label>
+      </div>
+      <div class="ifoot"><button class="xbtn" type="button" disabled>Back</button>&nbsp;<button class="xbtn pri" type="button" id="aiCreate" disabled>Create</button></div>
+    </div>
+    <div class="simfb" id="aiMsg"></div>
+    <table>
+      <tr><th>הגדרה</th><th>מה בוחרים</th><th>למה</th></tr>
+      <tr><td><b>Framework</b></td><td><b><span class="ltr">.NET 8.0 (Long Term Support)</span></b></td><td>גרסת הפלטפורמה שהאתר רץ עליה. הקורס בנוי על 8.0, ואם תבחרו אחרת – חלק מהקבצים בפרויקט ייראו אחרת ממה שכתוב כאן. אם ברשימה אצלכם מוצעת גרסה אחרת – בחרו 8.0.</td></tr>
+      <tr><td><b>Authentication type</b></td><td><b>None</b></td><td>"אימות" – מערכת משתמשים מוכנה. את דפי הכניסה וההרשמה נבנה בעצמנו, כחלק מהפרויקט.</td></tr>
+      <tr><td><b>Configure for HTTPS</b></td><td><b>מסומן</b></td><td>האתר יעבוד בחיבור מוצפן (https). בנושא ההרצה נראה מה זה אומר בפועל.</td></tr>
+      <tr><td><b>Enable container support</b></td><td>בלי סימון</td><td>הכנה להרצה בתוך "קונטיינר" (Docker) – לא בקורס.</td></tr>
+      <tr><td><b>Do not use top-level statements</b></td><td>בלי סימון</td><td>קשור לצורה שבה כתוב הקובץ Program.cs. משאירים כמו שהוא.</td></tr>
+      <tr><td><b>Enlist in .NET Aspire orchestration</b></td><td>בלי סימון</td><td>כלי לאתרים גדולים, עם הרבה חלקים – לא בקורס.</td></tr>
+    </table>
+    <div class="trap">יצרתם פרויקט עם הגדרות אחרות? למשל גרסת <span class="ltr">.NET</span> אחרת, או <span class="ltr">Authentication</span> שאינו <span class="ltr">None</span>. הכי פשוט ליצור פרויקט חדש, כמו כאן. הפרויקט הראשון עוד ריק – אין מה להפסיד.</div>
+  </article>
+
   <article class="spread act">
     <h3>מכירים את המסך: Solution Explorer</h3>
     <p>כשהפרויקט נוצר, נפתח מסך כזה. את דף הפתיחה (Overview) אפשר לסגור. החלון החשוב הוא <b><bdi>Solution Explorer</bdi></b>: הוא מציג את כל הקבצים והתיקיות של הפרויקט. לחצו על החלקים בתמונה, וקראו מה כל אחד:</p>
@@ -582,7 +611,8 @@
       <li>הורידו את תוכנת ההתקנה מהקישור <a href="https://aka.ms/vs/17/release/vs_community.exe" target="_blank" rel="noopener">הורדת Visual Studio Community 2022</a> והפעילו אותה. זו גרסה <b>2022</b>, החינמית (Community) – ולא Visual Studio Code (הסמל הכחול). גם אם באתר של מיקרוסופט מוצעת גרסה 2026 – כרגע מתקינים 2022; לעדכן אפשר בהמשך.</li>
       <li>במסך <b>Workloads</b> סמנו בדיוק שלוש תוספות: <b><bdi>ASP.NET and web development</bdi></b>, <b><bdi>.NET desktop development</bdi></b> ו-<b><bdi>Data storage and processing</bdi></b>. אחר כך לחצו <b>Install</b>. ההתקנה ארוכה – בינתיים אפשר ללמוד את <a href="#" data-go="notepad:1">הנושא "דף ראשון בפנקס רשימות"</a>, אם עוד לא עשיתם אותו. (<a href="#" data-go="vs:1">הסימולטור של ההתקנה</a>)</li>
       <li>פתחו את Visual Studio 2022 &rlm;←&rlm; <b><bdi>Create a new project</bdi></b> &rlm;←&rlm; בחיפוש הקלידו <b>Razor</b> &rlm;←&rlm; בחרו <b><bdi>ASP.NET Core Web App (Razor Pages)</bdi></b> &rlm;←&rlm; <b>Next</b>. (<a href="#" data-go="vs:2">הסימולטור של התבניות</a>)</li>
-      <li>ב-Project name כתבו שם באנגלית בלי רווחים, למשל <b>MyFirstWeb</b>. ב-Location בחרו מקום קבוע – לא Downloads – ו<b>רשמו לעצמכם איפה</b>. את התיבה Place solution and project in the same directory משאירים <b>בלי סימון</b>. &rlm;←&rlm; <b>Next</b> &rlm;←&rlm; במסך Additional information לא משנים כלום &rlm;←&rlm; <b>Create</b>. (<a href="#" data-go="vs:3">השלב על השם והמיקום</a>)</li>
+      <li>ב-Project name כתבו שם באנגלית בלי רווחים, למשל <b>MyFirstWeb</b>. ב-Location בחרו מקום קבוע – לא Downloads – ו<b>רשמו לעצמכם איפה</b>. את התיבה Place solution and project in the same directory משאירים <b>בלי סימון</b>. &rlm;←&rlm; <b>Next</b>. (<a href="#" data-go="vs:3">השלב על השם והמיקום</a>)</li>
+      <li>במסך <b>Additional information</b> ודאו: <b>Framework</b> – <b><span class="ltr">.NET 8.0 (Long Term Support)</span></b>; <b>Authentication type</b> – <b><span class="ltr">None</span></b>; <b>Configure for HTTPS</b> – מסומן; שלוש התיבות האחרות – בלי סימון. אחר כך <b>Create</b>. (<a href="#" data-go="vs:4">הסימולטור של המסך</a>)</li>
       <li>כשהפרויקט נפתח: ב-Solution Explorer פתחו את התיקייה <b>wwwroot</b> (אם היא סגורה – לחצו על החץ שלידה) ובדקו מה יש בתוכה.</li>
     </ol>
     <div class="expect">ב-Solution Explorer: למעלה <span class="ltr">Solution 'MyFirstWeb'</span>, ומתחתיו הפרויקט, ובו בין השאר התיקייה Pages, הקובץ Program.cs והתיקייה wwwroot. בתוך wwwroot: התיקיות css,&rlm; js ו-lib, והקובץ favicon.ico. <b>אין</b> תיקייה בשם HTML – וזה בדיוק כמו שצריך: אותה תיצרו בעצמכם בנושא "הדף הראשון בפרויקט".</div>
@@ -1291,7 +1321,27 @@ function checkName(){
   m.className = 'simfb ' + (ok ? 'ok' : (t.startsWith('✘') ? 'bad' : '')); m.innerHTML = t; $('#pNext').disabled = !ok;
 }
 $('#pName').addEventListener('input', checkName); $('#pSame').addEventListener('change', checkName); checkName();
-$('#pNext').addEventListener('click', () => { $('#pMsg').innerHTML = '✔ במסך Additional information משאירים הכול כמו שהוא ולוחצים <b>Create</b>. Visual Studio יוצר את הפרויקט – וזה המסך שתראו (השלב הבא).'; });
+$('#pNext').addEventListener('click', () => { $('#pMsg').innerHTML = '✔ יופי. עוד מסך אחד, האחרון לפני היצירה – <a href="#" data-go="vs:4">השלב הבא</a>.'; });
+
+/* Additional information: the screen right after Configure your new project */
+function checkAdd(){
+  const fw = $('#aiFw').value, au = $('#aiAuth').value, https = $('#aiHttps').checked, cont = $('#aiCont').checked, top = $('#aiTop').checked, asp = $('#aiAsp').checked;
+  const bad = [];
+  if (fw !== '8') bad.push('<b>Framework</b>: הקורס בנוי על <span class="ltr">.NET 8.0</span>, וגרסה אחרת תיתן פרויקט שנראה קצת אחרת. בחרו 8.0.');
+  if (au !== 'none') bad.push('<b>Authentication type</b>: בחרו None. את דפי הכניסה וההרשמה נבנה בעצמנו.');
+  if (!https) bad.push('<b>Configure for HTTPS</b>: משאירים מסומן.');
+  if (cont) bad.push('<b>Enable container support</b>: בלי סימון – קונטיינרים לא בקורס.');
+  if (top) bad.push('<b>Do not use top-level statements</b>: בלי סימון.');
+  if (asp) bad.push('<b>Enlist in .NET Aspire orchestration</b>: בלי סימון – לא בקורס.');
+  const m = $('#aiMsg');
+  if (bad.length) { m.className = 'simfb bad'; m.innerHTML = '✘ שונה מברירת המחדל:<br>' + bad.join('<br>'); }
+  else { m.className = 'simfb ok'; m.innerHTML = '✔ זו ברירת המחדל – בדיוק מה שצריך. עכשיו לוחצים <b>Create</b>.'; }
+  $('#aiCreate').disabled = bad.length > 0;
+}
+['#aiFw', '#aiAuth'].forEach(i => $(i).addEventListener('change', checkAdd));
+['#aiHttps', '#aiCont', '#aiTop', '#aiAsp'].forEach(i => $(i).addEventListener('change', checkAdd));
+checkAdd();
+$('#aiCreate').addEventListener('click', () => { $('#aiMsg').className = 'simfb ok'; $('#aiMsg').innerHTML = '✔ Visual Studio יוצר את הפרויקט – ופותח אותו. זה המסך שתראו (<a href="#" data-go="vs:5">השלב הבא</a>).'; });
 
 /* the Visual Studio screen: click to learn */
 const TREE = phase => [
@@ -1734,7 +1784,7 @@ pgApi = playground('#pg', {html:START, tasks:TASKS, htmlLabel:'HTML – wwwroot/
 Course.assignment('#asg1', {n:1,
   items:[
     'התקנתם את Visual Studio Community 2022 – עם <b>שלוש התוספות</b> מ<a href="#" data-go="vs:1">שלב ההכנה</a>. החשובה מכולן: <b><bdi>ASP.NET and web development</bdi></b> – בלעדיה אי אפשר ליצור את הפרויקט. (תוכנת ההתקנה: <a href="https://aka.ms/vs/17/release/vs_community.exe" target="_blank" rel="noopener">הורדת Visual Studio Community 2022</a>)',
-    'יצרתם פרויקט חדש מהתבנית <bdi>ASP.NET Core Web App (Razor Pages)</bdi>, עם שם באנגלית, והרצתם אותו פעם אחת. (<a href="#" data-go="vs:5">"עכשיו אצלכם" בנושא Visual Studio</a>, <a href="#" data-go="run:5">ובנושא ההרצה</a>)',
+    'יצרתם פרויקט חדש מהתבנית <bdi>ASP.NET Core Web App (Razor Pages)</bdi>, עם שם באנגלית, והרצתם אותו פעם אחת. (<a href="#" data-go="vs:6">"עכשיו אצלכם" בנושא Visual Studio</a>, <a href="#" data-go="run:5">ובנושא ההרצה</a>)',
     'יצרתם את הדף הראשון – index.html בתיקייה HTML שבתוך wwwroot – ו<b>כתוב בו השם שלכם</b>: בכותרת h1 וגם ב-title. (<a href="#" data-go="page:7">"עכשיו אצלכם" בנושא הדף הראשון</a>)',
     '<b>צילמתם מסך – שני צילומים.</b><br><b>א.</b> הדף שלכם פתוח בדפדפן.<br><b>ב.</b> מסך התוספות (<bdi>Workloads</bdi>), שבו רואים את שלוש התוספות מסומנות. איך מגיעים אליו: מחפשים בתפריט "התחל" את <b><bdi>Visual Studio Installer</bdi></b>, ובשורה של <bdi>Visual Studio Community 2022</bdi> לוחצים <b><bdi>Modify</bdi></b>. אחרי הצילום סוגרים את החלון ב-<b>X</b>, בלי ללחוץ על כפתור אחר. חסרה תוספת? מסמנים אותה ולוחצים <bdi>Modify</bdi> בפינה למטה – והיא תותקן.<br><b>איך מצלמים:</b> לוחצים <b>Win+PrtScn</b> (המקש עם הסמל של Windows, יחד עם Print Screen). צילום של כל המסך נשמר לבד בתיקייה <b>תמונות &rlm;←&rlm; צילומי מסך</b> (Pictures &rlm;←&rlm; Screenshots).',
     'העליתם את שני צילומי המסך למטלה 1 בקלאסרום, ולחצתם <b>הגשה</b>.'
@@ -1817,6 +1867,7 @@ trouble('#trVs', {base:false, items:[
   {t:'התקנתם את Visual Studio – ולא את Visual Studio Code?', how:'לסמל של Visual Studio יש צבע סגול, ובחלון הפתיחה שלו יש כפתור Create a new project. לסמל של Visual Studio Code יש צבע כחול – זו תוכנה אחרת, שלא מתאימה לפרויקט שלנו.'},
   {t:'אין ברשימה את התבנית <bdi>ASP.NET Core Web App (Razor Pages)</bdi>?', how:'כנראה שבהתקנה לא סומנה התוספת ASP.NET and web development. פותחים את התוכנה Visual Studio Installer &rlm;←&rlm; Modify &rlm;←&rlm; מסמנים אותה &rlm;←&rlm; Modify.'},
   {t:'ב-Solution Explorer אין wwwroot, או שיש Controllers ו-Views במקום Pages?', how:'נבחרה תבנית אחרת (Empty או Model-View-Controller). הכי פשוט: יוצרים פרויקט חדש, ובוחרים בדיוק ב-Razor Pages (<a href="#" data-go="vs:2">הסימולטור של התבניות</a>).'},
+  {t:'הפרויקט נוצר עם גרסת <span class="ltr">.NET</span> אחרת, או עם <span class="ltr">Authentication</span> שאינו <span class="ltr">None</span>?', how:'במסך Additional information היו הגדרות שונות מהקורס. הכי פשוט ליצור פרויקט חדש, ולבדוק שם: Framework &#8211; <span class="ltr">.NET 8.0</span>, Authentication type &#8211; <span class="ltr">None</span> (<a href="#" data-go="vs:4">הסימולטור של המסך</a>).'},
   {t:'שם הפרויקט באנגלית ובלי רווחים?', how:'שם עם עברית או עם רווחים עלול לגרום לבעיות בהמשך. אם כבר יצרתם פרויקט כזה – הכי פשוט ליצור פרויקט חדש, עם שם כמו MyFirstWeb.'},
   {t:'Solution Explorer נעלם?', how:'בתפריט View בוחרים Solution Explorer (או בקיצור Ctrl+Alt+L).'},
   {t:'לא מוצאים את הפרויקט בפעם הבאה?', how:'פותחים את Visual Studio, ובמסך הפתיחה בוחרים את הפרויקט ברשימה Open recent. או: בתיקייה שבה שמרתם (אם לא שיניתם, זו התיקייה <code>source\\repos</code> שבתיקייה של המשתמש שלכם) נכנסים לתיקייה עם השם של הפרויקט – ושם פותחים את הקובץ עם הסיומת sln.'}
