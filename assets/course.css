@@ -671,3 +671,10 @@ html,code,.ltr,pre,.cv,.cv *,.codeblock pre,button,.chip,.tree,.ftree,.pathbox,.
 .ed-gut{position:absolute;left:0;top:0;width:40px;overflow:hidden;background:rgba(255,255,255,.07);border-right:1px solid rgba(255,255,255,.14);pointer-events:none;z-index:1}
 .ed-gn{padding:12px 8px 12px 0;text-align:right;direction:ltr;white-space:pre;font-family:"JetBrains Mono",monospace;font-size:14px;line-height:1.55;color:#8b949e;user-select:none}
 .jsb-hl{z-index:2}
+
+/* reference tables: class names never wrap, airy cells, one idea per line */
+table.ref td{line-height:1.75;padding:12px 14px}
+table.ref td:first-child{white-space:nowrap;width:1%}
+table.ref td:first-child code{white-space:nowrap}
+table.ref td>div{margin:0 0 8px}
+table.ref td>div:last-child{margin-bottom:0}
