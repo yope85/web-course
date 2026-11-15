@@ -678,3 +678,50 @@ table.ref td:first-child{white-space:nowrap;width:1%}
 table.ref td:first-child code{white-space:nowrap}
 table.ref td>div{margin:0 0 8px}
 table.ref td>div:last-child{margin-bottom:0}
+
+/* ---- readability pass (all lessons) ---- */
+/* explanation boxes: short lines, one idea per line */
+.what>div,.bridge>div,.tip>div,.trap>div{margin:6px 0}
+.what>div:first-of-type,.bridge>div:first-of-type,.tip>div:first-of-type,.trap>div:first-of-type{margin-top:2px}
+.what>div:last-child,.bridge>div:last-child,.tip>div:last-child,.trap>div:last-child{margin-bottom:0}
+.what>p,.bridge>p,.tip>p,.trap>p{margin:6px 0}
+.what ul,.bridge ul,.tip ul,.trap ul{margin:6px 0;padding-inline-start:22px}
+.what li,.bridge li,.tip li,.trap li{margin:4px 0}
+/* reference tables that are not .ref: class names (code) in the first column never wrap, airy rows */
+table.ref th,table.ref td{vertical-align:middle}
+table.ref td>div b:first-child{white-space:nowrap}
+table.ref td>div+div{margin-top:0}
+@media (max-width:640px){
+  /* narrow screens: each row becomes a card, the name on top and the explanation under it */
+  table.ref,table.ref tbody{display:block}
+  table.ref tr:first-child{display:none}
+  table.ref tr{display:block;border:1px solid var(--line);border-radius:10px;margin:0 0 10px;overflow:hidden}
+  table.ref td{display:block;border:0;width:auto}
+  table.ref td:first-child{width:auto;white-space:normal;background:var(--surface2);padding:8px 14px}
+  table.ref td:first-child code{display:inline-block;margin:2px 0}
+  table.ref td:not(:first-child){padding:10px 14px}
+}
+/* colour roles for names made of parts (mt-3 = m + t + 3): same colours in text, table and simulator */
+.cx{font-family:"JetBrains Mono",Consolas,monospace;direction:ltr;unicode-bidi:isolate;font-weight:700;border-radius:5px;padding:0 3px;border-bottom:3px solid currentColor}
+.cx-1{color:#1d4ed8;background:#dbe7ff}   /* what: m / p / bg / text / btn */
+.cx-2{color:#b45309;background:#fdebc8}   /* where / which: t / b / s / e / success */
+.cx-3{color:#047857;background:#d3f5e6}   /* how much: 0-5 / lg / sm */
+:root[data-theme="dark"] .cx-1{color:#a9c4ff;background:#1f2b4a}
+:root[data-theme="dark"] .cx-2{color:#fcd079;background:#3a2d0b}
+:root[data-theme="dark"] .cx-3{color:#7ee2b1;background:#10322a}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .cx-1{color:#a9c4ff;background:#1f2b4a}
+  :root:not([data-theme="light"]) .cx-2{color:#fcd079;background:#3a2d0b}
+  :root:not([data-theme="light"]) .cx-3{color:#7ee2b1;background:#10322a}
+}
+.cxkey{display:flex;flex-wrap:wrap;gap:8px 18px;margin:8px 0;font-size:15px}
+.cxkey span.k{white-space:nowrap}
+.plan td>div{margin:0 0 6px;line-height:1.7}
+.plan td>div:last-child{margin-bottom:0}
+
+/* didactic emphasis: .where = the thing you act ON / the place ("לקישור", "על התמונה") - marker + thick underline, impossible to skim past; .ln = one instruction per line */
+.where{font-weight:700;padding:0 4px;border-radius:3px;background:linear-gradient(transparent 50%,#fde68a 50%);border-bottom:3px solid #f59e0b}
+:root[data-theme="dark"] .where{background:linear-gradient(transparent 50%,#5b4410 50%);border-bottom-color:#fbbf24}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .where{background:linear-gradient(transparent 50%,#5b4410 50%);border-bottom-color:#fbbf24}}
+.ln{margin:0 0 8px;line-height:1.75}
+.ln:last-child{margin-bottom:0}
