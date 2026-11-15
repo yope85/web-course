@@ -963,7 +963,7 @@ function run(){
   if (!fromSample && r.mode === 'html' && !!state.fcOk[r.kind] !== !bad) { state.fcOk[r.kind] = !bad; save(); paintStatus(); }
   if (r.mode === 'html' && r.kind === 'register' && !bad && !warn) findEgg('perfect');
   const verdict = (bad ? 'bad:' : 'ok:') + r.kind + ':' + r.mode;
-  if (!fcQuiet && verdict !== fcVerdict) { if (bad) SFX.play('bad'); else celebrate(out.querySelector('.fc-sum'), 'small'); }
+  if (!fcQuiet && verdict !== fcVerdict) { if (bad) SFX.play('bad'); else if (Course.once('fc:' + verdict)) celebrate(out.querySelector('.fc-sum'), 'small'); }   /* once per form and mode – fixing and breaking the same sample again is not a new success */
   fcVerdict = verdict;
 }
 const keep = () => { try { store.set('fc', ta.value); store.set('fcSample', fromSample); } catch(e){} };

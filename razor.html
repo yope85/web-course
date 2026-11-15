@@ -598,10 +598,11 @@ namespace MyFirstWeb.Pages.Site
 <script>
 (function(){
 "use strict";
-const {$, esc, state, save, Frame, seg, predict, quiz, doneCheck, playground, codeLines, hlHtmlLine, checkpoint, trouble, toast, IMAGES, fakeImg, findEgg, celebrate, SFX} = Course;
+const {$, esc, state, save, Frame, seg, predict, quiz, doneCheck, playground, codeLines, hlHtmlLine, checkpoint, trouble, toast, IMAGES, fakeImg, missingImg, lab, findEgg, celebrate, SFX} = Course;
 const HE = /[\u0590-\u05FF]/;
 /* hand-written labs: a sound for something the student just did – success, or a result that is broken on purpose */
-const labFb = (el, ok) => { if (ok) celebrate(el, 'small'); else SFX.play('bad'); };
+/* a lab (an exploring widget) rewards ONCE: the first success cheers and shows a static "✔ נפתר" chip; later clicks (same or other option) only show the explanation. key = the lab */
+const labFb = (el, ok, key) => { if (ok) lab(key, el); else SFX.play('bad'); };
 
 /* =====================================================================
    1. Razor-aware code colouring: HTML lines with @-tokens, and C# lines
@@ -806,7 +807,7 @@ function imgFix(html, path){
     if (/^data:/.test(src)) return x;
     let p = ''; try { p = new URL(src, 'https://h' + path).pathname; } catch(e){}
     const m = p.match(/^\/img\/([\w.-]+)$/i);
-    return a + (m ? (IMAGES[m[1].toLowerCase()] || fakeImg(m[1].replace(/\.[a-z]+$/i, ''))) : 'data:,') + b;
+    return a + (m ? (IMAGES[m[1].toLowerCase()] || fakeImg(m[1].replace(/\.[a-z]+$/i, ''))) : missingImg(src.split('/').pop().slice(0, 18))) + b;
   });
 }
 const SIM_CSS = 'body{padding:0!important}main{min-height:60px}.rb-slot{outline:3px dashed #16a34a;outline-offset:4px;border-radius:4px;position:relative;margin-top:30px;padding:2px}.rb-slot::before{content:"@RenderBody()";position:absolute;top:-30px;left:0;font:12px monospace;background:#15803d;color:#fff;padding:1px 8px;border-radius:6px;direction:ltr}footer{padding:8px 0;margin-top:14px;font-size:14px}';
@@ -913,7 +914,7 @@ function drawWhy(){
   $('#whyAdd').textContent = whyDone ? '↺ מההתחלה' : '➕ הוסיפו לתפריט: צור קשר';
 }
 seg($('#whySeg'), ['📄 דפי HTML (עד היום)', '🧱 Razor עם תבנית (מהיום)'], (o, i) => { whyI = i; whyDone = false; drawWhy(); });
-$('#whyAdd').addEventListener('click', () => { whyDone = !whyDone; drawWhy(); if (whyDone && whyI === 1) celebrate($('#whyCount'), 'small'); });
+$('#whyAdd').addEventListener('click', () => { whyDone = !whyDone; drawWhy(); if (whyDone && whyI === 1) lab('why', $('#whyCount')); });
 
 /* =====================================================================
    4. Topic "razor"
@@ -1056,7 +1057,7 @@ function runMap(user){
   document.querySelectorAll('#mapTree .f').forEach(f => f.classList.toggle('here', !!r.id && f.dataset.f === r.id));
   const v = $('#mapVerdict'); v.className = 'verdict ' + r.cls; v.innerHTML = r.msg;
   if (r.egg && state.p41) findEgg('ext');
-  if (user === true) labFb(v, r.cls !== 'bad');
+  if (user === true) labFb(v, r.cls !== 'bad', 'map');
 }
 $('#mapChips').innerHTML = ['/', '/Site/Forms/Order', '/site/about', '/Pages/Site/About', '/HTML/index.html', '/Img/pic.jpg', '/Shared/_Layout'].map(c => '<button type="button" class="chip">' + c + '</button>').join('');
 $('#mapChips').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; $('#mapIn').value = b.textContent; runMap(true); });
@@ -1082,7 +1083,7 @@ seg($('#apSeg'), AP.map(a => ({label:'asp-page="' + a.p + '"', mono:true, v:a}))
   rzLines($('#apSrc'), src, 'rz');
   codeLines($('#apOut'), razor(src, MY).out, 'html', {0:'diff'});
   $('#apNote').innerHTML = o.v.n; $('#apNote').className = 'verdict ' + (bad ? 'bad' : 'ok');
-  if (apUser) labFb($('#apNote'), !bad);
+  if (apUser) labFb($('#apNote'), !bad, 'asp');
 });
 apUser = true;
 
@@ -1094,7 +1095,8 @@ function drawWalk(){
   $('#wkBox').innerHTML = '<span style="color:#94a3b8">page   </span>' + esc(WK.p) + '<br><span style="color:#94a3b8">src    </span><span class="t-str">"' + esc(WK.s) + '"</span>' +
     '<br><span style="color:#94a3b8">sent   </span><span class="t-str">"' + esc(sent) + '"</span>' + (sent !== WK.s ? ' <span style="color:#fda4af">← ~/ became /</span>' : '') +
     '<br><span style="color:#94a3b8">result </span>' + esc(res) + (ok ? ' ✔' : ' ✘ 404');
-  $('#wkImg').src = ok ? IMAGES['pic.jpg'] || fakeImg('pic') : 'data:,';
+  $('#wkImg').src = ok ? IMAGES['pic.jpg'] || fakeImg('pic') : missingImg('pic.jpg');   /* a drawn 404 tile, not the browser's broken-image icon */
+  $('#wkImg').toggleAttribute('data-missing', !ok); $('#wkImg').alt = ok ? 'התמונה pic.jpg' : 'התמונה לא נמצאה (404)';
   let why;
   if (WK.s.startsWith('~/')) why = '✔ השרת כתב לוכסן במקום <code>~/</code>, והדפדפן מתחיל מתחילת האתר (wwwroot). זה עובד מכל כתובת.';
   else if (ok && WK.p === '/') why = WK.s.startsWith('../') ? '✔ הכתובת היא <code>/</code> – תחילת האתר, ואין לאן לעלות: הדפדפן נשאר שם, ומוצא את Img.' : '✔ הכתובת היא <code>/</code> – תחילת האתר, והתיקייה Img נמצאת בדיוק שם. מכל כתובת אחרת הנתיב הזה נכשל.';
@@ -1102,7 +1104,7 @@ function drawWalk(){
   else why = '✘ הדפדפן חישב את הנתיב מהכתובת <code>' + esc(WK.p) + '</code> והגיע ל-<code>' + esc(res) + '</code> – ושם אין תמונה.';
   $('#wkVerdict').innerHTML = why;
   if (WK.s.startsWith('~/') && state.p43) { wkSeen[WK.p] = true; if (Object.keys(wkSeen).length === 4) findEgg('everywhere'); }
-  if (wkUser) { if (!ok) SFX.play('bad'); else if (WK.s.startsWith('~/')) celebrate($('#wkVerdict'), 'small'); }
+  if (wkUser) { if (!ok) SFX.play('bad'); else if (WK.s.startsWith('~/')) lab('walk', $('#wkVerdict')); }
 }
 let wkUser = false;
 seg($('#wkPage'), ['/', '/Site/About', '/Site/About/', '/Site/Forms/Login'].map(p => ({label:p, mono:true, v:p})), o => { WK.p = o.v; drawWalk(); }, 3);
@@ -1414,10 +1416,10 @@ trouble('#trMove', {base:false, items:[T_SAVE, T_REFRESH,
    10. 🎯 understanding checks
    ===================================================================== */
 checkpoint('#cpRazor', [
-  {type:'text', q:'כתבו – בשורה אחת – את הבלוק שקובע שבלשונית תופיע המילה <b>המנות</b> (עם <code>@{</code> בהתחלה ו-<code>}</code> בסוף).', placeholder:'@{ … }',
+  {type:'text', q:'כתבו <b>שורת קוד אחת</b> של <bdi>Razor</bdi> שקובעת שכותרת הלשונית של הדף תהיה הטקסט <b>המנות</b>. <b>כל השורה</b> מתחילה ב-<code>@{</code> ונגמרת ב-<code>}</code>. המילה <b>המנות</b> עצמה היא רק טקסט הכותרת, בתוך מירכאות – <b>בלי <code>@</code> לפניה</b>.', placeholder:'@{ … }',
    accept:[/^@\{\s*ViewData\[\s*"Title"\s*\]\s*=\s*"המנות"\s*;\s*\}$/], answer:'@{ ViewData["Title"] = "המנות"; }',
-   wrong:'בדקו: <code>@{</code> בהתחלה, אחריו <code>ViewData["Title"]</code> עם מירכאות ישרות, סימן =, הכותרת במירכאות, <code>;</code> ובסוף <code>}</code> שסוגר.',
-   explain:'הבלוק <code>@{ }</code> מריץ פקודת <bdi>C#</bdi>: שומר "המנות" ב-ViewData, והתבנית שמה אותו בלשונית.', back:'razor:4'},
+   wrong:'בדקו: השורה כולה בין <code>@{</code> ל-<code>}</code>. בפנים: <code>ViewData["Title"]</code>, סימן =, הכותרת במירכאות ישרות ו-<code>;</code> בסוף. המבנה: <code>@{ ViewData["Title"] = "…"; }</code>',
+   explain:'התשובה: <code>@{ ViewData["Title"] = "המנות"; }</code>. הבלוק <code>@{ }</code> מריץ פקודת <bdi>C#</bdi>: היא שומרת את הטקסט "המנות" ב-ViewData, והתבנית שמה אותו בלשונית. המילה המנות היא טקסט בלבד – בלי <code>@</code> לפניה.', back:'razor:4'},
   {type:'line', q:'הכותרת בלשונית לא השתנתה, ובדף הופיעה שורה מוזרה. באיזו שורה הטעות?', lang:'html',
    code:'@page\n@model MyFirstWeb.Pages.Site.MenuModel\nViewData["Title"] = "המנות";\n<h2>המנות</h2>\n<p>מרגריטה – 45 שקל</p>', correct:3,
    why:{1:'<code>@page</code> – "אני דף". תקינה.', 2:'מחברת את הדף למחלקה שלו. תקינה.', 4:'כותרת רגילה. תקינה.', 5:'פסקה רגילה. תקינה.'},
