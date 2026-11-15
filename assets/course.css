@@ -723,5 +723,9 @@ table.ref td>div+div{margin-top:0}
 .where{font-weight:700;padding:0 4px;border-radius:3px;background:linear-gradient(transparent 50%,#fde68a 50%);border-bottom:3px solid #f59e0b}
 :root[data-theme="dark"] .where{background:linear-gradient(transparent 50%,#5b4410 50%);border-bottom-color:#fbbf24}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .where{background:linear-gradient(transparent 50%,#5b4410 50%);border-bottom-color:#fbbf24}}
-.ln{margin:0 0 8px;line-height:1.75}
-.ln:last-child{margin-bottom:0}
+div.ln{margin:0 0 8px;line-height:1.75}
+div.ln:last-child{margin-bottom:0}
+/* .not = the easy-to-miss negation in an instruction ("בלי רווחים", "לא Downloads") - red wavy underline + bold; never colour alone */
+.not{font-weight:700;color:#b91c1c;text-decoration:underline wavy #dc2626;text-decoration-thickness:2px;text-underline-offset:4px}
+:root[data-theme="dark"] .not{color:#fca5a5;text-decoration-color:#f87171}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .not{color:#fca5a5;text-decoration-color:#f87171}}
