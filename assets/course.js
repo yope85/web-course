@@ -36,6 +36,8 @@ const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>
 function hlHtmlLine(line){
   const cont = !line.includes('<') && line.match(/^(\s+)([a-z-]+:[^"]*)("?\s*\/?>?)$/);
   if (cont) return cont[1] + '<span class="t-str">' + esc(cont[2]) + '</span>' + '<span class="t-str">' + esc(cont[3].replace(/\s*\/?>$/, '')) + '</span>' + esc(cont[3].replace(/^"?/, ''));
+  const ac = !line.includes('<') && line.match(/^(\s+)([a-zA-Z-]+="[^"]*"(?:\s+[a-zA-Z-]+(?:="[^"]*")?)*\s*\/?>?)$/);
+  if (ac) return ac[1] + hlHtmlLine('<b ' + ac[2]).replace(/^&lt;<span class="t-tag">b<\/span> /, '');
   let out = ''; const re = /<!--[\s\S]*?-->|<[^>]*>?|[^<]+/g; let m;
   while ((m = re.exec(line))) {
     const t = m[0];
@@ -735,7 +737,9 @@ function initTour(){
 
 function initVsdo(){
   state.vs = state.vs || {};
-  document.querySelectorAll('ol.vsdo').forEach((ol, n) => {
+  let vsN = 0;   /* a list with data-vsid keeps its own saved-ticks key and is not counted, so adding one never shifts the keys of the lists after it */
+  document.querySelectorAll('ol.vsdo').forEach(ol => {
+    const n = ol.dataset.vsid || vsN++;
     if (ol.dataset.ready) return; ol.dataset.ready = '1';
     const sec = ol.closest('section.topic'), base = 'vs:' + (sec ? sec.dataset.id : 'x') + ':' + n;
     const prog = document.createElement('p'); prog.className = 'vsprog'; prog.setAttribute('aria-live', 'polite'); ol.parentNode.insertBefore(prog, ol);
@@ -744,14 +748,14 @@ function initVsdo(){
       const k = base + ':' + i, body = document.createElement('div'); body.className = 'vsbody';
       while (li.firstChild) body.appendChild(li.firstChild);
       const lab = document.createElement('label'); lab.className = 'vsck';
-      lab.innerHTML = '<input type="checkbox" aria-label="סימנתי שעשיתי את צעד ' + (i+1) + '" />';
+      lab.innerHTML = '<input type="checkbox" aria-label="סימנתי שעשיתי את הפעולה שבתיבה ' + (i+1) + '" />';
       li.append(lab, body);
       const cb = lab.querySelector('input'); cb.checked = !!state.vs[k]; li.classList.toggle('done', cb.checked);
       cb.addEventListener('change', () => { state.vs[k] = cb.checked; li.classList.toggle('done', cb.checked); paint(); save(); if (cb.checked && lis.every(x => x.classList.contains('done'))) listFinale(base, prog, {icon: '💻', title: 'עשיתם את זה אצלכם!', sub: 'כל ' + lis.length + ' הצעדים מסומנים', near: li}); });
     });
     function paint(){ const k = lis.filter(li => li.classList.contains('done')).length;
       const hasTr = !!(ol.closest('.spread') && ol.closest('.spread').querySelector('.trouble'));
-      prog.innerHTML = k === lis.length ? '✔ <b>עשיתם את כל הצעדים אצלכם!</b>' + (hasTr ? ' אם משהו לא עבד – הרשימה "עבד באתר ולא אצלי?" למטה.' : '') : 'עשיתם צעד? סמנו אותו. <b>' + k + '/' + lis.length + '</b>'; }
+      prog.innerHTML = k === lis.length ? '✔ <b>עשיתם את כל הפעולות אצלכם!</b>' + (hasTr ? ' אם משהו לא עבד – הרשימה "עבד באתר ולא אצלי?" למטה.' : '') : 'סיימתם פעולה? סמנו את התיבה שלה. <b>' + k + '/' + lis.length + '</b>'; }
     paint();
   });
 }
@@ -1459,6 +1463,7 @@ function show(ti, si, scroll){
   $('#topics').innerHTML = T.map((t,a) => '<button type="button" data-t="' + a + '"' + (a === ti ? ' aria-current="true"' : '') + (t.steps.every((x,b) => state.seen[t.id + ':' + b]) ? ' class="done"' : '') + '><span class="ic">' + t.icon + '</span><bdi dir="rtl">' + t.title + '</bdi>' + cpBadge(t) + '</button>').join('');
   const vm = videoMode();
   $('#steps').innerHTML = T[ti].steps.map((st,b) => '<button type="button" data-s="' + b + '"' + (b === si ? ' aria-current="true"' : '') + ' class="' + (state.seen[T[ti].id + ':' + b] ? 'seen' : '') + (vm && !isActive(st) ? ' skim' : '') + '"' + ' title="' + escA(stepTitle(st)) + (vm && !isActive(st) ? ' (שלב קריאה – במצב אחרי-סרטון אפשר לדלג)' : '') + '"><span class="k">' + (b+1) + '</span><bdi dir="rtl">' + stepTitleHtml(st) + '</bdi></button>').join('');
+  $('#steps').classList.toggle('many', T[ti].steps.length > 12);
   paintAced();
   const prev = nextActive(ti, si, -1);
   const next = nextActive(ti, si, 1);

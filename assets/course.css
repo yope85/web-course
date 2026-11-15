@@ -323,6 +323,9 @@ iframe.mini{display:block;width:100%;height:320px;border:0;background:#fff;margi
   .cv,.codeblock pre{white-space:pre-wrap;overflow-wrap:break-word}
   .cv .ln{padding-left:2.6em;text-indent:-2.6em;width:auto;min-width:0}
 }
+/* lessons 4-6 have long tag lines (Bootstrap class lists, link/script lines): wrap them on every width, with a hanging indent, instead of sideways scrolling inside the code box */
+body[data-lesson="l4"] .spread .cv,body[data-lesson="l5"] .spread .cv,body[data-lesson="l6"] .spread .cv{white-space:pre-wrap;overflow-wrap:anywhere}
+body[data-lesson="l4"] .spread .cv .ln,body[data-lesson="l5"] .spread .cv .ln,body[data-lesson="l6"] .spread .cv .ln{padding-left:2.6em;text-indent:-2.6em;width:auto;min-width:0}
 
 /* ---------- 💻 now in your Visual Studio ---------- */
 .spread.vsstep{border-top:5px solid var(--vs)}
@@ -427,7 +430,12 @@ details.ask>summary{color:var(--text)}
 
 .codeblock:has(.copy) pre{padding-top:34px}
 .trouble li span code{white-space:normal;overflow-wrap:anywhere}
-@media (max-width:600px){.vsdo>li{flex-direction:column;gap:2px;padding:8px}.vsdo>li .codeblock pre{font-size:13px}}
+@media (max-width:600px){.vsdo>li{flex-direction:column;align-items:stretch;gap:2px;padding:8px}.vsdo>li .codeblock pre{font-size:13px}}
+/* long code lines never push the step wider than the screen (BS-1 / RZ-1) */
+.vsdo>li,.vsdo>li>.vsbody,.vsbody .codeblock,.spread li{min-width:0;max-width:100%}
+.vsbody .codeblock,.spread .codeblock{max-width:100%;overflow-x:auto}
+.vsbody,.vsbody p{overflow-wrap:anywhere}
+.vsbody .codeblock pre{overflow-wrap:anywhere}
 .trouble>details.tr-d{background:transparent;padding:0;margin:0}
 .trouble>details.tr-d>summary{font-size:16.5px;padding:2px 0}
 .trouble>details.tr-d[open]>summary{margin-bottom:6px}
@@ -732,3 +740,9 @@ div.ln:last-child{margin-bottom:0}
 
 /* tab rows wrap on desktop (no sideways scrolling, nothing cut off); on phones they scroll sideways with a slim, quiet scrollbar */
 @media (max-width:640px){.topics,.steps{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}.topics::-webkit-scrollbar,.steps::-webkit-scrollbar{display:none}}
+
+/* long topics (>12 steps): the strip shows numbers only, and the title of the current step; hover/tap-hold shows the other titles */
+.steps.many{gap:5px}
+.steps.many button:not([aria-current="true"]){font-size:0;padding:3px;border-radius:50%;max-width:none}
+.steps.many button:not([aria-current="true"]) .k{margin:0;font-size:13px}
+.steps.many button:not([aria-current="true"]).aced::after,.steps.many button:not([aria-current="true"]).skim::after{display:none}
