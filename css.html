@@ -144,8 +144,8 @@
     <h3>💻 עכשיו אצלכם ב-Visual Studio</h3>
     <p>נבנה בפרויקט שלכם <b>דף תרגול חדש</b> של פיצה דני, pizza.html, ונעצב אותו עם style. למה דף חדש ולא practice.html או menu.html משיעור 2? כי כאן מתרגלים <b>עיצוב</b>: דף קצר ונקי מראה בדיוק מה כל שורת CSS משנה. לאורך השיעור נמשיך לשפר את אותו הדף – והדפים של האתר שלכם נשארים נקיים עד צעד הפרויקט בסוף השיעור.</p>
     <ol class="vsdo">
-      <li>ב-Solution Explorer: <b>קליק ימני</b> על התיקייה <b>HTML</b> (בתוך wwwroot) &rlm;←&rlm; <b>Add</b> &rlm;←&rlm; <b><bdi>New Item...</bdi></b> &rlm;←&rlm; <b>HTML Page</b>. השם המוצע הוא <b>htmlpage.html</b> – שנו אותו ל-<b>pizza.html</b> &rlm;←&rlm; <b>Add</b>. (אם החלון נפתח קטן, בלי רשימת תבניות – לחצו בו Show All Templates.)</li>
-      <li>בשורה של התגית html שבראש הקובץ, Visual Studio כתב רק <code>&lt;html&gt;</code>. החליפו אותה ב-<code>&lt;html lang="he" dir="rtl"&gt;</code> – בדיוק כמו בשיעור 2. ואז הדביקו <b>בתוך body</b>:
+      <li><div class="ln">ב-Solution Explorer: <b>קליק ימני</b> <span class="where">על התיקייה <b>HTML</b></span> (בתוך wwwroot) &rlm;←&rlm; <b>Add</b> &rlm;←&rlm; <b><bdi>New Item...</bdi></b> &rlm;←&rlm; <b>HTML Page</b>.</div><div class="ln">השם המוצע הוא <b>htmlpage.html</b> – שנו אותו ל-<b>pizza.html</b> &rlm;←&rlm; <b>Add</b>.</div><div class="ln">(אם החלון נפתח קטן, בלי רשימת תבניות – לחצו בו Show All Templates.)</div></li>
+      <li><span class="where">בשורה של התגית html</span> שבראש הקובץ, Visual Studio כתב רק <code>&lt;html&gt;</code>. החליפו אותה ב-<code>&lt;html lang="he" dir="rtl"&gt;</code> – בדיוק כמו בשיעור 2. ואז הדביקו <b><span class="where">בתוך body</span></b>:
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
 &lt;h1 style="color: red; font-size: 40px;"&gt;פיצה דני&lt;/h1&gt;
 &lt;p&gt;הפיצה הכי טעימה באשקלון&lt;/p&gt;
@@ -155,8 +155,8 @@
     &lt;p&gt;פטריות – 39 שקל &lt;span style="color: crimson;"&gt;במבצע&lt;/span&gt;&lt;/p&gt;
 &lt;/div&gt;
 </pre></div></li>
-      <li>שמרו (Ctrl+S). ואז <b>קליק ימני</b> על pizza.html &rlm;←&rlm; <b>View in Browser</b>. (או: ▶ הירוק – ואז בשורת הכתובת של הדפדפן כותבים אחרי הפורט את <code>/HTML/pizza.html</code>, כך: <code style="white-space:normal;overflow-wrap:anywhere">https://localhost:&lt;port&gt;/HTML/pizza.html</code> – עם מספר הפורט שלכם.)</li>
-      <li>🔨 <b>שברו בכוונה:</b> ב-h1 מחקו את ה-<code>;</code> שאחרי red, שמרו, ורעננו <b>בדפדפן</b> (Ctrl+F5). הכותרת חזרה לשחור ולגודל הרגיל? מצוין – ראיתם בעצמכם את מה שקרה <a href="#" data-go="basics:2">בשלב על הנקודה-פסיק</a>. עכשיו החזירו את ה-<code>;</code> למקומו.</li>
+      <li>שמרו (Ctrl+S). ואז <b>קליק ימני</b> <span class="where">על pizza.html</span> &rlm;←&rlm; <b>View in Browser</b>. (או: ▶ הירוק – ואז בשורת הכתובת של הדפדפן כותבים אחרי הפורט את <code>/HTML/pizza.html</code>, כך: <code style="white-space:normal;overflow-wrap:anywhere">https://localhost:&lt;port&gt;/HTML/pizza.html</code> – עם מספר הפורט שלכם.)</li>
+      <li>🔨 <b>שברו בכוונה:</b> <span class="where">ב-h1</span> מחקו את ה-<code>;</code> שאחרי red, שמרו, ורעננו <b>בדפדפן</b> (Ctrl+F5). הכותרת חזרה לשחור ולגודל הרגיל? מצוין – ראיתם בעצמכם את מה שקרה <a href="#" data-go="basics:2">בשלב על הנקודה-פסיק</a>. עכשיו החזירו את ה-<code>;</code> למקומו.</li>
     </ol>
     <div class="expect">בכתובת שמסתיימת ב-<code>/HTML/pizza.html</code> רואים: כותרת "פיצה דני" גדולה ואדומה; קופסה צהובה עם מסגרת כתומה סביב "התפריט" ושתי המנות; ובשורה של פטריות – רק המילה "במבצע" באדום, באותה שורה.</div>
     <div class="trouble" id="trBasics"></div>
@@ -304,19 +304,19 @@
     <h3>💻 עכשיו אצלכם ב-Visual Studio</h3>
     <p>ממשיכים בדף התרגול pizza.html מהנושא הקודם: ממרכזים תמונה, נותנים לתפריט אוויר, ומסתכלים על הקופסה ב-F12 – באתר שלכם, לא רק כאן.</p>
     <ol class="vsdo">
-      <li>ב-pizza.html, <b>אחרי</b> השורה <code>&lt;/div&gt;</code> של התפריט, הדביקו תמונה בתוך div שממרכז אותה. במקום pizza.jpg כתבו שם של תמונה <b>שיש לכם</b> בתיקייה Img (משיעור 2):
+      <li>ב-pizza.html, <b>אחרי</b> השורה <code>&lt;/div&gt;</code> של התפריט, הדביקו תמונה <span class="where">בתוך div שממרכז אותה</span>. במקום pizza.jpg כתבו שם של תמונה <b>שיש לכם</b> בתיקייה Img (משיעור 2):
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
 &lt;div style="text-align: center;"&gt;
     &lt;img src="../Img/pizza.jpg" alt="פיצה" width="150" /&gt;
 &lt;/div&gt;
 </pre></div></li>
-      <li>תנו לתפריט אוויר מבפנים ומבחוץ: את השורה הפותחת של ה-div של התפריט החליפו בשתי השורות האלה. החדש בהן: <code>padding</code> ו-<code>margin</code> בסוף.
+      <li>תנו לתפריט אוויר מבפנים ומבחוץ: את <span class="where">השורה הפותחת של ה-div של התפריט</span> החליפו בשתי השורות האלה. החדש בהן: <code>padding</code> ו-<code>margin</code> בסוף.
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html" data-marks="2:new">
 &lt;div style="background-color: lightyellow; border: 2px solid orange;
             padding: 20px; margin: 20px;"&gt;
 </pre></div></li>
       <li>שמרו (Ctrl+S) ורעננו <b>בדפדפן</b> (Ctrl+F5).</li>
-      <li>בדפדפן לחצו <b>F12</b>, לחצו על סמל החץ ("בחירת אלמנט") ואז על הקופסה הצהובה. גללו עד הסוף של החלק <b>Styles</b> – בריבועים הצבעוניים, מצאתם 20 ב-padding וגם ב-margin? (<a href="#" data-go="look:7">איך? השלב על F12</a>)</li>
+      <li><div class="ln">בדפדפן לחצו <b>F12</b>, לחצו על סמל החץ ("בחירת אלמנט") ואז <span class="where">על הקופסה הצהובה</span>.</div><div class="ln">גללו עד הסוף של החלק <b>Styles</b> – בריבועים הצבעוניים, מצאתם 20 ב-padding וגם ב-margin? (<a href="#" data-go="look:7">איך? השלב על F12</a>)</div></li>
     </ol>
     <div class="expect">בכתובת שמסתיימת ב-<code>/HTML/pizza.html</code> רואים: התמונה שלכם באמצע הרוחב; בתוך הקופסה הצהובה יש אוויר בין הטקסט למסגרת הכתומה (padding), ומסביב לקופסה – רווח עד הפסקה שמעליה ועד התמונה שמתחתיה, והקופסה צרה יותר משאר הדף כי יש לה margin גם בצדדים. ב-F12, בריבועים הצבעוניים, מופיע 20 גם בשכבת padding וגם בשכבת margin.</div>
     <div class="trouble" id="trLook"></div>
@@ -462,7 +462,7 @@ p::first-letter {
     <h3>💻 עכשיו אצלכם ב-Visual Studio</h3>
     <p>ב-pizza.html העיצוב עדיין מפוזר בתוך התגיות. עכשיו מעבירים אותו לתגית <code>&lt;style&gt;</code> אחת ב-head, עם id, class ובורר צאצאים – בדיוק כמו בנושא הזה.</p>
     <ol class="vsdo">
-      <li>ב-pizza.html, בתוך ה-head, <b>לפני</b> השורה <code>&lt;/head&gt;</code> הדביקו:
+      <li>ב-pizza.html, <span class="where">בתוך ה-head</span>, <b>לפני</b> השורה <code>&lt;/head&gt;</code> הדביקו:
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
 &lt;style&gt;
     #logo {
@@ -486,7 +486,7 @@ p::first-letter {
     }
 &lt;/style&gt;
 </pre></div></li>
-      <li>סמנו את כל מה שבין <code>&lt;body&gt;</code> לבין <code>&lt;/body&gt;</code> (בלי שתי התגיות עצמן), והדביקו במקומו את הגרסה הנקייה – בלי אף style בתוך תגית, רק שמות (id ו-class). <b>אחרי ההדבקה</b> החליפו את pizza.jpg בשם של התמונה שלכם:
+      <li>סמנו את <span class="where">כל מה שבין</span> <code>&lt;body&gt;</code> לבין <code>&lt;/body&gt;</code> (<span class="not">בלי שתי התגיות עצמן</span>), והדביקו במקומו את הגרסה הנקייה – בלי אף style בתוך תגית, רק שמות (id ו-class). <b>אחרי ההדבקה</b> החליפו את pizza.jpg בשם של התמונה שלכם:
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
 &lt;h1 id="logo"&gt;פיצה דני&lt;/h1&gt;
 &lt;p&gt;הפיצה הכי טעימה באשקלון&lt;/p&gt;
@@ -500,7 +500,7 @@ p::first-letter {
 &lt;/div&gt;
 </pre></div></li>
       <li>שמרו (Ctrl+S) ורעננו <b>בדפדפן</b> (Ctrl+F5). הדף אמור להיראות <b>כמעט כמו קודם</b> – רק שהקוד מסודר הרבה יותר. (הבדל אחד קטן: הכלל <code>.menu p</code> מגדיל קצת את המנות שבתוך התפריט.)</li>
-      <li>עכשיו הכוח של class: הוסיפו מנה שלישית במבצע – בתוך ה-div של התפריט, בשורה חדשה <b>אחרי שורת הפטריות</b> (לפני <code>&lt;/div&gt;</code> שסוגר את התפריט). את התגית <code>&lt;style&gt;</code> שב-head לא צריך לשנות בכלל:
+      <li>עכשיו הכוח של class: הוסיפו מנה שלישית במבצע – <span class="where">בתוך ה-div של התפריט</span>, בשורה חדשה <b>אחרי שורת הפטריות</b> (לפני <code>&lt;/div&gt;</code> שסוגר את התפריט). את התגית <code>&lt;style&gt;</code> שב-head <span class="not">לא צריך</span> לשנות בכלל:
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
 &lt;p&gt;זיתים – 39 שקל &lt;span class="sale"&gt;במבצע&lt;/span&gt;&lt;/p&gt;
 </pre></div>שמרו ורעננו.</li>
@@ -560,15 +560,15 @@ p::first-letter {
     <h3>💻 עכשיו אצלכם ב-Visual Studio</h3>
     <p>עושים ל-pizza.html את <a href="#" data-go="site:4">תרגיל ההמרה</a> עד הסוף: הכללים עוברים מתגית style לקובץ חיצוני. ככה בדיוק תעבדו מעכשיו בפרויקט – שם הקובץ יהיה site-style.css (<a href="#" data-go="practice:2">בצעד הפרויקט</a>), וכאן, בדף התרגול, style.css.</p>
     <ol class="vsdo">
-      <li>ב-Solution Explorer, בתוך <b>wwwroot</b>, כבר יש תיקייה בשם <b>css</b> (יש בה קובץ בשם site.css – הוא של הדפים ש-Visual Studio יצר; לא נוגעים בו). <b>קליק ימני</b> על התיקייה css &rlm;←&rlm; <b>Add</b> &rlm;←&rlm; <b><bdi>New Item...</bdi></b> (אם החלון נפתח קטן – Show All Templates) &rlm;←&rlm; <b>Style Sheet</b>, בשם <b>style.css</b> &rlm;←&rlm; <b>Add</b>.</li>
-      <li>ב-pizza.html סמנו את כל <b>הכללים</b> שבין <code>&lt;style&gt;</code> ל-<code>&lt;/style&gt;</code> (בלי שתי התגיות עצמן), גזרו (Ctrl+X) והדביקו בתוך style.css. אם Visual Studio כבר כתב משהו בקובץ החדש – אפשר למחוק אותו.</li>
-      <li>ב-pizza.html מחקו את שתי התגיות שנשארו ריקות – <code>&lt;style&gt;</code> ו-<code>&lt;/style&gt;</code> – ובמקומן הדביקו שורה אחת:
+      <li>ב-Solution Explorer, בתוך <b>wwwroot</b>, כבר יש תיקייה בשם <b>css</b> (יש בה קובץ בשם site.css – הוא של הדפים ש-Visual Studio יצר; <span class="not">לא נוגעים בו</span>). <b>קליק ימני</b> <span class="where">על התיקייה css</span> &rlm;←&rlm; <b>Add</b> &rlm;←&rlm; <b><bdi>New Item...</bdi></b> (אם החלון נפתח קטן – Show All Templates) &rlm;←&rlm; <b>Style Sheet</b>, בשם <b>style.css</b> &rlm;←&rlm; <b>Add</b>.</li>
+      <li>ב-pizza.html סמנו את <span class="where">כל <b>הכללים</b></span> שבין <code>&lt;style&gt;</code> ל-<code>&lt;/style&gt;</code> (בלי שתי התגיות עצמן), גזרו (Ctrl+X) והדביקו <span class="where">בתוך style.css</span>. אם Visual Studio כבר כתב משהו בקובץ החדש – אפשר למחוק אותו.</li>
+      <li><span class="where">ב-pizza.html</span> מחקו את שתי התגיות שנשארו ריקות – <code>&lt;style&gt;</code> ו-<code>&lt;/style&gt;</code> – ובמקומן הדביקו שורה אחת:
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
 &lt;link rel="stylesheet" href="../css/style.css" /&gt;
 </pre></div></li>
       <li>שמרו את <b>שני</b> הקבצים (Ctrl+S בכל אחד – בדקו שאין כוכבית ליד השמות בלשוניות), ורעננו <b>בדפדפן</b> (Ctrl+F5).</li>
-      <li>בדיקה שהחיבור עובד: ב-style.css שנו את הצבע של <code>#logo</code> ל-teal, שמרו ורעננו. הכותרת השתנתה? הקובץ מחובר!</li>
-      <li>🔨 <b>שברו בכוונה:</b> בשורת ה-link בדף pizza.html שנו את <code>css</code> ל-<code>cs</code>, שמרו, ורעננו <b>בדפדפן</b> (Ctrl+F5). העיצוב נעלם? מצוין – הדפדפן לא מצא את קובץ העיצוב כי הנתיב שגוי. עכשיו החזירו את <code>css</code>, שמרו ורעננו – והעיצוב חוזר.</li>
+      <li>בדיקה שהחיבור עובד: <span class="where">ב-style.css</span> שנו את הצבע של <code>#logo</code> ל-teal, שמרו ורעננו. הכותרת השתנתה? הקובץ מחובר!</li>
+      <li>🔨 <b>שברו בכוונה:</b> <span class="where">בשורת ה-link</span> בדף pizza.html שנו את <code>css</code> ל-<code>cs</code>, שמרו, ורעננו <b>בדפדפן</b> (Ctrl+F5). העיצוב נעלם? מצוין – הדפדפן לא מצא את קובץ העיצוב כי הנתיב שגוי. עכשיו החזירו את <code>css</code>, שמרו ורעננו – והעיצוב חוזר.</li>
     </ol>
     <div class="expect">בכתובת שמסתיימת ב-<code>/HTML/pizza.html</code> רואים: הדף נראה בדיוק כמו בסוף הנושא הקודם – רק שהכותרת עכשיו בצבע teal (כחול-ירקרק). ב-F12 &rlm;←&rlm; Elements רואים ב-head את שורת ה-link (לחצו על המשולש הקטן שליד head כדי לפתוח אותו), ובלשונית Styles מופיע ליד כל כלל שם הקובץ style.css.</div>
     <div class="trouble" id="trSite"></div>
@@ -639,13 +639,13 @@ p::first-letter {
     <h3>💻 עכשיו אצלכם ב-Visual Studio</h3>
     <p>ארבעה צעדים קטנים בקובץ style.css של דף התרגול – כדי לראות ירושה, "מי מנצח" והערות עובדים אצלכם באמת.</p>
     <ol class="vsdo">
-      <li><b>ירושה:</b> בראש style.css הוסיפו כלל אחד ל-body. שמרו ורעננו – <b>כל</b> הטקסט בדף מחליף גופן, כי גופן עובר בירושה:
+      <li><b>ירושה:</b> <span class="where">בראש style.css</span> הוסיפו כלל אחד ל-body. שמרו ורעננו – <b>כל</b> הטקסט בדף מחליף גופן, כי גופן עובר בירושה:
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="css">
 body {
     font-family: Arial;
 }
 </pre></div></li>
-      <li><b>מי מנצח:</b> בסוף style.css הוסיפו את הכלל הזה, שמרו ורעננו. הכותרת עוברת לאמצע, אבל נשארת בצבע של <code>#logo</code>: על הצבע id מנצח שם תגית – גם כשהכלל של התגית כתוב אחריו. על המרכוז אף אחד לא התחרה.
+      <li><b>מי מנצח:</b> <span class="where">בסוף style.css</span> הוסיפו את הכלל הזה, שמרו ורעננו. הכותרת עוברת לאמצע, אבל נשארת בצבע של <code>#logo</code>: על הצבע id מנצח שם תגית – גם כשהכלל של התגית כתוב אחריו. על המרכוז אף אחד לא התחרה.
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="css">
 h1 {
     color: green;
@@ -653,7 +653,7 @@ h1 {
 }
 </pre></div></li>
       <li><b>לראות את זה ב-F12:</b> בדפדפן F12 &rlm;←&rlm; סמל החץ &rlm;←&rlm; לחצו על הכותרת. בלשונית Styles, <b>בכלל h1 שכתבתם</b>, ההוראה <code>color: green</code> <b>מחוקה בקו</b> – ככה הדפדפן מראה הוראה שהפסידה. <code>text-align: center</code> שבאותו כלל לא מחוקה: מתחרים על כל תכונה בנפרד. (למטה, בכלל המובנה של h1 – <bdi style="white-space:nowrap">user agent stylesheet</bdi> – מחוקה גם <code>font-size: 2em</code> (em = כפולה של הגודל הרגיל; 2em בכותרת = 32px, ברירת המחדל של h1): ה-40px של <code>#logo</code> ניצח אותה.) מתקשים למצוא? ב-Styles חפשו את הכלל <code>h1</code> שכתבתם – ההוראה <code>color: green</code> בו כתובה בקו מחיקה.</li>
-      <li><b>הערה:</b> בתוך הכלל <code>#logo</code> סמנו את שורת הצבע (<code>color: teal;</code> – או red, אם לא שיניתם אותו) ולחצו Ctrl+K ואז Ctrl+C. השורה הפכה להערה: נוספו לה <code>/*</code> בהתחלה ו-<code>*/</code> בסוף. שמרו ורעננו – <b>הכותרת נהיית ירוקה!</b> ההוראה של <code>#logo</code> כבויה, ולכן הכלל של h1 כבר לא מפסיד לאף אחד. בסוף, בשורה הראשונה של הקובץ, כתבו הערה משלכם – למשל <code>/* Danny's pizza – practice */</code> – ושמרו.</li>
+      <li><b>הערה:</b> <span class="where">בתוך הכלל</span> <code>#logo</code> סמנו את שורת הצבע (<code>color: teal;</code> – או red, אם לא שיניתם אותו) ולחצו Ctrl+K ואז Ctrl+C. השורה הפכה להערה: נוספו לה <code>/*</code> בהתחלה ו-<code>*/</code> בסוף. שמרו ורעננו – <b>הכותרת נהיית ירוקה!</b> ההוראה של <code>#logo</code> כבויה, ולכן הכלל של h1 כבר לא מפסיד לאף אחד. בסוף, בשורה הראשונה של הקובץ, כתבו הערה משלכם – למשל <code>/* Danny's pizza – practice */</code> – ושמרו.</li>
     </ol>
     <div class="expect">בכתובת שמסתיימת ב-<code>/HTML/pizza.html</code> רואים: כל הטקסט בגופן Arial; אחרי צעד 2 הכותרת באמצע, אבל עוד <b>לא</b> ירוקה (וב-F12, בכלל h1 שלכם, רק ההוראה הירוקה מחוקה בקו). אחרי צעד 4 הכותרת ירוקה, כי כיביתם את הצבע של <code>#logo</code>. ההערה שכתבתם בשורה הראשונה לא משנה כלום במראה.</div>
     <div class="trouble" id="trWins"></div>
@@ -674,17 +674,17 @@ h1 {
     <div class="stepbox">
       <b>זה הצעד הראשון של מטלה 4</b> (<span data-asg="4"></span>): שם נדרש שכל העיצוב יהיה ב<b>קובץ CSS נפרד</b>, ושכל הדפים ייראו באותו סגנון. עד עכשיו עבדתם על דף התרגול pizza.html עם הקובץ style.css. לאתר שלכם יוצרים קובץ עיצוב <b>משלו</b>, בשם <b>site-style.css</b> – השם הזה ילווה אתכם עד סוף הקורס.
       <ol>
-        <li>בתיקייה css (בתוך wwwroot): קליק ימני &rlm;←&rlm; Add &rlm;←&rlm; <bdi>New Item...</bdi> &rlm;←&rlm; Style Sheet, בשם <b>site-style.css</b> &rlm;←&rlm; Add.</li>
-        <li>בדף הנחיתה (index.html) ובדף התוכן הראשון שלכם (about.html משיעור 2 – או השם שנתתם לו), בתוך ה-head, הוסיפו את השורה הזו. (יש לכם כבר דפים נוספים באתר? הוסיפו אותה גם בהם.)
+        <li><span class="where">בתיקייה css (בתוך wwwroot)</span>: קליק ימני &rlm;←&rlm; Add &rlm;←&rlm; <bdi>New Item...</bdi> &rlm;←&rlm; Style Sheet, בשם <b>site-style.css</b> &rlm;←&rlm; Add.</li>
+        <li>בדף הנחיתה (index.html) ובדף התוכן הראשון שלכם (about.html משיעור 2 – או השם שנתתם לו), <span class="where">בתוך ה-head</span>, הוסיפו את השורה הזו. (יש לכם כבר דפים נוספים באתר? הוסיפו אותה גם בהם.)
           <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
 &lt;link rel="stylesheet" href="../css/site-style.css" /&gt;
 </pre></div></li>
-        <li>כתבו ב-site-style.css: גופן וצבע רקע ל-body, צבע לכותרות h1 ו-h2, ו-class אחד בשם box לקופסת תוכן (עם padding, border ו-margin).</li>
-        <li>בכל אחד משני הדפים עטפו חלק מהתוכן (למשל כותרת ופסקה) ב-<code>&lt;div class="box"&gt;</code> … <code>&lt;/div&gt;</code>.</li>
-        <li>מעכשיו – בלי style בתוך התגיות. כל העיצוב של האתר בקובץ אחד. (במטלה 4 מותר גם קובץ נוסף, מיוחד לדף הראשי – אבל לא קובץ נפרד לכל דף תוכן.)</li>
+        <li>כתבו <span class="where">ב-site-style.css</span>: גופן וצבע רקע ל-body, צבע לכותרות h1 ו-h2, ו-class אחד בשם box לקופסת תוכן (עם padding, border ו-margin).</li>
+        <li><span class="where">בכל אחד משני הדפים</span> עטפו חלק מהתוכן (למשל כותרת ופסקה) ב-<code>&lt;div class="box"&gt;</code> … <code>&lt;/div&gt;</code>.</li>
+        <li>מעכשיו – <span class="not">בלי style</span> בתוך התגיות. כל העיצוב של האתר בקובץ אחד. (במטלה 4 מותר גם קובץ נוסף, מיוחד לדף הראשי – אבל <span class="not">לא קובץ נפרד לכל דף תוכן</span>.)</li>
         <li><b>בדיקה:</b> הריצו, עברו בין שני הדפים בקישורים – הם נראים <b>אחידים</b>? ב-F12 &rlm;←&rlm; Console אין שגיאה אדומה (404)?</li>
       </ol>
-      <div class="trap">בתיקייה css כבר יש <b>site.css</b> – הקובץ ש-Visual Studio יצר לדפים שלו. לא כותבים בו ולא מוחקים אותו. הקובץ שלכם: <b>site-style.css</b>.</div>
+      <div class="trap">בתיקייה css כבר יש <b>site.css</b> – הקובץ ש-Visual Studio יצר לדפים שלו. <span class="not">לא כותבים בו ולא מוחקים אותו</span>. הקובץ שלכם: <b>site-style.css</b>.</div>
       <div class="expect">בשני הדפים: אותו גופן, אותו צבע רקע ואותו צבע לכותרות – וקופסה עם מסגרת ואוויר סביב התוכן שעטפתם. שיניתם צבע בקובץ? הוא משתנה בשני הדפים יחד.</div>
       <p class="muted">את שאר הדרישות של מטלה 4 – כותרת קבועה עם לוגו בכל דף, ואיך אורזים ומגישים – תפגשו בסוף שיעור 4.</p>
       <label style="display:flex;gap:8px;align-items:center;margin-top:8px"><input type="checkbox" id="stepDone" /> עשיתי את הצעד בפרויקט שלי</label>
@@ -1216,7 +1216,7 @@ const TASKS = [
      explain: 'הסולמית אומרת "id". יש בדף רק תגית אחת עם <code>id="logo"</code> – הכותרת הראשית – ולכן רק היא גדלה.',
      alt: 'גם <code>h1 { font-size: 40px; }</code> היה מגדיל אותה – אבל אז כל h1 שיתווסף לדף בעתיד יגדל גם הוא. המשימה ביקשה דווקא את ה-id, כדי לכוון לתגית האחת הזו. לכן הבדיקה בודקת שהבורר <code>#logo</code> כתוב בקוד.'},
    back: 'rules:5'},
-  {id:'t3', text:'תנו לתפריט אוויר מבפנים: <code>padding: 20px</code> בכלל של <code>.menu</code> שכבר כתוב בעורך.',
+  {id:'t3', text:'תנו לתפריט אוויר מבפנים: <code>padding: 20px</code> <span class="where">בכלל של</span> <code>.menu</code> שכבר כתוב בעורך.',
    test: d => { const m = d.querySelector('.menu'), cs = m && d.defaultView.getComputedStyle(m);
      return !!m && !m.hasAttribute('style') && ['Top','Right','Bottom','Left'].every(k => cs['padding' + k] === '20px') &&
        sheetRules(d).some(r => usesSel(r, /\.menu(?![\w-])/) && r.style.paddingTop === '20px'); },
@@ -1225,7 +1225,7 @@ const TASKS = [
    solution: {code: '.menu {\n    background-color: white;\n    border: 2px solid orange;\n    padding: 20px;\n}', lang: 'css',
      explain: 'padding מרחיק את התוכן מהמסגרת – מכל ארבעת הצדדים. המסגרת "התנפחה" החוצה, והטקסט כבר לא צמוד לקו.'},
    back: 'look:3'},
-  {id:'t4', text:'הרחיקו את התפריט מהשכנים שלו: <code>margin: 30px</code>, באותו כלל <code>.menu</code> שבעורך.',
+  {id:'t4', text:'הרחיקו את התפריט מהשכנים שלו: <code>margin: 30px</code>, <span class="where">באותו כלל</span> <code>.menu</code> שבעורך.',
    test: d => { const m = d.querySelector('.menu'), cs = m && d.defaultView.getComputedStyle(m);
      return !!m && !m.hasAttribute('style') && ['Top','Right','Bottom','Left'].every(k => cs['margin' + k] === '30px') &&
        sheetRules(d).some(r => usesSel(r, /\.menu(?![\w-])/) && r.style.marginTop === '30px'); },

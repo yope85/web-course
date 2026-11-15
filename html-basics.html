@@ -169,27 +169,27 @@
     <div class="what">ההערה בשורה 2 לא מופיעה בדף אף פעם – היא בשבילכם. וכשהפכנו את שורת המבצע להערה, היא נעלמה מהדף, אבל נשארה בקוד. כשהמבצע יחזור – רק מוחקים את סימני ההערה.</div>
     <p><b>ב-Visual Studio</b> לא צריך להקליד את הסימנים: מסמנים שורות ולוחצים <b>Ctrl+K ואז Ctrl+C</b>. לביטול ההערה: <b>Ctrl+K ואז Ctrl+U</b>.</p>
     <div class="bridge">ב-C# כתבתם הערות עם <code>//</code>. ב-HTML יש רק צורה אחת: <code>&lt;!-- --&gt;</code>, והיא יכולה להשתרע על כמה שורות. הקיצור Ctrl+K ואז Ctrl+C עובד בשתי השפות – ו-Visual Studio כבר יודע איזה סימן לשים.</div>
-    <div class="trap">הערות לא מופיעות בדף, אבל כל גולש יכול לראות אותן בקוד המקור של הדף. לעולם לא כותבים בהן סיסמאות או סודות.</div>
+    <div class="trap">הערות לא מופיעות בדף, אבל כל גולש יכול לראות אותן בקוד המקור של הדף. <span class="not">לעולם לא</span> כותבים בהן סיסמאות או סודות.</div>
   </article>
   <article class="spread vsstep">
     <h3>💻 עכשיו אצלכם ב-Visual Studio</h3>
     <p>יוצרים בפרויקט שלכם <b>דף תרגול</b> של פיצה דני: practice.html. בו תנסו בעצמכם כל מה שלומדים בשיעור – ודף הנחיתה שלכם (index.html) יחכה נקי לצעד בפרויקט, בסוף השיעור.</p>
     <ol class="vsdo">
-      <li>ב-Solution Explorer: <b>קליק ימני</b> על התיקייה <b>HTML</b> (בתוך wwwroot) &rlm;←&rlm; <b>Add</b> &rlm;←&rlm; <b><bdi>New Item...</bdi></b> &rlm;←&rlm; <b>HTML Page</b>. השם המוצע הוא <b>htmlpage.html</b> – שנו אותו ל-<b>practice.html</b> &rlm;←&rlm; <b>Add</b>. (אם החלון נפתח קטן, בלי רשימת תבניות – לחצו בו Show All Templates.)</li>
-      <li>בשורה של התגית html (השנייה מלמעלה, אחרי DOCTYPE), במקום <code>&lt;html&gt;</code> כתבו <code>&lt;html lang="he" dir="rtl"&gt;</code> – כמו בשיעור 1. (מה בדיוק עושה כל חלק בשלד – בנושא הבא.)</li>
-      <li>הדביקו <b>בתוך body</b>:
+      <li><div class="ln">ב-Solution Explorer: <b>קליק ימני</b> <span class="where">על התיקייה <b>HTML</b></span> (בתוך wwwroot) &rlm;←&rlm; <b>Add</b> &rlm;←&rlm; <b><bdi>New Item...</bdi></b> &rlm;←&rlm; <b>HTML Page</b>.</div><div class="ln">השם המוצע הוא <b>htmlpage.html</b> – שנו אותו ל-<b>practice.html</b> &rlm;←&rlm; <b>Add</b>.</div><div class="ln">(אם החלון נפתח קטן, בלי רשימת תבניות – לחצו בו Show All Templates.)</div></li>
+      <li><span class="where">בשורה של התגית html</span> (השנייה מלמעלה, אחרי DOCTYPE), במקום <code>&lt;html&gt;</code> כתבו <code>&lt;html lang="he" dir="rtl"&gt;</code> – כמו בשיעור 1. (מה בדיוק עושה כל חלק בשלד – בנושא הבא.)</li>
+      <li>הדביקו <b><span class="where">בתוך body</span></b>:
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
 &lt;!-- practice page: Danny's pizza --&gt;
 &lt;h1&gt;פיצה דני&lt;/h1&gt;
 &lt;p&gt;מרגריטה – 45 שקל&lt;/p&gt;
 &lt;p&gt;מבצע: משלוח חינם!&lt;/p&gt;
 </pre></div></li>
-      <li><b>הקלידו בעצמכם</b> (בלי להעתיק), בשורה חדשה אחרי מרגריטה, מנה במבצע – עם קינון:
+      <li><b>הקלידו בעצמכם</b> (<span class="not">בלי להעתיק</span>), <span class="where">בשורה חדשה אחרי מרגריטה</span>, מנה במבצע – עם קינון:
         <div class="codeblock"><pre data-code="html">&lt;p&gt;פטריות – &lt;b&gt;&lt;i&gt;במבצע!&lt;/i&gt;&lt;/b&gt;&lt;/p&gt;</pre></div>
         Visual Studio הוסיף תגית סוגרת לבד בזמן שהקלדתם? מצוין. רק בדקו שבסוף הסדר נכון: i נסגרת לפני b.</li>
-      <li>שמרו (Ctrl+S). ואז <b>קליק ימני</b> על practice.html &rlm;←&rlm; <b>View in Browser</b>. (או: ▶ הירוק, ובדפדפן הכתובת <code style="white-space:normal;overflow-wrap:anywhere">https://localhost:&lt;port&gt;/HTML/practice.html</code> – עם מספר הפורט שלכם.)</li>
-      <li>🔨 <b>שברו בכוונה:</b> בשורה של פטריות מחקו את <code>&lt;/b&gt;</code>, שמרו, ורעננו <b>בדפדפן</b> עם Ctrl+F5 (רענון מלא, כמו בשיעור 1). גם "מבצע: משלוח חינם!" נהיה מודגש? בדיוק כמו ב<a href="#" data-go="anatomy:2">שלב על קינון</a>. עכשיו החזירו את <code>&lt;/b&gt;</code> למקומו ושמרו.</li>
-      <li><b>הערה:</b> סמנו את השורה של "מבצע: משלוח חינם!" ולחצו <b>Ctrl+K ואז Ctrl+C</b> – השורה הפכה להערה. שמרו ורעננו: היא נעלמה מהדף. עכשיו לחצו בדפדפן <b>Ctrl+U</b> (קוד המקור, משיעור 1): שתי ההערות שלכם שם – וכל גולש יכול לקרוא אותן. בסוף החזירו את השורה: סמנו אותה ולחצו <b>Ctrl+K ואז Ctrl+U</b>.</li>
+      <li>שמרו (Ctrl+S). ואז <b>קליק ימני</b> <span class="where">על practice.html</span> &rlm;←&rlm; <b>View in Browser</b>. (או: ▶ הירוק, ובדפדפן הכתובת <code style="white-space:normal;overflow-wrap:anywhere">https://localhost:&lt;port&gt;/HTML/practice.html</code> – עם מספר הפורט שלכם.)</li>
+      <li>🔨 <b>שברו בכוונה:</b> <span class="where">בשורה של פטריות</span> מחקו את <code>&lt;/b&gt;</code>, שמרו, ורעננו <b>בדפדפן</b> עם Ctrl+F5 (רענון מלא, כמו בשיעור 1). גם "מבצע: משלוח חינם!" נהיה מודגש? בדיוק כמו ב<a href="#" data-go="anatomy:2">שלב על קינון</a>. עכשיו החזירו את <code>&lt;/b&gt;</code> למקומו ושמרו.</li>
+      <li><b>הערה:</b> סמנו <span class="where">את השורה של "מבצע: משלוח חינם!"</span> ולחצו <b>Ctrl+K ואז Ctrl+C</b> – השורה הפכה להערה. שמרו ורעננו: היא נעלמה מהדף. עכשיו לחצו <span class="where">בדפדפן</span> <b>Ctrl+U</b> (קוד המקור, משיעור 1): שתי ההערות שלכם שם – וכל גולש יכול לקרוא אותן. בסוף החזירו את השורה: סמנו אותה ולחצו <b>Ctrl+K ואז Ctrl+U</b>.</li>
     </ol>
     <div class="expect">בכתובת שמסתיימת ב-<code>/HTML/practice.html</code> רואים, מיושר לימין: כותרת גדולה "פיצה דני", "מרגריטה – 45 שקל", "פטריות – <b><i>במבצע!</i></b>" (רק "במבצע!" מודגש ונטוי) ו"מבצע: משלוח חינם!". ההערה מהשורה הראשונה לא מופיעה בדף אף פעם. על הלשונית עוד לא כתוב "פיצה דני" – את זה נסדר בנושא הבא.</div>
     <div class="trouble" id="trAnatomy"></div>
@@ -254,9 +254,9 @@
     <p>ממשיכים ב-practice.html: עוברים על השלד ש-Visual Studio כתב בשבילכם, ובודקים בעצמכם מה כל חלק עושה.</p>
     <ol class="vsdo">
       <li>הסתכלו על הקוד של practice.html ומצאו בו את כל חלקי השלד <a href="#" data-go="page:1">משלב 1</a>: השורה DOCTYPE, התגית html, ה-head עם meta charset ו-title, וה-body עם התוכן שכתבתם.</li>
-      <li>בתוך התגית title כתבו: <b>פיצה דני – דף תרגול</b>. שמרו (Ctrl+S) ורעננו <b>בדפדפן</b> (Ctrl+F5) – והסתכלו על הלשונית.</li>
-      <li>🔨 <b>נסו בלי כיוון:</b> בשורה של התגית html מחקו רק את המאפיין <code>dir="rtl"</code> ואת הרווח שלפניו, ושמרו ורעננו: הטקסט נצמד לשמאל, וסימני הקריאה קפצו לתחילת המשפט – מימין למילה הראשונה. עכשיו החזירו את המאפיין למקומו, שמרו ורעננו.</li>
-      <li>ודאו שהשורה <code>&lt;meta charset="utf-8" /&gt;</code> נמצאת בתוך head (Visual Studio כותב אותה לבד) – ואל תמחקו אותה. גם אם אצלכם העברית נראית תקינה בלעדיה, בדפדפן או במחשב אחר הניחוש יכול להיות שגוי (<a href="#" data-go="page:3">ראיתם בשלב הקודם</a>).</li>
+      <li><span class="where">בתוך התגית title</span> כתבו: <b>פיצה דני – דף תרגול</b>. שמרו (Ctrl+S) ורעננו <b>בדפדפן</b> (Ctrl+F5) – והסתכלו על הלשונית.</li>
+      <li>🔨 <b>נסו בלי כיוון:</b> <span class="where">בשורה של התגית html</span> מחקו רק את המאפיין <code>dir="rtl"</code> ואת הרווח שלפניו, ושמרו ורעננו: הטקסט נצמד לשמאל, וסימני הקריאה קפצו לתחילת המשפט – מימין למילה הראשונה. עכשיו החזירו את המאפיין למקומו, שמרו ורעננו.</li>
+      <li>ודאו שהשורה <code>&lt;meta charset="utf-8" /&gt;</code> נמצאת <span class="where">בתוך head</span> (Visual Studio כותב אותה לבד) – ו<span class="not">אל תמחקו</span> אותה. גם אם אצלכם העברית נראית תקינה בלעדיה, בדפדפן או במחשב אחר הניחוש יכול להיות שגוי (<a href="#" data-go="page:3">ראיתם בשלב הקודם</a>).</li>
     </ol>
     <div class="expect">בכתובת שמסתיימת ב-<code>/HTML/practice.html</code>: על הלשונית כתוב "פיצה דני – דף תרגול", וכל הטקסט מיושר לימין. בצעד 3, בלי dir, הטקסט נצמד לשמאל – ואחרי שהחזרתם אותו, הכול חזר למקום.</div>
     <div class="trouble" id="trPage"></div>
@@ -331,9 +331,9 @@
     <h3>💻 עכשיו אצלכם ב-Visual Studio</h3>
     <p>ממשיכים ב-practice.html: מוסיפים כותרת משנה, קו מפריד, ואת הכתובת של הפיצרייה בשלוש שורות – כמו בשלבים של הנושא הזה.</p>
     <ol class="vsdo">
-      <li>בשורה שלפני "מרגריטה" הוסיפו כותרת משנה – רמה 2, כי היא פחות חשובה מ"פיצה דני":
+      <li><span class="where">בשורה שלפני "מרגריטה"</span> הוסיפו כותרת משנה – רמה 2, כי היא פחות חשובה מ"פיצה דני":
         <div class="codeblock"><pre data-code="html">&lt;h2&gt;התפריט&lt;/h2&gt;</pre></div></li>
-      <li>בסוף ה-body, אחרי השורה של המשלוח, הדביקו את הכתובת של הפיצרייה – כמו שהיא, בלי שום ירידת שורה. שמרו ורעננו <b>בדפדפן</b>: הקו המפריד הופיע, אבל הרחוב, העיר והטלפון – כולם בשורה אחת.
+      <li><span class="where">בסוף ה-body</span>, אחרי השורה של המשלוח, הדביקו את הכתובת של הפיצרייה – כמו שהיא, <span class="not">בלי שום ירידת שורה</span>. שמרו ורעננו <b>בדפדפן</b>: הקו המפריד הופיע, אבל הרחוב, העיר והטלפון – כולם בשורה אחת.
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
 &lt;hr /&gt;
 &lt;h2&gt;איך מגיעים?&lt;/h2&gt;
@@ -343,7 +343,7 @@
     טלפון: 08-1234567
 &lt;/p&gt;
 </pre></div></li>
-      <li>עכשיו הוסיפו <code>&lt;br /&gt;</code> בסוף השורה של הרחוב ובסוף השורה של העיר (אחרי הטלפון לא צריך – שם הפסקה נגמרת). שמרו ורעננו: שלוש שורות.
+      <li>עכשיו הוסיפו <code>&lt;br /&gt;</code> <span class="where">בסוף השורה של הרחוב ובסוף השורה של העיר</span> (אחרי הטלפון לא צריך – שם הפסקה נגמרת). שמרו ורעננו: שלוש שורות.
         <div class="codeblock"><pre data-code="html" data-marks="2:new,3:new">
 &lt;p&gt;
     רחוב הנמל 5&lt;br /&gt;
@@ -351,7 +351,7 @@
     טלפון: 08-1234567
 &lt;/p&gt;
 </pre></div></li>
-      <li>🔨 <b>רווחים:</b> בשורה של מרגריטה מחקו את המקף, והקלידו במקומו 6 רווחים. שמרו ורעננו – בדפדפן נשאר רווח אחד. עכשיו החליפו את 6 הרווחים ב-<code>&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;</code> – ושוב שמרו ורעננו.</li>
+      <li>🔨 <b>רווחים:</b> <span class="where">בשורה של מרגריטה</span> מחקו את המקף, והקלידו במקומו 6 רווחים. שמרו ורעננו – בדפדפן נשאר רווח אחד. עכשיו החליפו את 6 הרווחים ב-<code>&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;</code> – ושוב שמרו ורעננו.</li>
     </ol>
     <div class="expect">בכתובת שמסתיימת ב-<code>/HTML/practice.html</code> רואים: "פיצה דני" הכי גדולה, ומתחתיה "התפריט" – קטנה יותר, אבל מודגשת ובשורה משלה. אחרי המנות: קו אופקי לרוחב הדף, הכותרת "איך מגיעים?" והכתובת של הפיצרייה בשלוש שורות. ובשורה של מרגריטה – רווח רחב בין המילה למחיר.</div>
     <div class="trouble" id="trTags"></div>
@@ -444,10 +444,10 @@
     <h3>💻 עכשיו אצלכם ב-Visual Studio</h3>
     <p>מוסיפים לפרויקט <b>דף שני</b> – התפריט של דני – ומחברים בין הדפים בשלושת סוגי הקישורים: לדף אחר באתר, לאתר אחר, ולמקום בתוך הדף.</p>
     <ol class="vsdo">
-      <li>צרו בתיקייה HTML דף חדש בשם <b>menu.html</b> – בדיוק כמו שיצרתם את practice.html (<a href="#" data-go="anatomy:4">צעד 1 שם</a>). את השורה של התגית html החליפו בשורה הזו:
+      <li>צרו <span class="where">בתיקייה HTML</span> דף חדש בשם <b>menu.html</b> – בדיוק כמו שיצרתם את practice.html (<a href="#" data-go="anatomy:4">צעד 1 שם</a>). את השורה של התגית html החליפו בשורה הזו:
         <div class="codeblock"><pre data-code="html">&lt;html lang="he" dir="rtl"&gt;</pre></div>
         ובתוך התגית title כתבו: <b>התפריט – פיצה דני</b>.</li>
-      <li>הדביקו בתוך ה-body של menu.html. הדף ארוך בכוונה – כדי שתהיה לקישור "למחירון" סיבה לקפוץ:
+      <li>הדביקו <span class="where">בתוך ה-body של menu.html</span>. הדף ארוך בכוונה – כדי שתהיה לקישור "למחירון" סיבה לקפוץ:
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
 &lt;h1 id="top"&gt;התפריט&lt;/h1&gt;
 &lt;p&gt;&lt;a href="#prices"&gt;למחירון ↓&lt;/a&gt;&lt;/p&gt;
@@ -487,12 +487,12 @@
 &lt;p&gt;&lt;a href="#top"&gt;חזרה למעלה ↑&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="practice.html"&gt;חזרה לדף התרגול&lt;/a&gt;&lt;/p&gt;
 </pre></div></li>
-      <li>עברו ל-practice.html, ומתחת לכותרת h1 הוסיפו קישור לתפריט. (<a href="#" data-go="links:3">כמו בשלב 3</a>: הדפים באותה תיקייה, אז ב-href כותבים רק menu.html.) למה הקישור עטוף ב-p? קישור לא יורד שורה לבד – הוא יושב בשורה כמו מילה (<a href="#" data-go="links:1">ראיתם בשלב 1</a>). הפסקה נותנת לו שורה משלו.
+      <li>עברו ל-practice.html, ו<span class="where">מתחת לכותרת h1</span> הוסיפו קישור לתפריט. (<a href="#" data-go="links:3">כמו בשלב 3</a>: הדפים באותה תיקייה, אז ב-href כותבים רק menu.html.) למה הקישור עטוף ב-p? קישור לא יורד שורה לבד – הוא יושב בשורה כמו מילה (<a href="#" data-go="links:1">ראיתם בשלב 1</a>). הפסקה נותנת לו שורה משלו.
         <div class="codeblock"><pre data-code="html">&lt;p&gt;&lt;a href="menu.html"&gt;לתפריט שלנו&lt;/a&gt;&lt;/p&gt;</pre></div></li>
-      <li>ב-practice.html, בסוף ה-body (אחרי הכתובת של הפיצרייה), הוסיפו קישור למפה – שנפתח בלשונית חדשה:
+      <li>ב-practice.html, <span class="where">בסוף ה-body</span> (אחרי הכתובת של הפיצרייה), הוסיפו קישור למפה – שנפתח בלשונית חדשה:
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">&lt;p&gt;&lt;a href="https://maps.google.com" target="_blank"&gt;איך מגיעים? (מפה)&lt;/a&gt;&lt;/p&gt;</pre></div></li>
-      <li>שמרו את <b>שני</b> הקבצים (בדקו שאין כוכבית ליד השמות בלשוניות), ופתחו את practice.html בדפדפן (View in Browser). עכשיו לחצו לפי הסדר: "לתפריט שלנו" &rlm;←&rlm; "למחירון ↓" &rlm;←&rlm; "חזרה למעלה ↑" &rlm;←&rlm; "חזרה לדף התרגול" &rlm;←&rlm; ולבסוף המפה.</li>
-      <li>🔨 <b>שברו בכוונה:</b> ב-practice.html, בקישור לתפריט, מחקו את הסיומת <code>.html</code> מתוך ה-href – כך שיישאר רק menu. שמרו, רעננו ולחצו עליו: מקבלים דף שגיאה עם המספר 404 ("לא נמצא"). החזירו את הסיומת ושמרו.</li>
+      <li>שמרו את <span class="where"><b>שני</b> הקבצים</span> (בדקו שאין כוכבית ליד השמות בלשוניות), ופתחו את practice.html בדפדפן (View in Browser). עכשיו לחצו לפי הסדר: "לתפריט שלנו" &rlm;←&rlm; "למחירון ↓" &rlm;←&rlm; "חזרה למעלה ↑" &rlm;←&rlm; "חזרה לדף התרגול" &rlm;←&rlm; ולבסוף המפה.</li>
+      <li>🔨 <b>שברו בכוונה:</b> ב-practice.html, <span class="where">בקישור לתפריט</span>, מחקו את הסיומת <code>.html</code> מתוך ה-href – כך שיישאר רק menu. שמרו, רעננו ולחצו עליו: מקבלים דף שגיאה עם המספר 404 ("לא נמצא"). החזירו את הסיומת ושמרו.</li>
     </ol>
     <div class="expect">מהדף שמסתיים ב-<code>/HTML/practice.html</code> הקישור מעביר לכתובת שמסתיימת ב-<code>/HTML/menu.html</code>, ועל הלשונית כתוב "התפריט – פיצה דני". "למחירון ↓" מוסיף לסוף הכתובת <code>#prices</code> – והדף גולל מטה, אל המחירון שאחרי רשימת הפיצות. (המסך שלכם גבוה מאוד, וכל הדף נכנס בו? הקטינו את החלון – ואז תראו את הקפיצה.) "חזרה למעלה ↑" מחזיר לראש הדף. המפה נפתחת <b>בלשונית חדשה</b>, ו-practice.html נשאר פתוח בלשונית שלו. קישור שלחצתם עליו הפך מכחול לסגול? זה לא באג: כך הדפדפן מסמן קישור שכבר ביקרתם בו.</div>
     <div class="trouble" id="trLinks"></div>
@@ -631,23 +631,23 @@
     <h3>💻 עכשיו אצלכם ב-Visual Studio</h3>
     <p>עכשיו תמונות אמיתיות: יוצרים בפרויקט את התיקייה Img, שמים בה תמונות, ומוסיפים אותן לשני דפי התרגול – כולל תמונה שהיא קישור.</p>
     <ol class="vsdo">
-      <li>ב-Solution Explorer: <b>קליק ימני</b> על <b>wwwroot</b> &rlm;←&rlm; <b>Add</b> &rlm;←&rlm; <b>New Folder</b> &rlm;←&rlm; כתבו <b>Img</b> (עם I גדולה) &rlm;←&rlm; Enter.</li>
+      <li>ב-Solution Explorer: <b>קליק ימני</b> <span class="where">על <b>wwwroot</b></span> &rlm;←&rlm; <b>Add</b> &rlm;←&rlm; <b>New Folder</b> &rlm;←&rlm; כתבו <b>Img</b> (עם I גדולה) &rlm;←&rlm; Enter.</li>
       <li>שמרו במחשב 2–3 תמונות של פיצה (או של כל דבר אחר), מסוג jpg, png או webp. איך? באתר כלשהו: קליק ימני על תמונה &rlm;←&rlm; <bdi>Save image as</bdi> (שמירת התמונה בשם). תנו להן שמות באנגלית, בלי רווחים – למשל pizza.jpg ו-margherita.jpg. גררו אותן מסייר הקבצים של Windows אל התיקייה Img ב-Solution Explorer. שימו לב: ב-Solution Explorer רואים את השם <b>המלא</b>, עם הסיומת. כתוב שם png או jpeg? כתבו בקוד בדיוק את מה שכתוב שם.</li>
-      <li>ב-practice.html, מיד אחרי הכותרת h1, הוסיפו תמונה – עם השם של התמונה שלכם. את התמונה הראשונה <b>הקלידו בעצמכם</b> (בלי להעתיק ובלי לגרור) – כדי לוודא שהנתיב ברור לכם:
+      <li>ב-practice.html, <span class="where">מיד אחרי הכותרת h1</span>, הוסיפו תמונה – עם השם של התמונה שלכם. את התמונה הראשונה <b>הקלידו בעצמכם</b> (<span class="not">בלי להעתיק ובלי לגרור</span>) – כדי לוודא שהנתיב ברור לכם:
         <div class="codeblock"><pre data-code="html">&lt;img src="../Img/pizza.jpg" alt="פיצה חמה" width="150" /&gt;</pre></div></li>
-      <li>הפכו את התמונה לקישור לתפריט (<a href="#" data-go="images:6">כמו בשלב 6</a>): החליפו את שורת ה-img מצעד 3 בשלוש השורות האלה – ושוב עם השם של התמונה שלכם. שימו לב שגם ה-alt אומר עכשיו לאן הקישור מוביל:
+      <li>הפכו את התמונה לקישור לתפריט (<a href="#" data-go="images:6">כמו בשלב 6</a>): החליפו את <span class="where">שורת ה-img</span> מצעד 3 בשלוש השורות האלה – ושוב עם השם של התמונה שלכם. שימו לב שגם ה-alt אומר עכשיו לאן הקישור מוביל:
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html" data-marks="1:new,3:new">
 &lt;a href="menu.html"&gt;
     &lt;img src="../Img/pizza.jpg" alt="פיצה חמה – לתפריט" width="150" /&gt;
 &lt;/a&gt;
 </pre></div></li>
-      <li>ב-menu.html, מיד אחרי הכותרת h1, הוסיפו שתי תמונות – כל אחת בשורה משלה בקוד, עם השמות של התמונות שלכם. (יש לכם רק תמונה אחת? כתבו אותה פעמיים.) כאן כבר אפשר לגרור כל תמונה מ-Solution Explorer אל השורה בקוד: Visual Studio כותב בעצמו את התגית img עם נתיב אל הקובץ – בדקו שהוא מתחיל ב-<code>../Img/</code>, והשלימו alt ו-width.
+      <li><span class="where">ב-menu.html</span>, מיד אחרי הכותרת h1, הוסיפו שתי תמונות – כל אחת בשורה משלה בקוד, עם השמות של התמונות שלכם. (יש לכם רק תמונה אחת? כתבו אותה פעמיים.) כאן כבר אפשר לגרור כל תמונה מ-Solution Explorer אל השורה בקוד: Visual Studio כותב בעצמו את התגית img עם נתיב אל הקובץ – בדקו שהוא מתחיל ב-<code>../Img/</code>, והשלימו alt ו-width.
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
 &lt;img src="../Img/pizza.jpg" alt="פיצה" width="90" /&gt;
 &lt;img src="../Img/margherita.jpg" alt="פיצה מרגריטה" width="90" /&gt;
 </pre></div>
         שמרו את שני הקבצים, ורעננו <b>בדפדפן</b>. ב-practice.html לחצו על התמונה – היא מעבירה לתפריט.</li>
-      <li>🔨 <b>שברו בכוונה:</b> ב-practice.html, בתוך src, שנו את שם הקובץ כך שתהיה בו טעות (למשל piza במקום pizza). שמרו ורעננו: במקום התמונה – סמל שבור, והטקסט של alt (כך בכרום ובאדג׳). עכשיו לחצו בדפדפן <b>F12</b> &rlm;←&rlm; לשונית <b>Console</b>: יש שם שורה אדומה עם 404, ובקצה שלה שם הקובץ שלא נמצא (<a href="#" data-go="images:5">השלב על F12</a>). תקנו בחזרה, שמרו ורעננו.</li>
+      <li>🔨 <b>שברו בכוונה:</b> ב-practice.html, <span class="where">בתוך src</span>, שנו את שם הקובץ כך שתהיה בו טעות (למשל piza במקום pizza). שמרו ורעננו: במקום התמונה – סמל שבור, והטקסט של alt (כך בכרום ובאדג׳). עכשיו לחצו <span class="where">בדפדפן</span> <b>F12</b> &rlm;←&rlm; לשונית <b>Console</b>: יש שם שורה אדומה עם 404, ובקצה שלה שם הקובץ שלא נמצא (<a href="#" data-go="images:5">השלב על F12</a>). תקנו בחזרה, שמרו ורעננו.</li>
     </ol>
     <div class="expect">בכתובת שמסתיימת ב-<code>/HTML/practice.html</code> – מתחת לכותרת, התמונה שלכם ברוחב 150 פיקסלים. לחיצה עליה מעבירה לכתובת שמסתיימת ב-<code>/HTML/menu.html</code>, ושם שתי התמונות עומדות <b>זו ליד זו</b>, באותה שורה – כי img היא inline. בצעד 6, עם הטעות: סמל שבור עם הטקסט "פיצה חמה – לתפריט", וב-F12 בלשונית Console – שורה אדומה עם 404; מעבר עכבר על שם הקובץ שבקצה השורה מראה את הכתובת המלאה שהדפדפן ניסה.</div>
     <div class="trouble" id="trImages"></div>
@@ -1329,7 +1329,7 @@ const TASKS = [
    solution: {code: '<img src="../Img/pizza.jpg" alt="פיצה חמה" />', lang: 'html',
      explain: 'שתי הנקודות והלוכסן עולים מ-HTML ל-wwwroot, החלק <code>Img/</code> נכנס לתיקיית התמונות, ו-pizza.jpg הוא הקובץ. alt מתאר את התמונה במילים – למקרה שהיא לא נטענת, ובשביל תוכנות הקראה.'},
    back: 'images:2'},
-  {id:'width', text:'קבעו לתמונה רוחב של 150 פיקסלים.',
+  {id:'width', text:'קבעו <span class="where">לתמונה</span> רוחב של 150 פיקסלים.',
    test: d => parsedImgs().some(i => /^\.\.\/Img\/./.test(i.getAttribute('src') || '') && (i.getAttribute('width') || '').trim() === '150'),
    hints: ['גודל של תמונה קובעים במאפיין width (רוחב) – בתוך התגית img עצמה.',
            'בתוך התגית img, לפני הלוכסן שבסוף, הוסיפו <code>width="150"</code> – רק המספר, בלי px.'],
@@ -1354,7 +1354,7 @@ const TASKS = [
    solution: {code: '<p><a href="https://maps.google.com" target="_blank">איך מגיעים? (מפה)</a></p>', lang: 'html',
      explain: 'כתובת שמתחילה ב-<code>https://</code> היא נתיב מוחלט – אתר אחר. <code>target="_blank"</code> פותח אותו בלשונית חדשה, והאתר של פיצה דני נשאר פתוח.'},
    back: 'links:2'},
-  {id:'top', text:'קישור "חזרה למעלה": תנו לכותרת h1 את המאפיין <code>id="top"</code>, והוסיפו בסוף הדף קישור שקופץ אליה.',
+  {id:'top', text:'קישור "חזרה למעלה": תנו <span class="where">לכותרת h1</span> את המאפיין <code>id="top"</code>, והוסיפו בסוף הדף קישור שקופץ אליה.',
    test: d => { const h = d.querySelector('h1'); if (!h || h.id !== 'top' || d.querySelectorAll('[id="top"]').length !== 1) return false;
      const last = [...d.querySelectorAll('p')].find(p => /מחכים לכם/.test(p.textContent));
      return [...d.querySelectorAll('a')].some(a => a.getAttribute('href') === '#top' && (h.compareDocumentPosition(a) & FOLLOWS) && (!last || (last.compareDocumentPosition(a) & FOLLOWS))); },
@@ -1363,7 +1363,7 @@ const TASKS = [
    solution: {code: '<h1 id="top">פיצה דני</h1>\n…\n<p>מחכים לכם!</p>\n<p><a href="#top">חזרה למעלה</a></p>', lang: 'html',
      explain: 'הסולמית אומרת לדפדפן "חפש בדף הזה", ו-top הוא ה-id של הכותרת. כאן הדף קצר ואין הרבה לאן לגלול – בדף ארוך רואים את הקפיצה.'},
    back: 'links:4'},
-  {id:'imglink', text:'אתגר: הפכו את התמונה לקישור לדף menu.html.',
+  {id:'imglink', text:'אתגר: הפכו <span class="where">את התמונה</span> לקישור לדף menu.html.',
    test: d => [...d.querySelectorAll('a')].filter(a => isMenuHref(a.getAttribute('href'))).some(a => [...a.querySelectorAll('img')].some(i => (i.getAttribute('alt') || '').trim())),
    hints: ['קינון: את כל התגית img שמים <b>בתוך</b> תגית a – במקום טקסט.',
            'מצאו את השורה של img. בשורה שמעליה פותחים תגית a עם href לדף התפריט, ובשורה שמתחתיה סוגרים את a. את שורת ה-img עצמה לא משנים.'],

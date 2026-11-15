@@ -184,20 +184,20 @@ code.brk{white-space:normal!important;overflow-wrap:anywhere}
     <h3>💻 עכשיו אצלכם ב-Visual Studio</h3>
     <p>יוצרים בפרויקט שלכם דף תרגול וקובץ JavaScript ראשון. בקובץ ובדף האלה תשתמשו לכל התוכניות של השיעור.</p>
     <ol class="vsdo">
-      <li>האתר רץ? עצרו אותו (■). ב-Solution Explorer: <b>קליק ימני</b> על <b>wwwroot</b> &rlm;←&rlm; <b>Add</b> &rlm;←&rlm; <b>New Folder</b>. קראו לה <b>js</b>. (אם התיקייה <b>js</b> כבר קיימת ב-wwwroot – משתמשים בה ולא יוצרים חדשה.)</li>
-      <li><b>קליק ימני</b> על <b>js</b> &rlm;←&rlm; <b>Add</b> &rlm;←&rlm; <b>New Item...</b> &rlm;←&rlm; בחרו <b><bdi>JavaScript File</bdi></b> (אם לא רואים – חפשו <bdi>javascript</bdi> בתיבת החיפוש למעלה) &rlm;←&rlm; בשדה Name כתבו <b>practice.js</b> &rlm;←&rlm; <b>Add</b>.</li>
-      <li>בקובץ כתבו את שתי השורות האלה. השורה הראשונה היא <b>הערה</b>: JavaScript מתעלמת ממנה, והיא נועדה לבני אדם. (בכל שורה: <code>//</code>. ב-Visual Studio אפשר לסמן שורות וללחוץ <kbd>Ctrl+K</kbd> ואז <kbd>Ctrl+C</kbd> להפוך אותן להערה.)
+      <li>האתר רץ? עצרו אותו (■). ב-Solution Explorer: <b>קליק ימני</b> <span class="where">על <b>wwwroot</b></span> &rlm;←&rlm; <b>Add</b> &rlm;←&rlm; <b>New Folder</b>. קראו לה <b>js</b>. (אם התיקייה <b>js</b> כבר קיימת ב-wwwroot – משתמשים בה ולא יוצרים חדשה.)</li>
+      <li><b>קליק ימני</b> <span class="where">על <b>js</b></span> &rlm;←&rlm; <b>Add</b> &rlm;←&rlm; <b>New Item...</b> &rlm;←&rlm; בחרו <b><bdi>JavaScript File</bdi></b> (אם לא רואים – חפשו <bdi>javascript</bdi> בתיבת החיפוש למעלה) &rlm;←&rlm; בשדה Name כתבו <b>practice.js</b> &rlm;←&rlm; <b>Add</b>.</li>
+      <li><span class="where">בקובץ</span> כתבו את שתי השורות האלה. השורה הראשונה היא <b>הערה</b>: JavaScript מתעלמת ממנה, והיא נועדה לבני אדם. (בכל שורה: <code>//</code>. ב-Visual Studio אפשר לסמן שורות וללחוץ <kbd>Ctrl+K</kbd> ואז <kbd>Ctrl+C</kbd> להפוך אותן להערה.)
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="js">
 // Assignment 6 programs
 console.log("שלום מהקובץ שלי");
 </pre></div></li>
-      <li>צרו דף HTML: קליק ימני על <b>wwwroot/HTML</b> &rlm;←&rlm; <b>Add</b> &rlm;←&rlm; <b>New Item...</b> &rlm;←&rlm; <b><bdi>HTML Page</bdi></b> &rlm;←&rlm; שם: <b>js-practice.html</b>. בין תגיות ה-body כתבו כותרת, ו<b>ממש לפני <code>&lt;/body&gt;</code></b> את תגית ה-script:
+      <li>צרו דף HTML: קליק ימני <span class="where">על <b>wwwroot/HTML</b></span> &rlm;←&rlm; <b>Add</b> &rlm;←&rlm; <b>New Item...</b> &rlm;←&rlm; <b><bdi>HTML Page</bdi></b> &rlm;←&rlm; שם: <b>js-practice.html</b>. בין תגיות ה-body כתבו כותרת, ו<b><span class="where">ממש לפני</span> <code>&lt;/body&gt;</code></b> את תגית ה-script:
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
 &lt;h1&gt;תרגול JavaScript&lt;/h1&gt;
 &lt;script src="../js/practice.js"&gt;&lt;/script&gt;
 </pre></div></li>
-      <li>שמרו (Ctrl+S) והריצו (▶ הירוק). בשורת הכתובת, אחרי מספר הפורט, כתבו <code>/HTML/js-practice.html</code>. פתחו <b>F12</b> &rlm;←&rlm; <b>Console</b>: ההודעה שלכם שם.</li>
-      <li>🧪 <b>נסו לשנות:</b> הוסיפו בקובץ שורה <code>alert("עובד!");</code>, שמרו, ועשו <b>Ctrl+F5</b> בדפדפן. <b>למה Ctrl+F5?</b> הדפדפן שומר עותק של קבצי js (כמו של css), ו-F5 רגיל עלול להציג את הישן. Ctrl+F5 מכריח אותו להוריד מחדש.</li>
+      <li>שמרו (Ctrl+S) והריצו (▶ הירוק). <span class="where">בשורת הכתובת</span>, אחרי מספר הפורט, כתבו <code>/HTML/js-practice.html</code>. פתחו <b>F12</b> &rlm;←&rlm; <span class="where"><b>Console</b></span>: ההודעה שלכם שם.</li>
+      <li>🧪 <b>נסו לשנות:</b> הוסיפו <span class="where">בקובץ</span> שורה <code>alert("עובד!");</code>, שמרו, ועשו <b>Ctrl+F5</b> בדפדפן. <b>למה Ctrl+F5?</b> הדפדפן שומר עותק של קבצי js (כמו של css), ו-F5 רגיל עלול להציג את הישן. Ctrl+F5 מכריח אותו להוריד מחדש.</li>
     </ol>
     <div class="expect">בדף: הכותרת "תרגול JavaScript", ולפניה חלון קופץ "עובד!". ב-F12 ‏←‏ Console: <code>שלום מהקובץ שלי</code> – ומימין שם הקובץ <code>practice.js:2</code> ומספר השורה. (מספר השורה הזה יעזור לכם בהמשך למצוא שגיאות.)</div>
     <div class="trouble" id="trWhere"></div>
@@ -271,13 +271,13 @@ let a = parseInt(prompt("מספר ראשון"));
 let b = parseInt(prompt("מספר שני"));
 document.write(a + " * " + b + " = " + (a * b));
 </pre></div></li>
-      <li><b>תוכנית 2 – ברכה.</b> קולטת שם פרטי ושם משפחה ומדפיסה ברכה עם השם המלא: <code>Welcome Dana Cohen</code>. כאן <b>לא</b> צריך <code>parseInt</code> – אלה טקסטים, ו-<code>+</code> מדביק. (ובין השמות צריך רווח, בתוך מרכאות.) נסו לכתוב לבד.
+      <li><b>תוכנית 2 – ברכה.</b> קולטת שם פרטי ושם משפחה ומדפיסה ברכה עם השם המלא: <code>Welcome Dana Cohen</code>. כאן <b><span class="not">לא</span></b> צריך <code>parseInt</code> – אלה טקסטים, ו-<code>+</code> מדביק. (ובין השמות צריך רווח, בתוך מרכאות.) נסו לכתוב לבד.
         <details class="more"><summary>🔓 פתרון – אחרי שניסיתם</summary><div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="js">
 let first = prompt("שם פרטי");
 let last = prompt("שם משפחה");
 document.write("Welcome " + first + " " + last);
 </pre></div></details></li>
-      <li>לפני כל תוכנית – הערה שאומרת מה היא עושה (<code>//</code>). וכדי שתוכנית 1 לא תרוץ בכל פעם שאתם בודקים את תוכנית 2, הופכים אותה להערה: מסמנים את השורות ו-<kbd>Ctrl+K</kbd> ואז <kbd>Ctrl+C</kbd>.</li>
+      <li><span class="where">לפני כל תוכנית</span> – הערה שאומרת מה היא עושה (<code>//</code>). וכדי שתוכנית 1 לא תרוץ בכל פעם שאתם בודקים את תוכנית 2, הופכים אותה להערה: מסמנים את השורות ו-<kbd>Ctrl+K</kbd> ואז <kbd>Ctrl+C</kbd>.</li>
       <li><b>בדקו עם שתי דוגמאות לפחות</b> (זה מהרשימה במטלה), ועם קלט "מוזר": 0, מספר שלילי, ומילה במקום מספר. מה מדפיסה תוכנית 1 אם מקלידים "פיצה" כמספר הראשון? (<code>NaN * 3 = NaN</code> – ואתם מזהים למה.)</li>
     </ol>
     <div class="expect">הריצו (Ctrl+F5 בדפדפן). קופצים שני חלונות, ובדף מופיע <code>5 * 3 = 15</code> (אם הקלדתם 5 ו-3). ב-F12 ‏←‏ Console – בלי שורות אדומות.</div>
@@ -513,7 +513,7 @@ console.log("ממוצע", sum / count);
 // website JavaScript
 console.log("form-check.js נטען");
 </pre></div></li>
-        <li>פתחו דף שיש בו טופס – למשל <code>Pages/Site/Register.cshtml</code> (או Login). <b>בסוף הדף</b>, אחרי הטופס, הוסיפו:
+        <li>פתחו דף שיש בו טופס – למשל <code>Pages/Site/Register.cshtml</code> (או Login). <span class="where"><b>בסוף הדף</b></span>, אחרי הטופס, הוסיפו:
           <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
 &lt;script src="~/js/form-check.js"&gt;&lt;/script&gt;
 </pre></div>

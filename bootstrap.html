@@ -251,19 +251,19 @@ td code{overflow-wrap:normal;white-space:normal}
     <h3>💻 עכשיו אצלכם ב-Visual Studio</h3>
     <p>מחברים את Bootstrap ל<b>דף התוכן הראשון</b> שלכם (about.html משיעור 2 – או השם שנתתם לו), ולדף הנחיתה index.html. במהלך השיעור הדף about.html יהפוך ל<b>דף הבסיס</b> של כל דפי התוכן באתר – לכן מתחילים בו.</p>
     <ol class="vsdo">
-      <li>ב-Solution Explorer פתחו את התיקיות wwwroot &rlm;←&rlm; lib &rlm;←&rlm; bootstrap &rlm;←&rlm; dist &rlm;←&rlm; css, ופתחו בלחיצה כפולה את <b>bootstrap.css</b>. בשורות הראשונות כתוב <b>Bootstrap v5.1.0</b> – זה מספר הגרסה (כתוב אחרת? כתבו אותו במקום 5.1.0 בשורה שבצעד 3). שימו לב: <b>אין</b> בתיקייה קובץ rtl – זה בדיוק כמו שצריך, ולא עורכים את הקובץ. סגרו אותו. (<a href="#" data-go="setup:2">הדרך לקבצים – בשלב 2</a>, <a href="#" data-go="setup:4">והסבר על ה-CDN – בשלב 4</a>)</li>
-      <li>פתחו את about.html (בתיקייה HTML). בשורה של התגית html ודאו שכתוב <code>lang="he" dir="rtl"</code> (כמו בשיעור 2).</li>
-      <li>בתוך ה-head, מיד אחרי השורה של <code>meta charset</code>, הדביקו את שתי השורות האלה. הן חייבות להיות <b>מעל</b> השורה של <span class="nw">site-style.css</span> שכבר יש לכם משיעור 3: קודם Bootstrap, ואחריו העיצוב שלכם – כך, כשכלל שלכם וכלל של Bootstrap שווים בכוח, שלכם מנצח. (למה? <a href="#" data-go="mine:1">בנושא "משלכם + התיעוד"</a>.)
+      <li><span class="where">ב-Solution Explorer</span> פתחו את התיקיות wwwroot &rlm;←&rlm; lib &rlm;←&rlm; bootstrap &rlm;←&rlm; dist &rlm;←&rlm; css, ופתחו בלחיצה כפולה את <b>bootstrap.css</b>. בשורות הראשונות כתוב <b>Bootstrap v5.1.0</b> – זה מספר הגרסה (כתוב אחרת? כתבו אותו במקום 5.1.0 בשורה שבצעד 3). שימו לב: <b>אין</b> בתיקייה קובץ rtl – זה בדיוק כמו שצריך, ולא עורכים את הקובץ. סגרו אותו. (<a href="#" data-go="setup:2">הדרך לקבצים – בשלב 2</a>, <a href="#" data-go="setup:4">והסבר על ה-CDN – בשלב 4</a>)</li>
+      <li>פתחו את about.html (בתיקייה HTML). <span class="where">בשורה של התגית html</span> ודאו שכתוב <code>lang="he" dir="rtl"</code> (כמו בשיעור 2).</li>
+      <li><span class="where">בתוך ה-head</span>, מיד אחרי השורה של <code>meta charset</code>, הדביקו את שתי השורות האלה. הן חייבות להיות <span class="where"><b>מעל</b></span> השורה של <span class="nw">site-style.css</span> שכבר יש לכם משיעור 3: קודם Bootstrap, ואחריו העיצוב שלכם – כך, כשכלל שלכם וכלל של Bootstrap שווים בכוח, שלכם מנצח. (למה? <a href="#" data-go="mine:1">בנושא "משלכם + התיעוד"</a>.)
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
 &lt;meta name="viewport" content="width=device-width, initial-scale=1" /&gt;
 &lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.rtl.min.css" /&gt;
 </pre></div></li>
-      <li>בסוף ה-body – בשורה האחרונה, מיד לפני <code>&lt;/body&gt;</code> – הדביקו:
+      <li><span class="where">בסוף ה-body</span> – בשורה האחרונה, מיד לפני <code>&lt;/body&gt;</code> – הדביקו:
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
 &lt;script src="../lib/bootstrap/dist/js/bootstrap.bundle.min.js"&gt;&lt;/script&gt;
 </pre></div></li>
-      <li>בדיקה שהחיבור עובד: לכותרת h1 של הדף הוסיפו <code>class="text-center"</code> – כמו <a href="#" data-go="start:2">בדוגמה הראשונה של השיעור</a>. (כבר יש לה class? הוסיפו את text-center באותן מירכאות, אחרי רווח.) שמרו (Ctrl+S), ואז קליק ימני על about.html &rlm;←&rlm; <b>View in Browser</b>.</li>
-      <li>עשו את צעדים 2–4 גם בדף הנחיתה <b>index.html</b> – אותן שלוש שורות, באותם מקומות. כך שני הדפים מוכנים לתפריט המשותף שתבנו בנושא "רכיבים מוכנים".</li>
+      <li>בדיקה שהחיבור עובד: <span class="where">לכותרת h1</span> של הדף הוסיפו <code>class="text-center"</code> – כמו <a href="#" data-go="start:2">בדוגמה הראשונה של השיעור</a>. (כבר יש לה class? הוסיפו את text-center באותן מירכאות, אחרי רווח.) שמרו (Ctrl+S), ואז קליק ימני <span class="where">על about.html</span> &rlm;←&rlm; <b>View in Browser</b>.</li>
+      <li>עשו את צעדים 2–4 גם <span class="where">בדף הנחיתה <b>index.html</b></span> – אותן שלוש שורות, באותם מקומות. כך שני הדפים מוכנים לתפריט המשותף שתבנו בנושא "רכיבים מוכנים".</li>
     </ol>
     <div class="expect">בכתובת שמסתיימת ב-<code>/HTML/about.html</code> רואים: הכותרת באמצע השורה – סימן ש-Bootstrap מחובר. גם בלי שהוספתם class, הדף נראה קצת אחרת – אלה <a href="#" data-go="start:2">כללי הבסיס</a> של Bootstrap: הכותרות בגודל ובעובי אחרים, ו-body בלי margin – לכן התוכן צמוד לקצה החלון (בנושא הבא container יחזיר את הרווח). ובדיקה בטוחה, גם אם הכותרת שלכם כבר הייתה באמצע קודם: בדפדפן F12 &rlm;←&rlm; Console – אין שגיאה אדומה (404). אותו דבר ב-index.html. (והמחשב מחובר לאינטרנט – ה-CSS מגיע משם.)</div>
     <div class="trouble" id="trSetup"></div>
@@ -411,8 +411,8 @@ td code{overflow-wrap:normal;white-space:normal}
     <h3>💻 עכשיו אצלכם ב-Visual Studio</h3>
     <p>הופכים את about.html ל<b>דף הבסיס של דפי התוכן</b>: container שמרחיק את התוכן מהקצוות, ושורה עם שתי עמודות – טקסט ותמונה – שבטלפון יורדות אחת מתחת לשנייה. על הדף הזה תבנו את כל דפי התוכן של הגשה 1.</p>
     <ol class="vsdo">
-      <li>ב-about.html עטפו את כל התוכן שבתוך ה-body ב-container: שורה חדשה <code>&lt;div class="container"&gt;</code> מיד אחרי <code>&lt;body&gt;</code>, ושורה <code>&lt;/div&gt;</code> מיד <b>לפני</b> שורת ה-script. (ה-script נשאר מחוץ ל-container – הוא לא חלק מהתוכן.) גם כותרת האתר משיעור 4 – ה-div עם <code>class="site-header"</code> – נכנסת בינתיים לתוך ה-container. בנושא הבא תחליפו אותה בתפריט של Bootstrap.</li>
-      <li>בתוך ה-container, מיד אחרי ה-h1, הדביקו שורה עם שתי עמודות. (ה-h1 שלכם בתוך קופסת <code>box</code>? הדביקו אותה מיד אחרי ה-<code>&lt;/div&gt;</code> שסוגר את הקופסה.) שמרו – הדף עדיין נראה כמו קודם, ובסופו שורה חדשה עם "כאן הטקסט של הדף" ועם תמונה:
+      <li>ב-about.html עטפו את כל התוכן שבתוך ה-body <span class="where">ב-container</span>: שורה חדשה <code>&lt;div class="container"&gt;</code> מיד אחרי <code>&lt;body&gt;</code>, ושורה <code>&lt;/div&gt;</code> מיד <b>לפני</b> שורת ה-script. (ה-script נשאר מחוץ ל-container – הוא לא חלק מהתוכן.) גם כותרת האתר משיעור 4 – ה-div עם <code>class="site-header"</code> – נכנסת בינתיים לתוך ה-container. בנושא הבא תחליפו אותה בתפריט של Bootstrap.</li>
+      <li>בתוך ה-container, <span class="where">מיד אחרי ה-h1</span>, הדביקו שורה עם שתי עמודות. (ה-h1 שלכם בתוך קופסת <code>box</code>? הדביקו אותה מיד אחרי ה-<code>&lt;/div&gt;</code> שסוגר את הקופסה.) שמרו – הדף עדיין נראה כמו קודם, ובסופו שורה חדשה עם "כאן הטקסט של הדף" ועם תמונה:
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html" data-marks="7:new">
 &lt;div class="row"&gt;
     &lt;div class="col-md-8"&gt;
@@ -424,9 +424,9 @@ td code{overflow-wrap:normal;white-space:normal}
     &lt;/div&gt;
 &lt;/div&gt;
 </pre></div></li>
-      <li><b>מעבירים לעמודות.</b> בעמודה השנייה (<code>col-md-4</code>): גזרו (Ctrl+X) את שורת ה-img שכבר יש בדף (משיעור 2), והדביקו (Ctrl+V) אותה במקום שורת ה-img שבדוגמה. מחקו ממנה את <code>width="…"</code> (אם יש) וודאו שיש בה <code>class="img-fluid"</code> (<a href="#" data-go="grid:6">השלב על row-cols ותמונות</a>) – את הרוחב קובעת עכשיו העמודה. (תמונות בגודל מתאים, לא מתוחות – גם זה סעיף במחוון של הגשה 1.)<br>
-        בעמודה הראשונה (<code>col-md-8</code>): במקום "כאן הטקסט של הדף" העבירו לשם את הפסקה שכבר יש בדף, ובמקום ההערה – את כל שאר התוכן: קופסת התוכן, אם יש (ה-div עם <code>class="box"</code> משיעור 3), והקישור חזרה לדף הנחיתה. ה-h1 נשאר מעל השורה; רק אם הוא בתוך הקופסה, הוא עובר איתה לעמודה – וזה בסדר.</li>
-      <li>שמרו (Ctrl+S), ואז קליק ימני על about.html &rlm;←&rlm; <b>View in Browser</b>.</li>
+      <li><b>מעבירים לעמודות.</b> <span class="where">בעמודה השנייה</span> (<code>col-md-4</code>): גזרו (Ctrl+X) את שורת ה-img שכבר יש בדף (משיעור 2), והדביקו (Ctrl+V) אותה במקום שורת ה-img שבדוגמה. מחקו ממנה את <code>width="…"</code> (אם יש) וודאו שיש בה <code>class="img-fluid"</code> (<a href="#" data-go="grid:6">השלב על row-cols ותמונות</a>) – את הרוחב קובעת עכשיו העמודה. (תמונות בגודל מתאים, לא מתוחות – גם זה סעיף במחוון של הגשה 1.)<br>
+        <span class="where">בעמודה הראשונה</span> (<code>col-md-8</code>): במקום "כאן הטקסט של הדף" העבירו לשם את הפסקה שכבר יש בדף, ובמקום ההערה – את כל שאר התוכן: קופסת התוכן, אם יש (ה-div עם <code>class="box"</code> משיעור 3), והקישור חזרה לדף הנחיתה. ה-h1 נשאר מעל השורה; רק אם הוא בתוך הקופסה, הוא עובר איתה לעמודה – וזה בסדר.</li>
+      <li>שמרו (Ctrl+S), ואז קליק ימני <span class="where">על about.html</span> &rlm;←&rlm; <b>View in Browser</b>.</li>
       <li>בדיקה בגודל טלפון: בדפדפן F12, ואז Ctrl+Shift+M. בראש התצוגה, בתפריט <b>Dimensions</b>, בחרו <b>Responsive</b>, ובשדה הרוחב שלידו כתבו <b>360</b>. אחר כך נסו <b>767</b> ו-<b>768</b> – ותראו בדיוק איפה הסידור מתחלף. (דרך מהירה, בלי F12: הצרו את חלון הדפדפן עצמו – גררו את הקצה שלו פנימה.)</li>
     </ol>
     <div class="expect">בכתובת שמסתיימת ב-<code>/HTML/about.html</code> רואים: התוכן כבר לא צמוד לקצה החלון. בחלון רחב – הטקסט בימין והתמונה בשמאל, באותה שורה. ברוחב 360 – התמונה מתחת לטקסט, ולא רחבה מהמסך. ב-767 הן עדיין אחת מתחת לשנייה, וב-768 (נקודת השבירה md) – כבר זו ליד זו.</div>
@@ -654,7 +654,7 @@ td code{overflow-wrap:normal;white-space:normal}
     <h3>💻 עכשיו אצלכם ב-Visual Studio</h3>
     <p>מחליפים את כותרת האתר משיעור 4 ב<b>תפריט ניווט של Bootstrap</b> – הלוגו ושם האתר עוברים לתוכו – ומוסיפים לדף התוכן <b>כרטיסים בגריד</b>. בהגשה 1 צריך תפריט אחד שמופיע בכל הדפים – ותפריט מעוצב (לא רשימת קישורים כחולים) הוא גם סעיף במחוון שלה. בשיעור 6 תלמדו לכתוב אותו <b>פעם אחת</b> לכל האתר – לכן כבר עכשיו הוא זהה בדיוק בכל דף.</p>
     <ol class="vsdo">
-      <li>(מטלה 4 כבר הוגשה? רק אז מוחקים.) ב-about.html <b>מחקו את כותרת האתר הישנה</b>: את כל ה-div, מהשורה <code>&lt;div class="site-header"&gt;</code> ועד ה-<code>&lt;/div&gt;</code> שסוגר אותו (כולל הלוגו וה-nav שבתוכו). אחר כך, מיד אחרי <code>&lt;body&gt;</code> – <b>לפני</b> ה-div של ה-container – הדביקו את התפריט החדש:
+      <li>(מטלה 4 כבר הוגשה? רק אז מוחקים.) <span class="where">ב-about.html</span> <b>מחקו את כותרת האתר הישנה</b>: את כל ה-div, מהשורה <code>&lt;div class="site-header"&gt;</code> ועד ה-<code>&lt;/div&gt;</code> שסוגר אותו (כולל הלוגו וה-nav שבתוכו). אחר כך, מיד אחרי <code>&lt;body&gt;</code> – <b>לפני</b> ה-div של ה-container – הדביקו את התפריט החדש:
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
 &lt;nav class="navbar navbar-expand-md navbar-light bg-warning sticky-top"&gt;
     &lt;div class="container"&gt;
@@ -676,11 +676,11 @@ td code{overflow-wrap:normal;white-space:normal}
 &lt;/nav&gt;
 </pre></div></li>
       <li><b>מתאימים את התפריט לאתר שלכם:</b> שם קובץ הלוגו (מהתיקייה Img), שם האתר, ושורת <code>li</code> לכל דף תוכן שיש לכם – כמו בתפריט הישן. את שאר ה-class-ים השאירו כמו שהם. (רוצים צבע אחר, או תפריט כהה? זה ב-🚀 מתחת לשלבים.)</li>
-      <li>אותו דבר ב-index.html: מחקו את ה-div של <code>site-header</code>, והדביקו מיד אחרי <code>&lt;body&gt;</code> את <b>אותו תפריט בדיוק</b> – העתיקו אותו מ-about.html, אחרי שהתאמתם אותו. (את שלוש השורות של Bootstrap כבר הוספתם שם בנושא "מחברים את Bootstrap".)</li>
-      <li>ב-<span class="nw">site-style.css</span> <b>מחקו את ארבעת הכללים של התפריט הישן</b> – אלה שהבוררים שלהם הם <code>nav ul</code>, <code>nav li</code>, <code>nav a</code> ו-<code>nav a:hover</code>. כל כלל נמחק כולו: מהבורר ועד הסוגר המסולסל שסוגר אותו. שמרו (Ctrl+S).
+      <li>אותו דבר <span class="where">ב-index.html</span>: מחקו את ה-div של <code>site-header</code>, והדביקו מיד אחרי <code>&lt;body&gt;</code> את <b>אותו תפריט בדיוק</b> – העתיקו אותו מ-about.html, אחרי שהתאמתם אותו. (את שלוש השורות של Bootstrap כבר הוספתם שם בנושא "מחברים את Bootstrap".)</li>
+      <li><span class="where">ב-<span class="nw">site-style.css</span></span> <b>מחקו את ארבעת הכללים של התפריט הישן</b> – אלה שהבוררים שלהם הם <code>nav ul</code>, <code>nav li</code>, <code>nav a</code> ו-<code>nav a:hover</code>. כל כלל נמחק כולו: מהבורר ועד הסוגר המסולסל שסוגר אותו. שמרו (Ctrl+S).
         <div class="trap">הכללים הישנים נשארים בקובץ. הבורר <code>nav a</code> אומר "כל קישור שנמצא בתוך תגית nav" – וגם ה-navbar של Bootstrap הוא תגית <code>nav</code>. לכן הכללים הישנים חלים גם על התפריט החדש, ומתערבבים בעיצוב שלו. למשל: כל קישור בתפריט, וגם שם האתר, מקבל את צבע הרקע שכתבתם ב-<code>nav a:hover</code> כשהעכבר עליו.</div>
         בשאר הדפים עדיין יש כותרת ישנה, והתפריט שבה ייראה בינתיים כמו רשימה רגילה עם תבליטים. זה בסדר: <a href="#" data-go="practice:2">בצעד הפרויקט</a> שבסוף השיעור תחליפו אותה גם שם.</li>
-      <li>ב-about.html, מתחת לשורה של הטקסט והתמונה (אחרי ה-<code>&lt;/div&gt;</code> שסוגר את ה-row), הוסיפו שורה של שלושה כרטיסים:
+      <li>ב-about.html, <span class="where">מתחת לשורה של הטקסט והתמונה</span> (אחרי ה-<code>&lt;/div&gt;</code> שסוגר את ה-row), הוסיפו שורה של שלושה כרטיסים:
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
 &lt;div class="row row-cols-1 row-cols-md-3 g-4 mt-3"&gt;
     &lt;div class="col"&gt;
@@ -713,7 +713,7 @@ td code{overflow-wrap:normal;white-space:normal}
 &lt;/div&gt;
 </pre></div>
         בכל כרטיס החליפו את שם התמונה (מהתיקייה Img), את הכותרת ואת הטקסט.</li>
-      <li>שמרו את שני הדפים, והציגו את about.html בדפדפן (View in Browser). אם הוא כבר פתוח – רעננו בדפדפן (Ctrl+F5). לחצו בתפריט על "דף הבית" – ומשם חזרה לדף התוכן.</li>
+      <li>שמרו את שני הדפים, והציגו את about.html בדפדפן (View in Browser). אם הוא כבר פתוח – רעננו בדפדפן (Ctrl+F5). לחצו <span class="where">בתפריט</span> על "דף הבית" – ומשם חזרה לדף התוכן.</li>
       <li>בדיקה בגודל טלפון (360 – <a href="#" data-go="grid:7">איך</a>): לחצו על ☰.</li>
     </ol>
     <details class="more"><summary>🚀 רוצים להתאים את התפריט?</summary>
@@ -783,9 +783,9 @@ td code{overflow-wrap:normal;white-space:normal}
     <h3>💻 עכשיו אצלכם ב-Visual Studio</h3>
     <p>שני דברים שתעשו שוב ושוב בפרויקט: לוודא שהעיצוב <b>שלכם</b> מנצח את Bootstrap, ולהביא רכיב חדש <b>מהתיעוד</b>. הכול ב-about.html <span class="nw">וב-site-style.css</span>.</p>
     <ol class="vsdo">
-      <li>🔨 <b>שברו בכוונה:</b> ב-head של about.html החליפו את הסדר של שתי שורות ה-<code>link</code>: <span class="nw">site-style.css</span> למעלה, Bootstrap מתחתיה. שמרו ורעננו <b>בדפדפן</b> (Ctrl+F5). צבע הרקע או הגופן שכתבתם ל-body <span class="nw">ב-site-style.css</span> (בשיעור 3) נעלמו? זה Bootstrap שניצח: גם לו יש כלל ל-body, ועכשיו הוא נכתב אחרון – בדיוק כמו <a href="#" data-go="mine:1">בשלב 1</a>.</li>
+      <li>🔨 <b>שברו בכוונה:</b> <span class="where">ב-head של about.html</span> החליפו את הסדר של שתי שורות ה-<code>link</code>: <span class="nw">site-style.css</span> למעלה, Bootstrap מתחתיה. שמרו ורעננו <b>בדפדפן</b> (Ctrl+F5). צבע הרקע או הגופן שכתבתם ל-body <span class="nw">ב-site-style.css</span> (בשיעור 3) נעלמו? זה Bootstrap שניצח: גם לו יש כלל ל-body, ועכשיו הוא נכתב אחרון – בדיוק כמו <a href="#" data-go="mine:1">בשלב 1</a>.</li>
       <li>החזירו את הסדר הנכון – קודם Bootstrap, ואחריו <span class="nw">site-style.css</span> – שמרו ורעננו. העיצוב שלכם חזר.</li>
-      <li>🔨 <b>שם תגית מול class של Bootstrap:</b> בסוף <span class="nw">site-style.css</span> כתבו <code>h2 { font-size: 26px; }</code>, שמרו ורעננו. כותרות הכרטיסים לא גדלו? על כל אחת יש <code>class="h5"</code> של Bootstrap – ו-class חזק משם תגית, גם כשהקובץ שלכם אחרון. מחקו את הכלל הזה, ובמקומו הדביקו את הכלל שלמטה (ושנו את הצבע לצבע של האתר שלכם). ב-about.html הוסיפו את השם לכותרת של הכרטיס הראשון: <code>class="card-title h5 site-title"</code>.
+      <li>🔨 <b>שם תגית מול class של Bootstrap:</b> <span class="where">בסוף <span class="nw">site-style.css</span></span> כתבו <code>h2 { font-size: 26px; }</code>, שמרו ורעננו. כותרות הכרטיסים לא גדלו? על כל אחת יש <code>class="h5"</code> של Bootstrap – ו-class חזק משם תגית, גם כשהקובץ שלכם אחרון. מחקו את הכלל הזה, ובמקומו הדביקו את הכלל שלמטה (ושנו את הצבע לצבע של האתר שלכם). ב-about.html הוסיפו את השם לכותרת של הכרטיס הראשון: <code>class="card-title h5 site-title"</code>.
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="css">
 .site-title {
     color: darkred;
@@ -819,9 +819,9 @@ td code{overflow-wrap:normal;white-space:normal}
       <p style="margin-top:0">⏱ זה הצעד הארוך של השיעור – שעה עד שעתיים. לא חייבים בישיבה אחת.</p>
       <b>מלבישים את כל האתר שלכם ב-Bootstrap.</b> בשלבי "💻 עכשיו אצלכם" כבר בניתם את about.html כדף הבסיס של דפי התוכן (גריד, תפריט, כרטיסים), וחיברתם את index.html. עכשיו מעבירים את זה לכל שאר הדפים – דפי התוכן, וגם שלושת דפי הטפסים משיעור 4 (כניסה, הרשמה ושחזור סיסמה):
       <ol class="vsdo">
-        <li><b>שלוש השורות, בכל דף:</b> העתיקו אותן מ-about.html, שם הן כבר כתובות נכון: ב-head – שורת ה-viewport ושורת ה-link ל-Bootstrap, ו<b>אחריהן</b> ה-link ל-<span class="nw">site-style.css</span>; ובסוף ה-body – ה-script. ובתגית html – <code>lang="he" dir="rtl"</code>, כמו בכל דף.</li>
-        <li><b>התפריט, בכל דף:</b> מחקו את ה-div הישן של <code>site-header</code>, ומיד אחרי <code>&lt;body&gt;</code> הדביקו את <b>אותו navbar בדיוק</b> מ-about.html (<a href="#" data-go="comps:11">כמו שעשיתם שם</a>). הוספתם דף? הוסיפו קישור אליו בתפריט של <b>כל</b> הדפים. אחרי שהכותרת הישנה נמחקה מכל הדפים – מחקו <span class="nw">מ-site-style.css</span> גם את הכללים <code>.site-header</code> ו-<code>.site-name</code>: אף תגית כבר לא משתמשת בהם.</li>
-        <li><b>container, בכל דף:</b> עטפו את כל התוכן שמתחת לתפריט ב-<code>&lt;div class="container"&gt;</code> … <code>&lt;/div&gt;</code> – גם ב-index.html ובדפי הטפסים. הסדר ב-body: קודם ה-nav, אחריו ה-container עם התוכן, ובסוף שורת ה-script (<a href="#" data-go="grid:7">כמו ב-about.html</a>).</li>
+        <li><b>שלוש השורות, <span class="where">בכל דף</span>:</b> העתיקו אותן מ-about.html, שם הן כבר כתובות נכון: ב-head – שורת ה-viewport ושורת ה-link ל-Bootstrap, ו<b>אחריהן</b> ה-link ל-<span class="nw">site-style.css</span>; ובסוף ה-body – ה-script. ובתגית html – <code>lang="he" dir="rtl"</code>, כמו בכל דף.</li>
+        <li><b>התפריט, <span class="where">בכל דף</span>:</b> מחקו את ה-div הישן של <code>site-header</code>, ומיד אחרי <code>&lt;body&gt;</code> הדביקו את <b>אותו navbar בדיוק</b> מ-about.html (<a href="#" data-go="comps:11">כמו שעשיתם שם</a>). הוספתם דף? הוסיפו קישור אליו בתפריט של <b>כל</b> הדפים. אחרי שהכותרת הישנה נמחקה מכל הדפים – מחקו <span class="nw">מ-site-style.css</span> גם את הכללים <code>.site-header</code> ו-<code>.site-name</code>: אף תגית כבר לא משתמשת בהם.</li>
+        <li><b>container, <span class="where">בכל דף</span>:</b> עטפו את כל התוכן שמתחת לתפריט ב-<code>&lt;div class="container"&gt;</code> … <code>&lt;/div&gt;</code> – גם ב-index.html ובדפי הטפסים. הסדר ב-body: קודם ה-nav, אחריו ה-container עם התוכן, ובסוף שורת ה-script (<a href="#" data-go="grid:7">כמו ב-about.html</a>).</li>
         <li><b>דף הנחיתה (index.html) – מעוצב:</b> זה הדף הראשון שרואים. במחוון של הגשה 1 הוא שווה 15 נקודות, על שלושה דברים: כותרת עם שם האתר, פסקה שמסבירה על מה האתר ולמי הוא מיועד, וקישורים או כפתורים לחלקים המרכזיים. בתוך ה-container שלו בנו פתיחה גדולה וכרטיס לכל דף תוכן. הדביקו, ואז החליפו טקסטים, תמונות וקישורים – ושכפלו את ה-<code>col</code> פעם אחת לכל דף תוכן (בלי row חדש – הכרטיס הרביעי יורד לבד לשורה הבאה):
           <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
 &lt;div class="p-5 mb-4 bg-light text-center"&gt;
@@ -844,8 +844,8 @@ td code{overflow-wrap:normal;white-space:normal}
 &lt;/div&gt;
 </pre></div>
           הכול class-ים שכבר הכרתם: <code>p-5</code> ו-<code>mb-4</code> (<a href="#" data-go="comps:1">רווחים</a>), <code>bg-light</code> ו-<code>btn-lg</code> (<a href="#" data-go="comps:2">צבעים וכפתורים</a>), וכרטיסים בגריד (<a href="#" data-go="comps:5">כאן</a>) – עם <code>stretched-link</code>, כך שכל הכרטיס לחיץ (<a href="#" data-go="comps:4">כאן</a>). את מה שכבר היה בדף – טקסט, תמונה – שלבו בפנים או השאירו מתחת. רוצים רקע משלכם לפתיחה? מחקו מהתגית את <code>bg-light</code>, ושימו במקומו class משלכם (למשל <code>hero</code>) עם background-color <span class="nw">ב-site-style.css</span>. אם <code>bg-light</code> נשאר על התגית – הוא תמיד מנצח.</li>
-        <li><b>דפי התוכן:</b> בכל דף תוכן שכבר יש לכם – אותו מבנה כמו בדף הבסיס about.html: שורה עם שתי עמודות, טקסט ותמונה. דף חדש? יוצרים דף HTML עם שם משמעותי באנגלית, בלי רווחים (למשל gallery.html – לא page2.html; גם זה סעיף במחוון), מעתיקים אליו את כל התוכן של about.html, ומחליפים רק את ה-<code>title</code>, ה-h1, הטקסט והתמונות – כך כל דפי התוכן באותו סגנון בדיוק. בהגשה 1 צריך לפחות 10 דפי תוכן, אבל עכשיו מספיקים 2 דפים נוספים. את השאר נוח יותר ליצור אחרי שיעור 6, ישר כדפי Razor.</li>
-        <li><b>הטפסים:</b> מוסיפים רק class-ים (<a href="#" data-go="comps:10">השלב על טופס מעוצב</a>). ה-name, ה-id וה-for נשארים בדיוק כמו שהם. כל תווית ושדה נכנסים ל-div משלהם, ואת ה-<code>&lt;br /&gt;</code> שביניהם מוחקים – <code>form-control</code> כבר תופס שורה שלמה. שלוש דוגמאות מדף ההרשמה – שדה טקסט, כפתור radio וכפתור שליחה:
+        <li><b>דפי התוכן:</b> <span class="where">בכל דף תוכן</span> שכבר יש לכם – אותו מבנה כמו בדף הבסיס about.html: שורה עם שתי עמודות, טקסט ותמונה. דף חדש? יוצרים דף HTML עם שם משמעותי באנגלית, בלי רווחים (למשל gallery.html – <span class="not">לא page2.html</span>; גם זה סעיף במחוון), מעתיקים אליו את כל התוכן של about.html, ומחליפים רק את ה-<code>title</code>, ה-h1, הטקסט והתמונות – כך כל דפי התוכן באותו סגנון בדיוק. בהגשה 1 צריך לפחות 10 דפי תוכן, אבל עכשיו מספיקים 2 דפים נוספים. את השאר נוח יותר ליצור אחרי שיעור 6, ישר כדפי Razor.</li>
+        <li><b>הטפסים:</b> מוסיפים רק class-ים (<a href="#" data-go="comps:10">השלב על טופס מעוצב</a>). ה-name, ה-id וה-for <span class="not">נשארים בדיוק כמו שהם</span>. כל תווית ושדה נכנסים ל-div משלהם, ואת ה-<code>&lt;br /&gt;</code> שביניהם <span class="not">מוחקים</span> – <code>form-control</code> כבר תופס שורה שלמה. שלוש דוגמאות מדף ההרשמה – שדה טקסט, כפתור radio וכפתור שליחה:
           <div class="codeblock"><pre data-code="html">
 &lt;div class="mb-3"&gt;
     &lt;label for="userName" class="form-label"&gt;שם משתמש&lt;/label&gt;
@@ -1583,7 +1583,7 @@ const TASKS = [
      explain: '<code>card</code> הוא העוטף – המסגרת והפינות המעוגלות. <code>card-header</code> הוא הפס העליון האפור, ו-<code>card-body</code> הוא הגוף עם הריפוד. שניהם ילדים ישירים של card – לכן הם בתוכו, זה אחרי זה.',
      alt: 'רוצים רווח בין השורה לכרטיס? הוסיפו לכרטיס גם <code>mt-4</code>: <code>class="card mt-4"</code>.'},
    back: 'comps:3'},
-  {id:'t4', text:'בתוך גוף הכרטיס – קישור לדף <span class="cls">order.html</span> שנראה כמו כפתור ירוק: <code>btn btn-success</code>.',
+  {id:'t4', text:'<span class="where">בתוך גוף הכרטיס</span> – קישור לדף <span class="cls">order.html</span> שנראה כמו כפתור ירוק: <code>btn btn-success</code>.',
    test: d => t4ok(d),
    hints: ['כפתור של Bootstrap מקבל שני class-ים: הצורה הבסיסית, ועוד אחד לצבע. ירוק = הצלחה (success). על איזו תגית? מעבירים לדף אחר – אז קישור. ואיפה? בתוך ה-div של הגוף.',
            'המקום: בתוך ה-div של <code>card-body</code>, אחרי הפסקה. התגית: <code>a</code>, וה-<code>href</code> מצביע על הדף שכתוב במשימה. ה-class-ים: שני אלה שבמשימה, עם רווח ביניהם.'],
@@ -1591,7 +1591,7 @@ const TASKS = [
      explain: '<code>btn</code> נותן את צורת הכפתור, ו-<code>btn-success</code> את הצבע הירוק. התגית היא <code>a</code>, כי הכפתור מעביר לדף אחר. והוא יושב בתוך card-body – חלק מגוף הכרטיס, עם הריפוד שלו.',
      alt: '<code>&lt;button class="btn btn-success"&gt;</code> נראה אותו דבר, אבל לא מעביר לדף אחר – לכן הבדיקה לא מקבלת אותו. גם קישור בלי <code>href="order.html"</code>, וכפתור מחוץ ל-card-body, לא מתקבלים.'},
    back: 'comps:2'},
-  {id:'t5', text:'תנו לכותרת h1 <b>מרווח חיצוני (margin)</b> מלמעלה ויישור למרכז – רק עם class-ים של Bootstrap.',
+  {id:'t5', text:'תנו <span class="where">לכותרת h1</span> <b>מרווח חיצוני (margin)</b> מלמעלה ויישור למרכז – רק עם class-ים של Bootstrap.',
    test: d => { const h = d.querySelector('h1'); if (!h || h.hasAttribute('style')) return false; const cs = d.defaultView.getComputedStyle(h);
      return h.classList.contains('text-center') && hasCls(h, /^(mt|my|m)-[1-5]$/) && cs.textAlign === 'center' && parseFloat(cs.marginTop) > 0; },
    hints: ['שני class-ים של כלי עזר (utilities): אחד ל-margin מלמעלה (m ועוד t – top), ואחד ליישור הטקסט למרכז.',

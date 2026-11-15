@@ -151,7 +151,7 @@
     <div class="ctrls"><div class="seg" id="t4seg"></div></div>
     <div id="t4"></div>
     <div class="what" id="t4what"></div>
-    <div class="trap">בתא אפשר לשים הכול – אבל טבלה היא למידע שיש לו באמת <b>שורות ועמודות</b>: מחירון, מערכת שעות. לא משתמשים בה כדי <b>לסדר דף</b> (תמונה ליד טקסט, תפריט בצד): בטלפון היא לא מתקפלת, וקוראי מסך מקריאים אותה כמו נתונים. סידור של דף עושים ב-CSS – בשיעור הבא.</div>
+    <div class="trap">בתא אפשר לשים הכול – אבל טבלה היא למידע שיש לו באמת <b>שורות ועמודות</b>: מחירון, מערכת שעות. <span class="not">לא משתמשים בה</span> כדי <b>לסדר דף</b> (תמונה ליד טקסט, תפריט בצד): בטלפון היא לא מתקפלת, וקוראי מסך מקריאים אותה כמו נתונים. סידור של דף עושים ב-CSS – בשיעור הבא.</div>
   </article>
   <article class="spread act">
     <h3>מעצבים טבלה עם CSS</h3>
@@ -167,7 +167,7 @@
     <h3>💻 עכשיו אצלכם ב-Visual Studio</h3>
     <p>מוסיפים טבלת מחירים לדף התרגול <b>pizza.html</b> מהשיעור הקודם, ומעצבים אותה בקובץ <b>style.css</b> שלו. את דפי האתר שלכם עוד לא מלכלכים – אליהם מגיעים בנושא "טפסים".</p>
     <ol class="vsdo">
-      <li>ב-Solution Explorer פתחו את pizza.html – הוא בתיקייה HTML, בתוך wwwroot. <b>לפני</b> השורה <code>&lt;/body&gt;</code> הדביקו:
+      <li><span class="where">ב-Solution Explorer</span> פתחו את pizza.html – הוא בתיקייה HTML, בתוך wwwroot. <span class="where"><b>לפני</b> השורה</span> <code>&lt;/body&gt;</code> הדביקו:
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
 &lt;h2&gt;המחירון&lt;/h2&gt;
 &lt;table&gt;
@@ -181,7 +181,7 @@
     &lt;/tbody&gt;
 &lt;/table&gt;
 </pre></div></li>
-      <li>פתחו את <b>style.css</b> (בתיקייה css) והדביקו בסוף הקובץ את העיצוב של <a href="#" data-go="tables:5">השלב הקודם</a>:
+      <li>פתחו את <b>style.css</b> (בתיקייה css) והדביקו <span class="where">בסוף הקובץ</span> את העיצוב של <a href="#" data-go="tables:5">השלב הקודם</a>:
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="css">
 table {
     border-collapse: collapse;
@@ -198,7 +198,7 @@ tbody tr:hover {
     background-color: bisque;
 }
 </pre></div></li>
-      <li>שמרו את <b>שני</b> הקבצים (Ctrl+S בכל אחד), ופתחו את הדף: קליק ימני על pizza.html &rlm;←&rlm; <b>View in Browser</b>. אם הוא כבר פתוח – רעננו <b>בדפדפן</b> (Ctrl+F5).</li>
+      <li>שמרו את <b>שני</b> הקבצים (Ctrl+S בכל אחד), ופתחו את הדף: קליק ימני <span class="where">על pizza.html</span> &rlm;←&rlm; <b>View in Browser</b>. אם הוא כבר פתוח – רעננו <b>בדפדפן</b> (Ctrl+F5).</li>
       <li>🔨 <b>שברו בכוונה:</b> בשורה של מרגריטה כתבו את המילה <b>מבצע!</b> בין <code>&lt;tr&gt;</code> לבין <code>&lt;td&gt;</code> הראשון. שמרו ורעננו – לאן היא קפצה? (<a href="#" data-go="tables:4">השלב על תוכן בתאים</a>). עכשיו מחקו אותה.</li>
     </ol>
     <div class="expect">בכתובת שמסתיימת ב-<code>/HTML/pizza.html</code> רואים, מתחת לתמונה: הכותרת "המחירון" וטבלה עם קו אחד דק בין התאים; שורת הכותרות כתומה עם טקסט לבן; וכשהעכבר עובר על שורת מנה – היא נצבעת בכתום בהיר. בצעד 4 המילה "מבצע!" הופיעה <b>מעל</b> הטבלה, לא בתוכה.</div>
@@ -254,7 +254,7 @@ tbody tr:hover {
     <h3>💻 עכשיו אצלכם ב-Visual Studio</h3>
     <p>בונים בדף התרגול <b>pizza.html</b> תפריט אמיתי: nav, רשימה וקישורים – ומעצבים אותו ב-style.css. ככה תראו אצלכם איך רשימה רגילה הופכת לפס תפריט.</p>
     <ol class="vsdo">
-      <li>ב-pizza.html, <b>מיד אחרי</b> השורה <code>&lt;body&gt;</code>, הדביקו את התפריט. שני הקישורים מובילים לדפים שכבר יש לכם בתיקייה HTML:
+      <li>ב-pizza.html, <span class="where"><b>מיד אחרי</b> השורה</span> <code>&lt;body&gt;</code>, הדביקו את התפריט. שני הקישורים מובילים לדפים שכבר יש לכם בתיקייה HTML:
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
 &lt;nav&gt;
     &lt;ul&gt;
@@ -264,7 +264,7 @@ tbody tr:hover {
 &lt;/nav&gt;
 </pre></div></li>
       <li>שמרו ורעננו <b>בדפדפן</b> (Ctrl+F5). בינתיים זו רשימה רגילה: תבליטים, קישורים כחולים, אחד מתחת לשני – כמו <a href="#" data-go="lists:2">בכפתור 2 בשלב הקודם</a>.</li>
-      <li>בסוף <b>style.css</b> הדביקו את העיצוב של התפריט:
+      <li><span class="where">בסוף <b>style.css</b></span> הדביקו את העיצוב של התפריט:
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="css">
 nav {
     background-color: firebrick;
@@ -287,7 +287,7 @@ nav a:hover {
     background-color: darkorange;
 }
 </pre></div>שמרו ורעננו.</li>
-      <li>🔨 <b>ניסוי:</b> ב-style.css סמנו את השורה <code>display: inline;</code> ולחצו Ctrl+K ואז Ctrl+C – השורה הפכה להערה (משיעור 3). שמרו ורעננו: הקישורים חזרו להיות אחד מתחת לשני. עכשיו בטלו את ההערה – Ctrl+K ואז Ctrl+U – שמרו ורעננו.</li>
+      <li>🔨 <b>ניסוי:</b> <span class="where">ב-style.css</span> סמנו את השורה <code>display: inline;</code> ולחצו Ctrl+K ואז Ctrl+C – השורה הפכה להערה (משיעור 3). שמרו ורעננו: הקישורים חזרו להיות אחד מתחת לשני. עכשיו בטלו את ההערה – Ctrl+K ואז Ctrl+U – שמרו ורעננו.</li>
     </ol>
     <div class="expect">בכתובת שמסתיימת ב-<code>/HTML/pizza.html</code> רואים בראש הדף פס אדום, ובו "דף הבית" ו"פיצה דני" בלבן, באותה שורה, בלי תבליטים ובלי קו מתחת. כשהעכבר על קישור – הרקע שלו כתום. לחיצה על "דף הבית" פותחת את index.html שלכם.</div>
     <div class="tip">💡 <b>עובדים עכשיו על מטלה 4?</b> יש לכם כבר כל מה שצריך לכותרת האתר. אפשר לקפוץ ל<a href="#" data-go="practice:2">צעד בפרויקט</a>, לבנות אותה – ולחזור לטפסים אחר כך. הטפסים שייכים להגשה 1.</div>
@@ -383,7 +383,7 @@ nav a:hover {
     <h3>💻 עכשיו אצלכם ב-Visual Studio</h3>
     <p>מכאן עוברים לאתר <b>שלכם</b>: יוצרים את שלושת הדפים של הגשה 1. דף הכניסה נבנה עד הסוף, ובדף ההרשמה ובדף השחזור – כל מה שכבר אפשר עם מה שלמדתם. בנושא הבא תשלימו אותם.</p>
     <ol class="vsdo">
-      <li><b>יוצרים את login.html:</b> קליק ימני על התיקייה <b>HTML</b> (בתוך wwwroot) &rlm;←&rlm; <b>Add</b> &rlm;←&rlm; <b><bdi>New Item...</bdi></b> &rlm;←&rlm; <b>HTML Page</b>. את השם המוצע (htmlpage.html) שנו ל-<b>login.html</b> &rlm;←&rlm; <b>Add</b>. (אם החלון נפתח קטן, בלי רשימת תבניות – לחצו בו Show All Templates.)</li>
+      <li><b>יוצרים את login.html:</b> קליק ימני <span class="where">על התיקייה <b>HTML</b></span> (בתוך wwwroot) &rlm;←&rlm; <b>Add</b> &rlm;←&rlm; <b><bdi>New Item...</bdi></b> &rlm;←&rlm; <b>HTML Page</b>. את השם המוצע (htmlpage.html) שנו ל-<b>login.html</b> &rlm;←&rlm; <b>Add</b>. (אם החלון נפתח קטן, בלי רשימת תבניות – לחצו בו Show All Templates.)</li>
       <li><b>השלד:</b> Visual Studio כתב בקובץ שלד בלי lang ובלי dir, ועם title ריק. סמנו את כל מה שכתוב בקובץ (Ctrl+A), ובמקומו הדביקו את השלד הזה: בעברית, מימין לשמאל, עם title, ומחובר לקובץ העיצוב של האתר שלכם (site-style.css, משיעור 3):
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
 &lt;!DOCTYPE html&gt;
@@ -398,7 +398,7 @@ nav a:hover {
 &lt;/body&gt;
 &lt;/html&gt;
 </pre></div></li>
-      <li><b>ה-body:</b> הדביקו בתוך body את טופס הכניסה – עם label ו-for, id ו-name לכל שדה, וקישורים לשני הדפים האחרים:
+      <li><b>ה-body:</b> הדביקו <span class="where">בתוך body</span> את טופס הכניסה – עם label ו-for, id ו-name לכל שדה, וקישורים לשני הדפים האחרים:
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
 &lt;h1&gt;כניסה לאתר&lt;/h1&gt;
 &lt;form&gt;
@@ -414,7 +414,7 @@ nav a:hover {
 &lt;br /&gt;
 &lt;a href="recover.html"&gt;שכחתי סיסמה&lt;/a&gt;
 </pre></div></li>
-      <li><b>register.html – הרשמה:</b> צרו דף חדש באותה דרך (צעדים 1 ו-2 – אותו שלד, רק ב-title כתבו <b>הרשמה</b>), והדביקו בתוך body:
+      <li><b>register.html – הרשמה:</b> צרו דף חדש באותה דרך (צעדים 1 ו-2 – אותו שלד, רק <span class="where">ב-title</span> כתבו <b>הרשמה</b>), והדביקו בתוך body:
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
 &lt;h1&gt;הרשמה&lt;/h1&gt;
 &lt;form&gt;
@@ -442,7 +442,7 @@ nav a:hover {
           <tr><td>מייל</td><td><code>text</code></td><td><code>email</code></td></tr>
         </table>
         (למייל – <code>type="text"</code>. למה? בנושא הבא.)<br />שדה אחד עוד חסר כאן: <b>תאריך לידה</b>. הוא נכתב עם סוג שעוד לא למדתם – תוסיפו אותו בנושא הבא.</li>
-      <li><b>recover.html – שחזור סיסמה:</b> צרו דף שלישי באותה דרך (אותו שלד, וב-title: <b>שחזור סיסמה</b>), והדביקו בתוך body. את שאלות השחזור תוסיפו בנושא הבא:
+      <li><b>recover.html – שחזור סיסמה:</b> צרו דף שלישי באותה דרך (אותו שלד, וב-title: <b>שחזור סיסמה</b>), והדביקו <span class="where">בתוך body</span>. את שאלות השחזור תוסיפו בנושא הבא:
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
 &lt;h1&gt;שחזור סיסמה&lt;/h1&gt;
 &lt;form&gt;
@@ -455,7 +455,7 @@ nav a:hover {
 &lt;/form&gt;
 &lt;a href="login.html"&gt;חזרה לכניסה&lt;/a&gt;
 </pre></div></li>
-      <li><b>בודקים:</b> שמרו את שלושת הקבצים (Ctrl+S בכל אחד – בלי כוכבית בלשוניות), קליק ימני על login.html &rlm;←&rlm; <b>View in Browser</b>. לחצו על המילה "שם משתמש" – הסמן קפץ לתיבה? הקלידו שם וסיסמה, לחצו "כניסה" והסתכלו בשורת הכתובת. אחר כך לחצו "להרשמה", מלאו כמה שדות ולחצו "ניקוי". רוצים לוודא שכל השמות נכונים? העתיקו את הכתובת שקיבלתם אחרי השליחה לבדיקה המהירה שמתחת לצעדים.<br />🔨 <b>שברו בכוונה:</b> בדף הכניסה מחקו את <code>name="password"</code>, שמרו, רעננו ושלחו – password נעלם מהכתובת, בלי שום שגיאה. החזירו אותו.</li>
+      <li><b>בודקים:</b> שמרו את שלושת הקבצים (Ctrl+S בכל אחד – בלי כוכבית בלשוניות), קליק ימני <span class="where">על login.html</span> &rlm;←&rlm; <b>View in Browser</b>. לחצו על המילה "שם משתמש" – הסמן קפץ לתיבה? הקלידו שם וסיסמה, לחצו "כניסה" והסתכלו בשורת הכתובת. אחר כך לחצו "להרשמה", מלאו כמה שדות ולחצו "ניקוי". רוצים לוודא שכל השמות נכונים? העתיקו את הכתובת שקיבלתם אחרי השליחה לבדיקה המהירה שמתחת לצעדים.<br />🔨 <b>שברו בכוונה:</b> בדף הכניסה מחקו את <code>name="password"</code>, שמרו, רעננו ושלחו – password נעלם מהכתובת, בלי שום שגיאה. החזירו אותו.</li>
     </ol>
     <div class="expect">בכתובת שמסתיימת ב-<code>/HTML/login.html</code> רואים: הכותרת "כניסה לאתר", שתי תיבות עם תוויות, כפתור "כניסה" ושני קישורים – בעיצוב של site-style.css. אחרי "כניסה" הכתובת מסתיימת בערך כך:<div class="codeblock urlline"><pre data-code="text">login.html?userName=dana&amp;password=1234</pre></div>כן, הסיסמה גלויה בכתובת! למה? את זה תגלו בנושא "שליחה לשרת". בדף ההרשמה יש 8 תיבות, ו"ניקוי" מרוקן את כולן.<br /><b>התיבות התרוקנו, ושום "כניסה" לא קרתה?</b> זה תקין. הטופס עשה את החלק שלו: אסף את הנתונים ושלח. אבל בשרת עוד אין קוד שבודק שם וסיסמה – אז השרת פשוט שלח שוב את אותו דף. את הקוד הזה תכתבו בהמשך השנה, ב-C#.</div>
     <div class="urlcheck" id="ucForms"></div>
@@ -540,13 +540,13 @@ nav a:hover {
     <h3>💻 עכשיו אצלכם ב-Visual Studio</h3>
     <p>משלימים את דף ההרשמה ואת דף השחזור שהתחלתם <a href="#" data-go="forms:6">בנושא הקודם</a>: תאריך לידה, כפתורי radio למין, רשימת הצעות לעיר, ושתי שאלות לשחזור סיסמה.</p>
     <ol class="vsdo">
-      <li><b>תאריך לידה – date:</b> ב-register.html, <b>אחרי</b> שדה שם המשפחה ולפני שדה העיר, הדביקו (<a href="#" data-go="fields:1">השלב על date</a>):
+      <li><b>תאריך לידה – date:</b> ב-register.html, <b><span class="where">אחרי</b> שדה שם המשפחה ולפני שדה העיר</span>, הדביקו (<a href="#" data-go="fields:1">השלב על date</a>):
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
 &lt;label for="birthDate"&gt;תאריך לידה&lt;/label&gt;
 &lt;input type="date" id="birthDate" name="birthDate" /&gt;
 &lt;br /&gt;
 </pre></div>
-        <b>מין – radio:</b> באותו דף, <b>אחרי</b> שדה המייל ולפני כפתור "הרשמה", הדביקו. שימו לב: לשני הכפתורים <b>אותו name</b>, ו-id שונה לכל אחד:
+        <b>מין – radio:</b> באותו דף, <b><span class="where">אחרי</b> שדה המייל ולפני כפתור "הרשמה"</span>, הדביקו. שימו לב: לשני הכפתורים <b>אותו name</b>, ו-id שונה לכל אחד:
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
 &lt;p&gt;מין:&lt;/p&gt;
 &lt;input type="radio" id="male" name="gender" value="male" /&gt;
@@ -555,7 +555,7 @@ nav a:hover {
 &lt;label for="female"&gt;נקבה&lt;/label&gt;
 &lt;br /&gt;
 </pre></div></li>
-      <li><b>עיר – datalist:</b> מצאו את השורה של תיבת העיר (זו עם <code>id="city"</code>) והחליפו אותה בשורות האלה. התיבה נשארת תיבת טקסט – רק נוספות לה הצעות:
+      <li><b>עיר – datalist:</b> מצאו <span class="where">את השורה של תיבת העיר</span> (זו עם <code>id="city"</code>) והחליפו אותה בשורות האלה. התיבה נשארת תיבת טקסט – רק נוספות לה הצעות:
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
 &lt;input type="text" id="city" name="city" list="cities" /&gt;
 &lt;datalist id="cities"&gt;
@@ -565,7 +565,7 @@ nav a:hover {
     &lt;option value="תל אביב"&gt;&lt;/option&gt;
 &lt;/datalist&gt;
 </pre></div></li>
-      <li><b>שתי שאלות לשחזור – select:</b> ב-register.html, אחרי כפתורי המין ולפני כפתור "הרשמה", הדביקו. בשאלה 2 יש אפשרויות <b>שונות</b> מאלה שבשאלה 1 – כך אי אפשר לבחור את אותה שאלה פעמיים:
+      <li><b>שתי שאלות לשחזור – select:</b> ב-register.html, <span class="where">אחרי כפתורי המין ולפני כפתור "הרשמה"</span>, הדביקו. בשאלה 2 יש אפשרויות <b>שונות</b> מאלה שבשאלה 1 – כך אי אפשר לבחור את אותה שאלה פעמיים:
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
 &lt;label for="question1"&gt;שאלה לשחזור סיסמה 1&lt;/label&gt;
 &lt;select id="question1" name="question1"&gt;
@@ -588,7 +588,7 @@ nav a:hover {
 &lt;input type="text" id="answer2" name="answer2" /&gt;
 &lt;br /&gt;
 </pre></div></li>
-      <li><b>recover.html:</b> בדף השחזור, במקום ההערה <code style="white-space:normal;overflow-wrap:anywhere">&lt;!-- recovery questions: next topic --&gt;</code>, הדביקו <b>את אותו קוד בדיוק</b> מצעד 3 – עם אותם name. כך, כשתכתבו בהמשך השנה את הקוד בשרת, הוא יוכל להשוות בין מה שנשמר בהרשמה לבין מה שהוקלד בשחזור.</li>
+      <li><b>recover.html:</b> <span class="where">בדף השחזור</span>, במקום ההערה <code style="white-space:normal;overflow-wrap:anywhere">&lt;!-- recovery questions: next topic --&gt;</code>, הדביקו <b>את אותו קוד בדיוק</b> מצעד 3 – עם אותם name. כך, כשתכתבו בהמשך השנה את הקוד בשרת, הוא יוכל להשוות בין מה שנשמר בהרשמה לבין מה שהוקלד בשחזור.</li>
       <li><b>בודקים:</b> שמרו את שני הקבצים ופתחו את register.html בדפדפן (View in Browser). בחרו תאריך לידה בלוח השנה; נסו לסמן גם "זכר" וגם "נקבה"; לחצו בתיבת העיר והקלידו את האות א; בחרו שאלות, מלאו הכול ולחצו "הרשמה" – והעתיקו את הכתובת שקיבלתם לבדיקה המהירה שמתחת לצעדים. אחר כך פתחו את recover.html.</li>
     </ol>
     <div class="expect">בכתובת שמסתיימת ב-<code>/HTML/register.html</code> רואים את כל השדות של ההרשמה. בשדה תאריך הלידה נפתח לוח שנה. אפשר לסמן רק אחד מכפתורי המין. בתיבת העיר מופיעות הצעות (אשקלון, אשדוד…) – ואפשר גם להקליד עיר אחרת. אחרי "הרשמה" הכתובת ארוכה, ויש בה למשל <code>birthDate=2010-05-17</code> (שנה-חודש-יום), <code>gender=female</code> ו-<code>question1=pet</code> – ה-value, לא הטקסט שעל המסך. ב-recover.html: שם משתמש, שתי רשימות נפתחות ושתי תיבות לתשובות.</div>
@@ -721,7 +721,7 @@ name=dana&amp;size=L</pre></div>
     <h3>💻 עכשיו אצלכם ב-Visual Studio</h3>
     <p>שלושת הטפסים שלכם כמעט גמורים. עכשיו נותנים לכל טופס id ושיטת שליחה, מעצבים אותם ב-site-style.css, ובודקים בדיוק מה נשלח – גם בכלי המפתחים.</p>
     <ol class="vsdo">
-      <li><b>id ו-method:</b> בכל אחד משלושת הדפים החליפו את השורה <code>&lt;form&gt;</code> בשורה של אותו דף.
+      <li><b>id ו-method:</b> <span class="where">בכל אחד משלושת הדפים</span> החליפו את השורה <code>&lt;form&gt;</code> בשורה של אותו דף.
         <br />ב-login.html:
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
 &lt;form id="loginForm" method="get"&gt;
@@ -735,8 +735,8 @@ name=dana&amp;size=L</pre></div>
 &lt;form id="recoverForm" method="get"&gt;
 </pre></div>
         ה-<code>id</code> של <code>registerForm</code> ו-<code>recoverForm</code> עוד לא משמש לכלום. נשתמש בו בשיעורי <bdi>JavaScript</bdi>, אז נותנים אותו כבר עכשיו.
-        <br />את <code>action</code> <b>לא כותבים</b>: בלעדיו הנתונים נשלחים לאותו דף. את הדף שבאמת יקבל אותם תכתבו בהמשך השנה, ב-C#. ולמה דווקא get? <a href="#" data-go="send:3">בשלב על post</a> ראיתם: דף html רגיל בפרויקט לא יודע לקבל post.</li>
-      <li><b>עיצוב:</b> בסוף <b>site-style.css</b> הדביקו – ואז שנו את הצבעים לצבעים של האתר שלכם:
+        <br />את <code>action</code> <b><span class="not">לא כותבים</span></b>: בלעדיו הנתונים נשלחים לאותו דף. את הדף שבאמת יקבל אותם תכתבו בהמשך השנה, ב-C#. ולמה דווקא get? <a href="#" data-go="send:3">בשלב על post</a> ראיתם: דף html רגיל בפרויקט לא יודע לקבל post.</li>
+      <li><b>עיצוב:</b> <span class="where">בסוף <b>site-style.css</b></span> הדביקו – ואז שנו את הצבעים לצבעים של האתר שלכם:
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="css">
 form {
     background-color: white;
@@ -750,7 +750,7 @@ form {
 </pre></div>
         הכלל <code>form</code> חל על שלושת הטפסים, והכלל <code>#loginForm</code> רק על טופס הכניסה – הוא קצר, אז הקופסה שלו צרה יותר.</li>
       <li><b>מה נשלח?</b> שמרו את כל הקבצים, פתחו את login.html בדפדפן, מלאו ולחצו "כניסה" – והסתכלו בשורת הכתובת. עשו אותו דבר ב-register.html: מלאו את <b>כל</b> השדות, בחרו תאריך לידה, סמנו מין, ולחצו "הרשמה".<br />🔨 <b>שברו בכוונה:</b> ב-login.html כתבו post במקום get, שמרו, רעננו ושלחו – במקום הדף מופיע דף שגיאה: הדף שלכם לא מקבל post. החזירו ל-get.</li>
-      <li><b>בכלי המפתחים:</b> ב-login.html לחצו F12 &rlm;←&rlm; לשונית <b>Network</b>. <b>רק עכשיו</b> מלאו ולחצו "כניסה" (Network רושם רק מה שקורה כשהוא פתוח). ברשימה לחצו על השורה הראשונה – זו שמתחילה ב-<code>login.html?userName=</code> – ואז על הלשונית <b>Payload</b>. ב-get הזוגות מופיעים שם תחת הכותרת <b>Query String Parameters</b>. (בטופס שנשלח ב-post הם יופיעו באותה לשונית, תחת <b>Form Data</b> – ככה תבדקו אותם בהמשך.)</li>
+      <li><b>בכלי המפתחים:</b> <span class="where">ב-login.html</span> לחצו F12 &rlm;←&rlm; לשונית <b>Network</b>. <span class="where"><b>רק עכשיו</b></span> מלאו ולחצו "כניסה" (Network רושם רק מה שקורה כשהוא פתוח). ברשימה לחצו על השורה הראשונה – זו שמתחילה ב-<code>login.html?userName=</code> – ואז על הלשונית <b>Payload</b>. ב-get הזוגות מופיעים שם תחת הכותרת <b>Query String Parameters</b>. (בטופס שנשלח ב-post הם יופיעו באותה לשונית, תחת <b>Form Data</b> – ככה תבדקו אותם בהמשך.)</li>
     </ol>
     <div class="expect">טופס הכניסה בתוך קופסה צרה עם מסגרת; טפסי ההרשמה והשחזור בקופסה באותו סגנון. אחרי "כניסה" הכתובת מסתיימת למשל כך:<div class="codeblock urlline"><pre data-code="text">login.html?userName=dana&amp;password=1234</pre></div>אחרי "הרשמה" יש בכתובת <b>14 זוגות</b> name=ערך, מ-userName ועד answer2 – הכפתורים לא נשלחים, כי אין להם name. ב-F12, בלשונית Payload, תחת Query String Parameters, מופיעים אותם זוגות ברשימה מסודרת.</div>
     <div class="urlcheck" id="ucSend"></div>
@@ -775,8 +775,8 @@ form {
       <b>בונים את הכותרת הקבועה של האתר שלכם.</b> מטלה 4 דורשת שבכל דף תהיה אותה כותרת, עם <b>תמונה או לוגו</b> של האתר, וקישור לדף הראשי. עכשיו יש לכם את כל הכלים: div ותמונה (שיעורים 2–3), ותפריט nav מהשיעור הזה.
       <ol class="vsdo">
         <li><b>הדפים:</b> למטלה 4 צריך דף ראשי ועוד <b>5 דפי תוכן</b> לפחות. חסרים דפים? צרו אותם עכשיו, כמו <code>about.html</code> משיעור 2: שלד, שורת link ל-site-style.css, <code>h1</code>, תמונה ופסקה (את התוכן תשלימו אחר כך). שם כל דף – באנגלית ובלי רווחים: <code>gallery.html</code>, <code>contact.html</code> (לא <code>page1.html</code>). הקבצים צריכים להיות קיימים לפני שבונים תפריט.</li>
-        <li><b>הלוגו:</b> שימו בתיקייה Img תמונה קטנה שתהיה הלוגו של האתר – כל תמונה שמתאימה לנושא שלכם. שם באנגלית, בלי רווחים, למשל logo.png.</li>
-        <li><b>הכותרת – הדבקה:</b> ב-index.html, מיד אחרי השורה <code>&lt;body&gt;</code>, הדביקו את הקוד הזה:
+        <li><b>הלוגו:</b> שימו <span class="where">בתיקייה Img</span> תמונה קטנה שתהיה הלוגו של האתר – כל תמונה שמתאימה לנושא שלכם. שם באנגלית, בלי רווחים, למשל logo.png.</li>
+        <li><b>הכותרת – הדבקה:</b> ב-index.html, <span class="where">מיד אחרי השורה</span> <code>&lt;body&gt;</code>, הדביקו את הקוד הזה:
           <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
 &lt;div class="site-header"&gt;
     &lt;a href="index.html"&gt;&lt;img src="../Img/logo.png" alt="לוגו האתר – לדף הראשי" width="60" /&gt;&lt;/a&gt;
@@ -790,7 +790,7 @@ form {
 &lt;/div&gt;
 </pre></div></li>
         <li><b>הכותרת – מה משנים:</b> בקוד שהדבקתם שנו שלושה דברים: (1) את שם קובץ הלוגו, (2) את שם האתר, (3) בתפריט – שורת <code>li</code> לכל דף תוכן, עם שם הקובץ שלו ב-<code>href</code>. כך גם הדף הראשי מקשר לכל דפי התוכן, כמו שהמטלה דורשת.</li>
-        <li><b>העיצוב:</b> בסוף site-style.css הדביקו – ואז שנו את הצבעים לצבעים של האתר שלכם:
+        <li><b>העיצוב:</b> <span class="where">בסוף site-style.css</span> הדביקו – ואז שנו את הצבעים לצבעים של האתר שלכם:
           <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="css">
 .site-header {
     background-color: lightyellow;
@@ -816,7 +816,7 @@ nav a:hover {
     background-color: orange;
 }
 </pre></div></li>
-        <li><b>בכל הדפים:</b> העתיקו את כל ה-div של הכותרת – מ-<code>&lt;div class="site-header"&gt;</code> ועד ה-<code>&lt;/div&gt;</code> שסוגר אותו – והדביקו אותו מיד אחרי <code>&lt;body&gt;</code> בכל דף של <b>האתר שלכם</b>: דפי התוכן, וגם שלושת דפי הטפסים. לא בדפי התרגול (pizza.html, practice.html, menu.html) – הם לא חלק מהאתר. בדקו שבכל דף יש ב-head שורת link ל-site-style.css.</li>
+        <li><b>בכל הדפים:</b> העתיקו את כל ה-div של הכותרת – מ-<code>&lt;div class="site-header"&gt;</code> ועד ה-<code>&lt;/div&gt;</code> שסוגר אותו – והדביקו אותו מיד אחרי <code>&lt;body&gt;</code> <span class="where">בכל דף של <b>האתר שלכם</b></span>: דפי התוכן, וגם שלושת דפי הטפסים. לא בדפי התרגול (pizza.html, practice.html, menu.html) – הם לא חלק מהאתר. בדקו שבכל דף יש ב-head שורת link ל-site-style.css.</li>
         <li><b>בדיקה:</b> שמרו את כל הקבצים (Ctrl+S בכל אחד), פתחו את index.html בדפדפן (View in Browser) ועברו בין כל הדפים דרך התפריט. לחצו על הלוגו – הוא מחזיר לדף הראשי.</li>
       </ol>
       <div class="expect">בראש כל דף: קופסה עם הלוגו ושם האתר, ומתחתם התפריט – הקישורים בשורה אחת, בלי תבליטים ובלי קו מתחת. הכותרת נראית <b>אותו דבר בדיוק</b> בכל הדפים, והלוגו מוביל לדף הראשי. למה התפריט ירד שורה, ולא עומד ליד הלוגו? כי nav הוא block – הוא תופס שורה שלמה. בינתיים זה בסדר.</div>
@@ -1337,7 +1337,7 @@ const PG_TASKS = [
      explain: '<code>thead</code> עוטפת את שורת הכותרות, ו-<code>tbody</code> את שורות המנות. בכל שורה שני תאים – בדיוק כמו מספר תאי הכותרת – ולכן העמודות יוצאות ישרות.',
      alt: 'רוצים עמודה שלישית – למשל "צמחוני"? מוסיפים <code>th</code> אחד לשורת הכותרות, ו-<code>td</code> אחד <b>לכל</b> שורה. שכחתם שורה אחת? יהיה בה "חור".'},
    back: 'tables:3'},
-  {id:'t2', text:'ב-CSS: תנו לתאי הכותרת (<code>th</code>) צבע רקע, ולכל התאים – גם <code>th</code> וגם <code>td</code> – מסגרת (<code>border</code>).',
+  {id:'t2', text:'ב-CSS: תנו ל<span class="where">תאי הכותרת</span> (<code>th</code>) צבע רקע, ולכל התאים – גם <code>th</code> וגם <code>td</code> – מסגרת (<code>border</code>).',
    test: (d, w) => { const ths = [...d.querySelectorAll('th')], cells = [...d.querySelectorAll('th, td')]; if (!ths.length || !d.querySelector('td')) return false;
      if (d.querySelector('table[border], [bgcolor]') || cells.some(c => c.hasAttribute('style'))) return false;
      return ths.every(th => isColor(w.getComputedStyle(th).backgroundColor)) &&
@@ -1371,7 +1371,7 @@ const PG_TASKS = [
      explain: 'אותו name = קבוצה אחת, ולכן אפשר לבחור רק כפתור אחד. ה-value הוא מה שיישלח (למשל <code>size=L</code>), וה-id שונה כדי שכל label תמצא את הכפתור שלה.',
      alt: 'רוצים שהגודל הרגיל יהיה מסומן כבר כשהדף נפתח? הוסיפו לכפתור הראשון את המאפיין <code>checked</code>.'},
    back: 'fields:2'},
-  {id:'t6', text:'כפתור שליחה בתוך הטופס – <code>input</code> עם <code>type="submit"</code>, או תגית <code>button</code>.',
+  {id:'t6', text:'כפתור שליחה <span class="where">בתוך הטופס</span> – <code>input</code> עם <code>type="submit"</code>, או תגית <code>button</code>.',
    test: d => !!d.querySelector('form input[type=submit]') || [...d.querySelectorAll('form button')].some(b => b.type === 'submit'),
    hints: ['כפתור שליחה הוא עוד <code>input</code> – עם type אחר. את הטקסט שעליו קובע המאפיין <code>value</code>.',
            'הכפתור נכתב בתוך <code>form</code>, מיד לפני התגית הסוגרת שלו. הטקסט שעל הכפתור – בתוך <code>value</code>.'],
@@ -1379,7 +1379,7 @@ const PG_TASKS = [
      explain: 'submit שולח את הטופס. בלי value הדפדפן כותב על הכפתור טקסט משלו.',
      alt: 'גם <code>&lt;button&gt;להזמנה&lt;/button&gt;</code> בתוך טופס שולח אותו – ל-button בתוך form הסוג submit הוא ברירת המחדל. (תפגשו אותו ב-Bootstrap.)'},
    back: 'forms:5'},
-  {id:'t7', text:'שלחו את הטופס: מלאו את <b>כל</b> התיבות בדפדפן הקטן, בחרו גודל ולחצו על כפתור השליחה. בדקו בשורת הכתובת שכל השדות הגיעו (שדה חסר? חסר לו name).',
+  {id:'t7', text:'שלחו את הטופס: מלאו את <b>כל</b> התיבות <span class="where">בדפדפן הקטן</span>, בחרו גודל ולחצו על כפתור השליחה. בדקו בשורת הכתובת שכל השדות הגיעו (שדה חסר? חסר לו name).',
    test: () => false, /* checked when the form is sent – see onRender */
    hints: ['השליחה קורית בדפדפן הקטן שליד העורך, לא בקוד: מלאו כל תיבה, סמנו גודל ולחצו על כפתור השליחה. אחר כך הסתכלו בשורת הכתובת שמעליו.',
            'בכתובת צריך להופיע זוג name=ערך לכל שדה – למשל <code style="white-space:nowrap">?name=dana&amp;pass=1234&amp;size=L</code>. שדה לא מופיע? בדקו שיש לו name ושמילאתם אותו. וב-form כתוב <code>method="get"</code>?'],
