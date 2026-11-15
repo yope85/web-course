@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>שיעור 1 – JavaScript: משתנים, תנאים ולולאות | המדריך המעשי</title>
+<title>JavaScript – שיעור 1: משתנים, תנאים ולולאות | המדריך המעשי</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="assets/course.css" />
@@ -43,7 +43,7 @@ code.brk{white-space:normal!important;overflow-wrap:anywhere}
 </head>
 <body data-lesson="js1" data-title="JavaScript – שיעור 1" data-next="javascript.html" data-next-name="כל שיעורי JavaScript" data-home="javascript.html" data-home-name="JavaScript">
 <header class="topbar"><div class="in">
-  <span class="brand">🛠 שיעור 1 · JavaScript</span>
+  <span class="brand">🛠 JavaScript · שיעור 1</span>
   <span class="now" id="now"></span>
   <span class="progress" title="שלבים שעברתם בשיעור"><span class="bar"><i id="progBar"></i></span> <span id="progTxt">0/0</span></span>
   <button class="eggbtn" id="eggBtn" type="button" title="ביצי הפתעה – לחצו לרמזים">🥚 <span id="eggCount">0/5</span></button>
@@ -62,7 +62,7 @@ code.brk{white-space:normal!important;overflow-wrap:anywhere}
 <main>
 <div class="lesson-head">
   <div class="school">אורט הנרי רונסון אשקלון · מגמת מדעי המחשב והנדסת תוכנה · יוחאי פרץ</div>
-  <h1>שיעור 1 – JavaScript: משתנים, תנאים ולולאות</h1>
+  <h1>JavaScript – שיעור 1: משתנים, תנאים ולולאות</h1>
 </div>
 <nav class="topics" id="topics" aria-label="נושאי השיעור"></nav>
 <nav class="steps" id="steps" aria-label="השלבים בנושא"></nav>
@@ -86,7 +86,7 @@ code.brk{white-space:normal!important;overflow-wrap:anywhere}
 
   <article class="spread act">
     <h3>מי מריץ מה? C# בשרת, JavaScript בדפדפן</h3>
-    <p>בשיעור 6 למדתם שהשרת מריץ את ה-<bdi>C#</bdi> שבדף Razor, ושולח לדפדפן רק <b>תוצאה</b>. עכשיו נכתוב קוד שהולך ל<b>דפדפן</b>. הנה דף HTML שיש בו שורה אחת של JavaScript:</p>
+    <p>בשיעור 6 של HTML &amp; CSS (Razor) למדתם שהשרת מריץ את ה-<bdi>C#</bdi> שבדף Razor, ושולח לדפדפן רק <b>תוצאה</b>. עכשיו נכתוב קוד שהולך ל<b>דפדפן</b>. הנה דף HTML שיש בו שורה אחת של JavaScript:</p>
     <div class="codeblock"><pre data-code="html">
 &lt;h1&gt;פיצה דני&lt;/h1&gt;
 &lt;script&gt;
@@ -109,7 +109,7 @@ code.brk{white-space:normal!important;overflow-wrap:anywhere}
     </div>
     <div class="what" id="w11">ה-JavaScript מגיע לדפדפן <b>כמו שהוא – כטקסט</b>, והדפדפן מריץ אותו אצל הגולש. השרת לא יודע מה הוא עושה. שתי מסקנות חשובות:<br>1. <b>כל אחד יכול לקרוא אותו</b> – ב-Ctrl+U רואים את ה-HTML של הדף, ומשם פותחים גם את קובץ ה-JavaScript שהוא מחבר. לכן לא כותבים ב-JavaScript סיסמאות.<br>2. אי אפשר לסמוך עליו להגנה: מי שרוצה, משנה אותו או מכבה אותו בדפדפן שלו. בדיקות בצד הדפדפן נועדו לעזור לגולש; את האבטחה האמיתית השרת עושה (בהמשך השנה).</div>
     <table class="cmpj" id="cmpj1">
-      <tr><th></th><th><bdi>C#</bdi> בדף Razor (שיעור 6)</th><th>JavaScript</th></tr>
+      <tr><th></th><th><bdi>C#</bdi> בדף Razor (שיעור 6 – Razor)</th><th>JavaScript</th></tr>
       <tr><td>איפה רץ</td><td>בשרת</td><td>בדפדפן של הגולש</td></tr>
       <tr><td>מתי</td><td>לפני שהדף נשלח</td><td>אחרי שהדף הגיע</td></tr>
       <tr><td>מה הדפדפן רואה</td><td>רק את התוצאה</td><td>את הקוד עצמו – כל אחד יכול לפתוח אותו</td></tr>
@@ -159,7 +159,7 @@ code.brk{white-space:normal!important;overflow-wrap:anywhere}
       <li><b>איפה בדף?</b> <b>בסוף ה-<code>body</code></b>, ממש לפני <code>&lt;/body&gt;</code>: הדפדפן קורא מלמעלה למטה, ותגיות שמתחת לסקריפט עדיין לא קיימות כשהוא רץ.</li>
     </ul>
     <div class="trap">גם כשיש <code>src</code> וה-script ריק בפנים – חייבים תגית סוגרת: <code>&lt;script src="…"&gt;&lt;/script&gt;</code>. הצורה <code>&lt;script src="…" /&gt;</code> <b>לא עובדת</b>: הדפדפן "יאכל" את שאר הדף.</div>
-    <div class="bridge">🔗 הנתיב: דפי ה-HTML שלכם ב-<code>wwwroot/HTML</code>, והקבצים בתיקייה חדשה, <code>wwwroot/js</code> – לכן <code>../js/practice.js</code> ("עלו תיקייה אחת, וממנה אל js", כמו <code>../Img</code> בתמונות). בדף <b>Razor</b> הנתיב הוא <code>~/js/practice.js</code> – כמו <code>~/Img/…</code> (שיעור 6). את זה נעשה בפרויקט שלכם בסוף השיעור.</div>
+    <div class="bridge">🔗 הנתיב: דפי ה-HTML שלכם ב-<code>wwwroot/HTML</code>, והקבצים בתיקייה <code>wwwroot/js</code> (היא כבר קיימת בפרויקט – קיבלתם אותה יחד עם css ו-lib) – לכן <code>../js/practice.js</code> ("עלו תיקייה אחת, וממנה אל js", כמו <code>../Img</code> בתמונות). בדף <b>Razor</b> הנתיב הוא <code>~/js/practice.js</code> – כמו <code>~/Img/…</code> (שיעור 6 – Razor). את זה נעשה בפרויקט שלכם בסוף השיעור.</div>
   </article>
 
   <article class="spread act">
@@ -173,18 +173,18 @@ code.brk{white-space:normal!important;overflow-wrap:anywhere}
 
   <article class="spread act">
     <h3>מה קורה כש-<code>document.write</code> רצה אחרי שהדף נטען?</h3>
-    <p>לפני שנסתמך עליה, בדיקה אחת. בדף שבארגז יש כפתור, ובלחיצה עליו נכתב: <code>document.write("הפיצה נוספה")</code>. (איך כפתור מפעיל קוד – בשיעור הבא.) הכתיבה קורית <b>אחרי שהדף כבר נטען</b>.</p>
+    <p>לפני שנסתמך עליה, בדיקה אחת. בדף שבארגז יש כפתור, ובלחיצה עליו נכתב: <code>document.write("הפיצה נוספה")</code>. (איך כפתור מפעיל קוד – בשיעור 2 של JavaScript.) הכתיבה קורית <b>אחרי שהדף כבר נטען</b>.</p>
     <div class="predict" id="p22"></div>
     <p class="muted" style="margin:6px 0">קודם ▶ הריצו – הדף נטען בחלון. ואז לחצו על הכפתור שבתוכו.</p>
     <div id="jsb3"></div>
-    <div class="what" id="w22"><code>document.write</code> שרצה <b>בזמן שהדף נטען</b> – מוסיפה טקסט במקום שבו נמצא הסקריפט. אבל אחרי שהדף נטען, קריאה אליה <b>מחליפה את הדף כולו</b> בדף חדש – והדף הקודם נעלם. לכן היא טובה לתרגילים ראשונים, ולא לדף אמיתי.<br><b>בסרטון</b> תראו אותה, וכך נתרגל גם כאן. בינתיים נשתמש ב-<code>document.write</code>; בשיעורים הבאים נכיר דרך שמשנה רק חלק מהדף – <code>innerHTML</code>.</div>
+    <div class="what" id="w22"><code>document.write</code> שרצה <b>בזמן שהדף נטען</b> – מוסיפה טקסט במקום שבו נמצא הסקריפט. אבל אחרי שהדף נטען, קריאה אליה <b>מחליפה את הדף כולו</b> בדף חדש – והדף הקודם נעלם. לכן היא טובה לתרגילים ראשונים, ולא לדף אמיתי.<br><b>בסרטון</b> תראו אותה, וכך נתרגל גם כאן. בינתיים נשתמש ב-<code>document.write</code>; בשיעור 2 של JavaScript נכיר דרך שמשנה רק חלק מהדף – <code>innerHTML</code>.</div>
   </article>
 
   <article class="spread vsstep">
     <h3>💻 עכשיו אצלכם ב-Visual Studio</h3>
     <p>יוצרים בפרויקט שלכם דף תרגול וקובץ JavaScript ראשון. בקובץ ובדף האלה תשתמשו לכל התוכניות של השיעור.</p>
     <ol class="vsdo">
-      <li>האתר רץ? עצרו אותו (■). ב-Solution Explorer: <b>קליק ימני</b> <span class="where">על <b>wwwroot</b></span> &rlm;←&rlm; <b>Add</b> &rlm;←&rlm; <b>New Folder</b>. קראו לה <b>js</b>. (אם התיקייה <b>js</b> כבר קיימת ב-wwwroot – משתמשים בה ולא יוצרים חדשה.)</li>
+      <li>האתר רץ? עצרו אותו (■). ב-Solution Explorer פתחו את <b>wwwroot</b> – התיקייה <b>js</b> כבר שם (היא הגיעה עם הפרויקט, יחד עם css ו-lib). <span class="not">לא</span> צריך ליצור אותה. (אין אצלכם תיקייה בשם js? קליק ימני <span class="where">על <b>wwwroot</b></span> &rlm;←&rlm; <b>Add</b> &rlm;←&rlm; <b>New Folder</b> &rlm;←&rlm; <b>js</b>.)</li>
       <li><b>קליק ימני</b> <span class="where">על <b>js</b></span> &rlm;←&rlm; <b>Add</b> &rlm;←&rlm; <b>New Item...</b> &rlm;←&rlm; בחרו <b><bdi>JavaScript File</bdi></b> (אם לא רואים – חפשו <bdi>javascript</bdi> בתיבת החיפוש למעלה) &rlm;←&rlm; בשדה Name כתבו <b>practice.js</b> &rlm;←&rlm; <b>Add</b>.</li>
       <li><span class="where">בקובץ</span> כתבו את שתי השורות האלה. השורה הראשונה היא <b>הערה</b>: JavaScript מתעלמת ממנה, והיא נועדה לבני אדם. (בכל שורה: <code>//</code>. ב-Visual Studio אפשר לסמן שורות וללחוץ <kbd>Ctrl+K</kbd> ואז <kbd>Ctrl+C</kbd> להפוך אותן להערה.)
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="js">
@@ -214,14 +214,17 @@ console.log("שלום מהקובץ שלי");
   <article class="spread act">
     <h3>משתנה: קופסה עם שם – בלי לכתוב מה הסוג</h3>
     <p>משתנה שומר ערך בשם, כדי להשתמש בו שוב. מגדירים אותו עם <code>let</code>, ואז שם, <code>=</code> וערך: טקסט בין מרכאות, מספר, או <code>true</code> / <code>false</code> (אמת או שקר). בסוף כל פקודה – <code>;</code>.</p>
-    <p>שורה 6 שמה ב-<code>price</code> ערך חדש (הערך הישן ועוד 5): כאן אין <code>let</code> – המשתנה כבר קיים, ורק משנים את ערכו.</p>
-    <p>ועוד שני דברים בקוד שלמטה:</p>
-    <ul>
-      <li><code>console.log</code> מדפיס כמה ערכים אם מפרידים ביניהם בפסיק.</li>
-      <li><code>typeof x</code> אומר <b>מאיזה סוג</b> הערך של <code>x</code>.</li>
-    </ul>
-    <p>שלושה סוגים להכיר: <code>string</code> (טקסט), <code>number</code> (מספר), <code>boolean</code> (אמת או שקר).</p>
+    <p>רוצים לשנות את הערך אחר כך? כותבים רק את השם, <b>בלי <code>let</code></b>: המשתנה כבר קיים, ורק משנים את ערכו. למשל <code>price = price + 5;</code> – "הערך הישן ועוד 5".</p>
+    <p>ועוד דבר: <code>console.log</code> מדפיס כמה ערכים אם מפרידים ביניהם בפסיק.</p>
     <div class="bridge">ב-<bdi>C#</bdi> כתבתם <code>int price = 45;</code> – עם <b>סוג</b>. ב-JavaScript אין סוג בהגדרה: <code>let price = 45;</code>, והמחשב מבין לבד. וגם אפשר, בהמשך, לשים במשתנה ערך מסוג אחר – מה שב-<bdi>C#</bdi> היה שגיאה.</div>
+    <div id="jsb4a"></div>
+    <div class="what" id="w31a">בארגז: מגדירים שני משתנים, מוסיפים 5 למחיר (בלי <code>let</code>), ומדפיסים את שניהם – <code>מרגריטה 50</code>.</div>
+    <div class="tip">📼 <b>בסרטון תראו <code>var</code></b>. אצלנו תמיד <code>let</code>: <code>var</code> מרשה להגדיר אותו שם פעמיים ולהשתמש בו לפני ההגדרה, ושני הדברים האלה מסתירים טעויות. מי שכותב <code>var</code> לא מקלקל כלום. (גם משתנה בלי הגדרה – <code>x = 5</code> – JavaScript מרשה, ולכן תמיד מגדירים.)</div>
+  </article>
+
+  <article class="spread act">
+    <h3>סוגים: string, number, boolean – ו-<code>typeof</code></h3>
+    <p>לכל ערך יש <b>סוג</b>. שלושה סוגים להכיר: <code>string</code> (טקסט), <code>number</code> (מספר), <code>boolean</code> (אמת או שקר). והפקודה <code>typeof x</code> אומרת <b>מאיזה סוג</b> הערך של <code>x</code>.</p>
     <div class="predict" id="p31"></div>
     <div id="jsb4"></div>
     <div class="what" id="w31">הפקודה <code>typeof</code> אומרת מאיזה <b>סוג</b> הערך. בטבלה – שלושת הסוגים:
@@ -231,7 +234,6 @@ console.log("שלום מהקובץ שלי");
         <tr><td><code>string</code></td><td><code>"מרגריטה"</code></td><td><code>string</code></td></tr>
         <tr><td><code>boolean</code></td><td><code>true</code> · <code>false</code></td><td><code>bool</code></td></tr>
       </table></div>
-    <div class="tip">📼 <b>בסרטון תראו <code>var</code></b>. אצלנו תמיד <code>let</code>: <code>var</code> מרשה להגדיר אותו שם פעמיים ולהשתמש בו לפני ההגדרה, ושני הדברים האלה מסתירים טעויות. מי שכותב <code>var</code> לא מקלקל כלום. (גם משתנה בלי הגדרה – <code>x = 5</code> – JavaScript מרשה, ולכן תמיד מגדירים.)</div>
   </article>
 
   <article class="spread act">
@@ -245,7 +247,7 @@ console.log("שלום מהקובץ שלי");
 
   <article class="spread act">
     <h3>קלט מהגולש: <code>prompt</code></h3>
-    <p>הפקודה <code>prompt("שאלה")</code> פותחת חלון עם שדה, ומחזירה את מה שהגולש הקליד. הגולש הקליד <b>5</b> בחלון הראשון ו-<b>3</b> בשני – מה יודפס?</p>
+    <p>הפקודה <code>prompt("שאלה")</code> פותחת חלון עם שדה, ומחזירה את מה שהגולש הקליד.</p>
     <div class="predict" id="p33"></div>
     <p class="muted" style="margin:6px 0">כשיקפצו החלונות: כתבו 5, ואחרי זה 3.</p>
     <div id="jsb6"></div>
@@ -257,7 +259,7 @@ console.log("שלום מהקובץ שלי");
         <tr><td><code>parseInt("2.5")</code></td><td><code>2</code> – חותך את מה שאחרי הנקודה, בלי שגיאה</td></tr>
         <tr><td><code>parseInt("פיצה")</code></td><td><code>NaN</code> – אי אפשר להפוך למספר</td></tr>
       </table>
-      🔗 ב-<bdi>C#</bdi> כתבתם <code>int.Parse(Console.ReadLine())</code> – אותו רעיון, אבל אחרת בטעות: ב-<bdi>C#</bdi> <code>int.Parse("פיצה")</code> זורקת חריגה, וכאן <code>parseInt("פיצה")</code> מחזירה <code>NaN</code> בלי שגיאה.</div>
+      🔗 ב-<bdi>C#</bdi> כתבתם <code>int.Parse(Console.ReadLine())</code> – אותו רעיון, אבל יש הבדל בשגיאות: ב-<bdi>C#</bdi> <code>int.Parse("פיצה")</code> זורקת חריגה, וכאן <code>parseInt("פיצה")</code> מחזירה <code>NaN</code> בלי שגיאה.</div>
     <div class="tip">לחצו "ביטול" בחלון? <code>prompt</code> מחזיר <code>null</code>. ו-<code>parseInt(null)</code> הוא <code>NaN</code>. כשכותבים תוכנית אמיתית, צריך לבדוק את זה – לא היום.</div>
   </article>
 
@@ -334,10 +336,10 @@ document.write("Welcome " + first + " " + last);
 
   <article class="spread act">
     <h3>טווח שעות: איך בודקים אותו?</h3>
-    <p>המבצע הוא משעה 14 עד שעה 17. במתמטיקה כותבים טווח כזה בשורה אחת, וכך כתבו גם כאן. נסו לנחש מה יקרה.</p>
+    <p>המבצע הוא משעה 14 עד שעה 17. במתמטיקה כותבים טווח כזה בשורה אחת. ננסה לכתוב אותו כך גם בקוד – ונראה אם זה עובד. נסו לנחש מה יקרה.</p>
     <div class="predict" id="p44"></div>
     <div id="jsb10"></div>
-    <div class="what" id="w44">JavaScript מחשבת <b>משמאל לימין</b>, צעד אחר צעד: קודם <code>14 &lt;= hour</code> – אמת. ואז <code>true &lt;= 17</code>, וכש-<code>true</code> הופך למספר 1: <code>1 &lt;= 17</code> – אמת! התנאי תמיד נכון. הטעויות הכי קשות הן כאלה, <b>בלי שגיאה אדומה</b>: הקוד רץ, ועושה משהו אחר ממה שרציתם. התיקון: כל השוואה לבדה, וביניהן <code>&amp;&amp;</code>: <code>hour &gt;= 14 &amp;&amp; hour &lt;= 17</code>.<br>והבאג השני, 🔨 <b>"= במקום ==="</b>: כתבתם <code>=</code> אחד. זו <b>השמה</b>: שמים ערך במשתנה (כמו <code>let price = 45</code>) – היא לא השוואה. ההשמה מחזירה את הערך שנשמר (14), ומספר שאינו 0 נחשב "אמת". גם כאן אין שגיאה אדומה, והמשתנה השתנה.</div>
+    <div class="what" id="w44">JavaScript מחשבת <b>משמאל לימין</b>, צעד אחר צעד: קודם <code>14 &lt;= hour</code> – אמת. ואז <code>true &lt;= 17</code>, וכש-<code>true</code> הופך למספר 1: <code>1 &lt;= 17</code> – אמת! התנאי תמיד נכון. הטעויות הכי קשות הן כאלה, <b>בלי שגיאה אדומה</b>: הקוד רץ, ועושה משהו אחר ממה שרציתם. התיקון: כל השוואה לבדה, וביניהן <code>&amp;&amp;</code>: <code>hour &gt;= 14 &amp;&amp; hour &lt;= 17</code>.<br>והבאג השני, 🔨 <b>"= במקום ==="</b>: כתבתם <code>=</code> אחד. זו <b>השמה</b>: שמים ערך במשתנה (כמו <code>let price = 45</code>) – היא לא השוואה. ההשמה מחזירה את הערך שנשמר (בדוגמה <code>hour = 14</code> – המספר 14), ומספר שאינו 0 נחשב "אמת". גם כאן אין שגיאה אדומה, והמשתנה השתנה.</div>
     <div class="bridge">ב-<bdi>C#</bdi> שני הבאגים האלה לא מתקמפלים: <code>14 &lt;= hour &lt;= 17</code> (אי אפשר להשוות <code>bool</code> למספר) ו-<code>if (x = 5)</code> (התנאי חייב להיות <code>bool</code>). ב-JavaScript שניהם מותרים – ורצים. אז כשכותבים השוואה – שלוש פעמים <code>=</code>.</div>
   </article>
 
@@ -478,7 +480,7 @@ console.log("ממוצע", sum / count);
 
   <article class="spread vsstep">
     <h3>💻 עכשיו אצלכם: תוכניות 5, 6 ו-7 במטלה</h3>
-    <p>באותו קובץ <code>practice.js</code>, כל אחת בתורה (ואת הקודמות הופכים להערה). כאן <b>כותבים בעצמכם</b> – זה העניין של התרגול. הקוד של התוכניות האלה כבר הופיע בארגזים: כתבו אותו מהזיכרון, בלי להעתיק. תקועים? חוזרים לארגזי הקוד שבשלבים הקודמים.</p>
+    <p>באותו קובץ <code>practice.js</code>, כל אחת בתורה (ואת הקודמות הופכים להערה). כאן <b>כותבים בעצמכם</b> – זה העניין של התרגול. הקוד של התוכניות האלה כבר הופיע בארגזים: נסו לכתוב אותו לבד, בלי להעתיק – חמש דקות. לא הולך? פתחו את ארגז הקוד ב<a href="#" data-go="loops:3">שלב "while, וסכום של 10 מספרים"</a>, הסתכלו, וחזרו לכתוב בעצמכם.</p>
     <ol class="vsdo">
       <li><b>תוכנית 5 – סכום של 10 מספרים.</b> לולאה שקולטת 10 מספרים (<code>parseInt</code>!) ומדפיסה את הסכום. <b>טיפ:</b> בזמן בדיקה שנו את 10 ל-3, כדי לא להקליד הרבה – ובסוף החזירו ל-10.</li>
       <li><b>תוכנית 6 – ממוצע של 10 מספרים.</b> אותה לולאה, ועוד שורה אחרי הלולאה: הסכום חלקי 10.</li>
@@ -506,9 +508,9 @@ console.log("ממוצע", sum / count);
   <article class="spread">
     <h3>🧩 צעד בפרויקט: מכינים את האתר ל-JavaScript</h3>
     <div class="stepbox">
-      <b>בפרויקט האמיתי שלכם – מחברים קובץ JavaScript לדף עם טופס.</b> בשיעורים הבאים תכתבו בו קוד שבודק את השדות. היום רק מחברים, ובודקים שהחיבור עובד:
+      <b>בפרויקט האמיתי שלכם – מחברים קובץ JavaScript לדף עם טופס.</b> בשיעורים הבאים של JavaScript תכתבו בו קוד שבודק את השדות. היום רק מחברים, ובודקים שהחיבור עובד:
       <ol>
-        <li>ב-<code>wwwroot/js</code> (שיצרתם בשלב 💻 של "איפה כותבים") – <b>קובץ חדש</b> בשם <code>form-check.js</code>: קליק ימני ‏←‏ Add ‏←‏ New Item ‏←‏ <bdi>JavaScript File</bdi>. תוכן:
+        <li>ב-<code>wwwroot/js</code> (שבה כתבתם את practice.js בשלב 💻 של "איפה כותבים") – <b>קובץ חדש</b> בשם <code>form-check.js</code>: קליק ימני ‏←‏ Add ‏←‏ New Item ‏←‏ <bdi>JavaScript File</bdi>. תוכן:
           <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="js">
 // website JavaScript
 console.log("form-check.js נטען");
@@ -517,7 +519,7 @@ console.log("form-check.js נטען");
           <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
 &lt;script src="~/js/form-check.js"&gt;&lt;/script&gt;
 </pre></div>
-          הנתיב מתחיל ב-<code>~/</code> כי זה דף Razor (<a href="razor.html#paths-3">שיעור 6</a>) – לא <code>../js</code> כמו בדף html רגיל.</li>
+          הנתיב מתחיל ב-<code>~/</code> כי זה דף Razor (<a href="razor.html#paths-3">שיעור 6 – Razor</a>) – לא <code>../js</code> כמו בדף html רגיל.</li>
         <li>הריצו, פתחו את הדף (<code>/Site/Register</code>), ו-F12 ‏←‏ Console: <code>form-check.js נטען</code>. אין? Ctrl+F5, ובדקו ברשימת 🔧 של "איפה כותבים".</li>
         <li>השאירו את הקובץ והשורה. שורת ה-<code>console.log</code> תימחק בהמשך, כשיבוא בקובץ קוד אמיתי.</li>
       </ol>
@@ -557,7 +559,7 @@ console.log("form-check.js נטען");
       <div class="card"><h4>משתנים וסוגים</h4>
         <ul>
           <li><code>let price = 45;</code> – בלי סוג.</li>
-          <li>סוגים: <code>number</code>, <code>string</code>, <code>boolean</code>, <code>undefined</code>. <code>typeof x</code> אומר איזה.</li>
+          <li>סוגים: <code>number</code>, <code>string</code>, <code>boolean</code>. <code>typeof x</code> אומר איזה.</li>
           <li>אותיות גדולות וקטנות חשובות. תמיד <code>let</code> (לא <code>var</code>).</li>
         </ul></div>
       <div class="card"><h4>פלוס, קלט והמרות</h4>
@@ -609,7 +611,7 @@ for (let i = 1; i <= 10; i++) {
 
 <div class="stepnav" id="stepnav"></div>
 </main>
-<footer>בניית אתרים · המדריך המעשי · שיעור JavaScript 1 – משתנים, תנאים ולולאות · יוחאי פרץ</footer>
+<footer>בניית אתרים · המדריך המעשי · JavaScript – שיעור 1: משתנים, תנאים ולולאות · יוחאי פרץ</footer>
 
 <script src="assets/cohort.js"></script>
 <script src="assets/course.js"></script>
@@ -641,7 +643,7 @@ predict('#p11', {
   q: 'גולש פתח את הדף של פיצה דני, והקוד שבו כולל <code>alert("ברוכים הבאים")</code>. <b>איפה</b> יקפוץ החלון?',
   opts: ['במחשב של הגולש – הדפדפן הריץ את השורה', 'במחשב של השרת – הוא מריץ את הקוד ושולח את התוצאה', 'בשניהם'],
   correct: 0,
-  why: ['השרת רק שולח את הקובץ. את שורת ה-script מריץ הדפדפן של הגולש – בציר הזמן למטה רואים בדיוק מתי.', 'ככה עובד <bdi>C#</bdi> בדף Razor (שיעור 6). אבל זה JavaScript: השרת שולח את השורה כטקסט, בלי להריץ אותה.', 'הקוד רץ במקום אחד בלבד. איפה? אחרי התשובה הנכונה ייפתח ציר הזמן.']
+  why: ['השרת רק שולח את הקובץ. את שורת ה-script מריץ הדפדפן של הגולש – בציר הזמן למטה רואים בדיוק מתי.', 'ככה עובד <bdi>C#</bdi> בדף Razor (שיעור 6 – Razor). אבל זה JavaScript: השרת שולח את השורה כטקסט, בלי להריץ אותה.', 'הקוד רץ במקום אחד בלבד. איפה? אחרי התשובה הנכונה ייפתח ציר הזמן.']
 });
 (function(){
   const evs = [...$('#tl').querySelectorAll('.ev[data-s]')];
@@ -743,13 +745,16 @@ checkpoint('#cpWhere', [
 /* =====================================================================
    3. variables, + and prompt
    ===================================================================== */
-const BOX4 = 'let pizza = "מרגריטה";\nlet price = 45;\nlet isVegan = true;\nconsole.log(pizza, price, isVegan);\nconsole.log(typeof pizza, typeof price, typeof isVegan);\nprice = price + 5;\nconsole.log(price);';
-JB('#jsb4', {id: 'jsb4', file: 'variables.js', code: BOX4, noPage: true,
+const BOX4A = 'let pizza = "מרגריטה";\nlet price = 45;\nprice = price + 5;\nconsole.log(pizza, price);';
+JB('#jsb4a', {id: 'jsb4a', file: 'variables.js', code: BOX4A, noPage: true,
   breaks: [
     {label: 'שימוש לפני הגדרה', from: 'let price = 45;', to: 'console.log(price);\nlet price = 45;', explain: 'השתמשתם במשתנה <b>לפני</b> השורה שמגדירה אותו. הקוד נקרא מלמעלה למטה, ולכן קודם מגדירים (<code>let</code>) ורק אז משתמשים.'},
     {label: 'הגדרה כפולה', from: 'let price = 45;', to: 'let price = 45;\nlet price = 50;', explain: 'מגדירים משתנה <b>פעם אחת</b> עם <code>let</code>. לשנות ערך – בלי <code>let</code>: <code>price = 50;</code>. (עם <code>var</code> היה מותר לטעות כך – ולכן אצלנו <code>let</code>.) שימו לב: זו שגיאה שמונעת מהקוד לרוץ בכלל.'},
     {label: 'אות גדולה בשם', from: 'price = price + 5;', to: 'Price = Price + 5;', explain: '<code>price</code> ו-<code>Price</code> הם שני שמות שונים. כמו ב-<bdi>C#</bdi>: אותיות גדולות וקטנות חשובות.'}
-  ],
+  ]
+});
+const BOX4 = 'let pizza = "מרגריטה";\nlet price = 45;\nlet isVegan = true;\nconsole.log(pizza, price, isVegan);\nconsole.log(typeof pizza, typeof price, typeof isVegan);\nprice = price + 5;\nconsole.log(price);';
+JB('#jsb4', {id: 'jsb4', file: 'variables.js', code: BOX4, noPage: true,
   tasks: [
     T('qty', 'הגדירו משתנה בשם <code>qty</code> עם הערך 3, והדפיסו את <code>qty + 1</code>.', ['שורה אחת להגדרה (<code>let</code>, שם, <code>=</code>, ערך) ושורה אחת להדפסה.', 'שורה ראשונה: <code>let qty = …;</code>. שורה שנייה: <code>console.log(qty + …);</code>'],
       res => /let\s+qty\s*=\s*3/.test(res.src) && res.logs.includes('4'), {code: BOX4 + '\nlet qty = 3;\nconsole.log(qty + 1);', explain: 'qty הוא מספר, ולכן + מחבר: 3 + 1 = 4.'}, 'vars:1'),
@@ -758,7 +763,7 @@ JB('#jsb4', {id: 'jsb4', file: 'variables.js', code: BOX4, noPage: true,
   ]
 });
 predict('#p31', {
-  q: 'מה תדפיס <b>השורה החמישית</b> – <code>console.log(typeof pizza, typeof price, typeof isVegan)</code>?',
+  q: 'בקוד שבארגז למטה, מה תדפיס השורה <code>console.log(typeof pizza, typeof price, typeof isVegan)</code>?',
   opts: ['string number boolean', 'string string boolean', 'number number number'],
   correct: 0,
   why: ['<code>typeof</code> אומרת מאיזה סוג הערך: טקסט = <code>string</code>, מספר = <code>number</code>, אמת/שקר = <code>boolean</code>.', '<code>price</code> הוא 45 – מספר בלי מרכאות, לא טקסט. הסוג שלו <code>number</code>.', '<code>pizza</code> הוא טקסט (בין מרכאות) ו-<code>isVegan</code> הוא true – שניהם לא מספרים.']
@@ -772,7 +777,7 @@ JB('#jsb5', {id: 'jsb5', file: 'plus.js', code: BOX5, noPage: true,
   ],
   tasks: [
     T('full', 'הדפיסו <b>שם מלא</b> משלכם (פרטי, רווח, משפחה) בעזרת הדבקה של שלושה טקסטים: שם, רווח (<code>" "</code>), שם.', ['שלושה טקסטים עם <code>+</code> ביניהם, וה"רווח" הוא טקסט של תו אחד: <code>" "</code>.', 'המבנה: <code>console.log("…" + " " + "…");</code>'],
-      res => res.logs.some(l => /^\S+ \S+$/.test(l) && !/\d/.test(l) && l !== 'דני כהן'), {code: BOX5 + '\nconsole.log("דנה" + " " + "לוי");', explain: 'הרווח הוא טקסט בפני עצמו, ו-+ מדביק את שלושת הטקסטים.'}, 'vars:2')
+      res => res.logs.some(l => /^\S+ \S+$/.test(l) && !/\d/.test(l) && l !== 'דני כהן'), {code: BOX5 + '\nconsole.log("דנה" + " " + "לוי");', explain: 'הרווח הוא טקסט בפני עצמו, ו-+ מדביק את שלושת הטקסטים.'}, 'vars:3')
   ]
 });
 predict('#p32', {
@@ -791,10 +796,10 @@ JB('#jsb6', {id: 'jsb6', file: 'prompt.js', code: BOX6, noPage: true,
   tasks: [
     T('sum', 'תקנו את הקוד כך שיודפס <b>הסכום</b> של שני המספרים (5 ו-3 ← 8).', ['הבעיה: <code>prompt</code> מחזיר טקסט. את מה שחוזר מכל <code>prompt</code> עוטפים ב-<code>parseInt( … )</code>.', 'הצורה: <code>let a = parseInt(prompt("…"));</code>. עושים אותו דבר גם ל-<code>b</code>.'],
       res => { const n = promptNums(res); return !!n && !isNaN(n[0]) && !isNaN(n[1]) && res.logs.includes(String(n[0] + n[1])); },
-      {code: 'let a = parseInt(prompt("מספר ראשון"));\nlet b = parseInt(prompt("מספר שני"));\nconsole.log(a + b);', explain: 'parseInt הופכת כל קלט למספר, ולכן + מחבר מספרים.'}, 'vars:3'),
+      {code: 'let a = parseInt(prompt("מספר ראשון"));\nlet b = parseInt(prompt("מספר שני"));\nconsole.log(a + b);', explain: 'parseInt הופכת כל קלט למספר, ולכן + מחבר מספרים.'}, 'vars:4'),
     T('eq', 'הדפיסו את <b>התרגיל המלא</b> של מכפלה: <code>5 * 3 = 15</code> (עם המספרים שהקלדתם).', ['צריך טקסט אחד שנבנה מחמישה חלקים: מספר, <code>" * "</code>, מספר, <code>" = "</code>, והתוצאה. התוצאה של הכפל בסוגריים.', 'הצורה: <code>console.log(a + " * " + b + " = " + …);</code> – מה חסר בסוף? (אחרי ש-<code>a</code> ו-<code>b</code> הם כבר מספרים.)'],
       res => { const n = promptNums(res); if (!n || isNaN(n[0]) || isNaN(n[1])) return false; return res.logs.includes(n[0] + ' * ' + n[1] + ' = ' + (n[0] * n[1])); },
-      {code: 'let a = parseInt(prompt("מספר ראשון"));\nlet b = parseInt(prompt("מספר שני"));\nconsole.log(a + " * " + b + " = " + (a * b));', explain: 'הסוגריים סביב <code>(a * b)</code> לא חובה כאן. הם יהיו חובה כשנחבר: בלי <code>(a + b)</code> הסימן <code>+</code> היה מדביק במקום לחבר.'}, 'vars:3')
+      {code: 'let a = parseInt(prompt("מספר ראשון"));\nlet b = parseInt(prompt("מספר שני"));\nconsole.log(a + " * " + b + " = " + (a * b));', explain: 'הסוגריים סביב <code>(a * b)</code> לא חובה כאן. הם יהיו חובה כשנחבר: בלי <code>(a + b)</code> הסימן <code>+</code> היה מדביק במקום לחבר.'}, 'vars:4')
   ]
 });
 predict('#p33', {
@@ -814,17 +819,17 @@ trouble('#trVars', {base: false, items: TV});
 
 checkpoint('#cpVars', [
   {q: 'מה ידפיס <code>console.log("5" + 3);</code>?', opts: ['53', '8', 'NaN'], correct: 0,
-   why: ['יש כאן טקסט אחד לפחות, ולכן + מדביק: 53.', '8 היה אם שני הערכים היו מספרים (בלי מרכאות).', 'NaN היה אם ניסינו להפוך משהו לא-מספרי למספר. כאן + פשוט מדביק.'], back: 'vars:2'},
+   why: ['יש כאן טקסט אחד לפחות, ולכן + מדביק: 53.', '8 היה אם שני הערכים היו מספרים (בלי מרכאות).', 'NaN היה אם ניסינו להפוך משהו לא-מספרי למספר. כאן + פשוט מדביק.'], back: 'vars:3'},
   {q: 'הגולש הקליד 7 בחלון <code>prompt</code>. מה סוג הערך שחוזר?', opts: ['string – טקסט', 'number – מספר', 'boolean'], correct: 0,
-   why: ['<code>prompt</code> תמיד מחזיר טקסט. כדי לקבל מספר – <code>parseInt</code>.', 'היינו רוצים – אבל לא. מה שחוזר מ-<code>prompt</code> הוא טקסט, גם כשהוקלד מספר.', 'boolean הוא אמת/שקר. <code>prompt</code> מחזיר מה שהגולש הקליד, כטקסט.'], back: 'vars:3'},
+   why: ['<code>prompt</code> תמיד מחזיר טקסט. כדי לקבל מספר – <code>parseInt</code>.', 'היינו רוצים – אבל לא. מה שחוזר מ-<code>prompt</code> הוא טקסט, גם כשהוקלד מספר.', 'boolean הוא אמת/שקר. <code>prompt</code> מחזיר מה שהגולש הקליד, כטקסט.'], back: 'vars:4'},
   {q: 'איזו שורה קולטת <b>מספר שלם</b>, כך שאפשר לחשב איתו?', opts: ['<code>let n = parseInt(prompt("מספר"));</code>', '<code>let n = prompt("מספר");</code>', '<code>let n = int(prompt("מספר"));</code>'], correct: 0,
-   why: ['<code>prompt</code> מחזיר טקסט, ו-<code>parseInt</code> הופך אותו למספר שלם.', 'כך n הוא טקסט – חיבור שלו יהיה הדבקה.', 'אין ב-JavaScript פקודה בשם <code>int</code>. ההמרה היא <code>parseInt</code>.'], back: 'vars:3'},
+   why: ['<code>prompt</code> מחזיר טקסט, ו-<code>parseInt</code> הופך אותו למספר שלם.', 'כך n הוא טקסט – חיבור שלו יהיה הדבקה.', 'אין ב-JavaScript פקודה בשם <code>int</code>. ההמרה היא <code>parseInt</code>.'], back: 'vars:4'},
   {type: 'line', q: 'הקוד נעצר עם שגיאה אדומה. באיזו שורה הטעות?', lang: 'js',
    code: 'let name = prompt("שם");\nlet age = parseInt(prompt("גיל"));\ndocument.write(Name + " " + age);', correct: 3,
    why: {1: 'שורה תקינה: מגדירה את name.', 2: 'שורה תקינה: מגדירה את age כמספר.'},
    explain: 'הוגדר <code>name</code> באות קטנה, ובשורה 3 נכתב <code>Name</code> באות גדולה – שם אחר, ש-JavaScript לא מכירה.', back: 'vars:1'},
   {q: 'מה ידפיס <code>console.log("10" * "2");</code>?', opts: ['20', '102', 'שגיאה'], correct: 0,
-   why: ['כפל לא יכול להדביק, אז JavaScript ממירה למספרים ומחשבת.', '102 היה בחיבור (+) של טקסטים. כאן הפעולה היא כפל.', 'JavaScript לא מתלוננת – היא ממירה את הטקסטים למספרים.'], back: 'vars:2'},
+   why: ['כפל לא יכול להדביק, אז JavaScript ממירה למספרים ומחשבת.', '102 היה בחיבור (+) של טקסטים. כאן הפעולה היא כפל.', 'JavaScript לא מתלוננת – היא ממירה את הטקסטים למספרים.'], back: 'vars:3'},
   {type: 'text', q: 'כתבו שורה אחת שמגדירה משתנה בשם <b>price</b> עם הערך 45.', placeholder: 'let …',
    accept: [/^let\s+price\s*=\s*45\s*;?$/], answer: 'let price = 45;', wrong: 'בדקו: <code>let</code>, רווח, השם, <code>=</code>, המספר בלי מרכאות, ו-<code>;</code>.',
    explain: '<code>let</code> + שם + <code>=</code> + ערך. בלי סוג, ובלי מרכאות – כי זה מספר.', back: 'vars:1'}
@@ -1118,10 +1123,10 @@ JB('#jsb15', {id: 'jsb15', file: 'calc.js', code: BOX15, answers: ['12', '4', '*
 doneCheck('#stepDone', 'js1step');
 
 Course.assignment('#asg6', {n: 6,
-  lead: '<b>שבע התוכניות</b> – סמנו כשהן מוכנות אצלכם. כל סעיף מקושר לשלב שמלמד אותו. הנוסח המלא והמחוון – במטלה עצמה, בקלאסרום.',
+  lead: '<b>עשרה סעיפים</b>: שבע התוכניות, ועוד שלוש בדיקות בסוף – סמנו כל סעיף כשהוא מוכן אצלכם. כל סעיף מקושר לשלב שמלמד אותו. הנוסח המלא והמחוון – במטלה עצמה, בקלאסרום.',
   items: [
-    '<b>תוכנית 1:</b> קולטת שני מספרים ומדפיסה מכפלה, בפורמט <code>5 * 3 = 15</code> (<a href="#" data-go="vars:4">עכשיו אצלכם</a> · <a href="#" data-go="vars:3">parseInt</a>).',
-    '<b>תוכנית 2:</b> קולטת שם פרטי ושם משפחה ומדפיסה <code>Welcome Dana Cohen</code> (<a href="#" data-go="vars:4">עכשיו אצלכם</a>).',
+    '<b>תוכנית 1:</b> קולטת שני מספרים ומדפיסה מכפלה, בפורמט <code>5 * 3 = 15</code> (<a href="#" data-go="vars:5">עכשיו אצלכם</a> · <a href="#" data-go="vars:4">parseInt</a>).',
+    '<b>תוכנית 2:</b> קולטת שם פרטי ושם משפחה ומדפיסה <code>Welcome Dana Cohen</code> (<a href="#" data-go="vars:5">עכשיו אצלכם</a>).',
     '<b>תוכנית 3:</b> קולטת שני מספרים ומדפיסה את היחס בין שניהם (גדול, קטן או שווה), למשל <code>5&gt;3</code> (<a href="#" data-go="cond:6">עכשיו אצלכם</a> · <a href="#" data-go="cond:2">השוואות</a>).',
     '<b>תוכנית 4:</b> מחשבון – שני מספרים ופעולה (<code>+ - * /</code>), מדפיסה את התרגיל והתוצאה (<a href="#" data-go="cond:5">switch</a> · <a href="#" data-go="practice:1">מחשבון בארגז</a>).',
     '<b>תוכנית 5:</b> קולטת 10 מספרים ומדפיסה את הסכום (<a href="#" data-go="loops:3">לולאה וסכום</a>).',
@@ -1137,24 +1142,24 @@ Course.assignment('#asg6', {n: 6,
 
 const goBack = (go, txt) => ' <a href="#" data-go="' + go + '">↩ ' + txt + '</a>';
 quiz('#quiz', [
-  {q: 'דנה כתבה <code>let a = prompt("מספר");</code> ואחר כך <code>console.log(a + 1);</code>, והקלידה 4. מה יודפס?', opts: ['41', '5', 'NaN'], correct: 0, back: 'vars:3',
-   why: ['<code>a</code> הוא <b>טקסט</b> ("4"), ו-+ עם טקסט מדביק: "4" ו-1 נהיים 41.', 'זה היה נכון אילו עטפה ב-<code>parseInt</code>. בלעדיו <code>a</code> הוא טקסט.' + goBack('vars:3', 'חזרו ל-prompt'), 'NaN היה אם ניסתה להמיר משהו שאינו מספר. כאן + פשוט מדביק.' + goBack('vars:2', 'חזרו ל-"+"')]},
+  {q: 'דנה כתבה <code>let a = prompt("מספר");</code> ואחר כך <code>console.log(a + 1);</code>, והקלידה 4. מה יודפס?', opts: ['41', '5', 'NaN'], correct: 0, back: 'vars:4',
+   why: ['<code>a</code> הוא <b>טקסט</b> ("4"), ו-+ עם טקסט מדביק: "4" ו-1 נהיים 41.', 'זה היה נכון אילו עטפה ב-<code>parseInt</code>. בלעדיו <code>a</code> הוא טקסט.' + goBack('vars:4', 'חזרו ל-prompt'), 'NaN היה אם ניסתה להמיר משהו שאינו מספר. כאן + פשוט מדביק.' + goBack('vars:3', 'חזרו ל-"+"')]},
   {q: 'מבקר באתר לוחץ Ctrl+U ורואה את קוד ה-JavaScript של הדף. למה זה אפשרי?', opts: ['הדפדפן מקבל את הקוד כטקסט, ורק אז מריץ אותו', 'מפתחים אחראים להסתיר את הקוד, והפעם שכחו', 'Ctrl+U עובד רק למי שפתח קודם את F12'], correct: 0, back: 'start:2',
    why: ['לכן גם לא כותבים סיסמה ב-JavaScript.', 'אי אפשר להסתיר: כדי להריץ את הקוד הדפדפן חייב לקבל אותו.' + goBack('start:2', 'חזרו ל"מי מריץ מה"'), 'Ctrl+U פועל בכל דף. הקוד נשלח לכולם.' + goBack('start:2', 'חזרו ל"מי מריץ מה"')]},
   {q: 'מה ידפיס <code>console.log(0 === "0");</code>?', opts: ['false', 'true', 'שגיאה'], correct: 0, back: 'cond:2',
    why: ['מספר וטקסט הם סוגים שונים, ו-<code>===</code> בודקת גם סוג.', 'זה מה ש-<code>==</code> היה מחזיר. אבל <code>===</code> בודקת גם סוג.' + goBack('cond:2', 'חזרו להשוואות'), 'ההשוואה תקינה – היא פשוט מחזירה false.']},
   {q: 'כמה פעמים תרוץ הלולאה <code>for (let i = 0; i &lt; 5; i++)</code>?', opts: ['5', '4', '6'], correct: 0, back: 'loops:2',
    why: ['<code>i</code> לוקח את 0, 1, 2, 3, 4 – חמישה ערכים. (הספירה מתחילה ב-0, ולכן גם כאן <code>&lt;</code> נותן בדיוק 5.)', 'סופרים את 0 כסיבוב: 0 עד 4 הם חמישה.' + goBack('loops:2', 'חזרו לספירת סיבובים'), '6 היה עם <code>i &lt;= 5</code>.' + goBack('loops:2', 'חזרו לספירת סיבובים')]},
-  {q: 'התוכנית <code>let n = prompt("מספר"); if (n === 10) { document.write("עשר"); }</code> לא מדפיסה כלום כשמקלידים 10. למה?', opts: ['<code>n</code> הוא טקסט, ו-<code>"10" === 10</code> שקר', 'צריך לכתוב <code>=</code> במקום <code>===</code>', 'prompt לא עובד עם מספרים'], correct: 0, back: 'vars:3',
-   why: ['צריך <code>parseInt(prompt(…))</code> – וכך <code>n</code> יהיה מספר.', 'עם <code>=</code> אחד התנאי היה "אמת" תמיד – וה-n היה משתנה. זה לא התיקון.' + goBack('cond:4', 'חזרו ל"="'), 'prompt עובד – הוא רק מחזיר טקסט.' + goBack('vars:3', 'חזרו ל-prompt')]},
+  {q: 'התוכנית <code>let n = prompt("מספר"); if (n === 10) { document.write("עשר"); }</code> לא מדפיסה כלום כשמקלידים 10. למה?', opts: ['<code>n</code> הוא טקסט, ו-<code>"10" === 10</code> שקר', 'צריך לכתוב <code>=</code> במקום <code>===</code>', 'prompt לא עובד עם מספרים'], correct: 0, back: 'vars:4',
+   why: ['צריך <code>parseInt(prompt(…))</code> – וכך <code>n</code> יהיה מספר.', 'עם <code>=</code> אחד התנאי היה "אמת" תמיד – וה-n היה משתנה. זה לא התיקון.' + goBack('cond:4', 'חזרו ל"="'), 'prompt עובד – הוא רק מחזיר טקסט.' + goBack('vars:4', 'חזרו ל-prompt')]},
   {q: 'הלולאה <code>while (n &gt; 0) { sum = sum + n; }</code> לא נגמרת. מה חסר?', opts: ['שורה שמקטינה את <code>n</code>: <code>n = n - 1;</code>', 'שורה <code>break;</code> בתוך הלולאה, אחרי <code>sum</code>', 'שורה <code>else</code> אחרי הלולאה, כדי לעצור אותה'], correct: 0, back: 'loops:2',
    why: ['אם <code>n</code> לא משתנה, התנאי תמיד אמת. בגוף הלולאה צריך משהו שמקרב אותו לסוף.', '<code>break</code> היה עוצר אחרי סיבוב אחד – וזה לא התיקון (וגם לא למדנו אותו בלולאות).', '<code>else</code> שייך ל-<code>if</code>, לא ללולאה.']},
   {q: 'מה יודפס? <code>document.write("a"); document.write("b");</code>', opts: ['ab – באותה שורה', 'a ו-b בשתי שורות', 'רק b'], correct: 0, back: 'where:2',
    why: ['<code>document.write</code> לא יורדת שורה. לשורה חדשה: <code>&lt;br&gt;</code>.', 'דף HTML לא יורד שורה לבד – צריך <code>&lt;br&gt;</code>.' + goBack('where:2', 'חזרו לשלוש הדרכים'), 'שתי הפקודות רצות, והטקסטים נכתבים אחד אחרי השני.']},
   {q: 'שמרתם שינוי ב-<code>practice.js</code>, ובדפדפן לא קרה כלום ואין שגיאה ב-Console. מה בודקים קודם?', opts: ['Ctrl+F5, ושה-script באמת נמצא בדף', 'מוחקים את הקובץ ויוצרים אותו מחדש', 'משנים את שם הקובץ ומעדכנים אותו בכל הדפים'], correct: 0, back: 'where:4',
    why: ['הדפדפן שומר עותק של קובצי js. ובדקו גם שה-<code>&lt;script src&gt;</code> בדף ושהנתיב נכון.', 'הבעיה כמעט תמיד בדפדפן או בנתיב – לא בקובץ עצמו.' + goBack('where:4', 'חזרו לרשימת 🔧'), 'שם הקובץ תקין – הבעיה היא העותק השמור או החיבור בדף.' + goBack('where:4', 'חזרו לרשימת 🔧')]},
-  {q: 'מה ידפיס <code>console.log("3" + 4 * 2);</code>?', opts: ['38', '14', '11'], correct: 0, back: 'vars:2',
-   why: ['קודם הכפל (4 * 2 = 8), ואז <code>"3" + 8</code> – טקסט ומספר: הדבקה, 38.', 'הכפל קודם (4 * 2 = 8), ורק אז החיבור. ומכיוון ש-"3" הוא טקסט – מדביקים, לא מחשבים.' + goBack('vars:2', 'חזרו ל-"+"'), '11 היה בחישוב מספרי (3 + 8). אבל "3" הוא טקסט.' + goBack('vars:2', 'חזרו ל-"+"')]}
+  {q: 'מה ידפיס <code>console.log("3" + 4 * 2);</code>?', opts: ['38', '14', '11'], correct: 0, back: 'vars:3',
+   why: ['קודם הכפל (4 * 2 = 8), ואז <code>"3" + 8</code> – טקסט ומספר: הדבקה, 38.', 'הכפל קודם (4 * 2 = 8), ורק אז החיבור. ומכיוון ש-"3" הוא טקסט – מדביקים, לא מחשבים.' + goBack('vars:3', 'חזרו ל-"+"'), '11 היה בחישוב מספרי (3 + 8). אבל "3" הוא טקסט.' + goBack('vars:3', 'חזרו ל-"+"')]}
 ]);
 
 /* =====================================================================

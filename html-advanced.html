@@ -201,7 +201,7 @@ tbody tr:hover {
       <li>שמרו את <b>שני</b> הקבצים (Ctrl+S בכל אחד), ופתחו את הדף: קליק ימני <span class="where">על pizza.html</span> &rlm;←&rlm; <b>View in Browser</b>. אם הוא כבר פתוח – רעננו <b>בדפדפן</b> (Ctrl+F5).</li>
       <li>🔨 <b>שברו בכוונה:</b> בשורה של מרגריטה כתבו את המילה <b>מבצע!</b> בין <code>&lt;tr&gt;</code> לבין <code>&lt;td&gt;</code> הראשון. שמרו ורעננו – לאן היא קפצה? (<a href="#" data-go="tables:4">השלב על תוכן בתאים</a>). עכשיו מחקו אותה.</li>
     </ol>
-    <div class="expect">בכתובת שמסתיימת ב-<code>/HTML/pizza.html</code> רואים, מתחת לתמונה: הכותרת "המחירון" וטבלה עם קו אחד דק בין התאים; שורת הכותרות כתומה עם טקסט לבן; וכשהעכבר עובר על שורת מנה – היא נצבעת בכתום בהיר. בצעד 4 המילה "מבצע!" הופיעה <b>מעל</b> הטבלה, לא בתוכה.</div>
+    <div class="expect">בכתובת שמסתיימת ב-<code>/HTML/pizza.html</code> רואים: הכותרת "המחירון" וטבלה עם קו אחד דק בין התאים; שורת הכותרות כתומה עם טקסט לבן; וכשהעכבר עובר על שורת מנה – היא נצבעת בכתום בהיר. בתיבה 4 המילה "מבצע!" הופיעה <b>מעל</b> הטבלה, לא בתוכה.</div>
     <div class="trouble" id="trTables"></div>
   </article>
   <article class="spread cpstep">
@@ -226,7 +226,7 @@ tbody tr:hover {
     <div class="what" id="l1what" hidden>בכפתור השלישי הוספנו שלב באמצע – והמספור <b>התעדכן לבד</b>: 1 עד 5. את המספרים (וב-ul את הנקודות) הדפדפן מוסיף <b>בעצמו</b>, ולכן לא כותבים אותם בטקסט. ובכפתור השני, ul: השתנו רק שתי שורות – הפתיחה והסגירה של העוטפת. ה-<code>li</code> נשארו בדיוק אותו דבר.</div>
     <div class="bridge">גם כאן יש עץ משפחה, כמו בשיעור 3: <code>li</code> הוא <b>ילד</b> של <code>ol</code> או של <code>ul</code>, ומותר לשים אותו רק בתוך אחת מהן. ובתוך <code>li</code> מותר כמעט הכול – גם קישור. וזה בדיוק מה שנעשה בשלב הבא.</div>
     <details class="more"><summary>🚀 להעמקה: רשימה בתוך רשימה, ומספור אחר</summary>
-      <p>בתוך <code>li</code> מותר לשים <b>רשימה שלמה</b> – כך בונים תת-תפריט, או שלב במתכון שיש לו תתי-שלבים. הדפדפן מזיז את הרשימה הפנימית ימינה לבד:</p>
+      <p>בתוך <code>li</code> מותר לשים <b>רשימה שלמה</b> – כך בונים תת-תפריט, או שלב במתכון שיש לו תתי-שלבים. הדפדפן מזיז את הרשימה הפנימית פנימה לבד (בדף בעברית – שמאלה):</p>
       <div class="codeblock"><pre data-code="html">
 &lt;ol&gt;
     &lt;li&gt;מכינים בצק
@@ -414,7 +414,7 @@ nav a:hover {
 &lt;br /&gt;
 &lt;a href="recover.html"&gt;שכחתי סיסמה&lt;/a&gt;
 </pre></div></li>
-      <li><b>register.html – הרשמה:</b> צרו דף חדש באותה דרך (צעדים 1 ו-2 – אותו שלד, רק <span class="where">ב-title</span> כתבו <b>הרשמה</b>), והדביקו בתוך body:
+      <li><b>register.html – הרשמה:</b> צרו דף חדש באותה דרך (תיבות 1 ו-2 – אותו שלד, רק <span class="where">ב-title</span> כתבו <b>הרשמה</b>), והדביקו בתוך body:
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
 &lt;h1&gt;הרשמה&lt;/h1&gt;
 &lt;form&gt;
@@ -457,7 +457,7 @@ nav a:hover {
 </pre></div></li>
       <li><b>בודקים:</b> שמרו את שלושת הקבצים (Ctrl+S בכל אחד – בלי כוכבית בלשוניות), קליק ימני <span class="where">על login.html</span> &rlm;←&rlm; <b>View in Browser</b>. לחצו על המילה "שם משתמש" – הסמן קפץ לתיבה? הקלידו שם וסיסמה, לחצו "כניסה" והסתכלו בשורת הכתובת. אחר כך לחצו "להרשמה", מלאו כמה שדות ולחצו "ניקוי". רוצים לוודא שכל השמות נכונים? העתיקו את הכתובת שקיבלתם אחרי השליחה לבדיקה המהירה שמתחת לצעדים.<br />🔨 <b>שברו בכוונה:</b> בדף הכניסה מחקו את <code>name="password"</code>, שמרו, רעננו ושלחו – password נעלם מהכתובת, בלי שום שגיאה. החזירו אותו.</li>
     </ol>
-    <div class="expect">בכתובת שמסתיימת ב-<code>/HTML/login.html</code> רואים: הכותרת "כניסה לאתר", שתי תיבות עם תוויות, כפתור "כניסה" ושני קישורים – בעיצוב של site-style.css. אחרי "כניסה" הכתובת מסתיימת בערך כך:<div class="codeblock urlline"><pre data-code="text">login.html?userName=dana&amp;password=1234</pre></div>כן, הסיסמה גלויה בכתובת! למה? את זה תגלו בנושא "שליחה לשרת". בדף ההרשמה יש 8 תיבות, ו"ניקוי" מרוקן את כולן.<br /><b>התיבות התרוקנו, ושום "כניסה" לא קרתה?</b> זה תקין. הטופס עשה את החלק שלו: אסף את הנתונים ושלח. אבל בשרת עוד אין קוד שבודק שם וסיסמה – אז השרת פשוט שלח שוב את אותו דף. את הקוד הזה תכתבו בהמשך השנה, ב-C#.</div>
+    <div class="expect">בכתובת שמסתיימת ב-<code>/HTML/login.html</code> רואים: הכותרת "כניסה לאתר", שתי תיבות עם תוויות, כפתור "כניסה" ושני קישורים – בעיצוב של site-style.css. אחרי "כניסה" הכתובת מסתיימת בערך כך:<div class="codeblock urlline"><pre data-code="text">login.html?userName=dana&amp;password=1234</pre></div>כן, הסיסמה גלויה בכתובת! למה? את זה תגלו בנושא "שליחה לשרת". בדף ההרשמה יש 8 תיבות, ו"ניקוי" מרוקן את כולן.<br /><b>אחרי שלחצתם "כניסה" הדף נטען מחדש, התיבות ריקות ולא הופיע שום "ברוך הבא"?</b> זה תקין. הטופס עשה את החלק שלו: אסף את הנתונים ושלח. אבל בשרת עוד אין קוד שבודק שם וסיסמה – אז השרת פשוט שלח שוב את אותו דף. את הקוד הזה תכתבו בהמשך השנה, ב-C#.</div>
     <div class="urlcheck" id="ucForms"></div>
     <div class="trouble" id="trForms"></div>
   </article>
@@ -540,13 +540,13 @@ nav a:hover {
     <h3>💻 עכשיו אצלכם ב-Visual Studio</h3>
     <p>משלימים את דף ההרשמה ואת דף השחזור שהתחלתם <a href="#" data-go="forms:6">בנושא הקודם</a>: תאריך לידה, כפתורי radio למין, רשימת הצעות לעיר, ושתי שאלות לשחזור סיסמה.</p>
     <ol class="vsdo">
-      <li><b>תאריך לידה – date:</b> ב-register.html, <b><span class="where">אחרי</b> שדה שם המשפחה ולפני שדה העיר</span>, הדביקו (<a href="#" data-go="fields:1">השלב על date</a>):
+      <li><b>תאריך לידה – date:</b> ב-register.html, <span class="where"><b>אחרי</b> שדה שם המשפחה ולפני שדה העיר</span>, הדביקו (<a href="#" data-go="fields:1">השלב על date</a>):
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
 &lt;label for="birthDate"&gt;תאריך לידה&lt;/label&gt;
 &lt;input type="date" id="birthDate" name="birthDate" /&gt;
 &lt;br /&gt;
-</pre></div>
-        <b>מין – radio:</b> באותו דף, <b><span class="where">אחרי</b> שדה המייל ולפני כפתור "הרשמה"</span>, הדביקו. שימו לב: לשני הכפתורים <b>אותו name</b>, ו-id שונה לכל אחד:
+</pre></div></li>
+      <li><b>מין – radio:</b> באותו דף, <span class="where"><b>אחרי</b> שדה המייל ולפני כפתור "הרשמה"</span>, הדביקו. שימו לב: לשני הכפתורים <b>אותו name</b>, ו-id שונה לכל אחד:
         <div class="codeblock"><button class="copy" type="button">העתקה</button><pre data-code="html">
 &lt;p&gt;מין:&lt;/p&gt;
 &lt;input type="radio" id="male" name="gender" value="male" /&gt;
@@ -588,7 +588,7 @@ nav a:hover {
 &lt;input type="text" id="answer2" name="answer2" /&gt;
 &lt;br /&gt;
 </pre></div></li>
-      <li><b>recover.html:</b> <span class="where">בדף השחזור</span>, במקום ההערה <code style="white-space:normal;overflow-wrap:anywhere">&lt;!-- recovery questions: next topic --&gt;</code>, הדביקו <b>את אותו קוד בדיוק</b> מצעד 3 – עם אותם name. כך, כשתכתבו בהמשך השנה את הקוד בשרת, הוא יוכל להשוות בין מה שנשמר בהרשמה לבין מה שהוקלד בשחזור.</li>
+      <li><b>recover.html:</b> <span class="where">בדף השחזור</span>, במקום ההערה <code style="white-space:normal;overflow-wrap:anywhere">&lt;!-- recovery questions: next topic --&gt;</code>, הדביקו <b>את אותו קוד בדיוק</b> מתיבה 4 – עם אותם name. כך, כשתכתבו בהמשך השנה את הקוד בשרת, הוא יוכל להשוות בין מה שנשמר בהרשמה לבין מה שהוקלד בשחזור.</li>
       <li><b>בודקים:</b> שמרו את שני הקבצים ופתחו את register.html בדפדפן (View in Browser). בחרו תאריך לידה בלוח השנה; נסו לסמן גם "זכר" וגם "נקבה"; לחצו בתיבת העיר והקלידו את האות א; בחרו שאלות, מלאו הכול ולחצו "הרשמה" – והעתיקו את הכתובת שקיבלתם לבדיקה המהירה שמתחת לצעדים. אחר כך פתחו את recover.html.</li>
     </ol>
     <div class="expect">בכתובת שמסתיימת ב-<code>/HTML/register.html</code> רואים את כל השדות של ההרשמה. בשדה תאריך הלידה נפתח לוח שנה. אפשר לסמן רק אחד מכפתורי המין. בתיבת העיר מופיעות הצעות (אשקלון, אשדוד…) – ואפשר גם להקליד עיר אחרת. אחרי "הרשמה" הכתובת ארוכה, ויש בה למשל <code>birthDate=2010-05-17</code> (שנה-חודש-יום), <code>gender=female</code> ו-<code>question1=pet</code> – ה-value, לא הטקסט שעל המסך. ב-recover.html: שם משתמש, שתי רשימות נפתחות ושתי תיבות לתשובות.</div>
@@ -750,7 +750,7 @@ form {
 </pre></div>
         הכלל <code>form</code> חל על שלושת הטפסים, והכלל <code>#loginForm</code> רק על טופס הכניסה – הוא קצר, אז הקופסה שלו צרה יותר.</li>
       <li><b>מה נשלח?</b> שמרו את כל הקבצים, פתחו את login.html בדפדפן, מלאו ולחצו "כניסה" – והסתכלו בשורת הכתובת. עשו אותו דבר ב-register.html: מלאו את <b>כל</b> השדות, בחרו תאריך לידה, סמנו מין, ולחצו "הרשמה".<br />🔨 <b>שברו בכוונה:</b> ב-login.html כתבו post במקום get, שמרו, רעננו ושלחו – במקום הדף מופיע דף שגיאה: הדף שלכם לא מקבל post. החזירו ל-get.</li>
-      <li><b>בכלי המפתחים:</b> <span class="where">ב-login.html</span> לחצו F12 &rlm;←&rlm; לשונית <b>Network</b>. <span class="where"><b>רק עכשיו</b></span> מלאו ולחצו "כניסה" (Network רושם רק מה שקורה כשהוא פתוח). ברשימה לחצו על השורה הראשונה – זו שמתחילה ב-<code>login.html?userName=</code> – ואז על הלשונית <b>Payload</b>. ב-get הזוגות מופיעים שם תחת הכותרת <b>Query String Parameters</b>. (בטופס שנשלח ב-post הם יופיעו באותה לשונית, תחת <b>Form Data</b> – ככה תבדקו אותם בהמשך.)</li>
+      <li><b>בכלי המפתחים:</b> <span class="where">ב-login.html</span> לחצו F12 &rlm;←&rlm; לשונית <b>Network</b>. <b>רק עכשיו</b> מלאו ולחצו "כניסה" (Network רושם רק מה שקורה כשהוא פתוח). הרשימה ריקה? שלחו שוב, כשה-Network פתוח. ברשימה לחצו על השורה הראשונה – זו שמתחילה ב-<code>login.html?userName=</code> – ואז על הלשונית <b>Payload</b>. ב-get הזוגות מופיעים שם תחת הכותרת <b>Query String Parameters</b>. (בטופס שנשלח ב-post הם יופיעו באותה לשונית, תחת <b>Form Data</b> – ככה תבדקו אותם בהמשך.)</li>
     </ol>
     <div class="expect">טופס הכניסה בתוך קופסה צרה עם מסגרת; טפסי ההרשמה והשחזור בקופסה באותו סגנון. אחרי "כניסה" הכתובת מסתיימת למשל כך:<div class="codeblock urlline"><pre data-code="text">login.html?userName=dana&amp;password=1234</pre></div>אחרי "הרשמה" יש בכתובת <b>14 זוגות</b> name=ערך, מ-userName ועד answer2 – הכפתורים לא נשלחים, כי אין להם name. ב-F12, בלשונית Payload, תחת Query String Parameters, מופיעים אותם זוגות ברשימה מסודרת.</div>
     <div class="urlcheck" id="ucSend"></div>
