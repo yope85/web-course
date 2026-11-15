@@ -98,7 +98,11 @@ td code{overflow-wrap:normal;white-space:normal}
     <p>ומה כתוב בתוך הקובץ של Bootstrap? כללי CSS רגילים, כמו שכתבתם בשיעור 3. הנה שניים מהם, בגרסה מפושטת (בקובץ האמיתי הם כתובים בצורה מתוחכמת יותר – אבל זה מה שהם עושים):</p>
     <div class="codeblock"><pre class="cv" id="s12css"></pre></div>
     <div class="what">את <code>text-align: center;</code> אתם מכירים משיעור 3. ה-class <code>text-center</code> הוא בסך הכול <b>שם מוכן</b> להוראה הזו – לכן הכותרת בדוגמה למעלה עברה לאמצע רק בצד שמחובר ל-Bootstrap.</div>
-    <p>ועוד דבר שרואים בהשוואה: האותיות של הכותרת "פיצה דני" נעשו <b>דקות יותר</b> – ואף class לא ביקש את זה. ב-Bootstrap יש שני סוגי כללים: כללי class, שפועלים רק על תגית שכתבתם עליה את השם; וקומץ <b>כללי בסיס</b> לתגיות עצמן – כמו <code>body</code>, <code>h1</code> ו-<code>a</code> – שפועלים על כל הדף מהרגע שהקובץ מחובר: גופן, גודל ועובי של כותרות, צבע קישורים.</p>
+    <p>ועוד דבר שרואים בהשוואה: האותיות של הכותרת "פיצה דני" נעשו <b>דקות יותר</b> – ואף class לא ביקש את זה. ב-Bootstrap יש שני סוגי כללים:</p>
+    <ul>
+      <li><b>כללי class</b> – פועלים רק על תגית שכתבתם עליה את השם.</li>
+      <li><b>כללי בסיס</b> – כללים לתגיות עצמן, כמו <code>body</code>, <code>h1</code> ו-<code>a</code>. הם פועלים על כל הדף מהרגע שהקובץ מחובר: גופן, גודל ועובי של כותרות, צבע קישורים.</li>
+    </ul>
     <p>היתרון הגדול: אתר שבנוי עם Bootstrap <b>מתאים את עצמו לגודל המסך</b> – מחשב, טאבלט וטלפון. לזה קוראים <b>עיצוב רספונסיבי</b> (responsive – "מגיב" לגודל המסך).</p>
     <div class="tip">💡 הבית של Bootstrap הוא האתר <a href="https://getbootstrap.com/" target="_blank" rel="noopener">getbootstrap.com</a>. יש בו הסברים ודוגמאות לכל class. נשתמש בו לאורך השיעור.</div>
   </article>
@@ -110,14 +114,33 @@ td code{overflow-wrap:normal;white-space:normal}
     <h3>שלוש שורות בכל דף</h3>
     <p>כדי שדף ישתמש ב-Bootstrap, מוסיפים לו שלוש שורות. הנה דף שלם – השורות החדשות מסומנות. (שימו לב: ב-link יש כתובת באינטרנט, ובשם הקובץ יש <b>rtl</b>. למה rtl? <a href="#" data-go="setup:3">בשלב 3</a>. ולמה כתובת באינטרנט? <a href="#" data-go="setup:4">בשלב 4</a>.)</p>
     <div class="codeblock"><pre class="cv" id="s21code"></pre></div>
-    <table>
-      <tr><th>שורה</th><th>איפה</th><th>מה היא עושה</th></tr>
-      <tr><td>שורת ה-<code>meta</code> עם viewport</td><td>ב-head</td><td>חשובה בטלפון. נבין אותה <a href="#" data-go="setup:5">בעוד כמה שלבים</a>.</td></tr>
-      <tr><td><code>link</code> לקובץ ה-CSS</td><td>ב-head</td><td>מחברת את כל הכללים של Bootstrap – בדיוק כמו ה-link לקובץ העיצוב משיעור 3 (בדף התרגול זה היה style.css, ובאתר שלכם – <span class="nw">site-style.css</span>).</td></tr>
-      <tr><td><code>script</code> לקובץ ה-JS</td><td>בסוף ה-body, לפני <code>&lt;/body&gt;</code></td><td>מחברת את קוד ה-JavaScript של Bootstrap – הוא מפעיל דברים שזזים, כמו תפריט שנפתח בלחיצה.</td></tr>
+    <table class="ref">
+      <tr><th>שורה</th><th>מה היא עושה</th></tr>
+      <tr><td><code>meta</code> עם viewport</td><td>
+        <div><b>איפה:</b> ב-head.</div>
+        <div>חשובה בטלפון. נבין אותה <a href="#" data-go="setup:5">בעוד כמה שלבים</a>.</div>
+      </td></tr>
+      <tr><td><code>link</code> לקובץ ה-CSS</td><td>
+        <div><b>איפה:</b> ב-head.</div>
+        <div>מחברת את כל הכללים של Bootstrap.</div>
+        <div>בדיוק כמו ה-link לקובץ העיצוב משיעור 3 (בדף התרגול – style.css, באתר שלכם – <span class="nw">site-style.css</span>).</div>
+      </td></tr>
+      <tr><td><code>script</code> לקובץ ה-JS</td><td>
+        <div><b>איפה:</b> בסוף ה-body, לפני <code>&lt;/body&gt;</code>.</div>
+        <div>מחברת את קוד ה-JavaScript של Bootstrap.</div>
+        <div>הוא מפעיל דברים שזזים, כמו תפריט שנפתח בלחיצה.</div>
+      </td></tr>
     </table>
-    <div class="what"><code>script</code> היא תגית חדשה: היא מחברת לדף קובץ JavaScript – כמו ש-<code>link</code> מחברת קובץ CSS. המאפיין <code>src</code> אומר איפה הקובץ, בדיוק כמו בתמונה. למה היא בסוף ה-body? כי קודם הדפדפן מציג את התוכן, ורק אחר כך טוען את הקוד ש"מפעיל" אותו – כך הדף מופיע מהר יותר.</div>
-    <div class="trap">סוגרים את script בקיצור, כמו את link – כותבים <code>&lt;script src="..." /&gt;</code> ומסיימים. ב-meta, ב-link וב-img הקיצור עובד, כי אין להן תוכן. script היא תגית עם פתיחה וסגירה, והדפדפן לא מקבל בה את הקיצור: הקוד של Bootstrap לא ירוץ – ולא תופיע שום הודעת שגיאה. תמיד כותבים <code>&lt;script src="..."&gt;&lt;/script&gt;</code> – עם תגית סוגרת, גם כשאין שום דבר באמצע.</div>
+    <div class="what">
+      <div><code>script</code> היא תגית חדשה: היא מחברת לדף קובץ JavaScript – כמו ש-<code>link</code> מחברת קובץ CSS.</div>
+      <div>המאפיין <code>src</code> אומר איפה הקובץ, בדיוק כמו בתמונה.</div>
+      <div>למה היא בסוף ה-body? כי קודם הדפדפן מציג את התוכן, ורק אחר כך טוען את הקוד ש"מפעיל" אותו – כך הדף מופיע מהר יותר.</div>
+    </div>
+    <div class="trap">
+      <div>סוגרים את script בקיצור, כמו את link – כותבים <code>&lt;script src="..." /&gt;</code> ומסיימים.</div>
+      <div>ב-meta, ב-link וב-img הקיצור עובד, כי אין להן תוכן. script היא תגית עם פתיחה וסגירה, והדפדפן לא מקבל בה את הקיצור: הקוד של Bootstrap לא ירוץ – ולא תופיע שום הודעת שגיאה.</div>
+      <div>תמיד כותבים <code>&lt;script src="..."&gt;&lt;/script&gt;</code> – עם תגית סוגרת, גם כשאין שום דבר באמצע.</div>
+    </div>
     <div class="tip">💡 לפעמים קוראים לשלב הזה "התקנה" של Bootstrap. בפועל לא מתקינים כלום – רק <b>מקשרים</b> לקבצים, כמו שקישרתם לקובץ CSS.</div>
     <details class="more"><summary>🚀 להעמקה: למה דווקא bundle?</summary>
       <p>בתיקייה js של Bootstrap יש כמה קבצים. <b>bundle</b> פירושו "חבילה": בקובץ <code>bootstrap.bundle.min.js</code> ארוז גם הקוד של Bootstrap וגם ספרייה קטנה נוספת בשם <b>Popper</b>, שיודעת לחשב איפה להציג חלונית קופצת – למשל רשימה נפתחת (dropdown) או בועת הסבר (tooltip) – כך שלא תיחתך בקצה המסך.</p>
@@ -127,7 +150,9 @@ td code{overflow-wrap:normal;white-space:normal}
 
   <article class="spread act">
     <h3>Bootstrap בפרויקט שלכם – ומה חסר בו</h3>
-    <p>כשיצרתם את הפרויקט, Visual Studio כבר הכניס לתוכו את Bootstrap – בתיקייה <b>wwwroot/lib/bootstrap/dist</b>. את קובץ ה-JavaScript שלו נחבר מהפרויקט, כמו שמחברים קובץ שלכם. בואו נלך מהדף אל הקובץ, צעד אחר צעד. לחצו על "הצעד הבא" (הקובץ שאליו רוצים להגיע מסומן בקו ירוק מקווקו). בדרך נציץ גם בתיקייה css – ותראו מה <b>חסר</b> בה:</p>
+    <p>כשיצרתם את הפרויקט, Visual Studio כבר הכניס לתוכו את Bootstrap – בתיקייה <b>wwwroot/lib/bootstrap/dist</b>. את קובץ ה-JavaScript שלו נחבר מהפרויקט, כמו שמחברים קובץ שלכם.</p>
+    <p>בואו נלך מהדף אל הקובץ, צעד אחר צעד. לחצו על "הצעד הבא" (הקובץ שאליו רוצים להגיע מסומן בקו ירוק מקווקו).</p>
+    <p>בדרך נציץ גם בתיקייה css – ותראו מה <b>חסר</b> בה:</p>
     <div class="walk">
       <div class="ftree" id="ftree"></div>
       <div>
@@ -152,16 +177,27 @@ td code{overflow-wrap:normal;white-space:normal}
     <div class="predict" id="p24"></div>
     <!-- data-lock: the captions tell the answer of #p24 – the whole comparison is covered until the guess -->
     <div class="compare" id="s24" data-lock></div>
-    <div class="what">הקובץ הרגיל של Bootstrap נכתב לאנגלית – הוא "חושב משמאל לימין". לכן עם הקובץ הרגיל, תיבת הסימון נדחקת לקצה ה<b>שמאלי</b> – רחוק מהמילים שבימין – וגם החץ של הרשימה בצד הלא נכון. למה <code>dir="rtl"</code> לבד לא הספיק? הוא הופך רק את מה שלא נקבע לו צד, כמו כיוון הטקסט. אבל בקובץ הרגיל יש כללים שכתוב בהם במפורש "שמאל" – ובהם dir לא נוגע. בקובץ ה-RTL אותם כללים כתובים הפוך. וגם להפך: קובץ ה-RTL בלי dir משאיר את הטקסט מיושר לשמאל. <b>לכן, בכל דף בעברית – שניהם: <code>dir="rtl"</code> וגם <code>bootstrap.rtl.min.css</code>.</b></div>
+    <div class="what">
+      <div>הקובץ הרגיל של Bootstrap נכתב לאנגלית – הוא "חושב משמאל לימין".</div>
+      <div>לכן עם הקובץ הרגיל, תיבת הסימון נדחקת לקצה ה<b>שמאלי</b> – רחוק מהמילים שבימין – וגם החץ של הרשימה בצד הלא נכון.</div>
+      <div>למה <code>dir="rtl"</code> לבד לא הספיק?</div>
+      <div>הוא הופך רק את מה שלא נקבע לו צד, כמו כיוון הטקסט.</div>
+      <div>אבל בקובץ הרגיל יש כללים שכתוב בהם במפורש "שמאל" – ובהם dir לא נוגע.</div>
+      <div>בקובץ ה-RTL אותם כללים כתובים הפוך.</div>
+      <div>וגם להפך: קובץ ה-RTL בלי dir משאיר את הטקסט מיושר לשמאל.</div>
+      <div><b>לכן, בכל דף בעברית – שניהם: <code>dir="rtl"</code> וגם <code>bootstrap.rtl.min.css</code>.</b></div>
+    </div>
     <div class="tip">💡 רוצים לקרוא עוד? הדף על RTL בתיעוד של Bootstrap: <a href="https://getbootstrap.com/docs/5.1/getting-started/rtl/" target="_blank" rel="noopener">getbootstrap.com/docs/5.1/getting-started/rtl</a> (באנגלית).</div>
   </article>
 
   <article class="spread">
     <h3>הקובץ בעברית מגיע מהאינטרנט (CDN)</h3>
-    <p>בשלב הקודם ראינו שבדף בעברית צריך את קובץ ה-RTL – ובתיקייה שבפרויקט <b>אין</b> אותו. מה עושים? לוקחים אותו מהאינטרנט. קבצים של ספריות מוכנות, כמו Bootstrap, שמורים בשרתים שמגישים אותם במהירות, מכל מקום בעולם. שרת כזה נקרא <b>CDN</b> (Content Delivery Network – רשת שרתים שמגישה קבצים מוכנים). לכן ב-<code>href</code> לא כותבים נתיב בפרויקט, אלא <b>כתובת אינטרנט</b>, שמתחילה ב-<code>https://</code>. ככה זה נראה:</p>
+    <p>בשלב הקודם ראינו שבדף בעברית צריך את קובץ ה-RTL – ובתיקייה שבפרויקט <b>אין</b> אותו. מה עושים? לוקחים אותו מהאינטרנט.</p>
+    <p>קבצים של ספריות מוכנות, כמו Bootstrap, שמורים בשרתים שמגישים אותם במהירות, מכל מקום בעולם. שרת כזה נקרא <b>CDN</b> (Content Delivery Network – רשת שרתים שמגישה קבצים מוכנים).</p>
+    <p>לכן ב-<code>href</code> לא כותבים נתיב בפרויקט, אלא <b>כתובת אינטרנט</b>, שמתחילה ב-<code>https://</code>. ככה זה נראה:</p>
     <div class="codeblock"><pre class="cv" id="s23code"></pre></div>
     <p>את קובץ ה-JS משאירים כמו שהוא – הוא כן נמצא בפרויקט. נפרק את הכתובת:</p>
-    <table>
+    <table class="ref">
       <tr><th>החלק בכתובת</th><th>מה הוא אומר</th></tr>
       <tr><td><code class="brk">cdn.jsdelivr.net</code></td><td>השרת שמגיש את הקבצים – ה-CDN.</td></tr>
       <tr><td><code class="brk">bootstrap@5.1.0</code></td><td>הספרייה, והגרסה שלה. <b>הגרסה חייבת להתאים</b> לזו שבפרויקט (תיכף נבדוק).</td></tr>
@@ -186,7 +222,13 @@ td code{overflow-wrap:normal;white-space:normal}
     <div class="predict" id="p25"></div>
     <div class="ctrls"><div class="seg" id="s25seg"></div></div>
     <div id="s25"></div>
-    <div class="what" id="s25what" hidden>טלפונים עדיין מכבדים אתרים ישנים, שנבנו רק למחשב. לכן, כשאין שורת viewport, הטלפון <b>מעמיד פנים שהמסך שלו רחב</b> (בערך 980 פיקסלים), בונה את הדף ברוחב הזה – ואז <b>מקטין הכול</b> כדי שייכנס. התוצאה: טקסט זעיר, וצריך לעשות זום עם האצבעות. השורה <code>width=device-width</code> אומרת: "הרוחב שלי הוא הרוחב האמיתי של המכשיר". רק אז Bootstrap יכול לסדר את הדף בשבילו.</div>
+    <div class="what" id="s25what" hidden>
+      <div>טלפונים עדיין מכבדים אתרים ישנים, שנבנו רק למחשב.</div>
+      <div>לכן, כשאין שורת viewport, הטלפון <b>מעמיד פנים שהמסך שלו רחב</b> (בערך 980 פיקסלים), בונה את הדף ברוחב הזה – ואז <b>מקטין הכול</b> כדי שייכנס.</div>
+      <div>התוצאה: טקסט זעיר, וצריך לעשות זום עם האצבעות.</div>
+      <div>השורה <code>width=device-width</code> אומרת: "הרוחב שלי הוא הרוחב האמיתי של המכשיר".</div>
+      <div>רק אז Bootstrap יכול לסדר את הדף בשבילו.</div>
+    </div>
     <!-- data-lock: the slow explanation tells the answer, so it opens only after the guess -->
     <details class="more" data-lock><summary>🐢 רוצים הסבר לאט יותר?</summary>
       <p>דמיינו שמישהו שולח לכם פוסטר ענק, ברוחב של מטר. יש שתי דרכים להראות אותו בטלפון:</p>
@@ -196,7 +238,13 @@ td code{overflow-wrap:normal;white-space:normal}
       </ol>
       <p>בשפת הקוד: <code>width=device-width</code> = "רוחב הדף = רוחב המכשיר". <code>initial-scale=1</code> = "בלי זום בהתחלה".</p>
     </details>
-    <div class="tip">💡 איך בודקים דף בגודל של טלפון, בלי טלפון? בדפדפן במחשב: F12 (כלי המפתחים), ואז Ctrl+Shift+M – הדף מוצג בתוך מסגרת, ובראשה אפשר לבחור רוחב. כך תבדקו מעכשיו כל דף שלכם. ובטלפון שלכם? האתר שלכם לא ייפתח שם: localhost הוא "המחשב הזה" (שיעור 1), והטלפון הוא מחשב אחר. (ההדמיה שלמעלה מדמה את מה שטלפון אמיתי עושה.)</div>
+    <div class="tip">
+      <div>💡 איך בודקים דף בגודל של טלפון, בלי טלפון?</div>
+      <div>בדפדפן במחשב: F12 (כלי המפתחים), ואז Ctrl+Shift+M – הדף מוצג בתוך מסגרת, ובראשה אפשר לבחור רוחב.</div>
+      <div>כך תבדקו מעכשיו כל דף שלכם. ובטלפון שלכם?</div>
+      <div>האתר שלכם לא ייפתח שם: localhost הוא "המחשב הזה" (שיעור 1), והטלפון הוא מחשב אחר.</div>
+      <div>(ההדמיה שלמעלה מדמה את מה שטלפון אמיתי עושה.)</div>
+    </div>
     <div class="egg-w" id="eggWidth">🥚 תפסתם את המסך ברוחב המדויק! ההודעה הזו מופיעה רק כשהחלון ברוחב 700 עד 760 פיקסלים – כלל CSS שפועל רק בטווח רוחב מסוים. בדיוק ככה Bootstrap בנוי בפנים. הקוד הסודי: BREAKPOINT</div>
   </article>
   <article class="spread vsstep">
@@ -400,23 +448,37 @@ td code{overflow-wrap:normal;white-space:normal}
     <div class="ctrls"><span class="lbl">רקע:</span><div class="seg" id="s41b"></div></div>
     <div class="ctrls"><span class="lbl">יישור:</span><div class="seg" id="s41t"></div></div>
     <div id="s41"></div>
+    <div class="cxkey"><span class="k"><span class="cx cx-1">m</span> מה משנים</span><span class="k"><span class="cx cx-2">t</span> באיזה צד / איזה צבע</span><span class="k"><span class="cx cx-3">3</span> כמה</span></div>
+    <div id="s41dec"></div>
     <table class="ref">
       <tr><th>ה-class</th><th>מה הוא עושה</th></tr>
-      <tr><td><code>mt-3</code><br><code>mb-3</code><br><code>p-3</code></td><td>
-        <div><b>m</b> = margin – רווח <b>מחוץ</b> לקופסה.</div>
-        <div><b>p</b> = padding – רווח <b>בתוך</b> הקופסה.</div>
-        <div>האות הבאה היא הצד: <b>t</b> למעלה (top), <b>b</b> למטה (bottom), <b>s</b> בהתחלה (start), <b>e</b> בסוף (end). בלי צד – מכל הצדדים.</div>
-        <div>המספר הוא <b>דרגה</b> מ-0 עד 5, לא פיקסלים: 0 = בלי רווח, 3 = רווח בינוני, 5 = הכי גדול.</div>
+      <tr><td><span class="ltr"><span class="cx cx-1">m</span><span class="cx cx-2">t</span>-<span class="cx cx-3">3</span></span><br><span class="ltr"><span class="cx cx-1">p</span><span class="cx cx-2">b</span>-<span class="cx cx-3">2</span></span></td><td>
+        <div><span class="cx cx-1">m</span> = margin – רווח <b>מחוץ</b> לקופסה.</div>
+        <div><span class="cx cx-1">p</span> = padding – רווח <b>בתוך</b> הקופסה.</div>
+        <div>האות הבאה היא הצד: <span class="cx cx-2">t</span> למעלה (top), <span class="cx cx-2">b</span> למטה (bottom), <span class="cx cx-2">s</span> בהתחלה (start), <span class="cx cx-2">e</span> בסוף (end).</div>
+        <div>בלי אות של צד – הרווח מכל הצדדים (<code>p-3</code>).</div>
+        <div>המספר <span class="cx cx-3">3</span> הוא <b>דרגה</b> מ-0 עד 5, לא פיקסלים: 0 = בלי רווח, 5 = הכי גדול.</div>
       </td></tr>
-      <tr><td><code>bg-warning</code><br><code>text-danger</code><br><code>text-white</code></td><td>
-        <div><b>bg</b> = background – צבע הרקע.</div>
-        <div><b>text</b> ואחריו שם של צבע – צבע הטקסט.</div>
-        <div>ל-Bootstrap יש שמות צבעים משלו: warning (צהוב), success (ירוק), danger (אדום). את כולם נראה בשלב הבא.</div>
+      <tr><td><span class="ltr"><span class="cx cx-1">bg</span>-<span class="cx cx-2">warning</span></span><br><span class="ltr"><span class="cx cx-1">text</span>-<span class="cx cx-2">danger</span></span></td><td>
+        <div><span class="cx cx-1">bg</span> = background – צבע הרקע.</div>
+        <div><span class="cx cx-1">text</span> = צבע הטקסט.</div>
+        <div>אחרי המקף בא שם הצבע: <span class="cx cx-2">warning</span> צהוב, <span class="cx cx-2">success</span> ירוק, <span class="cx cx-2">danger</span> אדום.</div>
+        <div>את כל הצבעים נראה בשלב הבא.</div>
       </td></tr>
-      <tr><td><code>text-start</code><br><code>text-center</code><br><code>text-end</code></td><td>יישור הטקסט: לצד ההתחלה (בעברית – ימין), למרכז, או לצד הסוף.</td></tr>
-      <tr><td><code>fw-bold</code></td><td>טקסט מודגש (fw = font weight, עובי הגופן).</td></tr>
+      <tr><td><span class="ltr"><span class="cx cx-1">text</span>-<span class="cx cx-2">start</span></span><br><span class="ltr"><span class="cx cx-1">text</span>-<span class="cx cx-2">center</span></span><br><span class="ltr"><span class="cx cx-1">text</span>-<span class="cx cx-2">end</span></span></td><td>
+        <div>יישור הטקסט: <span class="cx cx-2">start</span> לצד ההתחלה (בעברית – ימין), <span class="cx cx-2">center</span> למרכז, <span class="cx cx-2">end</span> לצד הסוף.</div>
+      </td></tr>
+      <tr><td><span class="ltr"><span class="cx cx-1">fw</span>-<span class="cx cx-2">bold</span></span></td><td>
+        <div><span class="cx cx-1">fw</span> = font weight, עובי הגופן.</div>
+        <div><span class="cx cx-2">bold</span> = מודגש.</div>
+      </td></tr>
     </table>
-    <div class="bridge">בשיעור 3 כתבתם <code>margin: 20px;</code> – רווח מכל הצדדים, ובמרכוז תמונה פגשתם <code>margin-left</code> ו-<code>margin-right</code> – צד אחד בלבד. יש תכונה כזו לכל צד, למשל <code>margin-top</code> (רק מלמעלה) ו-<code>margin-bottom</code> (רק מלמטה) – וכך גם ב-padding. ה-class <code>mt-3</code> הוא בדיוק <code>margin-top</code>: הכלל כבר כתוב אצל Bootstrap, ואתם רק מוסיפים את השם. ולמה start ו-end ולא ימין ושמאל? כי בעברית ההתחלה היא בימין, ובאנגלית – בשמאל. קובץ ה-RTL דואג לזה בשבילכם.</div>
+    <div class="bridge">
+      <div>בשיעור 3 כתבתם <code>margin: 20px;</code> – רווח מכל הצדדים. במרכוז תמונה פגשתם <code>margin-left</code> ו-<code>margin-right</code> – צד אחד בלבד.</div>
+      <div>יש תכונה כזו לכל צד, למשל <code>margin-top</code> (רק מלמעלה) ו-<code>margin-bottom</code> (רק מלמטה) – וכך גם ב-padding.</div>
+      <div>ה-class <code>mt-3</code> הוא בדיוק <code>margin-top</code>: הכלל כבר כתוב אצל Bootstrap, ואתם רק מוסיפים את השם.</div>
+      <div>ולמה start ו-end ולא ימין ושמאל? כי בעברית ההתחלה היא בימין, ובאנגלית – בשמאל. קובץ ה-RTL דואג לזה בשבילכם.</div>
+    </div>
   </article>
 
   <article class="spread act">
@@ -436,7 +498,19 @@ td code{overflow-wrap:normal;white-space:normal}
       <tr><td><code>info</code></td><td>מידע</td><td>תכלת</td></tr>
       <tr><td><code>light</code> · <code>dark</code></td><td>בהיר · כהה</td><td>אפור בהיר מאוד · כמעט שחור</td></tr>
     </table>
-    <div class="what">שם הצבע הוא <b>מילה אחת שמחליפים</b>: <code>btn-success</code> הוא כפתור ירוק, ו-<code>btn-danger</code> – אדום. אותם שמות עובדים גם ב-class-ים הקטנים מהשלב הקודם: <code>bg-success</code>, <code>text-danger</code>, <code>bg-info</code>, <code>bg-light</code>. ועוד שלושה דברים מהכפתורים שלמעלה: <code>btn-outline-success</code> – רק מסגרת בצבע, בלי מילוי (outline = קו מתאר); <code>btn-lg</code> ו-<code>btn-sm</code> – כפתור גדול (large) וכפתור קטן (small). ושימו לב לשורה השנייה בקוד: <code>btn</code> עובד גם על קישור <code>a</code> – הוא פשוט <b>נראה</b> כמו כפתור. <b>מתי איזו תגית?</b> מעבירים לדף אחר – <code>a</code> עם <code>href</code> ועם <code>btn</code> (ל-<code>button</code> אין href, והוא לא יודע לעבור דף). שולחים טופס – <code>input</code> מסוג submit, כמו בשיעור 4. וה-<code>button</code> שבדוגמה? הוא לא בתוך form, אז אין לו מה לשלוח – כאן הוא רק מראה את העיצוב. (בתוך form, <code>button</code> בלי type שולח את הטופס, כמו submit.)</div>
+    <div class="what">
+      <div><b>צבע:</b> שם הצבע הוא <b>מילה אחת שמחליפים</b>. <span class="ltr"><span class="cx cx-1">btn</span>-<span class="cx cx-2">success</span></span> הוא כפתור ירוק, ו-<span class="ltr"><span class="cx cx-1">btn</span>-<span class="cx cx-2">danger</span></span> – אדום.</div>
+      <div>אותם שמות עובדים גם ב-class-ים הקטנים מהשלב הקודם: <code>bg-success</code>, <code>text-danger</code>, <code>bg-info</code>, <code>bg-light</code>.</div>
+      <div><b>סגנון:</b> <code>btn-outline-success</code> – רק מסגרת בצבע, בלי מילוי (outline = קו מתאר).</div>
+      <div><b>גודל:</b> <code>btn-lg</code> – כפתור גדול (large). <code>btn-sm</code> – כפתור קטן (small).</div>
+      <div><b>קישור בצורת כפתור:</b> שימו לב לשורה השנייה בקוד. <code>btn</code> עובד גם על קישור <code>a</code> – הוא פשוט <b>נראה</b> כמו כפתור.</div>
+    </div>
+    <div class="tip">
+      <div><b>מתי איזו תגית?</b></div>
+      <div>מעבירים לדף אחר – <code>a</code> עם <code>href</code> ועם <code>btn</code>. ל-<code>button</code> אין href, והוא לא יודע לעבור דף.</div>
+      <div>שולחים טופס – <code>input</code> מסוג submit, כמו בשיעור 4.</div>
+      <div>וה-<code>button</code> שבדוגמה? הוא לא בתוך form, אז אין לו מה לשלוח – כאן הוא רק מראה את העיצוב. (בתוך form, <code>button</code> בלי type שולח את הטופס, כמו submit.)</div>
+    </div>
   </article>
 
   <article class="spread act">
@@ -445,7 +519,7 @@ td code{overflow-wrap:normal;white-space:normal}
     <div class="ctrls"><div class="seg" id="s43seg"></div></div>
     <div id="s43"></div>
     <div class="what" id="s43what"></div>
-    <table>
+    <table class="ref">
       <tr><th>ה-class</th><th>החלק</th></tr>
       <tr><td><code>card</code></td><td>הכרטיס כולו – העוטף</td></tr>
       <tr><td><code>card-header</code></td><td>כותרת עליונה, על רקע אפור</td></tr>
@@ -453,12 +527,20 @@ td code{overflow-wrap:normal;white-space:normal}
       <tr><td><code>card-body</code></td><td>הגוף – עם ריפוד מבפנים. בתוכו <code>card-title</code> ו-<code>card-text</code></td></tr>
       <tr><td><code>card-footer</code></td><td>שורה תחתונה – מחיר, תאריך וכו'</td></tr>
     </table>
-    <div class="tip">💡 מי קובע את הרוחב של הכרטיס? העמודה שהוא יושב בה. בשתי השורות הראשונות של הקוד יש <code>row</code>, ובתוכו עמודה עם <code>col-8 col-md-4</code> – שני class-ים על אותה עמודה, כמו <a href="#" data-go="grid:5">במעבדת הגריד</a>: 8 מתוך 12 במסך צר, ושליש שורה מ-md ומעלה. כרטיס תמיד ממלא את כל הרוחב של העמודה שלו – לכן לא כותבים לו width, ובלי style בתוך התגית.</div>
+    <div class="tip">
+      <div>💡 מי קובע את הרוחב של הכרטיס?</div>
+      <div>העמודה שהוא יושב בה.</div>
+      <div>בשתי השורות הראשונות של הקוד יש <code>row</code>, ובתוכו עמודה עם <code>col-8 col-md-4</code> – שני class-ים על אותה עמודה, כמו <a href="#" data-go="grid:5">במעבדת הגריד</a>: 8 מתוך 12 במסך צר, ושליש שורה מ-md ומעלה.</div>
+      <div>כרטיס תמיד ממלא את כל הרוחב של העמודה שלו – לכן לא כותבים לו width, ובלי style בתוך התגית.</div>
+    </div>
   </article>
 
   <article class="spread act">
     <h3>כל הכרטיס לחיץ: stretched-link</h3>
-    <p>לפעמים רוצים שלחיצה <b>בכל מקום</b> על הכרטיס תפעיל את הקישור – לא רק על הכפתור. מוסיפים לקישור את ה-class <code>stretched-link</code> ("קישור נמתח"). אותו כרטיס, פעמיים. בכל אחד מהם לחצו <b>על התמונה</b> (במחשב – שימו לב גם לצורת העכבר):</p>
+    <div class="ln">לפעמים רוצים שלחיצה <b>בכל מקום</b> על הכרטיס תפעיל את הקישור – לא רק על הכפתור.</div>
+    <div class="ln">מוסיפים <span class="where">לקישור</span> את ה-class <code>stretched-link</code> ("קישור נמתח").</div>
+    <div class="ln">אותו כרטיס, פעמיים.</div>
+    <div class="ln">בכל אחד מהם לחצו <span class="where">על התמונה</span> (במחשב – שימו לב גם לצורת העכבר):</div>
     <div class="compare" id="s44"></div>
     <div class="what">בכרטיס הראשון (בלי stretched-link) רק הכפתור לחיץ – לחיצה על התמונה לא עושה כלום. בכרטיס השני הקישור "נמתח" על <b>כל הכרטיס</b>: העכבר הופך ליד בכל מקום, ולחיצה על התמונה או על הטקסט מפעילה את הקישור.</div>
   </article>
@@ -498,7 +580,7 @@ td code{overflow-wrap:normal;white-space:normal}
       <li><b>③ הקישורים:</b> <code>ul</code> עם <code>navbar-nav</code>, כל <code>li</code> עם <code>nav-item</code>, וכל <code>a</code> עם <code>nav-link</code> – אותה רשימה של קישורים משיעור 4, עם class לרשימה, לכל פריט (item) ולכל קישור (link). <code>active</code> מדגיש קישור אחד – את זה של הדף שנמצאים בו. Bootstrap לא יודע באיזה דף אתם: כותבים אותו ביד. בתפריט שתדביקו באתר שלכם הוא לא יופיע – אותו תפריט מועתק לכל הדפים, ו"בית" היה מודגש בכולם.</li>
     </ul>
     <p>ולשורה האחרונה ברשימת הקישורים יש class שעוד לא פגשתם – <code>d-md-none</code>. הוא שייך למשפחה קטנה של class-ים ש<b>מסתירים</b> תגית:</p>
-    <table>
+    <table class="ref">
       <tr><th>ה-class</th><th>מה הוא עושה</th></tr>
       <tr><td><code>d-none</code></td><td>d = display. מסתיר את התגית תמיד – כמו <code>display: none</code> משיעור 3.</td></tr>
       <tr><td><code>d-md-none</code></td><td>מסתיר רק מ-md ומעלה – כלומר רואים את התגית <b>רק במסך צר</b>, כמו טלפון. (שוב נקודת שבירה באמצע השם!)</td></tr>
@@ -659,7 +741,14 @@ td code{overflow-wrap:normal;white-space:normal}
     <div class="what" id="s51what"></div>
     <div class="bridge">זה הכלל משיעור 3: כששני כללים <b>שווים בכוח</b> (כאן – שניהם בורר של שם תגית, <code>h1</code>), מנצח <b>זה שנכתב אחרון</b>. הדפדפן קורא את הקבצים לפי סדר שורות ה-link – לכן הכללים של הקובץ שמקושר אחרון הם אלה ש"נכתבו אחרונים".</div>
     <!-- data-lock: the tip says "write a rule with a class" – it tells the answer of #p51 -->
-    <div class="tip" data-lock>💡 אז איך משנים משהו של Bootstrap? כותבים כלל עם <b>class</b>: class משלכם (כמו <code>price</code>) ליד ה-class-ים של Bootstrap – <code>class="card-text price"</code>, כמה שמות מופרדים ברווח – או כלל לאותו class ש-Bootstrap משתמש בו, כמו <code>.card-title</code>. לא עזר? בדפדפן F12, סמל החץ, ולחיצה על התגית: ב-Styles ההוראה שלכם מחוקה בקו, ומעליה הכלל שניצח אותה (כמו בשיעור 3). הבורר שלו מראה כמה כוח צריך. <b>חריג:</b> את ה-class-ים הקטנים של Bootstrap (כמו <code>bg-warning</code> או <code>mt-3</code>) כלל שלכם לא ינצח אף פעם, כי הם מסומנים כ"חשובים ביותר" (<code>!important</code>). לכן מוחקים אותם מהתגית ונותנים לה class משלכם. למה? ב-🚀 שמתחת.</div>
+    <div class="tip" data-lock>
+      <div>💡 אז איך משנים משהו של Bootstrap?</div>
+      <div>כותבים כלל עם <b>class</b>: class משלכם (כמו <code>price</code>) ליד ה-class-ים של Bootstrap – <code>class="card-text price"</code>, כמה שמות מופרדים ברווח – או כלל לאותו class ש-Bootstrap משתמש בו, כמו <code>.card-title</code>. לא עזר?</div>
+      <div>בדפדפן F12, סמל החץ, ולחיצה על התגית: ב-Styles ההוראה שלכם מחוקה בקו, ומעליה הכלל שניצח אותה (כמו בשיעור 3).</div>
+      <div>הבורר שלו מראה כמה כוח צריך.</div>
+      <div><b>חריג:</b> את ה-class-ים הקטנים של Bootstrap (כמו <code>bg-warning</code> או <code>mt-3</code>) כלל שלכם לא ינצח אף פעם, כי הם מסומנים כ"חשובים ביותר" (<code>!important</code>).</div>
+      <div>לכן מוחקים אותם מהתגית ונותנים לה class משלכם. למה? ב-🚀 שמתחת.</div>
+    </div>
     <details class="more"><summary>🚀 להעמקה: הכלל שלי אחרון – ובכל זאת הוא מפסיד?</summary>
       <p>זה קורה עם ה-class-ים הקטנים של Bootstrap (כמו <code>bg-warning</code>, <code>mt-3</code> או <code>text-center</code>). בקובץ של Bootstrap, להוראות שלהם מצורפת המילה <code>!important</code> ("חשוב"). הוראה כזו גוברת על כל הוראה רגילה – גם על כלל שנכתב אחריה, וגם על בורר מדויק יותר.</p>
       <p>ההיגיון: מי שכתב על תגית <code>bg-warning</code> ביקש במפורש רקע צהוב – אז זה מה שהוא מקבל. לכן לא "נלחמים" ב-class קטן מתוך <span class="nw">site-style.css</span>: פשוט מוחקים אותו מהתגית, ונותנים לה class משלכם. להרחבה: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/important" target="_blank" rel="noopener">MDN: !important</a> (באנגלית).</p>
@@ -1239,6 +1328,15 @@ function draw41(){
   const cls = [U.m, U.p, U.b, U.t].filter(Boolean).join(' ');
   const code = ['<p>פיצה דני · אשקלון</p>', '<h2 class="' + cls + '">התפריט של היום</h2>'];
   s41.set(L(code), {1:'new'}, null, {css:'h2{outline:1px dashed #94a3b8}'});
+  const SIDE = {t:'top – למעלה', b:'bottom – למטה', s:'start – בהתחלה', e:'end – בסוף'};
+  const dec = cls.split(' ').filter(Boolean).map(c => {
+    let m;
+    if ((m = /^(m|p)([tbse])-(\d)$/.exec(c))) return '<div><span class="ltr"><span class="cx cx-1">' + m[1] + '</span><span class="cx cx-2">' + m[2] + '</span>-<span class="cx cx-3">' + m[3] + '</span></span> = ' + (m[1] === 'm' ? 'margin' : 'padding') + ' + ' + SIDE[m[2]] + ' + דרגה ' + m[3] + '</div>';
+    if ((m = /^(m|p)-(\d)$/.exec(c))) return '<div><span class="ltr"><span class="cx cx-1">' + m[1] + '</span>-<span class="cx cx-3">' + m[2] + '</span></span> = ' + (m[1] === 'm' ? 'margin' : 'padding') + ' מכל הצדדים + דרגה ' + m[2] + '</div>';
+    if ((m = /^(bg|text)-(\w+)$/.exec(c))) return '<div><span class="ltr"><span class="cx cx-1">' + m[1] + '</span>-<span class="cx cx-2">' + m[2] + '</span></span> = ' + (m[1] === 'bg' ? 'צבע רקע' : (/^(start|center|end)$/.test(m[2]) ? 'יישור טקסט' : 'צבע טקסט')) + ': ' + m[2] + '</div>';
+    return '';
+  }).join('');
+  $('#s41dec').innerHTML = dec;
   s41.note.innerHTML = 'הקו המקווקו האפור מראה את גבולות ה-h2.' +
     (U.m === 'ms-3' ? '<br>עם <code>ms-3</code> יש רווח (margin) בצד ה<b>התחלה</b> – בעברית, מימין: הכותרת התרחקה מהקצה הימני.' : U.m === 'me-3' ? '<br>עם <code>me-3</code> יש רווח (margin) בצד ה<b>סוף</b> – בעברית, משמאל: הכותרת התרחקה מהקצה השמאלי.' : '');
 }

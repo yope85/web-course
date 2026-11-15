@@ -275,7 +275,12 @@
     </div>
     <div class="predict" id="pWeak"></div>
     <div id="wgAfter">
-      <div class="what"><b>כך סופר המחוון:</b> דף תוכן נספר רק אם יש בו תוכן משמעותי בנושא האתר – לפחות פסקה אחת של 3 משפטים שכתבתם. בדף א יש משפט אחד, ולכן הוא <b>לא נספר</b>. בדף ב יש פסקה של שלושה משפטים – ולכן הוא <b>נספר</b>. (הטבלה והקישור עוזרים לקורא, אבל המחוון לא דורש אותם.) העיצוב של שני הדפים זהה: אותו תפריט, אותם צבעים, אותו גריד.</div>
+      <div class="what">
+      <div><b>כך סופר המחוון:</b> דף תוכן נספר רק אם יש בו תוכן משמעותי בנושא האתר – לפחות פסקה אחת של 3 משפטים שכתבתם.</div>
+      <div>בדף א יש משפט אחד, ולכן הוא <b>לא נספר</b>.</div>
+      <div>בדף ב יש פסקה של שלושה משפטים – ולכן הוא <b>נספר</b>.</div>
+      <div>(הטבלה והקישור עוזרים לקורא, אבל המחוון לא דורש אותם.) העיצוב של שני הדפים זהה: אותו תפריט, אותם צבעים, אותו גריד.</div>
+    </div>
       <h4>דף תוכן נספר רק אם הוא עומד בשלושה תנאים</h4>
       <p class="muted">כך כתוב במחוון של ההגשה, בשורה "10 דפי תוכן".</p>
       <ol class="wgsigns">
@@ -575,6 +580,10 @@ const PLAN = [
   {what:'משלימים', goal:'משלימים ל-10 דפי תוכן – וכולם נפתחים מהתפריט. <b>יעד:</b> <a href="#" data-go="list:1">רשימת הדרישות</a> כמעט מלאה, ובפרק 6 יש שורה וצילום מסך לכל דף.'},
   {what:'שבוע ההגשה', goal:'ליטוש, <a href="#" data-go="rubric:3">מחוון</a>, פרק 3 בתיק הפרויקט (תרשים וטבלת הרשאות), <a href="#" data-go="submit:1">סיבוב בדיקה אחרון</a>, zip – ו<a href="#" data-go="submit:2">הגשה</a>. 💡 הגישו יום לפני תאריך היעד: יום אחד של ביטחון.'}
 ];
+/* one idea per line: split the week's text at the sentence ends and put the goal (יעד) on its own line */
+function goalLines(g){
+  return g.replace('<b>יעד:</b>', '\n<b>יעד:</b>').split('\n').flatMap(part => part.split(/\. (?=\S)/).map((x, i, a) => i < a.length - 1 && !/[.!?]$/.test(x) ? x + '.' : x)).filter(x => x.trim()).map(x => '<div>' + x + '</div>').join('');
+}
 (function plan(){
   const today = dayOf(NOW()), N = PLAN.length;
   /* week k (1..N) ends 7*(N-k) days before the due date, and starts 6 days earlier */
@@ -589,7 +598,7 @@ const PLAN = [
   $('#plan').innerHTML = '<tr><th>מתי</th><th>מה כדאי שיהיה מוכן בסוף השבוע</th></tr>' + PLAN.map((p, i) => {
     const s = DUE ? span(i + 1) : null, past = DUE && today > s[1];
     return '<tr class="' + (i === cur ? 'cur' : past ? 'past' : '') + '"><td><b>שבוע ' + (i + 1) + '</b>' + (s ? '<span class="pdates">' + dm(s[0]) + ' עד ' + dm(s[1]) + '</span>' : '') +
-      '<span class="wh">' + p.what + '</span>' + (i === cur ? '<span class="here">📍 אתם כאן</span>' : '') + '</td><td>' + p.goal + '</td></tr>';
+      '<span class="wh">' + p.what + '</span>' + (i === cur ? '<span class="here">📍 אתם כאן</span>' : '') + '</td><td>' + goalLines(p.goal) + '</td></tr>';
   }).join('');
 })();
 

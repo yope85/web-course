@@ -127,7 +127,14 @@ table.nwcode td code{white-space:normal;overflow-wrap:normal;word-break:keep-all
   <article class="spread act">
     <h3>דף Razor: שני קבצים – ושניהם רצים בשרת</h3>
     <p>דף Razor הוא דף שיש בו HTML וגם <b><bdi>C#</bdi></b>, וה-<bdi>C#</bdi> רץ <b>בשרת</b> – לפני שהדף נשלח לדפדפן. הסיומת שלו, cshtml, היא חיבור של cs (קובצי <bdi>C#</bdi>) ו-html.</p>
-    <div class="bridge">רגע – בשיעור 1 למדתם שהשרת שולח רק קבצים מ-wwwroot, "חלון הראווה" של האתר. זה עדיין נכון: קובץ html, תמונה או css השרת שולח כמו שהם. דפי Razor נמצאים בתיקייה אחרת, Pages – "במטבח". קובץ cshtml הוא <b>מתכון</b>: את המתכון השרת אף פעם לא שולח. הוא מכין לפיו דף HTML, בכל בקשה מחדש, ושולח את <b>המנה המוכנה</b>. מנה כזו כבר ראיתם: דף Welcome שנפתח בהרצה הראשונה (שיעור 1) הוא <code>Pages/Index.cshtml</code> – לכן יש לו כתובת, אף שהוא לא ב-wwwroot.</div>
+    <div class="bridge">
+      <div>רגע – בשיעור 1 למדתם שהשרת שולח רק קבצים מ-wwwroot, "חלון הראווה" של האתר.</div>
+      <div>זה עדיין נכון: קובץ html, תמונה או css השרת שולח כמו שהם.</div>
+      <div>דפי Razor נמצאים בתיקייה אחרת, Pages – "במטבח".</div>
+      <div>קובץ cshtml הוא <b>מתכון</b>: את המתכון השרת אף פעם לא שולח.</div>
+      <div>הוא מכין לפיו דף HTML, בכל בקשה מחדש, ושולח את <b>המנה המוכנה</b>.</div>
+      <div>מנה כזו כבר ראיתם: דף Welcome שנפתח בהרצה הראשונה (שיעור 1) הוא <code>Pages/Index.cshtml</code> – לכן יש לו כתובת, אף שהוא לא ב-wwwroot.</div>
+    </div>
     <p>Visual Studio יוצר לכל דף שני קבצים. כך הם נראים בדף חדש וריק בשם About:</p>
     <div class="compare">
       <div><p class="cslbl"><b>About.cshtml</b> – התצוגה (view): HTML עם קצת <bdi>C#</bdi>. כאן כותבים. גם הוא רץ בשרת.</p><div class="codeblock"><pre data-rz="rz">
@@ -172,7 +179,13 @@ namespace MyFirstWeb.Pages.Site
       <div id="rzResPane"><div class="pane-h"><span class="dot"></span>מה רואים בדפדפן</div><div id="rzRes"></div></div>
     </div>
     <div class="ctrls" id="rzCtrls"><button class="btn" type="button" id="rzTick">⏩ עברה דקה – רעננו את הדף</button></div>
-    <div class="what" id="w22">בשורה 10: ב-<bdi>C#</bdi>, <code>DateTime.Now</code> הוא התאריך והשעה של הרגע הזה, ו-<code>ToShortTimeString()</code> מחזירה מהם רק את השעה, כטקסט. השרת מריץ את הקוד, ו<b>במקומו</b> כותב את התוצאה. הוא עושה את זה <b>מחדש בכל טעינה</b> של הדף – לכן אחרי רענון השעה מתעדכנת. בלי רענון היא לא תזוז: בדפדפן יש רק הטקסט של השעה – אין שם קוד שירוץ שוב. ב-Ctrl+U (קוד המקור) אין אף <code>@</code>: הדפדפן מקבל HTML רגיל.</div>
+    <div class="what" id="w22">
+      <div>בשורה 10: ב-<bdi>C#</bdi>, <code>DateTime.Now</code> הוא התאריך והשעה של הרגע הזה, ו-<code>ToShortTimeString()</code> מחזירה מהם רק את השעה, כטקסט.</div>
+      <div>השרת מריץ את הקוד, ו<b>במקומו</b> כותב את התוצאה.</div>
+      <div>הוא עושה את זה <b>מחדש בכל טעינה</b> של הדף – לכן אחרי רענון השעה מתעדכנת.</div>
+      <div>בלי רענון היא לא תזוז: בדפדפן יש רק הטקסט של השעה – אין שם קוד שירוץ שוב.</div>
+      <div>ב-Ctrl+U (קוד המקור) אין אף <code>@</code>: הדפדפן מקבל HTML רגיל.</div>
+    </div>
     <div class="tip" data-lock>💡 <b>ומה לא הגיע לדפדפן?</b> חמש השורות הראשונות – <code>@page</code>, <code>@model</code> והבלוק שמתחתיהן: אלה הוראות לשרת, לא תוכן. ועוד שורה אחת מהתוכן נעלמה בדרך – איזו ולמה, בשלב הבא. ובשורת התמונה, ה-<code>~/</code> הפך ל-<code>/</code>: גם על זה בשלב הבא.</div>
     <div class="bridge">כמו <code>Console.WriteLine("Time: " + x)</code> ב-<bdi>C#</bdi>: על המסך לא מופיעה האות x – מופיע <b>הערך</b> שלה. כך גם מה שאחרי <code>@</code>.</div>
     <details class="more" data-lock><summary>🚀 להעמקה: השעה של מי?</summary>
@@ -188,13 +201,28 @@ namespace MyFirstWeb.Pages.Site
       <div><div class="pane-h"><span class="dot"></span>About.cshtml – מה שכתבתם</div><pre class="cv" id="symSrc"></pre></div>
       <div><div class="pane-h"><span class="dot"></span>מה הדפדפן מקבל (Ctrl+U)</div><pre class="cv" id="symOut"></pre></div>
     </div>
-    <table class="symtab">
+    <table class="symtab ref">
       <tr><th>הסימן</th><th>מה הוא אומר</th></tr>
-      <tr><td><code>@* … *@</code></td><td><b>הערה של Razor.</b> השרת מוחק אותה, והיא לא מגיעה לדפדפן. הערת HTML רגילה (משיעור 2) כן מגיעה – וכל אחד יכול לקרוא אותה ב-Ctrl+U. לכן בדף Razor, הערות לעצמכם כותבים כך. ושימו לב: <code>@</code> שנמצא בתוך הערת HTML רגילה <b>עדיין רץ</b> בשרת. כדי "לכבות" שורה שיש בה <code>@</code> – רק הערה של Razor.</td></tr>
-      <tr><td><code>@@</code></td><td><b>התו @ עצמו</b>, כטקסט. עם @ אחד, Razor היה מחפש קוד <bdi>C#</bdi> – ומודיע על שגיאה. (כתובת מייל מלאה, כמו <bdi>dana@gmail.com</bdi>, Razor מזהה לבד ומשאיר כמו שהיא.)</td></tr>
-      <tr><td><code>~/</code></td><td><b>"מתחילים מ-wwwroot".</b> כותבים אותו בתחילת נתיב, ב-src או ב-href – רק בקובץ cshtml. השרת כותב במקומו לוכסן אחד, והדפדפן מקבל למשל <code>/Img/pic.jpg</code> – הכתובת של התמונה באתר, מיד אחרי <code>localhost:&lt;port&gt;</code> שבשורת הכתובת.</td></tr>
+      <tr><td><code>@* … *@</code></td><td>
+        <div><b>הערה של Razor.</b> השרת מוחק אותה, והיא לא מגיעה לדפדפן.</div>
+        <div>הערת HTML רגילה (משיעור 2) כן מגיעה – וכל אחד יכול לקרוא אותה ב-Ctrl+U. לכן בדף Razor, הערות לעצמכם כותבים כך.</div>
+        <div>ושימו לב: <code>@</code> שנמצא בתוך הערת HTML רגילה <b>עדיין רץ</b> בשרת. כדי "לכבות" שורה שיש בה <code>@</code> – רק הערה של Razor.</div>
+      </td></tr>
+      <tr><td><code>@@</code></td><td>
+        <div><b>התו @ עצמו</b>, כטקסט.</div>
+        <div>עם @ אחד, Razor היה מחפש קוד <bdi>C#</bdi> – ומודיע על שגיאה.</div>
+        <div>(כתובת מייל מלאה, כמו <bdi>dana@gmail.com</bdi>, Razor מזהה לבד ומשאיר כמו שהיא.)</div>
+      </td></tr>
+      <tr><td><code>~/</code></td><td>
+        <div><b>"מתחילים מ-wwwroot".</b></div>
+        <div>כותבים אותו בתחילת נתיב, ב-src או ב-href – רק בקובץ cshtml.</div>
+        <div>השרת כותב במקומו לוכסן אחד, והדפדפן מקבל למשל <code>/Img/pic.jpg</code> – הכתובת של התמונה באתר, מיד אחרי <code>localhost:&lt;port&gt;</code> שבשורת הכתובת.</div>
+      </td></tr>
     </table>
-    <div class="what">שלושתם נעלמים בדרך: את ההערה השרת מוחק, מ-<code>@@</code> נשאר תו אחד, ואת <code>~/</code> מחליף לוכסן. לדפדפן מגיע תמיד HTML רגיל. ולמה בדף Razor כותבים <code>~/Img/…</code> ולא <code>../Img/…</code> כמו עד היום? על זה – בנושא "כתובות ונתיבים".</div>
+    <div class="what">
+      <div>שלושתם נעלמים בדרך: את ההערה השרת מוחק, מ-<code>@@</code> נשאר תו אחד, ואת <code>~/</code> מחליף לוכסן. לדפדפן מגיע תמיד HTML רגיל.</div>
+      <div>ולמה בדף Razor כותבים <code>~/Img/…</code> ולא <code>../Img/…</code> כמו עד היום? על זה – בנושא "כתובות ונתיבים".</div>
+    </div>
   </article>
 
   <article class="spread act">
@@ -386,9 +414,23 @@ namespace MyFirstWeb.Pages.Site
       <div class="ctrls"><span class="lbl">בדף כתוב <code>src="…"</code> עם:</span><div class="seg" id="wkPath"></div></div>
     </div>
     <div class="walkout" id="walkOut"><div class="pathbox" id="wkBox"></div><div class="row2"><img id="wkImg" alt="התמונה pic.jpg" /><span id="wkVerdict" aria-live="polite"></span></div></div>
-    <div class="what" id="w43">הדפדפן לא יודע באיזו תיקייה בפרויקט נמצא הקובץ של הדף. הוא רואה רק את <b>הכתובת</b>, ולפיה מחשב את הנתיב. לכן <code>../Img</code> עובד רק "במזל" – בכתובות בעומק של תיקייה אחת, כמו <code>/Site/About</code>. ואיך הדפדפן מחליט מה "התיקייה"? כל מה שעד <b>הלוכסן האחרון</b> בכתובת. בכתובת <code>/Site/About</code> זו <code>/Site/</code> – ובכתובת <code>/Site/About/</code> זו <code>/Site/About/</code>, אף ש-About הוא בכלל דף. בדף Razor, עם <code>~/</code> זה עובד <b>מכל כתובת</b>: השרת כותב במקומו לוכסן, והדפדפן מתחיל מתחילת האתר – מ-wwwroot.</div>
+    <div class="what" id="w43">
+      <div>הדפדפן לא יודע באיזו תיקייה בפרויקט נמצא הקובץ של הדף.</div>
+      <div>הוא רואה רק את <b>הכתובת</b>, ולפיה מחשב את הנתיב.</div>
+      <div>לכן <code>../Img</code> עובד רק "במזל" – בכתובות בעומק של תיקייה אחת, כמו <code>/Site/About</code>.</div>
+      <div>ואיך הדפדפן מחליט מה "התיקייה"?</div>
+      <div>כל מה שעד <b>הלוכסן האחרון</b> בכתובת.</div>
+      <div>בכתובת <code>/Site/About</code> זו <code>/Site/</code> – ובכתובת <code>/Site/About/</code> זו <code>/Site/About/</code>, אף ש-About הוא בכלל דף.</div>
+      <div>בדף Razor, עם <code>~/</code> זה עובד <b>מכל כתובת</b>: השרת כותב במקומו לוכסן, והדפדפן מתחיל מתחילת האתר – מ-wwwroot.</div>
+    </div>
     <div class="trap" data-lock><code>~/</code> ו-asp-page עובדים <b>רק בקובצי cshtml</b> – כי השרת הוא שמחליף אותם. קובץ html רגיל נשלח כמו שהוא, ואף אחד לא מחליף בו כלום: הדפדפן יחפש תיקייה בשם <code>~</code>, וקישור עם asp-page יישאר בלי href. לכן בדפי ה-html שעוד לא העברתם – לא משנים נתיבים.</div>
-    <div class="bridge">בשיעור 2 למדתם: נתיב <b>יחסי</b> (relative) תלוי בתיקייה של הדף שבו הוא כתוב. מהיום יש עוד סוג: נתיב שמתחיל ב-<code>/</code> לא תלוי בדף – הדפדפן מתחיל תמיד מאותה נקודה, מיד אחרי <code>localhost:&lt;port&gt;</code>. כשכותבים <code>~/</code> בדף Razor, השרת כותב בשבילכם את הלוכסן הזה. אפשר גם לכתוב <code>/Img/…</code> ישר, ואצלכם זה יעבוד. עם <code>~/</code> בטוח יותר: השרת כותב את ההתחלה הנכונה גם אם האתר יעלה פעם לכתובת משנה.</div>
+    <div class="bridge">
+      <div>בשיעור 2 למדתם: נתיב <b>יחסי</b> (relative) תלוי בתיקייה של הדף שבו הוא כתוב.</div>
+      <div>מהיום יש עוד סוג: נתיב שמתחיל ב-<code>/</code> לא תלוי בדף – הדפדפן מתחיל תמיד מאותה נקודה, מיד אחרי <code>localhost:&lt;port&gt;</code>.</div>
+      <div>כשכותבים <code>~/</code> בדף Razor, השרת כותב בשבילכם את הלוכסן הזה.</div>
+      <div>אפשר גם לכתוב <code>/Img/…</code> ישר, ואצלכם זה יעבוד.</div>
+      <div>עם <code>~/</code> בטוח יותר: השרת כותב את ההתחלה הנכונה גם אם האתר יעלה פעם לכתובת משנה.</div>
+    </div>
   </article>
 
   <article class="spread vsstep">
@@ -529,7 +571,7 @@ namespace MyFirstWeb.Pages.Site
         <div class="codeblock"><pre class="cv" id="sumLayout"></pre></div>
         <p style="margin:4px 0 0">התפריט – רק כאן. כל דף נכנס במקום <code>@RenderBody()</code> בתבנית.</p></div>
       <div class="card"><h4>כתובות</h4>
-        <table>
+        <table class="ref">
           <tr><th>הקובץ</th><th>הכתובת</th></tr>
           <tr><td><code>Pages/Index.cshtml</code></td><td><code>/</code></td></tr>
           <tr><td><code>Pages/Site/About.cshtml</code></td><td><code>/Site/About</code></td></tr>
