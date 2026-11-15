@@ -106,6 +106,9 @@ function wireCopy(root){
 const PIZZA_IMG = "data:image/svg+xml;utf8," + encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='47' fill='#e9a23b'/><circle cx='50' cy='50' r='40' fill='#d9472b'/><circle cx='50' cy='50' r='37' fill='#f6d365'/><circle cx='35' cy='38' r='6' fill='#c0392b'/><circle cx='63' cy='35' r='6' fill='#c0392b'/><circle cx='59' cy='63' r='6' fill='#c0392b'/><circle cx='36' cy='64' r='5' fill='#c0392b'/><circle cx='48' cy='50' r='3' fill='#2d6a2d'/><circle cx='71' cy='51' r='3' fill='#2d6a2d'/></svg>");
 const IMAGES = { 'pizza.jpg': PIZZA_IMG };
 function fakeImg(label, bg, fg){ return "data:image/svg+xml;utf8," + encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 110'><rect width='160' height='110' rx='10' fill='" + (bg || '#bfdbfe') + "'/><text x='80' y='64' font-family='Arial' font-size='22' text-anchor='middle' fill='" + (fg || '#1e3a8a') + "'>" + label + "</text></svg>"); }
+/* an image that is MISSING on purpose (a wrong path in a lab): a drawn "404" tile – the same lesson as the browser's broken-image icon,
+   but it is a real, loaded image (the icon looked like a bug in the guide, and differs between browsers). Mark it data-missing. */
+function missingImg(name){ return "data:image/svg+xml;utf8," + encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 110'><rect x='2' y='2' width='156' height='106' rx='10' fill='#fef2f2' stroke='#dc2626' stroke-width='3' stroke-dasharray='8 6'/><text x='80' y='52' font-family='Arial' font-size='30' font-weight='bold' text-anchor='middle' fill='#b91c1c'>404</text><text x='80' y='80' font-family='Arial' font-size='15' text-anchor='middle' fill='#7f1d1d'>" + (name || 'image not found') + "</text></svg>"); }
 function resolveImgs(src){ return src.replace(/(src\s*=\s*)(["']?)(?:\.\.\/)?(?:Img|img)\/([A-Za-z0-9_.-]+)\2(?=[\s>\/]|$)/gi, (x, a, q, f) => a + '"' + (IMAGES[f] || fakeImg(f.replace(/\.[a-z]+$/i,''))) + '"'); }
 const BASE_CSS = ':host{display:block}:host([hidden]){display:none}x-page{display:block;background:#fff;color:#111;padding:12px 16px;font-family:Rubik,Arial,sans-serif;font-size:16px;line-height:1.5;direction:rtl;min-height:40px}' +
   '.hit{outline:3px solid #f43f5e!important;outline-offset:2px}.peek{outline:2px dashed #2f6fec;outline-offset:2px}' +
@@ -123,7 +126,8 @@ class Stage {
     this.page.addEventListener('click', e => { const a = e.target.closest('a'); if (a) { e.preventDefault(); if (this.onLink) this.onLink(a); } });
     this.page.addEventListener('submit', e => { e.preventDefault(); if (this.onSubmit) this.onSubmit(e.target); });
   }
-  html(src){ this.page.innerHTML = resolveImgs(src); this.all().forEach(e => { const t = e.tagName.toLowerCase(); e.dataset.tag = t; e.dataset.kind = INLINE_TAGS.test(t) ? 'inline' : 'block'; }); return this; }
+  /* a mini page must never fetch anything: a <link href="../css/style.css"> or <script src> shown as code would be a real request (404 on the site). The tags stay (line <-> element mapping), the address moves to data-href / data-src. */
+  html(src){ this.page.innerHTML = resolveImgs(src).replace(/(<link\b[^>]*?\s)href(\s*=)/gi, '$1data-href$2').replace(/(<script\b[^>]*?\s)src(\s*=)/gi, '$1data-src$2'); this.all().forEach(e => { const t = e.tagName.toLowerCase(); e.dataset.tag = t; e.dataset.kind = INLINE_TAGS.test(t) ? 'inline' : 'block'; }); return this; }
   css(src){ this.u.textContent = mapCss(src || ''); return this; }
   all(){ return [...this.page.querySelectorAll('*')]; }
 }
@@ -207,7 +211,7 @@ function seg(el, options, onPick, start){
   options.forEach((o,i) => {
     const b = document.createElement('button'); b.type = 'button'; b.innerHTML = o.label || o;
     if (o.mono) b.className = 'chip';
-    b.addEventListener('click', () => pick(i)); el.appendChild(b); btns.push(b);
+    b.addEventListener('click', () => { if (b.getAttribute('aria-pressed') === 'true') return; pick(i); }); el.appendChild(b); btns.push(b);   /* re-clicking the chosen option does nothing (no repeated effects) */
   });
   function pick(i){ btns.forEach((b,j) => b.setAttribute('aria-pressed', i === j)); onPick(options[i], i); }
   pick(start || 0); return pick;
@@ -963,9 +967,30 @@ const pickNot = (arr, not) => { let x; do { x = arr[Math.floor(Math.random() * a
             'big'   = a whole block is finished -> the FINALE (so every lab that already called celebrate(el,'big') gets it).
    o.cheer = the text of the bubble, o.sound = another SFX kind, o.fx:false = bubble only. */
 let finAt = 0;
+/* IDEMPOTENT: the same element showing the same text is celebrated once. Clicking the same correct answer / chip / button again
+   (or ticking / unticking / re-ticking) must not replay the cheer, the sound, the streak or the confetti. */
+const celSeen = new WeakMap();
+function celDup(el, tag){
+  if (typeof el === 'string') el = $(el);
+  if (!el || typeof el !== 'object' || el.nodeType !== 1) return false;
+  const sig = tag + '|' + (el.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 200);
+  let set = celSeen.get(el); if (!set) { set = new Set(); celSeen.set(el, set); }
+  if (set.has(sig)) return true; set.add(sig); return false;
+}
+/* once(key): true the FIRST time (remembered in this browser), false ever after – for labs that must award / count / cheer only once */
+function once(key){ state.once = state.once || {}; if (state.once[key]) return false; state.once[key] = 1; save(); return true; }
+/* a calm, static "solved" chip in the heading of the step (no sound, no animation) – shown after the first success of a lab */
+function labSolved(el){
+  try { if (typeof el === 'string') el = $(el); const h = el && el.closest && el.closest('.spread') && el.closest('.spread').querySelector('h3');
+    if (h && !h.querySelector('.lab-done')) { const s = document.createElement('span'); s.className = 'lab-done'; s.textContent = '✔ נפתר'; h.appendChild(s); } } catch(e){}
+}
+/* lab(key, el): the success path of an exploring widget. First success: static chip + the normal small celebration, and returns true.
+   Every later success (same or another option): no effect at all – only the explanation the widget already shows. */
+function lab(key, el, level){ const first = once('lab:' + LESSON + ':' + key); labSolved(el); if (first) celebrate(el, level || 'small'); return first; }
 function celebrate(el, level, o){
   if (level === 'big') return finale(el, o);
   o = o || {};
+  if (celDup(el, level || 'small')) { if (quiet()) SFX.play('tick'); return; }
   if (quiet()) { SFX.play('tick'); return; }
   SFX.play(o.sound || (level === 'done' ? 'done' : 'ok'));
   if (Date.now() - finAt < 450) return;   /* a finale has just started: it is the one effect on the screen */
@@ -1046,9 +1071,9 @@ const FIN_THEMES = [
 ];
 let lastFin = -1;
 function stepRef(el){ const sp = el && el.closest ? el.closest('.spread') : null; if (!sp) return ''; for (const t of T) { const i = t.steps.indexOf(sp); if (i >= 0) return t.id + ':' + i; } return ''; }
-function finMark(key, perfect, el){
+function finMark(key, perfect, el, watched){
   state.fin = state.fin || {}; const old = state.fin[key] || {};
-  state.fin[key] = {p: perfect || old.p ? 1 : 0, s: stepRef(el) || old.s || ''}; save(); paintAced();
+  state.fin[key] = {p: perfect || old.p ? 1 : 0, s: stepRef(el) || old.s || '', w: watched || old.w ? 1 : 0}; save(); paintAced();
 }
 /* "🏆 מושלם" chip for a block that was finished without mistakes (remembered). Returns '' when it was not. */
 function finBadge(key, text){ const r = (state.fin || {})[key]; return r && r.p ? ' <span class="fin-badge">' + (text || '🏆 מושלם') + '</span>' : ''; }
@@ -1068,7 +1093,12 @@ function paintAced(){
 }
 function finale(el, o){
   o = o || {}; if (typeof el === 'string') el = $(el);
-  if (o.key) { try { finMark(o.key, !!o.perfect, el); } catch(e){} }
+  /* idempotent: a finale with a key plays once (again only when it is now perfect and was not before); without a key – once per element + text */
+  const prev = o.key && state.fin && state.fin[o.key];
+  if (o.key && (finOnce['k:' + o.key + ':' + (o.perfect ? 1 : 0)] || (prev && (prev.p || !o.perfect) && prev.w))) { try { finMark(o.key, !!o.perfect, el); } catch(e){} return; }
+  if (o.key) finOnce['k:' + o.key + ':' + (o.perfect ? 1 : 0)] = 1;
+  else if (celDup(el, 'finale')) return;
+  if (o.key) { try { finMark(o.key, !!o.perfect, el, true); } catch(e){} }
   if (quiet()) { SFX.play('tick'); return; }
   if (Date.now() - finAt < 900) return;
   finAt = Date.now();
@@ -1906,7 +1936,7 @@ function start(o){
 }
 
 window.Course = { $, esc, store, state, save, onSave: f => saveHooks.push(f), hlHtmlLine, hlCssLine, codeLines, autoCode, wireCopy,
-  PIZZA_IMG, IMAGES, fakeImg, mapCss, Stage, Split, Frame, frameDoc, seg, predict, quiz, doneCheck, playground, jsbox, jsGuard, tagIssues, newTagIssues, SFX, sequence, assignment, ASSIGN, toast, party, findEgg, start,
+  PIZZA_IMG, IMAGES, fakeImg, missingImg, once, lab, labSolved, mapCss, Stage, Split, Frame, frameDoc, seg, predict, quiz, doneCheck, playground, jsbox, jsGuard, tagIssues, newTagIssues, SFX, sequence, assignment, ASSIGN, toast, party, findEgg, start,
   checkpoint, trouble, askBox, stepName, celebrate, finale, finBadge,
   go: (id, n) => { const t = T.findIndex(x => x.id === id); if (t >= 0) show(t, (n || 1) - 1, true); } };
 })();

@@ -746,3 +746,7 @@ div.ln:last-child{margin-bottom:0}
 .steps.many button:not([aria-current="true"]){font-size:0;padding:3px;border-radius:50%;max-width:none}
 .steps.many button:not([aria-current="true"]) .k{margin:0;font-size:13px}
 .steps.many button:not([aria-current="true"]).aced::after,.steps.many button:not([aria-current="true"]).skim::after{display:none}
+
+/* static "solved" chip of an exploring lab (no animation, no sound) */
+.lab-done{display:inline-block;margin-inline-start:10px;padding:1px 10px;border-radius:999px;font-size:.75rem;font-weight:500;background:#dcfce7;color:#14532d;vertical-align:middle}
+[data-theme=dark] .lab-done,.dark .lab-done{background:#14532d;color:#dcfce7}
