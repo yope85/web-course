@@ -720,9 +720,9 @@ table.ref td>div+div{margin-top:0}
 .plan td>div:last-child{margin-bottom:0}
 
 /* didactic emphasis: .where = the thing you act ON / the place ("לקישור", "על התמונה") - marker + thick underline, impossible to skim past; .ln = one instruction per line */
-.where{font-weight:700;padding:0 4px;border-radius:3px;background:linear-gradient(transparent 50%,#fde68a 50%);border-bottom:3px solid #f59e0b}
-:root[data-theme="dark"] .where{background:linear-gradient(transparent 50%,#5b4410 50%);border-bottom-color:#fbbf24}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .where{background:linear-gradient(transparent 50%,#5b4410 50%);border-bottom-color:#fbbf24}}
+.where{font-weight:700;padding:0 4px;border-radius:3px;background:#fde68a;-webkit-box-decoration-break:clone;box-decoration-break:clone;border-bottom:3px solid #f59e0b}
+:root[data-theme="dark"] .where{background:#5b4410;border-bottom-color:#fbbf24}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .where{background:#5b4410;border-bottom-color:#fbbf24}}
 div.ln{margin:0 0 8px;line-height:1.75}
 div.ln:last-child{margin-bottom:0}
 /* .not = the easy-to-miss negation in an instruction ("בלי רווחים", "לא Downloads") - red wavy underline + bold; never colour alone */
