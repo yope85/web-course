@@ -1416,7 +1416,7 @@ trouble('#trMove', {base:false, items:[T_SAVE, T_REFRESH,
    10. 🎯 understanding checks
    ===================================================================== */
 checkpoint('#cpRazor', [
-  {type:'text', q:'כתבו <b>שורת קוד אחת</b> של <bdi>Razor</bdi> שקובעת שכותרת הלשונית של הדף תהיה הטקסט <b>המנות</b>. <b>כל השורה</b> מתחילה ב-<code>@{</code> ונגמרת ב-<code>}</code>. המילה <b>המנות</b> עצמה היא רק טקסט הכותרת, בתוך מירכאות – <b>בלי <code>@</code> לפניה</b>.', placeholder:'@{ … }',
+  {type:'text', q:'כתבו <b>שורת קוד אחת</b> של <bdi>Razor</bdi> שקובעת שכותרת הלשונית של הדף תהיה הטקסט <b>המנות</b>. כתבו אותה במבנה שרואים בראש הדף: <code>@{ … }</code> – עם הסוגריים המסולסלים.', placeholder:'@{ … }',
    accept:[/^@\{\s*ViewData\[\s*"Title"\s*\]\s*=\s*"המנות"\s*;\s*\}$/], answer:'@{ ViewData["Title"] = "המנות"; }',
    wrong:'בדקו: השורה כולה בין <code>@{</code> ל-<code>}</code>. בפנים: <code>ViewData["Title"]</code>, סימן =, הכותרת במירכאות ישרות ו-<code>;</code> בסוף. המבנה: <code>@{ ViewData["Title"] = "…"; }</code>',
    explain:'התשובה: <code>@{ ViewData["Title"] = "המנות"; }</code>. הבלוק <code>@{ }</code> מריץ פקודת <bdi>C#</bdi>: היא שומרת את הטקסט "המנות" ב-ViewData, והתבנית שמה אותו בלשונית. המילה המנות היא טקסט בלבד – בלי <code>@</code> לפניה.', back:'razor:4'},
