@@ -195,34 +195,14 @@ namespace MyFirstWeb.Pages.Site
 
   <article class="spread act">
     <h3>עוד שלושה סימנים של Razor</h3>
-    <p>חוץ מ-<code>@</code> יש עוד שלושה סימנים קטנים, שתפגשו כמעט בכל דף Razor. בחרו סימן, והשוו: מה כתוב בדף – ומה מגיע לדפדפן.</p>
+    <p>חוץ מ-<code>@</code> יש עוד שלושה סימנים קטנים, שתפגשו כמעט בכל דף Razor. בחרו סימן – ובדקו מה <b>השתנה</b> בין <b>מה שכתבתם</b> (החלון הימני) לבין <b>מה שהדפדפן מקבל</b> (החלון השמאלי).</p>
     <div class="ctrls"><div class="seg" id="symSeg"></div></div>
+    <div class="ln" id="symDiff"></div>
     <div class="compare wrapcode">
       <div><div class="pane-h"><span class="dot"></span>About.cshtml – מה שכתבתם</div><pre class="cv" id="symSrc"></pre></div>
       <div><div class="pane-h"><span class="dot"></span>מה הדפדפן מקבל (Ctrl+U)</div><pre class="cv" id="symOut"></pre></div>
     </div>
-    <table class="symtab ref">
-      <tr><th>הסימן</th><th>מה הוא אומר</th></tr>
-      <tr><td><code>@* … *@</code></td><td>
-        <div><b>הערה של Razor.</b> השרת מוחק אותה, והיא לא מגיעה לדפדפן.</div>
-        <div>הערת HTML רגילה (משיעור 2) כן מגיעה – וכל אחד יכול לקרוא אותה ב-Ctrl+U. לכן בדף Razor, הערות לעצמכם כותבים כך.</div>
-        <div>ושימו לב: <code>@</code> שנמצא בתוך הערת HTML רגילה <b>עדיין רץ</b> בשרת. כדי "לכבות" שורה שיש בה <code>@</code> – רק הערה של Razor.</div>
-      </td></tr>
-      <tr><td><code>@@</code></td><td>
-        <div><b>התו @ עצמו</b>, כטקסט.</div>
-        <div>עם @ אחד, Razor היה מחפש קוד <bdi>C#</bdi> – ומודיע על שגיאה.</div>
-        <div>(כתובת מייל מלאה, כמו <bdi>dana@gmail.com</bdi>, Razor מזהה לבד ומשאיר כמו שהיא.)</div>
-      </td></tr>
-      <tr><td><code>~/</code></td><td>
-        <div><b>"מתחילים מ-wwwroot".</b></div>
-        <div>כותבים אותו בתחילת נתיב, ב-src או ב-href – רק בקובץ cshtml.</div>
-        <div>השרת כותב במקומו לוכסן אחד, והדפדפן מקבל למשל <code>/Img/pic.jpg</code> – הכתובת של התמונה באתר, מיד אחרי <code>localhost:&lt;port&gt;</code> שבשורת הכתובת.</div>
-      </td></tr>
-    </table>
-    <div class="what">
-      <div>שלושתם נעלמים בדרך: את ההערה השרת מוחק, מ-<code>@@</code> נשאר תו אחד, ואת <code>~/</code> מחליף לוכסן. לדפדפן מגיע תמיד HTML רגיל.</div>
-      <div>ולמה בדף Razor כותבים <code>~/Img/…</code> ולא <code>../Img/…</code> כמו עד היום? על זה – בנושא "כתובות ונתיבים".</div>
-    </div>
+    <div class="what" id="symWhat"></div>
   </article>
 
   <article class="spread act">
@@ -961,11 +941,17 @@ predict('#p22', {
 
 /* 3: three small Razor signs – what is written vs. what the browser receives */
 const SYM = [
-  {label:'<code>@* … *@</code> הערה', src:'@* TODO: add a photo of the team *@\n<\!-- opening hours: 10:00-23:00 -->\n<h2>אודות האתר</h2>', m:{0:'gone'}, o:{}},
-  {label:'<code>@@</code> התו עצמו', src:'<p>עקבו אחרינו: @@pizza_dani</p>', m:{0:'diff'}, o:{0:'diff'}},
-  {label:'<code>~/</code> מ-wwwroot', src:'<img src="~/Img/pic.jpg" alt="תמונה" width="150" />', m:{0:'diff'}, o:{0:'diff'}}
+  {label:'<code>@* … *@</code> הערה', src:'@* TODO: add a photo of the team *@\n<\!-- opening hours: 10:00-23:00 -->\n<h2>אודות האתר</h2>', m:{0:'gone'}, o:{},
+   diff:'במה שכתבתם יש <b>שתי הערות</b> – של Razor ושל HTML. במה שהדפדפן מקבל נשארה רק הערת ה-HTML: הערת ה-Razor <b>נעלמה</b>.',
+   why:'<div><b>הערה של Razor</b> – הערה לעצמכם. השרת <b>מוחק</b> אותה, והיא לא מגיעה לדפדפן.</div><div>הערת HTML רגילה (משיעור 2) כן מגיעה – כל אחד יכול לקרוא אותה ב-Ctrl+U. לכן בדף Razor, הערות לעצמכם כותבים כך.</div>'},
+  {label:'<code>@@</code> התו עצמו', src:'<p>עקבו אחרינו: @@pizza_dani</p>', m:{0:'diff'}, o:{0:'diff'},
+   diff:'במה שכתבתם יש <code>@@</code> – שני תווים. במה שהדפדפן מקבל יש <code>@</code> אחד.',
+   why:'<div><b>רוצים את התו @ עצמו, כטקסט?</b> כותבים אותו פעמיים.</div><div>עם @ אחד, Razor היה מחפש אחריו קוד <bdi>C#</bdi> – ומודיע על שגיאה. (כתובת מייל מלאה, כמו <bdi>dana@gmail.com</bdi>, Razor מזהה לבד.)</div>'},
+  {label:'<code>~/</code> מ-wwwroot', src:'<img src="~/Img/pic.jpg" alt="תמונה" width="150" />', m:{0:'diff'}, o:{0:'diff'},
+   diff:'במה שכתבתם הנתיב מתחיל ב-<code>~/</code>. במה שהדפדפן מקבל הוא מתחיל בלוכסן אחד: <code>/</code>.',
+   why:'<div><code>~/</code> אומר: <b>"מתחילים מהתיקייה wwwroot"</b>. כותבים אותו בתחילת נתיב (ב-src או ב-href), רק בקובץ cshtml.</div><div>השרת מחליף אותו בלוכסן אחד, והדפדפן מקבל את הכתובת של התמונה באתר, למשל <code>/Img/pic.jpg</code>. (ולמה לא <code>../Img/…</code> כמו עד היום? בנושא "כתובות ונתיבים".)</div>'}
 ];
-seg($('#symSeg'), SYM, o => { rzLines($('#symSrc'), o.src, 'rz', o.m); codeLines($('#symOut'), razor(o.src, MY).out, 'html', o.o); });
+seg($('#symSeg'), SYM, o => { rzLines($('#symSrc'), o.src, 'rz', o.m); codeLines($('#symOut'), razor(o.src, MY).out, 'html', o.o); $('#symDiff').innerHTML = o.diff; $('#symWhat').innerHTML = o.why; });
 
 /* 3: ViewData["Title"] */
 rzLines($('#ttlLay'), '<title>@ViewData["Title"] - MyFirstWeb</title>', 'rz');
