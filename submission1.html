@@ -250,7 +250,7 @@
     <ul class="req" id="reqA"></ul>
     <h4 class="reqg">כללי בנייה</h4>
     <ul class="req" id="reqB"></ul>
-    <p class="muted prel">📌 <b>לפני שמגישים</b> <span id="preTxt"></span> – שמונה סעיפים, שמסמנים <a href="#" data-go="submit:3">בשלב ההגשה</a>.</p>
+    <p class="muted prel">📌 <b>לפני שמגישים</b> <span id="preTxt"></span> – שמונה סעיפים (חמישה מהם כמו ב"לפני שמגישים" שבמטלה, ושלושה נוספים מהמדריך), שמסמנים <a href="#" data-go="submit:3">בשלב ההגשה</a>.</p>
     <h4 class="reqg">🚀 אתגרים <span class="muted">(רשות, בלי ניקוד)</span></h4>
     <p>רוצים יותר? במטלה יש שלושה אתגרי רשות. הם לא מוסיפים נקודות – כותבים עליהם בתיק הפרויקט, בפרק "אתגרים שעשיתי".</p>
     <ul>
@@ -1070,7 +1070,7 @@ const ASG_ITEMS = [
 ];
 const ASG_HOW = 'בקלאסרום &rlm;←&rlm; <b>סביבת הלמידה</b> &rlm;←&rlm; הנושא <b><bdi>HTML &amp; CSS</bdi></b> &rlm;←&rlm; {name} &rlm;←&rlm; <b>הוספה או יצירה</b> &rlm;←&rlm; <b>קובץ</b> &rlm;←&rlm; בוחרים את קובץ ה-zip, ומחכים עד שהוא מופיע במטלה &rlm;←&rlm; <b>הגשה</b>.';
 const ASG_AFTER = '💡 הגישו יום לפני תאריך היעד – יום אחד של ביטחון. שיניתם משהו בפרויקט אחרי שיצרתם את ה-zip? יוצרים zip חדש לפני שמעלים. הגשתם ומצאתם טעות? במטלה בקלאסרום: <b>ביטול ההגשה</b> (<bdi>Unsubmit</bdi>) &rlm;←&rlm; מחליפים את קובץ ה-zip &rlm;←&rlm; <b>הגשה</b>. ⚠ אחרי ביטול חייבים להגיש שוב – לפני תאריך היעד.';
-Course.assignment('#asg5', {n:5, lead:'<b>רשימת הבדיקה שלפני ההגשה</b> – שמונה סעיפים. מסמנים רק מה שבאמת עשיתם – וכשהכול מסומן, מגישים.', items:ASG_ITEMS, how:ASG_HOW, after:ASG_AFTER});
+Course.assignment('#asg5', {n:5, lead:'<b>רשימת הבדיקה שלפני ההגשה</b> – שמונה סעיפים: חמישה כמו ב"לפני שמגישים" שבמטלה, ושלושה נוספים מהמדריך (הטבלה, העיצוב והציון). מסמנים רק מה שבאמת עשיתם – וכשהכול מסומן, מגישים.', items:ASG_ITEMS, how:ASG_HOW, after:ASG_AFTER});
 /* no due date in assets/cohort.js yet = the engine draws no box. The checklist still has to work (same saved state, same look). */
 (function asgFallback(){
   const el = $('#asg5'); if (el.classList.contains('asg')) return;
