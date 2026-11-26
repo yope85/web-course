@@ -1910,12 +1910,34 @@ function fixBidiTokens(root){
       else if (part) f.appendChild(document.createTextNode(part)); });
     n.replaceWith(f); });
 }
+/* coloured chips that together make ONE token (g-3, btn-outline-success): each chip is isolated, so inside a Hebrew sentence
+   the chips line up right-to-left ("3-g"). Any run of .cx chips joined only by - . / _ @ (no spaces) that is not already
+   inside an LTR wrapper gets one – here, for every page and for text written in later. */
+function groupCxRuns(root){
+  const isLtr = el => { for (let p = el.parentElement; p && p !== document.body; p = p.parentElement) { if (p.classList.contains('ltr') || p.classList.contains('cxrun') || p.tagName === 'CODE') return true; if (p.hasAttribute('dir')) return p.dir === 'ltr'; } return false; };
+  const JOIN = /^[-./_@]+$/;
+  (root.matches && root.matches('.cx') ? [root] : [...root.querySelectorAll('.cx')]).forEach(first => {
+    if (!first.isConnected || isLtr(first)) return;
+    const prev = first.previousSibling; if (prev && prev.nodeType === 1 && prev.classList.contains('cx')) return;
+    if (prev && prev.nodeType === 3 && JOIN.test(prev.nodeValue) && prev.previousSibling && prev.previousSibling.nodeType === 1 && prev.previousSibling.classList.contains('cx')) return;
+    const run = [first]; let n = first.nextSibling, chips = 1;
+    while (n) {
+      if (n.nodeType === 1 && n.classList.contains('cx')) { run.push(n); chips++; n = n.nextSibling; continue; }
+      if (n.nodeType === 3 && JOIN.test(n.nodeValue) && n.nextSibling && n.nextSibling.nodeType === 1 && n.nextSibling.classList.contains('cx')) { run.push(n); n = n.nextSibling; continue; }
+      break;
+    }
+    if (chips < 2) return;
+    const w = document.createElement('bdi'); w.dir = 'ltr'; w.className = 'cxrun';
+    first.parentNode.insertBefore(w, first); run.forEach(x => w.appendChild(x));
+  });
+}
 function start(o){
   o = o || {};
   try { fixBidiTokens(document.querySelector('main') || document.body); } catch(e){}
+  try { groupCxRuns(document.querySelector('main') || document.body); } catch(e){}
   /* explanations, quiz questions and checks are written into the page later – isolate C# / .NET there too */
   try { const mo = new MutationObserver(ms => { const roots = new Set(); ms.forEach(m => m.addedNodes.forEach(n => { const r = n.nodeType === 1 ? n : n.parentElement; if (r && r.isConnected) roots.add(r); }));
-    roots.forEach(r => { try { fixBidiTokens(r); } catch(e){} }); });
+    roots.forEach(r => { try { fixBidiTokens(r); } catch(e){} try { groupCxRuns(r); } catch(e){} }); });
     mo.observe(document.querySelector('main') || document.body, {childList: true, subtree: true}); } catch(e){}
   autoCode(); wireCopy();
   const pb = $('#printBtn'); if (pb) pb.addEventListener('click', () => window.print());
