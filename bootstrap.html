@@ -588,7 +588,7 @@ td code{overflow-wrap:normal;white-space:normal}
     <div id="u7"></div>
     <div class="cxkey"><span class="k"><span class="cx cx-1">m</span> מה משנים</span><span class="k"><span class="cx cx-2">t</span> באיזה צד / איזה צבע</span><span class="k"><span class="cx cx-3">3</span> כמה</span></div>
     <div id="u7dec"></div>
-    <div class="ln"><span class="cx cx-1">text</span>-<span class="cx cx-2">white</span> = טקסט לבן. על רקע כהה (success, danger) צריך אותו, אחרת קשה לקרוא – בדיוק כמו בשלב על צבעים.</div>
+    <div class="ln"><span class="ltr"><span class="cx cx-1">text</span>-<span class="cx cx-2">white</span></span> = טקסט לבן. על רקע כהה (success, danger) צריך אותו, אחרת קשה לקרוא – בדיוק כמו בשלב על צבעים.</div>
   </article>
 
   <!-- ===== 8. btn + colour ===== -->
@@ -1627,7 +1627,7 @@ seg($('#s36gseg'), ['g-0', 'g-3', 'g-5'].map(v => ({label:v, mono:true, v})), o 
   const code = S36G(o.v);
   codeLines($('#s36gcode'), L(code), 'html', {1:'diff'});
   s36g.show(visWrap(L(code)), {css:'.vis{background:#fde68a;border:2px solid #f59e0b;border-radius:10px;padding:10px;text-align:center}'});
-  $('#s36gwhat').innerHTML = '<div><span class="cx cx-1">g</span>-<span class="cx cx-3">' + o.v.slice(2) + '</span> – ' + G_T[o.v] + '</div><div>בלי <code>g</code> בכלל? יש רווח רגיל של 24 פיקסלים בין העמודות לרוחב, ובלי רווח בין שורות – לכן כותבים <code>g</code> על השורה, כדי לשלוט בשניהם.</div>' + (o.v === 'g-5' ? '<div>עברו ל-📱: <code>g-5</code> רחב מדי לטלפון – הוא יוצר גלילה הצידה.</div>' : '');
+  $('#s36gwhat').innerHTML = '<div><span class="ltr"><span class="cx cx-1">g</span>-<span class="cx cx-3">' + o.v.slice(2) + '</span></span> – ' + G_T[o.v] + '</div><div>בלי <code>g</code> בכלל? יש רווח רגיל של 24 פיקסלים בין העמודות לרוחב, ובלי רווח בין שורות – לכן כותבים <code>g</code> על השורה, כדי לשלוט בשניהם.</div>' + (o.v === 'g-5' ? '<div>עברו ל-📱: <code>g-5</code> רחב מדי לטלפון – הוא יוצר גלילה הצידה.</div>' : '');
 }, 1);
 
 /* ======================================================= 3.9 img-fluid */
@@ -1748,7 +1748,7 @@ const b9 = bsplit($('#b9'), {min:60});
 seg($('#b9s'), [{label:'מלא', v:''}, {label:'btn-outline-…', mono:true, v:'o'}], o => {
   const c3 = ['success', 'danger', 'primary'];
   b9.set(L(c3.map(c => '<button class="btn btn-' + (o.v ? 'outline-' : '') + c + '">' + c + '</button>')), o.v ? {0:'new', 1:'new', 2:'new'} : {}, null, {css:'.btn{margin:4px}'});
-  $('#b9what').innerHTML = o.v ? '<div><span class="cx cx-1">btn</span>-<span class="cx cx-2">outline</span>-<span class="cx cx-3">success</span>: רק מסגרת בצבע, בלי מילוי.</div><div>שם הצבע בסוף – אותו שם בדיוק, רק עם <code>outline-</code> לפניו.</div>' : '<div>כפתורים מלאים, כמו בשלב הקודם. בחרו "btn-outline-…".</div>';
+  $('#b9what').innerHTML = o.v ? '<div><span class="ltr"><span class="cx cx-1">btn</span>-<span class="cx cx-2">outline</span>-<span class="cx cx-3">success</span></span>: רק מסגרת בצבע, בלי מילוי.</div><div>שם הצבע בסוף – אותו שם בדיוק, רק עם <code>outline-</code> לפניו.</div>' : '<div>כפתורים מלאים, כמו בשלב הקודם. בחרו "btn-outline-…".</div>';
 }, 0);
 const b10 = bsplit($('#b10'), {min:60});
 seg($('#b10z'), [{label:'רגיל', v:''}, {label:'btn-lg', mono:true, v:'btn-lg'}, {label:'btn-sm', mono:true, v:'btn-sm'}], o => {
